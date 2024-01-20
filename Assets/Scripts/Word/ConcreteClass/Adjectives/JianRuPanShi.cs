@@ -29,7 +29,7 @@ public class JianRuPanShi : AbstractAdjectives
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        aimCharacter.def += 12;
+        aimCharacter.def += 13;
     }
 
     
@@ -37,7 +37,7 @@ public class JianRuPanShi : AbstractAdjectives
     public override void End()
     {
         base.End();
-        aim.def -= 12;
+        aim.def -= 13;
     }
 
 }
