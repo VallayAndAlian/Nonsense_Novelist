@@ -1051,6 +1051,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ae720e6c62e754490b1f7a699fefbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: BookDesk3
-  leastLoadTime: 1
+  sceneName: ShootCombat
+  leastLoadTime: 0.5
   canvas: {fileID: 0}

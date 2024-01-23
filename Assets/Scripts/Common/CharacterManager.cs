@@ -51,6 +51,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     private bool PAUSE;
     /// <summary>
     /// 手动设置设置。同时，发射器弃用禁用、子弹速度也会被同时设置。所有的角色都会脱离攻击状态
+    /// true暂停false开始
     /// </summary>
     public bool pause
     {

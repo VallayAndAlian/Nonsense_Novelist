@@ -271,6 +271,7 @@ public static class AllSkills
     /// <returns></returns>
     public static Type CreateSkillWord()
     {
+        #region
         //int number = UnityEngine.Random.Range(0, list_all.Count);
 
 
@@ -288,16 +289,16 @@ public static class AllSkills
         //int _number = UnityEngine.Random.Range(0, testList1.Count);
 
         //return testList1[_number];
-
-        //int _number = UnityEngine.Random.Range(0, list_all.Count);
-        //while (testList3.Contains(list_all[_number]))
-        //{
-        //    _number = UnityEngine.Random.Range(0, list_all.Count);
-        //}
-        //return list_all[_number];
+        #endregion
+        int _number = UnityEngine.Random.Range(0, list_all.Count);
+        while (testList3.Contains(list_all[_number]))
+        {
+            _number = UnityEngine.Random.Range(0, list_all.Count);
+        }
+        return list_all[_number];
 
         ////ÕıÊ½
-
+        
         int number = UnityEngine.Random.Range(0, GameMgr.instance.GetCombatStartList().Count);
         while (testList3.Contains(GameMgr.instance.GetCombatStartList()[number]))
         {

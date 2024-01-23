@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 挂在父物体(charaPos)上，随机生成4个角色子物体，分别位于四个空物体下
 /// start按钮响应函数
@@ -36,7 +37,14 @@ public class CreateOneCharacter : MonoBehaviour
         CharacterManager.instance.pause = true;
         Camera.main.GetComponent<CameraController>().SetCameraSize(4);
         Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
-        CreateNewCharacter(4);
+        if (SceneManager.GetActiveScene().name== "ShootCombat")
+        {
+            CreateNewCharacter(4);
+        }
+        else//测试版本用
+        {
+            CreateAllCharacter();
+        }
     }
     private void Update()
     {
@@ -77,23 +85,40 @@ public class CreateOneCharacter : MonoBehaviour
                 }
             }
         }
-        // 两方至少要有一名角色
-        if (isAllCharaUp && !isTwoSides)
+        if (SceneManager.GetActiveScene().name == "ShootCombat")
         {
-            text.color = Color.red;
-            text.text = "两方至少要有一名角色";
-        }
-        //仍有角色未就位
-        else if (!isAllCharaUp)
-        {
-            text.color = Color.red;
-            text.text = "仍有角色未就位";
-        }
-        else if (isTwoSides && isAllCharaUp)//成功开始
-        {
+            // 两方至少要有一名角色
+            if (isAllCharaUp && !isTwoSides)
+            {
+                text.color = Color.red;
+                text.text = "两方至少要有一名角色";
+            }
+            //仍有角色未就位
+            else if (!isAllCharaUp)
+            {
+                text.color = Color.red;
+                text.text = "仍有角色未就位";
+            }
+            else if (isTwoSides && isAllCharaUp)//成功开始
+            {
 
-            BackAnim();
+                BackAnim();
+            }
         }
+        else//测试版本用
+        {
+            // 两方至少要有一名角色
+            if (!isTwoSides)
+            {
+                text.color = Color.red;
+                text.text = "两方至少要有一名角色";
+            }
+            else//成功开始
+            {
+                BackAnim();
+            }
+        }
+           
 
     }
 
@@ -241,7 +266,43 @@ public class CreateOneCharacter : MonoBehaviour
         //把站位和对应灯光的颜色恢复
         OpenColor();
     }
+    /// <summary>
+    /// 策划debug调试用（开始产生全部角色）
+    /// </summary>
+    public void CreateAllCharacter( )
+    {
+        //重置角色
+        text.color = Color.black;
+        text.text = "将角色拖拽放入战场，进行相互对抗";
+        //关闭墙体，避免拖拽判定失误
+        wallP.SetActive(false);
+        //生成角色
+        for (int i = 0; i < charaPrefabs.Length; i++)
+        {
+            int number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+            while (array.Contains(number))//去重
+            {
+                number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+            }
+            array.Add(number);
 
+            GameObject chara = Instantiate(charaPrefabs[number]);
+            chara.transform.SetParent(charaPos.GetChild(i));
+            chara.transform.position = new Vector3(charaPos.GetChild(i).position.x, charaPos.GetChild(i).position.y + CharacterMouseDrag.offsetY, charaPos.GetChild(i).position.z);
+            chara.transform.localScale = Vector3.one * beforeScale;
+
+            SpriteRenderer _sr = chara.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
+            //角色的显示图层恢复正常
+            _sr.sortingLayerName = "UICanvas";
+            _sr.sortingOrder = 3;
+        }
+
+        //打开实时更新器
+        needUpdate = true;
+
+        //把站位和对应灯光的颜色恢复
+        OpenColor();
+    }
 
     /// <summary>
     ///把站位和对应灯光的颜色恢复
