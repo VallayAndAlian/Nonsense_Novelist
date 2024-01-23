@@ -136,8 +136,8 @@ public static class AllSkills
         list_all.AddRange(list_verb);
         list_all.AddRange(list_adj);
         list_all.AddRange(list_noun);
-        
 
+        #region
         //¡¶ºìÂ¥ÃÎ¡·Ìí¼Ó¶¯´Ê´ÊÌõ
         hlmList_verb.AddRange(new Type[] { typeof(BuryFlower), typeof(WritePoem)});
         //¡¶ºìÂ¥ÃÎ¡·Ìí¼ÓĞÎÈİ´Ê´ÊÌõ
@@ -225,7 +225,7 @@ public static class AllSkills
         maYiDiGuoList_all.AddRange(maYiDiGuoList_verb);
         maYiDiGuoList_all.AddRange(maYiDiGuoList_adj);
         maYiDiGuoList_all.AddRange(maYiDiGuoList_noun);
-
+        #endregion
         //Í¨ÓÃÌí¼Ó¶¯´Ê´ÊÌõ
         commonList_verb.AddRange(new Type[] { typeof(Shuai),typeof(HeartBroken),typeof(ToBigger),typeof(BaoZa),});
         //Í¨ÓÃÌí¼ÓĞÎÈİ´Ê´ÊÌõ
@@ -307,5 +307,19 @@ public static class AllSkills
 
         return GameMgr.instance.GetCombatStartList()[number];
     }
-
+    public static Type AllAdjWords(int i)
+    {
+        if (i > list_adj.Count) return list_adj[0];
+        return list_adj[i];
+    }
+    public static Type AllNounWords(int i)
+    {
+        if (i > list_noun.Count) return list_noun[0];
+        return list_noun[i];
+    }
+    public static Type AllVerbWords(int i)
+    {
+        if (i > list_verb.Count) return list_verb[0];
+        return list_verb[i];
+    }
 }

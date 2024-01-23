@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 ///<summary>
 ///panel管理器
@@ -21,21 +22,34 @@ class PanelManager : MonoBehaviour
     public float g_btnUpY = 335f;
     public float g_originalY = 310f;
 
+    /// 
+    public GameObject adjPrefab;
+    public GameObject nounPrefab;
+    public GameObject verbPrefab;
+    private Canvas combatCanvas;
+
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "NewGame")
-        {
-            OpenPanel(Pages1, Pages1[0], buttons1[0].GetComponent<RectTransform>(), btnUpY);
-        }
+
         if (SceneManager.GetActiveScene().name == "Combat")
         {
-            if (Pages3.Length>=2)
+            if (Pages3.Length >= 2)
             {
                 OpenPanelOnly(Pages3, Pages3[0]);
             }
-            if (Pages1 .Length>=2)
+            if (Pages1.Length >= 2)
             {
                 OpenPanel(Pages1, Pages1[0], buttons1[0].GetComponent<RectTransform>(), btnUpY);
+            }
+        }
+        else
+        {
+            foreach (Canvas canvas in FindObjectsOfType<Canvas>())
+            {
+                if (canvas.name == "combatCanvas")
+                {
+                    combatCanvas = canvas;
+                }
             }
         }
     }
@@ -148,7 +162,51 @@ class PanelManager : MonoBehaviour
     public void TestPanelChange()
     {
         OpenPanelByButtonName(buttons1,Pages1);
+
+        if (combatCanvas!=null)
+        {
+            var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;            
+            if (buttonSelf.name== "adjTestAll")
+            {
+                for (int i = 0; i < AllSkills.list_adj.Count; i++)
+                {
+                    GameObject word = Instantiate(adjPrefab, combatCanvas.transform);
+                    Type absWord = AllSkills.AllAdjWords(i);
+                    word.AddComponent(absWord);
+                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStageLoad/" + word.GetComponent<AbstractWord0>().wordName);
+                    word.transform.SetParent(Pages1[0].transform);
+                }
             }
+            else if(buttonSelf.name == "nounTestAll")
+            {
+                for (int i = 0; i < AllSkills.list_noun.Count; i++)
+                {
+                    GameObject word = Instantiate(nounPrefab, combatCanvas.transform);
+                    Type absWord = AllSkills.AllNounWords(i);
+                    word.AddComponent(absWord);
+                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStageLoad/" + word.GetComponent<AbstractWord0>().wordName);
+                    word.transform.SetParent(Pages1[1].transform);
+                }
+            }
+            else if(buttonSelf.name == "verbTestAll")
+            {
+                for (int i = 0; i < AllSkills.list_verb.Count; i++)
+                {
+                    GameObject word = Instantiate(verbPrefab, combatCanvas.transform);
+                    Type absWord = AllSkills.AllVerbWords(i);
+                    word.AddComponent(absWord);
+                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStageLoad/" + word.GetComponent<AbstractWord0>().wordName);
+                    word.transform.SetParent(Pages1[2].transform);
+                }
+            }
+            else//boss
+            {
+
+            }
+                
+        }
+
+    }
     /// <summary>
     /// 第二组panel
     /// </summary>

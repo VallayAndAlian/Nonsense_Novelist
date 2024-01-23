@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 ///<summary>
-///鼠标拖拽
+///24.1.23策划debug功能拖拽脚本
 ///</summary>
 class TestDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
