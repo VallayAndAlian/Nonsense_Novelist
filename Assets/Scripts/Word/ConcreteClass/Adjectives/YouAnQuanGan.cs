@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 有安全感的
+/// </summary>
 public class YouAnQuanGan : AbstractAdjectives
 {
     static public string s_description = "恢复+8，持续20s";

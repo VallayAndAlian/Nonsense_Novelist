@@ -46,6 +46,7 @@ class MouseDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandle
     public GameObject bullet;
     /// <summary>手动，词条信息板 </summary>
     private WordInformation information;
+    public static bool isopen = true;
     private void Start()
     {
         rectTrans = GetComponent<RectTransform>();
@@ -192,6 +193,8 @@ class MouseDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandle
     public void ClosePanel()
     {
         this.transform.parent.gameObject.SetActive(false);
+        Time.timeScale = 1;
+        
     }
     /// <summary>
     /// 下一个词条小球准备

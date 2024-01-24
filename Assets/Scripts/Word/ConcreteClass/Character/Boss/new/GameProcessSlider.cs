@@ -124,7 +124,6 @@ public class GameProcessSlider : MonoBehaviour
     void CreateBoss(GameObject _boss)
     {
         this.transform.localScale = Vector3.zero;
-        //print("生成boss");
 
         //生成boss
         GameObject boss = Instantiate(_boss);

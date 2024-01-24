@@ -37,7 +37,7 @@ class MouseDown : MonoBehaviour
     public AudioSource audioSource;
     /// <summary>·¢ÉäÆ÷</summary>
     public GameObject shoot;
-
+    
     private void Update()
     {
         if (CharacterManager.instance.pause) return;
@@ -89,5 +89,5 @@ class MouseDown : MonoBehaviour
     public void CloseDetail()
     {
         isShow = false;
-    }
+    }    
 }

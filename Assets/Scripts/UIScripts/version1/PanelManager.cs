@@ -160,7 +160,8 @@ class PanelManager : MonoBehaviour
     public void TestPanelChange()
     {
         OpenPanelByButtonName(buttons1,Pages1);
-
+        Time.timeScale = 0;
+        MouseDrag.isopen = false;
         if (combatCanvas!=null)
         {
             var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;            

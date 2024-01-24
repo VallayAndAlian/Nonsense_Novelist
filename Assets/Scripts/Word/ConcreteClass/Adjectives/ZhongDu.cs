@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 中毒的
+/// </summary>
 public class ZhongDu : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>中毒</color>，<color=#dd7d0e>颠倒</color>，持续10s";

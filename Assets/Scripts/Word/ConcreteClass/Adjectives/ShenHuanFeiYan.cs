@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 身患肺炎的
+/// </summary>
 public class ShenHuanFeiYan : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>患病</color>，持续20s";
