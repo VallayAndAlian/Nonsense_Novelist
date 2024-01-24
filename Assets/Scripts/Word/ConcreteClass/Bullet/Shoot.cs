@@ -1,6 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
-using System;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 发射词弹
@@ -13,8 +13,6 @@ public class Shoot : MonoBehaviour
     public GameObject bullet;
     /// <summary>词条</summary>
     private GameObject bulletInstance;
-    /// <summary>发射前词条的父物体</summary>
-    public Transform bulletRoot;
     /// <summary>发射后词条的父物体</summary>
     public Transform afterShootTF;
     /// <summary>当前的力</summary>
@@ -40,30 +38,59 @@ public class Shoot : MonoBehaviour
 
     private void Update()
     {
-        if (CreateOneCharacter. isTwoSides && CreateOneCharacter.isAllCharaUp)
+        if (SceneManager.GetActiveScene().name == "ShootCombat")
         {
-            aimSlider.value = 0; // 重置slider的值
+            if (CreateOneCharacter.isTwoSides && CreateOneCharacter.isAllCharaUp)
+            {
+                aimSlider.value = 0; // 重置slider的值
 
-            if (crtForce >= maxForce && !fired)// 蓄力到最大值
-            {
-                crtForce = maxForce;
-            }
+                if (crtForce >= maxForce && !fired)// 蓄力到最大值
+                {
+                    crtForce = maxForce;
+                }
 
-            if (Input.GetButtonDown("Fire1"))
-            {
-                crtForce = minForce; // 重置力的大小
-                fired = false; // 设置开火状态为未开火
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    crtForce = minForce; // 重置力的大小
+                    fired = false; // 设置开火状态为未开火
+                }
+                else if (Input.GetButton("Fire1") && !fired)// 一直按着
+                {
+                    crtForce += forceSpeed * Time.deltaTime; // 蓄力
+                    aimSlider.value = crtForce / maxForce; // 更新slider的值
+                }
+                else if (Input.GetButtonUp("Fire1") && !fired)
+                {
+                    ShootWordBullet();
+                }
             }
-            else if (Input.GetButton("Fire1") && !fired)// 一直按着
+        }
+        else
+        {
+            if (CreateOneCharacter.isTwoSides )
             {
-                crtForce += forceSpeed * Time.deltaTime; // 蓄力
-                aimSlider.value = crtForce / maxForce; // 更新slider的值
-            }
-            else if (Input.GetButtonUp("Fire1") && !fired)
-            {
-                ShootWordBullet();
-            }
+                aimSlider.value = 0; // 重置slider的值
 
+                if (crtForce >= maxForce && !fired)// 蓄力到最大值
+                {
+                    crtForce = maxForce;
+                }
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    crtForce = minForce; // 重置力的大小
+                    fired = false; // 设置开火状态为未开火
+                }
+                else if (Input.GetButton("Fire1") && !fired)// 一直按着
+                {
+                    crtForce += forceSpeed * Time.deltaTime; // 蓄力
+                    aimSlider.value = crtForce / maxForce; // 更新slider的值
+                }
+                else if (Input.GetButtonUp("Fire1") && !fired)
+                {
+                    ShootWordBullet();
+                }
+            }
         }
     }
     /// <summary>
@@ -77,19 +104,17 @@ public class Shoot : MonoBehaviour
         //预制体相关
         bulletInstance.transform.SetParent(gang);
         bulletInstance.transform.localPosition = Vector3.zero;
-       //bulletInstance.transform.localScale = Vector3.one;
         bulletInstance.transform.localEulerAngles = Vector3.zero;
-        bulletInstance.transform.SetParent(bulletRoot);
         bulletInstance.GetComponent<SpriteRenderer>().color -=  new Color(0, 0, 0, 1);
 
         //增加词条图像
 
         //给小球增加词条属性
-
-        abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord=bulletInstance.AddComponent(AllSkills.CreateSkillWord()) as AbstractWord0;
+        abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = bulletInstance.AddComponent(AllSkills.CreateSkillWord()) as AbstractWord0;
         foreach (var _col in (bulletInstance.GetComponentsInChildren<WordCollisionShoot>()))
             _col.absWord = abs;
         information.ChangeInformation(abs);
+        
     }
     /// <summary>
     /// 产生词条实体
@@ -103,9 +128,12 @@ public class Shoot : MonoBehaviour
         bulletInstance.transform.SetParent(afterShootTF);
         bulletInstance.GetComponent<Collider2D>().isTrigger = false;
         bulletInstance.GetComponent<SpriteRenderer>().color +=new Color(0,0,0,1);
-
-        ReadyWordBullet();
-        DestroyWordBullet();
+        //if (SceneManager.GetActiveScene().name == "ShootCombat")
+        //{
+            ReadyWordBullet();
+            DestroyWordBullet();
+                   
+        
     }
     private void DestroyWordBullet()
     {

@@ -184,7 +184,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3837959891539934793}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -307,7 +307,6 @@ MonoBehaviour:
   wordCollisionShoots: []
   myState: {fileID: 0}
   characterID: 0
-  gender: 0
   source: {fileID: 0}
   aAttackAudio: {fileID: 0}
   walkAudio: {fileID: 0}
@@ -315,23 +314,24 @@ MonoBehaviour:
   bullet: {fileID: 5396089893936509290, guid: 767f667755cd0c247aa64b5b5d83c016, type: 3}
   camp: 0
   roleName: 
+  gender: 0
   trait: {fileID: 0}
   criticalChance: 0
   multipleCriticalStrike: 2
-  attackInterval: 2.2
-  situation: {fileID: 0}
-  attackDistance: 0
-  charaAnim: {fileID: 0}
   dizzyTime: 0
   skills: []
   servants: []
   maxSkillsCount: 3
-  energy: 0
-  attackA: {fileID: 0}
   skillText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  attackInterval: 2.2
+  situation: {fileID: 0}
+  attackDistance: 0
+  charaAnim: {fileID: 0}
+  energy: 0
+  attackA: {fileID: 0}
 --- !u!1 &4084634625184318592
 GameObject:
   m_ObjectHideFlags: 0

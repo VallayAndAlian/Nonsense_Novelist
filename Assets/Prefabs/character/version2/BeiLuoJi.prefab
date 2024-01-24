@@ -747,7 +747,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 19.2, y: 10.8}
+    oldSize: {x: 19.199999, y: 10.799999}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -807,6 +807,7 @@ MonoBehaviour:
   defaultState: {fileID: 0}
   aim: {fileID: 0}
   speed: 0.5
+  isAimRandom: 0
 --- !u!114 &2320014479563054447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,6 +834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verbLoadingPrefab: {fileID: 6806686265833367326, guid: 756f52404dda4ef43afb026bc41a98d2, type: 3}
+  barPoint: {fileID: 0}
 --- !u!82 &2168264803539121840
 AudioSource:
   m_ObjectHideFlags: 0
@@ -840,7 +842,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3837959891539934793}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -941,7 +943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c93954f1550e8745be3314a9e6fe6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charaShortInstance: {fileID: 2631443086271073068, guid: c3a092e2db9c24c4fa911919912c5a16, type: 3}
 --- !u!114 &-4198413655761686095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -957,33 +958,38 @@ MonoBehaviour:
   wordKind: 0
   bookName: 0
   wordName: 
-  pattern: {fileID: 0}
   brief: 
   description: 
   nickname: []
   rarity: 0
   wordCollisionShoots: []
+  myState: {fileID: 0}
   characterID: 0
-  gender: 0
   source: {fileID: 0}
   aAttackAudio: {fileID: 0}
   walkAudio: {fileID: 0}
   teXiao: {fileID: 0}
   bullet: {fileID: 0}
   camp: 0
-  HP: 0
-  maxHP: 0
-  trait: {fileID: 0}
   roleName: 
-  skills: []
+  gender: 0
+  trait: {fileID: 0}
   criticalChance: 0
   multipleCriticalStrike: 2
+  dizzyTime: 0
+  skills: []
+  servants: []
+  maxSkillsCount: 3
+  skillText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   attackInterval: 2.2
   situation: {fileID: 0}
   attackDistance: 0
   charaAnim: {fileID: 0}
-  dizzyTime: 0
   energy: 0
+  attackA: {fileID: 0}
 --- !u!1 &4292073181992697367
 GameObject:
   m_ObjectHideFlags: 0

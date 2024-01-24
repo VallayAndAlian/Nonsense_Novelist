@@ -92,7 +92,8 @@ public class AfterStart : MonoBehaviour
             //显示角色简要信息(注意第二个参数对于UI)
             charaShortP = Instantiate(charaShortInstance);
             charaShortP.transform.localScale = Vector3.one* scale;
-            charaShortP.transform.parent = this.transform.GetComponentInChildren<Canvas>().gameObject.transform;
+            //charaShortP.transform.parent = this.transform.GetComponentInChildren<Canvas>().gameObject.transform;
+            charaShortP.transform.SetParent(this.transform.GetComponentInChildren<Canvas>().gameObject.transform);
             charaShortP.transform.localPosition = new Vector3(0,-900,0);
             charaShort = charaShortP.transform.GetChild(2);
             uiElement = charaShort.gameObject.GetComponent<RectTransform>();

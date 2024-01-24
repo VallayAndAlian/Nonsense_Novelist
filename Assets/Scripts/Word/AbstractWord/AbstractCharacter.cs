@@ -597,7 +597,8 @@ abstract public class AbstractCharacter : AbstractWord0
     
              obj.transform.localScale = Vector3.one * 20 / 8000f;
              obj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-             obj.transform.parent = energyCanvas.transform;
+             //obj.transform.parent = energyCanvas.transform;
+             obj.transform.SetParent(energyCanvas.transform);
              obj.transform.localPosition = this.transform.position + pos[(floatCount++)%4];
           
              obj.GetComponent<FloatWord>().InitPopup(value, this.camp == CampEnum.stranger, color, direct);
@@ -618,7 +619,8 @@ abstract public class AbstractCharacter : AbstractWord0
         {
  obj.transform.localScale = Vector3.one * 20 / 8000f;
             obj.transform.localRotation = Quaternion.Euler(Vector3.zero);
-           obj.transform.parent = energyCanvas.transform;
+            //obj.transform.parent = energyCanvas.transform;
+            obj.transform.SetParent(energyCanvas.transform);
             obj.transform.localPosition = this.transform.position + pos[(floatCount++) % 4];
            
             obj.GetComponent<FloatWord>().InitPopup(text, this.camp == CampEnum.stranger, color, direct);

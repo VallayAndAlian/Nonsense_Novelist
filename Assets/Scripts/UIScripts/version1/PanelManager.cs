@@ -23,9 +23,7 @@ class PanelManager : MonoBehaviour
     public float g_originalY = 310f;
 
     /// 
-    public GameObject adjPrefab;
-    public GameObject nounPrefab;
-    public GameObject verbPrefab;
+    public GameObject wordPrefab;
     private Canvas combatCanvas;
 
     private void Start()
@@ -170,33 +168,36 @@ class PanelManager : MonoBehaviour
             {
                 for (int i = 0; i < AllSkills.list_adj.Count; i++)
                 {
-                    GameObject word = Instantiate(adjPrefab, combatCanvas.transform);
+                    GameObject word = Instantiate(wordPrefab, combatCanvas.transform);
                     Type absWord = AllSkills.AllAdjWords(i);
+                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStage/NewGame/other/adj");
                     word.AddComponent(absWord);
-                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStageLoad/" + word.GetComponent<AbstractWord0>().wordName);
                     word.transform.SetParent(Pages1[0].transform);
+                    word.GetComponentInChildren<Text>().text = word.GetComponent<AbstractWord0>().wordName;
                 }
             }
             else if(buttonSelf.name == "nounTestAll")
             {
                 for (int i = 0; i < AllSkills.list_noun.Count; i++)
                 {
-                    GameObject word = Instantiate(nounPrefab, combatCanvas.transform);
+                    GameObject word = Instantiate(wordPrefab, combatCanvas.transform);
                     Type absWord = AllSkills.AllNounWords(i);
+                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStage/NewGame/other/noun");
                     word.AddComponent(absWord);
-                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStageLoad/" + word.GetComponent<AbstractWord0>().wordName);
                     word.transform.SetParent(Pages1[1].transform);
+                    word.GetComponentInChildren<Text>().text = word.GetComponent<AbstractWord0>().wordName;
                 }
             }
             else if(buttonSelf.name == "verbTestAll")
             {
                 for (int i = 0; i < AllSkills.list_verb.Count; i++)
                 {
-                    GameObject word = Instantiate(verbPrefab, combatCanvas.transform);
+                    GameObject word = Instantiate(wordPrefab, combatCanvas.transform);
                     Type absWord = AllSkills.AllVerbWords(i);
+                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStage/NewGame/other/verb");
                     word.AddComponent(absWord);
-                    word.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStageLoad/" + word.GetComponent<AbstractWord0>().wordName);
                     word.transform.SetParent(Pages1[2].transform);
+                    word.GetComponentInChildren<Text>().text = word.GetComponent<AbstractWord0>().wordName;
                 }
             }
             else//boss
