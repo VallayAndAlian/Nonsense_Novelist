@@ -23,11 +23,11 @@ override public void Awake()
         bookName = BookNameEnum.allBooks;
         gender = GenderEnum.noGender;
         camp = CampEnum.stranger;
-        hp =maxHp  =30;
+        hp =maxHp  =300;
         atk = 10;
-        def = 30;
-        psy = 15;
-        san = 30;
+        def = 15;
+        psy = 10;
+        san = 15;
         maxSkillsCount = 3;
         trait =gameObject.AddComponent<Sentimental>();
         roleName = "思潮";
