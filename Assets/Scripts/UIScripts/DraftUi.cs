@@ -345,8 +345,8 @@ public class DraftUi : MonoBehaviour
       
         _text.gameObject.SetActive(true);
         select = false;
-
-        int count = _inputField.GetLineCount(); _inputField.text = "";
+        var count = _inputField.text.Split('\n').Length;
+     /*   int count = _inputField.GetLineCount();*/ _inputField.text = "";
         for (int x = 0; x < count-1; x++)
         {
             _inputField.text += "\n";
