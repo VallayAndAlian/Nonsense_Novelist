@@ -195,11 +195,11 @@ public class CreateOneCharacter : MonoBehaviour
 
             //触发进度条开始开关
             GameObject.Find("GameProcess").GetComponent<GameProcessSlider>().ProcessStart();
-            //装载一个shooter
-            GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
-
-            // 将所有站位颜色隐藏
-            foreach (Situation it in Situation.allSituation)
+        //装载一个shooter
+        if (SceneManager.GetActiveScene().name == "ShootCombat") GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
+        else GameObject.Find("shooter").GetComponent<TestShoot>().ReadyWordBullet();
+        // 将所有站位颜色隐藏
+        foreach (Situation it in Situation.allSituation)
             {
             if (it.GetComponent<CircleCollider2D>() != null)
                 it.GetComponent<CircleCollider2D>().radius = 0.4f;
