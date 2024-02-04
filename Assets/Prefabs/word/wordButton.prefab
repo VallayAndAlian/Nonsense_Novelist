@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -1411279180504818101}
   - component: {fileID: -6948586656844970443}
   - component: {fileID: -8254564670566892240}
+  - component: {fileID: 7371446317206943645}
   m_Layer: 5
   m_Name: wordButton
   m_TagString: Untagged
@@ -136,8 +137,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: -1411279180504818101}
-        m_TargetAssemblyTypeName: MouseDrag, Assembly-CSharp
+      - m_Target: {fileID: 7371446317206943645}
+        m_TargetAssemblyTypeName: TestShoot, Assembly-CSharp
         m_MethodName: NextWordReady
         m_Mode: 1
         m_Arguments:
@@ -155,7 +156,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6353631512975227779}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86d52bffdb46faf4aa1c96bbcb279246, type: 3}
   m_Name: 
@@ -188,6 +189,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81706584768793e40aaf424e35f1359e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7371446317206943645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6353631512975227779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66eeda847a4dc3845bde366daeaf3c02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 6359337495731723507, guid: 81e66e01c2d552f4ca2c50d4e93178b2, type: 3}
+  crtForce: 0
+  minForce: 15
+  maxForce: 200
+  forceSpeed: 200
+  forceAmount: 12
 --- !u!1 &7997436063521526801
 GameObject:
   m_ObjectHideFlags: 0

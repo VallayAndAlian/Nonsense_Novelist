@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -37,16 +39,12 @@ class MouseDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandle
     public GameObject wordDetail;
     private GameObject otherCanvas;
     /// <summary>词条</summary>
-    private GameObject bulletInstance;
+    public static GameObject bulletInstance;
     /// <summary>存储WordCollisionShoot的词条属性</summary>
     public static AbstractWord0 abs;
-    /// <summary>发射位置</summary>
-    private Transform gang;
     /// <summary>词条</summary>
     public GameObject bullet;
-    /// <summary>手动，词条信息板 </summary>
-    private WordInformation information;
-    public static bool isopen = true;
+
     private void Start()
     {
         rectTrans = GetComponent<RectTransform>();
@@ -58,11 +56,6 @@ class MouseDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandle
         {
             audioSource = GameObject.Find("AudioSource_wirte").GetComponent<AudioSource>();
             audioSource_cantuse = GameObject.Find("AudioSource_CantUse").GetComponent<AudioSource>();
-        }
-        else if (SceneManager.GetActiveScene().name == "CombatTest")
-        {
-            gang = GameObject.Find("shooter").GetComponentInChildren<Transform>();
-            information = GameObject.Find("combatCanvas").GetComponentInChildren<WordInformation>();
         }
     }
     /// <summary>
@@ -196,26 +189,6 @@ class MouseDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandle
         Time.timeScale = 1;
         
     }
-    /// <summary>
-    /// 下一个词条小球准备
-    ///点击start后，在CreateOneCharacter 中调用一次
-    /// </summary>
-    public void NextWordReady()
-    {                
-        bulletInstance = Instantiate(bullet);
-
-        //预制体相关
-        bulletInstance.transform.SetParent(gang);
-        bulletInstance.transform.localPosition = Vector3.zero;
-        bulletInstance.transform.localEulerAngles = Vector3.zero;
-        bulletInstance.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
-
-        var buttonSelf = EventSystem.current.currentSelectedGameObject;
-        abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = bulletInstance.AddComponent(buttonSelf.GetComponent<AbstractWord0>().GetType()) as AbstractWord0;
-        foreach (var _col in (bulletInstance.GetComponentsInChildren<WordCollisionShoot>()))
-            _col.absWord = abs;
-        information.ChangeInformation(abs);
-        
-    }
+    
     
 }

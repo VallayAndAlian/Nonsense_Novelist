@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 /// <summary>
 /// 挂在父物体上.负责角色和situation的单例
@@ -66,7 +67,8 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     private Transform shooter;
     private void SetShooterTo(bool _b)
     {//true,暂停，此时关闭
-        shooter.GetComponent<Shoot>().enabled = (!_b);
+        if(SceneManager.GetActiveScene().name == "ShootCombat") shooter.GetComponent<Shoot>().enabled = (!_b);
+        else shooter.GetComponent<TestShoot>().enabled = (!_b);
         shooter.GetComponent<RollControler>().enabled = (!_b);
     }
 

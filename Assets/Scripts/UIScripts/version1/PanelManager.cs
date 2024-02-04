@@ -26,6 +26,8 @@ class PanelManager : MonoBehaviour
     public GameObject wordPrefab;
     private Canvas combatCanvas;
 
+    private bool[] word = new bool[3];
+
     private void Start()
     {
 
@@ -92,7 +94,11 @@ class PanelManager : MonoBehaviour
             {
                 CloseAllPanels(pages);
                 if (pages[i].gameObject.activeSelf == false)
+                {
                     pages[i].gameObject.SetActive(true);
+                    pages[i].gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                }
+
             }
             //打开故事导入面板时，打开第二组面板
             /*if (SceneManager.GetActiveScene().name == "NewGame")
@@ -161,12 +167,12 @@ class PanelManager : MonoBehaviour
     {
         OpenPanelByButtonName(buttons1,Pages1);
         Time.timeScale = 0;
-        MouseDrag.isopen = false;
         if (combatCanvas!=null)
         {
             var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;            
-            if (buttonSelf.name== "adjTestAll")
+            if (buttonSelf.name== "adjTestAll" && !word[0])
             {
+                word[0] = true;
                 for (int i = 0; i < AllSkills.list_adj.Count; i++)
                 {
                     GameObject word = Instantiate(wordPrefab, combatCanvas.transform);
@@ -177,8 +183,9 @@ class PanelManager : MonoBehaviour
                     word.GetComponentInChildren<Text>().text = word.GetComponent<AbstractWord0>().wordName;
                 }
             }
-            else if(buttonSelf.name == "nounTestAll")
+            else if(buttonSelf.name == "nounTestAll" && !word[1])
             {
+                word[1] = true;
                 for (int i = 0; i < AllSkills.list_noun.Count; i++)
                 {
                     GameObject word = Instantiate(wordPrefab, combatCanvas.transform);
@@ -189,8 +196,9 @@ class PanelManager : MonoBehaviour
                     word.GetComponentInChildren<Text>().text = word.GetComponent<AbstractWord0>().wordName;
                 }
             }
-            else if(buttonSelf.name == "verbTestAll")
+            else if(buttonSelf.name == "verbTestAll" && !word[2])
             {
+                word[2] = true;
                 for (int i = 0; i < AllSkills.list_verb.Count; i++)
                 {
                     GameObject word = Instantiate(wordPrefab, combatCanvas.transform);
