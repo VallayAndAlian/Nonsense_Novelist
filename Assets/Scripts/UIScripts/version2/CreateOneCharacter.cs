@@ -221,9 +221,21 @@ public class CreateOneCharacter : MonoBehaviour
                 it.GetComponent<AbstractCharacter>().enabled = true;
                 it.gameObject.AddComponent(typeof(AfterStart));
                 Destroy(it.GetComponent<CharacterMouseDrag>());
+
+
+            //碰撞体的设置
+            var _colE = it.GetComponent<PolygonCollider2D>();
+            var _colB = it.GetComponent<BoxCollider2D>();
+            if (_colE != null)
+            {
+                if (_colB != null) { _colB.enabled = true; _colE.enabled = false; }
             }
-            //恢复暂停
-            CharacterManager.instance.pause = false;
+
+
+
+        }
+        //恢复暂停
+        CharacterManager.instance.pause = false;
     }
 
 
@@ -258,6 +270,14 @@ public class CreateOneCharacter : MonoBehaviour
             //角色的显示图层恢复正常
             _sr.sortingLayerName = "UICanvas";
             _sr.sortingOrder = 3;
+
+            //碰撞体
+            var _colE = chara.GetComponent<PolygonCollider2D>();
+            var _colB = chara.GetComponent<BoxCollider2D>();
+            if (_colE != null)
+            {
+                if (_colB != null) { _colB.enabled = false; _colE.enabled = true; }
+            }
         }
 
         //打开实时更新器

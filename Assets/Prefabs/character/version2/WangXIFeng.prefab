@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 5361354823142773629}
   - component: {fileID: 1479494677}
   - component: {fileID: -2398173083784865602}
+  - component: {fileID: 6616519391035118235}
   m_Layer: 3
   m_Name: WangXIFeng
   m_TagString: character
@@ -347,6 +348,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c93954f1550e8745be3314a9e6fe6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!60 &6616519391035118235
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2923459406948245553}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.1009921, y: 5.266345}
+      - {x: -5.4610558, y: 4.2275763}
+      - {x: -4.4996896, y: 1.3223867}
+      - {x: -0.7119216, y: 1.0264219}
+      - {x: -1.6736877, y: -0.82639575}
+      - {x: -1.5784872, y: -3.2686906}
+      - {x: 1.7151356, y: -3.337015}
+      - {x: 2.1621482, y: 4.685461}
 --- !u!1 &4783718014092426606
 GameObject:
   m_ObjectHideFlags: 0

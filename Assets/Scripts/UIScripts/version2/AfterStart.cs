@@ -2,6 +2,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /// <summary>
 /// combat after start
@@ -51,6 +52,10 @@ public class AfterStart : MonoBehaviour
 
     private void Start()
     {
+
+
+
+
         mainCamera = Camera.main;
 
 
@@ -117,33 +122,58 @@ public class AfterStart : MonoBehaviour
     string energyAdr = "UI/energySingle";
     private float energyOffset = 60;//一行之间的每两个能量值中间的间隔大小
     private float energyOffsetWith = 300;//第一个能量值在x轴上向右的位移
-
+    private Dictionary<string, int> showBuffDic=new Dictionary<string, int>();
 
 
     void WhenBuffCountChange(int _i)
     {
 
-      
+      //获取bufflist的母物体并且收回之前生成的全部buff。
         buffList = charaShort.transform.GetChild(5);
         foreach (var _buff in buffList.GetComponentsInChildren<Image>())
         {
             PoolMgr.GetInstance().PushObj(buffShortAdr, _buff.gameObject);
         }
+        showBuffDic.Clear();
+
+        //获取角色身上的所有buff并生成
         var buff = abschara.GetComponents<AbstractBuff>();
-        for (int x = 0; x < Mathf.Min(buff.Length, 7); x++)
+        for (int x = 0; x < buff.Length; x++)
         {
-            PoolMgr.GetInstance().GetObj(buffShortAdr, (obj) =>
+            if (showBuffDic.Count > 7)
             {
-                
-                obj.transform.parent = buffList;
-                obj.transform.localScale = Vector3.one;
-                buffSprite = Resources.Load<Sprite>("WordImage/Buffs/" + buff[x].GetType().ToString());
+                //缩略栏只显示7种buff
+            }
+            else
+            { 
+            //
+            if (showBuffDic.ContainsKey(buff[x].buffName))
+            {
+                //相同的buff叠加，数字显现。
+                showBuffDic[buff[x].buffName] += 1;
+            }
+            else
+            {  
+                showBuffDic.Add(buff[x].buffName, 1);
+                PoolMgr.GetInstance().GetObj(buffShortAdr, (obj) =>
+                {
+                    obj.transform.parent = buffList;
+                    obj.transform.localScale = Vector3.one;
+                    buffSprite = Resources.Load<Sprite>("WordImage/Buffs/" + buff[x].GetType().ToString());
+                    obj.name = buff[x].buffName.ToString();
+
+                    if (buffSprite == null)
+                        obj.GetComponent<Image>().sprite = buffSprite_default;
+                    else
+                        obj.GetComponent<Image>().sprite = buffSprite;
+
+                   
+                });
                
-                if (buffSprite == null)
-                    obj.GetComponent<Image>().sprite = buffSprite_default;
-                else
-                    obj.GetComponent<Image>().sprite = buffSprite;
-            });
+            }
+            //界面显示改变
+            buffList.Find(buff[x].buffName.ToString()).GetComponentInChildren<TextMeshProUGUI>().text = showBuffDic[buff[x].buffName].ToString();
+            }
         }
     }
 
@@ -159,13 +189,13 @@ void FunctionInis()
         abschara = GetComponent<AbstractCharacter>();
 
         //ATK1
-        charaShort.transform.GetChild(0).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.atk* abschara.atkMul);
+        charaShort.transform.GetChild(0).GetComponentInChildren<Text>().text = (abschara.atk * abschara.atkMul).ToString();
         //def4
-        charaShort.transform.GetChild(3).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.def * abschara.defMul);
+        charaShort.transform.GetChild(2).GetComponentInChildren<Text>().text =(abschara.def * abschara.defMul).ToString();
         //san3
-        charaShort.transform.GetChild(2).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.san * abschara.sanMul);
+        charaShort.transform.GetChild(3).GetComponentInChildren<Text>().text =(abschara.san * abschara.sanMul).ToString();
         //psy2
-        charaShort.transform.GetChild(1).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.psy * abschara.psyMul);
+        charaShort.transform.GetChild(1).GetComponentInChildren<Text>().text = (abschara.psy * abschara.psyMul).ToString();
 
 
         //获取角色的技能列表
@@ -234,13 +264,13 @@ void FunctionInis()
         if (abschara == null) print("absChara==null");
         if (charaShort == null) print("charaShort==null");
         //ATK1
-        charaShort.transform.GetChild(0).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.atk * abschara.atkMul);
+        charaShort.transform.GetChild(0).GetComponentInChildren<Text>().text = (abschara.atk * abschara.atkMul).ToString();
         //def4
-        charaShort.transform.GetChild(3).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.def * abschara.defMul);
+        charaShort.transform.GetChild(3).GetComponentInChildren<Text>().text =(abschara.def * abschara.defMul).ToString();
         //san3
-        charaShort.transform.GetChild(2).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.san * abschara.sanMul);
+        charaShort.transform.GetChild(2).GetComponentInChildren<Text>().text =(abschara.san * abschara.sanMul).ToString();
         //psy2
-        charaShort.transform.GetChild(1).GetComponentInChildren<Text>().text = IntToString.SwitchATK(abschara.psy * abschara.psyMul);
+        charaShort.transform.GetChild(1).GetComponentInChildren<Text>().text = (abschara.psy * abschara.psyMul).ToString();
 
 
 

@@ -38,12 +38,10 @@ public class CharacterDetail_t : MonoBehaviour
     private float energyOffset = 60;//一行之间的每两个能量值中间的间隔大小
     private float energyOffsetWith = 150;//第一个能量值在x轴上向右的位移
     private Dictionary<string,int> itemDic=new Dictionary<string, int>();
-    private void awa()
-    {
+    private Dictionary<string, int> buffDic = new Dictionary<string, int>();
 
-    }
-
-    
+    [Header("手动设置信息预制体")]
+    public GameObject infoPerfab;
     private void OpenInit()
     {
 
@@ -71,33 +69,50 @@ public class CharacterDetail_t : MonoBehaviour
         panel_state.GetComponentInChildren<Slider>().value = nowCharacter.hp/nowCharacter.maxHp;
         panel_state.GetComponentsInChildren<Text>()[0].text = nowCharacter.hp.ToString() + "/" + (nowCharacter.maxHp* nowCharacter.maxHpMul).ToString();
 
-        panel_state.GetComponentsInChildren<Text>()[1].text = (nowCharacter.atk*nowCharacter.atkMul).ToString()+
-            " \n<color=#787878><size=25>( " + nowCharacter.atk.ToString() + " * "+(nowCharacter.atkMul*100).ToString()+ "% </size></color> )";
-       
-        panel_state.GetComponentsInChildren<Text>()[2].text = (nowCharacter.def * nowCharacter.defMul).ToString() +
-            " \n<color=#787878><size=25>( " + nowCharacter.def.ToString() + " * " + (nowCharacter.defMul * 100).ToString() + "%</size></color>  )";
+        //atk
+        panel_state.GetComponentsInChildren<Text>()[1].text = (nowCharacter.atk*nowCharacter.atkMul).ToString();
+           // +" \n<color=#787878><size=25>( " + nowCharacter.atk.ToString() + " * "+(nowCharacter.atkMul*100).ToString()+ "% </size></color> )";
 
-        panel_state.GetComponentsInChildren<Text>()[3].text = (nowCharacter.san * nowCharacter.sanMul).ToString() +
-            " \n<color=#787878><size=25>( " + nowCharacter.san.ToString() + " * " + (nowCharacter.sanMul * 100).ToString() + "%</size></color> )";
+       //def
+        panel_state.GetComponentsInChildren<Text>()[3].text = (nowCharacter.def * nowCharacter.defMul).ToString(); 
+           // +" \n<color=#787878><size=25>( " + nowCharacter.def.ToString() + " * " + (nowCharacter.defMul * 100).ToString() + "%</size></color>  )";
 
-        panel_state.GetComponentsInChildren<Text>()[4].text = (nowCharacter.psy * nowCharacter.psyMul).ToString() +
-      "\n<color=#787878><size=25> ( " + nowCharacter.psy.ToString() + " * " + (nowCharacter.psyMul * 100).ToString() + "%</size></color> )";
+        //san
+        panel_state.GetComponentsInChildren<Text>()[4].text = (nowCharacter.san * nowCharacter.sanMul).ToString();
+          //+ " \n<color=#787878><size=25>( " + nowCharacter.san.ToString() + " * " + (nowCharacter.sanMul * 100).ToString() + "%</size></color> )";
+
+        //psy
+        panel_state.GetComponentsInChildren<Text>()[2].text = (nowCharacter.psy * nowCharacter.psyMul).ToString();
+      //+"\n<color=#787878><size=25> ( " + nowCharacter.psy.ToString() + " * " + (nowCharacter.psyMul * 100).ToString() + "%</size></color> )";
 
 
+        buffDic.Clear();
         foreach (var buff in nowCharacter.GetComponents<AbstractBuff>())
         {
-            //生成对应的
-            PoolMgr.GetInstance().GetObj(buffPerfab, (obj) =>
+            if (buffDic.ContainsKey(buff.buffName))
             {
-          
-                obj.transform.parent = buffP;
-                obj.transform.localScale = Vector3.one;
-                Sprite buffSprite = Resources.Load<Sprite>("WordImage/Buffs/" + buff.GetType().ToString());
-                if (buffSprite == null)
-                    obj.GetComponent<Image>().sprite = Resources.Load<Sprite>("WordImage/Buffs/Default");
-                else
-                    obj.GetComponent<Image>().sprite = buffSprite;
-            });
+                buffDic[buff.buffName] += 1;
+            }
+            else
+            {   buffDic.Add(buff.buffName, 1);
+                //生成对应的
+                PoolMgr.GetInstance().GetObj(buffPerfab, (obj) =>
+                {
+
+                    obj.transform.parent = buffP;
+                    obj.transform.localScale = Vector3.one;
+                    obj.name = buff.buffName;
+                    Sprite buffSprite = Resources.Load<Sprite>("WordImage/Buffs/" + buff.GetType().ToString());
+                    if (buffSprite == null)
+                        obj.GetComponent<Image>().sprite = Resources.Load<Sprite>("WordImage/Buffs/Default");
+                    else
+                        obj.GetComponent<Image>().sprite = buffSprite;
+                });
+             
+            }
+            buffP.Find(buff.buffName).GetComponentInChildren<TextMeshProUGUI>().text = buffDic[buff.buffName].ToString();
+
+
         }
 
 
@@ -229,6 +244,17 @@ public class CharacterDetail_t : MonoBehaviour
     public void ClickLabel_bg()
     {
         SetPanal(3);
+    }
+
+    public void ClickBuff()
+    {
+      
+    }
+    public void ClickTrait()
+    {
+       
+        var a = Instantiate(infoPerfab, this.transform);
+        a.GetComponent<DetailInfo>().SetInfo(nowCharacter.roleName,nowCharacter.roleInfo);
     }
     #endregion
 }

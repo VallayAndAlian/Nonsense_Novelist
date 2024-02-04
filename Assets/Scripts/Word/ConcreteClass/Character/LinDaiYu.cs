@@ -21,6 +21,7 @@ class LinDaiYu : AbstractCharacter
         mainProperty.Add("精神","远法dps");
         trait=gameObject.AddComponent<Sentimental>();
         roleName = "诗人";
+        roleInfo = "诗人的介绍";
         attackInterval = 2.2f;
         attackDistance = 500;
         brief = "《红楼梦》中一位性格敏感脆弱，却又极有灵性的少女。";

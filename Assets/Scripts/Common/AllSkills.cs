@@ -246,7 +246,7 @@ public static class AllSkills
 
 
         ///<summary>测试词条1</summary>
-        testList1.AddRange(new Type[] { /*typeof(DuXian) ,typeof(BenJieShiDui)*/typeof(FengChan) });
+        testList1.AddRange(new Type[] { /*typeof(DuXian) ,typeof(BenJieShiDui)*/typeof(RenZao) });
 
         ///<summary>测试通过词条2</summary>///
         testList2.AddRange(new Type[] { /*noun*/typeof(BaiShuijing) ,typeof(BeiZhiRuDeJiYi) ,typeof(BenJieShiDui), typeof(BoLiGuaZhui),typeof(ChaBei),
@@ -286,18 +286,18 @@ public static class AllSkills
 
 
 
-        ////测试用，指定某种卡牌↓
+        //测试用，指定某种卡牌↓
 
-        //int _number = UnityEngine.Random.Range(0, testList1.Count);
+        int _number = UnityEngine.Random.Range(0, testList1.Count);
 
-        //return testList1[_number];
+        return testList1[_number];
         #endregion
-        int _number = UnityEngine.Random.Range(0, list_all.Count);
-        while (testList3.Contains(list_all[_number]))
-        {
-            _number = UnityEngine.Random.Range(0, list_all.Count);
-        }
-        return list_all[_number];
+        //int _number = UnityEngine.Random.Range(0, list_all.Count);
+        //while (testList2.Contains(list_all[_number]))
+        //{
+        //    _number = UnityEngine.Random.Range(0, list_all.Count);
+        //}
+        //return list_all[_number];
 
         ////正式
         

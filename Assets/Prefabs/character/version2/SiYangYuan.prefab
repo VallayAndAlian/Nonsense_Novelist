@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 2168264803539121840}
   - component: {fileID: 1887637913}
   - component: {fileID: -2175949600316354066}
+  - component: {fileID: 4537874659185686385}
   m_Layer: 3
   m_Name: SiYangYuan
   m_TagString: character
@@ -414,6 +415,39 @@ MonoBehaviour:
   charaAnim: {fileID: 0}
   energy: 0
   attackA: {fileID: 0}
+--- !u!60 &4537874659185686385
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837959891539934793}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.1388819, y: 7.691275}
+      - {x: -4.8267713, y: 6.109857}
+      - {x: -5.715489, y: 4.438583}
+      - {x: -5.0415754, y: 0.66300434}
+      - {x: -4.1146197, y: -4.8186088}
+      - {x: 1.6148019, y: -4.427552}
+      - {x: 4.7176356, y: -4.2702246}
+      - {x: 4.952453, y: 5.3841977}
 --- !u!1 &4654778993752474264
 GameObject:
   m_ObjectHideFlags: 0

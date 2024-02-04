@@ -37,7 +37,7 @@ abstract public class AbstractCharacter : AbstractWord0
 
     /// <summary>身份名</summary>
     [HideInInspector] public string roleName;
-
+    [HideInInspector] public string roleInfo;
 
 
     #region 血量
