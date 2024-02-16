@@ -9,10 +9,11 @@ class HeartBroken : AbstractVerbs
 
     static public string s_description = "造成2*<sprite name=\"psy\">的精神伤害";
     static public string s_wordName = "心碎";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
-        skillID = 14;
+        skillID = 15;
         wordName = "心碎";
         bookName = BookNameEnum.allBooks;
         description = "造成2*<sprite name=\"psy\">的精神伤害";
@@ -36,9 +37,10 @@ class HeartBroken : AbstractVerbs
     {
         //造成200%的精神伤害
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        aim.CreateFloatWord(
-        skillMode.UseMode(useCharacter, 2 * useCharacter.atk * useCharacter.atkMul * (1 - aim.def / (aim.def + 20)), aim)
-        , FloatWordColor.physics, true);
+        //aim.CreateFloatWord(
+        //skillMode.UseMode(useCharacter, 2 * useCharacter.atk * useCharacter.atkMul * (1 - aim.def / (aim.def + 20)), aim)
+        //, FloatWordColor.physics, true);
+        skillMode.UseMode(AttackType.atk, 2 * useCharacter.atk * useCharacter.atkMul, useCharacter, aim, true, 0);
     }
 
     public override string UseText()

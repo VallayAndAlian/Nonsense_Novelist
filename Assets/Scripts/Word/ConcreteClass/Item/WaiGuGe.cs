@@ -9,6 +9,7 @@ class WaiGuGe : AbstractItems
 {
     static public string s_description = "<sprite name=\"def\">+5";
     static public string s_wordName = "外骨骼";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
@@ -20,7 +21,7 @@ class WaiGuGe : AbstractItems
 
         VoiceEnum = MaterialVoiceEnum.Meat;
 
-        rarity = 0;
+        rarity = 1;
     }
 
     public override void UseItem(AbstractCharacter chara)

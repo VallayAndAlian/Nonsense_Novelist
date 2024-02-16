@@ -10,6 +10,7 @@ public class KeBan : AbstractAdjectives
 {
     static public string s_description = "12s内无法攻击";
     static public string s_wordName = "刻板的";
+    static public int rarity = 1;
     public override void Awake()
     {
         adjID = 3;
@@ -18,7 +19,7 @@ public class KeBan : AbstractAdjectives
         description = "12s内无法攻击";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = 12;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
     }
 

@@ -22,6 +22,8 @@ class Rat : AbstractCharacter
         trait = gameObject.AddComponent<Possessive>();
         roleName = "小偷";
         attackInterval = 1.7f;
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
         attackDistance = 100;
         brief = "肮脏且会偷窃物品的老鼠。";
         description = "肮脏且会偷窃物品的老鼠。";

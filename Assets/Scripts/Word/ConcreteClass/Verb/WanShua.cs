@@ -9,6 +9,7 @@ class WanShua : AbstractVerbs
 {
     static public string s_description = "使友方<color=#dd7d0e>亢奋</color>，持续15s";
     static public string s_wordName = "玩耍";
+    static public int rarity = 3;
     public override void Awake()
     {
         base.Awake();
@@ -20,7 +21,7 @@ class WanShua : AbstractVerbs
         skillMode = gameObject.AddComponent<UpATKMode>();
 
         skillEffectsTime = 15;
-        rarity = 1;
+        rarity = 3;
         needCD = 4;
     }
     override public string[] DetailLable()

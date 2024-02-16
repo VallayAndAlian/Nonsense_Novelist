@@ -2782,7 +2782,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -2823,7 +2823,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &288061803
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6327,6 +6327,8 @@ MonoBehaviour:
   toggle_noun: {fileID: 1281985099}
   toggle_verb: {fileID: 605443099}
   toggle_adj: {fileID: 1415405503}
+  bookButton: {fileID: 0}
+  bookPanel: {fileID: 0}
 --- !u!114 &1251680859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6369,6 +6371,7 @@ MonoBehaviour:
   originalY: 359
   g_btnUpY: 335
   g_originalY: 310
+  wordPrefab: {fileID: 0}
 --- !u!114 &1251680860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7006,7 +7009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e78d7a2f31621348b3edf87a1d0d7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanelBefore: {fileID: 0}
 --- !u!1 &1368771616
 GameObject:
   m_ObjectHideFlags: 0

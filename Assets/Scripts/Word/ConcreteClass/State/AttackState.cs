@@ -36,8 +36,7 @@ namespace AI
             //如果能量已满，则加入使用排队列表
             foreach (AbstractVerbs skill in myState.character.skills)
             {
-
-                //如果能量已满&&有目标,使用技能
+                //如果能量已满&&有目标
                 if (skill.CalculateCD() && skill.skillMode.CalculateAgain(skill.attackDistance, myState.character) != null)
                 {
                     skill.CDZero();
@@ -45,40 +44,49 @@ namespace AI
                 }
             }
 
-    
-
-          
+            //如果现在正在使用技能
             if (nowSkill != null)
             {
                 count += Time.deltaTime;
-                //如果现在正在使用技能，则检测技能是否有使用完毕
-                if (((!(nowSkill.isUsing))&&count>0.04f)||( count>2.2f))
+                //则检测技能是否有使用完毕
+                if (((!(nowSkill.isUsing)) && count > 0.04f) || (count > 2.2f))
                 {
                     canUseSkills.RemoveAt(0);
                     nowSkill = null;
                 }
             }
-            else if((canUseSkills.Count>0) )
+            //如果现在没在使用技能
+            else if ((canUseSkills.Count > 0))
             {
-                print("nowSkill==null:" + (nowSkill == null)+ canUseSkills.Count);
                 //使用一个排队中的技能
                 nowSkill = canUseSkills[0];
                 count = 0;
-                canUseSkills[0].UseVerb(myState.character); 
+                canUseSkills[0].UseVerb(myState.character);
+
                 myState.character.charaAnim.Play(AnimEnum.attack);
                 myState.character.CreateFloatWord(canUseSkills[0].wordName, FloatWordColor.physics, false);
             }
-            else if (attackAtime >= myState.character.attackInterval)
-            { 
             //如果没有技能在使用&&平A冷却完毕
+            else if (attackAtime >= (myState.character.attackInterval/myState.character.attackSpeedPlus))
+            {
+             
                 if (myState.character.AttackA())
                 {
-                     attackAtime = 0;
+                    attackAtime = 0;
+                   
+
+                }
+                else
+                {
+                  
+                    //myState.character.charaAnim.Play(AnimEnum.idle);
                 }
             }
-
-           
-         
+            else
+            {
+               
+               // myState.character.charaAnim.Play(AnimEnum.idle);
+            }
         }
 
         /// <summary>
@@ -103,6 +111,7 @@ namespace AI
         public override void EnterState(MyState0 myState)
         {
             myState.character.charaAnim.Play(AnimEnum.attack);
+            //myState.character.charaAnim.Play(AnimEnum.attack);
         }
 
         public override void Exit(MyState0 myState)

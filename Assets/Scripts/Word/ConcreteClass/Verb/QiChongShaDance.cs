@@ -9,17 +9,18 @@ class QiChongShaDance : AbstractVerbs
 
     static public string s_description = "被动：攻击额外造成20%的精神伤害；\n主动：起舞，攻击所有敌人，持续10s";
     static public string s_wordName = "七重纱之舞";
+    static public int rarity = 4;
     public override void Awake()
     {
         base.Awake();
-        skillID = 6;
+        skillID = 7;
         wordName = "七重纱之舞";
         bookName = BookNameEnum.Salome;
         description = "使自己获得“起舞”";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillMode.attackRange = new SingleSelector();
         skillEffectsTime =10;
-        rarity = 3;
+        rarity = 4;
         needCD=8;
         description = "被动：攻击额外造成20%的精神伤害；\n主动：<color=#dd7d0e>起舞</color>，攻击所有敌人，持续10s";
         if (GetComponent<AbstractCharacter>() != null)

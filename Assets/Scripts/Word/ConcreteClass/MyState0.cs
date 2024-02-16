@@ -50,6 +50,14 @@ namespace AI
         {
             nowState.Action(this);
         }
+
+        public void BulletOut()
+        {
+            character.CreateBullet(aim.gameObject);
+        }
+
+
+
         IEnumerator EveryZeroOne()
         {
             while (true)

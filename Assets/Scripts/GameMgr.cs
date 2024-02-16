@@ -67,12 +67,21 @@ public class GameMgr : MonoSingleton<GameMgr>
             combatStart = new List<Type>();
         foreach (var _i in _list)
         {
-           
+
             if (!combatStart.Contains(_i))
-                combatStart.Add(_i);
+            {
+                _i.GetType();
+                int _r = 1;
+                var count = _i.GetField("rarity").GetValue(null);
+                if (count != null) _r = (int)count;
+
+                for (int i = 0; i < _r; i++)
+                {
+                    combatStart.Add(_i);
+                }
+            }
+                
         }
- 
-        
     }
   
     public void AddBookList(BookNameEnum _book)

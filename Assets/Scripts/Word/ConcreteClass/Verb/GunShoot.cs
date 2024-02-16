@@ -9,10 +9,11 @@ class GunShoot : AbstractVerbs
 {
     static public string s_description = "造成3*<sprite name=\"atk\">的物理伤害";
     static public string s_wordName = "枪击";
+    static public int rarity = 2;
     public override void Awake()
     {
         base.Awake();
-        skillID = 10;
+        skillID = 11;
         wordName = "枪击";
         bookName = BookNameEnum.ElectronicGoal;
         description = "造成3*<sprite name=\"atk\">的物理伤害";
@@ -37,9 +38,10 @@ class GunShoot : AbstractVerbs
     {
         //造成300%伤害的物理攻击
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        aim.CreateFloatWord(
-        skillMode.UseMode(useCharacter, 3*useCharacter.atk *useCharacter.atkMul* (1 - aim.def / (aim.def + 20)), aim)
-        ,FloatWordColor.physics,true);
+        //aim.CreateFloatWord(
+        //skillMode.UseMode(useCharacter, 3*useCharacter.atk *useCharacter.atkMul* (1 - aim.def / (aim.def + 20)), aim)
+        //,FloatWordColor.physics,true);
+        skillMode.UseMode(AttackType.atk, 3 * useCharacter.atk * useCharacter.atkMul, useCharacter, aim, true, 0);
     }
     public override string UseText()
     {

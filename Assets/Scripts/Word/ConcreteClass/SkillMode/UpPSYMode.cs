@@ -11,7 +11,7 @@ class UpPSYMode : AbstractSkillMode
         skillModeID = 2;
         skillModeName = "状态提升";
     }
-    public override float UseMode(AbstractCharacter useCharacter, float value, AbstractCharacter aimCharacter)
+    public override float UseMode(AttackType attackType, float value, AbstractCharacter useCharacter, AbstractCharacter aimCharacter, bool hasFloat, float delay)
     {
         aimCharacter.psy += value;
         return value;

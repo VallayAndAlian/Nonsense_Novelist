@@ -11,11 +11,12 @@ public class HunFei : AbstractAdjectives
 
     static public string s_description = "散射，获得<color=#dd7d0e>虫卵</color>，持续10s";
     static public string s_wordName = "婚飞的";
+    static public int rarity = 2;
 
     public override void Awake()
     {
         base.Awake();
-        adjID = 17;
+        adjID = 19;
         wordName = "婚飞的";
         bookName = BookNameEnum.PHXTwist;
         description = "散射，获得<color=#dd7d0e>虫卵</color>，持续10s";
@@ -23,7 +24,7 @@ public class HunFei : AbstractAdjectives
         skillMode = gameObject.AddComponent<CureMode>();
 
         skillEffectsTime = 10;
-        rarity = 1;
+        rarity = 2;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
         {   

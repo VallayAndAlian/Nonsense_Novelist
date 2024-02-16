@@ -9,18 +9,18 @@ public class XinShenJiDang : AbstractAdjectives,IChongNeng
 {
     static public string s_description = "每次碰撞获得2<sprite name=\"psy\">，并获得<color=#dd7d0e>颠倒</color>";
     static public string s_wordName = "心神激荡的";
-
+    static public int rarity = 2;
     private int psyAdd;
 
     public override void Awake()
     {
-        adjID = 7;
+        adjID = 9;
         wordName = "心神激荡的";
         bookName = BookNameEnum.Salome;
         description = "每次碰撞获得2<sprite name=\"psy\">，并获得<color=#dd7d0e>颠倒</color>";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = 10;
-        rarity = 1;
+        rarity = 2;
         base.Awake();
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<ChongNeng>();

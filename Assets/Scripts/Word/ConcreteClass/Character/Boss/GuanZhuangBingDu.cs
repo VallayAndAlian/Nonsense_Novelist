@@ -48,9 +48,10 @@ using UnityEngine;
             cool = true;
             if (randomEnemy != null)
             {
-               myState.aim.CreateFloatWord(
-                   skillMode.UseMode(myState.character, 10 * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
-                   ,FloatWordColor.physics,false);
+                //myState.aim.CreateFloatWord(
+                //    skillMode.UseMode(myState.character, 10 * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
+                //    ,FloatWordColor.physics,false);
+                skillMode.UseMode(AttackType.atk, 10, myState.character, myState.aim, true, 0);
             }
             else
             {

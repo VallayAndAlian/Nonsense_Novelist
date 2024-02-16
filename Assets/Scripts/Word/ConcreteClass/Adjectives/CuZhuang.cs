@@ -10,17 +10,17 @@ public class CuZhuang : AbstractAdjectives
 {
     static public string s_description = "<sprite name=\"hpmax\">+30";
     static public string s_wordName = "粗壮的";
-
+    static public int rarity = 1;
 
     public override void Awake()
     {
-        adjID = 22;
+        adjID = 24;
         wordName = "粗壮的";
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"hpmax\">+30";
         skillMode = gameObject.AddComponent<CureMode>();
         skillEffectsTime = Mathf.Infinity;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
     }
 

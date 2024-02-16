@@ -31,15 +31,15 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        parent = this.transform.parent;
-        draftUi = parent.parent.GetComponent<DraftUi>();
+       
         if (draftUi == null) Debug.LogWarning("draftUi找不到");
     }
 
     #region 拖拽事件
     public void OnBeginDrag(PointerEventData eventData)
     {
-   
+        parent = this.transform.parent;
+        draftUi = parent.parent.GetComponent<DraftUi>();
         if (!canDrag) return;
         if (!draftUi.IsInkEnough(0)) { canBegin = false; return; }
         else  canBegin = true;
@@ -70,8 +70,9 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (!canDrag) return;
         if (!canBegin) return;
 
-
-      //判断是否在某个ui之上
+        parent = this.transform.parent;
+        draftUi = parent.parent.GetComponent<DraftUi>();
+        //判断是否在某个ui之上
         int changeIndex=-1;
         int index = parent.childCount-1;
 
@@ -134,7 +135,8 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (this.transform.Find("showText").GetComponent<TextMeshProUGUI>().text[0] == '<')
         { hasDelete = true; } else { hasDelete = false; }
 
-
+        parent = this.transform.parent;
+        draftUi = parent.parent.GetComponent<DraftUi>();
         if ((!hasDelete)&&(draftUi.IsInkEnough(1)))
         {
            _text = this.transform.Find("showText").GetComponent<TextMeshProUGUI>().text;

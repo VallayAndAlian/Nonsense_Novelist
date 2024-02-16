@@ -8,6 +8,7 @@ class WritePoem : AbstractVerbs
 {
     static public string s_description = "使友方获得<color=#dd7d0e>诗情</color>，持续10s";
     static public string s_wordName = "赋诗";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();

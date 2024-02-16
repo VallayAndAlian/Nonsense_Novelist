@@ -93,23 +93,24 @@ class FuHuoMode : AbstractSkillMode
     /// </summary>
     /// <param name="value">实际伤害</param>
     /// <param name="character">目标（来自目标数组）</param>
-    public override float UseMode(AbstractCharacter useCharacter, float value, AbstractCharacter aimCharacter)
-    {
-        if (useCharacter != null)//角色使用
-        {
-            float a = Random.Range(0, 100);//暴击抽奖
-            if (a <= useCharacter.criticalChance * 100)//暴击
-            {
-                value *= useCharacter.multipleCriticalStrike;
-                aimCharacter.teXiao.PlayTeXiao("BaoJi");
-                AbstractBook.afterFightText += useCharacter.CriticalText(aimCharacter);
-            }
-             aimCharacter.hp -= value;
-        }
-        else//玩家使用（形容词）
-        {
-            aimCharacter.hp -= (int)value;
-        }
+    public override float UseMode(AttackType attackType, float value, AbstractCharacter useCharacter, AbstractCharacter aimCharacter, bool hasFloat, float delay)
+    { 
+        //if (useCharacter != null)//角色使用
+        //{
+        //    float a = Random.Range(0, 100);//暴击抽奖
+        //    if (a <= useCharacter.criticalChance * 100)//暴击
+        //    {
+        //        value *= useCharacter.multipleCriticalStrike;
+        //        aimCharacter.teXiao.PlayTeXiao("BaoJi");
+        //        AbstractBook.afterFightText += useCharacter.CriticalText(aimCharacter);
+        //    }
+        //     aimCharacter.hp -= value;
+        //}
+        //else//玩家使用（形容词）
+        //{
+        //    aimCharacter.hp -= (int)value;
+        //}
+
 
         return value;
     }

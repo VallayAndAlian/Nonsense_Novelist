@@ -8,6 +8,7 @@ class FuTouAxe : AbstractItems
 {
     static public string s_description = "<sprite name=\"atk\">+1";
     static public string s_wordName = "钝斧头";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
@@ -19,7 +20,7 @@ class FuTouAxe : AbstractItems
  
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
-        rarity = 0;
+        rarity = 1;
     }
 
     public override void UseItem(AbstractCharacter chara)

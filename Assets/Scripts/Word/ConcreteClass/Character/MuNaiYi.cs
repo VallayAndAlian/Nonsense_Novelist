@@ -23,6 +23,8 @@ class MuNaiYi : AbstractCharacter
         trait=gameObject.AddComponent<Vicious>();
         roleName = "亡灵";
         attackInterval = 2.2f;
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
         attackDistance = 300;
         reLifes++;//复活技能
         brief = "";

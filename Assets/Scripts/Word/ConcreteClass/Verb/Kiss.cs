@@ -8,10 +8,11 @@ class Kiss : AbstractVerbs
 {
     static public string s_description = "使敌人受到3*<sprite name=\"psy\">的精神伤害，并被<color=#dd7d0e>俘获</color>10s";
     static public string s_wordName = "亲吻";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
-        skillID = 7;
+        skillID = 8;
         wordName = "亲吻";
         bookName = BookNameEnum.Salome;
         description = "使敌人受到3*<sprite name=\"psy\">的精神伤害，并被<color=#dd7d0e>俘获</color>10s";
@@ -42,9 +43,10 @@ class Kiss : AbstractVerbs
     public override void BasicAbility(AbstractCharacter useCharacter)
     {
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        aim.CreateFloatWord(
-        skillMode.UseMode(useCharacter, 3 * useCharacter.psy * useCharacter.psyMul * (1 - aim.san / (aim.san + 20)), aim)
-        ,FloatWordColor.psychic,true);
+        //aim.CreateFloatWord(
+        //skillMode.UseMode(useCharacter, 3 * useCharacter.psy * useCharacter.psyMul * (1 - aim.san / (aim.san + 20)), aim)
+        //,FloatWordColor.psychic,true);
+        skillMode.UseMode(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul, useCharacter, aim, true, 0);
     }
     public override string UseText()
     {

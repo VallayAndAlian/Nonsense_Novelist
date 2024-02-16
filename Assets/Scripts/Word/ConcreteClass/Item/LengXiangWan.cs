@@ -8,13 +8,14 @@ class LengXiangWan : AbstractItems
 {
     static public string s_description = "恢复+3，获得时清除负面状态";
     static public string s_wordName = "冷香丸";
+    static public int rarity =2;
     public override void Awake()
     {
         base.Awake();
         itemID = 2;
         wordName = "冷香丸";
         bookName = BookNameEnum.HongLouMeng;
-        rarity = 1;
+        rarity = 2;
 
         VoiceEnum = MaterialVoiceEnum.materialNull;
 

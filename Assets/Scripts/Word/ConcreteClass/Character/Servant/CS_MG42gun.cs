@@ -70,9 +70,10 @@ public class CS_MG42gun : ServantAbstract
                 myState.character.source.Play();
             }
             myState.character.charaAnim.Play(AnimEnum.attack);
-            myState.aim.CreateFloatWord(
-                attackA.UseMode(myState.character, myState.character.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
-                , FloatWordColor.physics, false);
+            //myState.aim.CreateFloatWord(
+            //    attackA.UseMode(myState.character, myState.character.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
+            //    , FloatWordColor.physics, false);
+            attackA.UseMode(AttackType.atk, myState.character.atk, myState.character, myState.aim, true, 0);
             attackCountNow += 1;
             return true;
         }

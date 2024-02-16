@@ -8,6 +8,8 @@ class BoLiGuaZhui : AbstractItems
 {
     static public string s_description = "<sprite name=\"san\">+3";
     static public string s_wordName = "玻璃挂坠";
+    static public int rarity = 1;
+
     public override void Awake()
     {
         base.Awake();
@@ -18,7 +20,7 @@ class BoLiGuaZhui : AbstractItems
 
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
-        rarity = 0;
+        rarity = 1;
     }
 
     public override void UseItem(AbstractCharacter chara)

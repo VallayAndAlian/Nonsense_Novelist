@@ -8,10 +8,11 @@ class ToBigger : AbstractVerbs
 {
     static public string s_description = "<sprite name=\"hpmax\">+20";
     static public string s_wordName = "变大";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
-        skillID = 16;
+        skillID = 17;
         wordName = "变大";
         bookName = BookNameEnum.allBooks;
         description = " <sprite name=\"hpmax\">+20";

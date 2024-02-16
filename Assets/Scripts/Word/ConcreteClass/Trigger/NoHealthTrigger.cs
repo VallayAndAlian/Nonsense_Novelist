@@ -25,7 +25,8 @@ namespace AI
                 
                 if (myState.character.reLifes > 0)//复活
                 {
-                    myState.character.hp = myState.character.maxHp;
+                    ReLifeEffect(myState);
+                  
 
                     //删除relife效果
                     if (myState.character.GetComponent<ReLife>() != null)
@@ -46,13 +47,33 @@ namespace AI
                     return false;
                 }
                 else//死亡
-                { 
+                {
+                    //如果没有复活buff，但有日轮挂坠，复活
+                    if (GetComponent<RiLunGuaZhui>() != null)
+                    {
+                        ReLifeEffect(myState);
+                        Destroy(GetComponent<RiLunGuaZhui>());
+                    }
                       return true;
                 }
                   
             }
             else//hp>0
                 return false;
+        }
+
+
+        /// <summary>
+        ///  部分词条有复活时强化的效果。写在这。
+        /// </summary>
+        void ReLifeEffect(MyState0 myState)
+        {
+            myState.character.hp = myState.character.maxHp;
+            //荷鲁斯之眼
+            if (myState.character.GetComponent<herusizhiyan>()!=null)
+            {
+                myState.character.atk += 1;
+            }
         }
     }
 }

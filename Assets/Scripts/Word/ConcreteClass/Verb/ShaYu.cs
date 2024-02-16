@@ -8,6 +8,7 @@ class ShaYu : AbstractVerbs
 {
     static public string s_description = "治疗10+100%<sprite name=\"san\">，消除所有负面状态";
     static public string s_wordName = "沙浴";
+    static public int rarity = 2;
     public override void Awake()
     {
         base.Awake();
@@ -19,7 +20,7 @@ class ShaYu : AbstractVerbs
         skillMode = gameObject.AddComponent<CureMode>();
 
         skillEffectsTime = Mathf.Infinity;
-        rarity = 1;
+        rarity = 2;
         needCD = 4;
     }
 
@@ -40,9 +41,10 @@ class ShaYu : AbstractVerbs
     {
         //治疗10+100%意志
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        aim.CreateFloatWord(
-        skillMode.UseMode(useCharacter, 10+ useCharacter.san*useCharacter.sanMul*1, aim)
-        , FloatWordColor.heal, true);
+        //aim.CreateFloatWord(
+        //skillMode.UseMode(useCharacter, 10+ useCharacter.san*useCharacter.sanMul*1, aim)
+        //, FloatWordColor.heal, true);
+        skillMode.UseMode(AttackType.heal, 10 + useCharacter.san * useCharacter.sanMul * 1, useCharacter, aim, true, 0);
 
         var _buffs = character.GetComponents<AbstractBuff>();
         foreach (var _buff in _buffs)

@@ -10,15 +10,16 @@ public class LuoYingBinFen : AbstractAdjectives
 
     static public string s_description = "获得<color=#dd7d0e>花瓣</color>";
     static public string s_wordName = "落英缤纷的";
+    static public int rarity = 1;
     public override void Awake()
     {
-        adjID = 21;
+        adjID = 23;
         wordName = "落英缤纷的";
         bookName = BookNameEnum.allBooks;
         description = "获得<color=#dd7d0e>花瓣</color>";
         skillMode = gameObject.AddComponent<DamageMode>();
         skillEffectsTime = Mathf.Infinity;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))

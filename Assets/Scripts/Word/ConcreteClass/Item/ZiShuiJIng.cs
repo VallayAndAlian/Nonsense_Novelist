@@ -8,6 +8,7 @@ class ZiShuiJIng: AbstractItems,IJiHuo
 {
     static public string s_description = "未激活，<sprite name=\"psy\">+1；\n激活，<sprite name=\"psy\"> + 3，获得<color=#dd7d0e>共振</color>";
     static public string s_wordName = "紫水晶";
+    static public int rarity =2;
     /// <summary>是否激活共振 </summary>
     private bool jiHuo;
     private float record;
@@ -20,7 +21,7 @@ class ZiShuiJIng: AbstractItems,IJiHuo
         bookName = BookNameEnum.CrystalEnergy;
         description = "未激活，<sprite name=\"psy\">+1；\n激活，<sprite name=\"psy\"> + 3，获得<color=#dd7d0e>共振</color>";
         VoiceEnum = MaterialVoiceEnum.Ceram;
-        rarity = 1;
+        rarity = 2;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<JiHuo>();

@@ -4,12 +4,21 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+public enum AttackType
+{ 
+    psy,//精神
+    atk,//物理
+    dir,//真实
+    heal//治愈
+}
 
 //[RequireComponent(typeof(CharaAnim))]
 //[RequireComponent(typeof(AI.MyState0))]
 //[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(AudioSource))]
+
 
 /// <summary>
 /// 抽象角色类（启用，会在Awake自动关上，需要外部脚本再启用）
@@ -39,7 +48,7 @@ abstract public class AbstractCharacter : AbstractWord0
     [HideInInspector] public string roleName;
     [HideInInspector] public string roleInfo;
 
-
+ 
     #region 血量
 
     private Slider hpSlider;
@@ -78,6 +87,103 @@ abstract public class AbstractCharacter : AbstractWord0
         {
             MaxHpMul = value;
             HPSetting();
+        }
+    }
+
+
+    IEnumerator DelayAttack(float _delayTime, float _value, AttackType _at, bool _hasFloat,AbstractCharacter _whoDid)
+    {
+        yield return new WaitForSeconds(_delayTime);
+        if (_hasFloat)
+        {
+            if(_at==AttackType.atk) CreateFloatWord(_value, FloatWordColor.physics, true);
+            if (_at == AttackType.psy) CreateFloatWord(_value, FloatWordColor.psychic, true);
+            if (_at == AttackType.dir) CreateFloatWord(_value, FloatWordColor.physics, true);
+        }
+        hp -= _value;
+        //执行外部委托
+        if (event_BeAttack != null)
+            event_BeAttack(_value, _whoDid);
+    }
+
+
+
+
+    //外部可以增加每秒检测的委托入口
+    [HideInInspector] public delegate void Event_BeAttack(float _damage,AbstractCharacter _whoDid);
+    [HideInInspector] public Event_BeAttack event_BeAttack;
+
+    /// <summary>
+    /// 角色收到攻击时计算伤害
+    /// </summary>
+    /// <param name="_at"></param>
+    /// <param name="_value">使用者的atk、psy或者直接伤害的数值</param>
+    public void BeAttack(AttackType _at,float _value,bool _hasFloat,float _delayTime,AbstractCharacter _whoDid)
+    {
+        //计算伤害
+        float value = 0;
+        switch (_at)
+        {
+            case AttackType.atk: //物理
+                {
+                    value = (_value * 5) / (def + 5);
+                }
+                break;
+            case AttackType.psy: //精神
+                {
+                    value = (_value * 5) / (san + 5);
+                } break;
+            case AttackType.dir: //真实
+                {
+                    value = _value;
+                } break;
+        }
+        //优先随从受击
+        if (servants.Count > 0)
+        {
+            servants[0].GetComponent<AbstractCharacter>().hp -= value;
+        }
+        //本身受击
+        else
+        {
+            if (_delayTime == 0)
+            {//如果没有延时
+                hp -= _value;
+                if (_hasFloat)
+                {
+                    if (_at == AttackType.atk) CreateFloatWord(_value, FloatWordColor.physics, true);
+                    if (_at == AttackType.psy) CreateFloatWord(_value, FloatWordColor.psychic, true);
+                    if (_at == AttackType.dir) CreateFloatWord(_value, FloatWordColor.physics, true);
+                }
+                //执行外部委托
+                if(event_BeAttack!=null)
+                    event_BeAttack(_value, _whoDid);
+            }
+            else
+            {//如果延时，则携程
+                StartCoroutine(DelayAttack(_delayTime, _value,_at,_hasFloat, _whoDid));
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// 角色收到攻击时计算伤害
+    /// </summary>
+    /// <param name="_at"></param>
+    /// <param name="_value">使用者的atk、psy或者直接伤害的数值</param>
+    public void BeCure(  float _value, bool _hasFloat, float _delayTime)
+    {
+        //无延时
+        if (_delayTime == 0)
+        {
+             if (_hasFloat) CreateFloatWord(_value, FloatWordColor.heal, true);
+            hp += _value;
+        }
+        else 
+        {
+            //如果延时，则携程
+            StartCoroutine(DelayAttack(_delayTime, _value, AttackType.heal, _hasFloat,null));
         }
     }
 
@@ -313,6 +419,7 @@ abstract public class AbstractCharacter : AbstractWord0
     }
 
 
+    
     /// <summary>
     /// 判断该角色是否有该buff
     /// </summary>
@@ -416,6 +523,8 @@ abstract public class AbstractCharacter : AbstractWord0
 
     ///<summary>这个角色身上可以挂载的最大随从数 </summary>
     private int maxServantsCount = 3;
+
+
     /// <summary>
     /// 增加随从时调用
     /// </summary>
@@ -454,6 +563,54 @@ abstract public class AbstractCharacter : AbstractWord0
         ServantRefresh();
     }
 
+
+    /// <summary>
+    /// 随机生成1个混养笼以外的随从
+    /// </summary>
+    public void AddRandomServant()
+    {
+        //为角色增加一个随从
+        var _random = UnityEngine.Random.Range(0, 7);
+        if (_random == 0)
+            this.AddServant("CS_BenJieShiDui");
+        if (_random == 1)
+            this.AddServant("CS_YiZhiWeiShiQi");
+        if (_random == 2)
+            this.AddServant("CS_GongYi");
+        if (_random == 3)
+            this.AddServant("CS_DuMoGu");
+        if (_random == 4)
+            this.AddServant("CS_Bing");
+        if (_random == 5)
+            this.AddServant("CS_MG42gun");
+        if (_random == 6)
+            this.AddServant("CS_Mao");
+
+
+    }
+
+
+    /// <summary>
+    ///当前的所有仆从合成混养笼。数量不限定。
+    /// </summary>
+    public void ServantMerge()
+    {
+        var _s = new ServantAbstract[servants.Count];
+        for (int i=servants.Count-1;i>=0;i--)
+        {
+            _s[i] = servants[i].GetComponent<ServantAbstract>();
+            DeleteServant(servants[i]);
+        }
+
+        if (servants.Count != 0) Debug.Log("servants.Count!=0,混养笼出错");
+
+        AddServant("CS_HunYangLong");
+        for (int i = 0; i < _s.Length; i++)
+        {
+            this.GetComponent<CS_HunYangLong>().SetInitNumber(_s[i]);
+        }
+    
+    }
     /// <summary>
     /// 删除随从时调用
     /// </summary>
@@ -461,6 +618,7 @@ abstract public class AbstractCharacter : AbstractWord0
     {
         if (servants.Contains(_a))
             servants.Remove(_a);
+        Destroy(_a);
         ServantRefresh();
     }
     void ServantRefresh()
@@ -494,6 +652,7 @@ abstract public class AbstractCharacter : AbstractWord0
 
     /// <summary>攻击间隔(检定攻击的次序，以及每两次攻击间隔时长)</summary>
     public float attackInterval = 2.2f;
+    public float attackSpeedPlus = 1;
 
     /// <summary>站位</summary>
     public Situation situation;
@@ -551,8 +710,28 @@ abstract public class AbstractCharacter : AbstractWord0
 
         if (myState.aim != null)
         {
+            print("AttackTimes:" + AttackTimes); 
+            for (int i = 1; i <= AttackTimes; i++)
+            {
+                AttackAOnce(AttackTimes);
 
-            myState.character.CreateBullet(myState.aim.gameObject);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    //攻击段数
+    public int AttackTimes=1;
+
+
+    /// <summary>
+    /// i是攻击的段数
+    /// </summary>
+    /// <param name="i"></param>
+    private void AttackAOnce(int i)
+    {
+         //myState.character.CreateBullet(myState.aim.gameObject);
             if (myState.character.aAttackAudio != null)
             {
                 myState.character.source.clip = myState.character.aAttackAudio;
@@ -560,20 +739,20 @@ abstract public class AbstractCharacter : AbstractWord0
             }
             //攻击
             myState.character.charaAnim.Play(AnimEnum.attack);
-      
-            myState.aim.CreateFloatWord(
-                attackA.UseMode(myState.character, myState.character.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
-                , FloatWordColor.physics, false);
 
-            //执行外部委托
-            if (event_AttackA != null)
+            attackA.UseMode(AttackType.atk, myState.character.atk/i, myState.character, myState.aim, true, 0);
+        //myState.aim.CreateFloatWord(
+        //    attackA.UseMode(myState.character, myState.character.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
+        //    , FloatWordColor.physics, false);
+        print("sssssssss");
+        //执行外部委托
+        if (event_AttackA != null)
                 event_AttackA();
 
             //
-            return true;
-        }
-        return false;
     }
+
+
 
 
     /// <summary>发出子弹 </summary>

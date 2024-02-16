@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 class ChaBei : AbstractItems
 {
-    static public string s_description = "精神+2";
+    static public string s_description = "<sprite name=\"psy\">+2";
     static public string s_wordName = "茶杯";
-
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
@@ -16,7 +16,7 @@ class ChaBei : AbstractItems
         itemID = 1;
         wordName = "茶杯";
         bookName = BookNameEnum.HongLouMeng;
-        rarity = 0;
+        rarity = 1;
 
         VoiceEnum = MaterialVoiceEnum.Ceram;
 

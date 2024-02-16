@@ -9,23 +9,17 @@ using UnityEngine.SceneManagement;
 public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
 
-    [Header("【手动】各词种对应的图")]
-
-    [Tooltip("动词对应的图")]public Sprite spriteVerb;
-    [Tooltip("名词对应的图")]public Sprite spriteNoun;
-    [Tooltip("形容词对应的图")]public Sprite spriteAdj;
-
-
-
+    [Header("【手动】对应的碰撞类型")]
+    public TextMeshProUGUI textCollider;
 
     [Header("【手动】词条信息对应的组件")]
 
     [Tooltip("卡牌底图")]public Image wordkindBg;
 
     [Tooltip("卡牌种类文字")]public Text wordkindText;
-    private string textVerb = "动词";
-    private string textNoun = "名词";
-    private string textAdj = "形容词";
+    private string textVerb = "动";
+    private string textNoun = "名";
+    private string textAdj = "形";
 
     [Tooltip("显示CD的文字")]public Text needCD;
     [Tooltip("词条名称")]public Text title;
@@ -67,22 +61,20 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
         {
             case WordKindEnum.adj:
                 {
-                    wordkindBg.sprite = spriteAdj;
-                    wordkindBg.SetNativeSize();
+                    
                     wordkindText.text = textAdj;
 
-                    resName = resAdrNoun + "adj_" + ((AbstractAdjectives)word).adjID;
+                    resName = resAdrAdj + "adj_" + ((AbstractAdjectives)word).adjID;
                     tepSprite = Resources.Load<Sprite>(resName);
                     if (tepSprite == null)
-                        wordImage.sprite = defaultWordImage;
+                    { wordImage.sprite = defaultWordImage;}
                     else
                         wordImage.sprite = Resources.Load<Sprite>(resName);
                 }
                 break;
             case WordKindEnum.noun:
                 {
-                    wordkindBg.sprite = spriteNoun;
-                    wordkindBg.SetNativeSize();
+        
                     wordkindText.text = textNoun;
 
                     resName = resAdrNoun + "noun_" + ((AbstractItems)word).itemID;
@@ -95,11 +87,10 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
                 break;
             case WordKindEnum.verb:
                 {
-                    wordkindBg.sprite = spriteVerb;
-                    wordkindBg.SetNativeSize();
+             
                     wordkindText.text = textVerb;
 
-                    resName = resAdrNoun + "verb_" + ((AbstractVerbs)word).skillID;
+                    resName = resAdrVerb + "v_" + ((AbstractVerbs)word).skillID;
                     tepSprite = Resources.Load<Sprite>(resName);
                     if (tepSprite == null)
                         wordImage.sprite = defaultWordImage;
@@ -109,18 +100,20 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
                 break;
         }
 
-        title.text = word.wordName;
-        description.text=word.description;
 
-        if(word.wordKind==WordKindEnum.verb)
+        description.text = word.description;
+
+        if (word.wordKind == WordKindEnum.verb)
         {
-            energy.enabled= true;
+            title.text = "      " + word.wordName;
+  
             needCD.text =/*word.wordName*/((AbstractVerbs)word).needCD.ToString();
-            
+
         }
         else
         {
-            energy.enabled= false;
+            title.text = word.wordName;
+            energy.gameObject.SetActive(false);
         }
 
         if (isDetail)
@@ -128,7 +121,25 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
             ReturnDetailInfo();
             ChangeDetailInfo();
         }
+
+        //碰撞词条
+        textCollider.text = "";
+        var _s = nowWord.DetailLable();
+        int _once = 0;
+        if (_s == null) { }
+        else
+        {
+            for (int i = 0; (_once == 0) && i < _s.Length; i++)
+            {
+                if (_s[i] == "JiHuo") { textCollider.text = "激活"; _once = 1; }
+                if (_s[i] == "ChongNeng") { textCollider.text = "充能"; _once = 1; }
+                if (_s[i] == "SanShe") { textCollider.text = "散射"; _once = 1; }
+                if (_s[i] == "ChuanBoCollision") { textCollider.text = "传播"; _once = 1; }
+                if (_s[i] == "XuWu_YunSu") { textCollider.text = "虚无"; _once = 1; }
+            }
+        }
        
+        
     }
     public void SetIsDetail(bool _bool)
     {

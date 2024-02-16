@@ -9,6 +9,7 @@ public class ShenYouHuanJing : AbstractAdjectives
 {
     static public string s_description = " <sprite name=\"atk\">和 <sprite name=\"psy\">交换10s";
     static public string s_wordName = "神游幻境的";
+    static public int rarity = 2;
     public override void Awake()
     {
         adjID = 2;
@@ -17,7 +18,7 @@ public class ShenYouHuanJing : AbstractAdjectives
         description = " <sprite name=\"atk\">和 <sprite name=\"psy\">交换10s";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = 10;
-        rarity = 1;
+        rarity = 2;
         
         base.Awake();
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))

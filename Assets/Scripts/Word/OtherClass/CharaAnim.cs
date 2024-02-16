@@ -26,7 +26,8 @@ public class CharaAnim : MonoBehaviour
     {
         newAnimName = Enum.GetName(typeof(AnimEnum),newAnimEnum);
         currentAnimName = Enum.GetName(typeof(AnimEnum), currentAnim);
-        anim.SetBool(currentAnimName, false);        anim.SetBool(newAnimName, true);
+        anim.SetBool(currentAnimName, false); 
+        anim.SetBool(newAnimName, true);
         currentAnim = newAnimEnum;
     }
     /// <summary>

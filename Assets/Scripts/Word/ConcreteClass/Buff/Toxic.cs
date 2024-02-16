@@ -32,7 +32,8 @@ public class Toxic : AbstractBuff
         if(nowTime>1)
         {
             nowTime= 0;
-            damageMode.UseMode((useCharacter!=null?useCharacter:chara), 5* (1 - chara.def / (chara.def + 20)), chara);
+            damageMode.UseMode(AttackType.atk, 5, useCharacter != null ? useCharacter : chara, chara, true, 0);
+            
         }
     }
 }

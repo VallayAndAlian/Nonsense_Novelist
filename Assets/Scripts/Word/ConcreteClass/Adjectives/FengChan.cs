@@ -8,15 +8,16 @@ using UnityEngine;
 /// </summary>
 public class FengChan : AbstractAdjectives
 {
-    static public string s_description = " < sprite name=\"hpmax\">+30";
+    static public string s_description = " < sprite name=\"hpmax\">+20";
     static public string s_wordName = "丰产的";
+    static public int rarity = 1;
     public override void Awake()
     {
         
-        adjID = 6;
+        adjID = 8;
         wordName = "丰产的";
         bookName = BookNameEnum.EgyptMyth;
-        description = "<sprite name=\"hpmax\">+30";
+        description = "<sprite name=\"hpmax\">+20";
         skillMode = gameObject.AddComponent<CureMode>();
         skillEffectsTime = Mathf.Infinity;
         rarity = 1;

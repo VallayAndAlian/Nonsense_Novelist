@@ -104,7 +104,9 @@ public static class AllSkills
     /// <summary>6个初始词条</summary>
     public static Type[] absWords = new Type[6];
 
-
+    /// <summary>测试词条</summary>
+    public static List<Type> BadBuff = new List<Type>();
+    public static List<Type> GoodBuff = new List<Type>();
 
     /// <summary>测试词条</summary>
     public static List<Type> testList1 = new List<Type>();
@@ -124,15 +126,19 @@ public static class AllSkills
         list_adj.AddRange(new Type[] {  typeof(BuXiu), typeof(ChaFanWuXin), typeof(CuZhuang), typeof(HunFei),
            typeof(FengChan),typeof(FengLi) ,typeof(GuoMin),typeof(HaoZhan) ,typeof(HeWuRan),
         typeof(JianRuPanShi),typeof(KeBan) ,typeof(LuoYingBinFen) ,typeof(QingXi),typeof(QuicklyGrowing),
-        typeof(RenZao) ,typeof(ShenHuanFeiYan),typeof(ShenYouHuanJing) ,typeof(XinShenJiDang),//未测试通过：typeof(HunQianMengYing),,typeof(LuanLun)
-            typeof(YouAnQuanGan),typeof(ZhongDu),})//缺少：混合的/拥挤的/隔离的/社会化的/野生的
+        typeof(RenZao) ,typeof(ShenHuanFeiYan),typeof(ShenYouHuanJing) ,typeof(XinShenJiDang),
+        //未测试通过：typeof(HunQianMengYing),typeof(LuanLun),typeof(HunHe),
+            typeof(YouAnQuanGan),typeof(ZhongDu),typeof(SheHuiHua),typeof(GeLi),typeof(YongJi),typeof(YeSheng)})
+            //缺少的已补完
                                                    ;
         //添加名词词条
-        list_noun.AddRange(new Type[] { typeof(WaiGuGe),  typeof(LengXiangWan), typeof(Nexus_6Arm),
-            typeof(ZiShuiJIng) ,typeof(RiLunGuaZhui),//未测试通过：typeof(DuXian),typeof(JiShengChong),
+        list_noun.AddRange(new Type[] { typeof(WaiGuGe),  typeof(LengXiangWan),
+            typeof(ZiShuiJIng) ,typeof(RiLunGuaZhui),
+            //未测试通过：typeof(DuXian),typeof(JiShengChong),typeof(XianZhiHead),typeof(TongLingBaoyu),typeof(SheQunFengRong), typeof(Nexus_6Arm), typeof(herusizhiyan),
             typeof(ChaBei),typeof(HuYanShi) ,typeof(BaiShuijing) ,typeof(FuTouAxe),typeof(BoLiGuaZhui),
-            typeof(herusizhiyan),typeof(MeiGuiShiYing) ,typeof(BeiZhiRuDeJiYi),typeof(QiGuaiShiXiang),
-            typeof(HouZiDian),typeof(VolumeProduction) ,typeof(XianZhiHead),//缺少：通灵宝玉、食物丰容、社群丰容、恶性肿瘤
+           typeof(MeiGuiShiYing) ,typeof(BeiZhiRuDeJiYi),typeof(QiGuaiShiXiang),
+            typeof(HouZiDian),typeof(VolumeProduction) ,typeof(ShiWuFengRong),typeof(EXingZhongLiu)
+            //缺少的已补完
         });
         //全部
         list_all.AddRange(list_verb);
@@ -156,7 +162,7 @@ public static class AllSkills
         //动物园添加形容词词条
         animalList_adj.AddRange(new Type[] { typeof(KeBan), typeof(YouAnQuanGan) });
         //动物园添加名词词条
-        animalList_noun.AddRange(new Type[] { typeof(BenJieShiDui), typeof(YiZhiWeiShiQi) });
+        animalList_noun.AddRange(new Type[] { typeof(ShiWuFengRong), typeof(YiZhiWeiShiQi_x) });
         //动物园全部词条
         animalList_all.AddRange(animalList_verb);
         animalList_all.AddRange(animalList_adj);
@@ -245,11 +251,17 @@ public static class AllSkills
         combatList_all.AddRange(shaLeMeiList_all);
 
 
+        //手动增加好坏词条
+        BadBuff.AddRange(new Type[] { });
+        GoodBuff.AddRange(new Type[] { });
+
+
+
         ///<summary>测试词条1</summary>
-        testList1.AddRange(new Type[] { /*typeof(DuXian) ,typeof(BenJieShiDui)*/typeof(RenZao) });
+        testList1.AddRange(new Type[] { /*typeof(DuXian) ,typeof(BenJieShiDui)*/typeof(HaoZhan) });
 
         ///<summary>测试通过词条2</summary>///
-        testList2.AddRange(new Type[] { /*noun*/typeof(BaiShuijing) ,typeof(BeiZhiRuDeJiYi) ,typeof(BenJieShiDui), typeof(BoLiGuaZhui),typeof(ChaBei),
+        testList2.AddRange(new Type[] { /*noun*/typeof(BaiShuijing) ,typeof(BeiZhiRuDeJiYi) ,typeof(ShiWuFengRong), typeof(BoLiGuaZhui),typeof(ChaBei),
         typeof(EXingZhongLiu),typeof(FuTouAxe),typeof(herusizhiyan),typeof(HouZiDian),typeof(HuYanShi),typeof(MeiGuiShiYing),typeof(Nexus_6Arm),
         typeof(QiGuaiShiXiang),typeof(VolumeProduction),typeof(WaiGuGe),typeof(XianZhiHead),typeof(ZiShuiJIng),
         /*adj*/typeof(ChaFanWuXin),typeof(CuZhuang),typeof(FengChan),typeof(FengLi),typeof(HaoZhan),typeof(HeWuRan),typeof(HunFei),
@@ -284,14 +296,16 @@ public static class AllSkills
 
         //return list_all[number];
 
-
+       #endregion
 
         //测试用，指定某种卡牌↓
 
-        int _number = UnityEngine.Random.Range(0, testList1.Count);
+        int _number = UnityEngine.Random.Range(0, list_all.Count);
 
-        return testList1[_number];
-        #endregion
+        return list_all[_number];
+       
+        
+        //测试用，所有可用卡牌
         //int _number = UnityEngine.Random.Range(0, list_all.Count);
         //while (testList2.Contains(list_all[_number]))
         //{

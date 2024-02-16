@@ -9,15 +9,16 @@ public class QingXi : AbstractAdjectives
 {
     static public string s_description = "+12<sprite name=\"san\">，持续20s";
     static public string s_wordName = "清晰的";
+    static public int rarity = 1;
     public override void Awake()
     {
-        adjID = 10;
+        adjID = 12;
         wordName = "清晰的";
         bookName = BookNameEnum.CrystalEnergy;
         description = "+12<sprite name=\"san\">，持续20s";
         skillMode = gameObject.AddComponent<UpPSYMode>();
         skillEffectsTime = 20;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
     }
 
@@ -31,7 +32,11 @@ public class QingXi : AbstractAdjectives
         aimCharacter.san += 12;
     }
 
-    
+    protected override void Update()
+    {
+        base.Update();
+
+    }
 
     public override void End()
     {

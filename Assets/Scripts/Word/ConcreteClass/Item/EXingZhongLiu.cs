@@ -8,6 +8,7 @@ class EXingZhongLiu : AbstractItems,IChongNeng
 {
     static public string s_description = "每次弹射<sprite name=\"hpmax\">-5%";
     static public string s_wordName = "恶性肿瘤";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();

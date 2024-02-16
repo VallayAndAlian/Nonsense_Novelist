@@ -34,9 +34,10 @@ class CHOOHShoot_x : AbstractVerbs
     public override void BasicAbility(AbstractCharacter useCharacter)
     {
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        aim.CreateFloatWord(
-        skillMode.UseMode(useCharacter, useCharacter.atk*0.25f * (1 - aim.def / (aim.def + 20)), aim)
-        ,FloatWordColor.physics,true);
+        //aim.CreateFloatWord(
+        //skillMode.UseMode(useCharacter, useCharacter.atk*0.25f * (1 - aim.def / (aim.def + 20)), aim)
+        //,FloatWordColor.physics,true);
+        skillMode.UseMode(AttackType.atk, useCharacter.atk * 0.25f, useCharacter, aim, true, 0);
     }
 
     public override string UseText()

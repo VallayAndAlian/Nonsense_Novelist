@@ -10,12 +10,14 @@ using UnityEngine.UI;
 public class DraftUi : MonoBehaviour
 {
     //文本内容
-    List<Text> content;
-
+    List<string> content=new List<string>();
+    public static DraftUi instance;
     // 不换行的的空格符
     public static readonly string NO_BREAKING_SPACE = "\u00A0";//"\u3000";
 
-
+    private string sentenseAdr= "UI/draftSentence";
+    private GameObject sentenseObj;
+    private Transform parent;
     bool select = false;
 
     //墨水
@@ -33,9 +35,29 @@ public class DraftUi : MonoBehaviour
     int oriTextLen;
     bool textHasChange;
 
+    //转行计算
+    float sizeWidth;
+    float sizeFont;
+
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            if (instance != this) Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {
+        InitContent();
+        sentenseObj = ResMgr.GetInstance().Load<GameObject>(sentenseAdr);
+        parent = this.transform.Find("Panel");
+
         foreach (var _a in GetComponentsInChildren<TMP_InputField>())
         {
             _a.text = "";
@@ -53,6 +75,11 @@ public class DraftUi : MonoBehaviour
         //初始化设定
         ChangeInkNum();
         ClickInk(-1);
+
+
+        //预制体的大小和字号大小，计算转行用
+        sizeWidth = (sentenseObj.transform.Find("showText").GetComponent<RectTransform>().rect.width);
+        sizeFont = (sentenseObj.transform.Find("showText").GetComponent<TextMeshProUGUI>().fontSize);
     }
 
     #region 开启草稿本的外部界面
@@ -68,10 +95,38 @@ public class DraftUi : MonoBehaviour
         this.gameObject.SetActive(false);
         //InitDraft();
     }
+
+ 
     void InitDraft()
     {
         ChangeInkNum();
         ClickInk(-1);
+
+
+        //生成句子,绑定组件
+        for (int i = 0; i < content.Count; i++)
+        {
+            PoolMgr.GetInstance().GetObj(sentenseObj, (obj) =>
+             {
+                 var _showText = obj.transform.Find("showText").GetComponent<TextMeshProUGUI>();
+                 var _inputField = obj.GetComponent<TMP_InputField>();
+
+                 _showText.text = content[i];
+                 _inputField.onValueChanged.AddListener((obj) => { CheckContent(_inputField); });
+                 _inputField.onSelect.AddListener((obj)=> { OpenEditText(_inputField); }); 
+                 _inputField.onDeselect.AddListener((obj) => { CloseEditText(_inputField); });
+
+                 //转行            
+                 var count = Mathf.Floor((sizeFont * (content[i].Length))/ sizeWidth);
+                 for (int x = 0; x < count - 1; x++)
+                 {
+                     _inputField.text += "\n";
+                 }
+
+                 obj.transform.parent = parent;
+                 obj.transform.localScale = Vector3.one;
+             });
+        }
     }
     #endregion
 
@@ -345,13 +400,17 @@ public class DraftUi : MonoBehaviour
       
         _text.gameObject.SetActive(true);
         select = false;
-        var count = _inputField.text.Split('\n').Length;
-     /*   int count = _inputField.GetLineCount();*/ _inputField.text = "";
-        for (int x = 0; x < count-1; x++)
+
+
+        //转行
+        _inputField.text = "";
+        var count =Mathf.Floor( (sizeFont * (_text.text.Length)) / sizeWidth);
+        for (int x = 0; x < count - 1; x++)
         {
             _inputField.text += "\n";
         }
-        
+
+
         if (textHasChange && (!_inputField.GetComponent<DragDraftText>().hasChange))
         {
             UseInkOnce(2);
@@ -400,6 +459,18 @@ public class DraftUi : MonoBehaviour
           
     }
 
+    #endregion
+
+    #region 文本生成
+
+    public void InitContent()
+    {
+        content.Clear(); 
+    }
+    public void AddContent(string _new)
+    {
+        content.Add(_new);
+    }
     #endregion
 }
 

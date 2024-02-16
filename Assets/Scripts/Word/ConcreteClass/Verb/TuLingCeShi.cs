@@ -8,12 +8,13 @@ class TuLingCeShi : AbstractVerbs
 {
     static public string s_description = "被动：对 <sprite name=\"san\">低于10的敌人造成30%额外伤害;\n主动：使敌人受到自身 <sprite name=\"atk\"> +  <sprite name=\"san\">的精神伤害";
     static public string s_wordName = "图灵测试";
+    static public int rarity = 4;
 
 
     public override void Awake()
     {
         base.Awake();
-        skillID = 9;
+        skillID = 10;
         wordName = "图灵测试";
         bookName = BookNameEnum.ElectronicGoal;
         description = "被动：对 <sprite name=\"san\">低于10的敌人造成30%额外伤害;\n主动：使敌人受到自身 <sprite name=\"atk\"> +  <sprite name=\"san\">的精神伤害";
@@ -23,7 +24,7 @@ class TuLingCeShi : AbstractVerbs
         skillMode.attackRange =  new SingleSelector();
         skillEffectsTime = Mathf.Infinity;
 
-        rarity = 3;
+        rarity = 4;
         needCD = 3;
     
 
@@ -38,9 +39,10 @@ class TuLingCeShi : AbstractVerbs
     public override void BasicAbility(AbstractCharacter useCharacter)
     {
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        aim.CreateFloatWord(
-        skillMode.UseMode(useCharacter, (aim.atk - aim.psy) * 10 * (1 - aim.san / (aim.san + 20)), aim)
-        ,FloatWordColor.psychic,true);
+        //aim.CreateFloatWord(
+        //skillMode.UseMode(useCharacter, (aim.atk - aim.psy) * 10 * (1 - aim.san / (aim.san + 20)), aim)
+        //,FloatWordColor.psychic,true);
+        skillMode.UseMode(AttackType.heal, (aim.atk - aim.psy) * 10 , useCharacter, aim, true, 0);
     }
     public override string UseText()
     {

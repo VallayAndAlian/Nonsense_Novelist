@@ -9,7 +9,7 @@ public class ChaFanWuXin : AbstractAdjectives
 {
     static public string s_description = "在10s内 <sprite name=\"psy\">+8，无法攻击";
     static public string s_wordName = "茶饭无心的";
-
+    static public int rarity = 1;
 
     public override void Awake()
     {

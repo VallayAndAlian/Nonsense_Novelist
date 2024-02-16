@@ -47,7 +47,7 @@ public class Ill : AbstractBuff
             yield return new WaitForSeconds(1);
             nowTime += 1;
             
-             damageMode.UseMode(useCharacter != null ? useCharacter : chara, 2 * (1 - chara.def / (chara.def + 20)), chara);
+             damageMode.UseMode(AttackType.atk, 2,useCharacter != null ? useCharacter : chara, chara,true,0/*2 * (1 - chara.def / (chara.def + 20))*/);
             if (nowTime >= 30)
             {
                 //buffs.Add(gameObject.AddComponent<>());

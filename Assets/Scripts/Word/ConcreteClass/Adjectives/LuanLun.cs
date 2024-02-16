@@ -9,16 +9,17 @@ public class LuanLun : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>·ý»ñ</color>Ò»Èº½ÇÉ«£¬¹¥»÷¶ÓÓÑ7s";
     static public string s_wordName = "ÂÒÂ×µÄ";
+    static public int rarity = 2;
     public override void Awake()
     {
         base.Awake();
-        adjID = 8;
+        adjID = 10;
         wordName = "ÂÒÂ×µÄ";
         bookName = BookNameEnum.Salome;
         description = "<color=#dd7d0e>·ý»ñ</color>Ò»Èº½ÇÉ«£¬¹¥»÷¶ÓÓÑ7s";
         skillMode = gameObject.AddComponent<DamageMode>();
         skillEffectsTime =7;
-        rarity = 1;
+        rarity = 2;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<ChuanBoCollision>();

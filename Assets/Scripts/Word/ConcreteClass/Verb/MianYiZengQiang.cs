@@ -8,10 +8,11 @@ class MianYiZengQiang : AbstractVerbs
 {
     static public string s_description = "<sprite name=\"hpmax\">+40，并消除负面状态”";
     static public string s_wordName = "免疫增强";
+    static public int rarity = 3;
     public override void Awake()
     {
         base.Awake();
-        skillID = 12;
+        skillID = 13;
         wordName = "免疫增强";
         bookName = BookNameEnum.FluStudy;
         description = "<sprite name=\"hpmax\">+40，并消除负面状态”";
@@ -20,7 +21,7 @@ class MianYiZengQiang : AbstractVerbs
         skillMode.attackRange =  new SingleSelector();
         skillEffectsTime = Mathf.Infinity;
 
-        rarity = 2;
+        rarity = 3;
         needCD =4;
 
     }
@@ -38,9 +39,10 @@ class MianYiZengQiang : AbstractVerbs
     public override void BasicAbility(AbstractCharacter useCharacter)
     {
         AbstractCharacter aim= skillMode.CalculateAgain(attackDistance,useCharacter)[0];
-        aim.CreateFloatWord(
-        skillMode.UseMode(useCharacter, 40, aim)
-        ,FloatWordColor.heal,true);
+        //aim.CreateFloatWord(
+        //skillMode.UseMode(useCharacter, 40, aim)
+        //,FloatWordColor.heal,true);
+        skillMode.UseMode(AttackType.heal, 40, useCharacter, aim, true, 0);
         aim.maxHp += 40;
         aim.CreateFloatWord(40, FloatWordColor.healMax, false);
 

@@ -10,10 +10,11 @@ public class HunQianMengYing : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>·ý»ñ</color>½ÇÉ«£¬¹¥»÷¶ÓÓÑ7s";
     static public string s_wordName = "»êÇ£ÃÎÝÓµÄ";
+    static public int rarity = 1;
 
     public override void Awake()
     {
-        adjID = 0;
+        adjID = 11;
         wordName = "»êÇ£ÃÎÝÓµÄ";
         bookName = BookNameEnum.Salome;
         description = "<color=#dd7d0e>·ý»ñ</color>½ÇÉ«£¬¹¥»÷¶ÓÓÑ7s";
@@ -21,7 +22,7 @@ public class HunQianMengYing : AbstractAdjectives
         skillMode = gameObject.AddComponent<DamageMode>();
 
         skillEffectsTime = 7;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
     }
     override public string[] DetailLable()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChongLuan : AbstractBuff
 {
-    static public string s_description = "(还没做)受到治疗后，孵化一只工蚁随从";
+    static public string s_description = "受到治疗后，孵化一只工蚁随从";
     static public string s_wordName = "虫卵";
 
 

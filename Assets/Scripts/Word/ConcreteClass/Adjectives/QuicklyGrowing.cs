@@ -9,9 +9,10 @@ public class QuicklyGrowing : AbstractAdjectives
 {
     static public string s_description = "<sprite name=\"hp\">恢复30";
     static public string s_wordName = "快速成长的";
+    static public int rarity = 1;
     public override void Awake()
     {
-        adjID = 20;
+        adjID = 22;
         wordName = "快速成长的";
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"hp\">恢复30";

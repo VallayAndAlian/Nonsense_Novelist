@@ -43,9 +43,10 @@ class BeiLuoJi : AbstractCharacter
             aims = attackA.CalculateAgain(100, this);
             foreach (AbstractCharacter aim in aims)
             {//普通攻击目标为所有队友，恢复70%意志的血量，不附带攻击攻击特效
-                aim.CreateFloatWord(
-                    attackA.UseMode(myState.character, san * 0.7f, aim)
-                    ,FloatWordColor.heal,false);
+             //aim.CreateFloatWord(
+             //    attackA.UseMode(myState.character, san * 0.7f, aim)
+             //    ,FloatWordColor.heal,false);
+                attackA.UseMode(AttackType.heal, san * 0.7f, myState.character, aim, true, 0);
                 myState.character.CreateBullet(aim.gameObject);
             }
             return true;    

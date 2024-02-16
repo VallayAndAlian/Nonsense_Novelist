@@ -6,35 +6,44 @@ using UnityEngine;
 /// </summary>
 class BeiZhiRuDeJiYi : AbstractItems
 {
-    static public string s_description = "<sprite name=\"psy\">-15%，<sprite name=\"san\">-15%，获得<color=#dd7d0e>改造</color>";
+    static public string s_description = "<sprite name=\"san\">-5,获得<color=#dd7d0e>改造</color>*2";
     static public string s_wordName = "被植入的记忆";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
         itemID = 14;
         wordName = "被植入的记忆";
         bookName = BookNameEnum.ElectronicGoal;
-        description = "<sprite name=\"psy\">-15%，<sprite name=\"san\">-15%，获得<color=#dd7d0e>改造</color>";
+        description = "<sprite name=\"san\">-5,获得<color=#dd7d0e>改造</color>*2";
         VoiceEnum = MaterialVoiceEnum.Meat;
 
         rarity = 1;
+
+
+        if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
+            wordCollisionShoots[0] = gameObject.AddComponent<XuWu_YunSu>();
     }
 
     override public string[] DetailLable()
     {
-        string[] _s = new string[1];
+        string[] _s = new string[2];
         _s[0] = "GaiZao";
+        _s[1] = "XuWu_YunSu";
         return _s;
     }
 
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
-        chara.psyMul -= 0.15f;
-        chara.sanMul -= 0.15f;
-        buffs.Add(chara.gameObject.AddComponent<GaiZao>());
-        buffs[0].maxTime = Mathf.Infinity;
 
+        chara.san -= 5;
+
+        for (int x = 0; x < 3; x++)
+        {
+            buffs.Add(gameObject.AddComponent<GaiZao>());
+            buffs[0].maxTime = Mathf.Infinity;
+        }
     }
 
     public override void UseVerb()
@@ -45,7 +54,6 @@ class BeiZhiRuDeJiYi : AbstractItems
     public override void End()
     {
         base.End();
-        aim.psyMul += 0.15f;
-        aim.sanMul += 0.15f;
+        aim.san += 5;
     }
 }

@@ -8,10 +8,11 @@ class TongPinGongZhen: AbstractVerbs
 {
     static public string s_description = "使友方获得<color=#dd7d0e>共振</color>，持续30s";
     static public string s_wordName = "同频共振";
+    static public int rarity = 3;
     public override void Awake()
     {
         base.Awake();
-        skillID = 8;
+        skillID = 9;
         wordName = "同频共振";
         bookName = BookNameEnum.CrystalEnergy;
         description = "使友方获得<color=#dd7d0e>共振</color>，持续30s";
@@ -20,7 +21,7 @@ class TongPinGongZhen: AbstractVerbs
         skillMode.attackRange = new SingleSelector();
         skillEffectsTime = 30;
 
-        rarity = 2;
+        rarity = 3;
         needCD=2;
 
     }

@@ -9,16 +9,16 @@ public class YouAnQuanGan : AbstractAdjectives
 {
     static public string s_description = "恢复+8，持续20s";
     static public string s_wordName = "有安全感的";
-
+    static public int rarity = 2;
     public override void Awake()
     {
-        adjID = 4;
+        adjID = 6;
         wordName = "有安全感的";
         bookName = BookNameEnum.ZooManual;
         description = "恢复+8，持续20s";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = 20;
-        rarity = 1;
+        rarity = 2;
 
         base.Awake();
 

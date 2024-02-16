@@ -13,7 +13,7 @@ class SelfMode : AbstractSkillMode
     }
 
 
-    public override float UseMode(AbstractCharacter useCharacter, float value, AbstractCharacter aimCharacter)
+    public override float UseMode(AttackType attackType, float value, AbstractCharacter useCharacter, AbstractCharacter aimCharacter, bool hasFloat, float delay)
     {
         return value;
     }

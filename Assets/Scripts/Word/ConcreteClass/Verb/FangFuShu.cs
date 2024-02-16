@@ -8,6 +8,7 @@ class FangFuShu : AbstractVerbs
 {
     static public string s_description = "使友方<color=#dd7d0e>复活</color>，持续10s";
     static public string s_wordName = "防腐";
+    static public int rarity =2;
     public override void Awake()
     {
         base.Awake();
@@ -22,7 +23,7 @@ class FangFuShu : AbstractVerbs
 
 
         skillEffectsTime = 10;
-        rarity = 1;
+        rarity = 2;
         needCD = 6;
 
 

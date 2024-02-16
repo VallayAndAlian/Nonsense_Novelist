@@ -8,6 +8,7 @@ class DuXian : AbstractItems
 {
     static public string s_description = "自身与随从的攻击附带<color=#dd7d0e>腐蚀</color>";
     static public string s_wordName = "毒腺";
+    static public int rarity = 3;
     public override void Awake()
     {
         base.Awake();
@@ -19,7 +20,7 @@ class DuXian : AbstractItems
         holdEnum = HoldEnum.handSingle;
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
-        rarity = 2;
+        rarity = 3;
     }
 
     override public string[] DetailLable()

@@ -10,15 +10,16 @@ public class JianRuPanShi : AbstractAdjectives
 {
     static public string s_description = "<sprite name=\"def\">+12，持续10s";
     static public string s_wordName = "坚如磐石的";
+    static public int rarity = 1;
     public override void Awake()
     {
-        adjID = 23;
+        adjID = 25;
         wordName = "坚如磐石的";
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"def\">+12，持续10s";
         skillMode = gameObject.AddComponent<UpDEFMode>();
         skillEffectsTime = 10;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
     }
 

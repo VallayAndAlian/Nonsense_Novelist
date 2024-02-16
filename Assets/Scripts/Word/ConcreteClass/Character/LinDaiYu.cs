@@ -9,7 +9,7 @@ class LinDaiYu : AbstractCharacter
     override public void Awake()
     {
         base.Awake();
-        characterID = 1;
+        characterID = 2;
         wordName = "林黛玉";
         bookName = BookNameEnum.HongLouMeng;
         gender = GenderEnum.girl;
@@ -18,12 +18,15 @@ class LinDaiYu : AbstractCharacter
         def = 3;
         psy = 5;
         san = 3;
+
         mainProperty.Add("精神","远法dps");
         trait=gameObject.AddComponent<Sentimental>();
         roleName = "诗人";
         roleInfo = "诗人的介绍";
         attackInterval = 2.2f;
-        attackDistance = 500;
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
+    attackDistance = 500;
         brief = "《红楼梦》中一位性格敏感脆弱，却又极有灵性的少女。";
         description = "林黛玉，中国古典名著《红楼梦》的女主角，金陵十二钗正册双首之一，西方灵河岸绛珠仙草转世，最后于贾宝玉、薛宝钗大婚之夜泪尽而逝。她生得容貌清丽，兼有诗才，是古代文学作品中极富灵气的经典女性形象。" +
             "\n道是：" +

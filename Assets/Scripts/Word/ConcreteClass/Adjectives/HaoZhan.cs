@@ -10,10 +10,12 @@ public class HaoZhan : AbstractAdjectives
 
     static public string s_description = "快速攻击，持续5s";
     static public string s_wordName = "好战的";
+    static public int rarity = 1;
     public override void Awake()
-    {                skillEffectsTime = 5;
+    {                
+        skillEffectsTime = 5;
         base.Awake();
-        adjID = 18;
+        adjID = 20;
         wordName = "好战的";
         bookName = BookNameEnum.PHXTwist;
         description = "快速攻击，持续5s";
@@ -21,7 +23,7 @@ public class HaoZhan : AbstractAdjectives
         skillMode = gameObject.AddComponent<SelfMode>();
 
 
-        rarity = 0;
+        rarity = 1;
 
     }
     bool hasOther = false;
@@ -45,10 +47,10 @@ public class HaoZhan : AbstractAdjectives
     float record;
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        GetComponentInChildren<AI.MyState0>().GetComponent<Animator>().speed = 1.83f;
-        record = aimCharacter.attackInterval;
-        aimCharacter.attackInterval = record-1.2f;
-        if (aimCharacter.attackInterval <= 0.5f) aimCharacter.attackInterval = 0.5f;
+        //GetComponentInChildren<AI.MyState0>().GetComponent<Animator>().speed = 1.83f;
+        record = aimCharacter.attackSpeedPlus;
+        aimCharacter.attackSpeedPlus += 0.5f;
+       // if (aimCharacter.attackInterval <= 0.5f) aimCharacter.attackInterval = 0.5f;
     }
 
     

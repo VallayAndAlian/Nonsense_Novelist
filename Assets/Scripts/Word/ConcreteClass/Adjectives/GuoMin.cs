@@ -7,24 +7,24 @@ using UnityEngine;
 /// </summary>
 public class GuoMin : AbstractAdjectives,IChongNeng
 {
-    static public string s_description = "充能，每次弹射<color=#dd7d0e>晕眩</color>0.5s";
+    static public string s_description = "color=#dd7d0e>充能</color>，每次弹射，让角色获得一层随机减益状态，持续10s";
     static public string s_wordName = "过敏的";
-
+    static public int rarity = 2;
 
     private float dizzyAdd;
 
     public override void Awake()
     {        
         base.Awake();
-        adjID = 14;
+        adjID = 16;
         wordName = "过敏的";
         bookName = BookNameEnum.FluStudy;
-        description = "充能，每次弹射<color=#dd7d0e>晕眩</color>0.5s";
+        description = "<color=#dd7d0e>充能</color>，每次弹射，让角色获得一层随机减益状态，持续10s";
 
         skillMode = gameObject.AddComponent<SelfMode>();
 
         skillEffectsTime = 0;
-        rarity = 1;
+        rarity = 2;
 
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
@@ -33,23 +33,31 @@ public class GuoMin : AbstractAdjectives,IChongNeng
 
     override public string[] DetailLable()
     {
-        string[] _s = new string[2];
+        string[] _s = new string[1];
         _s[0] = "ChongNeng";
-        _s[1] = "Dizzy";
         return _s;
     }
 
-
-    public void ChongNeng(int times)
+    int times;
+    public void ChongNeng(int _times)
     {
-        dizzyAdd += 0.5f*times;
+        dizzyAdd += 0.5f*_times;
+        times = _times;
     }
 
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
         base.UseAdj(aimCharacter);
+
+        for (int i = 0; i < times; i++)
+        {        
+            var count = UnityEngine.Random.Range(0,AllSkills.BadBuff.Count);
+            Type _t = AllSkills.BadBuff[count];
+            var buff=aimCharacter.gameObject.AddComponent(_t) as AbstractBuff; ;
+            buff.maxTime=10f;
+        }
+       
         
-         aimCharacter.gameObject.AddComponent<Dizzy>().maxTime= skillEffectsTime + dizzyAdd;
         //buffs.Add();
         //_b.maxTime =9 /*skillEffectsTime + dizzyAdd*/;
       

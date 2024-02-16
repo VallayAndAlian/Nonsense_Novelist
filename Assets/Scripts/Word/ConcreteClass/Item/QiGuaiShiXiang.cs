@@ -8,6 +8,7 @@ class QiGuaiShiXiang : AbstractItems
 {
     static public string s_description = " <sprite name=\"psy\">+1";
     static public string s_wordName = "奇怪石像";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
@@ -18,7 +19,7 @@ class QiGuaiShiXiang : AbstractItems
 
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
-        rarity = 0;
+        rarity = 1;
     }
 
     public override void UseItem(AbstractCharacter chara)

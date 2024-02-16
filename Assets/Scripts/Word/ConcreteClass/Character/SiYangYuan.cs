@@ -22,6 +22,8 @@ class SiYangYuan : AbstractCharacter
         trait=gameObject.AddComponent<Mercy>();
         roleName = "饲养员";
         attackInterval = 2.2f;
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
         attackDistance = 500;
 
         Destroy(attackA);
@@ -43,9 +45,10 @@ class SiYangYuan : AbstractCharacter
             }
             myState.character.charaAnim.Play(AnimEnum.attack);
             //普通攻击目标为血量百分比最低的队友，恢复120%意志的血量，以及“亢奋”状态
-            myState.aim.CreateFloatWord(
-            attackA.UseMode(myState.character, san * sanMul * 1.2f, myState.aim)
-            ,FloatWordColor.heal,false);
+            //myState.aim.CreateFloatWord(
+            //attackA.UseMode(myState.character, san * sanMul * 1.2f, myState.aim)
+            //,FloatWordColor.heal,false);
+            attackA.UseMode(AttackType.heal, san * sanMul * 1.2f, myState.character, myState.aim, true, 0);
             myState.aim.gameObject.AddComponent<KangFen>().maxTime = 5;
             return true;
         }

@@ -10,15 +10,16 @@ public class RenZao : AbstractAdjectives
 
     static public string s_description = "<sprite name=\"hpmax\">+20，获得<color=#dd7d0e>改造</color>";
     static public string s_wordName = "人造的";
+    static public int rarity = 1;
     public override void Awake()
     {
-        adjID = 12;
+        adjID = 14;
         wordName = "人造的";
         bookName = BookNameEnum.ElectronicGoal;
         description = "<sprite name=\"hpmax\">+20，获得<color=#dd7d0e>改造</color>";
         skillMode = gameObject.AddComponent<CureMode>();
         skillEffectsTime = Mathf.Infinity;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
     }
     override public string[] DetailLable()

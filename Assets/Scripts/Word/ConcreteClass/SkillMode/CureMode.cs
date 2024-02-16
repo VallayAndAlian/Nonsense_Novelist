@@ -11,15 +11,18 @@ class CureMode : AbstractSkillMode
         skillModeID = 3;
         skillModeName = "回血";
     }
-    public override float UseMode(AbstractCharacter useCharacter,float value, AbstractCharacter aimCharacter)
+
+
+    public override float UseMode(AttackType attackType, float value, AbstractCharacter useCharacter, AbstractCharacter aimCharacter, bool hasFloat, float delay)
     {
-        if (value > 0)
-        {
-           
-            aimCharacter.hp += (int)value;
-        }
+
+        aimCharacter.BeCure(value,hasFloat,delay);
         return value;
     }
+
+
+
+
     /// <summary>
     /// 再次计算锁定的目标(低血量友方）
     /// </summary>

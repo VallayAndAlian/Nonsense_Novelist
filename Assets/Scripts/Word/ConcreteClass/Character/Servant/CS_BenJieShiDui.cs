@@ -49,9 +49,10 @@ public class CS_BenJieShiDui : ServantAbstract
             }
             myState.character.charaAnim.Play(AnimEnum.attack);
             //普通攻击目标为血量百分比最低的队友，恢复10血量（待定）
-            myState.aim.CreateFloatWord(
-            attackA.UseMode(myState.character, san * sanMul * 1f, myState.aim)
-            , FloatWordColor.heal, false);
+            //myState.aim.CreateFloatWord(
+            //attackA.UseMode(myState.character, san * sanMul * 1f, myState.aim)
+            //, FloatWordColor.heal, false);
+            attackA.UseMode(AttackType.heal, san * sanMul * 1f, myState.character, myState.aim, true, 0);
             return true;
         }
 
@@ -61,8 +62,8 @@ public class CS_BenJieShiDui : ServantAbstract
     private void OnDestroy()
     {
         masterNow.DeleteServant(this.gameObject);
-        if (masterNow.GetComponent<BenJieShiDui>() != null)
-            Destroy(masterNow.GetComponent<BenJieShiDui>());
+        if (masterNow.GetComponent<ShiWuFengRong>() != null)
+            Destroy(masterNow.GetComponent<ShiWuFengRong>());
     }
 
     public override string ShowText(AbstractCharacter otherChara)

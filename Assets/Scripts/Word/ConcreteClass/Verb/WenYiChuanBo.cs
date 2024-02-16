@@ -8,10 +8,11 @@ class WenYiChuanBo : AbstractVerbs
 {
     static public string s_description = "传播<color=#dd7d0e>疾病</color>，持续5s";
     static public string s_wordName = "瘟疫传播";
+    static public int rarity = 3;
     public override void Awake()
     {
         base.Awake();
-        skillID = 11;
+        skillID = 12;
         wordName = "瘟疫传播";
         bookName = BookNameEnum.FluStudy;
         description = "传播<color=#dd7d0e>疾病</color>，持续5s";
@@ -21,7 +22,7 @@ class WenYiChuanBo : AbstractVerbs
         skillMode.attackRange =  new SingleSelector();
 
         skillEffectsTime = 5;
-        rarity = 2;
+        rarity = 3;
         needCD = 2;
 
 

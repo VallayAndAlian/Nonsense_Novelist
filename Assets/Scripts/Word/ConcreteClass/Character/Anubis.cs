@@ -24,6 +24,8 @@ class Anubis : AbstractCharacter
         trait=gameObject.AddComponent<Pride>();
         roleName = "死神";
         attackInterval = 2.2f;
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
         attackDistance = 200;
         brief = "";
         description = "暂无文案";

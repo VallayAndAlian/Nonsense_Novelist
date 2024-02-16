@@ -8,10 +8,11 @@ class Shuai : AbstractVerbs
 {
     static public string s_description = "使敌人<color=#dd7d0e>晕眩</color>3s";
     static public string s_wordName = "摔";
+    static public int rarity = 1;
     public override void Awake()
     {
         base.Awake();
-        skillID = 15;
+        skillID = 16;
         wordName = "摔";
         bookName = BookNameEnum.allBooks;
 

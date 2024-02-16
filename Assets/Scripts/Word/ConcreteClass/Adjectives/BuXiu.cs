@@ -10,17 +10,18 @@ using UnityEngine;
 
 public class BuXiu : AbstractAdjectives
 {
-    static public string s_description = "<sprite name=\"hpmax\">+60，获得<color=#dd7d0e>复活</color>";
+    static public string s_description = "<sprite name=\"hpmax\">+30，获得<color=#dd7d0e>复活</color>";
     static public string s_wordName = "不朽的";
+    static public int rarity = 2;
 
 
     public override void Awake()
     {
         
-        adjID = 5;
+        adjID = 7;
         wordName = "不朽的";
         bookName = BookNameEnum.EgyptMyth;
-        description = "<sprite name=\"hpmax\">+60，获得<color=#dd7d0e>复活</color>";
+        description = "<sprite name=\"hpmax\">+30，获得<color=#dd7d0e>复活</color>";
 
         skillMode = gameObject.AddComponent<CureMode>();
         skillEffectsTime = Mathf.Infinity;

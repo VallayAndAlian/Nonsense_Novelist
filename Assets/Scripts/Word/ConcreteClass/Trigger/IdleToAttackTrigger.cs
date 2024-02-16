@@ -16,16 +16,14 @@ namespace AI
         public override bool Satisfy(MyState0 myState)
         {
             if (myState.character.hp <= 0) return false;
-            if (CharacterManager.instance.pause)
-            {
-                return false;
-            }
+            if (CharacterManager.instance.pause)return false;
+
             if (myState.aim != null)
             {
                 return true;
             }
-            else 
-                return false;
+        
+            return false;
         }
     }
 }

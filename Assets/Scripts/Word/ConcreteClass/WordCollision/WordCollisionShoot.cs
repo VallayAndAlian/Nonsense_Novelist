@@ -68,8 +68,11 @@ public class WordCollisionShoot : MonoBehaviour
                 Destroy(this.gameObject);
             }
 
-           
-     
+            //检测是否满足特殊组合？是否会触发事件
+            string _s=EventCharWord.fuction(character,absWord);
+            if (_s == null) return;
+            DraftUi.instance.AddContent(_s);
+
         }
     }
 
