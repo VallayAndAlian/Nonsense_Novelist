@@ -15,7 +15,7 @@ namespace AI
         }
         public override bool Satisfy(MyState0 myState)
         {
-            if (myState.aim != null && Vector3.Distance(myState.transform.position, myState.aim.transform.position) <= myState.character.attackDistance)
+            if (myState.aim[0] != null && Vector3.Distance(myState.transform.position, myState.aim[0].transform.position) <= myState.character.attackDistance)
             {
                 return true;
             }

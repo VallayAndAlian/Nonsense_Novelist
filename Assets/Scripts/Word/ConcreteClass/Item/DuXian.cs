@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class DuXian : AbstractItems
 {
-    static public string s_description = "自身与随从的攻击附带<color=#dd7d0e>腐蚀</color>";
+    static public string s_description = "自身与随从的<sprite name=\"atk\">+1,附带<color=#dd7d0e>腐蚀</color>";
     static public string s_wordName = "毒腺";
     static public int rarity = 3;
     public override void Awake()
@@ -14,9 +14,9 @@ class DuXian : AbstractItems
         base.Awake();
         itemID = 19;
         wordName = "毒腺";
-        bookName = BookNameEnum.CrystalEnergy;
+        bookName = BookNameEnum.PHXTwist;
         
-        description = "自身与随从的攻击附带<color=#dd7d0e>腐蚀</color>";
+        description = "自身与随从的<sprite name=\"atk\">+1,附带<color=#dd7d0e>腐蚀</color>";
         holdEnum = HoldEnum.handSingle;
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
@@ -30,16 +30,30 @@ class DuXian : AbstractItems
         return _s;
     }
     bool hasAdd = false;
+
+
+    GameObject[] servants;
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
+
         if (hasAdd) return;
-        //为自身和所有随从，增加平A附加效果
-        var _acs = GetComponentsInChildren<AbstractCharacter>();
-        foreach (var _ac in _acs)
+
+        chara.atk += 5;
+        if (chara == null) return;
+        chara.event_AttackA += AddToAttackA;
+
+        servants = chara.servants.ToArray();
+
+        foreach (var _s in servants)
         {
-            _ac.event_AttackA += AddToAttackA;
+            if (_s != null)
+            {
+                _s.GetComponent<AbstractCharacter>().atk += 5;
+                _s.GetComponent<AbstractCharacter>().event_AttackA += AddToAttackA;
+            }
         }
+
         hasAdd = true;
     }
 
@@ -52,19 +66,29 @@ class DuXian : AbstractItems
     public void AddToAttackA()
     {
         var _ac = GetComponent<AbstractCharacter>();
-         //为攻击目标增加Buff
-        var buff = _ac.myState.aim.gameObject.AddComponent<FuShi>();
-        buffs.Add(buff);
-        buff.maxTime = 7;
+        //为攻击目标增加Buff
+        for (int i = 0; i < _ac.myState.aim.Count; i++)
+        {
+            var buff = _ac.myState.aim[i].gameObject.AddComponent<FuShi>();
+            buffs.Add(buff);
+            buff.maxTime = 10;
+        }
+           
     }
     public override void End()
     {
         base.End();
-        //为自身和所有随从，去掉平A附加效果
-        var _acs = GetComponentsInChildren<AbstractCharacter>();
-        foreach (var _ac in _acs)
+        if (aim == null) return;
+
+        aim.atk -= 5;
+        aim.event_AttackA -= AddToAttackA;
+        foreach (var _s in servants)
         {
-            _ac.event_AttackA -= AddToAttackA;
+            if (_s != null)
+            {
+                _s.GetComponent<AbstractCharacter>().atk -= 5;
+                _s.GetComponent<AbstractCharacter>().event_AttackA -= AddToAttackA;
+            }
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class MianYiZengQiang : AbstractVerbs
 {
-    static public string s_description = "<sprite name=\"hpmax\">+40，并消除负面状态”";
+    static public string s_description = "<sprite name=\"hpmax\">+40，并消除所有减益状态";
     static public string s_wordName = "免疫增强";
     static public int rarity = 3;
     public override void Awake()
@@ -15,14 +15,14 @@ class MianYiZengQiang : AbstractVerbs
         skillID = 13;
         wordName = "免疫增强";
         bookName = BookNameEnum.FluStudy;
-        description = "<sprite name=\"hpmax\">+40，并消除负面状态”";
+        description = "<sprite name=\"hpmax\">+40，并消除所有减益状态";
 
         skillMode = gameObject.AddComponent<SelfMode>();
         skillMode.attackRange =  new SingleSelector();
         skillEffectsTime = Mathf.Infinity;
 
         rarity = 3;
-        needCD =4;
+        needCD =5;
 
     }
     /// <summary>
@@ -38,19 +38,16 @@ class MianYiZengQiang : AbstractVerbs
 
     public override void BasicAbility(AbstractCharacter useCharacter)
     {
-        AbstractCharacter aim= skillMode.CalculateAgain(attackDistance,useCharacter)[0];
+
         //aim.CreateFloatWord(
         //skillMode.UseMode(useCharacter, 40, aim)
         //,FloatWordColor.heal,true);
-        skillMode.UseMode(AttackType.heal, 40, useCharacter, aim, true, 0);
-        aim.maxHp += 40;
-        aim.CreateFloatWord(40, FloatWordColor.healMax, false);
 
-        var _buffs = character.GetComponents<AbstractBuff>();
-        foreach (var _buff in _buffs)
-        {
-            if (_buff.isBad) Destroy(_buff);
-        }
+        useCharacter.maxHp += 40;
+        useCharacter.CreateFloatWord(40, FloatWordColor.healMax, false);
+        
+
+        character.DeleteBadBuff(100);
     }
 
     public override string UseText()

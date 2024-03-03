@@ -23,7 +23,8 @@ public class FloatWord : MonoBehaviour
     /// <param name="direct">是否是直接的</param>
     internal void InitPopup(float value, bool boss, FloatWordColor color, bool direct)
     {
-        string str = ((int)value).ToString();
+        //如果需要数字好看，就把float强行转换成int
+        string str = ((float)value).ToString("f1");
         TextMeshProUGUI text = null;
         if (!boss)
         {

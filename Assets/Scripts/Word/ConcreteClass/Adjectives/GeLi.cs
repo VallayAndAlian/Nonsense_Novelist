@@ -15,7 +15,7 @@ public class GeLi : AbstractAdjectives,IChongNeng
 
     public override void Awake()
     {        
-        base.Awake();
+     
         adjID = 17;
         wordName = "隔离的";
         bookName = BookNameEnum.FluStudy;
@@ -24,7 +24,8 @@ public class GeLi : AbstractAdjectives,IChongNeng
         skillMode = gameObject.AddComponent<SelfMode>();
 
         skillEffectsTime = 10;
-        rarity = 1;
+        rarity = 1;   
+        base.Awake();
     }
 
     override public string[] DetailLable()
@@ -49,18 +50,20 @@ public class GeLi : AbstractAdjectives,IChongNeng
 
         //每受到一次攻击回复+1
         thisCharacter = aimCharacter;
-        aimCharacter.event_AttackA += AddCure;
+        aimCharacter.event_BeAttack += AddCure;
 
         //添加10s的嘲讽和沮丧
-        buffs.Add(aimCharacter.gameObject.AddComponent<Upset>());
-        buffs[0].maxTime = 10;
-        buffs.Add(aimCharacter.gameObject.AddComponent<ChaoFeng>());
-        buffs[0].maxTime = 9;
+        var up = aimCharacter.gameObject.AddComponent<Upset>();
+        buffs.Add(up);
+        up.maxTime = 10;
+        var cf = aimCharacter.gameObject.AddComponent<ChaoFeng>();
+        buffs.Add(cf);
+        cf.maxTime =10;
 
     }
 
     float countCure = 0;
-    public void AddCure()
+    public void AddCure(float _value,AbstractCharacter _ac)
     {
         countCure += 1;
         thisCharacter.cure += 1;
@@ -77,6 +80,7 @@ public class GeLi : AbstractAdjectives,IChongNeng
 
     public override void End()
     {
+        aim.event_BeAttack -= AddCure;
         aim.cure -= countCure;
         base.End();
     }

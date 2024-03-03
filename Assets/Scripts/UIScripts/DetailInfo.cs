@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class DetailInfo : MonoBehaviour
 {
     public Text infoName;
-    public Text infoContent;
+    public TextMeshProUGUI infoContent;
 
     public void CloseInfo()
     {

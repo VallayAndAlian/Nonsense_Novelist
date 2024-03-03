@@ -74,6 +74,7 @@ IEnumerator Timer()
         if (collision.gameObject.layer == LayerMask.NameToLayer("Character"))
         {
             AbstractCharacter character = collision.gameObject.GetComponent<AbstractCharacter>();
+            if (character.myState.nowState == character.myState.allState.Find(p => p.id == AI.StateID.dead)) return;
 
             if (charaName.Contains(character.wordName))
             {

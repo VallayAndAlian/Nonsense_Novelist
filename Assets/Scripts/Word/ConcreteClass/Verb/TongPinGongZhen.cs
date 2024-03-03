@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class TongPinGongZhen: AbstractVerbs
 {
-    static public string s_description = "使友方获得<color=#dd7d0e>共振</color>，持续30s";
+    static public string s_description = "使2个友方获得<color=#dd7d0e>共振</color>10s，并消除其共振层数的负面状态";
     static public string s_wordName = "同频共振";
     static public int rarity = 3;
     public override void Awake()
@@ -15,11 +15,11 @@ class TongPinGongZhen: AbstractVerbs
         skillID = 9;
         wordName = "同频共振";
         bookName = BookNameEnum.CrystalEnergy;
-        description = "使友方获得<color=#dd7d0e>共振</color>，持续30s";
+        description = "使2个友方获得<color=#dd7d0e>共振</color>10s，并消除其共振层数的负面状态";
 
         skillMode = gameObject.AddComponent<UpATKMode>();
         skillMode.attackRange = new SingleSelector();
-        skillEffectsTime = 30;
+        skillEffectsTime = 10;
 
         rarity = 3;
         needCD=2;
@@ -35,8 +35,25 @@ class TongPinGongZhen: AbstractVerbs
     public override void UseVerb(AbstractCharacter useCharacter)
     {
         base.UseVerb(useCharacter);
-        buffs.Add(skillMode.CalculateAgain(attackDistance, useCharacter)[0].gameObject.AddComponent<GongZhen>());
+
+
+        AbstractCharacter[] a = skillMode.CalculateAgain(attackDistance, useCharacter);
+
+        buffs.Add(a[0].gameObject.AddComponent<GongZhen>());
         buffs[0].maxTime = skillEffectsTime;
+
+        int count0 = a[0].GetComponents<GongZhen>().Length;
+        a[0].DeleteBadBuff(count0);
+
+
+        if (a[1] != null)
+        {
+            buffs.Add(a[1].gameObject.AddComponent<GongZhen>());
+            buffs[0].maxTime = skillEffectsTime;
+        }
+        count0 = a[1].GetComponents<GongZhen>().Length;
+        a[1].DeleteBadBuff(count0);
+
     }
 
 

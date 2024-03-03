@@ -190,9 +190,9 @@ void FunctionInis()
 
         //ATK1
         charaShort.transform.GetChild(0).GetComponentInChildren<Text>().text = (abschara.atk * abschara.atkMul).ToString();
-        //def4
+        //def3
         charaShort.transform.GetChild(2).GetComponentInChildren<Text>().text =(abschara.def * abschara.defMul).ToString();
-        //san3
+        //san4
         charaShort.transform.GetChild(3).GetComponentInChildren<Text>().text =(abschara.san * abschara.sanMul).ToString();
         //psy2
         charaShort.transform.GetChild(1).GetComponentInChildren<Text>().text = (abschara.psy * abschara.psyMul).ToString();
@@ -266,9 +266,9 @@ void FunctionInis()
         //ATK1
         charaShort.transform.GetChild(0).GetComponentInChildren<Text>().text = (abschara.atk * abschara.atkMul).ToString();
         //def4
-        charaShort.transform.GetChild(3).GetComponentInChildren<Text>().text =(abschara.def * abschara.defMul).ToString();
+        charaShort.transform.GetChild(2).GetComponentInChildren<Text>().text =(abschara.def * abschara.defMul).ToString();
         //san3
-        charaShort.transform.GetChild(2).GetComponentInChildren<Text>().text =(abschara.san * abschara.sanMul).ToString();
+        charaShort.transform.GetChild(3).GetComponentInChildren<Text>().text =(abschara.san * abschara.sanMul).ToString();
         //psy2
         charaShort.transform.GetChild(1).GetComponentInChildren<Text>().text = (abschara.psy * abschara.psyMul).ToString();
 

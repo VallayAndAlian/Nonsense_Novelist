@@ -7,31 +7,33 @@ using UnityEngine;
 /// </summary>
 public class KangFen : AbstractBuff
 {
-    static public string s_description = "为缺少3能量及以上的动词提供1能量，消除自身";
+    static public string s_description = "消除自身，给缺少5能量的动词充能1点";
     static public string s_wordName = "亢奋";
 
     List<AbstractVerbs> skills;
     override protected void Awake()
     {
-        base.Awake();
+        
         buffName = "亢奋";
-        description = "为缺少3能量及以上的动词提供1能量，消除自身";
+        description = "消除自身，给缺少5能量的动词充能1点";
         book = BookNameEnum.ZooManual;
-
+        maxTime = 2;
+        base.Awake();
         //缺少能量的补充
         skills = this.GetComponent<AbstractCharacter>().skills;
-  
 
+        chara.teXiao.PlayTeXiao("kangFeng");
  
     }
 
     public override void Update()
     {
         base.Update();
-        
+        if (skills.Count == 0) return;
+
         foreach (var _skill in skills)
         {
-            if (_skill.needCD - _skill.CD >= 3)
+            if (_skill.needCD - _skill.CD >= 5)
             {
                 print("_skill" + _skill.wordName);
                 _skill.CD += 1;

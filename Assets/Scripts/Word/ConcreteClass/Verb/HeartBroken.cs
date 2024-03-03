@@ -19,12 +19,12 @@ class HeartBroken : AbstractVerbs
         description = "造成2*<sprite name=\"psy\">的精神伤害";
         //nickname.Add( "刺痛");
 
-        skillMode = gameObject.AddComponent<SelfMode>();
+        skillMode = gameObject.AddComponent<DamageMode>();
         skillMode.attackRange = new SingleSelector();
         skillEffectsTime = Mathf.Infinity;
 
         rarity = 1;
-        needCD=2;
+        needCD=1;
     }
 
     public override void UseVerb(AbstractCharacter useCharacter)
@@ -34,13 +34,26 @@ class HeartBroken : AbstractVerbs
         BasicAbility(useCharacter);
     }
     public override void BasicAbility(AbstractCharacter useCharacter)
-    {
+    {        
+        //奶妈
+        if (useCharacter.isNaiMa)
+        {
+            var _aims = skillMode.CalculateAgain(200, useCharacter);
+            int x = 0;
+            for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
+            {
+                skillMode.UseMode(AttackType.psy, 2 * useCharacter.psy * useCharacter.psyMul, useCharacter, _aims[i], true, 0);
+                x++;
+            }
+
+            return;
+        }
         //造成200%的精神伤害
-        AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        //aim.CreateFloatWord(
-        //skillMode.UseMode(useCharacter, 2 * useCharacter.atk * useCharacter.atkMul * (1 - aim.def / (aim.def + 20)), aim)
-        //, FloatWordColor.physics, true);
-        skillMode.UseMode(AttackType.atk, 2 * useCharacter.atk * useCharacter.atkMul, useCharacter, aim, true, 0);
+        for (int i = 0; i < character.myState.aim.Count; i++)
+        {
+            skillMode.UseMode(AttackType.psy, 2 * useCharacter.psy * useCharacter.psyMul, useCharacter, character.myState.aim[i], true, 0);
+        }
+        
     }
 
     public override string UseText()

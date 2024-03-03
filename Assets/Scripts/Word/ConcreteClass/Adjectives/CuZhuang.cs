@@ -31,8 +31,8 @@ public class CuZhuang : AbstractAdjectives
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        aimCharacter.maxHp += 20;
-        aimCharacter.CreateFloatWord(20, FloatWordColor.healMax, false);
+        aimCharacter.maxHp += 30;
+        aimCharacter.CreateFloatWord(30, FloatWordColor.healMax, false);
     }
 
     
@@ -40,7 +40,7 @@ public class CuZhuang : AbstractAdjectives
     public override void End()
     {
         base.End();
-        aim.maxHp -= 20;
+        aim.maxHp -= 30;
     }
 
 }

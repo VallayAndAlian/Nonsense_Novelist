@@ -10,31 +10,52 @@ class MuNaiYi : AbstractCharacter
     override public void Awake()
     {
         base.Awake();
+
+        //基础信息
         characterID = 4;
         wordName = "木乃伊";
         bookName = BookNameEnum.EgyptMyth;
-        gender = GenderEnum.noGender;
-        hp =maxHp  = 220;
+        brief = "暂无文案";
+        description = "沉默者曾经是某个王国的贵族，从小便精通魔法的使用。" +
+            "据说在王国政权被颠覆之后他被叛逃者关在地牢里折磨，痛苦的嘶吼随着时日慢慢沉寂，" +
+            "直到他所有人性都被磨灭。而他身上的魔法能量也被扭曲，变得恶毒不堪。如今的它都蜷缩于阴暗的地窖里，练习着被巫师们唾弃的魔法。";
+
+        //数值
+        hp = maxHp = 100;
         atk = 3;
-        def = 4;
-        psy = 4;
-        san = 4;
-        mainProperty.Add("意志","中法T");
-        trait=gameObject.AddComponent<Vicious>();
-        roleName = "亡灵";
+        def = 5;
+        psy = 3;
+        san = 3;
+
         attackInterval = 2.2f;
         AttackTimes = 1;
         attackSpeedPlus = 1;
-        attackDistance = 300;
-        reLifes++;//复活技能
-        brief = "";
-        description = "沉默者曾经是某个王国的贵族，从小便精通魔法的使用。据说在王国政权被颠覆之后他被叛逃者关在地牢里折磨，痛苦的嘶吼随着时日慢慢沉寂，直到他所有人性都被磨灭。而他身上的魔法能量也被扭曲，变得恶毒不堪。如今的它都蜷缩于阴暗的地窖里，练习着被巫师们唾弃的魔法。";
-    }
+        attackDistance = 500;
+        myState.aimCount = 1;
+        attackAmount = 1;
+        hasBetray = false;
 
+        //特性
+        roleName = "再生";
+        roleInfo = "每次复活攻击+3防御+6，出场获得“复活”";
+
+
+    }
+    NoHealthTrigger _nht = null;
     private void Start()
-    {
-        NoHealthTrigger noHealthTrigger= GetComponentInChildren<NoHealthTrigger>();
-        noHealthTrigger.OnLive += OnLive;
+    {  // 每次复活攻击 + 3防御 + 6”
+        var _list = myState.allState.Find(p => p.id == AI.StateID.attack).triggers;
+        foreach (var _t in _list)
+        {
+            if (_t.GetType() == typeof(AI.NoHealthTrigger))
+            { (_t as AI.NoHealthTrigger).event_relife += OnLive; _nht = (_t as AI.NoHealthTrigger); }
+
+        }
+
+        //出场获得“复活”
+        var re =gameObject.AddComponent<ReLife>();
+        re.maxTime = Mathf.Infinity;//复活技能
+  
     }
 
     /// <summary>
@@ -42,13 +63,18 @@ class MuNaiYi : AbstractCharacter
     /// </summary>
     public void OnLive()
     {
-        atk += 10;
-        def += 10;
-        psy += 10;
-        san += 10;
+        atk += 3;
+        def += 6;
+
     }
 
-
+    private void OnDestroy()
+    {
+        if (_nht != null)
+        {
+            _nht.event_relife -= OnLive;
+        }
+    }
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)

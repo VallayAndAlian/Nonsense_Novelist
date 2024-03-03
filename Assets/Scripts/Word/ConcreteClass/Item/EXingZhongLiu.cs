@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class EXingZhongLiu : AbstractItems,IChongNeng
 {
-    static public string s_description = "每次弹射<sprite name=\"hpmax\">-5%";
+    static public string s_description = "每次弹射<sprite name=\"hpmax\">-30";
     static public string s_wordName = "恶性肿瘤";
     static public int rarity = 1;
     public override void Awake()
@@ -15,7 +15,7 @@ class EXingZhongLiu : AbstractItems,IChongNeng
         itemID = 17;
         wordName = "恶性肿瘤";
         bookName = BookNameEnum.FluStudy;
-        description = "每次弹射<sprite name=\"hpmax\">-5%";
+        description = "每次弹射<sprite name=\"hpmax\">-30";
 
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
@@ -31,18 +31,19 @@ class EXingZhongLiu : AbstractItems,IChongNeng
         _s[0] = "ChongNeng";
         return _s;
     }
-    public float maxHPAdd;
-
+    int count;
+    float record;
     public void ChongNeng(int times)
     {
-        maxHPAdd += 0.05f*times;
+        count=times;
     }
 
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
+        chara.maxHp -= count*30;
 
-        chara.maxHpMul -= maxHPAdd;
+        record = count * 30;
     }
 
     public override void UseVerb()
@@ -53,7 +54,7 @@ class EXingZhongLiu : AbstractItems,IChongNeng
     public override void End()
     {
         base.End();
-        aim.maxHpMul += maxHPAdd;
+        aim.maxHp += record;
     }
 
     

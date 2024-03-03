@@ -8,7 +8,7 @@ public class CaiYi : AbstractBuff
     float orgAtk;
     override protected void Awake()
     {
-        base.Awake();
+      
         buffName = "猜疑";
         book = BookNameEnum.allBooks;
 
@@ -24,13 +24,13 @@ public class CaiYi : AbstractBuff
         chara.SetAimRandom(true);
         AbstractCharacter _ac=chara.myState.GetANewAim(true);
         chara.myState.SetUnchangeAim(_ac);
-        print(chara.wordName + "现在的目标是" + chara.myState.aim.wordName);
-  
+        print(chara.wordName + "现在的目标是" + chara.myState.aim[0].wordName);
+    base.Awake();
     }
     override public void Update()
     {
         base.Update();
-        print(chara.wordName + "Update()现在的目标是" + chara.myState.aim.wordName);
+        print(chara.wordName + "Update()现在的目标是" + chara.myState.aim[0].wordName);
         //攻击随机角色B，持续5秒，伤害结果降低50 %
         //被攻击者B随机攻击角色C（角色可以反复获得，即C也可以是A），效果一致，依据此循环，直到boss死亡
 
@@ -42,7 +42,7 @@ public class CaiYi : AbstractBuff
 
         if (chara.myState == null || chara.myState.aim== null) return;
         //为这个施法目标增加CAIYI的buff
-        var _b = chara.myState.aim.gameObject.AddComponent<CaiYi>();
+        var _b = chara.myState.aim[0].gameObject.AddComponent<CaiYi>();
         _b.maxTime = 10;
     
 

@@ -21,16 +21,17 @@ public class QuicklyGrowing : AbstractAdjectives
         rarity = 0;
         time = skillEffectsTime;
         base.Awake();
+
+
     }
 
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
-        base.UseAdj(aimCharacter);
+        base.UseAdj(aimCharacter); aimCharacter.BeCure(30, true, 0);
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        aimCharacter.hp += 30;
-        aimCharacter.CreateFloatWord(30, FloatWordColor.heal, false);
+       
     }
 
     float time;
@@ -42,7 +43,7 @@ public class QuicklyGrowing : AbstractAdjectives
 
     public override void End()
     {
-        //aim.hp -= 30;
+
         base.End();
     }
 

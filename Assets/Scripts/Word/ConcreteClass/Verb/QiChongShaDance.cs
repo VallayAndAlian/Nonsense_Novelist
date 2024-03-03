@@ -7,7 +7,7 @@ using UnityEngine;
 class QiChongShaDance : AbstractVerbs
 {
 
-    static public string s_description = "被动：攻击额外造成20%的精神伤害；\n主动：起舞，攻击所有敌人，持续10s";
+    static public string s_description = "被动：攻击额外造成20%的精神伤害；主动：起舞，攻击所有敌人，持续10s";
     static public string s_wordName = "七重纱之舞";
     static public int rarity = 4;
     public override void Awake()
@@ -16,16 +16,18 @@ class QiChongShaDance : AbstractVerbs
         skillID = 7;
         wordName = "七重纱之舞";
         bookName = BookNameEnum.Salome;
-        description = "使自己获得“起舞”";
+       
         skillMode = gameObject.AddComponent<SelfMode>();
         skillMode.attackRange = new SingleSelector();
         skillEffectsTime =10;
         rarity = 4;
         needCD=8;
-        description = "被动：攻击额外造成20%的精神伤害；\n主动：<color=#dd7d0e>起舞</color>，攻击所有敌人，持续10s";
-        if (GetComponent<AbstractCharacter>() != null)
-        {   
-            GetComponent<AbstractCharacter>().event_AttackA += AddToAttackA;
+        description = "被动：攻击额外造成20%的精神伤害；主动：<color=#dd7d0e>起舞</color>，攻击所有敌人，持续10s";
+        if (character == null) return;
+
+        if (!character.isNaiMa)
+        {
+            character.event_AttackA += AddToAttackA;
         }
        
     }
@@ -42,17 +44,25 @@ class QiChongShaDance : AbstractVerbs
     {
        
         base.UseVerb(useCharacter);
-      
+
+         //其它
         buffs.Add(gameObject.AddComponent<QiWu>());
         buffs[0].maxTime = skillEffectsTime;
     }
     void AddToAttackA()
     {
-        
+        for (int i = 0; i < character.myState.aim.Count; i++)
+        {
+            //攻击额外造成20%的精神伤害；
+            character.myState.aim[i].BeAttack(AttackType.psy, 0.2f * character.psy * character.psyMul, true, 0, character);
+        }
+       
     }
 
     private void OnDestroy()
     {
+        if (character == null) return;
+
         if (GetComponent<AbstractCharacter>() != null)
         {
             GetComponent<AbstractCharacter>().event_AttackA -= AddToAttackA;

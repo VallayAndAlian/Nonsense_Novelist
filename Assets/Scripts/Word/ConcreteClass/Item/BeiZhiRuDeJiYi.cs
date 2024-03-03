@@ -39,7 +39,7 @@ class BeiZhiRuDeJiYi : AbstractItems
 
         chara.san -= 5;
 
-        for (int x = 0; x < 3; x++)
+        for (int x = 0; x < 2; x++)
         {
             buffs.Add(gameObject.AddComponent<GaiZao>());
             buffs[0].maxTime = Mathf.Infinity;
@@ -55,5 +55,6 @@ class BeiZhiRuDeJiYi : AbstractItems
     {
         base.End();
         aim.san += 5;
+
     }
 }

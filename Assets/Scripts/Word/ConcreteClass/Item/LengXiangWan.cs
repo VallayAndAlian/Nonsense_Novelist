@@ -38,13 +38,9 @@ class LengXiangWan : AbstractItems
     {
         base.UseItem(chara);
         chara.cure += 3;
-        //
-        var _buffs = GetComponents<AbstractBuff>();
-        foreach (var _buff in _buffs)
-        {
-            if (_buff.isBad) Destroy(_buff);
-        }
         //清楚负面效果：
+        chara.DeleteBadBuff(100);
+       
 
     }
 

@@ -8,45 +8,54 @@ class ShaLeMei : AbstractCharacter
 {
     override public void Awake()
     {
+
         base.Awake();
+
+        //基础信息
         characterID = 8;
         wordName = "莎乐美";
         bookName = BookNameEnum.Salome;
-        gender = GenderEnum.girl;
-        hp =maxHp  = 130;
+        brief = "暂无介绍";
+        description = "暂无介绍";
+
+        //数值
+        hp = maxHp = 70;
         atk = 3;
-        def = 4;
-        psy = 5;
+        def = 3;
+        psy = 6;
         san = 3;
-        mainProperty.Add("精神","中法dps");
-        trait=gameObject.AddComponent<Possessive>();
-        roleName = "舞女";
+
         attackInterval = 2.2f;
-        attackDistance = 200;
-        brief = "《红楼梦》中一位性格敏感脆弱，却又极有灵性的少女。";
-        description = "林黛玉，中国古典名著《红楼梦》的女主角，金陵十二钗正册双首之一，西方灵河岸绛珠仙草转世，最后于贾宝玉、薛宝钗大婚之夜泪尽而逝。她生得容貌清丽，兼有诗才，是古代文学作品中极富灵气的经典女性形象。" +
-            "\n道是：" +
-            "\n可叹停机德，堪怜咏絮才。" +
-            "\n玉带林中挂，金簪雪里埋。";
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
+        attackDistance = 500;
+        myState.aimCount = 1;
+        attackAmount = 1;
+        hasBetray = false;
+
+        //特性
+        roleName = "舞女";
+        roleInfo = "攻击降低对方的意志";//普通攻击附带“冷漠”，不可叠加，持续10s
+        event_AttackA += AttackAMore;
     }
 
-    public override bool AttackA()
+   
+
+    void AttackAMore()
     {
-        if (base.AttackA())
+        for (int i = 0; i < myState.aim.Count; i++)
         {
-            //普通攻击降低敌人20%意志，不可叠加，持续10s
-            ShaLeMeiBuff record = myState.aim.GetComponent<ShaLeMeiBuff>();
-            if (record == null)
-                myState.aim.gameObject.AddComponent<ShaLeMeiBuff>();
-            else
-                record.nowTime = 10;
-            return true;
+            myState.aim[i].gameObject.AddComponent<LengMo>().maxTime = 10;
         }
-        return false;
+    }
+
+    private void OnDestroy()
+    {
+        event_AttackA -= AttackAMore;
     }
 
 
-
+    #region 文本
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
@@ -70,5 +79,5 @@ class ShaLeMei : AbstractCharacter
     {
         return "“宝玉…宝玉…你好……”黛玉没说完便合上了双眼。";
     }
-
+    #endregion
 }

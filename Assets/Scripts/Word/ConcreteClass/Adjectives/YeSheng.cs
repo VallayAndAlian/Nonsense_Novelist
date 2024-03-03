@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class YeSheng : AbstractAdjectives
 {
-    static public string s_description = "获得1个随机随从";
+    static public string s_description = "召唤一个随从";
     static public string s_wordName = "野生的";
     static public int rarity = 1;
     public override void Awake()
@@ -15,9 +15,9 @@ public class YeSheng : AbstractAdjectives
         adjID = 27;
         wordName = "野生的";
         bookName = BookNameEnum.allBooks;
-        description = "获得1个随机随从";
+        description = "召唤一个随从";
         skillMode = gameObject.AddComponent<SelfMode>();
-        skillEffectsTime = 1;
+        skillEffectsTime = Mathf.Infinity;
         rarity = 1;
 
 

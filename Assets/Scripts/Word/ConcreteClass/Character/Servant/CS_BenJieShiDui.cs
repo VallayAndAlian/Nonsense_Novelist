@@ -40,8 +40,13 @@ public class CS_BenJieShiDui : ServantAbstract
         //代替平A
         if (myState.aim != null)
         {
-            print("随从"+wordName+"的目标是"+ myState.aim.name);
-            myState.character.CreateBullet(myState.aim.gameObject);
+            print("随从"+wordName+"的目标是"+ myState.aim[0].name);
+            for (int x = 0; x < myState.aim.Count; x++)
+            {
+                    myState.character.CreateBullet(myState.aim[x].gameObject);
+                attackA.UseMode(AttackType.heal, san * sanMul * 1f, myState.character, myState.aim[x], true, 0);
+            }
+        
             if (myState.character.aAttackAudio != null)
             {
                 myState.character.source.clip = myState.character.aAttackAudio;
@@ -52,7 +57,7 @@ public class CS_BenJieShiDui : ServantAbstract
             //myState.aim.CreateFloatWord(
             //attackA.UseMode(myState.character, san * sanMul * 1f, myState.aim)
             //, FloatWordColor.heal, false);
-            attackA.UseMode(AttackType.heal, san * sanMul * 1f, myState.character, myState.aim, true, 0);
+           
             return true;
         }
 

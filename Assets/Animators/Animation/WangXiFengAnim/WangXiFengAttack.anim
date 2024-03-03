@@ -25,7 +25,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: f65b01a44fba5104f92285a9f67ea8e2, type: 3}
     - time: 0.16666667
       value: {fileID: 21300000, guid: 0030e3132cad26e4ca58dbef7d57f533, type: 3}
-    - time: 0.20833333
+    - time: 0.25
       value: {fileID: 21300000, guid: 8cba11ad09ec7a147ab27ef182de5d0d, type: 3}
     - time: 0.29166666
       value: {fileID: 21300000, guid: 3d6e0194012538f44ac9ea72ff20193e, type: 3}
@@ -37,7 +37,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: 17674584ed42af9468fd01305e045cde, type: 3}
     - time: 0.5833333
       value: {fileID: 21300000, guid: e3c119dfc78c6704bb64b9ecda2f21c5, type: 3}
-    - time: 0.6666667
+    - time: 0.625
       value: {fileID: 21300000, guid: c21c6e7c83f730146b32d500a7b9474e, type: 3}
     - time: 0.75
       value: {fileID: 21300000, guid: 062cfb107a8cdc34190089dffaadcde3, type: 3}
@@ -49,7 +49,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: 06f836c0d6afdcd438c1e1f9f9632f2c, type: 3}
     - time: 1.0416666
       value: {fileID: 21300000, guid: 54461f3d5d9235b4ab18e5411d9cc9be, type: 3}
-    - time: 1.125
+    - time: 1.0833334
       value: {fileID: 21300000, guid: bc94dd4fdd14cec48b002861453373f6, type: 3}
     - time: 1.1666666
       value: {fileID: 21300000, guid: cf07425ba91b91943babfd85291387f9, type: 3}
@@ -61,7 +61,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: 70d1c12003943364790cef936a78249b, type: 3}
     - time: 1.4583334
       value: {fileID: 21300000, guid: 72db006f5d741b5468f70ffe9273a7aa, type: 3}
-    - time: 1.5416666
+    - time: 1.5833334
       value: {fileID: 21300000, guid: 2add26197ce3caa489283a810eb0b276, type: 3}
     - time: 1.625
       value: {fileID: 21300000, guid: 40d1722c84b5b3448b35f092617ec978, type: 3}
@@ -73,7 +73,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: b6cc937af6e34324c93c24c0b56cba00, type: 3}
     - time: 1.9166666
       value: {fileID: 21300000, guid: c8a02569ecd196e45a588a403cd37a54, type: 3}
-    - time: 2
+    - time: 1.9583334
       value: {fileID: 21300000, guid: a34f5137dec8df54fa4ce36c81e4b964, type: 3}
     - time: 2.0416667
       value: {fileID: 21300000, guid: c43bf1646473ca84fa83c4e812ee72cd, type: 3}
@@ -158,6 +158,13 @@ AnimationClip:
   m_Events:
   - time: 1.1666666
     functionName: BulletOut
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.1666666
+    functionName: AttackA
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

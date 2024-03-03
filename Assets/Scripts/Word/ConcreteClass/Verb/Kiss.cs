@@ -23,7 +23,7 @@ class Kiss : AbstractVerbs
 
         skillEffectsTime =5;
         rarity = 1;
-        needCD = 4;
+        needCD = 5;
 
     }
     override public string[] DetailLable()
@@ -35,19 +35,40 @@ class Kiss : AbstractVerbs
     public override void UseVerb(AbstractCharacter useCharacter)
     {
         base.UseVerb(useCharacter);
-        buffs.Add(skillMode.CalculateAgain(attackDistance, useCharacter)[0].gameObject.AddComponent<FuHuo>());
-        buffs[0].maxTime = 10f;
-        BasicAbility(useCharacter);
+        //奶妈
+        if (useCharacter)
+        {
+            var _aims = skillMode.CalculateAgain(200, useCharacter);
+            int x = 0;
+            for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
+            {
+                skillMode.UseMode(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul, useCharacter, _aims[i], true, 0);
+
+                buffs.Add(_aims[i].gameObject.AddComponent<FuHuo>());
+                buffs[0].maxTime = skillEffectsTime;
+                x++;
+            }
+            return;
+        }
+
+
+        //
+        for (int i = 0; i < useCharacter.myState.aim.Count; i++)
+        {
+
+            skillMode.UseMode(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul, useCharacter, useCharacter.myState.aim[i], true, 0);
+
+            buffs.Add(useCharacter.myState.aim[i].gameObject.AddComponent<FuHuo>());
+            buffs[0].maxTime = skillEffectsTime;
+        }
+       
+    
     }
 
     public override void BasicAbility(AbstractCharacter useCharacter)
     {
-        AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        //aim.CreateFloatWord(
-        //skillMode.UseMode(useCharacter, 3 * useCharacter.psy * useCharacter.psyMul * (1 - aim.san / (aim.san + 20)), aim)
-        //,FloatWordColor.psychic,true);
-        skillMode.UseMode(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul, useCharacter, aim, true, 0);
     }
+        
     public override string UseText()
     {
         AbstractCharacter character = this.GetComponent<AbstractCharacter>();

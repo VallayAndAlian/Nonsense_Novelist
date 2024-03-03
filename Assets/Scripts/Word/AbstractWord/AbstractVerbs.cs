@@ -73,7 +73,7 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
     public virtual void CdAdd()
     {
         CD++;
-        //print(wordName+"'S CD：（cdadd）"+CD);
+
 
         if (CD+1>=needCD) 
             character.canUseSkills++;
@@ -94,8 +94,10 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
     {
         isUsing = true;
         stateInfo=useCharacter.charaAnim.anim.GetCurrentAnimatorStateInfo(0);
+        character.charaAnim.Play(AnimEnum.attack);
+        character.CreateFloatWord(this.wordName, FloatWordColor.physics, false);
     }
-    public void CDZero()
+    virtual public void CDZero()
     {
         CD = 0;
     }
@@ -129,7 +131,7 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
            
     }
 
-    private void OnDestroy()
+    virtual public void OnDestroy()
     {
         foreach (AbstractBuff buff in buffs)
         {

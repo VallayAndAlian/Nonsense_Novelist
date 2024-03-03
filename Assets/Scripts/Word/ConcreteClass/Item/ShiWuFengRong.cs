@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class ShiWuFengRong : AbstractItems
 {
-    static public string s_description = "随从四维+10%，获得时随机获得一个< color=#dd7d0e>丰容设施</color>";
+    static public string s_description = "随从四维+10%，获得时随机获得一个<color=#dd7d0e>丰容设施</color>";
     static public string s_wordName = "食物丰容";
     static public int rarity = 3;
     public override void Awake()
@@ -15,7 +15,7 @@ class ShiWuFengRong : AbstractItems
         itemID = 4;
         wordName = "食物丰容";
         bookName = BookNameEnum.ZooManual;
-        description = "随从四维+10%，获得时随机获得一个< color=#dd7d0e>丰容设施</color>";//随从
+        description = "随从四维+10%，获得时随机获得一个<color=#dd7d0e>丰容设施</color>";//随从
         rarity =3;
 
         VoiceEnum = MaterialVoiceEnum.materialNull;
@@ -37,6 +37,7 @@ class ShiWuFengRong : AbstractItems
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
+       
         if (hasAdd)
             return;
         if (chara == null)
@@ -53,7 +54,8 @@ class ShiWuFengRong : AbstractItems
             _s.sanMul += 0.1f;
         }
 
-        //为角色增加一个随从
+        //为角色增加一个随从 
+        //获得后随机获得一个丰容设施，即益智喂食器或者本杰士堆
         var _random = Random.Range(0, 2);//int型，0或1
         if(_random==0)
             chara.AddServant("CS_BenJieShiDui");

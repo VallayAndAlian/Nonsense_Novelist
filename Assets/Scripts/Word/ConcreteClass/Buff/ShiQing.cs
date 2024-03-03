@@ -12,12 +12,14 @@ public class ShiQing : AbstractBuff
 
     override protected void Awake()
     {
-        base.Awake();
+      
         buffName = "Ê«Çé";
         description = "ÌáÉý20%<sprite name=\"psy\">";
         book = BookNameEnum.HongLouMeng;
         chara.psyMul += 0.2f;
 
+        base.Awake();
+        chara.teXiao.PlayTeXiao("shiQing");
     }
 
 

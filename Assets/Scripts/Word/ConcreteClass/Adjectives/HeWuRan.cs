@@ -13,7 +13,7 @@ public class HeWuRan : AbstractAdjectives
     static public int rarity = 2;
     public override void Awake()
     {  
-        base.Awake();
+        
         adjID = 13;
         wordName = "ºËÎÛÈ¾µÄ";
         bookName = BookNameEnum.ElectronicGoal;
@@ -23,9 +23,11 @@ public class HeWuRan : AbstractAdjectives
 
         skillEffectsTime = 10;
         rarity = 2;
-      
-        if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision")) 
-            wordCollisionShoots[0]=gameObject.AddComponent<ChuanBoCollision>();
+
+        base.Awake();
+
+        if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
+            wordCollisionShoots[0] = gameObject.AddComponent<ChuanBoCollision>();
     }
 
 
@@ -40,8 +42,8 @@ public class HeWuRan : AbstractAdjectives
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
         base.UseAdj(aimCharacter);
-        aimCharacter.gameObject.AddComponent<Toxic>()
-            .maxTime = skillEffectsTime;
+        buffs.Add(aimCharacter.gameObject.AddComponent<Toxic>());
+        buffs[0].maxTime = skillEffectsTime;
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {

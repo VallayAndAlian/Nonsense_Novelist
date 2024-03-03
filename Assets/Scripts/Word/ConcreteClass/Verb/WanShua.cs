@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 class WanShua : AbstractVerbs
 {
-    static public string s_description = "使友方<color=#dd7d0e>亢奋</color>，持续15s";
+    static public string s_description = "使一名友方获得随机随从，并获得<color=#dd7d0e>亢奋</color>，持续10s";
     static public string s_wordName = "玩耍";
     static public int rarity = 3;
     public override void Awake()
@@ -16,13 +16,13 @@ class WanShua : AbstractVerbs
         skillID = 3;
         wordName = "玩耍";
         bookName = BookNameEnum.ZooManual;
-        description = "使友方<color=#dd7d0e>亢奋</color>，持续15s";
+        description = "使一名友方获得随机随从，并获得<color=#dd7d0e>亢奋</color>，持续10s";
 
-        skillMode = gameObject.AddComponent<UpATKMode>();
+        skillMode = gameObject.AddComponent<CureMode>();
 
-        skillEffectsTime = 15;
+        skillEffectsTime = 10;
         rarity = 3;
-        needCD = 4;
+        needCD = 5;
     }
     override public string[] DetailLable()
     {
@@ -37,7 +37,12 @@ class WanShua : AbstractVerbs
     public override void UseVerb(AbstractCharacter useCharacter)
     {
         base.UseVerb(useCharacter);
-        buffs.Add(skillMode.CalculateAgain(attackDistance, useCharacter)[0].gameObject.AddComponent<KangFen>());
+        var cha = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
+
+        cha.AddRandomServant();
+
+
+        buffs.Add(cha.gameObject.AddComponent<KangFen>());
         buffs[0].maxTime = skillEffectsTime;
     }
 

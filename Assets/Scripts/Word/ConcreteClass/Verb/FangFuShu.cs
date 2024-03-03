@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class FangFuShu : AbstractVerbs
 {
-    static public string s_description = "使友方<color=#dd7d0e>复活</color>，持续10s";
+    static public string s_description = "当友方倒下时使其<color=#dd7d0e>复活</color>，持续10s";
     static public string s_wordName = "防腐";
     static public int rarity =2;
     public override void Awake()
@@ -15,8 +15,8 @@ class FangFuShu : AbstractVerbs
         skillID = 5;
         wordName = "防腐";
         bookName = BookNameEnum.EgyptMyth;
-        description = "使友方<color=#dd7d0e>复活</color>，持续10s";
-
+        description = "当友方倒下时使其<color=#dd7d0e>复活</color>，持续10s";
+        //将这个技能的机制改一下，等角色倒下时才会释放，释放完才消耗能量点
         //目标：血量最低的友方
         skillMode = gameObject.AddComponent<CureMode>();
         skillMode.attackRange =  new SingleSelector();
@@ -24,7 +24,7 @@ class FangFuShu : AbstractVerbs
 
         skillEffectsTime = 10;
         rarity = 2;
-        needCD = 6;
+        needCD = 8;
 
 
     }
@@ -42,9 +42,55 @@ class FangFuShu : AbstractVerbs
     /// <param name="useCharacter">施法者</param>
     public override void UseVerb(AbstractCharacter useCharacter)
     {
-        base.UseVerb(useCharacter);
-        buffs.Add(skillMode.CalculateAgain(attackDistance, useCharacter)[0].gameObject.AddComponent<ReLife>());
-        buffs[0].maxTime = skillEffectsTime;
+        isUsing = true;
+   
+
+        //找是否有倒下的友军
+        var charas = skillMode.CalculateAgain(attackDistance, useCharacter);
+        AbstractCharacter deadChara = null;
+        foreach (var chara in charas)
+        {
+            if (chara.myState.nowState == chara.myState.allState.Find(p => p.id == AI.StateID.dead))
+            {
+                deadChara = chara;
+            }
+        }
+        if (deadChara == null) return;
+
+        deadChara.reLifes += 1;
+        CD = 0;
+        hasFull = false;
+        character.charaAnim.Play(AnimEnum.attack);
+        character.CreateFloatWord(this.wordName, FloatWordColor.physics, false);
+
+    }
+
+
+
+    bool hasFull = false;
+    
+    //如果满了且未使用，则能量不增加
+    public override void CdAdd()
+    {
+        if (!hasFull)
+        {
+            CD++;
+            if (CD  >= needCD)
+            {
+                character.canUseSkills++;
+                hasFull = true;
+            }
+        }
+        else
+        {
+            
+        }
+
+    }
+
+    public override void CDZero()
+    {
+        
     }
 
     public override string UseText()

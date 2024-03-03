@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 物品材质，对应音效种类
 /// </summary>
-enum MaterialVoiceEnum
+public enum MaterialVoiceEnum
 {
     /// <summary>无 </summary>
     materialNull = 0,

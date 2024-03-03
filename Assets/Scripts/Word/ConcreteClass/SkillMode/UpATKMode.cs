@@ -24,7 +24,7 @@ class UpATKMode : AbstractSkillMode
     override public AbstractCharacter[] CalculateAgain(int attackDistance, AbstractCharacter character)
     {
         
-        AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.friend);
+        AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.friend, false);
         CollectionHelper.OrderByDescending(a, p => p.allValue);
         return a;
     }

@@ -38,7 +38,8 @@ public class TestShoot : MonoBehaviour
     private Type clickWord;
     private void Start()
     {
-        if(SceneManager.GetActiveScene().name == "CombatTest")
+       
+        if (SceneManager.GetActiveScene().name == "CombatTest")
         {
             gang = GameObject.Find("shooter").transform.GetChild(0).gameObject;
             information = GameObject.Find("combatCanvas").GetComponentInChildren<WordInformation>();
@@ -83,25 +84,18 @@ public class TestShoot : MonoBehaviour
     /// 下一个词条小球准备[测试版本用]
     /// </summary>
     public void NextWordReady()
-    {
-        bulletInstance = Instantiate(bullet);
-
-        //预制体相关
-        bulletInstance.transform.SetParent(gang.transform);
-        bulletInstance.transform.localPosition = Vector3.zero;
-        bulletInstance.transform.localEulerAngles = Vector3.zero;
-        bulletInstance.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
+    {  
         var buttonSelf = EventSystem.current.currentSelectedGameObject;
-        abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = bulletInstance.AddComponent(buttonSelf.GetComponent<AbstractWord0>().GetType()) as AbstractWord0;
-        //if (list != null) list.Clear();
-        //list.Add(buttonSelf.GetComponent<AbstractWord0>().GetType());
-        foreach (var _col in (bulletInstance.GetComponentsInChildren<WordCollisionShoot>()))
-            _col.absWord = abs;
+        abs = this.GetComponent < AbstractWord0 > ();
+
+        ReadyWordBullet();
+        DestroyWordBullet();
         information.ChangeInformation(abs);
 
     }
     public void ReadyWordBullet()
     {
+
         bulletInstance = Instantiate(bullet);
 
         //预制体相关
@@ -110,7 +104,14 @@ public class TestShoot : MonoBehaviour
         bulletInstance.transform.localEulerAngles = Vector3.zero;
         bulletInstance.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
         //给小球增加词条属性
-        abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = bulletInstance.AddComponent(AllSkills.CreateSkillWord()) as AbstractWord0;
+        if (abs == null)
+        {
+            abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = bulletInstance.AddComponent(AllSkills.CreateSkillWord()) as AbstractWord0;
+        }
+        else
+        {
+            bulletInstance.AddComponent(abs.GetType());
+        }
         foreach (var _col in (bulletInstance.GetComponentsInChildren<WordCollisionShoot>()))
             _col.absWord = abs;
         information.ChangeInformation(abs);
@@ -123,12 +124,13 @@ public class TestShoot : MonoBehaviour
     {
         fired = true; // 设置开火状态为已开火
         //给词条添加一个初始的力
+        if (bulletInstance == null) 
+            bulletInstance = gang.transform.GetChild(0).gameObject; 
         bulletInstance.GetComponent<Rigidbody2D>().AddForce(bulletInstance.transform.up * crtForce * forceAmount);
         bulletInstance.transform.SetParent(afterShootTF);
         bulletInstance.GetComponent<Collider2D>().isTrigger = false;
         bulletInstance.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
         ReadyWordBullet();
-        //NextWordReady();
         DestroyWordBullet();
     }
     private void DestroyWordBullet()
@@ -139,7 +141,7 @@ public class TestShoot : MonoBehaviour
         }
         else if (gang.transform.childCount > 1)
         {
-            Destroy(gang.transform.GetChild(0).gameObject);
+            Destroy(gang.transform.GetChild(0).gameObject);   
         }
     }
 }

@@ -23,7 +23,7 @@ class GunShoot : AbstractVerbs
         skillMode.attackRange =  new SingleSelector();
         skillEffectsTime = Mathf.Infinity;
 
-        rarity = 1;
+        rarity = 2;
         needCD = 2;
 
     }
@@ -36,12 +36,24 @@ class GunShoot : AbstractVerbs
 
     public override void BasicAbility(AbstractCharacter useCharacter)
     {
-        //造成300%伤害的物理攻击
-        AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        //aim.CreateFloatWord(
-        //skillMode.UseMode(useCharacter, 3*useCharacter.atk *useCharacter.atkMul* (1 - aim.def / (aim.def + 20)), aim)
-        //,FloatWordColor.physics,true);
-        skillMode.UseMode(AttackType.atk, 3 * useCharacter.atk * useCharacter.atkMul, useCharacter, aim, true, 0);
+        //奶妈
+        if (useCharacter.isNaiMa)
+        {
+            var _aims = skillMode.CalculateAgain(200, useCharacter);
+            int x = 0;
+            for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
+            {
+                _aims[i].BeAttack(AttackType.atk, character.atk * character.atkMul * 3, true, 0, character);
+                x++;
+            }
+
+            return;
+        }
+        //其它
+        for (int i = 0; i < character.myState.aim.Count; i++)
+        {
+            character.myState.aim[i].BeAttack(AttackType.atk, character.atk * character.atkMul * 3, true, 0, character);
+        }
     }
     public override string UseText()
     {

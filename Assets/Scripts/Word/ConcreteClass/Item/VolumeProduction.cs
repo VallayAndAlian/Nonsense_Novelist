@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class VolumeProduction : AbstractItems
 {
-    static public string s_description = "散射，获得<color=#dd7d0e>改造</color>";
+    static public string s_description = "获得<color=#dd7d0e>改造</color>";
     static public string s_wordName = "量产改装件";
     static public int rarity = 1;
     public override void Awake()
@@ -15,7 +15,7 @@ class VolumeProduction : AbstractItems
         itemID = 14;
         wordName = "量产改装件";
         bookName = BookNameEnum.ElectronicGoal;
-        description = "散射，获得<color=#dd7d0e>改造</color>";
+        description = "获得<color=#dd7d0e>改造</color>";
         holdEnum = HoldEnum.handSingle;
         VoiceEnum = MaterialVoiceEnum.Ceram;
 

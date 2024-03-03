@@ -38,6 +38,10 @@ public class ChuanBoCollision : WordCollisionShoot
 
             //获取角色与相邻角色
             AbstractCharacter character = collision.gameObject.GetComponent<AbstractCharacter>();
+
+            if (character.myState.nowState == character.myState.allState.Find(p => p.id == AI.StateID.dead)) return;
+
+
             AbstractCharacter[] nearCharacter = CharacterManager.instance.GetNearBy_C(character.situation);
 
             character.CreateFloatWord(absWord.wordName, FloatWordColor.getWord, false);
@@ -55,6 +59,7 @@ public class ChuanBoCollision : WordCollisionShoot
                     if (cha != null)
                     {
                         character.AddVerb(collision.gameObject.AddComponent(b.GetType()) as AbstractVerbs);
+                        cha.CreateFloatWord(absWord.wordName, FloatWordColor.getWord, false);
                     }
                 }
 
@@ -72,7 +77,7 @@ public class ChuanBoCollision : WordCollisionShoot
                     if (cha != null)
                     {
                         AbstractAdjectives _adj = cha.gameObject.AddComponent(absWord.GetType()) as AbstractAdjectives;
-                        
+                        cha.CreateFloatWord(absWord.wordName, FloatWordColor.getWord, false);
                         _adj.UseAdj(cha);
                     }
                 }
@@ -90,6 +95,7 @@ public class ChuanBoCollision : WordCollisionShoot
                     if (cha != null)
                     {
                         AbstractItems _noun = collision.gameObject.AddComponent(absWord.GetType()) as AbstractItems;
+                        cha.CreateFloatWord(absWord.wordName, FloatWordColor.getWord, false);
                         noun.UseItem(cha);
                     }
                 }

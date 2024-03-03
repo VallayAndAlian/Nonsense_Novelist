@@ -43,7 +43,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     #region pauseSetting
 
     public void EndGame()
-    {
+    {if (pause) return;
         Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
         Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
         Instantiate(endGame);
@@ -162,28 +162,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
         }
     }
 
-    /// <summary>
-    /// 返回与输入的Situation相邻的situation的数值
-    /// </summary>
-    /// <param name="a">需要计算相邻situation的点</param>
-    /// <returns>Situation[0]和Situation[1]（和Situation[2]）</returns>
-     public Situation[] GetNearBy_S(Situation a)
-    {
-        Situation[] _resSits = new Situation[3];
-
-        switch (a.number)
-        {
-            case 1: { _resSits[0] = situationDic[2]; _resSits[1] = situationDic[3]; _resSits[2] = null; } break;
-            case 2: { _resSits[0] = situationDic[1]; _resSits[1] = situationDic[4]; _resSits[2] = null; } break;
-            case 3: { _resSits[0] = situationDic[1]; _resSits[1] = situationDic[4]; _resSits[2] = situationDic[4.5f]; } break;
-            case 4: { _resSits[0] = situationDic[2]; _resSits[1] = situationDic[3]; _resSits[2] = null; } break;
-            case 5: { _resSits[0] = situationDic[6]; _resSits[1] = situationDic[7]; _resSits[2] = situationDic[4.5f]; } break;
-            case 6: { _resSits[0] = situationDic[5]; _resSits[1] = situationDic[8]; _resSits[2] = null; } break;
-            case 7: { _resSits[0] = situationDic[5]; _resSits[1] = situationDic[8]; _resSits[2] = null; } break;
-            case 8: { _resSits[0] = situationDic[6]; _resSits[1] = situationDic[7];  _resSits[2] = null;} break;
-        }
-        return _resSits;
-    }
+   
 
 
     /// <summary>
@@ -207,5 +186,15 @@ public class CharacterManager : MonoSingleton<CharacterManager>
             case 8: { _resSits[0] = situationDic[6].GetComponentInChildren<AbstractCharacter>(); _resSits[1] = situationDic[7].GetComponentInChildren<AbstractCharacter>(); _resSits[2] = null; } break;
         }
         return _resSits;
+    }
+
+
+
+    float bulletSpeed=3.3f;
+    public float DelayAccount(float _startP,float _endP)
+    {
+        float count =( (Mathf.Abs(_startP - _endP)) / bulletSpeed);
+
+        return count;
     }
 }

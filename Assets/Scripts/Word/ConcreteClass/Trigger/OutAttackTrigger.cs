@@ -23,8 +23,8 @@ namespace AI
             }
 
 
-            if (myState.aim == null ||
-                 Situation.Distance(myState.character.situation, myState.aim.situation) > myState.character.attackDistance)
+            if (myState.aim[0] == null ||
+                 Situation.Distance(myState.character.situation, myState.aim[0].situation) > myState.character.attackDistance)
             {
                 myState.aim = null;
                 return true;

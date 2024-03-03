@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 class BaoZa : AbstractVerbs
 {
-    static public string s_description = "治疗友方3*<sprite name=\"san\">";
+    static public string s_description = "治疗3*<sprite name=\"san\">";
     static public string s_wordName = "包扎";
     static public int rarity = 1;
     public override void Awake()
@@ -17,7 +17,7 @@ class BaoZa : AbstractVerbs
         skillID = 18;
         wordName = "包扎";
         bookName = BookNameEnum.allBooks;
-        description = "治疗友方3*<sprite name=\"san\">";
+        description = "治疗3*<sprite name=\"san\">";
 
        // nickname.Add( "刺痛");
 
@@ -26,7 +26,7 @@ class BaoZa : AbstractVerbs
         skillEffectsTime = Mathf.Infinity;
 
         rarity = 1;
-        needCD=2;
+        needCD=3;
     }
 
     public override void UseVerb(AbstractCharacter useCharacter)
@@ -39,10 +39,7 @@ class BaoZa : AbstractVerbs
     {
         //基本效果：恢复300%*意志
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        //aim.CreateFloatWord(
-        //skillMode.UseMode(useCharacter, 40, aim)
-        //,FloatWordColor.heal,true);
-        skillMode.UseMode(AttackType.heal, 40, useCharacter, aim, true, 0);
+        skillMode.UseMode(AttackType.heal, 3* aim.san*aim.sanMul, useCharacter, aim, true, 0);
     }
 
     public override string UseText()

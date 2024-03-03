@@ -9,47 +9,67 @@ class SiYangYuan : AbstractCharacter
 {
     override public void Awake()
     {
+        isNaiMa = true;
+
         base.Awake();
+
+        //基础信息
         characterID = 11;
         wordName = "饲养员";
         bookName = BookNameEnum.ZooManual;
-        gender = GenderEnum.noGender;
-        hp =maxHp  = 100;
+        brief = "暂无介绍";
+        description = "暂无介绍";
+
+        //数值
+        hp = maxHp = 100;
         atk = 0;
         def = 5;
         psy = 3;
-        san = 5;
-        trait=gameObject.AddComponent<Mercy>();
-        roleName = "饲养员";
+        san = 6;
+
         attackInterval = 2.2f;
         AttackTimes = 1;
         attackSpeedPlus = 1;
         attackDistance = 500;
+        myState.aimCount = 1;
+        attackAmount = 1;
+        hasBetray = false;
 
-        Destroy(attackA);
-        attackA = gameObject.AddComponent<CureMode>();
-        description = "暂无文案";
+        //特性
+        roleName = "饲养员";
+        roleInfo = "普通攻击的治疗，附带5s亢奋";//普通攻击有20%几率附带“亢奋”状态，持续5s
+
     }
 
     AbstractCharacter[] aims;
     public override bool AttackA()
-    {//代替平A
-        if (hp <= 0) return false;
+    {
+        //if (hp <= 0) return false;
         if (myState.aim != null)
         {
-            myState.character.CreateBullet(myState.aim.gameObject);
+          
             if (myState.character.aAttackAudio != null)
             {
                 myState.character.source.clip = myState.character.aAttackAudio;
                 myState.character.source.Play();
             }
             myState.character.charaAnim.Play(AnimEnum.attack);
-            //普通攻击目标为血量百分比最低的队友，恢复120%意志的血量，以及“亢奋”状态
-            //myState.aim.CreateFloatWord(
-            //attackA.UseMode(myState.character, san * sanMul * 1.2f, myState.aim)
-            //,FloatWordColor.heal,false);
-            attackA.UseMode(AttackType.heal, san * sanMul * 1.2f, myState.character, myState.aim, true, 0);
-            myState.aim.gameObject.AddComponent<KangFen>().maxTime = 5;
+
+
+
+            for (int i = 0; i < myState.aim.Count; i++)
+            {
+                attackA.UseMode(AttackType.heal, san * sanMul * 1.2f, myState.character, myState.aim[i], true, 0);
+                if (Random.Range(1, 101) <= 20)
+                {
+                    myState.aim[i].gameObject.AddComponent<KangFen>().maxTime = 5;
+                }
+            }
+
+            //执行外部委托
+            if (event_AttackA != null)
+                event_AttackA();
+
             return true;
         }
         return false;

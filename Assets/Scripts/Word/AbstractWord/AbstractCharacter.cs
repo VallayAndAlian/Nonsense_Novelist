@@ -48,7 +48,9 @@ abstract public class AbstractCharacter : AbstractWord0
     [HideInInspector] public string roleName;
     [HideInInspector] public string roleInfo;
 
- 
+    public bool isNaiMa = false;
+
+
     #region 血量
 
     private Slider hpSlider;
@@ -60,7 +62,7 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return HP; }
         set
         {
-    
+
             HP = value;
             HPSetting();
         }
@@ -91,12 +93,12 @@ abstract public class AbstractCharacter : AbstractWord0
     }
 
 
-    IEnumerator DelayAttack(float _delayTime, float _value, AttackType _at, bool _hasFloat,AbstractCharacter _whoDid)
+    IEnumerator DelayAttack(float _delayTime, float _value, AttackType _at, bool _hasFloat, AbstractCharacter _whoDid)
     {
         yield return new WaitForSeconds(_delayTime);
         if (_hasFloat)
         {
-            if(_at==AttackType.atk) CreateFloatWord(_value, FloatWordColor.physics, true);
+            if (_at == AttackType.atk) CreateFloatWord(_value, FloatWordColor.physics, true);
             if (_at == AttackType.psy) CreateFloatWord(_value, FloatWordColor.psychic, true);
             if (_at == AttackType.dir) CreateFloatWord(_value, FloatWordColor.physics, true);
         }
@@ -110,61 +112,21 @@ abstract public class AbstractCharacter : AbstractWord0
 
 
     //外部可以增加每秒检测的委托入口
-    [HideInInspector] public delegate void Event_BeAttack(float _damage,AbstractCharacter _whoDid);
+    [HideInInspector] public delegate void Event_BeAttack(float _damage, AbstractCharacter _whoDid);
     [HideInInspector] public Event_BeAttack event_BeAttack;
 
-    /// <summary>
-    /// 角色收到攻击时计算伤害
-    /// </summary>
-    /// <param name="_at"></param>
-    /// <param name="_value">使用者的atk、psy或者直接伤害的数值</param>
-    public void BeAttack(AttackType _at,float _value,bool _hasFloat,float _delayTime,AbstractCharacter _whoDid)
-    {
-        //计算伤害
-        float value = 0;
-        switch (_at)
-        {
-            case AttackType.atk: //物理
-                {
-                    value = (_value * 5) / (def + 5);
-                }
-                break;
-            case AttackType.psy: //精神
-                {
-                    value = (_value * 5) / (san + 5);
-                } break;
-            case AttackType.dir: //真实
-                {
-                    value = _value;
-                } break;
-        }
-        //优先随从受击
-        if (servants.Count > 0)
-        {
-            servants[0].GetComponent<AbstractCharacter>().hp -= value;
-        }
-        //本身受击
-        else
-        {
-            if (_delayTime == 0)
-            {//如果没有延时
-                hp -= _value;
-                if (_hasFloat)
-                {
-                    if (_at == AttackType.atk) CreateFloatWord(_value, FloatWordColor.physics, true);
-                    if (_at == AttackType.psy) CreateFloatWord(_value, FloatWordColor.psychic, true);
-                    if (_at == AttackType.dir) CreateFloatWord(_value, FloatWordColor.physics, true);
-                }
-                //执行外部委托
-                if(event_BeAttack!=null)
-                    event_BeAttack(_value, _whoDid);
-            }
-            else
-            {//如果延时，则携程
-                StartCoroutine(DelayAttack(_delayTime, _value,_at,_hasFloat, _whoDid));
-            }
-        }
 
+    /// <summary>
+    /// 伤害系数。有些技能伤害减半，使用
+    /// </summary>
+    private float AttackAmount = 1;
+    virtual public float attackAmount
+    {
+        get { return AttackAmount; }
+        set
+        {
+            AttackAmount = value;
+        }
     }
 
     /// <summary>
@@ -172,19 +134,87 @@ abstract public class AbstractCharacter : AbstractWord0
     /// </summary>
     /// <param name="_at"></param>
     /// <param name="_value">使用者的atk、psy或者直接伤害的数值</param>
-    public void BeCure(  float _value, bool _hasFloat, float _delayTime)
+    public void BeAttack(AttackType _at, float _value, bool _hasFloat, float _delayTime, AbstractCharacter _whoDid)
+    {
+        //计算伤害
+        float value = 0;
+        switch (_at)
+        {
+            case AttackType.atk: //物理
+                {
+                   
+                    value = ((_value * 5) / (def + 5))*_whoDid.attackAmount;
+                    
+                }
+                break;
+            case AttackType.psy: //精神
+                {
+                    value = ((_value * 5) / (san + 5))*_whoDid.attackAmount;
+                } break;
+            case AttackType.dir: //真实
+                {
+                    value =( _value)*_whoDid.attackAmount;
+                } break;
+        }
+        //优先随从受击
+        if (servants.Count > 0)
+        {
+            servants[0].GetComponent<AbstractCharacter>().hp -= value;
+
+        }
+        //本身受击
+        else
+        {
+            if (_delayTime == 0)
+            {//如果没有延时
+                hp -= value;
+                if (_hasFloat)
+                {
+                    if (_at == AttackType.atk) CreateFloatWord(value, FloatWordColor.physics, true);
+                    if (_at == AttackType.psy) CreateFloatWord(value, FloatWordColor.psychic, true);
+                    if (_at == AttackType.dir) CreateFloatWord(value, FloatWordColor.physics, true);
+                }
+                //执行外部委托
+                if (event_BeAttack != null)
+                    event_BeAttack(value, _whoDid);
+            }
+            else
+            {//如果延时，则携程
+                StartCoroutine(DelayAttack(_delayTime, value, _at, _hasFloat, _whoDid));
+            }
+        }
+
+    }
+
+
+
+
+    //外部可以增加每秒检测的委托入口
+    [HideInInspector] public delegate void Event_BeCure();
+    [HideInInspector] public Event_BeCure event_BeCure;
+
+
+    /// <summary>
+    /// 角色收到攻击时计算伤害
+    /// </summary>
+    /// <param name="_at"></param>
+    /// <param name="_value">使用者的atk、psy或者直接伤害的数值</param>
+    public void BeCure(float _value, bool _hasFloat, float _delayTime)
     {
         //无延时
         if (_delayTime == 0)
         {
-             if (_hasFloat) CreateFloatWord(_value, FloatWordColor.heal, true);
+           
+            if (_hasFloat) CreateFloatWord(_value, FloatWordColor.heal, true);
             hp += _value;
         }
-        else 
+        else
         {
             //如果延时，则携程
-            StartCoroutine(DelayAttack(_delayTime, _value, AttackType.heal, _hasFloat,null));
+            StartCoroutine(DelayAttack(_delayTime, -_value, AttackType.heal, _hasFloat, null));
         }
+
+        if (event_BeCure != null) event_BeCure();
     }
 
 
@@ -223,30 +253,45 @@ abstract public class AbstractCharacter : AbstractWord0
     #endregion
 
     #region 恢复
-  
+
+    //固定数值形式的恢复
     private float CURE = 0;
     virtual public float cure
     {
         get { return CURE; }
         set
         {
-         
+
             CURE = value;
-            if (cure < 0) cure = 0;
+            if (CURE < 0) CURE = 0;
+        }
+    }
+    //生命比值形式的恢复
+    private float CUREHpRate = 0;
+    virtual public float cureHpRate
+    {
+        get { return CUREHpRate; }
+        set
+        {
+
+            CUREHpRate = value;
+            if (CUREHpRate < 0) CUREHpRate = 0;
         }
     }
     float cureTime;
     bool cureOpen;
     void CureHp()
     {
-       
-        if(CURE!=0)
+
+        if (cure != 0)
         {
-          
-            CreateFloatWord(CURE, FloatWordColor.heal, false);
-            hp += CURE;
+            BeCure(cure, true, 0);
         }
-      
+        if (cureHpRate != 0)
+        {
+             BeCure(maxHp* cureHpRate, true, 0);
+        }
+
     }
 
 
@@ -293,7 +338,7 @@ abstract public class AbstractCharacter : AbstractWord0
         set
         {
             DEF = value;
-            if (DEF <0 /*-19*/)
+            if (DEF < 0 /*-19*/)
                 DEF = 0;
             CaculateValue();
         }
@@ -417,9 +462,9 @@ abstract public class AbstractCharacter : AbstractWord0
             if (relifes < 0) relifes = 0;
         }
     }
-
-
     
+
+
     /// <summary>
     /// 判断该角色是否有该buff
     /// </summary>
@@ -431,6 +476,8 @@ abstract public class AbstractCharacter : AbstractWord0
             return false;
         else
             return true;
+
+  
     }
 
 
@@ -472,6 +519,26 @@ abstract public class AbstractCharacter : AbstractWord0
 
     ///<summary>这个角色身上可以挂载的最大技能数 </summary>
     public int maxSkillsCount = 3;
+
+
+    /// <summary>
+    /// 清除负面状态
+    /// </summary>
+    public void DeleteBadBuff(int _count)
+    {
+        var x = 0;
+        var _buffs = GetComponents<AbstractBuff>();
+        foreach (var _buff in _buffs)
+        {
+            if (x >= _count) return;
+            if (_buff.isBad)
+            {
+                Destroy(_buff);x++;
+            } 
+        }
+    }
+
+
     /// <summary>
     /// 增加verb技能时调用
     /// </summary>
@@ -490,7 +557,7 @@ abstract public class AbstractCharacter : AbstractWord0
             {
                 if (skills[1].wordName == "猜疑链")
                 {
-                    myState.character.CreateFloatWord("<s>"+skills[2].wordName+ "</s>", FloatWordColor.removeWord, false);
+                    myState.character.CreateFloatWord("<s>" + skills[2].wordName + "</s>", FloatWordColor.removeWord, false);
                     Destroy(skills[2]); skills.RemoveAt(2);
                 }
                 else
@@ -498,7 +565,7 @@ abstract public class AbstractCharacter : AbstractWord0
                     myState.character.CreateFloatWord("<s>" + skills[1].wordName + "</s>", FloatWordColor.removeWord, false);
                     Destroy(skills[1]); skills.RemoveAt(1);
                 }
-                    
+
             }
             else
             {
@@ -516,7 +583,7 @@ abstract public class AbstractCharacter : AbstractWord0
 
         GetComponentInChildren<AfterStart>().GetNewVerbs();
 
-        print(this.wordName + "增加" + _av.wordName + "身上技能：" + skills.Count);
+       
     }
 
 
@@ -596,7 +663,7 @@ abstract public class AbstractCharacter : AbstractWord0
     public void ServantMerge()
     {
         var _s = new ServantAbstract[servants.Count];
-        for (int i=servants.Count-1;i>=0;i--)
+        for (int i = servants.Count - 1; i >= 0; i--)
         {
             _s[i] = servants[i].GetComponent<ServantAbstract>();
             DeleteServant(servants[i]);
@@ -609,7 +676,7 @@ abstract public class AbstractCharacter : AbstractWord0
         {
             this.GetComponent<CS_HunYangLong>().SetInitNumber(_s[i]);
         }
-    
+
     }
     /// <summary>
     /// 删除随从时调用
@@ -641,6 +708,10 @@ abstract public class AbstractCharacter : AbstractWord0
 
     #region 平A
 
+    //伤害的阵营
+    public bool hasBetray = false;
+
+
     //ui
     private Canvas energyCanvas;
     private Slider energySlider;
@@ -652,7 +723,22 @@ abstract public class AbstractCharacter : AbstractWord0
 
     /// <summary>攻击间隔(检定攻击的次序，以及每两次攻击间隔时长)</summary>
     public float attackInterval = 2.2f;
-    public float attackSpeedPlus = 1;
+    virtual public float attackSpeedPlus 
+        {
+
+        get { return AttackSpeedPlus; }
+        set
+        {
+            AttackSpeedPlus = value;
+            attackSpeedSetting();
+        }
+    }
+    private float AttackSpeedPlus = 1;
+    void attackSpeedSetting()
+    {
+        charaAnim.SetSpeed(AnimEnum.attack, AttackSpeedPlus);
+    }
+
 
     /// <summary>站位</summary>
     public Situation situation;
@@ -710,10 +796,11 @@ abstract public class AbstractCharacter : AbstractWord0
 
         if (myState.aim != null)
         {
-            print("AttackTimes:" + AttackTimes); 
+         
             for (int i = 1; i <= AttackTimes; i++)
             {
-                AttackAOnce(AttackTimes);
+
+                Invoke("AttackAOnce", CharacterManager.instance.DelayAccount(this.situation.number, myState.aim[0].situation.number));
 
             }
             return true;
@@ -729,27 +816,28 @@ abstract public class AbstractCharacter : AbstractWord0
     /// i是攻击的段数
     /// </summary>
     /// <param name="i"></param>
-    private void AttackAOnce(int i)
+    private void AttackAOnce()
     {
-         //myState.character.CreateBullet(myState.aim.gameObject);
             if (myState.character.aAttackAudio != null)
             {
                 myState.character.source.clip = myState.character.aAttackAudio;
                 myState.character.source.Play();
             }
             //攻击
-            myState.character.charaAnim.Play(AnimEnum.attack);
+       // myState.character.charaAnim.Play(AnimEnum.attack);
+       
 
-            attackA.UseMode(AttackType.atk, myState.character.atk/i, myState.character, myState.aim, true, 0);
-        //myState.aim.CreateFloatWord(
-        //    attackA.UseMode(myState.character, myState.character.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
-        //    , FloatWordColor.physics, false);
-        print("sssssssss");
+        for (int x = 0; x < myState.aim.Count; x++)
+        {
+             attackA.UseMode(AttackType.atk, myState.character.atk/ AttackTimes, myState.character, myState.aim[x], true, 0);
+        }
+           
+
+
         //执行外部委托
         if (event_AttackA != null)
                 event_AttackA();
-
-            //
+        // myState.character.charaAnim.Play(AnimEnum.idle);
     }
 
 
@@ -855,6 +943,12 @@ abstract public class AbstractCharacter : AbstractWord0
         cureTime = 0;
         cureOpen = true;
 
+
+        if (isNaiMa)
+        {
+            Destroy(attackA);
+            attackA = gameObject.AddComponent<CureMode>();
+        }
     }
 
     private void OnEnable()
@@ -868,11 +962,14 @@ abstract public class AbstractCharacter : AbstractWord0
     {
 
         if (CharacterManager.instance.pause) return;
+        if (myState.nowState == myState.allState.Find(p => p.id == AI.StateID.dead)) return;
+            //角色的能量条积攒
+            energy += Time.deltaTime;
+    
 
-        //角色的能量条积攒
-        energy += Time.deltaTime;
         if (energy > 5)//每5秒恢复一点能量
         {
+        
             energy = 0;
             _canUseSkills = 0;
             if (OnEnergyFull != null)
@@ -894,6 +991,7 @@ abstract public class AbstractCharacter : AbstractWord0
         //energySlider.value = energy;
 
 
+        //【恢复】计时
         if (cureOpen)
             cureTime += Time.deltaTime;
         if (cureTime >= 10)

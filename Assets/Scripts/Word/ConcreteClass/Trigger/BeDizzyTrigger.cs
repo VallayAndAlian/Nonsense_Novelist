@@ -8,6 +8,7 @@ namespace AI
     /// </summary>
     class BeDizzyTrigger : AbstractTrigger
     {
+
         override public void Awake()
         {
             base.Awake();

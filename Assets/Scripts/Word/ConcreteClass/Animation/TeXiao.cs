@@ -19,4 +19,6 @@ public class TeXiao: MonoBehaviour
     {
         animator.Play(animName);
     }
+
+
 }

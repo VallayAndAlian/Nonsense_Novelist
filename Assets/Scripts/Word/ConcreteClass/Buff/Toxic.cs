@@ -14,7 +14,7 @@ public class Toxic : AbstractBuff
     DamageMode damageMode;
     override protected void Awake()
     {
-        base.Awake();
+ 
         buffName = "中毒";
         description = "每秒受到5点物理伤害";
         book = BookNameEnum.allBooks;
@@ -22,6 +22,7 @@ public class Toxic : AbstractBuff
         damageMode = gameObject.AddComponent<DamageMode>();
         damageMode.attackRange=new SingleSelector();
         isBad = true;
+        base.Awake();
     }
 
 

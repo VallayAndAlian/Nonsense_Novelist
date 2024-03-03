@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 namespace AI
 {
     /// <summary>
-    /// 死亡状态
+    /// 倒下状态（原死亡状态）
     /// </summary>
     class DeadState :AbstractState
     {
@@ -42,7 +43,16 @@ namespace AI
 
 
             if (lastOne&&myc.camp!=CampEnum.stranger)
-            { CharacterManager.instance.EndGame(); }
+            { //CharacterManager.instance.EndGame();
+              }
+
+            //临时的死亡效果
+            SpriteRenderer sp;
+            if (this.TryGetComponent<SpriteRenderer>(out sp))
+            {
+                sp.color = Color.black;
+            }
+            
             //var _sa = this.transform.parent.GetComponent<ServantAbstract>();
             ////如果是随从，额外手续
             //if (_sa != null)
@@ -51,10 +61,10 @@ namespace AI
             //}
             //临时去掉了这个if
             //if (myState.character.charaAnim.IsEnd(AnimEnum.dead))
-            { 
-                //播放完动画后销毁
-                Destroy(this.transform.parent.gameObject);
-            }
+            //{ 
+            //    //播放完动画后销毁
+            //    Destroy(this.transform.parent.gameObject);
+            //}
         }
 
 
@@ -103,7 +113,11 @@ namespace AI
         }
         public override void Exit(MyState0 myState)
         {
-            
+            //SpriteRenderer sp;
+            //if (this.TryGetComponent<SpriteRenderer>(out sp))
+            //{
+            //    sp.color = Color.white;
+            //}
         }
     }
 

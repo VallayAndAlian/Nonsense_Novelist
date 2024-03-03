@@ -14,7 +14,7 @@ public class HaoZhan : AbstractAdjectives
     public override void Awake()
     {                
         skillEffectsTime = 5;
-        base.Awake();
+       
         adjID = 20;
         wordName = "ºÃÕ½µÄ";
         bookName = BookNameEnum.PHXTwist;
@@ -24,48 +24,36 @@ public class HaoZhan : AbstractAdjectives
 
 
         rarity = 1;
-
+        base.Awake();
     }
     bool hasOther = false;
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
         base.UseAdj(aimCharacter);
-         foreach(var hz in aimCharacter.GetComponents<HaoZhan>())
-        {
-            if (hz != this)
-            {
-                hz.AddTime(skillEffectsTime);
-                hasOther = true;
-                Destroy(this);
-            }
-        }
-        if (!hasOther)
-        { BasicAbility(aimCharacter); }
-       
+     
+        BasicAbility(aimCharacter);
     }
 
     float record;
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        //GetComponentInChildren<AI.MyState0>().GetComponent<Animator>().speed = 1.83f;
+   
         record = aimCharacter.attackSpeedPlus;
         aimCharacter.attackSpeedPlus += 0.5f;
-       // if (aimCharacter.attackInterval <= 0.5f) aimCharacter.attackInterval = 0.5f;
+    
     }
 
-    
+    protected override void Update()
+    {
+      
+        base.Update();
+    }
 
     public override void End()
     {
-        if (hasOther)
-        { }
-        else
-        {
-            GetComponentInChildren<AI.MyState0>().GetComponent<Animator>().speed  = 1;
-            aim.attackInterval =record;
-        }
-        base.End();
-        Destroy(this);
+      
+        base.End();  aim.attackSpeedPlus -= 0.5f; Destroy(this);
+       
     }
 
 }

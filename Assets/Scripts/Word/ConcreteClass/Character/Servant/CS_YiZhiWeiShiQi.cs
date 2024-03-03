@@ -59,15 +59,20 @@ public class CS_YiZhiWeiShiQi : ServantAbstract
         //´úÌæÆ½A
         if (myState.aim != null)
         {
-            print("myState.aim != null"+myState.aim.wordName);
+            for (int i = 0; i < myState.aim.Count; i++)
+            {
+                print("myState.aim != null"+myState.aim[i].wordName); 
+                var buff=  myState.aim[i].gameObject.AddComponent<KangFen>();
+                buff.maxTime = 15;
+            }
+                
             if (myState.character.aAttackAudio != null)
             {
                 myState.character.source.clip = myState.character.aAttackAudio;
                 myState.character.source.Play();
             }
             myState.character.charaAnim.Play(AnimEnum.attack);
-            var buff=  myState.aim.gameObject.AddComponent<KangFen>();
-            buff.maxTime = 15;
+          
          
         }
         print("myState.aim ==== null");

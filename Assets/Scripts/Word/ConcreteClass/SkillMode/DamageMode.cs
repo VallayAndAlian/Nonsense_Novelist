@@ -7,9 +7,9 @@ using UnityEngine;
 class DamageMode : AbstractSkillMode
 {
     /// <summary>是否为物理伤害（仅用于展示） </summary>
-    public bool isPhysics=true;
-
-    private AbstractCharacter _useChara=null;
+    public bool isPhysics = true;
+ 
+    private AbstractCharacter _useChara = null;
     public void Awake()
     {
         skillModeID = 1;
@@ -28,7 +28,8 @@ class DamageMode : AbstractSkillMode
     }
 
 
-   
+
+
 
 
     /// <summary>
@@ -39,15 +40,22 @@ class DamageMode : AbstractSkillMode
     override public AbstractCharacter[] CalculateAgain(int attackDistance, AbstractCharacter character)
     {
         
-        AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.enemy);
-        if (a == null)
+      
+
+        //叛变
+        if (character.hasBetray)
         {
-            if(_useChara==null)
-             print("a == null&&_useChara==null");
-            else
-            print(_useChara.wordName + "fuckyou");
-        } 
-        return a;
+            AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.friend, true);
+            return a;
+        }
+        else//正常情况
+        {
+            AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.enemy, false);
+            return a;
+
+        }
+   
+
     }
     override public AbstractCharacter[] CalculateRandom(int attackDistance, AbstractCharacter character, bool _ignoreBoss)
     {

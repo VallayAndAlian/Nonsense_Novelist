@@ -37,8 +37,9 @@ public class WordCollisionShoot : MonoBehaviour
         {
             AbstractCharacter character = collision.gameObject.GetComponent<AbstractCharacter>();
 
-           
-                absWord = this.GetComponent<AbstractWord0>();
+            if (character.myState.nowState == character.myState.allState.Find(p => p.id == AI.StateID.dead)) return;
+
+            absWord = this.GetComponent<AbstractWord0>();
             if (absWord == null) return;
 
 
@@ -64,13 +65,16 @@ public class WordCollisionShoot : MonoBehaviour
             {
                 AbstractItems noun= collision.gameObject.AddComponent(absWord.GetType())as AbstractItems;
                 noun.UseItem(collision.gameObject.GetComponent<AbstractCharacter>());
-           
+               
+
                 Destroy(this.gameObject);
             }
 
             //检测是否满足特殊组合？是否会触发事件
             string _s=EventCharWord.fuction(character,absWord);
+           
             if (_s == null) return;
+           
             DraftUi.instance.AddContent(_s);
 
         }

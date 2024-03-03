@@ -16,8 +16,13 @@ namespace AI
 
         virtual public void Awake()
         {
-            triggers.Add(gameObject.AddComponent<NoHealthTrigger>());
-            map.Add(TriggerID.NoHealth, StateID.dead);
+
+                var t = gameObject.AddComponent<NoHealthTrigger>();
+                    triggers.Add(t);
+               // t.aaa = this;
+                map.Add(TriggerID.NoHealth, StateID.dead);
+          
+     
             triggers.Add(gameObject.AddComponent<BeDizzyTrigger>());
             map.Add(TriggerID.BeDizzy, StateID.dizzy);
         }
@@ -44,7 +49,7 @@ namespace AI
                 if(triggers[i].Satisfy(myState))
                 {
                     
-                    print("map[triggers[i].id="+(map[triggers[i].id]).ToString());
+               
                     myState.ChangeActiveState(map[triggers[i].id]);
                 }
             }

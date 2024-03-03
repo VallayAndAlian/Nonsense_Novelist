@@ -15,6 +15,7 @@ public class DetailWordInfo : MonoBehaviour
     {
         title.text = _title;
         info.text = _info;
+        
     }
 
 }

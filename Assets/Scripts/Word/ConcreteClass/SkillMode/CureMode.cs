@@ -15,7 +15,7 @@ class CureMode : AbstractSkillMode
 
     public override float UseMode(AttackType attackType, float value, AbstractCharacter useCharacter, AbstractCharacter aimCharacter, bool hasFloat, float delay)
     {
-
+       
         aimCharacter.BeCure(value,hasFloat,delay);
         return value;
     }
@@ -30,11 +30,22 @@ class CureMode : AbstractSkillMode
     /// <returns></returns>
     override public AbstractCharacter[] CalculateAgain(int attackDistance, AbstractCharacter character)
     {
-       
-        AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation,NeedCampEnum.friend);
-        CollectionHelper.OrderBy(a, p => p.hp);
+        if (character.hasBetray)
+        {
+            AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.enemy, false);
+            CollectionHelper.OrderBy(a, p => p.hp);
+            return a;
+        }
+        else
+        {
+             AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.friend, false);
+            CollectionHelper.OrderBy(a, p => p.hp); 
+            return a;
+        }
+           
+        
 
-        return a;
+       
     }
     override public AbstractCharacter[] CalculateRandom(int attackDistance, AbstractCharacter character, bool _ignoreBoss)
     {

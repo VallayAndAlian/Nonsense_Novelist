@@ -16,6 +16,7 @@ class JiShengChong : AbstractItems
         wordName = "寄生虫";
         bookName = BookNameEnum.FluStudy;
         description = "<sprite name=\"def\">-3，自身与随从的攻击附带<color=#dd7d0e>患病</color>";
+        //自身与随从的攻击附带“患病”，持续6s
 
         VoiceEnum = MaterialVoiceEnum.Meat;
 
@@ -34,6 +35,7 @@ class JiShengChong : AbstractItems
     }
 
     bool hasAdd = false;
+    AbstractCharacter[] _acs;
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
@@ -41,7 +43,7 @@ class JiShengChong : AbstractItems
 
         if (hasAdd) return;
         //为自身和所有随从，增加平A附加效果
-        var _acs = GetComponentsInChildren<AbstractCharacter>();
+        _acs = GetComponentsInChildren<AbstractCharacter>();
         foreach (var _ac in _acs)
         {
             _ac.event_AttackA += AddToAttackA;
@@ -53,9 +55,13 @@ class JiShengChong : AbstractItems
     {
         var _ac = GetComponent<AbstractCharacter>();
         //为攻击目标增加Buff
-        var buff = _ac.myState.aim.gameObject.AddComponent<Ill>();
+        for (int i = 0; i < _ac. myState.aim.Count; i++)
+        {
+                var buff = _ac.myState.aim[i].gameObject.AddComponent<Ill>();
         buffs.Add(buff);
-        buff.maxTime = 12;
+        buff.maxTime = 6;
+        }
+        
     }
 
 
@@ -69,6 +75,10 @@ class JiShengChong : AbstractItems
     public override void End()
     {
         base.End();
+        foreach (var _ac in _acs)
+        {
+            _ac.event_AttackA -= AddToAttackA;
+        }
         aim.def+=3;
     }
 }

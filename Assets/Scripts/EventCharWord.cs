@@ -20,7 +20,8 @@ public static class EventCharWord
                     switch (_word.wordName)
                     {
                         case "葬花":
-                            { 
+                            {
+                               
                                 Animsation(_word.wordName); 
                                 return "林黛玉登山渡水，过树穿花，把些残花落瓣去掩埋，桃花无情，流水无心：侬今葬花人笑痴，他年葬侬知为谁？"; 
                             } break;
@@ -72,9 +73,39 @@ public static class EventCharWord
                     #endregion
                 }
                 break;
+            case 5://垄断公司
+                {
+                    #region 文本
+                    switch (_word.wordName)
+                    {
+                        case "枪击":
+                            {
+                                return "垄断公司无所谓向谁的背后开了一枪，只要这是一桩好买卖。";
+                            }
+                            break;
+                        case "寄生虫":
+                            {
+                                return "随着垄断公司体量的增大，蛀虫在公司内部不断滋生，而贪婪是最好的营养剂，蛀虫会从根部开始吃起，直到将其蚕食殆尽。";
+                            }
+                            break;
+                        case "产卵":
+                            {
+                                return "垄断公司产下了无数虫卵，这些虫卵会在社会中孵化，直到爬满每个阴暗的角落。";
+                            }
+                            break;
+                        case "本杰士堆":
+                            {
+                                return "垄断公司召开股民大会发表演讲：亲爱的本杰士堆，等你们的嫩芽冒出石堆，我就要把你们大口吞下。";
+                            }
+                            break;
+                    }
+                    #endregion
+                }
+                break;
             case 6://老鼠
                 {
                     #region 文本
+
                     #endregion
                 }
                 break;
@@ -113,8 +144,38 @@ public static class EventCharWord
                     #endregion
                 }
                 break;
+            case 9://迪卡德
+                {
+                    #region 文本
+                    switch (_word.wordName)
+                    {
+                        case "心神激荡":
+                            {
+                                return "狄卡德凝视着瑞秋，不由得心神激荡，面色潮红，情感汹涌，爱的激情比死亡更神秘。";
+                            }
+                            break;
+                        case "沙浴":
+                            {
+                                return "狄卡德在细沙中来回翻滚，以去除身体上的灰尘，但他站起身时身上沾满了沙子，似乎更脏了。";
+                            }
+                            break;
+                        case "茶杯":
+                            {
+                                return "狄卡德在居酒屋独自喝酒，把玩着手中的富士山杯，久久没有说话。";
+                            }
+                            break;
+                        case "被植入的记忆":
+                            {
+                                return "狄卡德又梦到了那只独角兽，它泛着诡异的粉红色，消失在了山林。";
+                            }
+                            break;
+                    }
+                    #endregion
+                }
+                break;
         }
-       
+
+        
         return null;
     }
 

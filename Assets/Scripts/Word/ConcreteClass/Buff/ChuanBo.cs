@@ -8,10 +8,11 @@ public class ChuanBo: AbstractBuff
 {
     override protected void Awake()
     {
-        base.Awake();
+       
         buffName = "´«²¥";
         book = BookNameEnum.FluStudy;
-        upup= 1;
+        upup= 1; 
+        base.Awake();
     }
 
     /// <summary>

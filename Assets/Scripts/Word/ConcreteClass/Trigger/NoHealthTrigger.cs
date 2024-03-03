@@ -13,47 +13,40 @@ namespace AI
             base.Awake();
             id = TriggerID.NoHealth;
         }
+        //public AbstractState aaa;
 
-        public delegate void Live();
-        public event Live OnLive;
-
+        [HideInInspector] public delegate void Event_Relife();
+        [HideInInspector] public Event_Relife event_relife;
         public override bool Satisfy(MyState0 myState)
         {
-           
+  
+
             if (myState.character.hp <= 0)
             {
-                
+
+               
                 if (myState.character.reLifes > 0)//复活
                 {
-                    ReLifeEffect(myState);
-                  
+                   // print("1");//print(.ToString());
+                    //执行外部的复活效果
+                    if (event_relife!=null)
+                    { event_relife();  }
+
+                    //血量回满
+                    myState.character.hp = myState.character.maxHp;
 
                     //删除relife效果
                     if (myState.character.GetComponent<ReLife>() != null)
                     {
                         Destroy(myState.character.GetComponent<ReLife>());
-                        var _buffs = myState.character.GetComponents<AbstractBuff>();
-                        foreach (var _buff in _buffs)
-                        {
-                            if (_buff.isBad) Destroy(_buff);
-                        }
                     }
-                    else
-                        myState.character.reLifes--;
 
-
-
-                    //if (OnLive != null) OnLive();
+                    myState.character.teXiao.PlayTeXiao("relife");
                     return false;
                 }
                 else//死亡
                 {
-                    //如果没有复活buff，但有日轮挂坠，复活
-                    if (GetComponent<RiLunGuaZhui>() != null)
-                    {
-                        ReLifeEffect(myState);
-                        Destroy(GetComponent<RiLunGuaZhui>());
-                    }
+                   
                       return true;
                 }
                   
@@ -63,17 +56,5 @@ namespace AI
         }
 
 
-        /// <summary>
-        ///  部分词条有复活时强化的效果。写在这。
-        /// </summary>
-        void ReLifeEffect(MyState0 myState)
-        {
-            myState.character.hp = myState.character.maxHp;
-            //荷鲁斯之眼
-            if (myState.character.GetComponent<herusizhiyan>()!=null)
-            {
-                myState.character.atk += 1;
-            }
-        }
     }
 }

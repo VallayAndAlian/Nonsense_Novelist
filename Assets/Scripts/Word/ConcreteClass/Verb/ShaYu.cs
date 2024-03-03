@@ -1,12 +1,14 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 /// <summary>
 /// 动词：沙浴
 /// </summary>
 class ShaYu : AbstractVerbs
 {
-    static public string s_description = "治疗10+100%<sprite name=\"san\">，消除所有负面状态";
+    static public string s_description = "治疗10+100%<sprite name=\"san\">，消除3层减益状态";
     static public string s_wordName = "沙浴";
     static public int rarity = 2;
     public override void Awake()
@@ -15,9 +17,9 @@ class ShaYu : AbstractVerbs
         skillID = 4;
         wordName = "沙浴";
         bookName = BookNameEnum.ZooManual;
-        description = "治疗10+100%<sprite name=\"san\">，消除所有负面状态";
+        description = "治疗10+100%<sprite name=\"san\">，消除3层减益状态";
 
-        skillMode = gameObject.AddComponent<CureMode>();
+        skillMode = gameObject.AddComponent<SelfMode>();
 
         skillEffectsTime = Mathf.Infinity;
         rarity = 2;
@@ -34,11 +36,12 @@ class ShaYu : AbstractVerbs
     {
         base.UseVerb(useCharacter);
         BasicAbility(useCharacter);
+     
     }
 
-
+    List<AbstractBuff> badBuff=new List<AbstractBuff>();
     public override void BasicAbility(AbstractCharacter useCharacter)
-    {
+    {  
         //治疗10+100%意志
         AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
         //aim.CreateFloatWord(
@@ -46,11 +49,39 @@ class ShaYu : AbstractVerbs
         //, FloatWordColor.heal, true);
         skillMode.UseMode(AttackType.heal, 10 + useCharacter.san * useCharacter.sanMul * 1, useCharacter, aim, true, 0);
 
-        var _buffs = character.GetComponents<AbstractBuff>();
+
+        badBuff.Clear();
+        var _buffs = aim.GetComponents<AbstractBuff>();
+        
+        if (_buffs.Length == 0) return;
+
+        int mostCount = 0;
+        AbstractBuff mostBuff= _buffs[0];
+        //寻找身上最多的负面组件
         foreach (var _buff in _buffs)
         {
-            if (_buff.isBad) Destroy(_buff);
+            if (!badBuff.Contains(_buff))
+            {
+                if (_buff.isBad)
+                {
+                     badBuff.Add(_buff);
+                    if(aim.GetComponents(_buff.GetType()).Length>mostCount)
+                    {
+                        mostBuff = _buff;
+                        mostCount = aim.GetComponents(_buff.GetType()).Length;
+                    }
+                }
+            }
         }
+       if (mostCount == 0) return;
+        int count = 0;
+        foreach (var _buff in aim.GetComponents(mostBuff.GetType()))
+        {
+            Destroy(_buff);
+            count++;
+            if (count == 2) return;
+        }
+
     }
 
     public override string UseText()

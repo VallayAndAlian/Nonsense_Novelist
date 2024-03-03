@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// 物品（自己处理每秒做的事）
 /// </summary>
-abstract class AbstractItems : AbstractWord0
+abstract public class AbstractItems : AbstractWord0
 {
     /// <summary>物品序号</summary>
     public int itemID;
@@ -61,7 +61,7 @@ abstract class AbstractItems : AbstractWord0
     /// </summary>
     virtual public void End()
     {
-
+        aim.CreateFloatWord("<s>" + wordName + "</s>", FloatWordColor.removeWord, false);
     }
 
     private void OnDestroy()

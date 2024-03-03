@@ -21,8 +21,10 @@ public class AbstractBuff : MonoBehaviour
     protected virtual void Awake()
     {
         chara = GetComponent<AbstractCharacter>();
+        if(chara!=null) chara.CreateFloatWord( this.buffName, FloatWordColor.getWord, false);
         int num = 0;
         AbstractBuff[] buffs=GetComponents<AbstractBuff>();
+     
         for (int i = buffs.Length-1; i > -1; i--)
         {//倒序,最早的buff先被删除
             if (buffs[i].buffName == buffName)
@@ -30,10 +32,12 @@ public class AbstractBuff : MonoBehaviour
                 num++;
                 if (num > upup)
                 {
+                  
                     Destroy(buffs[i]);
                 }
             }
         }
+        
     }
 
     virtual public void Update()

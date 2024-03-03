@@ -18,7 +18,7 @@ public class Renzhiguhua_buff : AbstractBuff
 
     override protected void Awake()
     {
-        base.Awake();
+       
         buffName = "认知固化";
         book = BookNameEnum.allBooks;
 
@@ -29,6 +29,7 @@ public class Renzhiguhua_buff : AbstractBuff
 
 
         upup = 1;
+        base.Awake();
     }
 
 
@@ -66,12 +67,14 @@ public class Renzhiguhua_buff : AbstractBuff
         float _endAttack=2*(usingChara.atk+usingChara.psy)-4*usingChara.san*usingChara.sanMul;
         if (_endAttack >= 20)
         { 
-            usingChara.hp -= 20;
+           
+            usingChara.BeAttack(AttackType.dir, 20, true, 0, this.GetComponent<AbstractCharacter>());
             print(usingChara.wordName + "的怀疑主义结束，一次性造成伤害:" + 20); 
         }
         else
-        { 
-            usingChara.hp -= _endAttack;
+        {
+            usingChara.BeAttack(AttackType.dir, _endAttack, true, 0, this.GetComponent<AbstractCharacter>());
+           
             print(usingChara.wordName + "的怀疑主义结束，一次性造成伤害:"+ _endAttack);
         }
     }

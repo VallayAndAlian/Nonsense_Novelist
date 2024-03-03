@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 中毒的
+///形容词：中毒的
 /// </summary>
 public class ZhongDu : AbstractAdjectives
 {

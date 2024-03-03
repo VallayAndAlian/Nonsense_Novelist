@@ -39,9 +39,12 @@ class TongLingBaoyu : AbstractItems
         base.UseItem(chara);
         if (GetComponents<TongLingBaoyu>().Length <= 1)
         {//是最开始的一个，唯一增加的一个
+           
             chara.event_BeAttack += SwitchDamage;
             openDelege = true;
         }
+        chara.psy += 5;
+
 
     }
 
@@ -49,26 +52,40 @@ class TongLingBaoyu : AbstractItems
     {
         if (!openDelege)
         {
+           
             this.GetComponent<AbstractCharacter>().event_BeAttack += SwitchDamage;
             openDelege = true;
         }
     }
+
+
     void SwitchDamage(float _damage, AbstractCharacter _whoDid)
     { 
         //如果装备多个，则会叠加转移伤害的百分比，最高100%
         var count = GetComponents<TongLingBaoyu>().Length;
-        var rate = Mathf.Clamp(0,1,0.3f * count);
+        var rate = Mathf.Clamp(0.3f * count,0,1);
 
+        print(count);
         //寻找血量最高的队友
         IAttackRange attackRange = new SingleSelector();
-        AbstractCharacter[] a = attackRange.CaculateRange(200, this.GetComponent<AbstractCharacter>().situation, NeedCampEnum.friend);
-        CollectionHelper.OrderBy(a, p => p.hp);
+        AbstractCharacter[] a = attackRange.CaculateRange(200, this.GetComponent<AbstractCharacter>().situation, NeedCampEnum.friend, false);
+        CollectionHelper.OrderByDescending(a, p => p.hp);
+
+        //避免转移给自己，嵌套委托
+        int _count = -1;
+        for (int x = 0; (x < a.Length)&&(_count==-1); x++)
+        {
+            if (a[x] != this.GetComponent<AbstractCharacter>()) _count = x;
+        }
+
+        //如果没有队友了，就不转移
+        if (_count == -1) return;
 
         //转移血量
-        a[a.Length - 1].BeAttack(AttackType.dir, _damage, true, 0, _whoDid); 
+        a[_count].BeAttack(AttackType.dir, _damage* rate, true, 0, _whoDid);
 
-        //自己受伤（把血量加回来）
-        this.GetComponent<AbstractCharacter>().BeCure(_damage, true, 0);
+        //自己受伤（把血量加回来）4
+        this.GetComponent<AbstractCharacter>().BeCure(_damage * rate, true, 0);
     }
   
     public override void UseVerb()
@@ -93,7 +110,7 @@ class TongLingBaoyu : AbstractItems
                 other[x].AddDelege();
             }
         }
-       
+        aim.psy -= 5;
         base.End();
       
     }

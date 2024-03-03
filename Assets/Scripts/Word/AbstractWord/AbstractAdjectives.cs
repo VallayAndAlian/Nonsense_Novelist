@@ -30,6 +30,8 @@ abstract public class AbstractAdjectives : AbstractWord0
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots.Add(gameObject.AddComponent<Common>());
 
+        nowTime = skillEffectsTime;
+
     }
     /// <summary>
     /// 技能效果(特殊效果）
@@ -51,7 +53,7 @@ abstract public class AbstractAdjectives : AbstractWord0
       
         if (this.GetComponent<AbstractCharacter>() == null) return;
         if (CharacterManager.instance.pause == true) return;
-     
+        nowTime -= Time.deltaTime;
         if (nowTime < 0)
             Destroy(this);
     }

@@ -118,26 +118,31 @@ public static class AllSkills
     static AllSkills()
     {       
         //添加动词词条
-        list_verb.AddRange(new Type[] {   typeof(WritePoem) , typeof(HeartBroken),
-           typeof(Shuai),typeof(TongPinGongZhen),//缺少：产卵/审判
-         typeof(FangFuShu), typeof(GunShoot), typeof(MianYiZengQiang),//未测试通过：typeof(BaoZa),typeof(BuryFlower),typeof(Kiss),typeof(QiChongShaDance),typeof(WenYiChuanBo) typeof(TuLingCeShi), 
-        typeof(ShaYu), typeof(ToBigger), typeof(WanShua), });
-        //添加形容词词条
-        list_adj.AddRange(new Type[] {  typeof(BuXiu), typeof(ChaFanWuXin), typeof(CuZhuang), typeof(HunFei),
-           typeof(FengChan),typeof(FengLi) ,typeof(GuoMin),typeof(HaoZhan) ,typeof(HeWuRan),
-        typeof(JianRuPanShi),typeof(KeBan) ,typeof(LuoYingBinFen) ,typeof(QingXi),typeof(QuicklyGrowing),
-        typeof(RenZao) ,typeof(ShenHuanFeiYan),typeof(ShenYouHuanJing) ,typeof(XinShenJiDang),
-        //未测试通过：typeof(HunQianMengYing),typeof(LuanLun),typeof(HunHe),
-            typeof(YouAnQuanGan),typeof(ZhongDu),typeof(SheHuiHua),typeof(GeLi),typeof(YongJi),typeof(YeSheng)})
-            //缺少的已补完
-                                                   ;
+        list_verb.AddRange(new Type[] {   typeof(WritePoem) , typeof(BuryFlower),typeof(WanShua),typeof(ShaYu), typeof(FangFuShu),
+            typeof(ShenPan),typeof(QiChongShaDance),typeof(Kiss),typeof(TongPinGongZhen),typeof(TuLingCeShi),
+             typeof(GunShoot), typeof(MianYiZengQiang),typeof(ChanLuan),typeof(HeartBroken),typeof(Shuai), typeof(ToBigger), typeof(BaoZa),
+         //未测试通过：,typeof(WenYiChuanBo) , 
+          });
+        
+        //添加形容词词条W
+        list_adj.AddRange(new Type[] {  typeof(ChaFanWuXin),typeof(ShenYouHuanJing),typeof(KeBan),//typeof(HunHe),
+            typeof(YongJi),  typeof(YouAnQuanGan), typeof(BuXiu),  typeof(FengChan),  typeof(XinShenJiDang),
+            typeof(LuanLun),typeof(HunQianMengYing),typeof(QingXi),typeof(HeWuRan), typeof(RenZao) , typeof(ShenHuanFeiYan),
+            typeof(GeLi),typeof(SheHuiHua), typeof(HunFei),typeof(HaoZhan),typeof(FengLi),typeof(QuicklyGrowing),typeof(LuoYingBinFen) ,
+             typeof(CuZhuang),typeof(JianRuPanShi), typeof(ZhongDu),typeof(YeSheng),
+            //未测试通过：typeof(GuoMin),
+         }) ;
+                                                 
         //添加名词词条
-        list_noun.AddRange(new Type[] { typeof(WaiGuGe),  typeof(LengXiangWan),
-            typeof(ZiShuiJIng) ,typeof(RiLunGuaZhui),
-            //未测试通过：typeof(DuXian),typeof(JiShengChong),typeof(XianZhiHead),typeof(TongLingBaoyu),typeof(SheQunFengRong), typeof(Nexus_6Arm), typeof(herusizhiyan),
-            typeof(ChaBei),typeof(HuYanShi) ,typeof(BaiShuijing) ,typeof(FuTouAxe),typeof(BoLiGuaZhui),
-           typeof(MeiGuiShiYing) ,typeof(BeiZhiRuDeJiYi),typeof(QiGuaiShiXiang),
-            typeof(HouZiDian),typeof(VolumeProduction) ,typeof(ShiWuFengRong),typeof(EXingZhongLiu)
+        list_noun.AddRange(new Type[] {  typeof(ChaBei),typeof(LengXiangWan),typeof(TongLingBaoyu),
+            typeof(ShiWuFengRong),typeof(RiLunGuaZhui),typeof(herusizhiyan),//typeof(XianZhiHead),
+            typeof(BaiShuijing) ,typeof(ZiShuiJIng),typeof(HuYanShi) ,typeof(MeiGuiShiYing) ,typeof(Nexus_6Arm),
+             typeof(BeiZhiRuDeJiYi),typeof(VolumeProduction) ,typeof(JiShengChong),typeof(EXingZhongLiu),typeof(WaiGuGe), 
+            typeof(DuXian), typeof(FuTouAxe),  typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui),
+             //未测试通过：typeof(SheQunFengRong),
+
+      
+        
             //缺少的已补完
         });
         //全部
@@ -233,7 +238,7 @@ public static class AllSkills
         maYiDiGuoList_all.AddRange(maYiDiGuoList_verb);
         maYiDiGuoList_all.AddRange(maYiDiGuoList_adj);
         maYiDiGuoList_all.AddRange(maYiDiGuoList_noun);
-        #endregion
+    
         //通用添加动词词条
         commonList_verb.AddRange(new Type[] { typeof(Shuai),typeof(HeartBroken),typeof(ToBigger),typeof(BaoZa),});
         //通用添加形容词词条
@@ -251,14 +256,18 @@ public static class AllSkills
         combatList_all.AddRange(shaLeMeiList_all);
 
 
+     #endregion
+
         //手动增加好坏词条
-        BadBuff.AddRange(new Type[] { });
-        GoodBuff.AddRange(new Type[] { });
+        BadBuff.AddRange(new Type[] { typeof(DianDao),typeof(FuShi ),typeof(Toxic),typeof(Ill),typeof(XuRuo),typeof(PoJia),typeof(MuNe),typeof(ChiHuan),
+       typeof(LengMo),typeof(FuHuo),typeof(Dizzy),typeof(Upset)});
+        GoodBuff.AddRange(new Type[] { typeof(QiWu), typeof(ReLife),typeof(GongZhen),typeof(GaiZao),typeof(ChongLuan),typeof(HuaBan),typeof(ChaoFeng),
+        typeof(ShiQing),typeof(HeShan),typeof(RuiLi),typeof(JiSu),typeof(ZaiSheng),typeof(KangFen),});
 
 
 
         ///<summary>测试词条1</summary>
-        testList1.AddRange(new Type[] { /*typeof(DuXian) ,typeof(BenJieShiDui)*/typeof(HaoZhan) });
+        testList1.AddRange(new Type[] {  typeof(GuoMin) });
 
         ///<summary>测试通过词条2</summary>///
         testList2.AddRange(new Type[] { /*noun*/typeof(BaiShuijing) ,typeof(BeiZhiRuDeJiYi) ,typeof(ShiWuFengRong), typeof(BoLiGuaZhui),typeof(ChaBei),
@@ -276,7 +285,7 @@ public static class AllSkills
        typeof(CHOOHShoot_x),//九尾：乙酸喷射表中没有了 应该已经废弃了，确定的话可以标x
       /*测试负面状态的清楚*/
            typeof(HunQianMengYing),typeof(LuanLun),
-        /*verb*/typeof(BaoZa),typeof(BuryFlower),typeof(Kiss),typeof(QiChongShaDance),typeof(TuLingCeShi),typeof(WenYiChuanBo)});
+        /*verb*/typeof(BaoZa),typeof(BuryFlower),typeof(Kiss),typeof(QiChongShaDance),typeof(TuLingCeShi),typeof(WenYiChuanBo), typeof(ChaBei), typeof(LengXiangWan)});
     }
 
     /// <summary>
@@ -300,9 +309,9 @@ public static class AllSkills
 
         //测试用，指定某种卡牌↓
 
-        int _number = UnityEngine.Random.Range(0, list_all.Count);
+        int _number = UnityEngine.Random.Range(0, testList1.Count);
 
-        return list_all[_number];
+        return testList1[_number];
        
         
         //测试用，所有可用卡牌

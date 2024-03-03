@@ -37,7 +37,7 @@ public class GameProcessSlider : MonoBehaviour
     public GameObject characterCanvas;
 
     [Header("结束页面的预制体")]
-    public GameObject endGame;
+    //public GameObject endGame;
 
     private Vector3 oriScale;
     private void Start()
@@ -141,8 +141,8 @@ public class GameProcessSlider : MonoBehaviour
         IAttackRange attackRange = new SingleSelector();
 
         //这一句越级了
-        AbstractCharacter[] a = attackRange.CaculateRange(100, boss.GetComponent<AbstractCharacter>().situation, NeedCampEnum.all);
-        boss.GetComponentInChildren<AI.MyState0>().aim = a[Random.Range(0, a.Length)];
+        AbstractCharacter[] a = attackRange.CaculateRange(100, boss.GetComponent<AbstractCharacter>().situation, NeedCampEnum.all, false);
+        boss.GetComponentInChildren<AI.MyState0>().aim .Add (a[Random.Range(0, a.Length)]);
 
 
     }

@@ -42,28 +42,29 @@ public class XinShenJiDang : AbstractAdjectives,IChongNeng
     /// <param name="times"></param>
     public void ChongNeng(int times)
     {
-        psyAdd += 2*times;
+        psyAdd += times;
     }
 
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
         base.UseAdj(aimCharacter);
-
+  
         buffs.Add(aimCharacter.gameObject.AddComponent<DianDao>());
         buffs[0].maxTime = skillEffectsTime;
-
+      aimCharacter.psy += 2 * psyAdd;
         BasicAbility(aimCharacter);
 
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        aimCharacter.psy += psyAdd;
+ 
     }
 
     public override void End()
     {
-        aim.psy -= psyAdd;
-        base.End();
+        aim.psy -= psyAdd* 2  ;
+        base.End(); 
+       
     }
     
 }

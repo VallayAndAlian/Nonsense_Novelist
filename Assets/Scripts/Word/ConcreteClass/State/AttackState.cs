@@ -63,25 +63,25 @@ namespace AI
                 count = 0;
                 canUseSkills[0].UseVerb(myState.character);
 
-                myState.character.charaAnim.Play(AnimEnum.attack);
-                myState.character.CreateFloatWord(canUseSkills[0].wordName, FloatWordColor.physics, false);
+         
             }
             //如果没有技能在使用&&平A冷却完毕
-            else if (attackAtime >= (myState.character.attackInterval/myState.character.attackSpeedPlus))
-            {
+            //else if (attackAtime >= (myState.character.attackInterval/myState.character.attackSpeedPlus))
+            //{
              
-                if (myState.character.AttackA())
-                {
-                    attackAtime = 0;
-                   
+            //    if (/*myState.character.AttackA()*/myState.hasAttackAAnim)
+            //    {
+            //        attackAtime = 0;
+            //        //myState.hasAttackAAnim = false;
+            //      // myState.character.charaAnim.Play(AnimEnum.attack);
 
-                }
-                else
-                {
+            //    }
+            //    else
+            //    {
                   
-                    //myState.character.charaAnim.Play(AnimEnum.idle);
-                }
-            }
+                    
+            //    }
+            //}
             else
             {
                

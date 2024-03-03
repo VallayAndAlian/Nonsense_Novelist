@@ -22,6 +22,11 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             detailPos = Vector3.zero ;
             detailScale = Vector3.one*1.3f;
         }
+        if (SceneManager.GetActiveScene().name == "CombatTest")
+        {
+            detailPos = Vector3.zero;
+            detailScale = Vector3.one * 0.7f;
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -45,6 +50,11 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        isOpen = false;
+        PoolMgr.GetInstance().PushObj(adr_detail, go);
+    }
+    public void ClickClose()
     {
         isOpen = false;
         PoolMgr.GetInstance().PushObj(adr_detail, go);

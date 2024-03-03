@@ -43,6 +43,11 @@ public class JiHuo : WordCollisionShoot
         if (collision.gameObject.layer == LayerMask.NameToLayer("Character"))
         {
             AbstractCharacter character = collision.gameObject.GetComponent<AbstractCharacter>();
+
+
+            if (character.myState.nowState == character.myState.allState.Find(p => p.id == AI.StateID.dead)) return;
+
+
             character.CreateFloatWord(absWord.wordName, FloatWordColor.getWord, false);
             //判断该词条是形容词/动词/名词
             //先把absWord脚本挂在角色身上，然后调用角色身上的useAdj

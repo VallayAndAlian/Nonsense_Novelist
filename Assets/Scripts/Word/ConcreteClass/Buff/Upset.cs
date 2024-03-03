@@ -12,23 +12,26 @@ public class Upset : AbstractBuff
     AttackState state;
     override protected void Awake()
     {
-        base.Awake();
+       
         buffName = "¾ÚÉ¥";
         description = "Í£Ö¹ÆÕÍ¨¹¥»÷";
         book = BookNameEnum.allBooks;
         isBad = true;
         state=GetComponentInChildren<AttackState>();
-    
+
+        base.Awake();
     }
 
     public override void Update()
     {
         base.Update();
-        state.attackAtime = 0;//ÎÞ·¨Æ½A
+        chara.charaAnim.SetSpeed(AnimEnum.attack, 0);
+
     }
     private void OnDestroy()
     {
-        base.OnDestroy();   
+        base.OnDestroy();
+        chara.charaAnim.SetSpeed(AnimEnum.attack, chara.attackSpeedPlus);
     }
 
 }

@@ -51,4 +51,11 @@ public class CharaAnim : MonoBehaviour
         else
             return false;
     }
+
+
+    public void SetSpeed(AnimEnum animEnum, float speed)
+    {
+            anim.speed = 1 * speed;
+
+    }
 }

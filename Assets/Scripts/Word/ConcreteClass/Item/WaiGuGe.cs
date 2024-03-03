@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 class WaiGuGe : AbstractItems
 {
-    static public string s_description = "<sprite name=\"def\">+5";
+    static public string s_description = "自身与随从的<sprite name=\"def\">+5";
     static public string s_wordName = "外骨骼";
     static public int rarity = 1;
     public override void Awake()
@@ -17,17 +17,23 @@ class WaiGuGe : AbstractItems
         wordName = "外骨骼";
 
         bookName = BookNameEnum.PHXTwist;
-        description = "<sprite name=\"def\">+5";
+        description = "自身与随从的<sprite name=\"def\">+5";
 
         VoiceEnum = MaterialVoiceEnum.Meat;
 
         rarity = 1;
     }
-
+    GameObject[] servants;
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
         chara.def += 5;
+        servants = chara.servants.ToArray();
+        foreach (var _s in servants)
+        {
+            if (_s != null)
+                _s.GetComponent<AbstractCharacter>().def += 5;
+        }
     }
 
     public override void UseVerb()
@@ -38,6 +44,11 @@ class WaiGuGe : AbstractItems
     public override void End()
     {
         base.End();
-        aim.def -= 5;
+        aim.def -= 5; 
+        foreach (var _s in servants)
+        {
+            if(_s!=null)
+            _s.GetComponent<AbstractCharacter>().def -= 5;
+        }
     }
 }

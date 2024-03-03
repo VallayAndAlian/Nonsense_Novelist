@@ -43,8 +43,7 @@ class BaiShuijing: AbstractItems,IJiHuo
         base.UseItem(chara);
         if (jiHuo)
         {
-            chara.CreateFloatWord(60, FloatWordColor.heal, false);
-            chara.hp += 60;
+            chara.BeCure(60, true, 0);
            buffs.Add(gameObject.AddComponent<GongZhen>());
            buffs[0].maxTime = Mathf.Infinity;
         }
@@ -66,7 +65,7 @@ class BaiShuijing: AbstractItems,IJiHuo
         base.End();
 
         if (jiHuo)
-            aim.hp -= 60;
+            aim.BeAttack(AttackType.dir, 60, true, 0, this.GetComponent<AbstractCharacter>());
         else
             aim.maxHp -= 20;
     }

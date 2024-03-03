@@ -10,12 +10,17 @@ public class HuaBan: AbstractBuff
     static public string s_wordName = "»¨°ê";
     override protected void Awake()
     {
-        base.Awake();
+        
         buffName = "»¨°ê";
         description = "ÌáÉý1<sprite name=\"psy\">";
+        book = BookNameEnum.allBooks; 
+         maxTime = 200;
+        base.Awake();
 
-        book = BookNameEnum.allBooks;
         chara.psy += 1;
+       
+
+        
     }
 
 

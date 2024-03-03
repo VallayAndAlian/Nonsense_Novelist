@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Ill : AbstractBuff
 {
-    static public string s_description = "每秒受到2点物理伤害，连续患病30s后变得<color=#dd7d0e>虚弱</color>";
+    static public string s_description = "每秒受到2点物理伤害，连续患病10s后变得<color=#dd7d0e>虚弱</color>,可无限叠加";
     static public string s_wordName = "患病";
 
     /// <summary>外部赋值使用者</summary>
@@ -15,9 +15,9 @@ public class Ill : AbstractBuff
     DamageMode damageMode;
     override protected void Awake()
     {
-        base.Awake();
+        
         buffName = "患病";
-        description = "每秒受到2点物理伤害，连续患病30s后变得<color=#dd7d0e>虚弱</color>";
+        description = "每秒受到2点物理伤害，连续患病10s后变得<color=#dd7d0e>虚弱</color>,可无限叠加";
         book = BookNameEnum.FluStudy;
         damageMode = gameObject.AddComponent<DamageMode>();
         damageMode.attackRange=new SingleSelector();
@@ -25,6 +25,7 @@ public class Ill : AbstractBuff
         isAll = true;
         nowTime = 0;
 
+        base.Awake();
         StartCoroutine(MakeAttack());
     }
 
@@ -32,12 +33,7 @@ public class Ill : AbstractBuff
     public override void Update()
     {
         base.Update();
-        //nowTime += Time.deltaTime;
-        //if(nowTime>1)
-        //{
-        //    nowTime= 0;
-        //    damageMode.UseMode(useCharacter!=null?useCharacter:chara, 2 * (1 - chara.def / (chara.san + 20)), chara);
-        //}
+
     }
 
     IEnumerator MakeAttack() 
@@ -48,10 +44,10 @@ public class Ill : AbstractBuff
             nowTime += 1;
             
              damageMode.UseMode(AttackType.atk, 2,useCharacter != null ? useCharacter : chara, chara,true,0/*2 * (1 - chara.def / (chara.def + 20))*/);
-            if (nowTime >= 30)
+            if (nowTime >= 10)
             {
-                //buffs.Add(gameObject.AddComponent<>());
-                //buffs[0].maxTime = Mathf.Infinity;
+                var xr=gameObject.AddComponent<XuRuo>();
+                xr.maxTime = Mathf.Infinity;
                 nowTime = -9999;
             }
         }

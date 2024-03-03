@@ -20,6 +20,8 @@ class RiLunGuaZhui : AbstractItems
         VoiceEnum = MaterialVoiceEnum.Ceram;
         rarity = 3;
     }
+
+    AbstractCharacter ac;
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
@@ -27,19 +29,34 @@ class RiLunGuaZhui : AbstractItems
         chara.cure += 3;
         chara.maxHp += 30;
         chara.CreateFloatWord(30, FloatWordColor.healMax, false);
+        ac = chara;
 
     }
 
     public override void UseVerb()
     {
         base.UseVerb();
-        
+        if (CharacterManager.instance.pause) return;
+        if (ac == null) return;
+        if (ac.hp > 1) return;
+
+        if ((ac.myState.nowState == ac.myState.allState.Find(p => p.id == AI.StateID.dead)))
+        {
+            //角色死亡时
+            if (ac.reLifes == 0)
+            {
+                ac.reLifes++;
+                Destroy(this);
+            }
+             
+         
+        }
     }
 
     public override void End()
     {
         base.End();
-        aim.maxHp -= 5;
+        aim.maxHp -= 30;
         aim.cure -= 3;
     }
 }

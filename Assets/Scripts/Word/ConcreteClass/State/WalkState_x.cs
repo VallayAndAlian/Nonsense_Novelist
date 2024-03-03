@@ -29,7 +29,7 @@ namespace AI
                     myState.character.source.Play();
                 }
                 //ÒÆ¶¯
-                myState.character.transform.position = Vector3.MoveTowards(myState.transform.position, myState.aim.transform.position, myState.speed * Time.deltaTime);
+                myState.character.transform.position = Vector3.MoveTowards(myState.transform.position, myState.aim[0].transform.position, myState.speed * Time.deltaTime);
             }
         }
 

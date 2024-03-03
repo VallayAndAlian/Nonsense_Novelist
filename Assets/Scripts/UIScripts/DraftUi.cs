@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -11,7 +12,10 @@ public class DraftUi : MonoBehaviour
 {
     //文本内容
     List<string> content=new List<string>();
+
+
     public static DraftUi instance;
+    
     // 不换行的的空格符
     public static readonly string NO_BREAKING_SPACE = "\u00A0";//"\u3000";
 
@@ -87,6 +91,14 @@ public class DraftUi : MonoBehaviour
     {
         CharacterManager.instance.pause = true;
         this.gameObject.SetActive(true);
+        //this.transform.Find("Panal").
+        var _all = this.GetComponentsInChildren<DragDraftText>();
+        if (_all != null)
+        {
+            // ExecuteEvents.Execute(_all[0].gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
+            //_all[0].OnBeginDrag(new PointerEventData(EventSystem.current));
+        }
+ 
         InitDraft();
     }
     public void closeDraft()
@@ -122,7 +134,7 @@ public class DraftUi : MonoBehaviour
                  {
                      _inputField.text += "\n";
                  }
-
+                 _inputField.text += "\n";
                  obj.transform.parent = parent;
                  obj.transform.localScale = Vector3.one;
              });
@@ -405,7 +417,8 @@ public class DraftUi : MonoBehaviour
         //转行
         _inputField.text = "";
         var count =Mathf.Floor( (sizeFont * (_text.text.Length)) / sizeWidth);
-        for (int x = 0; x < count - 1; x++)
+        var countN = _text.text.Split("\n").Length;
+        for (int x = 0; x < count+ countN-1; x++)
         {
             _inputField.text += "\n";
         }
@@ -469,6 +482,7 @@ public class DraftUi : MonoBehaviour
     }
     public void AddContent(string _new)
     {
+        print(_new);
         content.Add(_new);
     }
     #endregion

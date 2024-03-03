@@ -3,49 +3,61 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 失恋
+/// 角色：失恋
 /// </summary>
 class ShiLian : AbstractCharacter
 {
     override public void Awake()
     {
         base.Awake();
+
+        //基础信息
         characterID = 12;
         wordName = "失恋";
         bookName = BookNameEnum.Salome;
-        gender = GenderEnum.noGender;
-        hp = maxHp = 120;
+        brief = "暂无介绍";
+        description = "暂无介绍";
+
+        //数值
+        hp = maxHp = 100;
         atk = 3;
-        def = 4;
-        psy = 5;
-        san = 3;
-        mainProperty.Add("精神", "中法dps");
-        trait = gameObject.AddComponent<Vicious>();
-        roleName = "负面情绪";
+        def = 3;
+        psy = 4;
+        san = 4;
+
         attackInterval = 2.2f;
-        attackDistance = 300;
-    }
-    private void Start()
-    {
-        attackState = GetComponent<AttackState>();
-        Destroy(attackA);
-        attackA = gameObject.AddComponent<DamageMode>();
-    }
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
+        attackDistance = 500;
+        myState.aimCount = 1;
+        attackAmount = 1;
+        hasBetray = false;
 
-    AttackState attackState;
-    AbstractCharacter[] aims;
-    public override bool AttackA()
+        //特性
+        roleName = "负面情绪";
+        roleInfo = "攻击有几率让对方沮丧";//普通攻击有20%几率附带“沮丧”状态，持续3s
+        event_AttackA += UpsetAttackA;
+    }
+  
+    /// <summary>
+    /// 特性
+    /// </summary>
+    void UpsetAttackA()
     {
-        if (base.AttackA())
-        {
-            //普通攻击有20几率附带“沮丧”状态
+      
+        for (int i = 0; i < myState.aim.Count; i++)
+        {  
             if (Random.Range(1, 101) <= 20)
-                myState.aim.gameObject.AddComponent<Upset>().maxTime = 5;
-            return true;
+            {
+                myState.aim[i].gameObject.AddComponent<Upset>().maxTime = 3;
+            }
         }
-        return false;
     }
 
+    private void OnDestroy()
+    {
+        event_AttackA -= UpsetAttackA;
+    }
 
     public override string ShowText(AbstractCharacter otherChara)
     {

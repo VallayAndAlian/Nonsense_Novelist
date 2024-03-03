@@ -47,6 +47,8 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
     private bool isCombatScene = false;
 
+
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "ShootCombat")
@@ -105,6 +107,8 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
         if (word.wordKind == WordKindEnum.verb)
         {
+            energy.gameObject.SetActive(true);
+            print("needCD");
             title.text = "      " + word.wordName;
   
             needCD.text =/*word.wordName*/((AbstractVerbs)word).needCD.ToString();
@@ -196,6 +200,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
             {
                 PoolMgr.GetInstance().GetObj(detailInfoPrefab, (obj) =>
                  {
+                     //生成面板的位置在这改没用，直接修改物品DetailWordInfo的位置
                      obj.transform.parent = detailParent;
                      obj.transform.localPosition = new Vector3(0, 0, 0);
                      obj.transform.localScale = Vector3.one;

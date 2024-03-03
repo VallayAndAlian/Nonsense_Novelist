@@ -7,28 +7,30 @@ using UnityEngine;
 /// </summary>
 public class ChaoFeng : AbstractBuff
 {
-    static public string s_description = "Í£Ö¹ÆÕÍ¨¹¥»÷";
+    static public string s_description = "ÎüÒýµÐÈËµÄ¹¥»÷";
     static public string s_wordName = "³°·í";
     AttackState state;
     override protected void Awake()
     {
-        base.Awake();
+    
         buffName = "³°·í";
-        description = "Í£Ö¹ÆÕÍ¨¹¥»÷";
+        description = "ÎüÒýµÐÈËµÄ¹¥»÷";
         book = BookNameEnum.allBooks;
         isBad = true;
         state=GetComponentInChildren<AttackState>();
-    
+        base.Awake();
+
     }
 
     public override void Update()
     {
         base.Update();
-        state.attackAtime = 0;//ÎÞ·¨Æ½A
+        
     }
     private void OnDestroy()
     {
-        base.OnDestroy();   
+        base.OnDestroy();
+       
     }
 
 }

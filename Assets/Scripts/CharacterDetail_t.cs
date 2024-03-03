@@ -98,7 +98,7 @@ public class CharacterDetail_t : MonoBehaviour
                 //生成对应的
                 PoolMgr.GetInstance().GetObj(buffPerfab, (obj) =>
                 {
-
+                    obj.GetComponent<BuffDetail>().wordname = buff.GetType().ToString();
                     obj.transform.parent = buffP;
                     obj.transform.localScale = Vector3.one;
                     obj.name = buff.buffName;

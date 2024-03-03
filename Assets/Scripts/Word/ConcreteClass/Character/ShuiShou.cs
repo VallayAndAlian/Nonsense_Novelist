@@ -26,33 +26,38 @@ class ShuiShou : AbstractCharacter
         attackDistance = 100;
         brief = "来自日常生活开销所产生的经济压力";
         description = "来自日常生活开销所产生的经济压力。";
+        myState.aimCount = 4;
     }
 
     AbstractCharacter[] aims;
-    public override bool AttackA()
-    {//代替平A
-        if (myState.aim != null)
-        {
-            myState.character.CreateBullet(myState.aim.gameObject);
-            if (myState.character.aAttackAudio != null)
-            {
-                myState.character.source.clip = myState.character.aAttackAudio;
-                myState.character.source.Play();
-            }
-            myState.character.charaAnim.Play(AnimEnum.attack);
-            aims = attackA.CalculateAgain(100, this);
-            foreach (AbstractCharacter aim in aims)
-            {//普通攻击为对所有敌人造成攻击力10%的伤害，附带攻击特效
-                myState.character.CreateBullet(aim.gameObject);
-                //aim.CreateFloatWord(
-                //    attackA.UseMode(myState.character, myState.character.atk * 0.1f * (1 - myState.aim.def / (myState.aim.def + 20)), aim)
-                //    ,FloatWordColor.physics,true);
-                attackA.UseMode(AttackType.atk, myState.character.atk * 0.1f , myState.character, aim, true, 0);
-            }
-            return true;
-        }
-        return false;
-    }
+    //public override bool AttackA()
+    //{//代替平A
+    //    if (myState.aim != null)
+    //    {
+    //        for (int i = 0; i < myState.aim.Count; i++)
+    //        { 
+    //            myState.character.CreateBullet(myState.aim.gameObject);
+            
+    //        }
+    //        if (myState.character.aAttackAudio != null)
+    //        {
+    //            myState.character.source.clip = myState.character.aAttackAudio;
+    //            myState.character.source.Play();
+    //        }
+    //        myState.character.charaAnim.Play(AnimEnum.attack);
+    //        aims = attackA.CalculateAgain(100, this);
+    //        foreach (AbstractCharacter aim in aims)
+    //        {//普通攻击为对所有敌人造成攻击力10%的伤害，附带攻击特效
+    //            myState.character.CreateBullet(aim.gameObject);
+    //            //aim.CreateFloatWord(
+    //            //    attackA.UseMode(myState.character, myState.character.atk * 0.1f * (1 - myState.aim.def / (myState.aim.def + 20)), aim)
+    //            //    ,FloatWordColor.physics,true);
+    //            attackA.UseMode(AttackType.atk, myState.character.atk * 0.1f , myState.character, aim, true, 0);
+    //        }
+    //        return true;
+    //    }
+    //    return false;
+    //}
 
     public override string ShowText(AbstractCharacter otherChara)
     {

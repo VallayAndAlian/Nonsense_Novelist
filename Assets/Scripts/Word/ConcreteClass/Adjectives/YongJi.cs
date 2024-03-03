@@ -18,12 +18,14 @@ public class YongJi : AbstractAdjectives
         description = "获得1个随机随从";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = 1;
-        rarity = 1;
+        rarity = 1; 
+
+        base.Awake();
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<ChuanBoCollision>();
 
-        base.Awake();
+      
     }
 
     public override void UseAdj(AbstractCharacter aimCharacter)

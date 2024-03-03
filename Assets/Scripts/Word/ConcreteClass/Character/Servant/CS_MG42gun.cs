@@ -62,19 +62,24 @@ public class CS_MG42gun : ServantAbstract
         }
         //base:
         if (myState.aim != null)
-        {
-            myState.character.CreateBullet(myState.aim.gameObject);
-            if (myState.character.aAttackAudio != null)
+        { if (myState.character.aAttackAudio != null)
             {
                 myState.character.source.clip = myState.character.aAttackAudio;
                 myState.character.source.Play();
             }
             myState.character.charaAnim.Play(AnimEnum.attack);
+            for (int x = 0; x < myState.aim.Count; x++)
+            {
+                 myState.character.CreateBullet(myState.aim[x].gameObject); 
+               
             //myState.aim.CreateFloatWord(
             //    attackA.UseMode(myState.character, myState.character.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
             //    , FloatWordColor.physics, false);
-            attackA.UseMode(AttackType.atk, myState.character.atk, myState.character, myState.aim, true, 0);
-            attackCountNow += 1;
+            attackA.UseMode(AttackType.atk, myState.character.atk, myState.character, myState.aim[x], true, 0);
+            
+            }
+           attackCountNow += 1;
+           
             return true;
         }
         return false;

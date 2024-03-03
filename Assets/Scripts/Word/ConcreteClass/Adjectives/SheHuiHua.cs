@@ -23,11 +23,13 @@ public class SheHuiHua : AbstractAdjectives,IJiHuo
 
         skillEffectsTime = 20;
         rarity = 3;
+        
+        base.Awake();
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<JiHuo>();
         
-        base.Awake();
+      
     }
 
     override public string[] DetailLable()
@@ -47,6 +49,7 @@ public class SheHuiHua : AbstractAdjectives,IJiHuo
     {
         base.UseAdj(aimCharacter);
 
+        aimCharacter.AddServant("CS_GongYi");
         aimCharacter.AddServant("CS_GongYi");
         if (jiHuo)
         {

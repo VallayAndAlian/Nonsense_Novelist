@@ -15,8 +15,13 @@ namespace AI
         }
         public override bool Satisfy(MyState0 myState)
         {
+            print("ReLifeTrigger Satisfy");
             if (myState.character.hp > 0)
+            {
+                print("ReLifeTrigger");
                 return true;
+            }
+                
             else
                 return false;
         }

@@ -31,8 +31,8 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-       
-        if (draftUi == null) Debug.LogWarning("draftUi找不到");
+        
+        //if (draftUi == null) Debug.LogWarning("draftUi找不到");
     }
 
     #region 拖拽事件

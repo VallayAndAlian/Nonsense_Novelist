@@ -8,7 +8,7 @@ using UnityEngine;
 public class GongZhen : AbstractBuff
 {
 
-    static public string s_description = "场上每有4个“共振”，四维+1，<sprite name=\"hp\">+30";
+    static public string s_description = "场上每有4个“共振”，四维+1";
     static public string s_wordName = "共振";
     int count=0;
     /// <summary>共振角色数量</summary>
@@ -17,11 +17,12 @@ public class GongZhen : AbstractBuff
     private int record;
     override protected void Awake()
     {
-        base.Awake();
+      
         buffName = "共振";
         book = BookNameEnum.CrystalEnergy;
-        description = "场上每有4个“共振”，四维+1，<sprite name=\"hp\">+30";
-   
+        description = "场上每有4个“共振”，四维+1";
+
+        base.Awake();
 
         //if (this.GetComponents<GongZhen>().Length == 1)
         //{
@@ -58,8 +59,6 @@ public class GongZhen : AbstractBuff
             chara.def += (num - record);
             chara.psy += (num - record);
             chara.san += (num - record);
-            chara.maxHp += (num - record) * 4;
-            chara.CreateFloatWord((num-record)*4, FloatWordColor.healMax, false);
             record = num;
         }
        
@@ -75,7 +74,6 @@ public class GongZhen : AbstractBuff
         //chara.def -= record;
         //chara.psy -= record;
         //chara.san -= record;
-        chara.maxHp -= 30 * num;
         chara.def -= 1 * num;
         chara.san -= 1 * num;
         chara.psy -= 1 * num;

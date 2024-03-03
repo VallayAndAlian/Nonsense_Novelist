@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 class Shuai : AbstractVerbs
 {
-    static public string s_description = "使敌人<color=#dd7d0e>晕眩</color>3s";
+    static public string s_description = "造成1*<sprite name=\"atk\">的物理伤害，使敌人<color=#dd7d0e>晕眩</color>1s";
     static public string s_wordName = "摔";
     static public int rarity = 1;
     public override void Awake()
@@ -16,19 +16,18 @@ class Shuai : AbstractVerbs
         wordName = "摔";
         bookName = BookNameEnum.allBooks;
 
-        description = "使敌人<color=#dd7d0e>晕眩</color>3s";
+        description = "造成1*<sprite name=\"atk\">的物理伤害，使敌人<color=#dd7d0e>晕眩</color>1s";
         //nickname.Add("砸");
         //nickname.Add("甩");
         //nickname.Add("投掷");
 
         skillMode = gameObject.AddComponent<DamageMode>();
-        //(skillMode as DamageMode).isPhysics = true;
 
         skillMode.attackRange = new SingleSelector();
-        skillEffectsTime = 3f;
+        skillEffectsTime = 1f;
 
         rarity = 1;
-        needCD=2;
+        needCD=1;
     }
     override public string[] DetailLable()
     {
@@ -40,18 +39,38 @@ class Shuai : AbstractVerbs
     public override void UseVerb(AbstractCharacter useCharacter)
     {
         base.UseVerb(useCharacter);
-        var _aim = skillMode.CalculateAgain(500, useCharacter)[0]; 
-         _aim.gameObject.AddComponent<Dizzy>().maxTime= skillEffectsTime;
-     
+
+
         BasicAbility(useCharacter);
     }
 
     public override void BasicAbility(AbstractCharacter useCharacter)
-    {
-        //AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        //aim.CreateFloatWord(
-        //skillMode.UseMode(useCharacter, useCharacter.atk*0.2f * (1 - aim.def / (aim.def + 20)), aim)
-        //,FloatWordColor.physics,true);
+    {       
+        //奶妈
+        if (useCharacter.isNaiMa)
+        {
+            var _aims = skillMode.CalculateAgain(200, useCharacter);
+            int x = 0;
+            for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
+            {
+                skillMode.UseMode(AttackType.atk, useCharacter.atk * useCharacter.atkMul, useCharacter, _aims[i], true, 0);
+
+                buffs.Add(_aims[i].gameObject.AddComponent<Dizzy>());
+                buffs[0].maxTime = skillEffectsTime;
+
+                x++;
+            }
+
+            return;
+        }
+        //其它
+        for (int i = 0; i < character.myState.aim.Count; i++)
+        {
+            skillMode.UseMode(AttackType.atk, useCharacter.atk * useCharacter.atkMul, useCharacter, character.myState.aim[i], true, 0);
+            
+            buffs.Add(character.myState.aim[i].gameObject.AddComponent<Dizzy>());
+            buffs[0].maxTime = skillEffectsTime;
+        }
     }
     public override string UseText()
     {

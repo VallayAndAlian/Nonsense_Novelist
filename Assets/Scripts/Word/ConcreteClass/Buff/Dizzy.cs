@@ -12,16 +12,22 @@ public class Dizzy : AbstractBuff
     override protected void Awake()
     {       
         
-        base.Awake();
+    
         buffName = "晕眩";
         description = "无法行动，能量增长停止";
-        book = BookNameEnum.allBooks;
+        book = BookNameEnum.allBooks;  
+        isBad = true;
+        maxTime = 2;
+
+        base.Awake();
+
         record = chara.energy;
         chara.dizzyTime = maxTime;
         if (record > 0.9f) record = 0.9f;
-       
-       
-        isBad = true;
+
+        chara.teXiao.PlayTeXiao("dizzy");
+
+
     }
 
    
@@ -32,5 +38,6 @@ public class Dizzy : AbstractBuff
         base.Update();
    
         chara.energy = 0;//能量增长停止
+      
     }
 }

@@ -19,7 +19,13 @@ namespace AI
 
 
         /// <summary>关注的目标</summary>
-        public AbstractCharacter aim;
+        public List<AbstractCharacter> aim=new List<AbstractCharacter>();
+        /// <summary>关注的目标</summary>
+        public List<AbstractCharacter> aimTemp = new List<AbstractCharacter>();
+        /// <summary>关注的目标最大数量</summary>
+        [HideInInspector] public int aimCount = 1;
+
+
         /// <summary>移速</summary>
         public float speed = 0.1f;
 
@@ -51,19 +57,32 @@ namespace AI
             nowState.Action(this);
         }
 
+        #region 角色攻击动画关键帧调用
         public void BulletOut()
         {
-            character.CreateBullet(aim.gameObject);
-        }
 
+            
+        }
+        //public bool hasAttackAAnim = false;
+        public void AttackA()
+        {
+
+            character.AttackA();
+            
+            for (int x = 0; x < aim.Count; x++)
+            {
+                character.CreateBullet(aim[x].gameObject);
+            }
+
+                
+        }
+        #endregion
 
 
         IEnumerator EveryZeroOne()
         {
             while (true)
             {
-
-
                 nowState.CheckTrigger(this);//更新状态
                 yield return new WaitForSeconds(0.1f);
                 if(event_EveryZeroOne!=null)
@@ -76,34 +95,37 @@ namespace AI
         AI.MyState0 masterState = null;
         IEnumerator Every1Seconds()
         {
-         
             sa = transform.parent.GetComponentInChildren<ServantAbstract>();
             if(sa!=null) masterState= sa.masterNow.GetComponentInChildren<MyState0>();
 
             while (true)
             {
                 if (!CharacterManager.instance.pause)
-                aim = FindAim();//不断寻找更近的敌人
+                {
+                    aim.Clear();
+                    aim .AddRange( FindAim());//不断寻找更近的敌人
+                }
+                 
                 yield return new WaitForSeconds(1);
             }
         }
         /// <summary>
         /// 寻找目标
         /// </summary>
-        public AbstractCharacter FindAim()
+        public AbstractCharacter[] FindAim()
         {
 
-                
+
 
 
             //如果已有不变目标：
             if (unchangeAim != null)
-                return unchangeAim;
+                return new AbstractCharacter[1] { unchangeAim };
 
             if (isAimRandom)
             {
                 //所有目标，返回随机一个(除了BOSS以外)
-                AbstractCharacter[] b = character.attackA.CalculateRandom(character.attackDistance, character,true);
+                AbstractCharacter[] b = character.attackA.CalculateRandom(character.attackDistance, character, true);
                 print("returnRandomAim");
                 int _r = Random.Range(0, b.Length);
 
@@ -111,7 +133,7 @@ namespace AI
                 if (b.Length <= 1)
                 {
                     print("在" + character.wordName + "的GetNewAim(Random)中，其目标小于1");
-                    return b[_r];
+                    return new AbstractCharacter[1] { b[_r] };
                 }
 
                 //排除自己
@@ -120,16 +142,35 @@ namespace AI
                     _r = Random.Range(0, b.Length);
                 }
 
-                return b[_r];
+                return new AbstractCharacter[1] { b[_r] };
             }
 
-                //筛选目标，返回距离最近的
-            AbstractCharacter[] a = character.attackA.CalculateAgain(character.attackDistance, character);
+            //筛选目标，返回距离最近的
 
+            aimTemp.Clear();
+            aimTemp.AddRange(character.attackA.CalculateAgain(character.attackDistance, character));
 
+            //按照攻击对象的数目来返回指定数目的目标、
+            for(int x=0;x<aimTemp.Count;x++)
+            {
+                
+                //移除已经死亡的对象
+                if ((aimTemp[x].myState.nowState == aimTemp[x].myState.allState.Find(p => p.id == AI.StateID.dead)))
+                {
+         
+                    aimTemp.Remove(aimTemp[x]);
+                }
+         
+            }
+
+            if (aimCount > aimTemp.Count) return aimTemp.ToArray();
+            int _vount = aimTemp.Count - aimCount;
+            aimTemp.RemoveRange(aimCount, _vount);
+
+            return aimTemp.ToArray();
 
            
-            return a[0];
+            
         }
 
    

@@ -10,7 +10,7 @@ public class SingleSelector : IAttackRange
     private List<AbstractCharacter> result;
 
     
-    public AbstractCharacter[] CaculateRange(int attackDistance, Situation situation, NeedCampEnum needCamp)
+    public AbstractCharacter[] CaculateRange(int attackDistance, Situation situation, NeedCampEnum needCamp,bool isJiangXu)
     {
         //射程筛
         firstResult= CollectionHelper.FindAll<Situation>(Situation.allSituation,p=>p.GetComponentInChildren<AbstractCharacter>()!=null && Situation.Distance(situation,p) <= attackDistance);
@@ -25,9 +25,12 @@ public class SingleSelector : IAttackRange
 
 
         secondResult= CollectionHelper.FindAll<Situation>(firstResult, p => isAim(myCamp, p.GetComponentInChildren<AbstractCharacter>().camp, needCamp));
-        CollectionHelper.OrderBy(secondResult, p => Situation.Distance(situation, p)); 
+
+        //降序升序
+        if(isJiangXu) CollectionHelper.OrderByDescending(secondResult, p => Situation.Distance(situation, p));
+        else CollectionHelper.OrderBy(secondResult, p => Situation.Distance(situation, p));
        
-        
+
 
         //转角色
         result = new List<AbstractCharacter>();
