@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 #region 结构体
 [System.Serializable]public struct Time_Stage
@@ -73,8 +75,10 @@ public class GameProcessSlider : MonoBehaviour
 
 
         //其它设置
-        bookCanvas.SetActive(false);
-        characterCanvas.SetActive(true);
+        if(bookCanvas!=null)
+            bookCanvas.SetActive(false);
+        if (characterCanvas != null)
+            characterCanvas.SetActive(true);
 
         //生成进度条
         sliderProcess = this.GetComponent<Slider>();
@@ -101,17 +105,18 @@ public class GameProcessSlider : MonoBehaviour
         }
         sliderProcess.maxValue = time_all;
 
-        settingList.SetActive(false);
+        if(settingList!=null)
+            settingList.SetActive(false);
     }
     private void FixedUpdate()
     {
-        if (isStart) CreateEvent();
-        DestroyEvent();
+       
 
         if (CharacterManager.instance.pause) return;
         if (!countTime)
             return;
-
+        if (isStart&&(SceneManager.GetActiveScene().name != "CombatTest")) CreateEvent();
+        DestroyEvent();
 
         timeNow += Time.deltaTime;
         sliderProcess.value = timeNow ;
@@ -194,8 +199,10 @@ public class GameProcessSlider : MonoBehaviour
         //游戏暂停
         CharacterManager.instance.pause = true;
         //生成面板
-        bookCanvas.SetActive(true);
-        characterCanvas.SetActive(false);
+        if (bookCanvas != null)
+            bookCanvas.SetActive(true);
+        if (characterCanvas != null)
+            characterCanvas.SetActive(false);
     }
     /// <summary>
     /// 在BookCanvas的确认按钮Onclick上调用
@@ -204,8 +211,10 @@ public class GameProcessSlider : MonoBehaviour
     {
         //进入放角色页面
         //生成面板
-        bookCanvas.SetActive(false);
-        characterCanvas.SetActive(true);
+        if (bookCanvas != null)
+            bookCanvas.SetActive(false);
+        if (characterCanvas != null)
+            characterCanvas.SetActive(true);
 
         GameObject.Find("UICanvas").GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(2);
     }
@@ -218,7 +227,8 @@ public class GameProcessSlider : MonoBehaviour
     {
         countTime = true;
         CharacterManager.instance.pause = false;
-        settingList.SetActive(true);
+        if (settingList != null)
+            settingList.SetActive(true);
     }
 
     #endregion

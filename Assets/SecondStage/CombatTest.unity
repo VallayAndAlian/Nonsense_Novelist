@@ -10640,7 +10640,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4.9118514, y: 2.587037}
+  m_AnchoredPosition: {x: 218, y: -690}
   m_SizeDelta: {x: 545.86, y: 34.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1106519566
@@ -10682,6 +10682,7 @@ MonoBehaviour:
   - events: 0
   bookCanvas: {fileID: 0}
   characterCanvas: {fileID: 0}
+  settingList: {fileID: 0}
   eventPoint:
   - {fileID: 0}
   - {fileID: 0}
@@ -16477,6 +16478,7 @@ MonoBehaviour:
   event_stage: []
   bookCanvas: {fileID: 1433244364}
   characterCanvas: {fileID: 1589666088}
+  settingList: {fileID: 0}
   eventPoint:
   - {fileID: 2072770938}
   - {fileID: 1578737817}

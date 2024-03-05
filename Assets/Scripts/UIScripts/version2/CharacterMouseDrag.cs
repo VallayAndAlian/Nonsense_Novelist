@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// 版本二：拖拽角色站位
 /// before start
@@ -36,13 +37,22 @@ public class CharacterMouseDrag : MonoBehaviour
 
     private Transform oriParent;
     private void Start()
-    {
+    {        
+        if (SceneManager.GetActiveScene().name == "CombatTest")
+        {
+            beforeScale = 10;
+        }
+
+
         nowParentTF = transform.parent;
         target = transform;
         sr= GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
         oriParent = GameObject.Find("UICanvas").transform.Find("Panel").Find("charaPos");
         transform.localScale = Vector3.one * beforeScale;
-    }
+
+
+           
+}
 
     private void OnMouseEnter()
     {
