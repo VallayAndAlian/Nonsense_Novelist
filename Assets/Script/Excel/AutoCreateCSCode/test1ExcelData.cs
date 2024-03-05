@@ -12,6 +12,7 @@ public class test1ExcelItem : ExcelItemBase
 	public string name;
 	public string textEvent;
 	public string textDraft;
+	public string textTrigger;
 }
 
 [CreateAssetMenu(fileName = "test1ExcelData", menuName = "Excel To ScriptableObject/Create test1ExcelData", order = 1)]
@@ -36,6 +37,7 @@ public class test1AssetAssignment
 			items[i].name = allItemValueRowList[i]["name"];
 			items[i].textEvent = allItemValueRowList[i]["textEvent"];
 			items[i].textDraft = allItemValueRowList[i]["textDraft"];
+			items[i].textTrigger = allItemValueRowList[i]["textTrigger"];
 		}
 		test1ExcelData excelDataAsset = ScriptableObject.CreateInstance<test1ExcelData>();
 		excelDataAsset.items = items;
