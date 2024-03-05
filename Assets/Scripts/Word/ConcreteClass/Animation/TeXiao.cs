@@ -7,7 +7,7 @@ using UnityEngine.UI;
 ///</summary>
 public class TeXiao: MonoBehaviour
 {
-    private Animator animator;
+    public static Animator animator;
 
     private void Awake()
     {
@@ -18,7 +18,6 @@ public class TeXiao: MonoBehaviour
     public void PlayTeXiao(string animName)
     {
         animator.Play(animName);
-    }
-
+    }    
 
 }
