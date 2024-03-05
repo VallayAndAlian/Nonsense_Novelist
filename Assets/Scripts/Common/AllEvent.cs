@@ -11,12 +11,14 @@ using System.Linq;
 /// </summary>
 [System.Serializable]
 public enum EventType
-{
-    YiWai,
-    FangKe,
-    JiaoYi,
-    XiWang,
-    WeiJi
+{  
+    XiWang=0,
+    FangKe=1,
+    YiWai=2,
+     WeiJi=3,
+    JiaoYi=4
+  
+  
 }
 
 

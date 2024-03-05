@@ -108,6 +108,7 @@ public static class AllSkills
     public static List<Type> BadBuff = new List<Type>();
     public static List<Type> GoodBuff = new List<Type>();
 
+
     /// <summary>≤‚ ‘¥ Ãı</summary>
     public static List<Type> testList1 = new List<Type>();
     /// <summary>
