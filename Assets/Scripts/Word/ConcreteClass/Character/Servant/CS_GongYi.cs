@@ -27,6 +27,12 @@ public class CS_GongYi : ServantAbstract
         description = "己方的工蚁越多越强大";
 
 
+        
+    }
+
+    private void Start()
+    {
+        
         //检测现在的工蚁数量，并实时更新给该角色身上的所有工蚁
         //是否会有重复问题？
         CS_GongYi[] _yiQun = transform.parent
@@ -35,9 +41,7 @@ public class CS_GongYi : ServantAbstract
         {
             _gongYi.ChangeNumber(_yiQun.Length);
         }
-        
     }
-
 
     /// <summary>
     /// 本队伍中，每额外有一只工蚁，则所有工蚁攻击+1，防御+3

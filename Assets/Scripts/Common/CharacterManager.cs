@@ -67,7 +67,11 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     private Transform shooter;
     private void SetShooterTo(bool _b)
     {//true,‘›Õ££¨¥À ±πÿ±’
-        if(SceneManager.GetActiveScene().name == "ShootCombat") shooter.GetComponent<Shoot>().enabled = (!_b);
+        if (SceneManager.GetActiveScene().name == "ShootCombat")
+        {
+            if(shooter==null) shooter = GameObject.Find("shooter").transform;
+            shooter.GetComponent<Shoot>().enabled = (!_b);
+        } 
         else shooter.GetComponent<TestShoot>().enabled = (!_b);
         shooter.GetComponent<RollControler>().enabled = (!_b);
     }

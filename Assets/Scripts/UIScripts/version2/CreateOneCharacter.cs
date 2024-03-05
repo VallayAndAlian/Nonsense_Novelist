@@ -264,7 +264,7 @@ public class CreateOneCharacter : MonoBehaviour
             GameObject chara = Instantiate(charaPrefabs[number]);
             chara.transform.SetParent(charaPos.GetChild(i));
             chara.transform.position = new Vector3(charaPos.GetChild(i).position.x, charaPos.GetChild(i).position.y + CharacterMouseDrag.offsetY, charaPos.GetChild(i).position.z);
-            chara.transform.localScale = Vector3.one * beforeScale;
+
 
             SpriteRenderer _sr = chara.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
             //角色的显示图层恢复正常

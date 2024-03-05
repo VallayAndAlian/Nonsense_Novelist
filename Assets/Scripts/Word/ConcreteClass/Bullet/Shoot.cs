@@ -77,7 +77,8 @@ public class Shoot : MonoBehaviour
         bulletInstance.transform.localEulerAngles = Vector3.zero;
         bulletInstance.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);                  
         //给小球增加词条属性
-        abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = bulletInstance.AddComponent(AllSkills.CreateSkillWord()) as AbstractWord0;
+        abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = 
+            bulletInstance.AddComponent(/*AllSkills.CreateSkillWord()*/GameMgr.instance.GetNowListOne()) as AbstractWord0;
         foreach (var _col in (bulletInstance.GetComponentsInChildren<WordCollisionShoot>()))
             _col.absWord = abs;
         information.ChangeInformation(abs);

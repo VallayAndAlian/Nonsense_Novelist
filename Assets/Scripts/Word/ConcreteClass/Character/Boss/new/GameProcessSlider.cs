@@ -36,7 +36,8 @@ public class GameProcessSlider : MonoBehaviour
     public GameObject bookCanvas;
     public GameObject characterCanvas;
 
-    [Header("结束页面的预制体")]
+    [Header("设定获取列表")]
+    public GameObject settingList;
     //public GameObject endGame;
 
     private Vector3 oriScale;
@@ -74,8 +75,8 @@ public class GameProcessSlider : MonoBehaviour
             _icon.GetComponent<Image>().sprite = time_stage[_i].image;
         }
         sliderProcess.maxValue = time_all;
-        
-       
+
+        settingList.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -191,6 +192,7 @@ public class GameProcessSlider : MonoBehaviour
     {
         countTime = true;
         CharacterManager.instance.pause = false;
+        settingList.SetActive(true);
     }
 
     #endregion

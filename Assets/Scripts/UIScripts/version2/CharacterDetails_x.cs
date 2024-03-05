@@ -5,7 +5,7 @@ using UnityEngine.UI;
 ///<summary>
 ///角色详细信息面板（挂在该面板的预制体本身）
 ///</summary>
-class CharacterDetails : MonoBehaviour
+class CharacterDetails_x : MonoBehaviour
 {
     public Text[] texts1;
     public Text[] texts2;
@@ -192,7 +192,7 @@ class CharacterDetails : MonoBehaviour
                 word.transform.localScale = Vector3.one;
 
                 //加载图片
-                //stateImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStage/CharacterDetails/ShuXing/"+);
+                //stateImage.GetComponent<Image>().sprite = Resources.Load<Sprite>("FirstStage/CharacterDetails_x/ShuXing/"+);
                 //同一词的数量
                 for (int j = i + 1; j < adj.Length; j++)
                 {

@@ -614,15 +614,29 @@ abstract public class AbstractCharacter : AbstractWord0
         _servant.GetComponentInChildren<AI.MyState0>().aim = null;
         _sa.situation = this.situation;
 
-        if ((servants.Count != 0) && (servants.Count >= maxServantsCount))
+        //移除最先得的随从
+        if ((servants.Count >= maxServantsCount))
         {
             print(this.gameObject.name + "随从数超出，移除" + servants[0].name);
             //技能数超出，移除最前面的（此处可能有问题）
             servants.RemoveAt(0);
         }
+
+        if(servants.Count>0)
+        {
+            if (servants[0].GetComponent<CS_HunYangLong>())
+            {
+                print(this.gameObject.name + "随从数超出，移除" + servants[0].name);
+                //技能数超出，移除最前面的（此处可能有问题）
+                servants.RemoveAt(0);
+            }
+        }
+
+
+
         servants.Add(_servant);
 
-        print(this.wordName + "增加随从：" + _a + "(" + servants.Count);
+  
 
         //生成随从
         //if (Resources.Load<GameObject>("Servants/" + _av.GetType().Name) == null) print("Resources.Load<GameObject>(Servants /  +_av.GetType().Name)==null");

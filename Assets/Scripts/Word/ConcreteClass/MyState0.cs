@@ -102,6 +102,7 @@ namespace AI
             {
                 if (!CharacterManager.instance.pause)
                 {
+                    if (aim == null) print(character.wordName);
                     aim.Clear();
                     aim .AddRange( FindAim());//不断寻找更近的敌人
                 }

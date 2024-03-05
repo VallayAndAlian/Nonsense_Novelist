@@ -108,7 +108,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
         if (word.wordKind == WordKindEnum.verb)
         {
             energy.gameObject.SetActive(true);
-            print("needCD");
+            
             title.text = "      " + word.wordName;
   
             needCD.text =/*word.wordName*/((AbstractVerbs)word).needCD.ToString();

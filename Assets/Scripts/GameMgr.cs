@@ -8,24 +8,38 @@ using UnityEngine.UI;
 public class GameMgr : MonoSingleton<GameMgr>
 {
 
-    //战斗相关
-    private List<Type> combatStart = new List<Type>();
-
     //关闭界面相关
     private GameObject exitPanel;
     GameObject exitObj;
     Button exitButton;
     Button cancelButton;
     bool hasOpenExit = false;
-    List<BookNameEnum> listBook = new List<BookNameEnum>();
+
+
+    List<BookNameEnum> bookList = new List<BookNameEnum>();
+
+    //战斗总牌库
+    List<Type> wordList = new List<Type>();
+
+    //当前未使用的牌的牌库
+    List<Type> wordNowList = new List<Type>();
+
+    //当前未使用的牌的牌库
+    List<Type> wordHasUseList = new List<Type>();
+
 
     private void Start()
     {
+        //退出菜单
         exitPanel = Resources.Load<GameObject>("UI/exitPanel");
         DontDestroyOnLoad(this.gameObject);
+
+        //牌库
+        InitCardList();
     }
     private void Update()
     {
+        //退出菜单
         if (hasOpenExit) return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -38,6 +52,10 @@ public class GameMgr : MonoSingleton<GameMgr>
             cancelButton.onClick.AddListener(BackToGame);
         }
     }
+
+
+
+    #region exit菜单相关
     public void ExitButton()
     {
         Application.Quit();
@@ -48,37 +66,33 @@ public class GameMgr : MonoSingleton<GameMgr>
         Time.timeScale = 1f;
         
     }
+    #endregion
 
-    public List<Type> GetCombatStartList()
-    {
-        
-        return combatStart;
-    }
+    #region 旧 牌库
+
     public void SetCombatStartList(List<Type> _list)
     {
-        listBook.Clear();
-        combatStart.Clear();
-        combatStart = _list;
+        bookList.Clear();
+        wordList.Clear();
+        wordList = _list;
     }
     public void AddCombatStartList(List<Type> _list)
     {
 
-        if (combatStart == null)
-            combatStart = new List<Type>();
         foreach (var _i in _list)
         {
 
-            if (!combatStart.Contains(_i))
+            if (!wordList.Contains(_i))
             {
                 _i.GetType();
                 int _r = 1;
-                var count = _i.GetField("rarity").GetValue(null);
-                if (count != null) _r = (int)count;
+                //var count = _i.GetField("rarity").GetValue(null);
+                //if (count != null) _r = (int)count;
 
-                for (int i = 0; i < _r; i++)
-                {
-                    combatStart.Add(_i);
-                }
+                //for (int i = 0; i < _r; i++)
+                //{
+                    wordList.Add(_i);
+                //}
             }
                 
         }
@@ -90,90 +104,166 @@ public class GameMgr : MonoSingleton<GameMgr>
         {
             case BookNameEnum.HongLouMeng:
                 {
-                    if (!listBook.Contains(BookNameEnum.HongLouMeng))
+                    if (!bookList.Contains(BookNameEnum.HongLouMeng))
                     {   
                         AddCombatStartList(AllSkills.hlmList_all);
-                        listBook.Add(BookNameEnum.HongLouMeng);
+                        bookList.Add(BookNameEnum.HongLouMeng);
                     }
                  
                 }
                 break;
             case BookNameEnum.CrystalEnergy:
                 {
-                    if (!listBook.Contains(BookNameEnum.CrystalEnergy))
+                    if (!bookList.Contains(BookNameEnum.CrystalEnergy))
                     {
                         AddCombatStartList(AllSkills.crystalList_all);
-                        listBook.Add(BookNameEnum.CrystalEnergy);
+                        bookList.Add(BookNameEnum.CrystalEnergy);
                     }
                   
                 }
                 break;
             case BookNameEnum.Salome:
                 {
-                    if (!listBook.Contains(BookNameEnum.Salome))
+                    if (!bookList.Contains(BookNameEnum.Salome))
                     {
                         AddCombatStartList(AllSkills.shaLeMeiList_all);
-                        listBook.Add(BookNameEnum.Salome);
+                        bookList.Add(BookNameEnum.Salome);
                     }
 
                 }
                 break;
             case BookNameEnum.ZooManual:
                 {
-                    if (!listBook.Contains(BookNameEnum.ZooManual))
+                    if (!bookList.Contains(BookNameEnum.ZooManual))
                     {
                         AddCombatStartList(AllSkills.animalList_all);
-                        listBook.Add(BookNameEnum.ZooManual);
+                        bookList.Add(BookNameEnum.ZooManual);
                     }
                   
                 }
                 break;
             case BookNameEnum.PHXTwist:
                 {
-                    if (!listBook.Contains(BookNameEnum.PHXTwist))
+                    if (!bookList.Contains(BookNameEnum.PHXTwist))
                     {
                         AddCombatStartList(AllSkills.maYiDiGuoList_all);
-                        listBook.Add(BookNameEnum.PHXTwist);
+                        bookList.Add(BookNameEnum.PHXTwist);
                     }
       
                 }
                 break;
             case BookNameEnum.FluStudy:
                 {
-                    if (!listBook.Contains(BookNameEnum.FluStudy))
+                    if (!bookList.Contains(BookNameEnum.FluStudy))
                     {
                         AddCombatStartList(AllSkills.liuXingBXList_all);
-                        listBook.Add(BookNameEnum.FluStudy);
+                        bookList.Add(BookNameEnum.FluStudy);
                     }
                   
                 }
                 break;
             case BookNameEnum.EgyptMyth:
                 {
-                    if (!listBook.Contains(BookNameEnum.EgyptMyth))
+                    if (!bookList.Contains(BookNameEnum.EgyptMyth))
                     {
                         AddCombatStartList(AllSkills.aiJiShenHuaList_all);
-                        listBook.Add(BookNameEnum.EgyptMyth);
+                        bookList.Add(BookNameEnum.EgyptMyth);
                     }                 
                 }
                 break;
             case BookNameEnum.ElectronicGoal:
                 {
-                    if (!listBook.Contains(BookNameEnum.ElectronicGoal))
+                    if (!bookList.Contains(BookNameEnum.ElectronicGoal))
                     {
                         AddCombatStartList(AllSkills.humanList_all);
-                        listBook.Add(BookNameEnum.ElectronicGoal);
+                        bookList.Add(BookNameEnum.ElectronicGoal);
                     }        
                 }
                 break;
-   
+            case BookNameEnum.allBooks:
+                {
+                    if (!bookList.Contains(BookNameEnum.allBooks))
+                    {
+                        AddCombatStartList(AllSkills.commonList_all);
+                        bookList.Add(BookNameEnum.allBooks);
+                    }
+
+                }
+                break;
+
         }
     }
     public bool HasBook(BookNameEnum _book)
     {
-        if (listBook.Contains(_book))
+        if (bookList.Contains(_book))
             return true;
         return false;
     }
-    
+    #endregion
+
+
+    #region 新 牌库
+
+
+    /// <summary>
+    /// 牌库初始化
+    /// </summary>
+    void InitCardList()
+    {
+        wordList.Clear();
+        wordNowList.Clear();
+        wordHasUseList.Clear();
+
+
+        //测试用
+        wordList.AddRange(new Type[] { typeof(SheQunFengRong), typeof(ChanLuan), typeof(ShiWuFengRong) });
+
+        //加入通用词组
+        if(wordList==null)
+            AddBookList(BookNameEnum.allBooks);
+        RefreshNowList();
+    }
+
+
+
+    public List<Type> GetHasUsedList()
+    {
+        return wordHasUseList;
+    }
+    public List<Type> GetNowList()
+    {
+
+        if (wordNowList == null) //加入通用词组
+            AddBookList(BookNameEnum.allBooks);
+        return wordNowList;
+    }
+    public Type GetNowListOne()
+    {
+        int count = UnityEngine.Random.Range(0, wordNowList.Count);
+        var _res = wordNowList[count];
+        wordNowList.Remove(_res);
+        wordHasUseList.Add(_res);
+        RefreshNowList();
+        return _res;
+    }
+
+    public List<Type> GetAllList()
+    {
+        return wordList;
+    }
+
+
+
+    /// <summary>
+    /// 刷新现有卡牌列表
+    /// </summary>
+    void RefreshNowList()
+    {
+        if (wordNowList.Count == 0)
+        {
+            wordNowList.AddRange(wordList);
+            wordHasUseList.Clear();
+        }
+    }
+    #endregion
 }
