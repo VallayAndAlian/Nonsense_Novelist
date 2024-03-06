@@ -115,8 +115,8 @@ public class GameProcessSlider : MonoBehaviour
         if (CharacterManager.instance.pause) return;
         if (!countTime)
             return;
-        if (isStart&&(SceneManager.GetActiveScene().name != "CombatTest")) CreateEvent();
         DestroyEvent();
+        if (isStart) CreateEvent();//&&(SceneManager.GetActiveScene().name != "CombatTest")        
 
         timeNow += Time.deltaTime;
         sliderProcess.value = timeNow ;
@@ -239,11 +239,12 @@ public class GameProcessSlider : MonoBehaviour
     private float totalTime = 0;
     public void CreateEvent()
     {
+        if (eventCount > 3) return;
         totalTime += Time.deltaTime;
         if (totalTime > eventTime)
         {
             totalTime = 0;
-            eventCount++;
+            
             //生成事件气泡预制体
             for(int i = 0; i < event_stage[eventCount].events; i++)
             {
@@ -261,11 +262,12 @@ public class GameProcessSlider : MonoBehaviour
                 //未做避免纸球位置
             }
             isCreate = true;
+            eventCount++;
         }
         
     }
     private float destroyTime = 0;
-    public float dTime = 10;
+    public float dTime = 2;
     /// <summary>
     /// 销毁事件气泡
     /// </summary>
@@ -277,14 +279,15 @@ public class GameProcessSlider : MonoBehaviour
             destroyTime += Time.deltaTime;
             if (destroyTime > dTime)
             {
-                for(int i = 0; i < array0.Count; i++)
+                destroyTime = 0;                
+                for (int i = 0; i < array0.Count; i++)
                 {
                     Destroy(array0[i]);
-                    print("Destroy");
                 }
                 TeXiao.animator.SetBool("dis", true);
+                isCreate = false;
             }
-            isCreate = false;
+            
         }
         
     }
