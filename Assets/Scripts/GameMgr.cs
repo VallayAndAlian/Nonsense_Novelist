@@ -29,9 +29,23 @@ public class GameMgr : MonoSingleton<GameMgr>
     //当前未使用的牌的牌库
     List<Type> wordHasUseList = new List<Type>();
 
+    //当前触发的所有事件
+    public List<string> happenEvent = new List<string>();
+
+
+
+
+    [HideInInspector] public GameObject characterCanvas;
+
 
     private void Start()
     {
+        characterCanvas = GameObject.Find("UICanvas");
+        
+        //界面设置
+        if (characterCanvas != null)
+            characterCanvas.SetActive(true);
+
         //退出菜单
         exitPanel = Resources.Load<GameObject>("UI/exitPanel");
         DontDestroyOnLoad(this.gameObject);
@@ -70,138 +84,6 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
     #endregion
 
-    #region 旧 牌库
-
-    public void SetCombatStartList(List<Type> _list)
-    {
-        bookList.Clear();
-        wordList.Clear();
-        wordList = _list;
-    }
-    public void AddCombatStartList(List<Type> _list)
-    {
-
-        foreach (var _i in _list)
-        {
-
-            if (!wordList.Contains(_i))
-            {
-                _i.GetType();
-                int _r = 1;
-                //var count = _i.GetField("rarity").GetValue(null);
-                //if (count != null) _r = (int)count;
-
-                //for (int i = 0; i < _r; i++)
-                //{
-                    wordList.Add(_i);
-                //}
-            }
-                
-        }
-    }
-  
-    public void AddBookList(BookNameEnum _book)
-    {
-        switch (_book)
-        {
-            case BookNameEnum.HongLouMeng:
-                {
-                    if (!bookList.Contains(BookNameEnum.HongLouMeng))
-                    {   
-                        //AddCombatStartList(AllSkills.hlmList_all);
-                        bookList.Add(BookNameEnum.HongLouMeng);
-                    }
-                 
-                }
-                break;
-            case BookNameEnum.CrystalEnergy:
-                {
-                    if (!bookList.Contains(BookNameEnum.CrystalEnergy))
-                    {
-                        //AddCombatStartList(AllSkills.crystalList_all);
-                        bookList.Add(BookNameEnum.CrystalEnergy);
-                    }
-                  
-                }
-                break;
-            case BookNameEnum.Salome:
-                {
-                    if (!bookList.Contains(BookNameEnum.Salome))
-                    {
-                        //AddCombatStartList(AllSkills.shaLeMeiList_all);
-                        bookList.Add(BookNameEnum.Salome);
-                    }
-
-                }
-                break;
-            case BookNameEnum.ZooManual:
-                {
-                    if (!bookList.Contains(BookNameEnum.ZooManual))
-                    {
-                        //AddCombatStartList(AllSkills.animalList_all);
-                        bookList.Add(BookNameEnum.ZooManual);
-                    }
-                  
-                }
-                break;
-            case BookNameEnum.PHXTwist:
-                {
-                    if (!bookList.Contains(BookNameEnum.PHXTwist))
-                    {
-                       // AddCombatStartList(AllSkills.maYiDiGuoList_all);
-                        bookList.Add(BookNameEnum.PHXTwist);
-                    }
-      
-                }
-                break;
-            case BookNameEnum.FluStudy:
-                {
-                    if (!bookList.Contains(BookNameEnum.FluStudy))
-                    {
-                        //AddCombatStartList(AllSkills.liuXingBXList_all);
-                        bookList.Add(BookNameEnum.FluStudy);
-                    }
-                  
-                }
-                break;
-            case BookNameEnum.EgyptMyth:
-                {
-                    if (!bookList.Contains(BookNameEnum.EgyptMyth))
-                    {
-                        //AddCombatStartList(AllSkills.aiJiShenHuaList_all);
-                        bookList.Add(BookNameEnum.EgyptMyth);
-                    }                 
-                }
-                break;
-            case BookNameEnum.ElectronicGoal:
-                {
-                    if (!bookList.Contains(BookNameEnum.ElectronicGoal))
-                    {
-                        //AddCombatStartList(AllSkills.humanList_all);
-                        bookList.Add(BookNameEnum.ElectronicGoal);
-                    }        
-                }
-                break;
-            case BookNameEnum.allBooks:
-                {
-                    if (!bookList.Contains(BookNameEnum.allBooks))
-                    {
-                        //AddCombatStartList(AllSkills.commonList_all);
-                        bookList.Add(BookNameEnum.allBooks);
-                    }
-
-                }
-                break;
-
-        }
-    }
-    public bool HasBook(BookNameEnum _book)
-    {
-        if (bookList.Contains(_book))
-            return true;
-        return false;
-    }
-    #endregion
 
 
     #region 新 牌库
@@ -216,6 +98,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         wordNowList.Clear();
         wordHasUseList.Clear();
 
+        happenEvent.Clear();
 
         //测试用
         wordList.AddRange(new Type[] { typeof(SheQunFengRong), typeof(ChanLuan), typeof(ShiWuFengRong) });
@@ -262,7 +145,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         return bookList;
     }
 
-
+   
 
     /// <summary>
     /// 检测是否一本书的所有词组都已经获取。返回是或否
@@ -385,6 +268,151 @@ public class GameMgr : MonoSingleton<GameMgr>
             wordNowList.AddRange(wordList);
             wordHasUseList.Clear();
         }
+    }
+
+
+    public void SetCombatStartList(List<Type> _list)
+    {
+        bookList.Clear();
+        wordList.Clear();
+        wordList = _list;
+    }
+    public void AddCombatStartList(List<Type> _list)
+    {
+
+        foreach (var _i in _list)
+        {
+
+            if (!wordList.Contains(_i))
+            {
+                _i.GetType();
+                int _r = 1;
+                //var count = _i.GetField("rarity").GetValue(null);
+                //if (count != null) _r = (int)count;
+
+                //for (int i = 0; i < _r; i++)
+                //{
+                wordList.Add(_i);
+                //}
+            }
+
+        }
+    }
+
+    public void AddBookList(BookNameEnum _book)
+    {
+        switch (_book)
+        {
+            case BookNameEnum.HongLouMeng:
+                {
+                    if (!bookList.Contains(BookNameEnum.HongLouMeng))
+                    {
+                        //AddCombatStartList(AllSkills.hlmList_all);
+                        bookList.Add(BookNameEnum.HongLouMeng);
+                    }
+
+                }
+                break;
+            case BookNameEnum.CrystalEnergy:
+                {
+                    if (!bookList.Contains(BookNameEnum.CrystalEnergy))
+                    {
+                        //AddCombatStartList(AllSkills.crystalList_all);
+                        bookList.Add(BookNameEnum.CrystalEnergy);
+                    }
+
+                }
+                break;
+            case BookNameEnum.Salome:
+                {
+                    if (!bookList.Contains(BookNameEnum.Salome))
+                    {
+                        //AddCombatStartList(AllSkills.shaLeMeiList_all);
+                        bookList.Add(BookNameEnum.Salome);
+                    }
+
+                }
+                break;
+            case BookNameEnum.ZooManual:
+                {
+                    if (!bookList.Contains(BookNameEnum.ZooManual))
+                    {
+                        //AddCombatStartList(AllSkills.animalList_all);
+                        bookList.Add(BookNameEnum.ZooManual);
+                    }
+
+                }
+                break;
+            case BookNameEnum.PHXTwist:
+                {
+                    if (!bookList.Contains(BookNameEnum.PHXTwist))
+                    {
+                        // AddCombatStartList(AllSkills.maYiDiGuoList_all);
+                        bookList.Add(BookNameEnum.PHXTwist);
+                    }
+
+                }
+                break;
+            case BookNameEnum.FluStudy:
+                {
+                    if (!bookList.Contains(BookNameEnum.FluStudy))
+                    {
+                        //AddCombatStartList(AllSkills.liuXingBXList_all);
+                        bookList.Add(BookNameEnum.FluStudy);
+                    }
+
+                }
+                break;
+            case BookNameEnum.EgyptMyth:
+                {
+                    if (!bookList.Contains(BookNameEnum.EgyptMyth))
+                    {
+                        //AddCombatStartList(AllSkills.aiJiShenHuaList_all);
+                        bookList.Add(BookNameEnum.EgyptMyth);
+                    }
+                }
+                break;
+            case BookNameEnum.ElectronicGoal:
+                {
+                    if (!bookList.Contains(BookNameEnum.ElectronicGoal))
+                    {
+                        //AddCombatStartList(AllSkills.humanList_all);
+                        bookList.Add(BookNameEnum.ElectronicGoal);
+                    }
+                }
+                break;
+            case BookNameEnum.allBooks:
+                {
+                    if (!bookList.Contains(BookNameEnum.allBooks))
+                    {
+                        //AddCombatStartList(AllSkills.commonList_all);
+                        bookList.Add(BookNameEnum.allBooks);
+                    }
+
+                }
+                break;
+
+        }
+    }
+    public bool HasBook(BookNameEnum _book)
+    {
+        if (bookList.Contains(_book))
+            return true;
+        return false;
+    }
+    #endregion
+
+
+    #region 调用各种界面
+
+    public void BookCanvasClickYes()
+    {
+        //进入放角色页面
+        //生成面板
+        if (characterCanvas != null)
+            characterCanvas.SetActive(true);
+
+        characterCanvas.GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(2);
     }
     #endregion
 }

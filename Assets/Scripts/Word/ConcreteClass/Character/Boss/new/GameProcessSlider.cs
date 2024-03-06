@@ -74,11 +74,6 @@ public class GameProcessSlider : MonoBehaviour
         oriScale = this.transform.localScale;
 
 
-        //其它设置
-        if(bookCanvas!=null)
-            bookCanvas.SetActive(false);
-        if (characterCanvas != null)
-            characterCanvas.SetActive(true);
 
         //生成进度条
         sliderProcess = this.GetComponent<Slider>();
@@ -182,7 +177,7 @@ public class GameProcessSlider : MonoBehaviour
     public void BossDie()
     {
         this.transform.localScale = oriScale;
-        CreateBookCanvas();
+        //CreateBookCanvas();
     }
 
     #endregion
@@ -191,33 +186,23 @@ public class GameProcessSlider : MonoBehaviour
     /// <summary>
     ///进入抽取书本页面
     /// </summary>
-    void CreateBookCanvas()
-    {
-        //镜头拉远
-        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
-        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
-        //游戏暂停
-        CharacterManager.instance.pause = true;
-        //生成面板
-        if (bookCanvas != null)
-            bookCanvas.SetActive(true);
-        if (characterCanvas != null)
-            characterCanvas.SetActive(false);
-    }
+    //void CreateBookCanvas()
+    //{
+    //    //镜头拉远
+    //    Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
+    //    Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
+    //    //游戏暂停
+    //    CharacterManager.instance.pause = true;
+    //    //生成面板
+    //    if (bookCanvas != null)
+    //        bookCanvas.SetActive(true);
+    //    if (characterCanvas != null)
+    //        characterCanvas.SetActive(false);
+    //}
     /// <summary>
     /// 在BookCanvas的确认按钮Onclick上调用
     /// </summary>
-    public void BookCanvasClickYes()
-    {
-        //进入放角色页面
-        //生成面板
-        if (bookCanvas != null)
-            bookCanvas.SetActive(false);
-        if (characterCanvas != null)
-            characterCanvas.SetActive(true);
-
-        GameObject.Find("UICanvas").GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(2);
-    }
+  
 
 
     /// <summary>

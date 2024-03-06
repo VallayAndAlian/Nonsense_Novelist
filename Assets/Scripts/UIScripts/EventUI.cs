@@ -16,7 +16,8 @@ public enum EventType
     FangKe = 1,
     YiWai = 2,
     WeiJi = 3,
-    JiaoYi = 4
+    JiaoYi = 4,
+    ChangJing=5
 }
 
 
@@ -24,44 +25,91 @@ public class EventUI : MonoBehaviour
 {
     [Header("这是哪一个界面的UI")]
     public EventType type;
+    bool isKey=false;
 
-
-
+    //全部数据
     public test1ExcelData data;
-    List<test1ExcelItem> needAllDate = new List<test1ExcelItem>();
-    List<test1ExcelItem> needNowDate = new List<test1ExcelItem>();
+
+    //不重要数据
+    List<test1ExcelItem> needAllDate_nKey = new List<test1ExcelItem>();
+    List<test1ExcelItem> needNowDate_nKey = new List<test1ExcelItem>();
+    //重要数据
+    List<test1ExcelItem> needAllDate_Key = new List<test1ExcelItem>();
+    List<test1ExcelItem> needNowDate_Key = new List<test1ExcelItem>();
+    //函数中使用的数据
+    List<test1ExcelItem> tempAllDate = new List<test1ExcelItem>();
+    List<test1ExcelItem> tempNowDate = new List<test1ExcelItem>();
 
     private void Start()
     {
         GameMgr.instance.AddBookList(BookNameEnum.HongLouMeng);
         GameMgr.instance.AddBookList(BookNameEnum.ElectronicGoal);
         //GameMgr.instance.AddBookList(BookNameEnum.EgyptMyth);
-        Open();
+        Open(false);
+    }
+
+   
+
+
+    #region 处理data 
+    
+    
+    void DataInit()
+    {
+        tempAllDate.Clear();
+        tempNowDate.Clear();
+        if (isKey)
+        {
+            tempAllDate = needAllDate_Key;
+            tempNowDate = needNowDate_Key;
+        }
+        else
+        {
+            tempAllDate = needAllDate_nKey;
+            tempNowDate = needNowDate_nKey;
+        }
     }
 
 
-    #region 处理data
     void DealWithData(EventType _type)
     {
-        needAllDate.Clear();
+        needAllDate_nKey.Clear();
+        needAllDate_Key.Clear();
+        needNowDate_nKey.Clear();
+        needNowDate_Key.Clear();
+
         foreach (var _t in data.items)
         {
             if (_t.type == _type)
             {
-                if (!needAllDate.Contains(_t))
-                    needAllDate.Add(_t);
+                if (!_t.isKey)
+                {
+                    if (!needAllDate_nKey.Contains(_t))
+                        needAllDate_nKey.Add(_t);
+                }
+                else
+                {
+                    if (!needAllDate_Key.Contains(_t))
+                        needAllDate_Key.Add(_t);
+                }
             }
         }
-        needNowDate.AddRange(needAllDate);
+
+        needNowDate_nKey.AddRange(needAllDate_nKey);
+        needNowDate_Key.AddRange(needAllDate_Key);
     }
 
 
 
     void RefreshNowList()
     {
-        if (needNowDate.Count <= 0)
+        if (needNowDate_nKey.Count <= 0)
         {
-            needNowDate.AddRange(needAllDate);
+            needNowDate_nKey.AddRange(needAllDate_nKey);
+        }
+        if (needNowDate_Key.Count <= 0)
+        {
+            needNowDate_Key.AddRange(needAllDate_Key);
         }
     }
 
@@ -77,21 +125,36 @@ public class EventUI : MonoBehaviour
     /// </summary>
     public void OpenInit_YiWai()
     {
-        Transform cardParent=this.transform.Find("CardGroup");
-        TextMeshProUGUI[] text = cardParent.GetComponentsInChildren<TextMeshProUGUI>();
+        DataInit();
 
+         Transform cardParent=this.transform.Find("CardGroup");
+        TextMeshProUGUI[] text = cardParent.GetComponentsInChildren<TextMeshProUGUI>();
+      
        
+
         for (int i = 0; i < 6; i += 2)
-        { 
-            //重新抽取
-            int _r = UnityEngine.Random.Range(0, needNowDate.Count);
+        {
+
+            int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
+            int loopCount = 0;
+            while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
+            {//如果有条件并且条件没满足,就重找一个
+             
+                _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
+                if (loopCount > 50)
+                {
+                    print("死循环");
+                    return;
+                }
+            }
+
 
             //切换文字内容
-            text[i].text= needNowDate[_r].name;
-            text[i+1].text = needNowDate[_r].textEvent;
+            text[i].text= tempNowDate[_r].name;
+            text[i+1].text = tempNowDate[_r].textEvent;
 
             //刷新已用事件列表
-            needNowDate.Remove(needNowDate[_r]);
+            tempNowDate.Remove(tempNowDate[_r]);
             RefreshNowList();
         }
 
@@ -103,7 +166,35 @@ public class EventUI : MonoBehaviour
     #region 访客
     public void OpenInit_FangKe()
     {
+        DataInit();
+        int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
+        int loopCount = 0;
+        while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
+        {//如果有条件并且条件没满足,就重找一个
 
+            _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
+            if (loopCount > 50)
+            {
+                print("死循环");
+                return;
+            }
+        }
+
+        //
+        Image sprite = this.transform.Find("Sprite").GetComponent<Image>();
+        Image bubble= this.transform.Find("bubble").GetComponent<Image>();
+        TextMeshProUGUI words = bubble.GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
+
+
+        info.text = tempNowDate[_r].name;
+        words.text = tempNowDate[_r].textEvent;
+    }
+
+    void Close_FangKe()
+    {
+        //GameMgr.instance.BookCanvasClickYes();
+        Destroy(this.gameObject);
     }
     #endregion
 
@@ -111,7 +202,32 @@ public class EventUI : MonoBehaviour
     #region 希望
     public void OpenInit_XiWang()
     {
+        DataInit();
+        int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
+        int loopCount = 0;
+        while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
+        {//如果有条件并且条件没满足,就重找一个
 
+            _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
+            if (loopCount > 50)
+            {
+                print("死循环");
+                return;
+            }
+        }
+   
+        TextMeshProUGUI info = this.transform.Find("info").GetComponentInChildren<TextMeshProUGUI>();
+        info.text = tempNowDate[_r].name + "\n\n" + tempNowDate[_r].textEvent;
+
+
+        RefreshNowList();
+
+    }
+
+
+    public void Close_XiWang()
+    {
+        
     }
     #endregion
 
@@ -207,16 +323,38 @@ public class EventUI : MonoBehaviour
             }
         }
 
+        //抽取事件信息
+        tempAllDate.Clear();
+        tempNowDate.Clear();
+        if (isKey)
+        {
+            tempAllDate = needAllDate_Key;
+            tempNowDate = needNowDate_Key;
+        }
+        else
+        {
+            tempAllDate = needAllDate_nKey;
+            tempNowDate = needNowDate_nKey;
+        }
+        int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
+        int loopCount = 0;
+        while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
+        {//如果有条件并且条件没满足,就重找一个
 
-
-        int _r = UnityEngine.Random.Range(0, needNowDate.Count);
-
+            _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
+            if (loopCount > 50)
+            {
+                print("死循环");
+                return;
+            }
+        }
 
         //切换文字内容
-        titleText.text = needNowDate[_r].name+"\n"+ needNowDate[_r].textEvent;
+        titleText.text = tempNowDate[_r].name+"\n"+ tempNowDate[_r].textEvent;
+
 
         //刷新已用事件列表
-        needNowDate.Remove(needNowDate[_r]);
+        tempNowDate.Remove(tempNowDate[_r]);
         RefreshNowList();
     }
 
@@ -266,7 +404,34 @@ public class EventUI : MonoBehaviour
     #region 危机
     public void OpenInit_WeiJi()
     {
+        DataInit();
+        int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
+        int loopCount = 0;
+        while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
+        {//如果有条件并且条件没满足,就重找一个
 
+            _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
+            if (loopCount > 50)
+            {
+                print("死循环");
+                return;
+            }
+        }
+
+        //
+        TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
+        info.text = tempNowDate[_r].name + "\n\n" + tempNowDate[_r].textEvent;
+
+        RefreshNowList();
+
+    }
+    #endregion
+
+
+    #region 场景
+    public void OpenInit_ChangJing()
+    {
+        
     }
     #endregion
 
@@ -277,8 +442,9 @@ public class EventUI : MonoBehaviour
     #region 外部点击/调用事件
 
 
-    public void Open()
+    public void Open(bool _isKey)
     {
+        isKey = _isKey;
         CharacterManager.instance.pause = true;
         DealWithData(type);
         switch (type)
@@ -308,6 +474,12 @@ public class EventUI : MonoBehaviour
                     OpenInit_WeiJi();
                 }
                 break;
+            case EventType.ChangJing:
+                {
+                    
+                    OpenInit_ChangJing();
+                }
+                break;
         }
     }
 
@@ -319,11 +491,11 @@ public class EventUI : MonoBehaviour
         {
             case EventType.XiWang: 
                 {
-
+                    Close_XiWang();
                 }break;
             case EventType.FangKe:
                 {
-
+                    Close_FangKe();
                 }
                 break;
             case EventType.YiWai:
@@ -343,5 +515,6 @@ public class EventUI : MonoBehaviour
                 break;
         }
     }
+
     #endregion
 }
