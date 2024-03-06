@@ -288,9 +288,11 @@ public class GameProcessSlider : MonoBehaviour
                 destroyTime = 0;                
                 for (int i = 0; i < array0.Count; i++)
                 {
-                    PoolMgr.GetInstance().PushObj(array0[i].gameObject.name,array0[i].gameObject);
+                    //PoolMgr.GetInstance().PushObj(array0[i].gameObject.name,array0[i].gameObject);
+
+                    //让每一个气泡执行它的消失动画
                 }
-                TeXiao.animator.SetBool("dis", true);
+               
                 isCreate = false;
             }
             
