@@ -10347,12 +10347,16 @@ MonoBehaviour:
   - {fileID: 1356567826}
   eventBubblePrefab:
   - {fileID: 296767673687119374, guid: a8b4700e44fff0041bb7b0a6a770e147, type: 3}
-  - {fileID: 296767673687119374, guid: 8228bba66bb0cd2438c23068c5feb655, type: 3}
-  - {fileID: 296767673687119374, guid: b18401dba64c988489d417ad7a636e14, type: 3}
-  - {fileID: 296767673687119374, guid: 29e9109d5fd453c40b4e2264c78e01d8, type: 3}
   - {fileID: 296767673687119374, guid: 1b34a8a16ed0932448303639416a0a4c, type: 3}
-  eventTime: 6
-  dTime: 2
+  - {fileID: 296767673687119374, guid: 8228bba66bb0cd2438c23068c5feb655, type: 3}
+  - {fileID: 296767673687119374, guid: 29e9109d5fd453c40b4e2264c78e01d8, type: 3}
+  - {fileID: 296767673687119374, guid: b18401dba64c988489d417ad7a636e14, type: 3}
+  eventTime: 8
+  xiWang: 10
+  jiaoYi: 25
+  weiJi: 30
+  fangKe: 25
+  yiWai: 10
 --- !u!114 &1338572143
 MonoBehaviour:
   m_ObjectHideFlags: 0
