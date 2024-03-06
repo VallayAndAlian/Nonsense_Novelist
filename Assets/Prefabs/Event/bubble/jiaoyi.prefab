@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 296767672697493675}
   - component: {fileID: 296767672697493672}
   m_Layer: 0
-  m_Name: yiwai
+  m_Name: jiaoyi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 626459831
   m_SortingLayer: 1
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: 80b6bd3403d6ae946b6021c4fd033998, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ada05e7abf8a1bd4f9fd815c09fe9868, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -179,10 +179,10 @@ GameObject:
   - component: {fileID: 296767673687119373}
   - component: {fileID: 296767673687119375}
   - component: {fileID: 296767673687119362}
-  - component: {fileID: 2213720119226666162}
-  - component: {fileID: 1282883154546105451}
+  - component: {fileID: 2198855023935317618}
+  - component: {fileID: 5994943781645946325}
   m_Layer: 0
-  m_Name: yiwai
+  m_Name: jiaoyi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -278,7 +278,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2213720119226666162
+--- !u!114 &2198855023935317618
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,7 +292,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isKey: 0
   dTime: 4
---- !u!58 &1282883154546105451
+  logo_Event:
+  - {fileID: 5281034728410389872, guid: 9eace8e4621caad4fb229fbaacb29ffe, type: 3}
+  - {fileID: 5281034728410389872, guid: 259aa7596fd4fb94eb799f2a8dccdcef, type: 3}
+  - {fileID: 5281034728410389872, guid: be5f8399fcf8f254dad78fb6100fdc14, type: 3}
+  - {fileID: 5281034728410389872, guid: 7737506fb13249a459a718c1df376e77, type: 3}
+  - {fileID: 5281034728410389872, guid: 99cd9acc9b0cd9543b48d5c69f65daf7, type: 3}
+--- !u!58 &5994943781645946325
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
