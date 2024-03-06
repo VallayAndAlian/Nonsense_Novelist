@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 296767672697493675}
   - component: {fileID: 296767672697493672}
   m_Layer: 0
-  m_Name: fangke
+  m_Name: weiji
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 626459831
   m_SortingLayer: 1
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: 1e65969371456dd46a81cb12e9cb01b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -179,8 +179,10 @@ GameObject:
   - component: {fileID: 296767673687119373}
   - component: {fileID: 296767673687119375}
   - component: {fileID: 296767673687119362}
+  - component: {fileID: 1321248274680026534}
+  - component: {fileID: 4200141848649994223}
   m_Layer: 0
-  m_Name: bubble00 1
+  m_Name: weiji
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,3 +278,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1321248274680026534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296767673687119374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f137ba53f0c17dc4b8795b977bbf85f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isKey: 0
+  dTime: 4
+--- !u!58 &4200141848649994223
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296767673687119374}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.92, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.2

@@ -34,6 +34,7 @@ public class GameProcessSlider : MonoBehaviour
 
     [Header("【单位：s】游戏进程相关参数（手动）")]
     public Time_Stage[] time_stage;
+    [Header("每轮的事件个数")] 
     public Event_Stage[] event_stage;
 
     private int stageCount=0;
@@ -57,17 +58,24 @@ public class GameProcessSlider : MonoBehaviour
     /// <summary>
     /// 事件气泡功能
     /// </summary>
-    public GameObject[] eventPoint;
-    public GameObject[] eventBubblePrefab;
+    [Header("事件位置")] public GameObject[] eventPoint;
+    [Header("事件气泡（气泡顺序不能改变）")] public GameObject[] eventBubblePrefab;
 
-    /// 每轮间隔时间
-    public int eventTime = 30;
+    [Header("每轮间隔时间")] public int eventTime = 30;
+    [Header("重要事件消失时间")] public int keyEventTime = 15;
     private int eventCount=0;
     private List<int> array = new List<int>();
     private List<GameObject> array0 = new List<GameObject>();
     public static bool isStart = false;
     private bool isCreate = false;
 
+    //概率
+    [Header("事件概率")]
+    [Header("希望")] public int xiWang = 10;
+    [Header("交易")] public int jiaoYi = 25;
+    [Header("危机")] public int weiJi = 30;
+    [Header("访客")] public int fangKe = 25;
+    [Header("意外")] public int yiWai = 10;
     private void Start()
     {
 
@@ -110,7 +118,6 @@ public class GameProcessSlider : MonoBehaviour
         if (CharacterManager.instance.pause) return;
         if (!countTime)
             return;
-        DestroyEvent();
         if (isStart) CreateEvent();//&&(SceneManager.GetActiveScene().name != "CombatTest")        
 
         timeNow += Time.deltaTime;
@@ -229,25 +236,42 @@ public class GameProcessSlider : MonoBehaviour
         if (totalTime > eventTime)
         {
             totalTime = 0;
-            
+            array0.Clear();
+            int _random = -1;
+            //重要事件每三轮出现一次
+            if (eventCount % 3 == 0)
+            {
+                _random = Random.Range(0, event_stage[eventCount].events);
+            }
             //生成事件气泡预制体
             for(int i = 0; i < event_stage[eventCount].events; i++)
             {
-                int number = Random.Range(0, eventBubblePrefab.Length);
                 int num0= Random.Range(0, eventPoint.Length);
-                 PoolMgr.GetInstance().GetObj(eventBubblePrefab[number],(a)=>
-                {
-                    array.Add(num0);
-                    array0.Add(a);
-                    a.transform.SetParent(eventPoint[num0].transform); 
-                    a.transform.localPosition = Vector3.zero;
-                });
+                //概率抽取                
+                int numx = Random.Range(1, 101);
+                if (numx <= xiWang) { numx = 0; }
+                else if (numx > xiWang && numx < xiWang + jiaoYi) numx = 1;
+                else if (numx >= xiWang + jiaoYi && numx < xiWang + jiaoYi + weiJi) numx = 2;
+                else if (numx >= xiWang + jiaoYi + weiJi && numx < xiWang + jiaoYi + weiJi + fangKe) numx = 3;
+                else numx = 4;
 
                 while (array.Contains(num0))//位置去重
                 {
                     num0 = Random.Range(0, eventPoint.Length);
                 }
-               
+                //实例化事件气泡
+                PoolMgr.GetInstance().GetObj(eventBubblePrefab[numx], (a) =>
+                {
+                    array.Add(num0);
+                    array0.Add(a);
+                    a.transform.SetParent(eventPoint[num0].transform);
+                    a.transform.localPosition = Vector3.zero;
+                    if (i == _random)
+                    { 
+                        a.GetComponent<Bubble>().isKey = true;
+                        a.GetComponent<Bubble>().dTime =keyEventTime;
+                    }
+                });
                 //未做避免纸球位置
             }
 
@@ -257,31 +281,5 @@ public class GameProcessSlider : MonoBehaviour
         }
         
     }
-    private float destroyTime = 0;
-    public float dTime = 2;
-    /// <summary>
-    /// 销毁事件气泡
-    /// </summary>
-   public void DestroyEvent()
-    {
-        //时间销毁
-        if (isCreate)
-        {
-            destroyTime += Time.deltaTime;
-            if (destroyTime > dTime)
-            {
-                destroyTime = 0;                
-                for (int i = 0; i < array0.Count; i++)
-                {
-                    //PoolMgr.GetInstance().PushObj(array0[i].gameObject.name,array0[i].gameObject);
-
-                    //让每一个气泡执行它的消失动画
-                }
-               
-                isCreate = false;
-            }
-            
-        }
-        
-    }
+   
 }
