@@ -15,8 +15,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     Button cancelButton;
     bool hasOpenExit = false;
 
-
+    //玩家已有的书库
     List<BookNameEnum> bookList = new List<BookNameEnum>();
+    //玩家已有的，词语全部获取完毕的书库
+    List<BookNameEnum> bookAllGetList = new List<BookNameEnum>();
 
     //战斗总牌库
     List<Type> wordList = new List<Type>();
@@ -106,7 +108,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.HongLouMeng))
                     {   
-                        AddCombatStartList(AllSkills.hlmList_all);
+                        //AddCombatStartList(AllSkills.hlmList_all);
                         bookList.Add(BookNameEnum.HongLouMeng);
                     }
                  
@@ -116,7 +118,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.CrystalEnergy))
                     {
-                        AddCombatStartList(AllSkills.crystalList_all);
+                        //AddCombatStartList(AllSkills.crystalList_all);
                         bookList.Add(BookNameEnum.CrystalEnergy);
                     }
                   
@@ -126,7 +128,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.Salome))
                     {
-                        AddCombatStartList(AllSkills.shaLeMeiList_all);
+                        //AddCombatStartList(AllSkills.shaLeMeiList_all);
                         bookList.Add(BookNameEnum.Salome);
                     }
 
@@ -136,7 +138,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.ZooManual))
                     {
-                        AddCombatStartList(AllSkills.animalList_all);
+                        //AddCombatStartList(AllSkills.animalList_all);
                         bookList.Add(BookNameEnum.ZooManual);
                     }
                   
@@ -146,7 +148,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.PHXTwist))
                     {
-                        AddCombatStartList(AllSkills.maYiDiGuoList_all);
+                       // AddCombatStartList(AllSkills.maYiDiGuoList_all);
                         bookList.Add(BookNameEnum.PHXTwist);
                     }
       
@@ -156,7 +158,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.FluStudy))
                     {
-                        AddCombatStartList(AllSkills.liuXingBXList_all);
+                        //AddCombatStartList(AllSkills.liuXingBXList_all);
                         bookList.Add(BookNameEnum.FluStudy);
                     }
                   
@@ -166,7 +168,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.EgyptMyth))
                     {
-                        AddCombatStartList(AllSkills.aiJiShenHuaList_all);
+                        //AddCombatStartList(AllSkills.aiJiShenHuaList_all);
                         bookList.Add(BookNameEnum.EgyptMyth);
                     }                 
                 }
@@ -175,7 +177,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.ElectronicGoal))
                     {
-                        AddCombatStartList(AllSkills.humanList_all);
+                        //AddCombatStartList(AllSkills.humanList_all);
                         bookList.Add(BookNameEnum.ElectronicGoal);
                     }        
                 }
@@ -184,7 +186,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.allBooks))
                     {
-                        AddCombatStartList(AllSkills.commonList_all);
+                        //AddCombatStartList(AllSkills.commonList_all);
                         bookList.Add(BookNameEnum.allBooks);
                     }
 
@@ -252,6 +254,125 @@ public class GameMgr : MonoSingleton<GameMgr>
         return wordList;
     }
 
+
+    //获取已有的书本列表
+    public List<BookNameEnum> GetBookList()
+    {
+
+        return bookList;
+    }
+
+
+
+    /// <summary>
+    /// 检测是否一本书的所有词组都已经获取。返回是或否
+    /// </summary>
+    /// <param name="_book"></param>
+    /// <returns></returns>
+   public  bool IsBookWordAllGet(BookNameEnum _book)
+    {
+        if (bookAllGetList.Contains(_book)) return true;
+
+        List<Type> _typeList = GetBookList(_book);
+        if (_typeList == null)
+        {
+            print("_typeList == null"); return true;
+        }
+
+
+        foreach (var _w in _typeList)
+        {
+            if (!wordList.Contains(_w))
+            {
+                return false;
+            }
+        }
+        bookAllGetList.Add(_book);
+        return true;
+    }
+
+
+    List<Type> GetBookList(BookNameEnum _book)
+    {
+        List<Type> _typeList = null;
+        switch (_book)
+        {
+            case BookNameEnum.HongLouMeng:
+                {
+                    _typeList = AllSkills.hlmList_all;
+                }
+                break;
+            case BookNameEnum.CrystalEnergy:
+                {
+                    _typeList = AllSkills.crystalList_all;
+                }
+                break;
+            case BookNameEnum.Salome:
+                {
+                    _typeList = AllSkills.shaLeMeiList_all;
+                }
+                break;
+            case BookNameEnum.ZooManual:
+                {
+                    _typeList = AllSkills.animalList_all;
+                }
+                break;
+            case BookNameEnum.PHXTwist:
+                {
+                    _typeList = AllSkills.maYiDiGuoList_all;
+                }
+                break;
+            case BookNameEnum.FluStudy:
+                {
+                    _typeList = AllSkills.liuXingBXList_all;
+                }
+                break;
+            case BookNameEnum.EgyptMyth:
+                {
+                    _typeList = AllSkills.aiJiShenHuaList_all;
+                }
+                break;
+            case BookNameEnum.ElectronicGoal:
+                {
+                    _typeList = AllSkills.humanList_all;
+                }
+                break;
+            case BookNameEnum.allBooks:
+                {
+                    _typeList = AllSkills.commonList_all;
+                }
+                break;
+
+        }
+        return _typeList;
+    }
+
+
+    /// <summary>
+    /// 随机获取书本中还未获取的词语
+    /// </summary>
+    /// <param name="_book"></param>
+    public Type GetBookListNeedWordOne(BookNameEnum _book)
+    {
+        //已经没有没获得的词语了，返回null
+        if (IsBookWordAllGet(_book)) return null;
+
+        List<Type> _typeList = GetBookList(_book);
+        if (_typeList == null)
+        {
+            print("_typeList == null");return null;
+        }
+        
+
+        int _R = UnityEngine.Random.Range(0, _typeList.Count);
+
+        while (wordList.Contains(_typeList[_R]))
+        {
+            _R = UnityEngine.Random.Range(0, _typeList.Count);
+
+        }
+        return _typeList[_R];
+    }
 
 
     /// <summary>

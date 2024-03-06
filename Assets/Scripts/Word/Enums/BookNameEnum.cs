@@ -26,4 +26,5 @@ public enum BookNameEnum
     FluStudy = 8,
     /// <summary>ÂìÒÏµÛ¹ú </summary>
     PHXTwist = 9,
+    BookNull=30
 };
