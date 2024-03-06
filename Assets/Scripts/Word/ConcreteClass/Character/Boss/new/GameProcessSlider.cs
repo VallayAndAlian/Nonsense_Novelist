@@ -250,19 +250,25 @@ public class GameProcessSlider : MonoBehaviour
             {
                 int number = Random.Range(0, eventBubblePrefab.Length);
                 int num0= Random.Range(0, eventPoint.Length);
-                GameObject a= Instantiate(eventBubblePrefab[number]);
+                 PoolMgr.GetInstance().GetObj(eventBubblePrefab[number],(a)=>
+                {
+                    array.Add(num0);
+                    array0.Add(a);
+                    a.transform.SetParent(eventPoint[num0].transform); 
+                    a.transform.localPosition = Vector3.zero;
+                });
+
                 while (array.Contains(num0))//位置去重
                 {
                     num0 = Random.Range(0, eventPoint.Length);
                 }
-                array.Add(num0);
-                array0.Add(a);
-                a.transform.SetParent(eventPoint[num0].transform); 
-                a.transform.localPosition = Vector3.zero;
+               
                 //未做避免纸球位置
             }
+
             isCreate = true;
             eventCount++;
+            array.Clear();
         }
         
     }
@@ -282,7 +288,7 @@ public class GameProcessSlider : MonoBehaviour
                 destroyTime = 0;                
                 for (int i = 0; i < array0.Count; i++)
                 {
-                    Destroy(array0[i]);
+                    PoolMgr.GetInstance().PushObj(array0[i].gameObject.name,array0[i].gameObject);
                 }
                 TeXiao.animator.SetBool("dis", true);
                 isCreate = false;
