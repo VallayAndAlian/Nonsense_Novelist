@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 5281034728410389885}
   - component: {fileID: 5281034728410389886}
   - component: {fileID: 5281034728410389887}
+  - component: {fileID: 6271807371233513335}
+  - component: {fileID: 2133282684221614960}
   m_Layer: 0
-  m_Name: FANGKE
+  m_Name: WEIJI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,10 +73,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 626459831
-  m_SortingLayer: 1
+  m_SortingLayerID: 1069493185
+  m_SortingLayer: 3
   m_SortingOrder: 8
-  m_Sprite: {fileID: 21300000, guid: 7ef14abc7d150df4daf28fe6d84f3b53, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 511d39aeda187764a8c4b48d72042937, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -95,7 +97,7 @@ Animator:
   m_GameObject: {fileID: 5281034728410389872}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 081c1cf0fc5151340a0435d57822234d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6758f6904d9ffcd4584d99bfd8c337a2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -106,3 +108,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6271807371233513335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281034728410389872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee74c6f49bc29c948a2320fc6d90de60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logo_Event:
+  - {fileID: 5281034728410389872, guid: 9eace8e4621caad4fb229fbaacb29ffe, type: 3}
+  - {fileID: 5281034728410389872, guid: 259aa7596fd4fb94eb799f2a8dccdcef, type: 3}
+  - {fileID: 5281034728410389872, guid: be5f8399fcf8f254dad78fb6100fdc14, type: 3}
+  - {fileID: 5281034728410389872}
+  - {fileID: 5281034728410389872, guid: 99cd9acc9b0cd9543b48d5c69f65daf7, type: 3}
+--- !u!114 &2133282684221614960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281034728410389872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f137ba53f0c17dc4b8795b977bbf85f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isKey: 0
+  dTime: 4

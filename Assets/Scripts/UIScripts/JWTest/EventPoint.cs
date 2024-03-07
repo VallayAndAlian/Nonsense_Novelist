@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 挂在Point点上
+/// </summary>
 public class EventPoint : MonoBehaviour
 {
-    public static bool[] isEvent= {true,true,true,true,true }; 
+    public static bool[] isEvent= {true,true,true,true,true,true }; 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //事件气泡位置若有纸条，则不生成气泡
