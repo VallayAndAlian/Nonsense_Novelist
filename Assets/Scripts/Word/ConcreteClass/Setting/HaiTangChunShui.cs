@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
+/// <summary>
+/// Éè¶¨£ºº£ÌÄ´ºË¯
+/// </summary>
 public class HaiTangChunShui : AbstractSetting
 {
-   
-
-
-
     AbstractCharacter chara;
 
     public override void Start()
