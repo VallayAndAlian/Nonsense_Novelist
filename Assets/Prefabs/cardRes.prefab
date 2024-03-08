@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.44705883}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -588,6 +588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4338117747861965719}
   - component: {fileID: 1560509488}
+  - component: {fileID: 8745911339226919310}
   m_Layer: 5
   m_Name: cardRes
   m_TagString: Untagged
@@ -647,6 +648,27 @@ MonoBehaviour:
   btn_Check: {fileID: 684269349019989369}
   btn_exit: {fileID: 4338117746368846992}
   chooseWord: {fileID: 0}
+--- !u!95 &8745911339226919310
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4338117747861965718}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd0d5b4a6520dbc4a92d7a7a6ffd3aa9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7307040687262871137
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +789,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1061762498217222366}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1560509488}
+        m_TargetAssemblyTypeName: ShooterWordCheck, Assembly-CSharp
+        m_MethodName: ClickCancelButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8818821104591984234
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,4 +922,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5407884028136839046}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1560509488}
+        m_TargetAssemblyTypeName: ShooterWordCheck, Assembly-CSharp
+        m_MethodName: ClickCheckButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

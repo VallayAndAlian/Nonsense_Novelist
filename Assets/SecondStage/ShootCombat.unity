@@ -10061,8 +10061,8 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: 8228bba66bb0cd2438c23068c5feb655, type: 3}
   - {fileID: 296767673687119374, guid: 29e9109d5fd453c40b4e2264c78e01d8, type: 3}
   - {fileID: 296767673687119374, guid: b18401dba64c988489d417ad7a636e14, type: 3}
-  eventTime: 8
-  keyEventTime: 15
+  eventTime: 3
+  keyEventTime: 3
   xiWang: 20
   jiaoYi: 20
   weiJi: 20

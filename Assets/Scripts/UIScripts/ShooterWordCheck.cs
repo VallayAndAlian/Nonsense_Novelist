@@ -5,7 +5,9 @@ using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
+/// <summary>
+/// 挂在牌库UI上
+/// </summary>
 public class ShooterWordCheck : MonoBehaviour
 {
 
@@ -47,6 +49,7 @@ public class ShooterWordCheck : MonoBehaviour
             btn_Check.gameObject.SetActive(true);
             btn_cancel.gameObject.SetActive(true);
             btn_exit.gameObject.SetActive(false);
+            GetComponent<Animator>().Play("CardRes_Up");
         }
         //按照现在的牌库生成
         textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
@@ -115,8 +118,24 @@ public class ShooterWordCheck : MonoBehaviour
         CloseMainPanal();
         CharacterManager.instance.pause = false;
     }
+    public void ClickCancelButton()
+    {
+        GetComponent<Animator>().Play("CardRes_Down");
+    }
+    public void ClickCheckButton()
+    {
+        GetComponent<Animator>().Play("CardRes_Down");
+        GameMgr.instance.DeleteCardList(chooseWord);
+        GameMgr.instance.AddCardList(this.transform.parent.GetComponent<EventUI>().JY_chooseWord);
+        this.transform.parent.GetComponent<EventUI>().CloseAnim();
+    }
 
+    #endregion
 
-
+    #region 动画事件
+    public void Anim_Down()
+    {
+        CloseMainPanal();
+    }
     #endregion
 }

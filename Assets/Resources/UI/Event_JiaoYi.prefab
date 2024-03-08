@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 6151446038305411666}
   - component: {fileID: 6151446038305411693}
   - component: {fileID: 5225503857246262559}
+  - component: {fileID: 2535933067016786744}
   m_Layer: 5
   m_Name: Event_JiaoYi
   m_TagString: Untagged
@@ -263,6 +264,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
+  JY_chooseWord: {fileID: 0}
+--- !u!95 &2535933067016786744
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151446038305411695}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ff250c587269654fbaebf64a221691c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6151446038630390551
 GameObject:
   m_ObjectHideFlags: 0

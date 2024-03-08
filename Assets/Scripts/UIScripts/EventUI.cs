@@ -157,6 +157,11 @@ public class EventUI : MonoBehaviour
 
     }
 
+    public void Close_YiWai()
+    {
+
+    }
+
     #endregion
 
 
@@ -232,7 +237,7 @@ public class EventUI : MonoBehaviour
 
     #region ½»Ò×
     GameObject cardPanal;
-    private AbstractWord0 JY_chooseWord=null;
+    [HideInInspector]public AbstractWord0 JY_chooseWord=null;
     Transform choose=null;
     Vector3 chooseScale = new Vector3(0.341f,0.32f,0.341f);
     public void OpenInit_JiaoYi()
@@ -242,7 +247,7 @@ public class EventUI : MonoBehaviour
         cardPanal = this.transform.Find("cardRes").gameObject;
 
         cardPanal.SetActive(false);
-        cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
+   
 
         string adr_detail = "UI/WordInformation";
 
@@ -305,7 +310,7 @@ public class EventUI : MonoBehaviour
                 PoolMgr.GetInstance().GetObj(adr_detail, (obj) =>
                 {
                     var _word=obj.AddComponent(_rWord[i])as AbstractWord0;
-                    obj.GetComponentInChildren<WordInformation>().SetIsDetail(false);
+                    obj.GetComponentInChildren<WordInformation>().SetIsDetail(true);
 
                     if (_word == null) print("this.gameObject.GetComponent<AbstractWord0>()");
                     else
@@ -378,7 +383,8 @@ public class EventUI : MonoBehaviour
             choose.localScale = chooseScale;
             choose.localPosition = Vector3.zero;
 
-            cardPanal.SetActive(true);
+          
+            cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
         }
   
         
@@ -388,31 +394,22 @@ public class EventUI : MonoBehaviour
 
     void Close_JiaoYi()
     { 
-        Transform CardGroup = this.transform.Find("CardGroup");
-        for (int i = 0; i < CardGroup.childCount; i++)
-        {
-            Button _button=null;
-            if (CardGroup.GetChild(i).TryGetComponent<Button>(out _button))
-            {
-                _button.onClick.RemoveAllListeners();
-                Destroy(_button);
-            }
-            PoolMgr.GetInstance().PushObj(CardGroup.GetChild(i).gameObject.name, CardGroup.GetChild(i).gameObject);
-        } 
+        //Transform CardGroup = this.transform.Find("CardGroup");
+        //for (int i = 0; i < CardGroup.childCount; i++)
+        //{
+        //    Button _button=null;
+        //    if (CardGroup.GetChild(i).TryGetComponent<Button>(out _button))
+        //    {
+        //        _button.onClick.RemoveAllListeners();
+        //        Destroy(_button);
+        //    }
+        //    PoolMgr.GetInstance().PushObj(CardGroup.GetChild(i).gameObject.name, CardGroup.GetChild(i).gameObject);
+        //}
+        Destroy(this.gameObject);
     }
 
 
-    public void JY_ClickExchange()
-    {
-        if(cardPanal==null) cardPanal = this.transform.Find("cardRes").gameObject;
 
-        GameMgr.instance.AddCardList(JY_chooseWord);
-        GameMgr.instance.DeleteCardList(cardPanal.GetComponent<ShooterWordCheck>().chooseWord);
-    }
-    public void JY_ClickCancel()
-    {
-        cardPanal.SetActive(false);
-    }
     #endregion
 
 
@@ -439,6 +436,11 @@ public class EventUI : MonoBehaviour
 
         RefreshNowList();
 
+    }
+
+    public void Close_WeiJi()
+    {
+    
     }
     #endregion
 
@@ -501,10 +503,14 @@ public class EventUI : MonoBehaviour
         }
     }
 
-    
-
-    public void ClickNext()
+    public void CloseAnim()
     {
+        GetComponent<Animator>().Play("EventUI_Dis1");
+    }
+
+    public void Close()
+    {
+        CharacterManager.instance.pause = false;
         switch (type)
         {
             case EventType.XiWang: 
@@ -518,17 +524,17 @@ public class EventUI : MonoBehaviour
                 break;
             case EventType.YiWai:
                 {
-
+                    Close_YiWai();
                 }
                 break;
             case EventType.JiaoYi:
                 {
-
+                    Close_JiaoYi();
                 }
                 break;
             case EventType.WeiJi:
                 {
-
+                    Close_WeiJi();
                 }
                 break;
         }
