@@ -37,7 +37,7 @@ public class AbstractBuff : MonoBehaviour
                 }
             }
         }
-        
+        chara.AddBuff(this);
     }
 
     virtual public void Update()
@@ -52,5 +52,6 @@ public class AbstractBuff : MonoBehaviour
     virtual public void OnDestroy()
     {
         chara.CreateFloatWord("<s>" + this.buffName + "</s>", FloatWordColor.removeWord, false);
+        chara.RemoveBuff(this);
     }
 }

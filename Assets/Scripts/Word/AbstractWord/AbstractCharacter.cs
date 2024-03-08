@@ -445,10 +445,10 @@ abstract public class AbstractCharacter : AbstractWord0
     #endregion
 
 
-    #region 特殊buff用
+    #region buff
 
     /// <summary>所有buff《buffID，是否有buff》</summary>
-    public Dictionary<int, int> buffs;
+    public Dictionary<AbstractBuff, int> buffs;
     /// <summary>剩余眩晕时间</summary>
     public float dizzyTime;
     /// <summary>是否有复活状态(仍不可叠加，但数量为0则不可复活)</summary>
@@ -462,13 +462,14 @@ abstract public class AbstractCharacter : AbstractWord0
             if (relifes < 0) relifes = 0;
         }
     }
-    
 
+    [HideInInspector] public delegate void Event_AddBuff(AbstractBuff _buff);
+    [HideInInspector] public Event_AddBuff event_AddBuff;
 
     /// <summary>
     /// 判断该角色是否有该buff
     /// </summary>
-    public bool HasBuff(int buffID)
+    public bool HasBuff(AbstractBuff buffID)
     {
         if (!buffs.ContainsKey(buffID))
             return false;
@@ -485,12 +486,15 @@ abstract public class AbstractCharacter : AbstractWord0
     /// 加个buff
     /// </summary>
     /// <param name="buffID"></param>
-    public void AddBuff(int buffID)
+    public void AddBuff(AbstractBuff buffID)
     {
         if (!buffs.ContainsKey(buffID))
             buffs.Add(buffID, 1);
         else
             buffs[buffID]++;
+
+        if (event_AddBuff != null)
+            event_AddBuff(buffID);
     }
 
 
@@ -498,9 +502,28 @@ abstract public class AbstractCharacter : AbstractWord0
     /// 去个buff
     /// </summary>
     /// <param name="buffID"></param>
-    public void RemoveBuff(int buffID)
+    public void RemoveBuff(AbstractBuff buffID)
     {
         buffs[buffID]--;
+    }
+
+
+
+    /// <summary>
+    /// 清除负面状态
+    /// </summary>
+    public void DeleteBadBuff(int _count)
+    {
+        var x = 0;
+        var _buffs = GetComponents<AbstractBuff>();
+        foreach (var _buff in _buffs)
+        {
+            if (x >= _count) return;
+            if (_buff.isBad)
+            {
+                Destroy(_buff); x++;
+            }
+        }
     }
 
 
@@ -521,24 +544,11 @@ abstract public class AbstractCharacter : AbstractWord0
     public int maxSkillsCount = 3;
 
 
-    /// <summary>
-    /// 清除负面状态
-    /// </summary>
-    public void DeleteBadBuff(int _count)
-    {
-        var x = 0;
-        var _buffs = GetComponents<AbstractBuff>();
-        foreach (var _buff in _buffs)
-        {
-            if (x >= _count) return;
-            if (_buff.isBad)
-            {
-                Destroy(_buff);x++;
-            } 
-        }
-    }
 
 
+
+    [HideInInspector] public delegate void Event_AddVerb(AbstractVerbs _verb);
+    [HideInInspector] public Event_AddVerb event_AddVerb;
     /// <summary>
     /// 增加verb技能时调用
     /// </summary>
@@ -583,7 +593,10 @@ abstract public class AbstractCharacter : AbstractWord0
 
         GetComponentInChildren<AfterStart>().GetNewVerbs();
 
-       
+        if (event_AddVerb != null)
+        {
+            event_AddVerb(_av);
+        }
     }
 
 
@@ -592,6 +605,9 @@ abstract public class AbstractCharacter : AbstractWord0
     private int maxServantsCount = 3;
 
 
+
+    [HideInInspector] public delegate void Event_AddServant(ServantAbstract _ser);
+    [HideInInspector] public Event_AddServant event_AddServant;
     /// <summary>
     /// 增加随从时调用
     /// </summary>
@@ -642,6 +658,9 @@ abstract public class AbstractCharacter : AbstractWord0
         //if (Resources.Load<GameObject>("Servants/" + _av.GetType().Name) == null) print("Resources.Load<GameObject>(Servants /  +_av.GetType().Name)==null");
 
         ServantRefresh();
+
+        if (event_AddServant != null)
+            event_AddServant(_sa);
     }
 
 
@@ -720,6 +739,32 @@ abstract public class AbstractCharacter : AbstractWord0
     #endregion
 
 
+    #region adj $ noun
+    [HideInInspector] public delegate void Event_AddAdj(AbstractAdjectives _ser);
+    [HideInInspector] public Event_AddAdj event_AddAdj;
+
+    public void AddAdj(AbstractAdjectives _ser)
+    {
+        if (event_AddAdj != null)
+        {
+            event_AddAdj(_ser);
+
+        }
+    }
+    [HideInInspector] public delegate void Event_AddNoun (AbstractItems _ser);
+    [HideInInspector] public Event_AddNoun event_AddNoun;
+
+    public void AddNoun(AbstractItems _ser)
+    {
+        if (event_AddNoun != null)
+        {
+            event_AddNoun(_ser);
+
+        }
+    }
+
+    #endregion
+
     #region 平A
 
     //伤害的阵营
@@ -748,11 +793,25 @@ abstract public class AbstractCharacter : AbstractWord0
         }
     }
     private float AttackSpeedPlus = 1;
+    private float AttackSpeedTemp = -1;
     void attackSpeedSetting()
     {
         charaAnim.SetSpeed(AnimEnum.attack, AttackSpeedPlus);
     }
+    public void AttackSpeedPause(bool _b)
+    {
+        if (_b)//设置成暂停
+        {
+            AttackSpeedTemp = attackSpeedPlus;
+            attackSpeedPlus = 0;
+        }
+        else//解除暂停
+        {
+            if(AttackSpeedTemp!=-1)
+                attackSpeedPlus = AttackSpeedTemp;
 
+        }
+    }
 
     /// <summary>站位</summary>
     public Situation situation;
@@ -942,7 +1001,7 @@ abstract public class AbstractCharacter : AbstractWord0
 
         teXiao = GetComponentInChildren<TeXiao>();
         source = this.GetComponent<AudioSource>();
-        buffs = new Dictionary<int, int>();
+        buffs = new Dictionary<AbstractBuff, int>();
         charaAnim = GetComponentInChildren<CharaAnim>();
 
         if (GameObject.Find("AllCharacter") != null)

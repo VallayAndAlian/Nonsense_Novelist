@@ -148,6 +148,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     public void SetIsDetail(bool _bool)
     {
         isDetail = _bool;
+        this.transform.parent.GetComponent<CanvasGroup>().blocksRaycasts = _bool;
     }
 
 

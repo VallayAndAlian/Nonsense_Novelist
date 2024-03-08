@@ -75,7 +75,7 @@ public class WordCollisionShoot : MonoBehaviour
            
             if (_s == null) return;
            
-            DraftUi.instance.AddContent(_s);
+            GameMgr.instance.draftUi.AddContent(_s);
 
         }
     }

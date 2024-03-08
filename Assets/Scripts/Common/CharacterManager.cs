@@ -62,6 +62,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
             PAUSE = value;
             SetShooterTo(PAUSE);
             WordBallPause(PAUSE);
+            AllCharaAnimPause(PAUSE);
         }
     }
     private Transform shooter;
@@ -102,6 +103,23 @@ public class CharacterManager : MonoSingleton<CharacterManager>
             }
         }
 
+    }
+
+
+
+    private void AllCharaAnimPause(bool _b)
+    {
+        foreach(var _c in this.GetComponentsInChildren<AbstractCharacter>())
+        {
+            if (_b)
+            {
+                _c.AttackSpeedPause(true);
+            }
+            else
+            {
+                _c.AttackSpeedPause(false);
+            }
+        }
     }
     #endregion
 

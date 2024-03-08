@@ -22,29 +22,32 @@ public class ShooterWordCheck : MonoBehaviour
     public GameObject word_adj;
     public GameObject word_verb;
     public GameObject word_item;
-    // Start is called before the first frame update
-    void Start()
-    {
-        CloseMainPanal();
 
-    }
+    public bool jiaoYi = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
+    [Header("牌库主面板组件(手动)")]
+    public Button btn_cancel;
+    public Button btn_Check;
+    public Button btn_exit;
     #region 1
 
-    void SetParameter()
+    public void OpenMainPanal()
     {
-        
-    }
-    void OpenMainPanal()
-    {
-        mainPanal.SetActive(true);
-
+        mainPanal.SetActive(true); 
+        if (!jiaoYi)
+        {
+   
+            btn_Check.gameObject.SetActive(false);
+            btn_cancel.gameObject.SetActive(false);
+            btn_exit.gameObject.SetActive(true);
+        }
+        else
+        {
+            btn_Check.gameObject.SetActive(true);
+            btn_cancel.gameObject.SetActive(true);
+            btn_exit.gameObject.SetActive(false);
+        }
         //按照现在的牌库生成
         textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
 
@@ -57,6 +60,12 @@ public class ShooterWordCheck : MonoBehaviour
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
+
+                if (jiaoYi)
+                {
+                    obj.GetComponent<Button>().onClick.AddListener(() => ClickThis(obj));
+
+                }
             });
         }
         foreach (var _word in GameMgr.instance.GetHasUsedList())
@@ -81,6 +90,12 @@ public class ShooterWordCheck : MonoBehaviour
             PoolMgr.GetInstance().PushObj(wordsArea.GetChild(i).gameObject.name, wordsArea.GetChild(i).gameObject);
         }
     }
+
+    [HideInInspector]public AbstractWord0 chooseWord=null;
+    void ClickThis(GameObject _botton)
+    {
+        chooseWord = _botton.GetComponent<AbstractWord0>();
+    }    
     #endregion
 
 
@@ -91,7 +106,7 @@ public class ShooterWordCheck : MonoBehaviour
     /// </summary>
     public void ClickShooterButton()
     {
-        OpenMainPanal();
+        OpenMainPanal(); 
         CharacterManager.instance.pause = true;
     }
 
@@ -100,6 +115,8 @@ public class ShooterWordCheck : MonoBehaviour
         CloseMainPanal();
         CharacterManager.instance.pause = false;
     }
+
+
 
     #endregion
 }

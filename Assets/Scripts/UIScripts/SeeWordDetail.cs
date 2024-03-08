@@ -10,6 +10,9 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private GameObject go;
     private Vector3 detailPos = Vector3.zero;
     private Vector3 detailScale = Vector3.one;
+
+
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "ShootCombat"|| SceneManager.GetActiveScene().name == "NewGame4")
@@ -59,4 +62,6 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         isOpen = false;
         PoolMgr.GetInstance().PushObj(adr_detail, go);
     }
+
+    
 }

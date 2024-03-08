@@ -54,6 +54,7 @@ public class GuoMin : AbstractAdjectives,IChongNeng
             var count = UnityEngine.Random.Range(0,AllSkills.BadBuff.Count);
             Type _t = AllSkills.BadBuff[count];
             var buff=aimCharacter.gameObject.AddComponent(_t) as AbstractBuff; ;
+       
             buff.maxTime=10f;
         }
        

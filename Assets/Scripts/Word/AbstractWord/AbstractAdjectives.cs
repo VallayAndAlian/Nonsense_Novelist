@@ -32,6 +32,8 @@ abstract public class AbstractAdjectives : AbstractWord0
 
         nowTime = skillEffectsTime;
 
+        if (aim == null) return;
+        aim.AddAdj(this);
     }
     /// <summary>
     /// 技能效果(特殊效果）
@@ -73,6 +75,7 @@ abstract public class AbstractAdjectives : AbstractWord0
 
     private void OnDestroy()
     {
+        
         foreach (AbstractBuff buff in buffs)
         {
             Destroy(buff);

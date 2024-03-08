@@ -14,7 +14,7 @@ public class DraftUi : MonoBehaviour
     List<string> content=new List<string>();
 
 
-    public static DraftUi instance;
+ 
     
     // 不换行的的空格符
     public static readonly string NO_BREAKING_SPACE = "\u00A0";//"\u3000";
@@ -44,19 +44,8 @@ public class DraftUi : MonoBehaviour
     float sizeFont;
 
 
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            if (instance != this) Destroy(this);
-        }
-        else
-        {
-            instance = this;
-        }
-    }
 
-    private void Start()
+    private void Awake()
     {
         InitContent();
         sentenseObj = ResMgr.GetInstance().Load<GameObject>(sentenseAdr);
@@ -120,6 +109,9 @@ public class DraftUi : MonoBehaviour
         {
             PoolMgr.GetInstance().GetObj(sentenseObj, (obj) =>
              {
+                 
+                 obj.transform.parent = parent;
+                 obj.transform.localScale = Vector3.one;
                  var _showText = obj.transform.Find("showText").GetComponent<TextMeshProUGUI>();
                  var _inputField = obj.GetComponent<TMP_InputField>();
 
@@ -135,10 +127,11 @@ public class DraftUi : MonoBehaviour
                      _inputField.text += "\n";
                  }
                  _inputField.text += "\n";
-                 obj.transform.parent = parent;
-                 obj.transform.localScale = Vector3.one;
+                 
              });
         }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parent);
     }
     #endregion
 

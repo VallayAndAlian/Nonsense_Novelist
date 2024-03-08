@@ -30,25 +30,34 @@ public class GameMgr : MonoSingleton<GameMgr>
     List<Type> wordHasUseList = new List<Type>();
 
     //当前触发的所有事件
-    public List<string> happenEvent = new List<string>();
+    [HideInInspector]public List<string> happenEvent = new List<string>();
 
 
 
+    [Header("界面设置(手动)")]
+    public GameObject characterCanvas;
+    public DraftUi draftUi;
+    public GameObject combatCanvas;
 
-    [HideInInspector] public GameObject characterCanvas;
+
+    void OpenCharacterPutting()
+    {
+        combatCanvas.gameObject.SetActive(true);
+        draftUi.gameObject.SetActive(false);
+        characterCanvas.gameObject.SetActive(true);
+    }
 
 
     private void Start()
     {
-        characterCanvas = GameObject.Find("UICanvas");
-        
+
+
         //界面设置
-        if (characterCanvas != null)
-            characterCanvas.SetActive(true);
+        OpenCharacterPutting();
 
         //退出菜单
         exitPanel = Resources.Load<GameObject>("UI/exitPanel");
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
 
         //牌库
         InitCardList();
@@ -100,17 +109,39 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         happenEvent.Clear();
 
+
+        AddBookList(BookNameEnum.allBooks);
         //测试用
-        wordList.AddRange(new Type[] { typeof(SheQunFengRong), typeof(ChanLuan), typeof(ShiWuFengRong) });
+        // wordList.AddRange(new Type[] { typeof(BuryFlower), typeof(QiChongShaDance) });
 
         //加入通用词组
-        if(wordList==null)
+        if (wordList==null)
             AddBookList(BookNameEnum.allBooks);
         RefreshNowList();
     }
 
+    public void AddCardList(AbstractWord0 _word)
+    {
+        wordList.Add(_word.GetType());
+        wordNowList.Add(_word.GetType());
+    }
+    public void DeleteCardList(AbstractWord0 _word)
+    {
+        if (wordList.Contains(_word.GetType()))
+        {
+            wordList.Remove(_word.GetType());
+        }
 
 
+        if (wordNowList.Contains(_word.GetType()))
+        {
+            wordNowList.Remove(_word.GetType());
+        }
+        else if (wordHasUseList.Contains(_word.GetType()))
+        {
+            wordHasUseList.Remove(_word.GetType());
+        }
+    }
     public List<Type> GetHasUsedList()
     {
         return wordHasUseList;
@@ -385,7 +416,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 {
                     if (!bookList.Contains(BookNameEnum.allBooks))
                     {
-                        //AddCombatStartList(AllSkills.commonList_all);
+                        AddCombatStartList(AllSkills.commonList_all);
                         bookList.Add(BookNameEnum.allBooks);
                     }
 

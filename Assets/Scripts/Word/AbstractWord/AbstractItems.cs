@@ -28,6 +28,8 @@ abstract public class AbstractItems : AbstractWord0
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots.Add(gameObject.AddComponent<Common>());
 
+        if (aim == null) return;
+        aim.AddNoun(this);
     }
 
     /// <summary>

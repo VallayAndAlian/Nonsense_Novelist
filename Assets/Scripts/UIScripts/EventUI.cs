@@ -42,10 +42,7 @@ public class EventUI : MonoBehaviour
 
     private void Start()
     {
-        GameMgr.instance.AddBookList(BookNameEnum.HongLouMeng);
-        GameMgr.instance.AddBookList(BookNameEnum.ElectronicGoal);
-        //GameMgr.instance.AddBookList(BookNameEnum.EgyptMyth);
-        Open(false);
+      
     }
 
    
@@ -189,6 +186,7 @@ public class EventUI : MonoBehaviour
 
         info.text = tempNowDate[_r].name;
         words.text = tempNowDate[_r].textEvent;
+        RefreshNowList();
     }
 
     void Close_FangKe()
@@ -233,7 +231,7 @@ public class EventUI : MonoBehaviour
 
 
     #region ½»Ò×
-
+    GameObject cardPanal;
     private AbstractWord0 JY_chooseWord=null;
     Transform choose=null;
     Vector3 chooseScale = new Vector3(0.341f,0.32f,0.341f);
@@ -241,6 +239,10 @@ public class EventUI : MonoBehaviour
     {
         JY_chooseWord = null;
         choose = this.transform.Find("choose");
+        cardPanal = this.transform.Find("cardRes").gameObject;
+
+        cardPanal.SetActive(false);
+        cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
 
         string adr_detail = "UI/WordInformation";
 
@@ -375,12 +377,12 @@ public class EventUI : MonoBehaviour
             choose.SetParent(which.gameObject.transform);
             choose.localScale = chooseScale;
             choose.localPosition = Vector3.zero;
+
+            cardPanal.SetActive(true);
         }
   
         
-
-        if (JY_chooseWord == null) print("null");
-        else print(JY_chooseWord.wordName);
+        
     }
 
 
@@ -397,6 +399,19 @@ public class EventUI : MonoBehaviour
             }
             PoolMgr.GetInstance().PushObj(CardGroup.GetChild(i).gameObject.name, CardGroup.GetChild(i).gameObject);
         } 
+    }
+
+
+    public void JY_ClickExchange()
+    {
+        if(cardPanal==null) cardPanal = this.transform.Find("cardRes").gameObject;
+
+        GameMgr.instance.AddCardList(JY_chooseWord);
+        GameMgr.instance.DeleteCardList(cardPanal.GetComponent<ShooterWordCheck>().chooseWord);
+    }
+    public void JY_ClickCancel()
+    {
+        cardPanal.SetActive(false);
     }
     #endregion
 
@@ -444,8 +459,12 @@ public class EventUI : MonoBehaviour
 
     public void Open(bool _isKey)
     {
+        GameMgr.instance.AddBookList(BookNameEnum.HongLouMeng);
+        GameMgr.instance.AddBookList(BookNameEnum.ElectronicGoal);
+        //GameMgr.instance.AddBookList(BookNameEnum.EgyptMyth);
+       CharacterManager.instance.pause = true;
         isKey = _isKey;
-        CharacterManager.instance.pause = true;
+        
         DealWithData(type);
         switch (type)
         {
@@ -476,7 +495,6 @@ public class EventUI : MonoBehaviour
                 break;
             case EventType.ChangJing:
                 {
-                    
                     OpenInit_ChangJing();
                 }
                 break;
