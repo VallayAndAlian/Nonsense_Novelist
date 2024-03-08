@@ -55,6 +55,13 @@ public class Bubble : MonoBehaviour
             Animlogo();
             //词条消失
             Destroy(collision.gameObject);
+
+            //危机事件触发设定(根据半场位置)
+            if(this.gameObject.name== "weiji(Clone)"&&this.gameObject.transform.position.x<=-0.15f)
+            {//A队增加设定
+
+            }
+
         }
     }
     /// <summary>
@@ -80,8 +87,6 @@ public class Bubble : MonoBehaviour
             case "JIAOYI(Clone)": { _adr = "UI/Event_JiaoYi"; } break;
         }
         var a = ResMgr.GetInstance().Load<GameObject>(_adr);
-        print(_adr);
-        print(this.gameObject.name);
         a.GetComponent<EventUI>().Open(isKey);
         a.transform.parent = GameObject.Find("CharacterCanvas").transform;
         a.transform.localPosition = Vector3.zero;

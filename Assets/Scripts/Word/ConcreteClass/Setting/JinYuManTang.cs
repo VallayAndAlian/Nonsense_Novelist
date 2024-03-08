@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Éè¶¨£º½ğÓñÂúÌÃ
+/// </summary>
 public class JinYuManTang : AbstractSetting
 {
     AbstractCharacter chara;
