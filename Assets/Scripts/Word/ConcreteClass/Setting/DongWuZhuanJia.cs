@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine;
 /// <summary>
-/// 设定：海棠春睡
+/// 设定：动物专家
 /// </summary>
-public class HaiTangChunShui : AbstractSetting
+public class DongWuZhuanJia : AbstractSetting
 {
     AbstractCharacter chara;
 
@@ -12,9 +12,9 @@ public class HaiTangChunShui : AbstractSetting
     {
         base.Start();
         level = SettingLevel.PingYong;
-        name = "海棠春睡";
-        info = "林黛玉每拥有50花瓣，她拥有动词中的一个，减少1能量上限，最少为1";
-        lables = new List<string> { "角色", "花瓣" };
+        name = "动物专家";
+        info = "饲养员以普通攻击治疗时，随从回血效果翻倍";
+        lables = new List<string> { "角色", "随从" };
         hasAdd = false;
         Init();
     }
@@ -22,7 +22,7 @@ public class HaiTangChunShui : AbstractSetting
     {
         if (hasAdd) return;
 
-         chara = CharacterManager.instance.gameObject.GetComponentInChildren<LinDaiYu>();
+        chara = CharacterManager.instance.gameObject.GetComponentInChildren<SiYangYuan>();
         if (chara != null)
         {
             chara.event_AddBuff += Effect;
@@ -31,7 +31,7 @@ public class HaiTangChunShui : AbstractSetting
     }
     void Effect(AbstractBuff buff)
     {
-        
+
 
     }
 

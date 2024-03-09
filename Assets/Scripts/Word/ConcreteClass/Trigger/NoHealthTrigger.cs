@@ -15,7 +15,7 @@ namespace AI
         }
         //public AbstractState aaa;
 
-        [HideInInspector] public delegate void Event_Relife();
+        [HideInInspector] public delegate void Event_Relife(AbstractCharacter ac);
         [HideInInspector] public Event_Relife event_relife;
         public override bool Satisfy(MyState0 myState)
         {
@@ -30,7 +30,7 @@ namespace AI
                    // print("1");//print(.ToString());
                     //执行外部的复活效果
                     if (event_relife!=null)
-                    { event_relife();  }
+                    { event_relife(myState.character);  }
 
                     //血量回满
                     myState.character.hp = myState.character.maxHp;
