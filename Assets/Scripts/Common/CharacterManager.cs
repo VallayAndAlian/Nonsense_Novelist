@@ -27,9 +27,9 @@ public class CharacterManager : MonoSingleton<CharacterManager>
         }
     }
     /// <summary>左侧角色</summary>
-    public static List<AbstractCharacter> charas_left = new List<AbstractCharacter>();
+    public  List<AbstractCharacter> charas_left = new List<AbstractCharacter>();
     /// <summary>右侧角色</summary>
-    public static List<AbstractCharacter> charas_right = new List<AbstractCharacter>();
+    public  List<AbstractCharacter> charas_right = new List<AbstractCharacter>();
 
     /// <summary>
     /// int=situation的number。方便快捷寻找situation的自典
