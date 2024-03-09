@@ -36,14 +36,18 @@ public class JinYuManTang : AbstractSetting
     }
     void EffectA(AbstractAdjectives _av)
     {
-        //她拥有动词中的一个，减少1能量上限，最少为1
-        
+        //她拥有形容词中的一个，减少1能量上限，最少为1
+        int number = Random.Range(1, 5);
+        if (number == 1) { chara.gameObject.AddComponent(_av.GetType()); }
+        else return;
 
     }
     void EffectB(AbstractItems _av)
     {
-        //她拥有动词中的一个，减少1能量上限，最少为1
-
+        //她拥有名词中的一个，减少1能量上限，最少为1
+        int number = Random.Range(1, 5);
+        if (number == 1) { chara.gameObject.AddComponent(_av.GetType()); }
+        else return;
 
     }
     private void OnDestroy()

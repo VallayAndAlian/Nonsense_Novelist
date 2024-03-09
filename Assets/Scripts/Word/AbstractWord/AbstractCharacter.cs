@@ -599,6 +599,15 @@ abstract public class AbstractCharacter : AbstractWord0
         }
     }
 
+    [HideInInspector] public delegate void Event_UseVerb(AbstractVerbs _buff);
+    [HideInInspector] public Event_UseVerb event_UseVerb;
+    public void UseVeb_Chara(AbstractVerbs _av)
+    {
+        if (event_UseVerb != null)
+        {
+            event_UseVerb(_av);
+        }
+    }
 
 
     ///<summary>这个角色身上可以挂载的最大随从数 </summary>

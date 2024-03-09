@@ -86,6 +86,7 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
     {
 
     }
+  
     /// <summary>
     /// 使用技能
     /// </summary>
@@ -96,6 +97,7 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
         stateInfo=useCharacter.charaAnim.anim.GetCurrentAnimatorStateInfo(0);
         character.charaAnim.Play(AnimEnum.attack);
         character.CreateFloatWord(this.wordName, FloatWordColor.physics, false);
+        useCharacter.UseVeb_Chara(this);
     }
     virtual public void CDZero()
     {
