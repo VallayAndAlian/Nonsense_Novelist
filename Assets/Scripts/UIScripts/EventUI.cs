@@ -166,9 +166,12 @@ public class EventUI : MonoBehaviour
 
 
     #region ·Ã¿Í
+
+    private int KeyCharacter = -1;
     public void OpenInit_FangKe()
     {
         DataInit();
+        KeyCharacter = -1;
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         int loopCount = 0;
         while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
@@ -188,7 +191,9 @@ public class EventUI : MonoBehaviour
         TextMeshProUGUI words = bubble.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
 
-
+        if ((tempNowDate[_r].happen != null) && (tempNowDate[_r].happen != ""))
+            KeyCharacter = int.Parse(tempNowDate[_r].happen);
+        print(tempNowDate[_r].happen);
         info.text = tempNowDate[_r].name;
         words.text = tempNowDate[_r].textEvent;
         RefreshNowList();
@@ -196,7 +201,11 @@ public class EventUI : MonoBehaviour
 
     void Close_FangKe()
     {
-        //GameMgr.instance.BookCanvasClickYes();
+        if (isKey&& KeyCharacter!=-1)
+            GameMgr.instance.CreateTheCharacterPut(KeyCharacter);
+        else
+            GameMgr.instance.CreateCharacterPut(1);
+        
         Destroy(this.gameObject);
     }
     #endregion
@@ -461,11 +470,13 @@ public class EventUI : MonoBehaviour
 
     public void Open(bool _isKey)
     {
+        
+        isKey = _isKey;
         GameMgr.instance.AddBookList(BookNameEnum.HongLouMeng);
         GameMgr.instance.AddBookList(BookNameEnum.ElectronicGoal);
         //GameMgr.instance.AddBookList(BookNameEnum.EgyptMyth);
        CharacterManager.instance.pause = true;
-        isKey = _isKey;
+        
         
         DealWithData(type);
         switch (type)

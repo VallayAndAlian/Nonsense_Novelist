@@ -18,7 +18,7 @@ public class CreateOneCharacter : MonoBehaviour
     [Header("（手动挂）灯光父物体")]
     public Transform lightP;
 
-    [Header("（手动挂）角色预制体池")]
+    [Header("（手动挂）角色预制体池【按角色ID挂】")]
     public GameObject[] charaPrefabs;
     private List<int> array = new List<int>();
 
@@ -31,6 +31,9 @@ public class CreateOneCharacter : MonoBehaviour
 
     [Header("战前角色大小(22)")]
     public float beforeScale=25;
+
+    //比如第一个角色林黛玉的序号是2，这个数值就为2
+    private int IDAmount = 2;
 
     private void Start()
     {
@@ -239,7 +242,14 @@ public class CreateOneCharacter : MonoBehaviour
         CharacterManager.instance.pause = false;
     }
 
-
+    private bool isKeyCharacter(int number)
+    {
+        if (number == (9 - IDAmount) || number == (5 - IDAmount))
+        {
+            return true;
+        }
+        return false;
+    }
 
 /// <summary>
 /// 外部和start调用。生成count数量的角色。
@@ -256,9 +266,12 @@ public class CreateOneCharacter : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int number = UnityEngine.Random.Range(0, charaPrefabs.Length);
-            while (array.Contains(number))//去重
+            float loopCount = 0;
+            while ((array.Contains(number) || isKeyCharacter(number) )&& loopCount<50)//去重
             {
                 number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+                loopCount++;
+                if (loopCount > 45) print("死循环");
             }
             array.Add(number);
 
@@ -301,9 +314,12 @@ public class CreateOneCharacter : MonoBehaviour
         for (int i = 0; i < charaPrefabs.Length; i++)
         {
             int number = UnityEngine.Random.Range(0, charaPrefabs.Length);
-            while (array.Contains(number))//去重
+                       float loopCount = 0;
+            while ((array.Contains(number) || isKeyCharacter(number) )&& loopCount<50)//去重
             {
                 number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+                loopCount++;
+                if (loopCount > 45) print("死循环");
             }
             array.Add(number);
 
@@ -323,6 +339,49 @@ public class CreateOneCharacter : MonoBehaviour
 
         //把站位和对应灯光的颜色恢复
         OpenColor();
+    }
+
+    public bool CreateTheCharacter(int ID)
+    {
+        //重置角色
+        text.color = Color.black;
+        text.text = "将角色拖拽放入战场，进行相互对抗";
+        //关闭墙体，避免拖拽判定失误
+        wallP.SetActive(false);
+        //生成角色
+        int number = ID - IDAmount;
+
+        if (array.Contains(number))//去重
+        {
+            return false;
+        }
+        array.Add(number);
+
+        GameObject chara = Instantiate(charaPrefabs[number]);
+        chara.transform.SetParent(charaPos.GetChild(1));
+        chara.transform.position = new Vector3(charaPos.GetChild(1).position.x, charaPos.GetChild(1).position.y + CharacterMouseDrag.offsetY, charaPos.GetChild(1).position.z);
+
+
+        SpriteRenderer _sr = chara.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
+        //角色的显示图层恢复正常
+        _sr.sortingLayerName = "UICanvas";
+        _sr.sortingOrder = 3;
+
+        //碰撞体
+        var _colE = chara.GetComponent<PolygonCollider2D>();
+        var _colB = chara.GetComponent<BoxCollider2D>();
+        if (_colE != null)
+        {
+            if (_colB != null) { _colB.enabled = false; _colE.enabled = true; }
+        }
+        
+
+        //打开实时更新器
+        needUpdate = true;
+
+        //把站位和对应灯光的颜色恢复
+        OpenColor();
+        return true;
     }
 
     /// <summary>

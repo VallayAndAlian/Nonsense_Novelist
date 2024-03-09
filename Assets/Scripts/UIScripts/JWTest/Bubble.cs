@@ -30,11 +30,11 @@ public class Bubble : MonoBehaviour
         //播放事件logo动画
         switch (this.gameObject.name)
         {
-            case "fangke(Clone)": { _adr = "UI/LOGO/FANGKE"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); } break;
-            case "xiwang(Clone)": { _adr = "UI/LOGO/XIWANG"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); } break;
-            case "yiwai(Clone)": { _adr = "UI/LOGO/YIWAI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); } break;
-            case "weiji(Clone)": { _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); } break;
-            case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); } break;
+            case "fangke(Clone)": { _adr = "UI/LOGO/FANGKE"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
+            case "xiwang(Clone)": { _adr = "UI/LOGO/XIWANG"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
+            case "yiwai(Clone)": { _adr = "UI/LOGO/YIWAI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
+            case "weiji(Clone)": { _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
+            case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
         }
           
         

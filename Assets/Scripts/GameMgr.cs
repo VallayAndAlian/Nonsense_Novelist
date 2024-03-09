@@ -436,14 +436,27 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #region 调用各种界面
 
-    public void BookCanvasClickYes()
+    public void CreateCharacterPut(int initCharacter)
     {
-        //进入放角色页面
-        //生成面板
+        //镜头拉远
+        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
+        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f); 
+        //生成面板  进入放角色页面
+        CharacterManager.instance.pause = true;
         if (characterCanvas != null)
             characterCanvas.SetActive(true);
-
-        characterCanvas.GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(2);
+        characterCanvas.GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(initCharacter);
+    }
+    public void CreateTheCharacterPut(int characterID)
+    {
+        //镜头拉远
+        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
+        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
+        //生成面板  进入放角色页面
+        CharacterManager.instance.pause = true;
+        if (characterCanvas != null)
+            characterCanvas.SetActive(true);
+        characterCanvas.GetComponentInChildren<CreateOneCharacter>().CreateTheCharacter(characterID);
     }
     #endregion
 }
