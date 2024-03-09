@@ -451,6 +451,8 @@ abstract public class AbstractCharacter : AbstractWord0
     public Dictionary<AbstractBuff, int> buffs;
     /// <summary>剩余眩晕时间</summary>
     public float dizzyTime;
+    [HideInInspector] public delegate void Event_GetRelife(AbstractCharacter chara);
+    [HideInInspector] public Event_GetRelife event_GetRelife;
     /// <summary>是否有复活状态(仍不可叠加，但数量为0则不可复活)</summary>
     private int relifes;
     public int reLifes
@@ -458,6 +460,10 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return relifes; }
         set
         {
+            if (relifes <= value)
+            {
+                if (event_GetRelife != null) event_GetRelife(this);
+            }
             relifes = value;
             if (relifes < 0) relifes = 0;
         }

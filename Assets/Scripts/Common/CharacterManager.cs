@@ -226,4 +226,11 @@ public class CharacterManager : MonoSingleton<CharacterManager>
         else if (_your == CampEnum.right) return charas_left;
         else return charas_left;
     }
+
+    public List<AbstractCharacter> GetFriend(CampEnum _your)
+    {
+        if (_your == CampEnum.left) return charas_left;
+        else if (_your == CampEnum.right) return charas_right;
+        else return charas_left;//ÖÐÁ¢
+    }
 }

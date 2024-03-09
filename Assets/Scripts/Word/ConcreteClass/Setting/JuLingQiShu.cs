@@ -43,7 +43,7 @@ public class JuLingQiShu : AbstractSetting
         }
         hasAdd = true;
     }
-    void Effect()
+    void Effect(AbstractCharacter ac)
     {
         chara.atkMul += 0.03f;
         chara.defMul += 0.06f;

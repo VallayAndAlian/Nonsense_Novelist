@@ -17,7 +17,7 @@ public class AbstractSetting : MonoBehaviour
     [HideInInspector] public string name;
     [HideInInspector] public string info;
     [HideInInspector] public List<string> lables;
-
+    [HideInInspector] public CampEnum camp;
 
     public bool hasAdd = false;
     /// <summary>

@@ -61,7 +61,7 @@ class MuNaiYi : AbstractCharacter
     /// <summary>
     /// 身份
     /// </summary>
-    public void OnLive()
+    public void OnLive(AbstractCharacter ac)
     {
         atk += 3;
         def += 6;

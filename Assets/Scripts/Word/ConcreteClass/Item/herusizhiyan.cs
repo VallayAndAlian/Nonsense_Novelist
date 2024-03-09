@@ -46,7 +46,7 @@ class herusizhiyan : AbstractItems
     }
 
 
-    void RelifeStronger()
+    void RelifeStronger(AbstractCharacter ac)
     { 
         GetComponent<AbstractCharacter>().atk += 1;
         record++;
