@@ -32,6 +32,27 @@ public class ShooterWordCheck : MonoBehaviour
     public Button btn_cancel;
     public Button btn_Check;
     public Button btn_exit;
+
+    #region 尝试
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="eventTrigger">需要添加事件的EventTrigger</param>
+    /// <param name="eventTriggerType">事件类型</param>
+    /// <param name="callback">回调函数</param>
+    void AddPointerEvent(EventTrigger eventTrigger, EventTriggerType eventTriggerType, UnityEngine.Events.UnityAction<BaseEventData> callback)
+    {
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = eventTriggerType;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(callback);
+        eventTrigger.triggers.Add(entry);
+      
+    }
+    #endregion
+
+
     #region 1
 
     public void OpenMainPanal()
@@ -46,10 +67,11 @@ public class ShooterWordCheck : MonoBehaviour
         }
         else
         {
-            btn_Check.gameObject.SetActive(true);
+            btn_Check.gameObject.SetActive(false);
             btn_cancel.gameObject.SetActive(true);
             btn_exit.gameObject.SetActive(false);
             GetComponent<Animator>().Play("CardRes_Up");
+            chooseWord = null;
         }
         //按照现在的牌库生成
         textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
@@ -66,7 +88,9 @@ public class ShooterWordCheck : MonoBehaviour
 
                 if (jiaoYi)
                 {
-                    obj.GetComponent<Button>().onClick.AddListener(() => ClickThis(obj));
+                    obj.GetComponent<Button>().interactable = false;
+                    var et = obj.AddComponent<EventTrigger>();
+                    AddPointerEvent(et, EventTriggerType.PointerClick, (obj) => { ClickThis(et.gameObject); });
 
                 }
             });
@@ -83,11 +107,15 @@ public class ShooterWordCheck : MonoBehaviour
 
                 if (jiaoYi)
                 {
-                    obj.GetComponent<Button>().onClick.AddListener(() => ClickThis(obj));
+                    obj.GetComponent<Button>().interactable = false;
+                    var et = obj.AddComponent<EventTrigger>();
+                    AddPointerEvent(et, EventTriggerType.PointerClick, (obj) => { ClickThis(et.gameObject); });
 
                 }
             });
         }
+
+       
     }
 
     void CloseMainPanal()
@@ -100,10 +128,36 @@ public class ShooterWordCheck : MonoBehaviour
         }
     }
 
-    [HideInInspector]public AbstractWord0 chooseWord=null;
+    [HideInInspector]public GameObject chooseWord=null;
     void ClickThis(GameObject _botton)
     {
-        chooseWord = _botton.GetComponent<AbstractWord0>();
+        if (chooseWord != _botton)
+        {
+            if (chooseWord != null)
+                chooseWord.GetComponent<Image>().color = Color.white;
+            chooseWord = _botton;
+            chooseWord.GetComponent<Image>().color = Color.grey;
+        }
+
+        else
+        {
+            chooseWord.GetComponent<Image>().color = Color.white;
+            chooseWord = null;
+        }
+
+
+
+        if (chooseWord == null)
+        {
+            btn_Check.gameObject.SetActive(false);
+        }
+
+        else
+        {
+            
+            btn_Check.gameObject.SetActive(true);
+        }
+        
     }    
     #endregion
 
@@ -131,7 +185,7 @@ public class ShooterWordCheck : MonoBehaviour
     public void ClickCheckButton()
     {
         GetComponent<Animator>().Play("CardRes_Down");
-        GameMgr.instance.DeleteCardList(chooseWord);
+        GameMgr.instance.DeleteCardList(chooseWord.GetComponent<AbstractWord0>());
         GameMgr.instance.AddCardList(this.transform.parent.GetComponent<EventUI>().JY_chooseWord);
         this.transform.parent.GetComponent<EventUI>().CloseAnim();
     }

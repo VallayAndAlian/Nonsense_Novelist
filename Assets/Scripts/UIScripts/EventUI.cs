@@ -132,6 +132,26 @@ public class EventUI : MonoBehaviour
 
     #endregion
 
+
+    #region 尝试
+    
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="eventTrigger">需要添加事件的EventTrigger</param>
+    /// <param name="eventTriggerType">事件类型</param>
+    /// <param name="callback">回调函数</param>
+    void AddPointerEvent(EventTrigger eventTrigger, EventTriggerType eventTriggerType, UnityEngine.Events.UnityAction<BaseEventData> callback)
+    {
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = eventTriggerType;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(callback);
+        eventTrigger.triggers.Add(entry);
+        Debug.Log("AddPointerEnterEvent");
+    }
+    #endregion
+
     private string nowEvent;
 
     #region 五种类型的事件
@@ -143,23 +163,24 @@ public class EventUI : MonoBehaviour
     public void OpenInit_YiWai()
     {
         DataInit(false);
+        checkBotton = this.transform.Find("CheckButton").GetComponent<Button>();
+        checkBotton.gameObject.SetActive(false);
 
-         Transform cardParent=this.transform.Find("CardGroup");
+        Transform cardParent = this.transform.Find("CardGroup");
         TextMeshProUGUI[] text = cardParent.GetComponentsInChildren<TextMeshProUGUI>();
-      
-       
+
+
 
         for (int i = 0; i < 6; i += 2)
         {
-            //if ((i == 1)&&isKey&& (needNowDate_Key.Count>0)&&(GameMgr.instance.happenEvent.Contains(needNowDate_Key())))
-            //{
-            //   // needNowDate_Key.
-            //}
+            var et = cardParent.GetChild(i / 2).GetComponent<EventTrigger>();
+            AddPointerEvent(et, EventTriggerType.PointerClick, (obj) => { Click_YW(et.gameObject); });
+
             int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
             int loopCount = 0;
             while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
             {//如果有条件并且条件没满足,就重找一个
-             
+
                 _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
                 if (loopCount > 50)
                 {
@@ -170,17 +191,46 @@ public class EventUI : MonoBehaviour
 
 
             //切换文字内容
-            text[i].text= tempNowDate[_r].name;
-            text[i+1].text = tempNowDate[_r].textEvent;
+            text[i].text = tempNowDate[_r].name;
+            text[i + 1].text = tempNowDate[_r].textEvent;
 
             //刷新已用事件列表
             nowEvent = tempNowDate[_r].name;
             tempNowDate.Remove(tempNowDate[_r]);
             RefreshNowList();
         }
-
     }
 
+
+    private GameObject nowChosen_YW = null;
+    public void Click_YW(GameObject obj)
+    {
+        if (nowChosen_YW != obj)
+        {
+            if (nowChosen_YW != null)
+                nowChosen_YW.GetComponent<Image>().color = Color.white;
+            nowChosen_YW = obj;
+            nowChosen_YW.GetComponent<Image>().color = Color.grey;
+        }
+
+        else
+        {
+            nowChosen_YW.GetComponent<Image>().color = Color.white;
+            nowChosen_YW = null;
+        }
+
+
+
+        if (nowChosen_YW == null)
+        {
+            checkBotton.gameObject.SetActive(false);
+        }
+
+        else
+        {
+            checkBotton.gameObject.SetActive(true);
+        }
+    }
     public void Close_YiWai()
     {
         GameMgr.instance.happenEvent.Add(nowEvent);
@@ -489,6 +539,9 @@ public class EventUI : MonoBehaviour
         //刷新已用事件列表
         tempNowDate.Remove(tempNowDate[_r]);
         RefreshNowList();
+
+
+      
     }
 
 
