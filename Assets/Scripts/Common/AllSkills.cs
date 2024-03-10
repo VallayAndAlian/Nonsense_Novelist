@@ -121,8 +121,10 @@ public static class AllSkills
     /// <summary>鬼才库</summary>
     public static List<Type> setting_GuiCai = new List<Type>();
 
-
-
+    public static List<Type> Rare_1 = new List<Type>();
+    public static List<Type> Rare_2 = new List<Type>();
+    public static List<Type> Rare_3 = new List<Type>();
+    public static List<Type> Rare_4 = new List<Type>();
     /// <summary>
     /// 静态构造函数
     /// </summary>
@@ -272,7 +274,16 @@ public static class AllSkills
         /// <summary>战斗界面全部词条</summary>
         combatList_all.AddRange(shaLeMeiList_all);
 
-
+        //稀有度1的词条
+        Rare_1.AddRange(new Type[] { typeof(WenYiChuanBo), typeof(BeiZhiRuDeJiYi), typeof(VolumeProduction), typeof(EXingZhongLiu), typeof(WaiGuGe), typeof(FuTouAxe),
+        typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui), typeof(ChaFanWuXin), typeof(KeBan),typeof(YongJi),typeof(FengChan), typeof(HunQianMengYing),
+        typeof(QingXi),typeof(RenZao),typeof(GeLi),typeof(HaoZhan),typeof(Kiss),typeof(HeartBroken),typeof(Shuai),typeof(ToBigger),typeof(BaoZa),});
+        Rare_2.AddRange(new Type[] { typeof(LengXiangWan), typeof(SheQunFengRong), typeof(BaiShuijing), typeof(ZiShuiJIng), typeof(MeiGuiShiYing), typeof(JiShengChong),
+        typeof(ShenYouHuanJing),typeof(HunHe),typeof(YouAnQuanGan),typeof(BuXiu),typeof(XinShenJiDang),typeof(LuanLun),typeof(HeWuRan),typeof(ShenHuanFeiYan),
+        typeof(GuoMin),typeof(HunFei),typeof(ShaYu),typeof(FangFuShu),typeof(GunShoot),});
+        Rare_3.AddRange(new Type[] { typeof(ShiWuFengRong), typeof(RiLunGuaZhui), typeof(herusizhiyan), typeof(XianZhiHead), typeof(HuYanShi), typeof(DuXian),
+        typeof(SheHuiHua),typeof(WanShua),typeof(TongLingBaoyu),typeof(WenYiChuanBo),typeof(MianYiZengQiang),typeof(ChanLuan),});
+        Rare_4.AddRange(new Type[] { typeof(TongLingBaoyu), typeof(Nexus_6Arm), typeof(BuryFlower), typeof(ShenPan), typeof(QiChongShaDance), typeof(TuLingCeShi), });
 
 
         //手动增加好坏词条

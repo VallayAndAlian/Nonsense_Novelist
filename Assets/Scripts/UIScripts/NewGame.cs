@@ -517,8 +517,7 @@ public class NewGame : MonoBehaviour
     public void CombatStart()
     {
         GameMgr.instance.SetCombatStartList(null);
-        GameMgr.instance.AddBookList(nowBook[0]);
-        GameMgr.instance.AddBookList(nowBook[1]);
+      
         GameMgr.instance.AddCombatStartList(AllSkills.commonList_all);
     }
 

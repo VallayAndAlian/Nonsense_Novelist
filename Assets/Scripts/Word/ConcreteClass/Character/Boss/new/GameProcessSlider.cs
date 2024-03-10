@@ -241,6 +241,7 @@ public class GameProcessSlider : MonoBehaviour
             //重要事件每三轮出现一次
             if (eventCount % 3 == 0)
             {
+                //检测当前的所有事件中，哪些事件是可以生成重要事件的，并且从中随机抽取一件
                 _random = Random.Range(0, event_stage[eventCount].events);
             }
             //生成事件气泡预制体

@@ -13,7 +13,7 @@ class FireBall_x : AbstractVerbs
         base.Awake();
         skillID = 10;
         wordName = "杂耍火球";
-        bookName = BookNameEnum.StudentOfWitch;
+        //bookName = BookNameEnum.StudentOfWitch;
 
         skillMode = gameObject.AddComponent<DamageMode>();
         skillMode.attackRange = new SingleSelector();

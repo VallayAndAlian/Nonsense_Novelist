@@ -47,28 +47,9 @@ public class AddBooKAndWords : MonoBehaviour
         book[2] = BookNameEnum.ZooManual;
         //获取没用的书
         //这里先随便简写
-        while (GameMgr.instance.HasBook(book[0]))
-        {
-            ds[0] = UnityEngine.Random.Range(2, System.Enum.GetNames(typeof(BookNameEnum)).Length);
-            book[0] = (BookNameEnum)int.Parse(ds[0].ToString()); 
-            while (GameMgr.instance.HasBook(book[1]) || (book[1]==book[0]))
-            {
-                ds[1] = UnityEngine.Random.Range(2, System.Enum.GetNames(typeof(BookNameEnum)).Length);
-                book[1] = (BookNameEnum)int.Parse(ds[1].ToString());
-                print(book[1] + "ds[1]=" + ds[1]);
 
-                 while (GameMgr.instance.HasBook(book[2]) || (book[2] == book[0])|| (book[2] == book[1]))
-                 {
-                    ds[2] = UnityEngine.Random.Range(2, System.Enum.GetNames(typeof(BookNameEnum)).Length);
-                    book[2] = (BookNameEnum)int.Parse(ds[2].ToString());
-                    print(book[2] + "ds[2]=" + ds[2]);
-                    }
-            } 
-        }
 
-        print(book[0] + "ds[0]=====" + ds[0]);
-        print(book[2] + "ds[2]=====" + ds[2]);
-        print(book[1] + "ds[1]=====" + ds[1]);
+
         //刷新button的图样。
         chooseBooksParent.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("WordImage/Book/" + book[0].ToString());
         chooseBooksParent.GetChild(1).GetComponent<Image>().sprite = Resources.Load<Sprite>("WordImage/Book/" + book[1].ToString());
@@ -252,7 +233,7 @@ public class AddBooKAndWords : MonoBehaviour
     /// </summary>
     public void ClickYes()
     {
-        GameMgr.instance.AddBookList(book[bookOriNumber]);
+        //GameMgr.instance.AddBookList(book[bookOriNumber]);
     }
 
     /// <summary>

@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1312344407117963822}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8861099596511052627}
+        m_TargetAssemblyTypeName: EventUI, Assembly-CSharp
+        m_MethodName: CloseAnim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1312344408051688019
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,7 +978,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1312344409144197859}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8861099596511052627}
+        m_TargetAssemblyTypeName: EventUI, Assembly-CSharp
+        m_MethodName: CloseAnim
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3459307741901535931
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,6 +1003,7 @@ GameObject:
   - component: {fileID: 7395676848058251471}
   - component: {fileID: 1978085765391488863}
   - component: {fileID: 8861099596511052627}
+  - component: {fileID: 714216965729484416}
   m_Layer: 5
   m_Name: Event_WeiJi
   m_TagString: Untagged
@@ -1130,3 +1155,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
+  word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
+  word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
+  word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
+  JY_chooseWord: {fileID: 0}
+--- !u!95 &714216965729484416
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459307741901535931}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ff250c587269654fbaebf64a221691c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

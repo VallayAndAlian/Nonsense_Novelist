@@ -29,6 +29,7 @@ class DanDao: MonoBehaviour
 
     private void Update()
     {
+        if (CharacterManager.instance.pause) return;
         if(a && aim != null)
         {
             a = false;

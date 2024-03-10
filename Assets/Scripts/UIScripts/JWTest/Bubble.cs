@@ -47,11 +47,18 @@ public class Bubble : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
         {
+
+            if (GameMgr.instance.eventHappen) return;
+
             //播放气泡消失动画
             animator = this.GetComponent<Animator>();
             animator.SetBool("boom", true);
-            
-            
+
+
+            //开启事件开关
+            GameMgr.instance.eventHappen = true;
+
+
             Animlogo();
             //词条消失
             Destroy(collision.gameObject);
@@ -77,6 +84,10 @@ public class Bubble : MonoBehaviour
     /// </summary>
     public void OpenPanal()
     {
+        if(GameObject.Find("CharacterCanvas").transform.childCount>0)
+        {
+            return;
+        }
         string _adr = "";
         switch (this.gameObject.name)
         {

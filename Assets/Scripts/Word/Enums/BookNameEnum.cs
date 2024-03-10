@@ -9,7 +9,7 @@ public enum BookNameEnum
     allBooks = 0,
   
     /// <summary>女巫学徒 </summary>
-    StudentOfWitch = 1,
+    BookNull = 1,
     /// <summary>红楼梦 </summary>
     HongLouMeng = 2,
     /// <summary>动物园丰容手册</summary>
@@ -26,5 +26,5 @@ public enum BookNameEnum
     FluStudy = 8,
     /// <summary>蚂蚁帝国 </summary>
     PHXTwist = 9,
-    BookNull=30
+   
 };

@@ -80,6 +80,12 @@ public class ShooterWordCheck : MonoBehaviour
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
+
+                if (jiaoYi)
+                {
+                    obj.GetComponent<Button>().onClick.AddListener(() => ClickThis(obj));
+
+                }
             });
         }
     }
