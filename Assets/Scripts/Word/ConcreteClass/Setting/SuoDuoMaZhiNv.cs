@@ -8,11 +8,11 @@ public class SuoDuoMaZhiNv : AbstractSetting
 {
     AbstractCharacter chara;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         level = SettingLevel.QiaoSi;
-        name = "索多玛之女";
+        settingName = "索多玛之女";
         info = "莎乐美攻击意志低于20的角色，有10%概率造成2s俘获";
         lables = new List<string> { "角色", "俘获" };
         hasAdd = false;

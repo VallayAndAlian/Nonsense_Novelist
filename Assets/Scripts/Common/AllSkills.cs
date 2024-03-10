@@ -7,6 +7,7 @@ using System;
 ///</summary>
 public static class AllSkills
 {
+    #region 词条
     /// <summary>全部名词词条</summary>
     public static List<Type> list_noun = new List<Type>();
     /// <summary>全部形容词词条</summary>
@@ -99,7 +100,7 @@ public static class AllSkills
    
     /// <summary>战斗界面全部词条</summary>
     public static List<Type> combatList_all = new List<Type>();
-
+#endregion
 
     /// <summary>6个初始词条</summary>
     public static Type[] absWords = new Type[6];
@@ -111,11 +112,23 @@ public static class AllSkills
 
     /// <summary>测试词条</summary>
     public static List<Type> testList1 = new List<Type>();
+
+    //设定
+    /// <summary>平庸库</summary>
+    public static List<Type> setting_PingYong = new List<Type>();
+    /// <summary>巧思库</summary>
+    public static List<Type> setting_QiaoSi = new List<Type>();
+    /// <summary>鬼才库</summary>
+    public static List<Type> setting_GuiCai = new List<Type>();
+
+
+
     /// <summary>
     /// 静态构造函数
     /// </summary>
     static AllSkills()
-    {       
+    {
+        #region 词条
         //添加动词词条
         list_verb.AddRange(new Type[] {   typeof(WritePoem) , typeof(BuryFlower),typeof(WanShua),typeof(ShaYu), typeof(FangFuShu),
             typeof(ShenPan),typeof(QiChongShaDance),typeof(Kiss),typeof(TongPinGongZhen),typeof(TuLingCeShi),
@@ -272,6 +285,14 @@ public static class AllSkills
         ///<summary>测试词条1</summary>
         testList1.AddRange(new Type[] {  typeof(SheQunFengRong),typeof(ChanLuan),typeof(ShiWuFengRong) });
 
+        #endregion
+
+        //设定
+        setting_PingYong.AddRange(new Type[] { typeof(HaiTangChunShui), typeof(JuLingQiShu), typeof(ShuoShuShuoShu) , typeof(ShengSiZaiWo ), typeof(JingXinHeHu) 
+        ,typeof(DongWuZhuanJia)});
+        setting_QiaoSi.AddRange(new Type[] {typeof(CanHeYuSheng),typeof(JinYuManTang),typeof(KeJuanZaShui),typeof(SuoDuoMaZhiNv),typeof(YaoHaiZhenCe),typeof(JiNiTaiMei) ,
+        });
+        setting_GuiCai.AddRange(new Type[] { typeof(ChengShengZhuiJi),typeof(MeiFeiSeWu)});
 
     }
 
@@ -318,5 +339,24 @@ public static class AllSkills
     {
         if (i > list_verb.Count) return list_verb[0];
         return list_verb[i];
+    }
+    
+    public static Type RandomPY()
+    {
+        int _number = UnityEngine.Random.Range(0, setting_PingYong.Count);
+
+        return setting_PingYong[_number];
+    }
+    public static Type RandomQS()
+    {
+        int _number = UnityEngine.Random.Range(0, setting_QiaoSi.Count);
+
+        return setting_QiaoSi[_number];
+    }
+    public static Type RandomGC()
+    {
+        int _number = UnityEngine.Random.Range(0, setting_GuiCai.Count);
+
+        return setting_GuiCai[_number];
     }
 }

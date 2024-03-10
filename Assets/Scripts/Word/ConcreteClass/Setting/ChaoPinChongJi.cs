@@ -8,11 +8,11 @@ public class ChaoPinChongJi : AbstractSetting
 {
     AbstractCharacter chara;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         level = SettingLevel.PingYong;
-        name = "超频冲击";
+        settingName = "超频冲击";
         info = "角色每拥有1能量点，造成的最终伤害+3%";
         lables = new List<string> { "蓄能" };
         hasAdd = false;

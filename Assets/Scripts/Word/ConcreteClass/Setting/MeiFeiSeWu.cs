@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 设定：要害侦测
+/// 设定【大技能】：眉飞色舞
 /// </summary>
-public class YaoHaiZhenCe : AbstractSetting
+public class MeiFeiSeWu : AbstractSetting
 {
     AbstractCharacter chara;
 
     public override void Awake()
     {
         base.Awake();
-        level = SettingLevel.PingYong;
-        settingName = "要害侦测";
-        info = "狄卡德每次攻击的攻击特效，有30%概率翻倍，5%概率变为4倍";
-        lables = new List<string> { "角色", "攻击特效" };
+        level = SettingLevel.GuiCai;
+        settingName = "眉飞色舞";
+        info = "“亢奋”提供的能量+1";
+        lables = new List<string> { "蓄能"};
         hasAdd = false;
         Init();
     }
@@ -22,7 +22,7 @@ public class YaoHaiZhenCe : AbstractSetting
     {
         if (hasAdd) return;
 
-        chara = CharacterManager.instance.gameObject.GetComponentInChildren<DiKaDe>();
+        chara = CharacterManager.instance.gameObject.GetComponentInChildren<ShiLian>();
         if (chara != null)
         {
             chara.event_AddBuff += Effect;
@@ -33,11 +33,5 @@ public class YaoHaiZhenCe : AbstractSetting
     {
 
 
-    }
-
-    private void OnDestroy()
-    {
-        if (hasAdd)
-            chara.event_AddBuff -= Effect;
     }
 }

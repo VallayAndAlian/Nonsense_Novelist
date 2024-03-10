@@ -8,11 +8,11 @@ public class DongWuZhuanJia : AbstractSetting
 {
     AbstractCharacter chara;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         level = SettingLevel.PingYong;
-        name = "动物专家";
+        settingName = "动物专家";
         info = "饲养员以普通攻击治疗时，随从回血效果翻倍";
         lables = new List<string> { "角色", "随从" };
         hasAdd = false;

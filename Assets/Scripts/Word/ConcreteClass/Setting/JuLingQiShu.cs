@@ -8,12 +8,12 @@ public class JuLingQiShu : AbstractSetting
 {
     AbstractCharacter chara;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         level = SettingLevel.PingYong;
-        name = "¾ÛÁéÆæÊõ";
+        settingName = "¾ÛÁéÆæÊõ";
         info = "Ä¾ÄËÒÁÃ¿´Î¸´»î£¬¹¥»÷+3%£¬·ÀÓù+6%";
         lables = new List<string> { "½ÇÉ«", "¸´»î" };
 

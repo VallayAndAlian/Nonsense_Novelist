@@ -14,7 +14,7 @@ public class AbstractSetting : MonoBehaviour
 {
 
     [HideInInspector]public SettingLevel level = SettingLevel.PingYong;
-    [HideInInspector] public string name;
+    [HideInInspector] public string settingName;
     [HideInInspector] public string info;
     [HideInInspector] public List<string> lables;
     [HideInInspector] public CampEnum camp;
@@ -24,6 +24,12 @@ public class AbstractSetting : MonoBehaviour
     /// 在监听的变量发生变化的时候，执行这个
     /// </summary>
     /// <returns></returns>
+    /// 
+
+    public virtual void Awake()
+    {
+        
+    }
     public virtual void Start()
     {
         

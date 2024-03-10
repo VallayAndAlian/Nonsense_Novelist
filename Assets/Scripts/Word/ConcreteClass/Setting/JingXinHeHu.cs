@@ -8,11 +8,11 @@ public class JingXinHeHu : AbstractSetting
 {
     AbstractCharacter chara;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         level = SettingLevel.PingYong;
-        name = "精心呵护";
+        settingName = "精心呵护";
         info = "由贝洛姬·姬妮孵化出的工蚁，生命上限+30";
         lables = new List<string> { "角色" };
         hasAdd = false;

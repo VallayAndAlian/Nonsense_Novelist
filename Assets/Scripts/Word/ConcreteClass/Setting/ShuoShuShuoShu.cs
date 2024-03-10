@@ -9,12 +9,12 @@ public class ShuoShuShuoShu :AbstractSetting
 {
     AbstractCharacter chara;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         level = SettingLevel.PingYong;
-        name = "硕鼠硕鼠";
+        settingName = "硕鼠硕鼠";
         info = "老鼠基于双方名词数之差，额外造成差值*5%伤害";
         lables = new List<string> { "角色" };
 

@@ -8,12 +8,12 @@ public class ShengSiZaiWo : AbstractSetting
 {
     AbstractCharacter chara;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         level = SettingLevel.PingYong;
-        name = "生死在握";
+        settingName = "生死在握";
         info = "阿努比斯的队友获得与触发复活时，阿努比斯与其都会获得30生命";
         lables = new List<string> { "角色", "复活" };
 

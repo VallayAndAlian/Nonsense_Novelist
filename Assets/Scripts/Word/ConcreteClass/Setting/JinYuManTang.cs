@@ -7,12 +7,12 @@ using UnityEngine;
 public class JinYuManTang : AbstractSetting
 {
     AbstractCharacter chara;
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         level = SettingLevel.PingYong;
-        name = "金玉满堂";
+        settingName = "金玉满堂";
         info = "王熙凤获得的名词和形容词，有25%概率视作获得两次";
         lables = new List<string> { "角色"};
 

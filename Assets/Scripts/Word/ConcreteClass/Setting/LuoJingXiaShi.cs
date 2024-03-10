@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine;
 /// <summary>
-/// 设定：海棠春睡
+/// 设定【角色】：落井下石
 /// </summary>
-public class HaiTangChunShui : AbstractSetting
+public class LuoJingXiaShi : AbstractSetting
 {
     AbstractCharacter chara;
 
@@ -12,9 +12,9 @@ public class HaiTangChunShui : AbstractSetting
     {
         base.Awake();
         level = SettingLevel.PingYong;
-        settingName = "海棠春睡";
-        info = "林黛玉每拥有50花瓣，她拥有动词中的一个，减少1能量上限，最少为1";
-        lables = new List<string> { "角色", "花瓣" };
+        settingName = "落井下石";
+        info = "失恋对获得沮丧的敌人，追击一次“心碎”";
+        lables = new List<string> { "角色","高频"};
         hasAdd = false;
         Init();
     }
@@ -22,7 +22,7 @@ public class HaiTangChunShui : AbstractSetting
     {
         if (hasAdd) return;
 
-         chara = CharacterManager.instance.gameObject.GetComponentInChildren<LinDaiYu>();
+        chara = CharacterManager.instance.gameObject.GetComponentInChildren<ShiLian>();
         if (chara != null)
         {
             chara.event_AddBuff += Effect;
@@ -31,13 +31,7 @@ public class HaiTangChunShui : AbstractSetting
     }
     void Effect(AbstractBuff buff)
     {
-        
 
-    }
 
-    private void OnDestroy()
-    {
-        if (hasAdd)
-            chara.event_AddBuff -= Effect;
     }
 }
