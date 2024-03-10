@@ -18,6 +18,12 @@ public class Setting : MonoBehaviour
     public GameObject gc;
 
     public GameObject logo;
+    private TextMeshProUGUI textT;
+    private void Awake()
+    {
+        textT = this.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
+        
+    }
     void Start()
     {
         Quality();
@@ -27,6 +33,7 @@ public class Setting : MonoBehaviour
     /// </summary>
     void Quality()
     {
+        textT.text= "选择一个设定";
         //概率抽取                
         int numx = UnityEngine.Random.Range(1, 101);
         if (numx <= pingYong) { numx = 0; }
@@ -111,13 +118,24 @@ public class Setting : MonoBehaviour
         }
     }
     private Var button;
+    private bool isEnd = false;
     public void ButtonDown()
     {
-        var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        textT = this.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
+        print(textT);
         
+        this.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = "确定";
+        print(textT.text);
+
+        var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        isEnd = true;
     }
     public void EndButton()
     {
-        
+        if (isEnd)
+        {
+            var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        }
+        isEnd = false;
     }
 }

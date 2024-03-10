@@ -333,9 +333,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: EventUI, Assembly-CSharp
-        m_MethodName: ClickNext
+      - m_Target: {fileID: 7703496779099602158}
+        m_TargetAssemblyTypeName: Setting, Assembly-CSharp
+        m_MethodName: EndButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
