@@ -2,6 +2,7 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -18,14 +19,12 @@ public class Setting : MonoBehaviour
     public GameObject gc;
 
     public GameObject logo;
-    private TextMeshProUGUI textT;
-    private void Awake()
-    {
-        textT = this.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
-        
-    }
+    private PointerEventData ed;
+    private BaseEventData baseEventData;
     void Start()
     {
+        
+
         Quality();
     }
     /// <summary>
@@ -33,7 +32,8 @@ public class Setting : MonoBehaviour
     /// </summary>
     void Quality()
     {
-        textT.text= "选择一个设定";
+        this.transform.GetChild(3).GetComponentInChildren<Text>().text= "选择一个设定";
+        this.transform.GetChild(3).GetComponent<Button>().interactable = false;
         //概率抽取                
         int numx = UnityEngine.Random.Range(1, 101);
         if (numx <= pingYong) { numx = 0; }
@@ -54,15 +54,15 @@ public class Setting : MonoBehaviour
                         //获取抽出的平庸卡牌内容
                         a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ppy.settingName;//标题
                         a.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = ppy.info;//描述
-                        //a.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load("");
-                                                                                                                   //生成标签
+                                                                                                //a.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load("");
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (obj) => { PointerClick(a); });                                                                                                                                             //生成标签
                         Transform p = a.transform.GetChild(1);
                         for (int i = 0; i < ppy.lables.Count; i++)
                         {
                             GameObject lg = Instantiate(logo);
                             lg.transform.SetParent(a.transform.GetChild(1));
                             lg.transform.localScale = Vector3.one;
-                            logo.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + ppy.lables[i]);
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + ppy.lables[i]);
                         }
                     });
                 }
@@ -78,15 +78,15 @@ public class Setting : MonoBehaviour
                         //获取抽出的平庸卡牌内容
                         a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().settingName;//标题
                         a.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().info;//描述
-                                                                                                                   //a.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load("");
-                                                                                                                   //生成标签
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (obj)=> { PointerClick(a); });                                                                                                                                             //生成标签
+
                         Transform p = a.transform.GetChild(1);
-                        for (int i = 0; i < a.GetComponent<AbstractSetting>().lables.Count; i++)
+                        for (int i = 0; i < a.GetComponent<AbstractSetting>().lables.Count; i++)//生成标签
                         {
                             GameObject lg = Instantiate(logo);
                             lg.transform.SetParent(a.transform.GetChild(1));
                             lg.transform.localScale = Vector3.one;
-                            logo.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + a.GetComponent<AbstractSetting>().lables[i]);
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + a.GetComponent<AbstractSetting>().lables[i]);
                         }
                     });
                 }
@@ -102,40 +102,62 @@ public class Setting : MonoBehaviour
                         //获取抽出的平庸卡牌内容
                         a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().settingName;//标题
                         a.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().info;//描述
-                                                                                                                   //a.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load("");
-                                                                                                                   //生成标签
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, ( data) => { PointerClick( a); });                                                                                                                                             //生成标签
                         Transform p = a.transform.GetChild(1);
                         for (int i = 0; i < a.GetComponent<AbstractSetting>().lables.Count; i++)
                         {
                             GameObject lg = Instantiate(logo);
                             lg.transform.SetParent(a.transform.GetChild(1));
                             lg.transform.localScale = Vector3.one;
-                            logo.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + a.GetComponent<AbstractSetting>().lables[i]);
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + a.GetComponent<AbstractSetting>().lables[i]);
                         }
                     });
                 }
                 return;
         }
     }
-    private Var button;
-    private bool isEnd = false;
-    public void ButtonDown()
+  
+    /// <param name="eventTrigger">需要添加事件的EventTrigger</param>
+    /// <param name="eventTriggerType">事件类型</param>
+    /// <param name="callback">回调函数</param>
+    void AddPointerEvent(EventTrigger eventTrigger, EventTriggerType eventTriggerType, UnityEngine.Events.UnityAction<BaseEventData> callback)
     {
-        textT = this.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
-        print(textT);
-        
-        this.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = "确定";
-        print(textT.text);
-
-        var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        isEnd = true;
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = eventTriggerType;
+        entry.callback = new EventTrigger.TriggerEvent();
+        entry.callback.AddListener(callback);
+        eventTrigger.triggers.Add(entry);
     }
-    public void EndButton()
+    private GameObject click = null;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="a">a是点击的物体（含有eventTrigger）</param>
+    void PointerClick(GameObject a)
     {
-        if (isEnd)
+        //只能选中一个
+        if (click != a)
         {
-            var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            if (click != null)
+                click.GetComponent<Image>().color = Color.white;
+            a.GetComponent<Image>().color = Color.black;
+            click = a;
         }
-        isEnd = false;
+        else
+        {
+            a.GetComponent<Image>().color = Color.white;
+            click = null;
+        }
+        if (click == null)
+        {
+            this.transform.GetChild(3).GetComponentInChildren<Text>().text = "选择一个设定";
+            this.transform.GetChild(3).GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            this.transform.GetChild(3).GetComponentInChildren<Text>().text = "确定";
+            this.transform.GetChild(3).GetComponent<Button>().interactable = true;
+        }
     }
 }
