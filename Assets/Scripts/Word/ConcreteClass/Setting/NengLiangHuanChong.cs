@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 设定【大技能】：超频冲击
+/// 设定【大技能】：能量缓冲
 /// </summary>
-public class ChaoPinChongJi : AbstractSetting
+public class NengLiangHuanChong : AbstractSetting
 {
     AbstractCharacter chara;
 
     public override void Awake()
     {
         base.Awake();
-        level = SettingLevel.PingYong;
-        settingName = "超频冲击";
-        info = "角色每拥有1能量点，造成的最终伤害+3%";
+        level = SettingLevel.QiaoSi;
+        settingName = "能量缓冲";
+        info = "角色每拥有1能量点，受到的最终伤害-5%";
         lables = new List<string> { "蓄能" };
         hasAdd = false;
         Init();
@@ -42,9 +42,9 @@ public class ChaoPinChongJi : AbstractSetting
             count += _skill.CD;//获取所有技能的当前能量点
         }
         //恢复系数
-        ac.attackAmount -= record;
+        ac.attackAmount += record;
         //增加系数
-        ac.attackAmount += count * 0.03f;
+        ac.attackAmount -= count * 0.05f;
         //记录系数以便下次恢复
         record = count * 0.03f;
     }

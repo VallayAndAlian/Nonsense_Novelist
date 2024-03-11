@@ -26,7 +26,8 @@ namespace AI
             triggers.Add(gameObject.AddComponent<KilledAimTrigger>());
             map.Add(TriggerID.KilledAim, StateID.idle);
         }
-
+        [HideInInspector] public delegate void Event_UseVerb(AbstractVerbs _verb);
+        [HideInInspector] public Event_UseVerb event_UseVerb;
         private float count;//防止bug用，最大限度的不执行时间
         public override void Action(MyState0 myState)
         {
@@ -62,7 +63,10 @@ namespace AI
                 nowSkill = canUseSkills[0];
                 count = 0;
                 canUseSkills[0].UseVerb(myState.character);
-
+                if (event_UseVerb != null)
+                {
+                    event_UseVerb(canUseSkills[0]);
+                }
          
             }
             //如果没有技能在使用&&平A冷却完毕

@@ -131,15 +131,14 @@ public class Setting : MonoBehaviour
     private GameObject click = null;
 
     /// <summary>
-    /// 
+    /// 选择其中一个设定
     /// </summary>
     /// <param name="a">a是点击的物体（含有eventTrigger）</param>
     void PointerClick(GameObject a)
     {
-        //只能选中一个
-        if (click != a)
+        if (click != a)//click不是当前选中的物体
         {
-            if (click != null)
+            if (click != null)//click不是空
                 click.GetComponent<Image>().color = Color.white;
             a.GetComponent<Image>().color = Color.black;
             click = a;
@@ -149,12 +148,12 @@ public class Setting : MonoBehaviour
             a.GetComponent<Image>().color = Color.white;
             click = null;
         }
-        if (click == null)
+        if (click == null)//click没选中物体
         {
             this.transform.GetChild(3).GetComponentInChildren<Text>().text = "选择一个设定";
             this.transform.GetChild(3).GetComponent<Button>().interactable = false;
         }
-        else
+        else//click选中物体
         {
             this.transform.GetChild(3).GetComponentInChildren<Text>().text = "确定";
             this.transform.GetChild(3).GetComponent<Button>().interactable = true;

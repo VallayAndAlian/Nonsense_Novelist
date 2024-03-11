@@ -24,18 +24,21 @@ public class CanHeYuSheng : AbstractSetting
         chara = CharacterManager.instance.gameObject.GetComponentInChildren<LinDaiYu>();
         if (chara != null)
         {
-            chara.event_AddBuff += Effect;
+            chara.event_AddVerb += Effect;
         }
         hasAdd = true;
     }
-    void Effect(AbstractBuff buff)
+    void Effect(AbstractVerbs highestverb)
     {
         int cd = 0;
-        AbstractVerbs highestverb;//能量最高的动词
         foreach (var verb in chara.GetComponents<AbstractVerbs>())
         {
             verb.needCD += 2;
-            if (verb.needCD > cd) highestverb=verb;
+            if (verb.needCD > cd) {
+                highestverb = verb;//能量最高的动词
+                cd = verb.needCD;
+            }
+            
         }
         //获得能量的速度翻倍？？？
 
@@ -44,6 +47,6 @@ public class CanHeYuSheng : AbstractSetting
     private void OnDestroy()
     {
         if (hasAdd)
-            chara.event_AddBuff -= Effect;
+            chara.event_AddVerb -= Effect;
     }
 }

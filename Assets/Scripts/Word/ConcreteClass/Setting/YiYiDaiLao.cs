@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 设定【大技能】：超频冲击
+/// 设定【大技能】：以逸待劳
 /// </summary>
-public class ChaoPinChongJi : AbstractSetting
+public class YiYiDaiLao : AbstractSetting
 {
     AbstractCharacter chara;
 
@@ -12,46 +12,34 @@ public class ChaoPinChongJi : AbstractSetting
     {
         base.Awake();
         level = SettingLevel.PingYong;
-        settingName = "超频冲击";
-        info = "角色每拥有1能量点，造成的最终伤害+3%";
-        lables = new List<string> { "蓄能" };
+        settingName = "以逸待劳";
+        info = "角色每获取1能量，恢复3%最大生命";
+        lables = new List<string> {  };
         hasAdd = false;
         Init();
     }
     public override void Init()
     {
         if (hasAdd) return;
+
         foreach (var _c in CharacterManager.instance.GetFriend(camp))
         {
             _c.OnEnergyFull += Effect; //每次获得一个能量点的时候，都执行此函数
         }
-        
         hasAdd = true;
     }
-
-    float record=0;//临时储存attackAmount系数
-
-
+    float record = 0;//临时储存attackAmount系数
+    
     //每次获得一个能量点的时候，都执行此函数
     void Effect(AbstractCharacter ac)
     {
-        //效果描述：计算角色每增加一个能量点时，当前所有技能的能量点总和，乘以伤害系数
-        int count=0;//用于记录当前能量点的数量
-        foreach (var _skill in ac.skills)
-        {
-            count += _skill.CD;//获取所有技能的当前能量点
-        }
-        //恢复系数
-        ac.attackAmount -= record;
-        //增加系数
-        ac.attackAmount += count * 0.03f;
-        //记录系数以便下次恢复
-        record = count * 0.03f;
+        ac.BeCure(0.03f*ac.maxHp, true, 0);
+
     }
 
     private void OnDestroy()
     {
-        if (!hasAdd) return;
+        if (!hasAdd) return; 
         foreach (var _c in CharacterManager.instance.GetFriend(camp))
         {
             _c.OnEnergyFull -= Effect;
