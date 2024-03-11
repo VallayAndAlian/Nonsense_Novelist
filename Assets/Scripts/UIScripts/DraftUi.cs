@@ -47,7 +47,7 @@ public class DraftUi : MonoBehaviour
 
     private void Awake()
     {
-        InitContent();
+        
         sentenseObj = ResMgr.GetInstance().Load<GameObject>(sentenseAdr);
         parent = this.transform.Find("Panel");
 
@@ -78,6 +78,7 @@ public class DraftUi : MonoBehaviour
     #region 开启草稿本的外部界面
     public void openDraft()
     {
+        print(content.Count);
         CharacterManager.instance.pause = true;
         this.gameObject.SetActive(true);
         //this.transform.Find("Panal").
@@ -93,6 +94,10 @@ public class DraftUi : MonoBehaviour
     public void closeDraft()
     {
         CharacterManager.instance.pause = false;
+        for (int i = parent.childCount-1; i >=0; i--)
+        {
+            PoolMgr.GetInstance().PushObj(parent.GetChild(i).name, parent.GetChild(i).gameObject);
+        } 
         this.gameObject.SetActive(false);
         //InitDraft();
     }

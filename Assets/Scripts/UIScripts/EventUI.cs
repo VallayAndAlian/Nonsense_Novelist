@@ -152,8 +152,10 @@ public class EventUI : MonoBehaviour
     }
     #endregion
 
-    private string nowEvent;
 
+    //当前正在处理的nowEvent
+    private test1ExcelItem nowEvent;
+    private test1ExcelItem[] event_YW=new test1ExcelItem[3];
     #region 五种类型的事件
 
     #region 意外
@@ -193,9 +195,9 @@ public class EventUI : MonoBehaviour
             //切换文字内容
             text[i].text = tempNowDate[_r].name;
             text[i + 1].text = tempNowDate[_r].textEvent;
-
+            event_YW[i] = tempNowDate[_r];
             //刷新已用事件列表
-            nowEvent = tempNowDate[_r].name;
+
             tempNowDate.Remove(tempNowDate[_r]);
             RefreshNowList();
         }
@@ -211,12 +213,14 @@ public class EventUI : MonoBehaviour
                 nowChosen_YW.GetComponent<Image>().color = Color.white;
             nowChosen_YW = obj;
             nowChosen_YW.GetComponent<Image>().color = Color.grey;
+            nowEvent = event_YW[obj.transform.GetSiblingIndex()];
         }
 
         else
         {
             nowChosen_YW.GetComponent<Image>().color = Color.white;
             nowChosen_YW = null;
+            nowEvent = null; 
         }
 
 
@@ -233,7 +237,7 @@ public class EventUI : MonoBehaviour
     }
     public void Close_YiWai()
     {
-        GameMgr.instance.happenEvent.Add(nowEvent);
+        GameMgr.instance.happenEvent.Add(nowEvent.name);
         Destroy(this.gameObject);
     }
 
@@ -268,10 +272,11 @@ public class EventUI : MonoBehaviour
 
         if ((tempNowDate[_r].happen != null) && (tempNowDate[_r].happen != ""))
             KeyCharacter = int.Parse(tempNowDate[_r].happen);
-        nowEvent = tempNowDate[_r].name;
+        nowEvent = tempNowDate[_r];
         print(tempNowDate[_r].happen);
         info.text = tempNowDate[_r].name;
         words.text = tempNowDate[_r].textEvent;
+   
         RefreshNowList();
     }
 
@@ -281,7 +286,7 @@ public class EventUI : MonoBehaviour
             GameMgr.instance.CreateTheCharacterPut(KeyCharacter);
         else
             GameMgr.instance.CreateCharacterPut(1);
-        GameMgr.instance.happenEvent.Add(nowEvent);
+        GameMgr.instance.happenEvent.Add(nowEvent.name);
         Destroy(this.gameObject);
     }
     #endregion
@@ -387,7 +392,7 @@ public class EventUI : MonoBehaviour
         _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         TextMeshProUGUI info = this.transform.Find("info").GetComponentInChildren<TextMeshProUGUI>();
         info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        nowEvent = tempNowDate[_r].name;
+        nowEvent = tempNowDate[_r];
 
         RefreshNowList();
 
@@ -432,7 +437,7 @@ public class EventUI : MonoBehaviour
         {
             GameMgr.instance.AddCardList(_w);
         }
-        GameMgr.instance.happenEvent.Add(nowEvent);
+        GameMgr.instance.happenEvent.Add(nowEvent.name);
         Destroy(this.gameObject);
     }
     #endregion
@@ -534,7 +539,7 @@ public class EventUI : MonoBehaviour
 
         //切换文字内容
         titleText.text = tempNowDate[_r].name+"\n"+ tempNowDate[_r].textEvent;
-        nowEvent = tempNowDate[_r].name;
+        nowEvent = tempNowDate[_r];
 
         //刷新已用事件列表
         tempNowDate.Remove(tempNowDate[_r]);
@@ -573,7 +578,7 @@ public class EventUI : MonoBehaviour
 
     void Close_JiaoYi()
     {
-        GameMgr.instance.happenEvent.Add(nowEvent);
+        GameMgr.instance.happenEvent.Add(nowEvent.name);
         Destroy(this.gameObject);
     }
 
@@ -602,14 +607,14 @@ public class EventUI : MonoBehaviour
         //
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
         info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        nowEvent = tempNowDate[_r].name;
+        nowEvent = tempNowDate[_r];
         RefreshNowList();
 
     }
 
     public void Close_WeiJi()
     {
-        GameMgr.instance.happenEvent.Add(nowEvent);
+        GameMgr.instance.happenEvent.Add(nowEvent.name);
         Destroy(this.gameObject);
     }
     #endregion
@@ -625,6 +630,19 @@ public class EventUI : MonoBehaviour
     #endregion
 
 
+    #region 事件触发效果
+
+    #region 意外
+    void Happen_Setting()
+    {
+        string adr = "UI/Setting";
+        var obj=ResMgr.GetInstance().Load<GameObject>(adr);
+        
+    }
+
+    #endregion
+
+    #endregion
 
     #region 外部点击/调用事件
 
@@ -683,6 +701,15 @@ public class EventUI : MonoBehaviour
     {
         CharacterManager.instance.pause = false;
         GameMgr.instance.eventHappen = false;
+        //处理当前的nowChosenEvent
+        if ((nowEvent.happen != null) && (nowEvent.happen != ""))
+        {
+            Invoke(nowEvent.happen,0);
+        }
+        //内容加入草稿本
+        GameMgr.instance.draftUi.AddContent(nowEvent.textDraft);
+        
+        //关闭面板
         switch (type)
         {
             case EventType.XiWang: 

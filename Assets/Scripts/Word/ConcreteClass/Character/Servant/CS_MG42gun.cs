@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class CS_MG42gun : ServantAbstract
 {
-
+    static public string s_description = "攻速更快，需要换弹";
+    static public string s_wordName = "随从：MG-42机枪";
 
     //连续攻击的次数
     private int attackCountMax=0;

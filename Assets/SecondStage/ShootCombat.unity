@@ -10067,11 +10067,11 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: b18401dba64c988489d417ad7a636e14, type: 3}
   eventTime: 3
   keyEventTime: 3
-  xiWang: 20
-  jiaoYi: 20
-  weiJi: 20
-  fangKe: 20
-  yiWai: 100
+  xiWang: 0
+  jiaoYi: 100
+  weiJi: 0
+  fangKe: 0
+  yiWai: 0
 --- !u!114 &1338572143
 MonoBehaviour:
   m_ObjectHideFlags: 0

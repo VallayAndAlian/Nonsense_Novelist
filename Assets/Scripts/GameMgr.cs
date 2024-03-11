@@ -121,6 +121,8 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void Awake()
     {
         DealWithData();
+
+        draftUi.InitContent(); 
     }
 
     private void Start()

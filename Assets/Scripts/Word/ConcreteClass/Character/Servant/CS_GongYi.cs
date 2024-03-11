@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CS_GongYi : ServantAbstract
 {
-
+    static public string s_description = "己方的工蚁越多越强大";
+    static public string s_wordName = "随从：工蚁";
     override public void Awake()
     {
         base.Awake();

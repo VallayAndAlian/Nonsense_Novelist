@@ -70,7 +70,7 @@ class FangFuShu : AbstractVerbs
     bool hasFull = false;
     
     //如果满了且未使用，则能量不增加
-    public override void CdAdd()
+    public override void CdAdd(AbstractCharacter AC)
     {
         if (!hasFull)
         {
