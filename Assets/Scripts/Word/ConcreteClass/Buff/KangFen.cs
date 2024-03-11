@@ -25,7 +25,7 @@ public class KangFen : AbstractBuff
         chara.teXiao.PlayTeXiao("kangFeng");
  
     }
-
+    public int nl=1;
     public override void Update()
     {
         base.Update();
@@ -36,7 +36,7 @@ public class KangFen : AbstractBuff
             if (_skill.needCD - _skill.CD >= 5)
             {
                 print("_skill" + _skill.wordName);
-                _skill.CD += 1;
+                _skill.CD += nl;
                 Destroy(this);
             }
         }

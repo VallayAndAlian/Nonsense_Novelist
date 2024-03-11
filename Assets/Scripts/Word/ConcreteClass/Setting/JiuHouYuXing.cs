@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// 设定【大技能】：眉飞色舞
+/// 设定【高频技能】：酒后余兴
 /// </summary>
-public class MeiFeiSeWu : AbstractSetting
+public class JiuHouYuXing : AbstractSetting
 {
     AbstractCharacter chara;
 
     public override void Awake()
     {
         base.Awake();
-        level = SettingLevel.GuiCai;
-        settingName = "眉飞色舞";
-        info = "“亢奋”提供的能量+1";
-        lables = new List<string> { "蓄能"};
+        level = SettingLevel.PingYong;
+        settingName = "酒后余兴";
+        info = "角色每释放4个动词，获得7s“诗情”和“锐利”";
+        lables = new List<string> { "高频" };
         hasAdd = false;
         Init();
     }
@@ -24,25 +24,23 @@ public class MeiFeiSeWu : AbstractSetting
 
         foreach (var _c in CharacterManager.instance.GetFriend(camp))
         {
-            _c.OnEnergyFull += Effect; //每次获得一个能量点的时候，都执行此函数
+            _c.event_UseVerb+= Effect;//每次释放动词，增加效果
+            
         }
         hasAdd = true;
-    }
-    void Effect(AbstractCharacter ac)
+    }    
+    void Effect(AbstractVerbs _av)
     {
-        var _kf= ac.GetComponents<KangFen>();
-        foreach(var it in _kf)
-        {
-            it.nl += 1;
-        }
-
+        
+        
     }
+
     private void OnDestroy()
     {
-        if (!hasAdd) return;
+        if (!hasAdd) return; 
         foreach (var _c in CharacterManager.instance.GetFriend(camp))
         {
-            _c.OnEnergyFull -= Effect;
+            _c.event_AddVerb += Effect;
         }
     }
 }
