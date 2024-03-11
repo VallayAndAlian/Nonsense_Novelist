@@ -70,7 +70,7 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
     public delegate void AwakeHandler();
     static public event AwakeHandler OnAwake;
 
-    public virtual void CdAdd()
+    public virtual void CdAdd(AbstractCharacter ac)
     {
         CD++;
 

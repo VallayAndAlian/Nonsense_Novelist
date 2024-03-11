@@ -21,23 +21,39 @@ public class ChaoPinChongJi : AbstractSetting
     public override void Init()
     {
         if (hasAdd) return;
-
-        chara = CharacterManager.instance.gameObject.GetComponentInChildren<SiYangYuan>();
-        if (chara != null)
+        foreach (var _c in CharacterManager.instance.GetFriend(camp))
         {
-            chara.event_AddBuff += Effect;
+            _c.OnEnergyFull += Effect; //每次获得一个能量点的时候，都执行此函数
         }
+        
         hasAdd = true;
     }
-    void Effect(AbstractBuff buff)
+
+    float record=0;//临时储存attackAmount系数
+
+
+    //每次获得一个能量点的时候，都执行此函数
+    void Effect(AbstractCharacter ac)
     {
-
-
+        int count=0;//用于记录当前能量点的数量
+        foreach (var _skill in ac.skills)
+        {
+            count += _skill.CD;//获取所有技能的当前能量点
+        }
+        //恢复系数
+        ac.attackAmount -= record;
+        //增加系数
+        ac.attackAmount += count * 0.03f;
+        //记录系数以便下次恢复
+        record = count * 0.03f;
     }
 
     private void OnDestroy()
     {
-        if (hasAdd)
-            chara.event_AddBuff -= Effect;
+        if (!hasAdd) return;
+        foreach (var _c in CharacterManager.instance.GetFriend(camp))
+        {
+            _c.OnEnergyFull -= Effect;
+        }
     }
 }

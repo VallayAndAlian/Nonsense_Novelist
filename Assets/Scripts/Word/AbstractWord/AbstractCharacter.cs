@@ -790,7 +790,7 @@ abstract public class AbstractCharacter : AbstractWord0
     private Canvas energyCanvas;
     private Slider energySlider;
     private Text energyText;
-    public delegate void energyFull();
+    public delegate void energyFull(AbstractCharacter a);
     public event energyFull OnEnergyFull;
     public Text[] skillText = new Text[3];
 
@@ -1061,7 +1061,7 @@ abstract public class AbstractCharacter : AbstractWord0
             energy = 0;
             _canUseSkills = 0;
             if (OnEnergyFull != null)
-                OnEnergyFull();
+                OnEnergyFull(this);
         }
 
 
