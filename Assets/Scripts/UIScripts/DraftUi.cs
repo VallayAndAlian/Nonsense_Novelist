@@ -126,7 +126,7 @@ public class DraftUi : MonoBehaviour
                  _inputField.onDeselect.AddListener((obj) => { CloseEditText(_inputField); });
 
                  //×ªÐÐ            
-                 var count = Mathf.Floor((sizeFont * (content[i].Length))/ sizeWidth);
+                 var count = Mathf.Floor((sizeFont * (content[i].Length))/ (sizeWidth - _showText.margin.x));
                  for (int x = 0; x < count - 1; x++)
                  {
                      _inputField.text += "\n";

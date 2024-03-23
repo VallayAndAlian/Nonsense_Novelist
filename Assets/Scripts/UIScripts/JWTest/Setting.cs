@@ -21,10 +21,14 @@ public class Setting : MonoBehaviour
     public GameObject logo;
     private PointerEventData ed;
     private BaseEventData baseEventData;
+
+    //是哪一边加入设定？左true右false
+    bool isLeft = true;
     void Start()
     {
-        
 
+        if (!CharacterManager.instance.pause)
+            CharacterManager.instance.pause = true;
         Quality();
     }
     /// <summary>
@@ -61,8 +65,10 @@ public class Setting : MonoBehaviour
                         {
                             GameObject lg = Instantiate(logo);
                             lg.transform.SetParent(a.transform.GetChild(1));
-                            lg.transform.localScale = Vector3.one;
+                        
                             lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + ppy.lables[i]);
+                            lg.GetComponent<Image>().SetNativeSize();
+                            lg.transform.localScale = Vector3.one;
                         }
                     });
                 }
@@ -130,6 +136,8 @@ public class Setting : MonoBehaviour
     }
     private GameObject click = null;
 
+
+    #region 外部点击事件
     /// <summary>
     /// 选择其中一个设定
     /// </summary>
@@ -159,4 +167,30 @@ public class Setting : MonoBehaviour
             this.transform.GetChild(3).GetComponent<Button>().interactable = true;
         }
     }
+
+
+
+
+    /// <summary>
+    /// 点击选中按钮
+    /// </summary>
+    public void ClickCheck()
+    {
+        if (CharacterManager.instance.pause)
+            CharacterManager.instance.pause = false;
+        ///不知道是那一队加入设定欸，先乱写了噢
+        if (isLeft)
+        {
+            GameMgr.instance.settingL.Add(click.GetComponent<AbstractSetting>());
+            GameMgr.instance.settingPanel.RefreshList();
+            Destroy(gameObject);
+        }
+        else
+        {
+            GameMgr.instance.settingR.Add(click.GetComponent<AbstractSetting>());
+            GameMgr.instance.settingPanel.RefreshList();
+            Destroy(gameObject);
+        }
+    }
+    #endregion
 }
