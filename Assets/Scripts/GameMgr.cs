@@ -65,9 +65,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     public test1ExcelData data;
 
     //当前可以触发的所有事件
-    public List<test1ExcelItem> canHappenData_nKey;
-    public List<test1ExcelItem> canHappenData_Key;
-    public List<test1ExcelItem> leftData;
+    [HideInInspector] public List<test1ExcelItem> canHappenData_nKey;
+    [HideInInspector] public List<test1ExcelItem> canHappenData_Key;
+    [HideInInspector] public List<test1ExcelItem> leftData;
     /// <summary>
     /// 读取excel表数据，加入所有没有前置条件的data
     /// </summary>
@@ -540,6 +540,13 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (characterCanvas != null)
             characterCanvas.SetActive(true);
         characterCanvas.GetComponentInChildren<CreateOneCharacter>().CreateTheCharacter(characterID);
+    }
+
+    public void OpenEventUi()
+    {
+   
+        draftUi.gameObject.SetActive(false);
+        characterCanvas.gameObject.SetActive(false);
     }
     #endregion
 }

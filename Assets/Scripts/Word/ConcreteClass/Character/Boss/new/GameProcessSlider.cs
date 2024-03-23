@@ -113,12 +113,14 @@ public class GameProcessSlider : MonoBehaviour
     }
     private void FixedUpdate()
     {
-       
+
+
 
         if (CharacterManager.instance.pause) return;
         if (!countTime)
             return;
         if (isStart) CreateEvent();//&&(SceneManager.GetActiveScene().name != "CombatTest")        
+  
 
         timeNow += Time.deltaTime;
         sliderProcess.value = timeNow ;
@@ -144,7 +146,7 @@ public class GameProcessSlider : MonoBehaviour
                 CreateBoss(time_stage[stageCount].boss);
             }
 
-
+           
             countTime = false;
             stageCount++;
         }
@@ -231,10 +233,12 @@ public class GameProcessSlider : MonoBehaviour
     private float totalTime = 0;
     public void CreateEvent()
     {
+        
         if (eventCount > 3) return;
         totalTime += Time.deltaTime;
         if (totalTime > eventTime)
         {
+        
             totalTime = 0;
             array0.Clear();
             int _random = -1;

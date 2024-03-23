@@ -508,9 +508,11 @@ public class EventUI : MonoBehaviour
         //生成卡牌
         for (int i = 0; i < 3; i++)
         {
-                //生成卡牌
-        PoolMgr.GetInstance().GetObj(adr_detail, (obj) =>
-            {
+            
+            //生成卡牌
+            //PoolMgr.GetInstance().GetObj(adr_detail, (obj) =>
+            //{
+                var  obj = ResMgr.GetInstance().Load<GameObject>(adr_detail);
                 var _word=obj.AddComponent(AllSkills.list_all[_rWord[i]])as AbstractWord0;
                 obj.GetComponentInChildren<WordInformation>().SetIsDetail(true);
                 obj.GetComponent<Canvas>().overrideSorting = false;
@@ -522,14 +524,17 @@ public class EventUI : MonoBehaviour
 
                 obj.transform.parent = CardGroup;
                 obj.transform.localPosition = new Vector3(0, 0, 3);
+                obj.GetComponent<Canvas>().overrideSorting = false;
+
                 obj.transform.localScale = Vector3.one*1.2f;
+                obj.GetComponent<Canvas>().overrideSorting = false;
 
                 //增加按钮组件
-                var _botton=obj.AddComponent<Button>();
+                var _botton =obj.AddComponent<Button>();
                 _botton.transition = Selectable.Transition.None;
                 _botton.onClick .AddListener(()=>ClickWord_YJ(_botton));
                 // obj.GetComponent<Canvas>().overrideSorting = true;
-            });
+            //});
             
         }
 
@@ -651,8 +656,8 @@ public class EventUI : MonoBehaviour
     {
        
         isKey = _isKey;
-        
-        
+
+        GameMgr.instance.OpenEventUi();
        CharacterManager.instance.pause = true;
         
         
