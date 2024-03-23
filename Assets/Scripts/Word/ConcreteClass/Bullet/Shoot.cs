@@ -35,7 +35,9 @@ public class Shoot : MonoBehaviour
     public static AbstractWord0 abs;
     /// <summary>手动，词条信息板 </summary>
     public WordInformation information;
-
+    /// <summary>手动，轨迹脚本 </summary>
+    public Track track;
+    public float dotScale=0.15f;
     private void Update()
     {
             if (CreateOneCharacter.isTwoSides && CreateOneCharacter.isAllCharaUp)
@@ -51,15 +53,18 @@ public class Shoot : MonoBehaviour
                 {
                     crtForce = minForce; // 重置力的大小
                     fired = false; // 设置开火状态为未开火
+                    track.Show();
                 }
                 else if (Input.GetButton("Fire1") && !fired)// 一直按着
                 {
                     crtForce += forceSpeed * Time.deltaTime; // 蓄力
                     aimSlider.value = crtForce / maxForce; // 更新slider的值
+                    track.UpdateDots(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y,0) ,dotScale* gang.GetChild(0).transform.up * crtForce);
                 }
                 else if (Input.GetButtonUp("Fire1") && !fired)
                 {
                     ShootWordBullet();
+                    track.Hide();
                 }
             }               
     }

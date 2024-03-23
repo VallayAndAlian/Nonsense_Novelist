@@ -66,8 +66,8 @@ public class CharacterDetail_t : MonoBehaviour
         sprite.sprite = _s2;
 
         //panel1
-        panel_state.GetComponentInChildren<Slider>().value = nowCharacter.hp/nowCharacter.maxHp;
-        panel_state.GetComponentsInChildren<Text>()[0].text = nowCharacter.hp.ToString() + "/" + (nowCharacter.maxHp* nowCharacter.maxHpMul).ToString();
+        panel_state.GetComponentInChildren<Slider>().value =nowCharacter.hp/nowCharacter.maxHp;
+        panel_state.GetComponentsInChildren<Text>()[0].text = ((int)nowCharacter.hp).ToString() + "/" + (nowCharacter.maxHp* nowCharacter.maxHpMul).ToString();
 
         //atk
         panel_state.GetComponentsInChildren<Text>()[1].text = (nowCharacter.atk*nowCharacter.atkMul).ToString();
