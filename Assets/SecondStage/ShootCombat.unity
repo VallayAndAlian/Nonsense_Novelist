@@ -5773,7 +5773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cd1b431f622a843acfefc5d69acee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotNum: 30
+  dotNum: 20
   dotsParent: {fileID: 861780025}
   dotPrefab: {fileID: 5121049698529958212, guid: 4dcd6282422a96841beeaf03d4f2332f, type: 3}
   dotSpacing: 0.01
@@ -5793,7 +5793,7 @@ Transform:
   m_Children:
   - {fileID: 861780026}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &784230871
 GameObject:
@@ -12484,6 +12484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef64ea5a9eed4af4ebd612669fe61ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingL: []
+  settingR: []
+  settingPanel: {fileID: 0}
   nowBook: 0
   data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
   canHappenData_nKey: []
@@ -16132,37 +16135,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &2014650270
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2014650271}
-  m_Layer: 0
-  m_Name: XiaCishandiao
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2014650271
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2014650270}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0966519, y: -0.02304259, z: 2124.2004}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2014990312
 GameObject:
   m_ObjectHideFlags: 0
