@@ -193,9 +193,10 @@ public class EventUI : MonoBehaviour
 
 
             //切换文字内容
+            print("i=" + i + ";r=" + _r);
             text[i].text = tempNowDate[_r].name;
             text[i + 1].text = tempNowDate[_r].textEvent;
-            event_YW[i] = tempNowDate[_r];
+            event_YW[i/2] = tempNowDate[_r];
             //刷新已用事件列表
 
             tempNowDate.Remove(tempNowDate[_r]);
@@ -743,6 +744,13 @@ public class EventUI : MonoBehaviour
                 break;
         }
     }
+
+    #endregion
+
+
+    #region invoke事件
+    //对应test1表格happen那一行，写事件的函数名称
+    
 
     #endregion
 }

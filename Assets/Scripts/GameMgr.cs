@@ -30,12 +30,19 @@ public class CustomList : List<string>
 public class GameMgr : MonoSingleton<GameMgr>
 {
 
+    [HideInInspector] public List<AbstractSetting> settingL=new List<AbstractSetting>();
+    [HideInInspector] public List<AbstractSetting> settingR = new List<AbstractSetting>();
+
+
     //关闭界面相关
     private GameObject exitPanel;
     GameObject exitObj;
     Button exitButton;
     Button cancelButton;
     bool hasOpenExit = false;
+    public SettingList settingPanel;
+
+
 
     //当前的剧本
     public BookNameEnum nowBook;
@@ -68,6 +75,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     [HideInInspector] public List<test1ExcelItem> canHappenData_nKey;
     [HideInInspector] public List<test1ExcelItem> canHappenData_Key;
     [HideInInspector] public List<test1ExcelItem> leftData;
+
     /// <summary>
     /// 读取excel表数据，加入所有没有前置条件的data
     /// </summary>
