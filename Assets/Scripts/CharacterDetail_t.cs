@@ -26,7 +26,7 @@ public class CharacterDetail_t : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI nameTrait;
     public Image sprite;
-    private string spriteAdr = "WordImage/Character/";
+    private string spriteAdr = "WordImage/Character/Detail/";
 
     [Header("生成词条的相关设置")]
     public GameObject itemPerfab;
