@@ -36,7 +36,7 @@ public class Track : MonoBehaviour
         {
             var dot = Instantiate(dotPrefab).transform;
             dot.parent = dotsParent.transform;
-            dot.localScale = 0.1f*Vector3.one * scale;
+            dot.localScale = 0.2f*Vector3.one * scale;
             dot.position = Vector3.zero;
             if (scale > dotMinScale)
                 scale -= scaleFactor;
@@ -51,7 +51,7 @@ public class Track : MonoBehaviour
     /// <param name="pushSpeed">发射方向</param>
     /// <param name="secondPos">接触点</param>
     /// <param name="reflect">反射方向</param>
-    public void UpDateDots0(Vector3 startPos, Vector2 shoot, Vector3 secondPos, Vector2 reflect)
+    /*public void UpDateDots0(Vector3 startPos, Vector2 shoot, Vector3 secondPos, Vector2 reflect)
     {
         timeStamp = dotSpacing;
         
@@ -77,6 +77,38 @@ public class Track : MonoBehaviour
                 timeStamp += dotSpacing;
             }
 
+        }
+    }*/
+    public void UpDateDots0(Vector3 startPos, Vector2 shoot, Vector3 secondPos, Vector2 reflect)
+    {
+        timeStamp = dotSpacing;
+        bool isReflecting = false;
+        Vector2 lastPos = startPos;
+
+        for (int i = 0; i < dotNum; ++i)
+        {
+            if (!isReflecting)
+            {
+                pos.x = startPos.x + shoot.x * timeStamp;
+                pos.y = (startPos.y + shoot.y * timeStamp) - 0.5f * Physics2D.gravity.magnitude * timeStamp * timeStamp;
+
+                // 使用点的移动方向而不是固定坐标来判断反射
+                if ((shoot.x > 0 && pos.x > secondPos.x) || (shoot.x < 0 && pos.x < secondPos.x))
+                {
+                    isReflecting = true;
+                    startPos = pos; // 更新反射起点
+                    timeStamp = 0; // 重置时间戳
+                }
+            }
+            else
+            {
+                pos.x = startPos.x + reflect.x * timeStamp;
+                pos.y = (startPos.y + reflect.y * timeStamp) - 0.5f * Physics2D.gravity.magnitude * timeStamp * timeStamp;
+            }
+
+            dotList[i].position = pos;
+            timeStamp += dotSpacing;
+            lastPos = pos; // 更新最后一个位置，用于下一次循环
         }
     }
     public static float Dott(Vector3 lhs, Vector3 rhs)

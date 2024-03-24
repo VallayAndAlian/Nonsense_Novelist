@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 108321682}
   - component: {fileID: 108321681}
   - component: {fileID: 108321683}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -3922,7 +3922,7 @@ GameObject:
   - component: {fileID: 559059423}
   - component: {fileID: 559059422}
   - component: {fileID: 559059424}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -4377,7 +4377,7 @@ GameObject:
   - component: {fileID: 605268161}
   - component: {fileID: 605268160}
   - component: {fileID: 605268162}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -5773,11 +5773,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cd1b431f622a843acfefc5d69acee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotNum: 30
+  dotNum: 40
   dotsParent: {fileID: 861780025}
   dotPrefab: {fileID: 5121049698529958212, guid: 4dcd6282422a96841beeaf03d4f2332f, type: 3}
-  dotSpacing: 0.01
-  dotMinScale: 0.049
+  dotSpacing: 0.008
+  dotMinScale: 0.08
   dotMaxScale: 1
 --- !u!4 &777950741
 Transform:
@@ -5808,7 +5808,7 @@ GameObject:
   - component: {fileID: 784230873}
   - component: {fileID: 784230874}
   - component: {fileID: 784230876}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -6383,7 +6383,7 @@ GameObject:
   - component: {fileID: 852174571}
   - component: {fileID: 852174570}
   - component: {fileID: 852174572}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -9265,7 +9265,7 @@ GameObject:
   - component: {fileID: 1290198533}
   - component: {fileID: 1290198532}
   - component: {fileID: 1290198534}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -15145,7 +15145,6 @@ MonoBehaviour:
   information: {fileID: 5293158394419421231}
   track: {fileID: 777950740}
   dotScale: 0.15
-  camera: {fileID: 1179621499}
 --- !u!114 &1930712503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15171,7 +15170,7 @@ GameObject:
   - component: {fileID: 1942666713}
   - component: {fileID: 1942666712}
   - component: {fileID: 1942666714}
-  m_Layer: 2
+  m_Layer: 9
   m_Name: wall
   m_TagString: wall
   m_Icon: {fileID: 0}
@@ -15186,8 +15185,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1942666709}
   m_LocalRotation: {x: -0, y: -0, z: 0.34969285, w: 0.93686444}
-  m_LocalPosition: {x: -5.17, y: -2.16, z: 4.69}
-  m_LocalScale: {x: 0.27579704, y: 0.23949814, z: 0.0062545724}
+  m_LocalPosition: {x: -5.1700015, y: -2.16, z: 4.69}
+  m_LocalScale: {x: 0.27579707, y: 0.23949815, z: 0.006254572}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 382792105}
