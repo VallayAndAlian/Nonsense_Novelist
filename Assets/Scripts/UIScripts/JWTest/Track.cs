@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class Track : MonoBehaviour
 {
-    [SerializeField]private int dotNum = 20;
+    [SerializeField]private int dotNum = 40;
     public GameObject dotsParent;
     public GameObject dotPrefab;
     public float dotSpacing = 0.01f;
@@ -43,16 +43,56 @@ public class Track : MonoBehaviour
             dotList[i] = dot;
         }
     }
-    public void UpdateDots(Vector3 birdPos,Vector2 pushSpeed)
+    bool istrue=false;
+    /// <summary>
+    /// 更新点的位置
+    /// </summary>
+    /// <param name="startPos">起始点</param>
+    /// <param name="pushSpeed">发射方向</param>
+    /// <param name="secondPos">接触点</param>
+    /// <param name="reflect">反射方向</param>
+    public void UpDateDots0(Vector3 startPos, Vector2 shoot, Vector3 secondPos, Vector2 reflect)
     {
         timeStamp = dotSpacing;
-        for(int i = 0; i < dotNum; ++i)
+        
+        for (int i = 0; i < dotNum; ++i)
         {
-            pos.x = birdPos.x + pushSpeed.x * timeStamp;
-            pos.y=(birdPos.y+pushSpeed.y*timeStamp)-0.5f* Physics2D.gravity.magnitude * timeStamp*timeStamp;
-            dotList[i].position = pos;
-            timeStamp += dotSpacing;
+            if ((dotList[i].position.x<0&& dotList[i].position.x>Shoot.pointt.x&& dotList[i].position.y < Shoot.pointt.y+ shoot.y * timeStamp) ||(dotList[i].position.x > 0 && dotList[i].position.x < Shoot.pointt.x && dotList[i].position.y < Shoot.pointt.y+ reflect.y * timeStamp))//发射
+            {
+                pos.x = startPos.x + shoot.x * timeStamp;
+                pos.y = (startPos.y + shoot.y * timeStamp) - 0.5f * Physics2D.gravity.magnitude * timeStamp * timeStamp;
+                dotList[i].position = pos;
+                timeStamp += dotSpacing;
+            }
+            else//反射
+            {
+                if (istrue==false)
+                {
+                    timeStamp = dotSpacing;
+                    istrue = true;
+                }
+                pos.x = secondPos.x + reflect.x * timeStamp;
+                pos.y = (secondPos.y + reflect.y * timeStamp) - 0.5f * Physics2D.gravity.magnitude * timeStamp * timeStamp;
+                dotList[i].position = pos;
+                timeStamp += dotSpacing;
+            }
+
         }
+    }
+    public static float Dott(Vector3 lhs, Vector3 rhs)
+    {
+        return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
+    }
+    /// <summary>
+    /// 反弹方向
+    /// </summary>
+    /// <param name="inDirection">入射方向</param>
+    /// <param name="inNormal">法线</param>
+    /// <returns></returns>
+    public static Vector3 Reflectt(Vector3 inDirection, Vector3 inNormal)
+    {
+        float num = -2f * Dott(inNormal, inDirection);
+        return new Vector3(num * inNormal.x + inDirection.x, num * inNormal.y + inDirection.y, num * inNormal.z + inDirection.z);
     }
     /// <summary>
     /// 显示预测轨迹

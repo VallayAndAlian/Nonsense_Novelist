@@ -1,6 +1,8 @@
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using OfficeOpenXml.FormulaParsing.Excel.Functions.RefAndLookup;
+using Unity.Burst.CompilerServices;
 
 /// <summary>
 /// 发射词弹
@@ -38,6 +40,10 @@ public class Shoot : MonoBehaviour
     /// <summary>手动，轨迹脚本 </summary>
     public Track track;
     public float dotScale=0.15f;
+    private Vector2 normall;
+    public static Vector2 pointt;
+    private LayerMask mask=9;
+    RaycastHit2D hit;
     private void Update()
     {
             if (CreateOneCharacter.isTwoSides && CreateOneCharacter.isAllCharaUp)
@@ -59,7 +65,21 @@ public class Shoot : MonoBehaviour
                 {
                     crtForce += forceSpeed * Time.deltaTime; // 蓄力
                     aimSlider.value = crtForce / maxForce; // 更新slider的值
-                    track.UpdateDots(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y,0) ,dotScale* gang.GetChild(0).transform.up * crtForce);
+                    
+
+                //2d射线检测需要指定参与碰撞的layer 并且添加射线长度，否则会失效
+                LayerMask layer = 1 << 9;
+                hit = Physics2D.Raycast(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), gang.GetChild(0).transform.up, Mathf.Infinity, layer);
+                Debug.DrawLine(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), hit.point, Color.black);
+                if (hit.collider != null)
+                {
+                    print(hit.point);
+                    pointt = hit.point;
+                    normall= hit.normal;
+                }
+                Vector3 re = Track.Reflectt(gang.GetChild(0).transform.up, normall);
+                //track.UpdateDots(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), dotScale * gang.GetChild(0).transform.up * crtForce,normall);
+                track.UpDateDots0(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), dotScale * gang.GetChild(0).transform.up * crtForce,pointt, dotScale * re * crtForce);
                 }
                 else if (Input.GetButtonUp("Fire1") && !fired)
                 {
@@ -68,6 +88,7 @@ public class Shoot : MonoBehaviour
                 }
             }               
     }
+    
     /// <summary>
     /// 下一个词条小球准备
     ///点击start后，在CreateOneCharacter 中调用一次

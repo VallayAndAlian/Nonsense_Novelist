@@ -5773,7 +5773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cd1b431f622a843acfefc5d69acee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotNum: 20
+  dotNum: 30
   dotsParent: {fileID: 861780025}
   dotPrefab: {fileID: 5121049698529958212, guid: 4dcd6282422a96841beeaf03d4f2332f, type: 3}
   dotSpacing: 0.01
@@ -15145,6 +15145,7 @@ MonoBehaviour:
   information: {fileID: 5293158394419421231}
   track: {fileID: 777950740}
   dotScale: 0.15
+  camera: {fileID: 1179621499}
 --- !u!114 &1930712503
 MonoBehaviour:
   m_ObjectHideFlags: 0

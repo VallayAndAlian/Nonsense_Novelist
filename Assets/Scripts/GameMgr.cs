@@ -59,7 +59,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     //当前未使用的牌的牌库
     List<Type> wordNowList = new List<Type>();
 
-    //当前未使用的牌的牌库
+    //当前待使用的牌的牌库
+    List<Type> wordGoingUseList = new List<Type>();
+
+    //当前已使用的牌的牌库
     List<Type> wordHasUseList = new List<Type>();
 
 
@@ -192,6 +195,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         wordList.Clear();
         wordNowList.Clear();
+        wordGoingUseList.Clear();
         wordHasUseList.Clear();
 
         happenEvent.Clear();
@@ -233,6 +237,10 @@ public class GameMgr : MonoSingleton<GameMgr>
         {
             wordHasUseList.Remove(_word.GetType());
         }
+        else if (wordGoingUseList.Contains(_word.GetType()))
+        {
+            wordGoingUseList.Remove(_word.GetType());
+        }
     }
 
     public List<Type> GetHasUsedList()
@@ -249,11 +257,19 @@ public class GameMgr : MonoSingleton<GameMgr>
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
         var _res = wordNowList[count];
         wordNowList.Remove(_res);
-        wordHasUseList.Add(_res);
+        wordGoingUseList.Add(_res);
         RefreshNowList();
         return _res;
     }
-
+    public Type GetGoingUseList()
+    {
+        //全部解锁前，只有3个槽位
+        for(int i = 0; i < 3; i++)
+        {
+            GetNowListOne();//待使用词库有5个词
+        }        
+        return wordGoingUseList[5];
+    }
     public List<Type> GetAllList()
     {
         return wordList;
