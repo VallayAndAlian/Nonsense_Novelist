@@ -164,9 +164,11 @@ public class DraftUi : MonoBehaviour
                         inkRedOn = false;
                         inkBlackOn = true;
                         inkBlueOn = false;
-                        inkBlackObj.color = Color.black;
-                        inkBlueObj.color = Color.blue;
-                        inkRedObj.color = Color.red;
+                        inkBlackObj.color = Color.white;
+                        inkBlueObj.color = Color.white;
+                        inkRedObj.color = Color.white;
+                        penObj.transform.localScale = Vector3.one * 0.65f;
+                        penObj.GetComponent<RectTransform>().anchoredPosition = blackpen;
                         //
                         OpenAllDrag();
                         CloseAllDelete();
@@ -185,8 +187,10 @@ public class DraftUi : MonoBehaviour
                         inkBlackOn = false;
                         inkBlueOn = false;
                         inkBlackObj.color = Color.white;
-                        inkBlueObj.color = Color.blue;
-                        inkRedObj.color = Color.black;
+                        inkBlueObj.color = Color.white;
+                        inkRedObj.color = Color.white;
+                        penObj.transform.localScale = Vector3.one * 0.65f;
+                        penObj.GetComponent<RectTransform>().anchoredPosition = redpen;
                         //
                         CloseAllDrag();
                         OpenAllDelete();
@@ -205,8 +209,10 @@ public class DraftUi : MonoBehaviour
                         inkBlackOn = false;
                         inkBlueOn = true;
                         inkBlackObj.color = Color.white;
-                        inkBlueObj.color = Color.black;
-                        inkRedObj.color = Color.red;
+                        inkBlueObj.color = Color.white;
+                        inkRedObj.color = Color.white;
+                        penObj.transform.localScale = Vector3.one * 0.65f;
+                        penObj.GetComponent<RectTransform>().anchoredPosition = bluepen;
                         //
                         CloseAllDelete();
                         CloseAllDrag();
@@ -221,15 +227,17 @@ public class DraftUi : MonoBehaviour
         }
         ChangeInkNum();
     }
-
+    Vector3 blackpen = new Vector3(734,234,0);
+    Vector3 redpen = new Vector3(734,34,0);
+    Vector3 bluepen = new Vector3(734,-166,0);
     void DefualtState()
     {
         inkRedOn = false;
         inkBlackOn = false;
         inkBlueOn = false;
         inkBlackObj.color = Color.white;
-        inkBlueObj.color = Color.blue;
-        inkRedObj.color = Color.red;
+        inkBlueObj.color = Color.white;
+        inkRedObj.color = Color.white;
         penObj.gameObject.transform.localScale = Vector3.zero;
 
         //

@@ -73,7 +73,7 @@ public class Shoot : MonoBehaviour
                 Debug.DrawLine(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), hit.point, Color.black);
                 if (hit.collider != null)
                 {
-                    print(hit.point);
+
                     pointt = hit.point;
                     normall= hit.normal;
                 }
