@@ -32,8 +32,9 @@ public class CreateOneCharacter : MonoBehaviour
     [Header("战前角色大小(22)")]
     public float beforeScale=25;
 
-    //比如第一个角色林黛玉的序号是2，这个数值就为2
-    private int IDAmount = 2;
+    
+    [Header("比如第一个角色的序号是1，这个数值就为1")]
+    public int IDAmount = 1;
 
     private void Start()
     {
@@ -244,12 +245,31 @@ public class CreateOneCharacter : MonoBehaviour
 
     private bool isKeyCharacter(int number)
     {
-        if (number == (9 - IDAmount) || number == (5 - IDAmount))
+        if (number == (8 - IDAmount) || number == (9 - IDAmount))
         {
             return true;
         }
         return false;
     }
+
+    /// <summary>
+    /// 访客专用，提前获得即将创建的角色
+    /// </summary>
+    public int GetNextCreateChara()
+    {
+        charaNext = -1;
+        int number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+        float loopCount = 0;
+        while ((array.Contains(number) || isKeyCharacter(number)) && loopCount < 50)//去重
+        {
+            number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+            loopCount++;
+            if (loopCount > 45) print("死循环");
+        }
+        charaNext = number;
+        return number;
+    }
+    int charaNext = -1;
 
 /// <summary>
 /// 外部和start调用。生成count数量的角色。
@@ -265,16 +285,25 @@ public class CreateOneCharacter : MonoBehaviour
         //生成角色
         for (int i = 0; i < count; i++)
         {
-            int number = UnityEngine.Random.Range(0, charaPrefabs.Length);
-            float loopCount = 0;
-            while ((array.Contains(number) || isKeyCharacter(number) )&& loopCount<50)//去重
+             int number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+            if ((count == 1) & (charaNext != -1))//如果已经抽好了
             {
-                number = UnityEngine.Random.Range(0, charaPrefabs.Length);
-                loopCount++;
-                if (loopCount > 45) print("死循环");
+                number= charaNext;
+                charaNext = -1;
+            }
+            else//现抽
+            { 
+              
+                float loopCount = 0;
+                while ((array.Contains(number) || isKeyCharacter(number) )&& loopCount<50)//去重
+                {
+                    number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+                    loopCount++;
+                    if (loopCount > 45) print("死循环");
+                }
             }
             array.Add(number);
-
+            print(number);
             GameObject chara = Instantiate(charaPrefabs[number]);
             chara.transform.SetParent(charaPos.GetChild(i));
             chara.transform.position = new Vector3(charaPos.GetChild(i).position.x, charaPos.GetChild(i).position.y + CharacterMouseDrag.offsetY, charaPos.GetChild(i).position.z);

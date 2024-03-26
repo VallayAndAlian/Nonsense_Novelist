@@ -356,6 +356,7 @@ GameObject:
   - component: {fileID: 3387635198855117178}
   - component: {fileID: 3387635198855117181}
   - component: {fileID: 3387635198855117180}
+  - component: {fileID: 1696272505070084104}
   m_Layer: 5
   m_Name: Sprite
   m_TagString: Untagged
@@ -372,7 +373,7 @@ RectTransform:
   m_GameObject: {fileID: 3387635198855117182}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -12150}
-  m_LocalScale: {x: 0.19376, y: 0.19376, z: 0.031535197}
+  m_LocalScale: {x: 0.43502066, y: 0.43502066, z: 0.07080131}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3387635199026244097}
@@ -380,8 +381,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 951.6217, y: -618.0735}
-  m_SizeDelta: {x: 2824.5461, y: 2768}
+  m_AnchoredPosition: {x: 986, y: -626}
+  m_SizeDelta: {x: 1056.8594, y: 1118}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3387635198855117178
 CanvasRenderer:
@@ -464,19 +465,28 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3387635198855117181}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AddBooKAndWords, Assembly-CSharp
-        m_MethodName: Click_A_Book
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
+--- !u!95 &1696272505070084104
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387635198855117182}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d1ca567b98d5a7c49b2e7ab5764baac7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3387635199026244096
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,7 +651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
+  eventWorldPos: {x: 1, y: 1, z: 1}
   word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}

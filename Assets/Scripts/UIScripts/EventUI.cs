@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
+ using UnityEngine.Events;
 /// <summary>
 /// 事件的类型
 /// </summary>
@@ -27,7 +28,7 @@ public class EventUI : MonoBehaviour
     public EventType type;
     bool isKey=false;
 
-
+    [HideInInspector]public Vector3 eventWorldPos = Vector3.one;
 
     //不重要数据
     List<test1ExcelItem> needAllDate_nKey = new List<test1ExcelItem>();
@@ -193,7 +194,7 @@ public class EventUI : MonoBehaviour
 
 
             //切换文字内容
-            print("i=" + i + ";r=" + _r);
+            
             text[i].text = tempNowDate[_r].name;
             text[i + 1].text = tempNowDate[_r].textEvent;
             event_YW[i/2] = tempNowDate[_r];
@@ -238,9 +239,13 @@ public class EventUI : MonoBehaviour
     }
     public void Close_YiWai()
     {
+       
         GameMgr.instance.happenEvent.Add(nowEvent.name);
+        GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);
+        
     }
+
 
     #endregion
 
@@ -271,6 +276,21 @@ public class EventUI : MonoBehaviour
         TextMeshProUGUI words = bubble.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
 
+        int triggerName = -1;
+        if (isKey && KeyCharacter != -1)
+        {
+            triggerName = KeyCharacter;//本身就是ID
+            
+        }
+        else
+        {
+            triggerName = GameMgr.instance.GetNextCreateChara();//数组，非ID
+            triggerName += 1;
+        }
+        sprite.GetComponent<Animator>().SetTrigger(triggerName.ToString());
+        sprite.SetNativeSize();
+
+
         if ((tempNowDate[_r].happen != null) && (tempNowDate[_r].happen != ""))
             KeyCharacter = int.Parse(tempNowDate[_r].happen);
         nowEvent = tempNowDate[_r];
@@ -283,11 +303,16 @@ public class EventUI : MonoBehaviour
 
     void Close_FangKe()
     {
-        if (isKey&& KeyCharacter!=-1)
+        if (isKey && KeyCharacter != -1)
+        { 
             GameMgr.instance.CreateTheCharacterPut(KeyCharacter);
+        }
         else
+        {
             GameMgr.instance.CreateCharacterPut(1);
+        }   
         GameMgr.instance.happenEvent.Add(nowEvent.name);
+        GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);
     }
     #endregion
@@ -439,6 +464,7 @@ public class EventUI : MonoBehaviour
             GameMgr.instance.AddCardList(_w);
         }
         GameMgr.instance.happenEvent.Add(nowEvent.name);
+        GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);
     }
     #endregion
@@ -585,10 +611,11 @@ public class EventUI : MonoBehaviour
     void Close_JiaoYi()
     {
         GameMgr.instance.happenEvent.Add(nowEvent.name);
+        GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);
     }
 
-
+    
 
     #endregion
 
@@ -621,6 +648,7 @@ public class EventUI : MonoBehaviour
     public void Close_WeiJi()
     {
         GameMgr.instance.happenEvent.Add(nowEvent.name);
+        GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);
     }
     #endregion

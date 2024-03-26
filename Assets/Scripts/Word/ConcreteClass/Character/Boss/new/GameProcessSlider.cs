@@ -246,7 +246,13 @@ public class GameProcessSlider : MonoBehaviour
             if (eventCount % 3 == 0)
             {
                 //检测当前的所有事件中，哪些事件是可以生成重要事件的，并且从中随机抽取一件
+                int loop = 0;
                 _random = Random.Range(0, event_stage[eventCount].events);
+                while (!GameMgr.instance.HaveCanHappenKeyEvent(_random)&&(loop<50))
+                {
+                    loop += 1;
+                    _random = Random.Range(0, event_stage[eventCount].events);
+                }
             }
             //生成事件气泡预制体
             for(int i = 0; i < event_stage[eventCount].events; i++)
@@ -255,10 +261,10 @@ public class GameProcessSlider : MonoBehaviour
                 //概率抽取                
                 int numx = Random.Range(1, 101);
                 if (numx <= xiWang) { numx = 0; }
-                else if (numx > xiWang && numx < xiWang + jiaoYi) numx = 1;
-                else if (numx >= xiWang + jiaoYi && numx < xiWang + jiaoYi + weiJi) numx = 2;
-                else if (numx >= xiWang + jiaoYi + weiJi && numx < xiWang + jiaoYi + weiJi + fangKe) numx = 3;
-                else numx = 4;
+                else if (numx > xiWang && numx < xiWang + jiaoYi) numx = 4;
+                else if (numx >= xiWang + jiaoYi && numx < xiWang + jiaoYi + weiJi) numx = 3;
+                else if (numx >= xiWang + jiaoYi + weiJi && numx < xiWang + jiaoYi + weiJi + fangKe) numx = 1;
+                else numx = 2;
 
                 while (array.Contains(num0))//位置去重
                 {

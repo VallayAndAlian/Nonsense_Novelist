@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 public class CustomList : List<string>
 {
     public new void Add(string item)
@@ -109,10 +110,23 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
     }
 
+    public bool HaveCanHappenKeyEvent(int _enumNum)
+    {
+        var _num = 0;
+        foreach (var item in canHappenData_Key)
+        {
+            if (item.type == (EventType)(Convert.ToInt32(_enumNum)))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     #endregion
 
     [Header("界面设置(手动)")]
+    public GameObject UiCanvas;
     public GameObject characterCanvas;
     public DraftUi draftUi;
     public GameObject combatCanvas;
@@ -124,7 +138,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         combatCanvas.gameObject.SetActive(true);
         draftUi.gameObject.SetActive(false);
-        characterCanvas.gameObject.SetActive(true);
+        UiCanvas.gameObject.SetActive(true);
     }
     private void Awake()
     {
@@ -163,6 +177,71 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
     }
 
+
+
+    #region 事件气泡
+    /// <summary>
+    /// 显示事件的飘字
+    /// </summary>
+    public void PopupEvent(Vector3 pos, string name, string info)
+    {
+        var obj=ResMgr.GetInstance().Load<GameObject>("UI/popEvent"); 
+        //世界坐标转画布坐标
+        Vector2 canvasSize = characterCanvas.GetComponent<RectTransform>().sizeDelta;
+        Vector3 viewPortPos3d = Camera.main.WorldToViewportPoint(pos);
+        Vector2 viewPortRelative = new Vector2(viewPortPos3d.x - 0.5f, viewPortPos3d.y - 0.5f);
+        Vector2 cubeScreenPos = new Vector2(viewPortRelative.x * canvasSize.x, viewPortRelative.y );
+        obj.GetComponent<RectTransform>().position = pos;
+        obj.transform.parent = characterCanvas.transform;
+        obj.transform.localScale = Vector3.one;
+         StartCoroutine(MoveToPosCanvas( obj.GetComponent<RectTransform>(), name,info));
+      
+      
+    }
+
+    WaitForSeconds waitFrame = new WaitForSeconds(0.02f);
+    IEnumerator MoveToPosCanvas(RectTransform obj,string text1,string text2)
+    {  
+        var pos = new Vector2(-796, -425);
+        Image image = obj.gameObject.GetComponentInChildren<Image>();
+        TextMeshProUGUI text = obj.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        //停留在最开始的点 
+        float i = 0;
+        while (i< 0.6f)
+        {
+            i += 0.02f;
+            image.gameObject.SetActive(false);
+            text.gameObject.SetActive(true);
+            text.text = text1;
+            yield return waitFrame;
+        }
+
+
+        //移动到草稿本
+        while (Mathf.Abs((obj.anchoredPosition- pos).x)>2f)
+        {
+            image.gameObject.SetActive(true);
+            text.gameObject.SetActive(false);
+            obj.anchoredPosition -= 0.08f * (obj.anchoredPosition - pos);
+            yield return waitFrame;
+        }
+
+        //停留在草稿本
+        i = 0;
+        while (i < 0.6f)
+        {
+            i += 0.02f;
+            image.gameObject.SetActive(false);
+            text.gameObject.SetActive(true);
+            text.text = text2;
+            yield return waitFrame;
+        }
+        Destroy(obj.gameObject);
+    }
+
+
+    #endregion
 
 
     #region exit菜单相关
@@ -527,6 +606,11 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #region 调用各种界面
 
+
+    public int GetNextCreateChara()
+    {
+        return UiCanvas.GetComponentInChildren<CreateOneCharacter>().GetNextCreateChara();
+    }
     public void CreateCharacterPut(int initCharacter)
     {
         //镜头拉远
@@ -534,9 +618,9 @@ public class GameMgr : MonoSingleton<GameMgr>
         Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f); 
         //生成面板  进入放角色页面
         CharacterManager.instance.pause = true;
-        if (characterCanvas != null)
-            characterCanvas.SetActive(true);
-        characterCanvas.GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(initCharacter);
+        if (UiCanvas != null)
+            UiCanvas.SetActive(true);
+        UiCanvas.GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(initCharacter);
     }
     public void CreateTheCharacterPut(int characterID)
     {
@@ -545,16 +629,16 @@ public class GameMgr : MonoSingleton<GameMgr>
         Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
         //生成面板  进入放角色页面
         CharacterManager.instance.pause = true;
-        if (characterCanvas != null)
-            characterCanvas.SetActive(true);
-        characterCanvas.GetComponentInChildren<CreateOneCharacter>().CreateTheCharacter(characterID);
+        if (UiCanvas != null)
+            UiCanvas.SetActive(true);
+        UiCanvas.GetComponentInChildren<CreateOneCharacter>().CreateTheCharacter(characterID);
     }
 
     public void OpenEventUi()
     {
    
         draftUi.gameObject.SetActive(false);
-        characterCanvas.gameObject.SetActive(false);
+        UiCanvas.gameObject.SetActive(false);
     }
     #endregion
 }

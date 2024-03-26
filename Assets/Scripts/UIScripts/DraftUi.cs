@@ -34,7 +34,7 @@ public class DraftUi : MonoBehaviour
     bool inkBlueOn = false;
     int inkBlueCount = 5;
     Image inkBlueObj;
-
+    Image penObj;
     //文本修改
     int oriTextLen;
     bool textHasChange;
@@ -64,6 +64,7 @@ public class DraftUi : MonoBehaviour
         inkRedObj = this.transform.Find("red").GetComponent<Image>();
         inkBlackObj = this.transform.Find("black").GetComponent<Image>();
         inkBlueObj = this.transform.Find("blue").GetComponent<Image>();
+        penObj = this.transform.Find("pen").GetComponent<Image>();
 
         //初始化设定
         ChangeInkNum();
@@ -229,6 +230,8 @@ public class DraftUi : MonoBehaviour
         inkBlackObj.color = Color.white;
         inkBlueObj.color = Color.blue;
         inkRedObj.color = Color.red;
+        penObj.gameObject.transform.localScale = Vector3.zero;
+
         //
         CloseAllDrag();
         CloseAllDelete();

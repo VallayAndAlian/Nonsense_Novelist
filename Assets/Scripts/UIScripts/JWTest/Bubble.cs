@@ -7,6 +7,7 @@ public class Bubble : MonoBehaviour
     public bool isKey = false;
     private Animator animator;
     float destroyTime=0;
+    public Vector3 pos = Vector3.one;
     [Header("事件消失时间")] public float dTime = 4;
     public static string b_name = "";
 
@@ -30,11 +31,16 @@ public class Bubble : MonoBehaviour
         //播放事件logo动画
         switch (this.gameObject.name)
         {
-            case "fangke(Clone)": { _adr = "UI/LOGO/FANGKE"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
-            case "xiwang(Clone)": { _adr = "UI/LOGO/XIWANG"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
-            case "yiwai(Clone)": { _adr = "UI/LOGO/YIWAI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
-            case "weiji(Clone)": { _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
-            case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); obj.GetComponent<Bubble>().isKey = isKey; } break;
+            case "fangke(Clone)": { _adr = "UI/LOGO/FANGKE"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey;obj.GetComponent<Bubble>().pos = this.transform.position; } break;
+            case "xiwang(Clone)": { _adr = "UI/LOGO/XIWANG"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
+            case "yiwai(Clone)": { _adr = "UI/LOGO/YIWAI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
+            case "weiji(Clone)": { _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); 
+                     obj.GetComponent<Bubble>().pos = this.transform.position;obj.GetComponent<Bubble>().isKey = isKey; } break;
+            case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); 
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
         }
           
         
@@ -99,6 +105,7 @@ public class Bubble : MonoBehaviour
         }
         var a = ResMgr.GetInstance().Load<GameObject>(_adr);
         a.GetComponent<EventUI>().Open(isKey);
+        a.GetComponent<EventUI>().eventWorldPos = pos;
         a.transform.parent = GameObject.Find("CharacterCanvas").transform;
         a.transform.localPosition = Vector3.zero;
         a.transform.localScale = Vector3.one;

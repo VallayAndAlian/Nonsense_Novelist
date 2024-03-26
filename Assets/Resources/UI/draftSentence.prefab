@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 1559737571750927035}
   - component: {fileID: 1559737571750927034}
   - component: {fileID: 1559737571750927013}
-  - component: {fileID: 1559737571750927014}
   - component: {fileID: 1559737571750927015}
   m_Layer: 5
   m_Name: draftSentence
@@ -200,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.764151, g: 0.764151, b: 0.764151, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 10, y: 10, z: 10, w: 10}
   m_Maskable: 1
@@ -367,21 +366,6 @@ MonoBehaviour:
   hasChange: 0
   hasDelete: 0
   canDelete: 0
---- !u!114 &1559737571750927014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1559737571750927032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.6830188, g: 0.0038660883, b: 0.0038660883, a: 1}
-  m_EffectDistance: {x: 3, y: -3}
-  m_UseGraphicAlpha: 1
 --- !u!114 &1559737571750927015
 MonoBehaviour:
   m_ObjectHideFlags: 0
