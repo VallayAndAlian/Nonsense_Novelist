@@ -56,7 +56,7 @@ class WangXiFeng : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return "只见传来一阵高亢的笑声“" + otherChara.wordName + "，是我来迟了”。语罢便走出了一个浓妆美艳的少妇，正是王熙凤。";
+            return " 只听得一阵笑声，凤姐款款而来，其打扮彩绣辉煌，宛如神仙妃子，“我来迟了，不曾迎接远客。”";
         else
             return null;
     }

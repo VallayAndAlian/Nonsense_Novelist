@@ -1037,6 +1037,8 @@ abstract public class AbstractCharacter : AbstractWord0
             Destroy(attackA);
             attackA = gameObject.AddComponent<CureMode>();
         }
+
+        
     }
 
     private void OnEnable()

@@ -74,7 +74,7 @@ public class WordCollisionShoot : MonoBehaviour
             string _s=EventCharWord.fuction(character,absWord);
            
             if (_s == null) return;
-           
+            GameMgr.instance.PopupEvent(collision.transform.position, absWord.wordName, _s);
             GameMgr.instance.draftUi.AddContent(_s);
 
         }

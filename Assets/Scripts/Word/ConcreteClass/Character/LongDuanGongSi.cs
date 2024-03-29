@@ -68,7 +68,7 @@ class LongDuanGongSi : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return "只见传来一阵高亢的笑声“" + otherChara.wordName + "，是我来迟了”。语罢便走出了一个浓妆美艳的少妇，正是王熙凤。";
+            return "当一家公司倒下时，没有人能看到垄断公司庞大的黑影，驱逐，驱逐！";
         else
             return null;
     }

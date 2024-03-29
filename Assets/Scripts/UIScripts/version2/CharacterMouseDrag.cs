@@ -119,7 +119,6 @@ public class CharacterMouseDrag : MonoBehaviour
         targetScreenpos = Camera.main.WorldToScreenPoint(target.position);
         offset = target.position - Camera.main.ScreenToWorldPoint(mouseScreenpos);
 
-      
 
         while (Input.GetMouseButton(0))//鼠标左键被持续按下。
         {
@@ -128,6 +127,8 @@ public class CharacterMouseDrag : MonoBehaviour
             target.position = targetWorldpos;
             yield return new WaitForFixedUpdate();
         }
+
+
     }
     private void OnMouseUp()
     {

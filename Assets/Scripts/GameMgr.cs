@@ -116,13 +116,17 @@ public class GameMgr : MonoSingleton<GameMgr>
     public bool HaveCanHappenKeyEvent(int _enumNum)
     {
         var _num = 0;
+        print("1");
         foreach (var item in canHappenData_Key)
         {
+            print("2");
             if (item.type == (EventType)(Convert.ToInt32(_enumNum)))
             {
+                print("3");
                 return true;
             }
         }
+        print("4");
         return false;
     }
 
@@ -284,7 +288,8 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         nowBook = BookNameEnum.ElectronicGoal;
         //加入通用词组
-        wordList.AddRange(new Type[] { typeof(FuTouAxe), typeof(Shuai), typeof(Shuai), typeof(FuTouAxe), typeof(Shuai) });
+        wordList.AddRange(new Type[] { typeof(BuryFlower), typeof(Shuai), typeof(Shuai), typeof(FuTouAxe), typeof(Shuai) , typeof(HeartBroken),typeof(ZiShuiJIng),
+        typeof(XianZhiHead)});
 
 
         RefreshNowList();

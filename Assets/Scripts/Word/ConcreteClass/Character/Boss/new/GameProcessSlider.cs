@@ -246,13 +246,9 @@ public class GameProcessSlider : MonoBehaviour
             if (eventCount % 3 == 0)
             {
                 //检测当前的所有事件中，哪些事件是可以生成重要事件的，并且从中随机抽取一件
-                int loop = 0;
+                
                 _random = Random.Range(0, event_stage[eventCount].events);
-                while (!GameMgr.instance.HaveCanHappenKeyEvent(_random)&&(loop<50))
-                {
-                    loop += 1;
-                    _random = Random.Range(0, event_stage[eventCount].events);
-                }
+               
             }
             //生成事件气泡预制体
             for(int i = 0; i < event_stage[eventCount].events; i++)
@@ -265,6 +261,27 @@ public class GameProcessSlider : MonoBehaviour
                 else if (numx >= xiWang + jiaoYi && numx < xiWang + jiaoYi + weiJi) numx = 3;
                 else if (numx >= xiWang + jiaoYi + weiJi && numx < xiWang + jiaoYi + weiJi + fangKe) numx = 1;
                 else numx = 2;
+
+                if (i == _random)//是重要事件
+                {
+                    print("死");
+                    int loop = 0;
+                    while (!(GameMgr.instance.HaveCanHappenKeyEvent(numx)) && (loop < 50))
+                    {
+                        print("loop"+ loop);
+                        loop += 1;
+                        numx = Random.Range(1, 101);
+                        if (numx <= xiWang) { numx = 0; }
+                        else if (numx > xiWang && numx < xiWang + jiaoYi) numx = 4;
+                        else if (numx >= xiWang + jiaoYi && numx < xiWang + jiaoYi + weiJi) numx = 3;
+                        else if (numx >= xiWang + jiaoYi + weiJi && numx < xiWang + jiaoYi + weiJi + fangKe) numx = 1;
+                        else numx = 2;
+
+                        if (loop > 48) print("死循环");
+                    }
+                }
+
+
 
                 while (array.Contains(num0))//位置去重
                 {

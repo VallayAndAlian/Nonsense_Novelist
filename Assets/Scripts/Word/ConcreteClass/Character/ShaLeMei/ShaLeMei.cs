@@ -59,7 +59,7 @@ class ShaLeMei : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return otherChara.wordName + "早已看见多了一个妹妹，细看形容，只见泪光点点，娇喘微微，闲静时如姣花照水，行动处似弱柳扶风，" + otherChara.wordName + "笑道：“这个妹妹，我曾见过的”";
+            return "莎乐美手捧银盘而来，银盘上血迹斑斑，约翰的头颅已无生气，嘴唇泛着苍白的微笑。";
         else
             return null;
     }

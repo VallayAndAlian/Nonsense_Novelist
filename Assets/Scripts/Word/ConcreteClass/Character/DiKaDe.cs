@@ -62,7 +62,7 @@ class DiKaDe : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return otherChara.wordName + "早已看见多了一个妹妹，细看形容，只见泪光点点，娇喘微微，闲静时如姣花照水，行动处似弱柳扶风，" + otherChara.wordName + "笑道：“这个妹妹，我曾见过的”";
+            return "市中心的霓虹灯牌爆了又爆，狄卡德在喧嚣的酒吧中沉默地喝下一杯劣质鸡尾酒。";
         else
             return null;
     }
