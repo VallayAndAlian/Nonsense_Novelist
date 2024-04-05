@@ -289,6 +289,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c93954f1550e8745be3314a9e6fe6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowParentTF: {fileID: 0}
+  lastParentTF: {fileID: 0}
 --- !u!114 &-5819735466181227385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +321,7 @@ MonoBehaviour:
   camp: 0
   roleName: 
   roleInfo: 
+  isNaiMa: 0
   gender: 0
   trait: {fileID: 0}
   criticalChance: 0
@@ -327,12 +330,12 @@ MonoBehaviour:
   skills: []
   servants: []
   maxSkillsCount: 3
+  hasBetray: 0
   skillText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   attackInterval: 2.2
-  attackSpeedPlus: 1
   situation: {fileID: 0}
   attackDistance: 0
   charaAnim: {fileID: 0}
@@ -994,11 +997,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_Size.x
-      value: 4.92
+      value: 5.4105077
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_Size.y
-      value: 8.14
+      value: 6.5799994
+      objectReference: {fileID: 0}
+    - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_WasSpriteAssigned
@@ -1018,11 +1025,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.4
+      value: -0.43
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.z

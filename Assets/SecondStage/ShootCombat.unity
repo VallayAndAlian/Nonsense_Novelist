@@ -9205,12 +9205,12 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: b18401dba64c988489d417ad7a636e14, type: 3}
   - {fileID: 296767673687119374, guid: 8228bba66bb0cd2438c23068c5feb655, type: 3}
   - {fileID: 296767673687119374, guid: 1b34a8a16ed0932448303639416a0a4c, type: 3}
-  eventTime: 10
-  keyEventTime: 14
-  xiWang: 0
-  jiaoYi: 100
+  eventTime: 3
+  keyEventTime: 2
+  xiWang: 20
+  jiaoYi: 20
   weiJi: 20
-  fangKe: 0
+  fangKe: 20
   yiWai: 20
 --- !u!114 &1338572143
 MonoBehaviour:

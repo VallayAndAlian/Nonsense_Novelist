@@ -13,8 +13,8 @@ public class FloatWord : MonoBehaviour
     /// <summary>(手动）</summary>
     public TextMeshProUGUI[] bossTexts;
 
-
-
+    bool fade = false;
+    TextMeshProUGUI textNow;
 
     private Color purple = new Color(153 / 255, 0, 255 / 255, 1);
     /// <summary>
@@ -26,8 +26,9 @@ public class FloatWord : MonoBehaviour
     /// <param name="direct">是否是直接的</param>
     internal void InitPopup(float value, bool boss, FloatWordColor color, bool direct)
     {
+
         //如果需要数字好看，就把float强行转换成int
-        string str = ((int)value).ToString(/*"f1"*/);
+        string str = (Mathf.Ceil(value)).ToString(/*"f1"*/);
         TextMeshProUGUI text = null;
         if (!boss)
         {
@@ -65,6 +66,9 @@ public class FloatWord : MonoBehaviour
             Destroy(this.gameObject);//不漂字
             return;
         }
+        textNow = text;
+        fade = true;
+
         text.text = str;
         text.outlineColor = SetColor(color);
 
@@ -77,9 +81,13 @@ public class FloatWord : MonoBehaviour
         LeanTween.moveY(this.gameObject, this.transform.position.y + height, time).setDestroyOnComplete(true);
     }
 
-
+    Color alpha1 = new Color(0, 0, 0, 1);
     private void Update()
     {
+        if (!fade) return;
+        if (textNow == null) return;
+
+        textNow.color -= alpha1 * Time.deltaTime;
 
     }
 
@@ -92,20 +100,15 @@ public class FloatWord : MonoBehaviour
     /// <param name="direct">是否是直接的</param>
     internal void InitPopup(string textInfo, bool boss, FloatWordColor color, bool direct)
     {
-
         TextMeshProUGUI text = null;
         if (!boss)
         {
-
             text = normalTexts[1];
-
         }
         else//boss
         {
 
-
             text = bossTexts[0];
-
         }
         if (text == null)
         {
@@ -113,6 +116,9 @@ public class FloatWord : MonoBehaviour
             Destroy(this.gameObject);//不漂字
             return;
         }
+        textNow = text;
+        fade = true;
+
         text.text = textInfo;
         text.outlineColor = SetColor(color);
         text.enabled = true;

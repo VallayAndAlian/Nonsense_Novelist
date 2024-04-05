@@ -22,7 +22,6 @@ public class LoadingScene : MonoBehaviour
     private Slider slider;
     private void Start()
     {
-
         if(canvas==null)
             canvas = Resources.Load<GameObject>("UI/SceneChangeCanvas");
     }
@@ -32,7 +31,7 @@ public class LoadingScene : MonoBehaviour
         print("dEnterNextScenesd");
 
         obj = Instantiate<GameObject>(canvas);
-        print("Instantiate");
+    
         slider = obj.GetComponentInChildren<Slider>();
         //生成加载面板，并开始异步加载场景
         obj.GetComponentInChildren<LoadingSlider_t>().LoadSceneAsyn(sceneName, leastLoadTime);

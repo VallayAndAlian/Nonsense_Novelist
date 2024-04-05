@@ -425,7 +425,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 524078680}
-  - component: {fileID: 524078679}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -433,31 +432,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &524078679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 524078678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef64ea5a9eed4af4ebd612669fe61ebf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  settingL: []
-  settingR: []
-  settingPanel: {fileID: 0}
-  nowBook: 0
-  data: {fileID: 0}
-  canHappenData_nKey: []
-  canHappenData_Key: []
-  leftData: []
-  UiCanvas: {fileID: 0}
-  characterCanvas: {fileID: 0}
-  draftUi: {fileID: 0}
-  combatCanvas: {fileID: 0}
-  eventHappen: 0
 --- !u!4 &524078680
 Transform:
   m_ObjectHideFlags: 0

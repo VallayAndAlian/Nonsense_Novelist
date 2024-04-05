@@ -15,8 +15,9 @@ public class CustomList : List<string>
 
     private void IsContentValid(string content)
     {
-        foreach (var _t in GameMgr.instance.leftData)
+        for (int tt = 0; tt < GameMgr.instance.leftData.Count; tt++)
         {
+            var _t = GameMgr.instance.leftData[tt];
             if (_t.textTrigger == content)
             {
                 GameMgr.instance.leftData.Remove(_t);
@@ -24,6 +25,10 @@ public class CustomList : List<string>
                 else GameMgr.instance.canHappenData_nKey.Add(_t);
             }
         }
+        //foreach (var _t in GameMgr.instance.leftData)
+        //{
+            
+        //}
     }
 }
 

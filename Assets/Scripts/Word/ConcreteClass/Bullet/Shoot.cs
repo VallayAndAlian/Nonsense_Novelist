@@ -55,6 +55,12 @@ public class Shoot : MonoBehaviour
                     crtForce = maxForce;
                 }
 
+                if (!Input.GetButton("Fire1"))
+                {
+                    track.Hide();
+                }
+
+
                 if (Input.GetButtonDown("Fire1"))
                 {
                     crtForce = minForce; // 重置力的大小

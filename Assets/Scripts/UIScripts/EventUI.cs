@@ -275,9 +275,10 @@ public class EventUI : MonoBehaviour
         KeyCharacter = -1;
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         int loopCount = 0;
-        while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
-        {//如果有条件并且条件没满足,就重找一个
-
+        while ((tempNowDate[_r].textTrigger != "") &&
+            (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
+        {
+            //如果有条件并且条件没满足,就重找一个
             _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
             if (loopCount > 50)
             {
@@ -295,16 +296,16 @@ public class EventUI : MonoBehaviour
         int triggerName = -1;
         if (isKey && KeyCharacter != -1)
         {
-            triggerName = KeyCharacter;//本身就是ID
-            
+            triggerName = KeyCharacter;//本身就是ID 
         }
         else
         {
             triggerName = GameMgr.instance.GetNextCreateChara();//数组，非ID
             triggerName += 1;
         }
-        sprite.GetComponent<Animator>().SetTrigger(triggerName.ToString());
-        sprite.SetNativeSize();
+
+        sprite.GetComponent<Animator>().SetBool(triggerName.ToString(),true);
+        //sprite.SetNativeSize();
 
 
         if ((tempNowDate[_r].happen != null) && (tempNowDate[_r].happen != ""))
@@ -752,7 +753,9 @@ public class EventUI : MonoBehaviour
 
     public void CloseAnim()
     {
+
         GetComponent<Animator>().Play("EventUI_Dis1");
+
     }
 
     public void Close()
