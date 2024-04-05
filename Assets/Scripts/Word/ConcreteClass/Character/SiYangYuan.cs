@@ -77,7 +77,7 @@ class SiYangYuan : AbstractCharacter
 
     public override string ShowText(AbstractCharacter otherChara)
     {
-        return otherChara.wordName + "出场文本";
+        return otherChara + "出场文本";
     }
     public override string CriticalText(AbstractCharacter otherChara)
     {

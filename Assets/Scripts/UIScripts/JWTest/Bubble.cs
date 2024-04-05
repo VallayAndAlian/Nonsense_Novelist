@@ -32,14 +32,14 @@ public class Bubble : MonoBehaviour
         switch (this.gameObject.name)
         {
             case "fangke(Clone)": { _adr = "UI/LOGO/FANGKE"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
-                    obj.GetComponent<Bubble>().isKey = isKey;obj.GetComponent<Bubble>().pos = this.transform.position; } break;
+                   obj.GetComponent<Bubble>().isKey = isKey;obj.GetComponent<Bubble>().pos = this.transform.position; } break;
             case "xiwang(Clone)": { _adr = "UI/LOGO/XIWANG"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
                     obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
             case "yiwai(Clone)": { _adr = "UI/LOGO/YIWAI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
                     obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
-            case "weiji(Clone)": { _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); 
-                     obj.GetComponent<Bubble>().pos = this.transform.position;obj.GetComponent<Bubble>().isKey = isKey; } break;
-            case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0); 
+            case "weiji(Clone)": { _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().pos = this.transform.position;obj.GetComponent<Bubble>().isKey = isKey; } break;
+            case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
                     obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
         }
           

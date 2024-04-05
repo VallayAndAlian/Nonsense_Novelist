@@ -13,6 +13,9 @@ public class FloatWord : MonoBehaviour
     /// <summary>(手动）</summary>
     public TextMeshProUGUI[] bossTexts;
 
+
+
+
     private Color purple = new Color(153 / 255, 0, 255 / 255, 1);
     /// <summary>
     /// 
@@ -24,7 +27,7 @@ public class FloatWord : MonoBehaviour
     internal void InitPopup(float value, bool boss, FloatWordColor color, bool direct)
     {
         //如果需要数字好看，就把float强行转换成int
-        string str = ((float)value).ToString("f1");
+        string str = ((int)value).ToString(/*"f1"*/);
         TextMeshProUGUI text = null;
         if (!boss)
         {
@@ -68,13 +71,17 @@ public class FloatWord : MonoBehaviour
         text.enabled = true;
 
         float time = 0.8f;
-        float height = 1f;//弹射高度
+        float height = 0.6f;//弹射高度
         //(什么移动，终点在哪，花多长时间)
         //.setEaseOutBack()设置曲线（），使其往返.setDestroyOnComplete(true)设置完成后销毁
         LeanTween.moveY(this.gameObject, this.transform.position.y + height, time).setDestroyOnComplete(true);
     }
 
 
+    private void Update()
+    {
+
+    }
 
     /// <summary>
     /// 
@@ -90,7 +97,7 @@ public class FloatWord : MonoBehaviour
         if (!boss)
         {
 
-            text = normalTexts[0];
+            text = normalTexts[1];
 
         }
         else//boss
@@ -111,7 +118,7 @@ public class FloatWord : MonoBehaviour
         text.enabled = true;
 
         float time = 1;
-        float height = 1f;//弹射高度
+        float height = 0.6f;//弹射高度
         //(什么移动，终点在哪，花多长时间)
         //.setEaseOutBack()设置曲线（），使其往返.setDestroyOnComplete(true)设置完成后销毁
         LeanTween.moveY(this.gameObject, this.transform.position.y + height, time).setDestroyOnComplete(true);

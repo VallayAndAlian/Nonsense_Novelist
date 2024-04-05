@@ -941,7 +941,8 @@ abstract public class AbstractCharacter : AbstractWord0
         danDao.SetOff(this.transform.position);
     }
 
-    Vector3[] pos =new Vector3[] { new Vector3(-400, 400, 0) , new Vector3(0, 0, 0) , new Vector3(400, -400, 0), new Vector3(0, 600, 0) };
+    Vector3[] pos =new Vector3[] 
+    { new Vector3(-200, 100, 0) , new Vector3(0, 0, 0) , new Vector3(200, -100, 0), new Vector3(0, 200, 0) };
     int floatCount = 0;
 
     /// <summary>漂浮文字 </summary>

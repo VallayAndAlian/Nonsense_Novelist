@@ -156,7 +156,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 626459831
   m_SortingLayer: 1
-  m_SortingOrder: 6
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 95a838b893347a64d928795a87477812, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -291,19 +291,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isKey: 0
+  pos: {x: 1, y: 1, z: 1}
   dTime: 4
-  logo_Event:
-  - {fileID: 5281034728410389872, guid: 9eace8e4621caad4fb229fbaacb29ffe, type: 3}
-  - {fileID: 5281034728410389872, guid: 259aa7596fd4fb94eb799f2a8dccdcef, type: 3}
-  - {fileID: 5281034728410389872, guid: be5f8399fcf8f254dad78fb6100fdc14, type: 3}
-  - {fileID: 5281034728410389872, guid: 7737506fb13249a459a718c1df376e77, type: 3}
-  - {fileID: 5281034728410389872, guid: 99cd9acc9b0cd9543b48d5c69f65daf7, type: 3}
-  banner_Event:
-  - {fileID: 4945147416913479266, guid: 69b18c45018038c4b83561eed88a643d, type: 3}
-  - {fileID: 1255452285124637697, guid: b216469d5bd0a304984e84eea83f6629, type: 3}
-  - {fileID: 4619278252233171592, guid: 71014361a51d6094d9522078d32b8674, type: 3}
-  - {fileID: 6914290976500671379, guid: 5ccf1d6b40a946945944e4d5ec1523d6, type: 3}
-  - {fileID: 2068174667578089082, guid: b80329635e00c1d4694ba1c1b3a62c72, type: 3}
 --- !u!58 &1282883154546105451
 CircleCollider2D:
   m_ObjectHideFlags: 0
