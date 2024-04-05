@@ -236,12 +236,26 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         //Õ£¡Ù‘⁄≤›∏Â±æ
         i = 0;
+        text.text = "";
+        int _index = 0;
+        float textDelay = 0.06f;
+        float textDAll = 0;
+  
         while (i < 0.6f)
         {
             i += 0.02f;
             image.gameObject.SetActive(false);
             text.gameObject.SetActive(true);
-            text.text = text2;
+            if (i > textDAll)
+            {
+                textDAll += textDelay;
+                if (_index < text2.Length)
+                {
+                    text.text += text2[_index];
+                    _index += 1;
+                }
+            }
+          
             yield return waitFrame;
         }
         Destroy(obj.gameObject);

@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723217449379156723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.39, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -253,7 +253,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3837959891525375965}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.48, y: -4.67, z: 0}
+  m_LocalPosition: {x: 0.90999997, y: -4.67, z: 0}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -412,6 +412,7 @@ MonoBehaviour:
   camp: 1
   roleName: 
   roleInfo: 
+  isNaiMa: 0
   gender: 0
   trait: {fileID: 0}
   criticalChance: 0
@@ -420,12 +421,12 @@ MonoBehaviour:
   skills: []
   servants: []
   maxSkillsCount: 3
+  hasBetray: 0
   skillText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   attackInterval: 0
-  attackSpeedPlus: 1
   situation: {fileID: 0}
   attackDistance: 0
   charaAnim: {fileID: 0}
@@ -567,6 +568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c93954f1550e8745be3314a9e6fe6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowParentTF: {fileID: 0}
+  lastParentTF: {fileID: 0}
 --- !u!60 &3579512521669017538
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -790,7 +793,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6592295561007384171}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.51, y: -6.66, z: 0}
+  m_LocalPosition: {x: 0.88, y: -6.66, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -824,7 +827,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7266290056929868227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.7499995, z: 0}
+  m_LocalPosition: {x: 1.39, y: 5.7499995, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -880,7 +883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.33
+      value: 1.06
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1026,7 +1029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.36
+      value: 0.029999971
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_AnchoredPosition.y

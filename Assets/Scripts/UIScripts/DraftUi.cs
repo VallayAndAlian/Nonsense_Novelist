@@ -167,8 +167,12 @@ public class DraftUi : MonoBehaviour
                         inkBlackObj.color = Color.white;
                         inkBlueObj.color = Color.white;
                         inkRedObj.color = Color.white;
-                        penObj.transform.localScale = Vector3.one * 0.65f;
+                        penObj.transform.localScale = Vector3.one * 0.065f;
                         penObj.GetComponent<RectTransform>().anchoredPosition = blackpen;
+                        //重置层级
+                        penObj.transform.SetSiblingIndex(penObj.transform.parent.childCount - 1);
+                        int _index = inkBlackObj.transform.parent.Find(inkBlackObj.gameObject.name).GetSiblingIndex();
+                        penObj.transform.SetSiblingIndex(_index);
                         //
                         OpenAllDrag();
                         CloseAllDelete();
@@ -189,8 +193,12 @@ public class DraftUi : MonoBehaviour
                         inkBlackObj.color = Color.white;
                         inkBlueObj.color = Color.white;
                         inkRedObj.color = Color.white;
-                        penObj.transform.localScale = Vector3.one * 0.65f;
+                        penObj.transform.localScale = Vector3.one * 0.065f;
                         penObj.GetComponent<RectTransform>().anchoredPosition = redpen;
+                        //重置层级
+                        penObj.transform.SetSiblingIndex(penObj.transform.parent.childCount-1);
+                        int _index = inkRedObj.transform.parent.Find(inkRedObj.gameObject.name).GetSiblingIndex();
+                        penObj.transform.SetSiblingIndex(_index);
                         //
                         CloseAllDrag();
                         OpenAllDelete();
@@ -211,8 +219,12 @@ public class DraftUi : MonoBehaviour
                         inkBlackObj.color = Color.white;
                         inkBlueObj.color = Color.white;
                         inkRedObj.color = Color.white;
-                        penObj.transform.localScale = Vector3.one * 0.65f;
+                        penObj.transform.localScale = Vector3.one * 0.065f;
                         penObj.GetComponent<RectTransform>().anchoredPosition = bluepen;
+                        //重置层级
+                        penObj.transform.SetSiblingIndex(penObj.transform.parent.childCount - 1);
+                        int _index = inkBlueObj.transform.parent.Find(inkBlueObj.gameObject.name).GetSiblingIndex();
+                        penObj.transform.SetSiblingIndex(_index);
                         //
                         CloseAllDelete();
                         CloseAllDrag();

@@ -22,16 +22,10 @@ public class ColliderTableObj : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.GetMask("Default"))
-        {
-            print("sdsdsd");     return;   
-        }
-         
         timer = 0;
         if(onlyCoroutine!=null)
             StopCoroutine(onlyCoroutine);
         onlyCoroutine = StartCoroutine(Move());
-
     }
 
     IEnumerator Move()

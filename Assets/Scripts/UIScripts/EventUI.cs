@@ -157,6 +157,22 @@ public class EventUI : MonoBehaviour
     //当前正在处理的nowEvent
     private test1ExcelItem nowEvent;
     private test1ExcelItem[] event_YW=new test1ExcelItem[3];
+
+
+
+    IEnumerator TypeDelay(string text, TextMeshProUGUI textUI, float delay)
+    {
+        int _index = 0;
+        textUI.text= "";
+        while (_index< text.Length)
+        {
+            textUI.text += text[_index];
+            _index++;
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
+
     #region 五种类型的事件
 
     #region 意外
@@ -294,10 +310,12 @@ public class EventUI : MonoBehaviour
         if ((tempNowDate[_r].happen != null) && (tempNowDate[_r].happen != ""))
             KeyCharacter = int.Parse(tempNowDate[_r].happen);
         nowEvent = tempNowDate[_r];
-        print(tempNowDate[_r].happen);
-        info.text = tempNowDate[_r].name;
-        words.text = tempNowDate[_r].textEvent;
-   
+       
+        //info.text = tempNowDate[_r].name;
+        StartCoroutine(TypeDelay((tempNowDate[_r].name ), info, 0.05f));
+       // words.text = tempNowDate[_r].textEvent;
+        StartCoroutine(TypeDelay((tempNowDate[_r].textEvent), words, 0.05f));
+
         RefreshNowList();
     }
 
@@ -336,8 +354,6 @@ public class EventUI : MonoBehaviour
         checkBotton.gameObject.SetActive(false);
         for (int i = 0; i < 3; i++)
         {
-
-
             //随机抽书
             int _lC = 0;
             int _rb = UnityEngine.Random.Range(2, System.Enum.GetNames(typeof(BookNameEnum)).Length);
@@ -417,7 +433,8 @@ public class EventUI : MonoBehaviour
 
         _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         TextMeshProUGUI info = this.transform.Find("info").GetComponentInChildren<TextMeshProUGUI>();
-        info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
+        //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
         nowEvent = tempNowDate[_r];
 
         RefreshNowList();
@@ -570,7 +587,8 @@ public class EventUI : MonoBehaviour
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
 
         //切换文字内容
-        titleText.text = tempNowDate[_r].name+"\n"+ tempNowDate[_r].textEvent;
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), titleText, 0.05f));
+        //titleText.text = tempNowDate[_r].name+"\n"+ tempNowDate[_r].textEvent;
         nowEvent = tempNowDate[_r];
 
         //刷新已用事件列表
@@ -600,13 +618,18 @@ public class EventUI : MonoBehaviour
             choose.localPosition = Vector3.zero;
 
           
-            cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
+            //cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
         }
   
         
         
     }
 
+
+    public void JY_OpenCardRes()
+    {
+        cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
+    }
 
     void Close_JiaoYi()
     {
@@ -639,7 +662,8 @@ public class EventUI : MonoBehaviour
 
         //
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
-        info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
+        //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
         nowEvent = tempNowDate[_r];
         RefreshNowList();
 
