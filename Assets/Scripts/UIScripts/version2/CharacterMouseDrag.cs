@@ -102,7 +102,7 @@ public class CharacterMouseDrag : MonoBehaviour
       
     }
 
-
+    
     
     //被移动物体需要添加collider组件，以响应OnMouseDown()函数
     //基本思路。当鼠标点击物体时（OnMouseDown（），函数体里面代码只执行一次），
@@ -110,11 +110,11 @@ public class CharacterMouseDrag : MonoBehaviour
     //由于物体坐标是世界坐标，鼠标坐标是屏幕坐标，需要进行转换。具体过程如下所示。
     IEnumerator OnMouseDown()
     {
+       
 
         //先让点击物体中心与鼠标点击处同步。
-        Vector2 offsetCenter = GetComponent<Collider2D>().offset;
         mouseScreenpos = new Vector3(Input.mousePosition.x, Input.mousePosition.y , Camera.main.WorldToScreenPoint(target.position).z);
-        target.position= Camera.main.ScreenToWorldPoint(mouseScreenpos)-new Vector3(offsetCenter.x/4,offsetCenter.y/4,0);
+        target.position= Camera.main.ScreenToWorldPoint(mouseScreenpos)/*-new Vector3(offsetCenter.x/4,offsetCenter.y/4,0)*/;
 
         targetScreenpos = Camera.main.WorldToScreenPoint(target.position);
         offset = target.position - Camera.main.ScreenToWorldPoint(mouseScreenpos);

@@ -13,7 +13,7 @@ public class AfterStart : MonoBehaviour
     private GameObject charaShortInstance;
 
     //生成面板的大小。
-    private float scale = 1.8f / 1900;
+    private float scale = 1.6f / 1900;
 
 
     /// <summary>角色简要预制体克隆</summary>
@@ -96,10 +96,10 @@ public class AfterStart : MonoBehaviour
             one = true;
             //显示角色简要信息(注意第二个参数对于UI)
             charaShortP = Instantiate(charaShortInstance);
-            charaShortP.transform.localScale = Vector3.one* scale;
+            charaShortP.transform.localScale = Vector3.one * scale;
             //charaShortP.transform.parent = this.transform.GetComponentInChildren<Canvas>().gameObject.transform;
             charaShortP.transform.SetParent(this.transform.GetComponentInChildren<Canvas>().gameObject.transform);
-            charaShortP.transform.localPosition = new Vector3(0,-900,0);
+            charaShortP.transform.localPosition = new Vector3(0, -900, 0);
             charaShort = charaShortP.transform.GetChild(2);
             uiElement = charaShort.gameObject.GetComponent<RectTransform>();
             if (IsUIOffscreen())
@@ -114,6 +114,7 @@ public class AfterStart : MonoBehaviour
             FunctionInis();
             WhenBuffCountChange(0);
         }
+
     }
 
 

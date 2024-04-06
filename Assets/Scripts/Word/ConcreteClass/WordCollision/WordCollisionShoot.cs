@@ -31,7 +31,7 @@ public class WordCollisionShoot : MonoBehaviour
         if (CharacterManager.instance.pause)
             return;
 
-
+        if(collision.sharedMaterial!=null)return;
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Character"))
         {

@@ -323,6 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c93954f1550e8745be3314a9e6fe6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nowParentTF: {fileID: 0}
+  lastParentTF: {fileID: 0}
 --- !u!114 &-5807438003841155818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,6 +355,7 @@ MonoBehaviour:
   camp: 0
   roleName: 
   roleInfo: 
+  isNaiMa: 0
   gender: 0
   trait: {fileID: 0}
   criticalChance: 0
@@ -361,12 +364,12 @@ MonoBehaviour:
   skills: []
   servants: []
   maxSkillsCount: 3
+  hasBetray: 0
   skillText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   attackInterval: 2.2
-  attackSpeedPlus: 1
   situation: {fileID: 0}
   attackDistance: 0
   charaAnim: {fileID: 0}
@@ -382,7 +385,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 3837959891539934793}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7f8d485a9562d3c469d5168f11c7156e, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -621,7 +624,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: b6b11bc1eb2843c47bb2307f4badc4a4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 

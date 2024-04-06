@@ -7,7 +7,8 @@ using UnityEngine;
 /// </summary>
 public class EventPoint : MonoBehaviour
 {
-    public static bool[] isEvent= {true,true,true,true,true,true }; 
+    public static bool[] isEvent= {true,true,true,true,true,/*=5=*/
+        true, true, true, true, true }; 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //事件气泡位置若有纸条，则不生成气泡
@@ -19,6 +20,11 @@ public class EventPoint : MonoBehaviour
             else if (this.gameObject.name == "point3") isEvent[3] = false;
             else if (this.gameObject.name == "point4") isEvent[4] = false;
             else if (this.gameObject.name == "point5") isEvent[5] = false;
+            else if (this.gameObject.name == "point6") isEvent[6] = false;
+            else if (this.gameObject.name == "point7") isEvent[7] = false;
+            else if (this.gameObject.name == "point8") isEvent[8] = false;
+            else if (this.gameObject.name == "point9") isEvent[9] = false;
+
 
         }
     }

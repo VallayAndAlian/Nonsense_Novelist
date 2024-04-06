@@ -313,9 +313,9 @@ public class EventUI : MonoBehaviour
         nowEvent = tempNowDate[_r];
        
         //info.text = tempNowDate[_r].name;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name ), info, 0.05f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name ), info, 0.03f));
        // words.text = tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].textEvent), words, 0.05f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].textEvent), words, 0.03f));
 
         RefreshNowList();
     }
@@ -435,7 +435,7 @@ public class EventUI : MonoBehaviour
         _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         TextMeshProUGUI info = this.transform.Find("info").GetComponentInChildren<TextMeshProUGUI>();
         //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.03f));
         nowEvent = tempNowDate[_r];
 
         RefreshNowList();
@@ -588,7 +588,7 @@ public class EventUI : MonoBehaviour
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
 
         //ÇÐ»»ÎÄ×ÖÄÚÈÝ
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), titleText, 0.05f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), titleText, 0.03f));
         //titleText.text = tempNowDate[_r].name+"\n"+ tempNowDate[_r].textEvent;
         nowEvent = tempNowDate[_r];
 
@@ -664,7 +664,7 @@ public class EventUI : MonoBehaviour
         //
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
         //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.03f));
         nowEvent = tempNowDate[_r];
         RefreshNowList();
 

@@ -103,7 +103,7 @@ GameObject:
   m_Layer: 3
   m_Name: MuNaiYi
   m_TagString: character
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -351,7 +351,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 3837959891539934793}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 7f8d485a9562d3c469d5168f11c7156e, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -367,11 +367,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.9179647, y: 4.835929}
-      - {x: -3.8448281, y: 1.7559024}
-      - {x: -3.0104775, y: -4.4430556}
-      - {x: 2.1001792, y: -4.4374948}
-      - {x: 3.7507448, y: 1.8828633}
+    - - {x: -2.3025894, y: 5.220554}
+      - {x: -4.421766, y: 2.236683}
+      - {x: -3.3470259, y: -4.4911323}
+      - {x: 3.0617387, y: -4.629809}
+      - {x: 6.6205726, y: -3.0767026}
+      - {x: 4.4592524, y: -0.15423903}
+      - {x: 3.7988262, y: 2.1232536}
       - {x: 1.6240265, y: 4.111298}
 --- !u!1 &4084634625184318592
 GameObject:

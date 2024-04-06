@@ -51,7 +51,9 @@ public class GameProcessSlider : MonoBehaviour
 
     [Header("设定获取列表")]
     public GameObject settingList;
-    //public GameObject endGame;
+
+    private GameObject _wordInfo;
+
 
     private Vector3 oriScale;
 
@@ -66,7 +68,6 @@ public class GameProcessSlider : MonoBehaviour
     private int eventCount=0;
     private List<int> array = new List<int>();
     private List<GameObject> array0 = new List<GameObject>();
-    public static bool isStart = false;
     private bool isCreate = false;
 
     //概率
@@ -81,7 +82,7 @@ public class GameProcessSlider : MonoBehaviour
 
         oriScale = this.transform.localScale;
 
-
+       
 
         //生成进度条
         sliderProcess = this.GetComponent<Slider>();
@@ -110,6 +111,10 @@ public class GameProcessSlider : MonoBehaviour
 
         if(settingList!=null)
             settingList.SetActive(false);
+
+        _wordInfo = this.transform.parent.GetComponentInChildren<WordInformation>().gameObject;
+        if(_wordInfo!=null)
+            _wordInfo.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -119,7 +124,8 @@ public class GameProcessSlider : MonoBehaviour
         if (CharacterManager.instance.pause) return;
         if (!countTime)
             return;
-        if (isStart) CreateEvent();//&&(SceneManager.GetActiveScene().name != "CombatTest")        
+    
+        CreateEvent();//&&(SceneManager.GetActiveScene().name != "CombatTest")        
   
 
         timeNow += Time.deltaTime;
@@ -223,6 +229,11 @@ public class GameProcessSlider : MonoBehaviour
         CharacterManager.instance.pause = false;
         if (settingList != null)
             settingList.SetActive(true);
+
+        GameMgr.instance.settingPanel.RefreshList();
+
+        if (_wordInfo != null)
+            _wordInfo.gameObject.SetActive(true);
     }
 
     #endregion

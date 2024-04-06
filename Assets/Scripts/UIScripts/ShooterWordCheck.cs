@@ -75,17 +75,17 @@ public class ShooterWordCheck : MonoBehaviour
         }
         //按照现在的牌库生成
         textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
-
+       
         foreach (var _word in GameMgr.instance.GetNowList())
         {
-            
+           
             PoolMgr.GetInstance().GetObj(word_adj, (obj) =>
             {
                 var word = obj.AddComponent(_word) as AbstractWord0;
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
-
+                obj.GetComponentInChildren<Image>().SetNativeSize();
                 if (jiaoYi)
                 {
                     obj.GetComponent<Button>().interactable = false;
@@ -95,6 +95,7 @@ public class ShooterWordCheck : MonoBehaviour
                 }
             });
         }
+      
         foreach (var _word in GameMgr.instance.GetHasUsedList())
         {
 
@@ -104,7 +105,7 @@ public class ShooterWordCheck : MonoBehaviour
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
-
+                obj.GetComponentInChildren<Image>().SetNativeSize();
                 if (jiaoYi)
                 {
                     obj.GetComponent<Button>().interactable = false;

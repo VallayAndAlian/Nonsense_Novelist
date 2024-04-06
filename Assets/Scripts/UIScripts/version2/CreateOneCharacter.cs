@@ -201,7 +201,7 @@ public class CreateOneCharacter : MonoBehaviour
 
             //触发进度条开始开关
             GameObject.Find("GameProcess").GetComponent<GameProcessSlider>().ProcessStart();
-        GameProcessSlider.isStart = true;
+      
         //装载一个shooter
         if (SceneManager.GetActiveScene().name == "ShootCombat") GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
         else GameObject.Find("shooter").GetComponent<TestShoot>().ReadyWordBullet();
@@ -235,7 +235,7 @@ public class CreateOneCharacter : MonoBehaviour
             var _colB = it.GetComponent<BoxCollider2D>();
             if (_colE != null)
             {
-                if (_colB != null) { _colB.enabled = true; _colE.enabled = false; }
+                if (_colB != null) { _colB.enabled = true; _colE.enabled = true; }
             }
 
 

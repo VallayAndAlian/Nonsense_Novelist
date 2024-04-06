@@ -12,6 +12,14 @@ public class SettingList : MonoBehaviour
     public GameObject guiCai;
     public GameObject qiaoSi;
 
+    [Header("左右背景基物体（手动设置）")]
+    public Transform groupBGL;
+    public Transform groupBGR;
+    [Header("设定背景预制体（手动设置）")]
+    public GameObject settingBg_U;
+    public GameObject settingBg_M;
+    public GameObject settingBg_B;
+
     public void RefreshList()
     {
         //先把所有的还回去
@@ -23,6 +31,19 @@ public class SettingList : MonoBehaviour
         {
             PoolMgr.GetInstance().PushObj(groupR.GetChild(i).gameObject.name, groupR.GetChild(i).gameObject);
         }
+
+
+        for (int i = groupBGL.childCount - 1; i > 0; i--)
+        {
+            PoolMgr.GetInstance().PushObj(groupBGL.GetChild(i).gameObject.name, groupBGL.GetChild(i).gameObject);
+        }
+        for (int i = groupBGR.childCount - 1; i > 0; i--)
+        {
+            PoolMgr.GetInstance().PushObj(groupBGR.GetChild(i).gameObject.name, groupBGR.GetChild(i).gameObject);
+        }
+
+
+
         //再按照列表刷新
         foreach (var set in GameMgr.instance.settingL)
         {
@@ -61,5 +82,40 @@ public class SettingList : MonoBehaviour
                 _obj.GetComponentInChildren<Text>().text = set.settingName;
             });
         }
+
+
+
+        BGrefresh(true);
+        BGrefresh(false);
+    }
+
+    private void BGrefresh(bool isL)
+    {
+        Transform _parent= groupBGL;
+        if (!isL) _parent = groupBGR;
+
+        PoolMgr.GetInstance().GetObj(settingBg_U, (_obj) =>
+        {
+            _obj.transform.parent = _parent;
+            _obj.transform.localPosition = Vector3.zero;
+            _obj.transform.localScale = Vector3.one;
+        });
+
+        foreach (var set in (isL ? GameMgr.instance.settingL : GameMgr.instance.settingR))
+        {
+            PoolMgr.GetInstance().GetObj(settingBg_M, (_obj) =>
+            {
+                _obj.transform.parent = _parent;
+                _obj.transform.localPosition = Vector3.zero;
+                _obj.transform.localScale = Vector3.one;
+            });
+        }
+        PoolMgr.GetInstance().GetObj(settingBg_B, (_obj) =>
+        {
+            _obj.transform.parent = _parent;
+            _obj.transform.localPosition = Vector3.zero;
+            _obj.transform.localScale = Vector3.one;
+        });
+
     }
 }

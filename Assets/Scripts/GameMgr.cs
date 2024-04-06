@@ -47,7 +47,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     Button cancelButton;
     bool hasOpenExit = false;
     public SettingList settingPanel;
-
+    public GameObject CardRes;
 
 
     //当前的剧本
@@ -155,7 +155,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void Awake()
     {
         DealWithData();
-
+        CardRes.SetActive(false);
         draftUi.InitContent(); 
     }
 
@@ -346,24 +346,41 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
     }
 
+    /// <summary>
+    /// 返回已经使用的词条们
+    /// </summary>
+    /// <returns></returns>
     public List<Type> GetHasUsedList()
     {
         return wordHasUseList;
     }
+    /// <summary>
+    /// 返回未使用的词条们
+    /// </summary>
+    /// <returns></returns>
     public List<Type> GetNowList()
     {
 
         return wordNowList;
     }
+
+    /// <summary>
+    /// 随机返回一个未使用的词条
+    /// </summary>
+    /// <returns></returns>
     public Type GetNowListOne()
     {
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
         var _res = wordNowList[count];
         wordNowList.Remove(_res);
+        wordHasUseList.Add(_res);
         wordGoingUseList.Add(_res);
         RefreshNowList();
         return _res;
     }
+
+
+    
     public Type GetGoingUseList()
     {
         //全部解锁前，只有3个槽位
