@@ -993,8 +993,10 @@ abstract public class AbstractCharacter : AbstractWord0
 
     virtual public void Awake()
     {
-        energyCanvas = this.GetComponentInChildren<Canvas>();
+        energyCanvas = this.GetComponentInChildren<Canvas>(); if (energyCanvas == null) return;
         energyCanvas.worldCamera = GameObject.Find("MainCamera").GetComponent<Camera>();
+        
+        if (energyCanvas.worldCamera == null) print(" energyCanvas.worldCamera==null");
         energySlider = energyCanvas.transform.Find("CD").GetComponent<Slider>();
         hpSlider = energyCanvas.transform.Find("HP").GetComponent<Slider>();
         energyText = this.GetComponentInChildren<Text>();

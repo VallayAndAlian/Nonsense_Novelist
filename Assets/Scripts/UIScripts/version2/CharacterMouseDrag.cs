@@ -14,13 +14,15 @@ public class CharacterMouseDrag : MonoBehaviour
     private Transform target;//拖拽物体
     private Vector3 mouseScreenpos;//鼠标的屏幕坐标
     private Vector3 offset;//偏移量
+    private int siblingBefore = 0;//最初的站位
+    private GameObject black;
 
     /// <summary>记录目前所在的站位</summary>
     [HideInInspector]public Transform nowParentTF;
     /// <summary>记录上一个所在的站位</summary>
     [HideInInspector] public Transform lastParentTF;
     /// <summary>角色和站位position的Y偏移量</summary>
-    public static float offsetY =0.2f;
+    public static float offsetY =0f;
 
     //颜色
     private Color colorOnMouseOver = new Color((float)100 / 255, (float)100 / 255, (float)50 / 255, (float)255 / 255);
@@ -30,7 +32,8 @@ public class CharacterMouseDrag : MonoBehaviour
 
     //角色战后大小
     private float afterScale=0.28f;
-    private float beforeScale = 22;
+    private float beforeScale =18;
+    private float afterClickScale = 0.44f;
 
 
     private string characterDetailPrefab = "UI/CharacterDetail";
@@ -43,6 +46,7 @@ public class CharacterMouseDrag : MonoBehaviour
             beforeScale = 10;
         }
 
+        siblingBefore = this.transform.parent.GetSiblingIndex();
 
         nowParentTF = transform.parent;
         target = transform;
@@ -120,6 +124,18 @@ public class CharacterMouseDrag : MonoBehaviour
         offset = target.position - Camera.main.ScreenToWorldPoint(mouseScreenpos);
 
 
+        //如果是从画布那边放过来，则
+        if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))
+        {
+            //画布上留下阴影
+            ShowBlack();
+        }
+
+        //如果位置之间变换，则变大
+        if (nowParentTF.GetComponent<Situation>() != null)
+            this.transform.localScale = ScaleWithTure(afterClickScale);
+
+
         while (Input.GetMouseButton(0))//鼠标左键被持续按下。
         {
             mouseScreenpos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, targetScreenpos.z);
@@ -138,35 +154,64 @@ public class CharacterMouseDrag : MonoBehaviour
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Situation"))//角色拖拽到站位上且位置校准
             {
-               
-                
                 if ((hit.collider.transform.childCount == 0))//如果站位上没有其它角色
                 {
-
                     SetCharacterToSituation(hit.collider.transform.GetComponent<Situation>());
                 }
                 else //如果站位上有其它角色
                 {
-                    var otherChara = hit.transform.GetChild(0);
+                    //如果是从画布那边放过来，则
+                    if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))
+                    {
+                        transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
+                        DeleteBlack();
+                    }
+                    else
+                    {
+                        transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
+                        this.transform.localScale = ScaleWithTure(afterScale);
+                    }
 
-                    Situation _s = this.GetComponent<AbstractCharacter>().situation;
-
-                    SetCharacterToSituation(hit.collider.transform.GetComponent<Situation>());
-                    otherChara.GetComponent<CharacterMouseDrag>().SetCharacterToSituation(_s);
                 }
-               
+
 
             }
+
             else//没有检测到站位
             {
                 transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
-
+                this.transform.localScale = ScaleWithTure(afterScale);
+                if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))
+                {
+                    this.transform.localScale = ScaleWithTure(beforeScale);
+                    DeleteBlack();
+                }
             }
+        }
+        else if (Camera.main.WorldToViewportPoint(target.position).y<0.4)
+        {
+            print("hey man");
+            DeleteBlack();
+            this.transform.parent =oriParent.GetChild(siblingBefore);
+            nowParentTF = transform.parent;
+
+            transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
+            transform.localScale = Vector3.one * beforeScale;
+
+            var chara = this.GetComponent<AbstractCharacter>();
+            chara.camp = CampEnum.left;
+            if (CharacterManager.charas_left.Contains(chara)) CharacterManager.charas_left.Remove(chara);
+            if (CharacterManager.charas_right.Contains(chara)) CharacterManager.charas_right.Remove(chara);
         }
         else//没有检测到站位
         {
+            print("hey dsdasdadfdsadddddd");
             transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
-
+            this.transform.localScale = ScaleWithTure(afterScale);
+            if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))
+            {
+                DeleteBlack(); this.transform.localScale = ScaleWithTure(beforeScale);
+            }
         }
        
     }
@@ -176,34 +221,38 @@ public class CharacterMouseDrag : MonoBehaviour
     {
         var chara = GetComponent<AbstractCharacter>();
 
-
-
         lastParentTF = nowParentTF;
 
         if (s == null)
         {
-  
+
             int i = 0;
             for (; i < oriParent.childCount && oriParent.GetChild(i).childCount >= 1; i++)
             {
             }
             nowParentTF = oriParent.GetChild(i);
-            this.transform.SetParent(nowParentTF); 
-           
+            this.transform.SetParent(nowParentTF);
+
         }
-           
         else
         {
-              nowParentTF = s.transform;
-            this.transform.SetParent(nowParentTF); 
-            
-            //如果是从画布那边放过来，则变小
-          
-        } //如果是从放置后过来，则变大
+            nowParentTF = s.transform;
+            this.transform.SetParent(nowParentTF);
+        }
+
+        
+        if (lastParentTF.GetComponent<Situation>() == null && s != null)//如果是从放置后过来，则变大
+        {
+            this.transform.localScale = ScaleWithTure( afterScale);
+        }
+        else if(s != null)//位置之间切换
+        {
+            this.transform.localScale = ScaleWithTure(afterScale);
+        }
        
-       if (lastParentTF.GetComponent<Situation>() == null&& s != null) this.transform.localScale = Vector3.one * afterScale;
-        if (lastParentTF.GetComponent<Situation>() != null && s == null) this.transform.localScale = Vector3.one * beforeScale;
-       
+        else if (lastParentTF.GetComponent<Situation>() != null && s == null)  //其它情况，则保持小
+            this.transform.localScale = ScaleWithTure(beforeScale);
+
 
         transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
 
@@ -269,7 +318,49 @@ public class CharacterMouseDrag : MonoBehaviour
 
     }
 
+    Vector3 ScaleWithTure(float muti)
+    {
+        return  new Vector3(this.transform.localScale.x / Mathf.Abs(this.transform.localScale.x),
+                    this.transform.localScale.y / Mathf.Abs(this.transform.localScale.y),
+                    this.transform.localScale.z / Mathf.Abs(this.transform.localScale.z)) * muti;
+    }
 
-    
+
+    void ShowBlack()
+    {
+
+        if (black != null) return;
+
+
+        var _obj = Instantiate<GameObject>(this.gameObject);
+
+        _obj.transform.parent = nowParentTF;
+        _obj.transform.localScale = Vector3.one * beforeScale;
+        _obj.transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
+        _obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().color = Color.black;
+       // print(_obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().sortingOrder);
+        _obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().sortingOrder -= 1;
+
+        _obj.GetComponentInChildren<AI.MyState0>().GetComponent<Animator>().speed = 0;
+
+        //删除身上不必要的组件
+        Destroy(_obj.GetComponentInChildren<CharacterMouseDrag>());
+        Destroy(_obj.GetComponent<AbstractCharacter>());
+        Destroy(_obj.GetComponentInChildren<AI.MyState0>());
+
+
+      
+
+        black = _obj;
+    }
+
+
+    void DeleteBlack()
+    {
+        if (black == null) return;
+        print("want to die");
+        Destroy(black);
+        black = null;
+    }
 } 
 
