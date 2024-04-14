@@ -11,6 +11,11 @@ public class WordVec : MonoBehaviour
     Rigidbody2D rigid;
     public float velocity=2f;
 
+
+    SpriteRenderer sp;
+    public Color color;
+    public Color oriColor;
+
     private GameObject Info;
     private WordInformation Info_obj;
 
@@ -18,15 +23,24 @@ public class WordVec : MonoBehaviour
     Vector3 oriScale = Vector3.one;
     private float cardSize = 0.6f;//¿¨ÅÆ´óÐ¡
     private Vector3 cardOffset = new Vector3(100f,0f, 0);//¿¨ÅÆÆ«ÒÆ
+    private float speed=3;
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+
+        sp = GetComponent<SpriteRenderer>();
+
+
         Info = null;
     }
 
     void Update()
     {
-        if (CharacterManager.instance.pause) return;
+        if (CharacterManager.instance.pause)
+        {
+            StopAllCoroutines();
+            return;
+        } 
 
 
         if (rigid.velocity.magnitude < velocity)
@@ -48,6 +62,7 @@ public class WordVec : MonoBehaviour
             return;
         }
 
+        oriColor = sp.color;
 
         PoolMgr.GetInstance().GetObj("UI/WordInformation", (obj) =>
          {       
@@ -73,7 +88,9 @@ public class WordVec : MonoBehaviour
     {
         while ((Info!=null)&&(Info_obj.transform.localScale.x< (oriScale * cardSize).x))
         {
-            Info_obj.transform.localScale += oriScale * cardSize*Time.deltaTime*5;
+            Info_obj.transform.localScale += oriScale * cardSize*Time.deltaTime* speed;
+
+            sp.color -= (oriColor-color) * 0.04f;
             yield return waitForFixedUpdate;
         }
     }
@@ -88,10 +105,17 @@ public class WordVec : MonoBehaviour
         _obj.transform.position = oriPos;
         _obj.transform.localScale = oriScale;
 
+        sp.color = oriColor;
+
         PoolMgr.GetInstance().PushObj(Info.name, Info);
         Info = null;
         Info_obj = null;
 
 
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines(); 
     }
 }

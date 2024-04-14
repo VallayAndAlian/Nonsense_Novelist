@@ -63,7 +63,7 @@ public class LoadingSlider_t : MonoBehaviour
         ao.allowSceneActivation = true;
         //加载完成过后 才会去执行fun
         hasRealLoad = true;
-        if (hasLeastTime && hasRealLoad && (!hasFun))
+        if ( hasRealLoad && (!hasFun))
         {
             hasFun = true;
             StartCoroutine(Wait(fun));

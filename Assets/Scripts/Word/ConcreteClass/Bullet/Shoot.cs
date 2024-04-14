@@ -94,7 +94,9 @@ public class Shoot : MonoBehaviour
                 }
             }               
     }
-    
+
+
+    private Vector3 oriScale;
     /// <summary>
     /// 下一个词条小球准备
     ///点击start后，在CreateOneCharacter 中调用一次
@@ -114,7 +116,12 @@ public class Shoot : MonoBehaviour
         foreach (var _col in (bulletInstance.GetComponentsInChildren<WordCollisionShoot>()))
             _col.absWord = abs;
         information.ChangeInformation(abs);
-               
+
+        //
+        oriScale = bulletInstance.transform.localScale;
+        bulletInstance.transform.localScale = Vector3.zero;
+
+
     }
     /// <summary>
     /// 产生词条实体
@@ -123,9 +130,11 @@ public class Shoot : MonoBehaviour
     {
         fired = true; // 设置开火状态为已开火
         //给词条添加一个初始的力
+        bulletInstance.transform.localScale =oriScale;
         bulletInstance.GetComponent<Rigidbody2D>().AddForce(bulletInstance.transform.up * crtForce * forceAmount);
         bulletInstance.transform.SetParent(afterShootTF);
         bulletInstance.GetComponent<Collider2D>().isTrigger = false;
+        
         bulletInstance.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
         ReadyWordBullet();               
         DestroyWordBullet();

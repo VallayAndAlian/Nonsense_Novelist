@@ -280,7 +280,8 @@ public class CreateOneCharacter : MonoBehaviour
 /// </summary>
 /// <param name="count"></param>
     public void CreateNewCharacter(int count)
-    {        
+    {
+        InitPos();
         //重置角色
         text.color = Color.black;
         text.text = "将角色拖拽放入战场，进行相互对抗";
@@ -338,6 +339,7 @@ public class CreateOneCharacter : MonoBehaviour
     /// </summary>
     public void CreateAllCharacter( )
     {
+        InitPos();
         //重置角色
         text.color = Color.black;
         text.text = "将角色拖拽放入战场，进行相互对抗";
@@ -376,6 +378,7 @@ public class CreateOneCharacter : MonoBehaviour
 
     public bool CreateTheCharacter(int ID)
     {
+        InitPos();
         //重置角色
         text.color = Color.black;
         text.text = "将角色拖拽放入战场，进行相互对抗";
@@ -443,5 +446,19 @@ public class CreateOneCharacter : MonoBehaviour
             }
 
         }
+    }
+
+    void InitPos()
+    {
+        var _p = this.transform.Find("Panel").Find("charaPos");
+
+        for (int j = 0; j < _p.childCount; j++)
+        {
+            for(int i= _p.GetChild(j).childCount-1; i>=0;i--)
+            {
+                Destroy(_p.GetChild(j).GetChild(i).gameObject);
+            }
+        }
+       
     }
 }
