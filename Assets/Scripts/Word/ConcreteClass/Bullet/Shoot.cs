@@ -44,6 +44,8 @@ public class Shoot : MonoBehaviour
     public static Vector2 pointt;
     private LayerMask mask=9;
     RaycastHit2D hit;
+    RaycastHit2D hit2;
+    public float ra = 1f;
     private void Update()
     {
             if (CreateOneCharacter.isTwoSides && CreateOneCharacter.isAllCharaUp)
@@ -76,15 +78,15 @@ public class Shoot : MonoBehaviour
                 //2d射线检测需要指定参与碰撞的layer 并且添加射线长度，否则会失效
                 LayerMask layer = 1 << 9;
                 hit = Physics2D.Raycast(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), gang.GetChild(0).transform.up, Mathf.Infinity, layer);
-                Debug.DrawLine(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), hit.point, Color.black);
-                if (hit.collider != null)
+                //Debug.DrawLine(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), hit.point, Color.black);
+                hit2 =Physics2D.CircleCast(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), ra, gang.GetChild(0).transform.up, Mathf.Infinity, layer);
+                if (hit2.collider != null)
                 {
 
-                    pointt = hit.point;
-                    normall= hit.normal;
+                    pointt = hit2.point;
+                    normall= hit2.normal;
                 }
                 Vector3 re = Track.Reflectt(gang.GetChild(0).transform.up, normall);
-                //track.UpdateDots(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), dotScale * gang.GetChild(0).transform.up * crtForce,normall);
                 track.UpDateDots0(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), dotScale * gang.GetChild(0).transform.up * crtForce,pointt, dotScale * re * crtForce);
                 }
                 else if (Input.GetButtonUp("Fire1") && !fired)
