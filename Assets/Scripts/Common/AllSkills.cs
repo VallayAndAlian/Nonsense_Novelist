@@ -120,6 +120,8 @@ public static class AllSkills
     public static List<Type> setting_QiaoSi = new List<Type>();
     /// <summary>鬼才库</summary>
     public static List<Type> setting_GuiCai = new List<Type>();
+    /// <summary>独特库</summary>
+    public static List<Type> setting_DuTe = new List<Type>();
 
     public static List<Type> Rare_1 = new List<Type>();
     public static List<Type> Rare_2 = new List<Type>();
@@ -301,11 +303,17 @@ public static class AllSkills
         //设定
         setting_PingYong.AddRange(new Type[] { typeof(HaiTangChunShui), typeof(JuLingQiShu), typeof(ShuoShuShuoShu) , typeof(ShengSiZaiWo ), typeof(JingXinHeHu) 
         ,typeof(DongWuZhuanJia),typeof(XiXiXiangTong),typeof(MiaoYuLianZhu),typeof(YiShiErNiao),typeof(QianXianMingLiao),typeof(YiEChuanE),typeof(ShiDaLiChen),typeof(ChaoPinChongJi)
-        ,typeof(YiYiDaiLao),typeof(JiuHouYuXing)});
-        setting_QiaoSi.AddRange(new Type[] {typeof(CanHeYuSheng),typeof(JinYuManTang),typeof(KeJuanZaShui),typeof(SuoDuoMaZhiNv),typeof(YaoHaiZhenCe),typeof(JiNiTaiMei) ,
-        typeof(XueShangJiaShuang),typeof(MouDingHouDong),typeof(NengLiangHuanChong),typeof(FengChiDianChe)});
-        setting_GuiCai.AddRange(new Type[] { typeof(ChengShengZhuiJi),typeof(MeiFeiSeWu), typeof(DongWuLeYuan) });
-
+        ,typeof(YiYiDaiLao),typeof(JiuHouYuXing),typeof(YinJiuLeShen),typeof(CaiSIQuanYong),typeof(ZangHuaJuHun),typeof(LuoHuaShiJie),typeof(ShengCunJiQiao),typeof(PiMaoZengHou)
+        ,typeof(DongWuZhuanJia),typeof(XiuYangShengXi ),typeof(AiZhuanJiuJue),typeof(ZhuRenMingLing),typeof(BingRuGaoHuang),typeof(LuoJingXiaShi),typeof(ZhenFuPingWen),typeof(FuFuDeZheng)
+        ,typeof(JianDuanYiLiao),typeof(QiangZhiFanLan),typeof(QiaoGuShiSui),typeof(ShouShuZhunBei),typeof(BingFaZheng),typeof(MianYiXiTong),typeof(YiQunZhuQiang),typeof(YiMingDiMing)
+        ,});
+        setting_QiaoSi.AddRange(new Type[] {typeof(JinYuManTang),typeof(KeJuanZaShui),typeof(SuoDuoMaZhiNv),typeof(YaoHaiZhenCe),typeof(JiNiTaiMei) ,
+        typeof(XueShangJiaShuang),typeof(MouDingHouDong),typeof(NengLiangHuanChong),typeof(FengChiDianChe),typeof(XianShouHengChang),typeof(JinJiJiuYuan),typeof(YuanQuGuiHua),typeof(ShiPuYouHua)
+        ,typeof(TongShengGOngSi),typeof(YiChanZhuanRang),typeof(WuZhiAiQuan),typeof(QingMiZhiWu),typeof(KuMuFengChun),typeof(QuanBoDuan),typeof(HuaXueJiLe),typeof(XuNiShengMingLi),typeof(ManXingYanZheng)
+        ,typeof(YinKeXiaoYing),typeof(DiXiXinHao)});
+        setting_GuiCai.AddRange(new Type[] { typeof(ChengShengZhuiJi),typeof(MeiFeiSeWu), typeof(DongWuLeYuan), typeof(CanHeYuSheng), typeof(DongWuLeYuan), typeof(QunQingJIFen), typeof(AiYiFanLan)
+        , typeof(CiShengBo), typeof(ZhiHuiHeXin), typeof(FangXueLiaoFa), typeof(ChongFenLiYong)});
+        setting_DuTe.AddRange(new Type[] { typeof(RenXingShangCun), typeof(ShenJingWenLuan) });
     }
 
     /// <summary>
@@ -370,5 +378,11 @@ public static class AllSkills
         int _number = UnityEngine.Random.Range(0, setting_GuiCai.Count);
 
         return setting_GuiCai[_number];
+    }
+    public static Type RandomDT()
+    {
+        int _number = UnityEngine.Random.Range(0, setting_DuTe.Count);
+
+        return setting_DuTe[_number];
     }
 }
