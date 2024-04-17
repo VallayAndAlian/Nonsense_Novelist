@@ -13,6 +13,7 @@ public class ChengShengZhuiJi : AbstractSetting
         base.Awake();
         level = SettingLevel.GuiCai;
         settingName = "眉飞色舞";
+        res_name = "meifeisewu";
         info = "角色每释放4个动词，下次动词追击一次相同技能";
         lables = new List<string> { "高频"};
         hasAdd = false;

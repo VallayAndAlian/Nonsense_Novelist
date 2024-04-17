@@ -13,6 +13,7 @@ public class LuoJingXiaShi : AbstractSetting
         base.Awake();
         level = SettingLevel.PingYong;
         settingName = "落井下石";
+        res_name = "luojingxiashi";
         info = "失恋对获得沮丧的敌人，追击一次“心碎”";
         lables = new List<string> { "角色","高频"};
         hasAdd = false;

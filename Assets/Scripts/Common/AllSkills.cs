@@ -300,10 +300,11 @@ public static class AllSkills
 
         //…Ë∂®
         setting_PingYong.AddRange(new Type[] { typeof(HaiTangChunShui), typeof(JuLingQiShu), typeof(ShuoShuShuoShu) , typeof(ShengSiZaiWo ), typeof(JingXinHeHu) 
-        ,typeof(DongWuZhuanJia)});
+        ,typeof(DongWuZhuanJia),typeof(XiXiXiangTong),typeof(MiaoYuLianZhu),typeof(YiShiErNiao),typeof(QianXianMingLiao),typeof(YiEChuanE),typeof(ShiDaLiChen),typeof(ChaoPinChongJi)
+        ,typeof(YiYiDaiLao),typeof(JiuHouYuXing)});
         setting_QiaoSi.AddRange(new Type[] {typeof(CanHeYuSheng),typeof(JinYuManTang),typeof(KeJuanZaShui),typeof(SuoDuoMaZhiNv),typeof(YaoHaiZhenCe),typeof(JiNiTaiMei) ,
-        });
-        setting_GuiCai.AddRange(new Type[] { typeof(ChengShengZhuiJi),typeof(MeiFeiSeWu)});
+        typeof(XueShangJiaShuang),typeof(MouDingHouDong),typeof(NengLiangHuanChong),typeof(FengChiDianChe)});
+        setting_GuiCai.AddRange(new Type[] { typeof(ChengShengZhuiJi),typeof(MeiFeiSeWu), typeof(DongWuLeYuan) });
 
     }
 

@@ -14,6 +14,7 @@ public class ShengSiZaiWo : AbstractSetting
 
         level = SettingLevel.PingYong;
         settingName = "生死在握";
+        res_name = "shengsizaiwo";
         info = "阿努比斯的队友获得与触发复活时，阿努比斯与其都会获得30生命";
         lables = new List<string> { "角色", "复活" };
 

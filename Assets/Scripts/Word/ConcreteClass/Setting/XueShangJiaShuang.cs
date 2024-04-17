@@ -13,6 +13,7 @@ public class XueShangJiaShuang : AbstractSetting
         base.Awake();
         level = SettingLevel.QiaoSi;
         settingName = "雪上加霜";
+        res_name = "xueshangjiashuang";
         info = "减益状态可叠加更多次";
         lables = new List<string> { "异常"};
         hasAdd = false;

@@ -13,6 +13,7 @@ public class JiuHouYuXing : AbstractSetting
         base.Awake();
         level = SettingLevel.PingYong;
         settingName = "酒后余兴";
+        res_name = "jiuhouyuxing";
         info = "角色每释放4个动词，获得7s“诗情”和“锐利”";
         lables = new List<string> { "高频" };
         hasAdd = false;

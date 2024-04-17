@@ -15,6 +15,7 @@ public class AbstractSetting : MonoBehaviour
 
     [HideInInspector]public SettingLevel level = SettingLevel.PingYong;
     [HideInInspector] public string settingName;
+    [HideInInspector] public string res_name;
     [HideInInspector] public string info;
     [HideInInspector] public List<string> lables;
     [HideInInspector] public CampEnum camp;

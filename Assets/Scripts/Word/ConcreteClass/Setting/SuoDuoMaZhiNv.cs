@@ -13,6 +13,7 @@ public class SuoDuoMaZhiNv : AbstractSetting
         base.Awake();
         level = SettingLevel.QiaoSi;
         settingName = "索多玛之女";
+        res_name = "suoduomazhinv";
         info = "莎乐美攻击意志低于20的角色，有10%概率造成2s俘获";
         lables = new List<string> { "角色", "俘获" };
         hasAdd = false;

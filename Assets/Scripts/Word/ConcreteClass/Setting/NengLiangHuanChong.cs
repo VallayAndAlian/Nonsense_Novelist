@@ -13,6 +13,7 @@ public class NengLiangHuanChong : AbstractSetting
         base.Awake();
         level = SettingLevel.QiaoSi;
         settingName = "能量缓冲";
+        res_name = "nenglianghuanchong";
         info = "角色每拥有1能量点，受到的最终伤害-5%";
         lables = new List<string> { "蓄能" };
         hasAdd = false;

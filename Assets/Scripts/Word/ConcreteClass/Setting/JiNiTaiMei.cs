@@ -15,6 +15,7 @@ public class JiNiTaiMei : AbstractSetting
         base.Awake();
         level = SettingLevel.QiaoSi;
         settingName = "姬妮肽霉";
+        res_name = "jinitaimei";
         info = "贝洛姬·姬妮每次释放动词，治疗一名友方0.2*意志";
         lables = new List<string> { "角色", "高频" };
         hasAdd = false;

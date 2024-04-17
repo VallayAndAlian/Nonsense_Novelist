@@ -13,6 +13,7 @@ public class DongWuZhuanJia : AbstractSetting
         base.Awake();
         level = SettingLevel.PingYong;
         settingName = "动物专家";
+        res_name = "dongwuzhuanjia";
         info = "饲养员以普通攻击治疗时，随从回血效果翻倍";
         lables = new List<string> { "角色", "随从" };
         hasAdd = false;

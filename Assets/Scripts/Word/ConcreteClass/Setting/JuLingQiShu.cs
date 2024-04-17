@@ -14,6 +14,7 @@ public class JuLingQiShu : AbstractSetting
 
         level = SettingLevel.PingYong;
         settingName = "聚灵奇术";
+        res_name = "julingqishu";
         info = "木乃伊每次复活，攻击+3%，防御+6%";
         lables = new List<string> { "角色", "复活" };
 
