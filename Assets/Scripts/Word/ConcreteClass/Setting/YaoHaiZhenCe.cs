@@ -11,8 +11,9 @@ public class YaoHaiZhenCe : AbstractSetting
     public override void Awake()
     {
         base.Awake();
-        level = SettingLevel.PingYong;
+        level = SettingLevel.QiaoSi;
         settingName = "要害侦测";
+        res_name = "yaohaizhence";
         info = "狄卡德每次攻击的攻击特效，有30%概率翻倍，5%概率变为4倍";
         lables = new List<string> { "角色", "攻击特效" };
         hasAdd = false;

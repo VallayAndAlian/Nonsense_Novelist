@@ -13,6 +13,7 @@ public class ShiPuYouHua : AbstractSetting
         base.Awake();
         level = SettingLevel.QiaoSi;
         settingName = "食谱优化";
+        res_name = "shipuyouhua";
         info = "饲养员普通攻击附带“亢奋”的概率，每次攻击提升20%，成功触发后恢复为20%";
         lables = new List<string> { "角色","蓄能"};
         hasAdd = false;

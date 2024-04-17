@@ -13,6 +13,7 @@ public class MeiFeiSeWu : AbstractSetting
         base.Awake();
         level = SettingLevel.GuiCai;
         settingName = "眉飞色舞";
+        res_name = "meifeisewu";
         info = "“亢奋”提供的能量+1";
         lables = new List<string> { "蓄能"};
         hasAdd = false;

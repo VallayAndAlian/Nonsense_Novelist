@@ -11,8 +11,9 @@ public class JinYuManTang : AbstractSetting
     {
         base.Awake();
 
-        level = SettingLevel.PingYong;
+        level = SettingLevel.QiaoSi;
         settingName = "金玉满堂";
+        res_name = "jinyumantang";
         info = "王熙凤获得的名词和形容词，有25%概率视作获得两次";
         lables = new List<string> { "角色"};
 

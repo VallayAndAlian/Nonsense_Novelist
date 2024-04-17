@@ -13,6 +13,7 @@ public class YiYiDaiLao : AbstractSetting
         base.Awake();
         level = SettingLevel.PingYong;
         settingName = "以逸待劳";
+        res_name = "yiyidailao";
         info = "角色每获取1能量，恢复3%最大生命";
         lables = new List<string> {  };
         hasAdd = false;

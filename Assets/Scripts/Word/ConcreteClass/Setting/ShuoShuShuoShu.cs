@@ -15,6 +15,7 @@ public class ShuoShuShuoShu :AbstractSetting
 
         level = SettingLevel.PingYong;
         settingName = "硕鼠硕鼠";
+        res_name = "shuoshushuoshu";
         info = "老鼠基于双方名词数之差，额外造成差值*5%伤害";
         lables = new List<string> { "角色" };
 

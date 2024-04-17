@@ -15,6 +15,7 @@ public class KeJuanZaShui : AbstractSetting
 
         level = SettingLevel.QiaoSi;
         settingName = "苛捐杂税";
+        res_name = "kejuanzashui";
         info = "每当敌方释放动词，垄断公司对其造成一次伤害为20%的普通攻击，附带攻击效果";
         lables = new List<string> { "角色"};
 

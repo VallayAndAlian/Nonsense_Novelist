@@ -56,8 +56,9 @@ public class Setting : MonoBehaviour
                         a.transform.SetParent(this.transform.GetChild(1));
                         a.transform.localScale = Vector3.one;
                         //获取抽出的平庸卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/pingyong/"+ppy.res_name);
                         a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ppy.settingName;//标题
-                        a.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = ppy.info;//描述
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = ppy.info;//描述
                                                                                                 //a.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load("");
                         AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (obj) => { PointerClick(a); });                                                                                                                                             //生成标签
                         Transform p = a.transform.GetChild(1);
@@ -78,21 +79,22 @@ public class Setting : MonoBehaviour
                 {
                     PoolMgr.GetInstance().GetObj(qs, (a) => {
                         Type qs0 = AllSkills.RandomQS();
-                        a.AddComponent(qs0);
+                        var qss= a.AddComponent(qs0) as AbstractSetting;
                         a.transform.SetParent(this.transform.GetChild(1));
                         a.transform.localScale = Vector3.one;
-                        //获取抽出的平庸卡牌内容
-                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().settingName;//标题
-                        a.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().info;//描述
+                        //获取抽出的巧思卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/qiaosi/" + qss.res_name);
+                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = qss.settingName;//标题
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = qss.info;//描述
                         AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (obj)=> { PointerClick(a); });                                                                                                                                             //生成标签
 
                         Transform p = a.transform.GetChild(1);
-                        for (int i = 0; i < a.GetComponent<AbstractSetting>().lables.Count; i++)//生成标签
+                        for (int i = 0; i < qss.lables.Count; i++)//生成标签
                         {
                             GameObject lg = Instantiate(logo);
                             lg.transform.SetParent(a.transform.GetChild(1));
                             lg.transform.localScale = Vector3.one;
-                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + a.GetComponent<AbstractSetting>().lables[i]);
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + qss.lables[i]);
                         }
                     });
                 }
@@ -101,21 +103,22 @@ public class Setting : MonoBehaviour
                 for (int j = 0; j < 3; j++)
                 {
                     PoolMgr.GetInstance().GetObj(gc, (a) => {
-                        Type gc0 = AllSkills.RandomQS();
-                        a.AddComponent(gc0);
+                        Type gc0 = AllSkills.RandomGC();
+                        var gcc= a.AddComponent(gc0)as AbstractSetting;
                         a.transform.SetParent(this.transform.GetChild(1));
                         a.transform.localScale = Vector3.one;
-                        //获取抽出的平庸卡牌内容
-                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().settingName;//标题
-                        a.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = a.GetComponent<AbstractSetting>().info;//描述
+                        //获取抽出的鬼才卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/guicai/" + gcc.res_name);
+                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gcc.settingName;//标题
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = gcc.info;//描述
                         AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, ( data) => { PointerClick( a); });                                                                                                                                             //生成标签
                         Transform p = a.transform.GetChild(1);
-                        for (int i = 0; i < a.GetComponent<AbstractSetting>().lables.Count; i++)
+                        for (int i = 0; i < gcc.lables.Count; i++)
                         {
                             GameObject lg = Instantiate(logo);
                             lg.transform.SetParent(a.transform.GetChild(1));
                             lg.transform.localScale = Vector3.one;
-                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + a.GetComponent<AbstractSetting>().lables[i]);
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + gcc.lables[i]);
                         }
                     });
                 }

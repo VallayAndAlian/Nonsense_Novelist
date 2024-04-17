@@ -13,6 +13,7 @@ public class JingXinHeHu : AbstractSetting
         base.Awake();
         level = SettingLevel.PingYong;
         settingName = "精心呵护";
+        res_name = "jingxinhehu";
         info = "由贝洛姬·姬妮孵化出的工蚁，生命上限+30";
         lables = new List<string> { "角色" };
         hasAdd = false;
