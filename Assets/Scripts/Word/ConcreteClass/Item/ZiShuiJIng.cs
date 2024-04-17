@@ -21,8 +21,8 @@ class ZiShuiJIng: AbstractItems,IJiHuo
         bookName = BookNameEnum.CrystalEnergy;
         description = "未激活，<sprite name=\"psy\">+1；\n激活，<sprite name=\"psy\"> + 3，获得<color=#dd7d0e>共振</color>";
         VoiceEnum = MaterialVoiceEnum.Ceram;
-        rarity = 2; 
-
+        rarity = 2;
+        useTimes = 6;
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<JiHuo>();
     }

@@ -17,7 +17,7 @@ class BeiZhiRuDeJiYi : AbstractItems
         bookName = BookNameEnum.ElectronicGoal;
         description = "<sprite name=\"san\">-5,获得<color=#dd7d0e>改造</color>*2";
         VoiceEnum = MaterialVoiceEnum.Meat;
-
+        useTimes = 6;
         rarity = 1;
 
 

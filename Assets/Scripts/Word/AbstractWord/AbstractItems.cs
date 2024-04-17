@@ -20,7 +20,8 @@ abstract public class AbstractItems : AbstractWord0
     protected AbstractCharacter aim;
     /// <summary>特殊效果存储引用</summary>
     protected List<AbstractBuff> buffs = new List<AbstractBuff>();
-
+    /// <summary>名词</summary>
+    public int useTimes = 2;
     virtual public void Awake()
     {
         aim = GetComponent<AbstractCharacter>();
@@ -38,7 +39,7 @@ abstract public class AbstractItems : AbstractWord0
     /// <param name="chara">持有者</param>
     virtual public void UseItem(AbstractCharacter chara)
     {
-        
+       
     }
 
     /// <summary>

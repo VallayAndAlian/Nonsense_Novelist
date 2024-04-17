@@ -15,7 +15,7 @@ class herusizhiyan : AbstractItems
         base.Awake();
 
         itemID = 7;
-
+        useTimes = 3;
         wordName = "荷鲁斯之眼";
         bookName = BookNameEnum.EgyptMyth;
         description = "<sprite name=\"atk\">+4,每次复活攻击+1";

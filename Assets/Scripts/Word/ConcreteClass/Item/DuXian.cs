@@ -15,7 +15,7 @@ class DuXian : AbstractItems
         itemID = 19;
         wordName = "毒腺";
         bookName = BookNameEnum.PHXTwist;
-        
+        useTimes = 2;
         description = "自身与随从的<sprite name=\"atk\">+1,附带<color=#dd7d0e>腐蚀</color>";
         holdEnum = HoldEnum.handSingle;
         VoiceEnum = MaterialVoiceEnum.Ceram;

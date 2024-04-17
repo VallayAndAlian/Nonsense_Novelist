@@ -19,6 +19,7 @@ class XianZhiHead : AbstractItems
         description = "<sprite name=\"psy\">+30%，<sprite name=\"san\">-30%，受到的控制时间 - 1s";
         VoiceEnum = MaterialVoiceEnum.Ceram;
         rarity = 3;
+        useTimes = 3;
     }
 
     public override void UseItem(AbstractCharacter chara)

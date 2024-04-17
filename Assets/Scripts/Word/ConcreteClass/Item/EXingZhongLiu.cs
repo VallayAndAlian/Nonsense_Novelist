@@ -18,7 +18,7 @@ class EXingZhongLiu : AbstractItems,IChongNeng
         description = "每次弹射<sprite name=\"hpmax\">-30";
 
         VoiceEnum = MaterialVoiceEnum.Ceram;
-
+        useTimes = 6;
         rarity = 1;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))

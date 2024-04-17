@@ -18,7 +18,7 @@ class TongLingBaoyu : AbstractItems
         wordName = "通灵宝玉";
         bookName = BookNameEnum.HongLouMeng;
         rarity = 4;
-
+        useTimes = 4;
         VoiceEnum = MaterialVoiceEnum.materialNull;
 
 

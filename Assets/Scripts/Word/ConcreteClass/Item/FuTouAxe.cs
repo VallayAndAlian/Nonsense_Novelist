@@ -14,7 +14,7 @@ class FuTouAxe : AbstractItems
         base.Awake();
         itemID = 20;
         wordName = "钝斧头";
-
+        useTimes = 6;
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"atk\">+1";
  

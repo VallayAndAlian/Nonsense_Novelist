@@ -16,7 +16,7 @@ class QiGuaiShiXiang : AbstractItems
         wordName = "奇怪石像";
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"psy\">+1";
-
+        useTimes = 6;
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
         rarity = 1;

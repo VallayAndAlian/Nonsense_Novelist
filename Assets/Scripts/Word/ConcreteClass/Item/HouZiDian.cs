@@ -16,7 +16,7 @@ class HouZiDian : AbstractItems
         wordName = "厚字典";
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"def\">+3";
-
+        useTimes = 6;
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
         rarity = 1;

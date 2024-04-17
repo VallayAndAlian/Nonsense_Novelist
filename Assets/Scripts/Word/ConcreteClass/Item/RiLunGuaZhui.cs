@@ -13,7 +13,7 @@ class RiLunGuaZhui : AbstractItems
     {
         base.Awake();
         itemID = 6;
-
+        useTimes = 3;
         wordName = "日轮挂坠";
         bookName = BookNameEnum.EgyptMyth;
         description = "<sprite name=\"hpmax\">+30，恢复+3,可消耗进行复活";

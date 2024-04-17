@@ -549,7 +549,6 @@ public class EventUI : MonoBehaviour
         #endregion
 
 
-
         //Éú³É¿¨ÅÆ
         for (int i = 0; i < 3; i++)
         {
@@ -597,7 +596,6 @@ public class EventUI : MonoBehaviour
         RefreshNowList();
 
 
-      
     }
 
 

@@ -16,7 +16,7 @@ class LengXiangWan : AbstractItems
         wordName = "冷香丸";
         bookName = BookNameEnum.HongLouMeng;
         rarity = 2;
-
+        useTimes = 2;
         VoiceEnum = MaterialVoiceEnum.materialNull;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))

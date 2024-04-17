@@ -17,7 +17,7 @@ class ShiWuFengRong : AbstractItems
         bookName = BookNameEnum.ZooManual;
         description = "随从四维+10%，获得时随机获得一个<color=#dd7d0e>丰容设施</color>";//随从
         rarity =3;
-
+        useTimes = 3;
         VoiceEnum = MaterialVoiceEnum.materialNull;
    
 

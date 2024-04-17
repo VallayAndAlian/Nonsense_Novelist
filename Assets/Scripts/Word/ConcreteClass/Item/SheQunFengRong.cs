@@ -22,7 +22,7 @@ class SheQunFengRong : AbstractItems
         bookName = BookNameEnum.ZooManual;
         description = "自动合成<color=#dd7d0e>混养笼</color>。每种不同生物，使混养笼<sprite name=\"hp\"> + 40";//随从
         rarity =2;
-
+        useTimes = 2;
         VoiceEnum = MaterialVoiceEnum.materialNull;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))

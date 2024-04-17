@@ -77,8 +77,7 @@ public class ShooterWordCheck : MonoBehaviour
         textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
        
         foreach (var _word in GameMgr.instance.GetNowList())
-        {
-           
+        { 
             PoolMgr.GetInstance().GetObj(word_adj, (obj) =>
             {
                 var word = obj.AddComponent(_word) as AbstractWord0;
@@ -98,7 +97,6 @@ public class ShooterWordCheck : MonoBehaviour
       
         foreach (var _word in GameMgr.instance.GetHasUsedList())
         {
-
             PoolMgr.GetInstance().GetObj(word_item, (obj) =>
             {
                 var word = obj.AddComponent(_word) as AbstractWord0;

@@ -18,7 +18,7 @@ class WaiGuGe : AbstractItems
 
         bookName = BookNameEnum.PHXTwist;
         description = "自身与随从的<sprite name=\"def\">+5";
-
+        useTimes = 6;
         VoiceEnum = MaterialVoiceEnum.Meat;
 
         rarity = 1;

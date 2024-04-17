@@ -17,7 +17,7 @@ class Nexus_6Arm : AbstractItems
         bookName = BookNameEnum.ElectronicGoal; 
         description = "<sprite name=\"atk\">+5，攻击造成三段伤害，获得<color=#dd7d0e>改造</color>*3";
         VoiceEnum = MaterialVoiceEnum.Meat;
-
+        useTimes = 1;
         rarity = 4;
     }
     override public string[] DetailLable()

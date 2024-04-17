@@ -17,7 +17,7 @@ class BoLiGuaZhui : AbstractItems
         wordName = "玻璃挂坠";
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"san\">+3";
-
+        useTimes = 6;
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
         rarity = 1;

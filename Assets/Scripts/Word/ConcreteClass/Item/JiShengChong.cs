@@ -17,7 +17,7 @@ class JiShengChong : AbstractItems
         bookName = BookNameEnum.FluStudy;
         description = "<sprite name=\"def\">-3，自身与随从的攻击附带<color=#dd7d0e>患病</color>";
         //自身与随从的攻击附带“患病”，持续6s
-
+        useTimes = 4;
         VoiceEnum = MaterialVoiceEnum.Meat;
 
         rarity = 2;

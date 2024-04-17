@@ -190,7 +190,7 @@ public class CharacterMouseDrag : MonoBehaviour
         }
         else if (Camera.main.WorldToViewportPoint(target.position).y<0.4)
         {
-            print("hey man");
+            
             DeleteBlack();
             this.transform.parent =oriParent.GetChild(siblingBefore);
             nowParentTF = transform.parent;
@@ -205,7 +205,7 @@ public class CharacterMouseDrag : MonoBehaviour
         }
         else//没有检测到站位
         {
-            print("hey dsdasdadfdsadddddd");
+            
             transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
             this.transform.localScale = ScaleWithTure(afterScale);
             if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))
@@ -358,7 +358,7 @@ public class CharacterMouseDrag : MonoBehaviour
     void DeleteBlack()
     {
         if (black == null) return;
-        print("want to die");
+        
         Destroy(black);
         black = null;
     }

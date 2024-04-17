@@ -308,7 +308,7 @@ public class CreateOneCharacter : MonoBehaviour
                 }
             }
             array.Add(number);
-            print(number);
+          
             GameObject chara = Instantiate(charaPrefabs[number]);
             chara.transform.SetParent(charaPos.GetChild(i));
             chara.transform.position = new Vector3(charaPos.GetChild(i).position.x, charaPos.GetChild(i).position.y + CharacterMouseDrag.offsetY, charaPos.GetChild(i).position.z);

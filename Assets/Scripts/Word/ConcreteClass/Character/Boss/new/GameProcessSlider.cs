@@ -275,11 +275,11 @@ public class GameProcessSlider : MonoBehaviour
 
                 if (i == _random)//是重要事件
                 {
-                    print("死");
+                   
                     int loop = 0;
                     while (!(GameMgr.instance.HaveCanHappenKeyEvent(numx)) && (loop < 50))
                     {
-                        print("loop"+ loop);
+                        
                         loop += 1;
                         numx = Random.Range(1, 101);
                         if (numx <= xiWang) { numx = 0; }
