@@ -491,11 +491,9 @@ public class GameMgr : MonoSingleton<GameMgr>
             }
             int _random = UnityEngine.Random.Range(0, NwordCanUseTimes[_res].Count);
             NwordCanUseTimes[_res][_random] -= 1;
-            print("NwordCanUseTimes[_res][_random]" + NwordCanUseTimes[_res][_random]+"!!"+ _random);
-            print( _res.Name+ "===" +NwordCanUseTimes[_res][_random]);
+
             if (NwordCanUseTimes[_res][_random] <= 0)
             {
-                print("delete"+ _res.Name);
                 DeleteCardList(_res);
             }
 

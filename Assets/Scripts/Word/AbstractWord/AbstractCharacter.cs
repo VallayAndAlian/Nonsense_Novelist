@@ -532,6 +532,23 @@ abstract public class AbstractCharacter : AbstractWord0
         }
     }
 
+    /// <summary>
+    /// 清除正面状态
+    /// </summary>
+    public void DeleteGoodBuff(int _count)
+    {
+        var x = 0;
+        var _buffs = GetComponents<AbstractBuff>();
+        foreach (var _buff in _buffs)
+        {
+            if (x >= _count) return;
+            if (!_buff.isBad)
+            {
+                Destroy(_buff); x++;
+            }
+        }
+    }
+
 
     #endregion
 

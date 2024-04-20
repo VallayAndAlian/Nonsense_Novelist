@@ -17,7 +17,7 @@ class ChaBei : AbstractItems
         wordName = "茶杯";
         bookName = BookNameEnum.HongLouMeng;
         rarity = 1;
-
+        useTimes = 6;
         VoiceEnum = MaterialVoiceEnum.Ceram;
 
         description = "<sprite name=\"psy\">+2";

@@ -1,0 +1,88 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+/// <summary>
+/// 怪物：偏见
+/// </summary>
+public class PianJian : AbstractCharacter
+{
+    override public void Awake()
+    {
+        base.Awake();
+
+        //基础信息
+        characterID = 7;
+        wordName = "赛博疯子";
+        bookName = BookNameEnum.allBooks;
+        brief = "暂无文案";
+        description = "暂无文案";
+
+        //数值
+        hp = maxHp = 30;
+        atk = 6;
+        def = 20;
+        psy = 6;
+        san = 15;
+
+        attackInterval = 2.2f;
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
+        attackDistance = 500;
+        myState.aimCount = 1;
+        attackAmount = 1;
+        hasBetray = false;
+
+        //特性
+        roleName = "法师";
+        roleInfo = "攻击有30%概率移除对方一层增益";//30%概率攻击移除一层增益
+        event_AttackA += AttackMore;
+    }
+
+    /// <summary>
+    /// 身份
+    /// </summary>
+    void AttackMore()
+    {
+        for (int i = 0; i < myState.aim.Count; i++)
+        {
+            int _random = Random.Range(0, 100);
+            if (_random <= 30)
+            {
+                myState.aim[i].DeleteGoodBuff(1);
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        event_AttackA -= AttackMore;
+    }
+
+
+
+
+
+    public override string ShowText(AbstractCharacter otherChara)
+    {
+        if (otherChara != null)
+            return "阿努比斯出场文本";
+        else
+            return null;
+    }
+    public override string CriticalText(AbstractCharacter otherChara)
+    {
+        if (otherChara != null)
+            return "“我就知道，别人不挑剩下的也不给我。”林黛玉轻捻一朵花瓣，向" + otherChara.wordName + "飞去";
+        else
+            return null;
+    }
+
+    public override string LowHPText()
+    {
+        return "黛玉对侍女喘息道：“笼上火盆罢。”便将一对帕子，一叠诗稿焚尽于火盆中。";
+    }
+    public override string DieText()
+    {
+        return "“宝玉…宝玉…你好……”黛玉没说完便合上了双眼。";
+    }
+}

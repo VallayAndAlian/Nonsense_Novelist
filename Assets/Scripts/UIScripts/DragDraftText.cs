@@ -27,6 +27,7 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector] public bool hasDelete = false;
     [HideInInspector] public bool canDelete = false;
 
+    public int index;
 
     void Start()
     {
@@ -35,6 +36,10 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         //if (draftUi == null) Debug.LogWarning("draftUi找不到");
     }
 
+    public void RefreshIndex()
+    {
+        index=transform.GetSiblingIndex();
+    }
     #region 拖拽事件
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -88,6 +93,8 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                         
                         changeIndex = index;
                         this.transform.SetSiblingIndex(index);
+                        draftUi.ChangeIndexContent(this.index, index);
+                        draftUi.RefreshIndex();
                         draftUi.UseInkOnce(0);
                     } 
                 }
@@ -110,6 +117,8 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                         changeIndex = index;
                         this.transform.SetSiblingIndex(index);
+                        draftUi.ChangeIndexContent(this.index, index);
+                        draftUi.RefreshIndex();
                         draftUi.UseInkOnce(0);
                     }
                 }

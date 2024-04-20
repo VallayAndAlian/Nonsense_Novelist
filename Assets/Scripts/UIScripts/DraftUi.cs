@@ -13,9 +13,6 @@ public class DraftUi : MonoBehaviour
     //文本内容
     List<string> content=new List<string>();
 
-
- 
-    
     // 不换行的的空格符
     public static readonly string NO_BREAKING_SPACE = "\u00A0";//"\u3000";
 
@@ -35,6 +32,7 @@ public class DraftUi : MonoBehaviour
     int inkBlueCount = 5;
     Image inkBlueObj;
     Image penObj;
+
     //文本修改
     int oriTextLen;
     bool textHasChange;
@@ -43,11 +41,15 @@ public class DraftUi : MonoBehaviour
     float sizeWidth;
     float sizeFont;
 
-
+    //页数相关
+    TextMeshProUGUI textPage;
+    public int maxPage=1;
+    public int nowPage = 1;
+    List<int> pageCount = new List<int>();
+    List<Transform> pageChild = new List<Transform>();
 
     private void Awake()
     {
-        
         sentenseObj = ResMgr.GetInstance().Load<GameObject>(sentenseAdr);
         parent = this.transform.Find("Panel");
 
@@ -60,11 +62,14 @@ public class DraftUi : MonoBehaviour
         }
 
         select = false;
+
         //获取墨水本身
         inkRedObj = this.transform.Find("red").GetComponent<Image>();
         inkBlackObj = this.transform.Find("black").GetComponent<Image>();
         inkBlueObj = this.transform.Find("blue").GetComponent<Image>();
         penObj = this.transform.Find("pen").GetComponent<Image>();
+
+        textPage = this.transform.Find("page").GetComponent<TextMeshProUGUI>();
 
         //初始化设定
         ChangeInkNum();
@@ -79,7 +84,7 @@ public class DraftUi : MonoBehaviour
     #region 开启草稿本的外部界面
     public void openDraft()
     {
-        print(content.Count);
+       // print(content.Count);
         CharacterManager.instance.pause = true;
         this.gameObject.SetActive(true);
         //this.transform.Find("Panal").
@@ -92,52 +97,152 @@ public class DraftUi : MonoBehaviour
  
         InitDraft();
     }
+
     public void closeDraft()
     {
         CharacterManager.instance.pause = false;
+      
         for (int i = parent.childCount-1; i >=0; i--)
         {
+            if(parent.GetChild(i).GetComponent<DragDraftText>().hasDelete)
+            {
+                content.RemoveAt(parent.GetChild(i).GetComponent<DragDraftText>().index);
+                
+            }
             PoolMgr.GetInstance().PushObj(parent.GetChild(i).name, parent.GetChild(i).gameObject);
         } 
         this.gameObject.SetActive(false);
         //InitDraft();
     }
 
- 
     void InitDraft()
     {
         ChangeInkNum();
         ClickInk(-1);
 
+        //遍历所有的句子，找到对应的行数
+        maxPage = 1;
+        pageCount.Clear();
+        pageCount.Add(0);
+        pageChild.Clear();
 
         //生成句子,绑定组件
         for (int i = 0; i < content.Count; i++)
         {
             PoolMgr.GetInstance().GetObj(sentenseObj, (obj) =>
-             {
-                 
-                 obj.transform.parent = parent;
-                 obj.transform.localScale = Vector3.one;
-                 var _showText = obj.transform.Find("showText").GetComponent<TextMeshProUGUI>();
-                 var _inputField = obj.GetComponent<TMP_InputField>();
+            {
+                obj.transform.parent = parent;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponent<DragDraftText>().index = i;
+         
+                var _showText = obj.transform.Find("showText").GetComponent<TextMeshProUGUI>();
+                var _inputField = obj.GetComponent<TMP_InputField>();
 
-                 _showText.text = content[i];
-                 _inputField.onValueChanged.AddListener((obj) => { CheckContent(_inputField); });
-                 _inputField.onSelect.AddListener((obj)=> { OpenEditText(_inputField); }); 
-                 _inputField.onDeselect.AddListener((obj) => { CloseEditText(_inputField); });
+                _showText.text = content[i];
+                _inputField.onValueChanged.AddListener((obj) => { CheckContent(_inputField); });
+                _inputField.onSelect.AddListener((obj)=> { OpenEditText(_inputField); }); 
+                _inputField.onDeselect.AddListener((obj) => { CloseEditText(_inputField); });
 
-                 //转行            
-                 var count = Mathf.Floor((sizeFont * (content[i].Length))/ (sizeWidth - _showText.margin.x));
-                 for (int x = 0; x < count - 1; x++)
-                 {
-                     _inputField.text += "\n";
-                 }
-                 _inputField.text += "\n";
-                 
-             });
+                //转行            
+                var count = Mathf.Floor((sizeFont * (content[i].Length))/ (sizeWidth - _showText.margin.x));
+                for (int x = 0; x < count - 1; x++)
+                {
+                    _inputField.text += "\n";
+                }
+                _inputField.text += "\n";
+
+                //刷新页面并且计算页数
+                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parent);
+                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(1, 0);
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parent);
+                //print((RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position)).y);
+                if ((RectTransformUtility.WorldToScreenPoint(Camera.main,obj.GetComponent<RectTransform>().position)).y <= 50f)
+                {
+                    maxPage += 1;
+                    pageCount.Add(i);
+                }
+                pageChild.Add(obj.transform);
+            });
+
+            //将现在的页数设为最大页数，隐藏其它页数的句子。
+            nowPage = maxPage;
+
+            ShowPageSentences(nowPage);
+
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parent);
+    }
+
+    public void ShowPageSentences(int _page)
+    {
+        textPage.text =nowPage+ " / " +maxPage;
+        print("现在是第" + nowPage + "页");
+        //nowpage\_page\maxpage都是从1开始的）
+        if (_page < 0 || _page > maxPage)
+        {
+            print("调用页码出错");
+            return;
+        }
+
+        if (_page == maxPage)
+        {
+            for (int x = 0; x < pageChild.Count; x++)
+            {
+                if (x < pageCount[nowPage - 1])
+                {
+                    pageChild[x].gameObject.SetActive(false);
+                }
+                else
+                { pageChild[x].gameObject.SetActive(true); }
+            }
+        }
+        else if (_page == 1)
+        {
+            for (int x = 0; x < pageChild.Count; x++)
+            {
+                if (x >= pageCount[nowPage])
+                {
+                    pageChild[x].gameObject.SetActive(false);
+                }
+                else
+                { pageChild[x].gameObject.SetActive(true); }
+            }
+        }
+        else
+        {
+            for (int x = 0; x < pageChild.Count; x++)
+            {
+                if ((x <= pageCount[nowPage-1])||(x >= pageCount[nowPage]))
+                {
+                    pageChild[x].gameObject.SetActive(false);
+                }
+                else
+                { pageChild[x].gameObject.SetActive(true); }
+            }
+        }
+    }
+
+    public void NextPage()
+    {
+        if (nowPage == maxPage) return;
+        nowPage++;
+        ShowPageSentences(nowPage);
+    }
+    public void LastPage()
+    {
+        if (nowPage == 1) return;
+        nowPage--;
+        ShowPageSentences(nowPage);
+    }
+
+    public void RefreshIndex()
+    {
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            parent.GetChild(i).GetComponent<DragDraftText>().RefreshIndex();
+        }
     }
     #endregion
 
@@ -391,22 +496,35 @@ public class DraftUi : MonoBehaviour
     #endregion
 
 
+    
+
     #region 文本编辑蓝墨水
     /// <summary>
     /// 实现文本编辑框
     /// </summary>
     public void OpenEditText(TMP_InputField _inputField)
     {
+
+
+       
         if (select) return;
         if (!inkBlueOn) return; 
         if (!IsInkEnough(2))  return;
         if (_inputField.GetComponent<DragDraftText>().hasDelete) return;
 
-      
+
+     
+
+
         _inputField.transform.Find("editText").gameObject.SetActive(true);
         _inputField.caretColor+=new Color(0,0,0,1);
         TextMeshProUGUI _text = _inputField.transform.Find("showText").GetComponent<TextMeshProUGUI>();
         _inputField.text = _text.text;
+
+        //找到现在正在处理的是哪一个
+        //nowEditIndex = content.FindIndex(item => item.Contains(_text.text));
+      
+
 
         oriTextLen = _text.text.Length;
 
@@ -434,6 +552,9 @@ public class DraftUi : MonoBehaviour
         _text.gameObject.SetActive(true);
         select = false;
 
+        //修改库里的文本
+        content[_inputField.GetComponent<DragDraftText>().index] = _inputField.text;
+        
 
         //转行
         _inputField.text = "";
@@ -450,6 +571,9 @@ public class DraftUi : MonoBehaviour
             UseInkOnce(2);
             _inputField.GetComponent<DragDraftText>().hasChange = true;
         }
+
+     
+        
 
         _inputField.transform.Find("editText").gameObject.SetActive(false);
         _inputField.caretColor -= new Color(0, 0, 0, 1);
@@ -501,10 +625,45 @@ public class DraftUi : MonoBehaviour
     {
         content.Clear(); 
     }
+
     public void AddContent(string _new)
     {
-        print(_new);
+      
         content.Add(_new);
+    }
+    public void ChangeIndexContent(int oldIndex,int newIndex)
+    {
+        if (oldIndex == newIndex) return;
+
+        string _new= content[oldIndex];
+        List<string> newList = new List<string>();
+
+        if (oldIndex < newIndex)
+        {
+            for (int x = oldIndex+1; x < content.Count; x++)
+            {
+               
+                newList.Add(content[x]);
+                if(x== newIndex)
+                    newList.Add(_new);
+            }
+            content.RemoveRange(oldIndex, content.Count - oldIndex);
+            content.AddRange(newList);
+        }
+        else
+        {
+            for (int x = newIndex ; x < content.Count; x++)
+            {
+                if (x != oldIndex)
+                    newList.Add(content[x]);
+            }
+            content.RemoveRange(newIndex, content.Count - newIndex);
+            content.Add(_new);
+            content.AddRange(newList);
+        }
+       
+     
+
     }
     #endregion
 }
