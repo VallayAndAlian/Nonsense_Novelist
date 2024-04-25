@@ -17,7 +17,7 @@ public class WuZhiAiQuan : AbstractSetting
         info = "敌方被情迷的角色攻击速度+50%，且无视“沮丧”";
         lables = new List<string> { "情迷" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

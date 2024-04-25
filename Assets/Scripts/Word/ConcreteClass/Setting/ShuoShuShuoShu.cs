@@ -21,7 +21,7 @@ public class ShuoShuShuoShu :AbstractSetting
 
         hasAdd = false;
 
-        Init();
+      
 
 
     }

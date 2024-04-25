@@ -19,7 +19,7 @@ public class JiNiTaiMei : AbstractSetting
         info = "贝洛姬·姬妮每次释放动词，治疗一名友方0.2*意志";
         lables = new List<string> { "角色", "高频" };
         hasAdd = false;
-        Init();
+
     }
     public override void Init()
     {

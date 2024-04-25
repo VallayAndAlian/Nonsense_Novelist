@@ -17,7 +17,7 @@ public class XiuYangShengXi : AbstractSetting
         info = "复活后额外恢复我方角色30%的血量";
         lables = new List<string> { "复活" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class LuoJingXiaShi : AbstractSetting
         info = "失恋对获得沮丧的敌人，追击一次“心碎”";
         lables = new List<string> { "角色","高频"};
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class JianDuanYiLiao : AbstractSetting
         info = "拥有“卓越性能”的我方角色，生命上限+150";
         lables = new List<string> { "改造" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

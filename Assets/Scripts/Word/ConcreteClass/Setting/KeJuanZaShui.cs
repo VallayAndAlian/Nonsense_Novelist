@@ -21,7 +21,7 @@ public class KeJuanZaShui : AbstractSetting
 
         hasAdd = false;
 
-        Init();
+   
 
 
     }

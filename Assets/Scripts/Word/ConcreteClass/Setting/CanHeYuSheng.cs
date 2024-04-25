@@ -16,7 +16,7 @@ public class CanHeYuSheng : AbstractSetting
         info = "林黛玉拥有的动词释放所需能量+2，其中能量最高的动词，获得能量的速度翻倍";
         lables = new List<string> { "角色", "蓄能" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

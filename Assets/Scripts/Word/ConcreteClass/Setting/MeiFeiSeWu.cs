@@ -17,7 +17,7 @@ public class MeiFeiSeWu : AbstractSetting
         info = "“亢奋”提供的能量+1";
         lables = new List<string> { "蓄能"};
         hasAdd = false;
-        Init();
+     
     }
     public override void Init()
     {

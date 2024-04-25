@@ -17,7 +17,7 @@ public class XianShouHengChang : AbstractSetting
         info = "通灵宝玉将50%的伤害转移给友方";
         lables = new List<string> {  };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

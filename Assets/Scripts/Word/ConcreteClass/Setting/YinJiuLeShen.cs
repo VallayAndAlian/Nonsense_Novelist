@@ -17,7 +17,7 @@ public class YinJiuLeShen : AbstractSetting
         info = "我方精神超过50的角色，自身和随从的攻击额外造成5精神伤害";
         lables = new List<string> { "攻击特效" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

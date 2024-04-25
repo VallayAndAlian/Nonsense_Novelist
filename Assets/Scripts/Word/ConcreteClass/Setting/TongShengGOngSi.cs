@@ -17,7 +17,7 @@ public class TongShengGOngSi : AbstractSetting
         info = "我方角色可以共享相邻队友的复活次数";
         lables = new List<string> { "复活" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

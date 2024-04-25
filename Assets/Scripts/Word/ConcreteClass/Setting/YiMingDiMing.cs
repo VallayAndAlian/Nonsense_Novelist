@@ -17,7 +17,7 @@ public class YiMingDiMing : AbstractSetting
         info = "当角色倒下时，牺牲3只友方工蚁可以将其复活";
         lables = new List<string> { "牺牲","复活" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

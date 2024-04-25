@@ -17,7 +17,7 @@ public class ChengShengZhuiJi : AbstractSetting
         info = "角色每释放4个动词，下次动词追击一次相同技能";
         lables = new List<string> { "高频"};
         hasAdd = false;
-        Init();
+     
     }
     public override void Init()
     {

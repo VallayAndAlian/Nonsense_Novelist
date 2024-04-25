@@ -17,7 +17,7 @@ public class QunQingJIFen : AbstractSetting
         info = "我方角色倒下时，所有友方随从全属性+5";
         lables = new List<string> { "牺牲" };
         hasAdd = false;
-        Init();
+         
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class LuoHuaShiJie : AbstractSetting
         info = "每2s，随机角色获得1花瓣";
         lables = new List<string> { "花瓣" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

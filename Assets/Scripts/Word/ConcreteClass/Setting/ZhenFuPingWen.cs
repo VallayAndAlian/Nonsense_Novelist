@@ -17,7 +17,7 @@ public class ZhenFuPingWen : AbstractSetting
         info = "我方每层共振生命上限+20";
         lables = new List<string> {"共振" };
         hasAdd = false;
-        Init();
+     
     }
     public override void Init()
     {

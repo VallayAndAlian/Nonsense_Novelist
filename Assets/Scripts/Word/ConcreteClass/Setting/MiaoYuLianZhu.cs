@@ -17,7 +17,7 @@ public class MiaoYuLianZhu : AbstractSetting
         info = "排比会让词条分裂成5个，而非3个";
         lables = new List<string> { "弹射" };
         hasAdd = false;
-        Init();
+    
     }
     public override void Init()
     {

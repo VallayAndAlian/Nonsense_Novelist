@@ -19,7 +19,7 @@ public class JinYuManTang : AbstractSetting
 
         hasAdd = false;
 
-        Init();
+ 
 
 
     }

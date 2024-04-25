@@ -17,7 +17,7 @@ public class ShengCunJiQiao : AbstractSetting
         info = "我方角色每拥有20点防御，角色与其随从的生命回复+3";
         lables = new List<string> { "治疗" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

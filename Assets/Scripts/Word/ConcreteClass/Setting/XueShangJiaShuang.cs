@@ -17,7 +17,7 @@ public class XueShangJiaShuang : AbstractSetting
         info = "减益状态可叠加更多次";
         lables = new List<string> { "异常"};
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

@@ -20,7 +20,6 @@ public class JuLingQiShu : AbstractSetting
 
         hasAdd = false;
 
-        Init();
 
 
     }

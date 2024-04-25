@@ -17,7 +17,7 @@ public class DiXiXinHao : AbstractSetting
         info = "工蚁的攻速+50%";
         lables = new List<string> { "随从" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

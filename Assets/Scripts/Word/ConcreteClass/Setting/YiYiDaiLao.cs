@@ -17,7 +17,7 @@ public class YiYiDaiLao : AbstractSetting
         info = "角色每获取1能量，恢复3%最大生命";
         lables = new List<string> {  };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

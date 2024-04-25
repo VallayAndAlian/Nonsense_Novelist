@@ -17,7 +17,7 @@ public class ShenJingWenLuan : AbstractSetting
         info = "全场每层“改造”有5%概率让角色不分敌我地随机攻击";
         lables = new List<string> { "改造" };
         hasAdd = false;
-        Init();
+    
     }
     public override void Init()
     {

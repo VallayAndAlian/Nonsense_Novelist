@@ -17,7 +17,7 @@ public class QingMiZhiWu : AbstractSetting
         info = "敌方所有减益状态的时间+1s，情迷+2s";
         lables = new List<string> { "异常","情迷" };
         hasAdd = false;
-        Init();
+         
     }
     public override void Init()
     {

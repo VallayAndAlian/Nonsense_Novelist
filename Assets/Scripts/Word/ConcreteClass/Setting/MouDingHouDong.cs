@@ -17,7 +17,7 @@ public class MouDingHouDong : AbstractSetting
         info = "角色持有的动词中，能量最高的动词，能量+4，释放后追击一次相同技能";
         lables = new List<string> { "蓄能" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

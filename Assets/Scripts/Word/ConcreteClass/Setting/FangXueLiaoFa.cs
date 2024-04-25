@@ -17,7 +17,7 @@ public class FangXueLiaoFa : AbstractSetting
         info = "使敌方角色的某项减益状态达到10层时引爆，消除其身上所有减益状态，每层造成其3%自身生命的伤害";
         lables = new List<string> { "异常" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

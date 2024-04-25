@@ -17,7 +17,7 @@ public class YuanQuGuiHua : AbstractSetting
         info = "每当3个我方随从合成为混养笼时，队友随机获得一个随从";
         lables = new List<string> { "随从" };
         hasAdd = false;
-        Init();
+    
     }
     public override void Init()
     {

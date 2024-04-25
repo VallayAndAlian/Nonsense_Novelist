@@ -17,7 +17,7 @@ public class ShiDaLiChen : AbstractSetting
         info = "我方生命超过300的角色，攻击附带5%最大生命值的伤害";
         lables = new List<string> { "攻击特效" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

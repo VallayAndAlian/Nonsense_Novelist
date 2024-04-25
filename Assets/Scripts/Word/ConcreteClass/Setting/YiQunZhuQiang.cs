@@ -17,7 +17,7 @@ public class YiQunZhuQiang : AbstractSetting
         info = "随从的生命上限+50%，工蚁的生命上限+100%";
         lables = new List<string> { "随从" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

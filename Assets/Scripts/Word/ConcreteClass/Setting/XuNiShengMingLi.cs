@@ -17,7 +17,7 @@ public class XuNiShengMingLi : AbstractSetting
         info = "我方随从每受到20伤害，为宿主提供1能量";
         lables = new List<string> { "随从" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

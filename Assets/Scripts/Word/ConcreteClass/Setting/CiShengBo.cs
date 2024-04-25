@@ -17,7 +17,7 @@ public class CiShengBo : AbstractSetting
         info = "全场共振从4层计算一次，改为3层计算一次";
         lables = new List<string> { "共振" };
         hasAdd = false;
-        Init();
+     
     }
     public override void Init()
     {

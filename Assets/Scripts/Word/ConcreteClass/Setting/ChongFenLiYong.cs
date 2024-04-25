@@ -17,7 +17,7 @@ public class ChongFenLiYong : AbstractSetting
         info = "当随从死亡时，宿主获得其一半生命上限";
         lables = new List<string> { "牺牲","随从" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

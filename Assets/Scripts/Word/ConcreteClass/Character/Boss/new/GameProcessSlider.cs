@@ -277,7 +277,7 @@ public class GameProcessSlider : MonoBehaviour
                 {
                    
                     int loop = 0;
-                    while (!(GameMgr.instance.HaveCanHappenKeyEvent(numx)) && (loop < 50))
+                    while ((!GameMgr.instance.HaveCanHappenKeyEvent(numx)) && (loop < 50))
                     {
                         
                         loop += 1;

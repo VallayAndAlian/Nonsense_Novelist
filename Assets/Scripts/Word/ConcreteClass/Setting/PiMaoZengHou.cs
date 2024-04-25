@@ -17,7 +17,7 @@ public class PiMaoZengHou : AbstractSetting
         info = "我方随从获得20防御";
         lables = new List<string> { "随从" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class HuaXueJiLe : AbstractSetting
         info = "我方“改造”减少的意志会转化为精神";
         lables = new List<string> { "改造" };
         hasAdd = false;
-        Init();
+
     }
     public override void Init()
     {

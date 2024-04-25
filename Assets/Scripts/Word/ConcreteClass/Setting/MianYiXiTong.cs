@@ -17,7 +17,7 @@ public class MianYiXiTong : AbstractSetting
         info = "当我方角色受到治疗时，有20%的概率净化1层负面状态";
         lables = new List<string> { "净化" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

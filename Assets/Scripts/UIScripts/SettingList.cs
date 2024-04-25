@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+
 public class SettingList : MonoBehaviour
 {
     [Header("左右组别基物体（手动设置）")]
@@ -47,8 +49,10 @@ public class SettingList : MonoBehaviour
         //再按照列表刷新
         foreach (var set in GameMgr.instance.settingL)
         {
+            AbstractSetting _set = this.gameObject.AddComponent(set) as AbstractSetting;
+            
             GameObject obj = pingYong;
-            switch (set.level)
+            switch (_set.level)
             {
                 case SettingLevel.PingYong: { obj = pingYong; } break;
                 case SettingLevel.GuiCai: { obj = guiCai; } break;
@@ -60,14 +64,17 @@ public class SettingList : MonoBehaviour
                 _obj.transform.parent = groupL;
                 _obj.transform.localPosition = Vector3.zero;
                 _obj.transform.localScale = Vector3.one;
-                _obj.GetComponentInChildren<Text>().text = set.settingName;
+                print("dsdsd");
+                print(_set.settingName);
+                _obj.GetComponentInChildren<Text>().text = _set.settingName;
             });
         }
 
         foreach (var set in GameMgr.instance.settingR)
         {
+            AbstractSetting _set = this.gameObject.AddComponent(set) as AbstractSetting;
             GameObject obj = pingYong;
-            switch (set.level)
+            switch (_set.level)
             {
                 case SettingLevel.PingYong: { obj = pingYong; } break;
                 case SettingLevel.GuiCai: { obj = guiCai; } break;
@@ -79,7 +86,9 @@ public class SettingList : MonoBehaviour
                 _obj.transform.parent = groupR;
                 _obj.transform.localPosition = Vector3.zero;
                 _obj.transform.localScale = Vector3.one;
-                _obj.GetComponentInChildren<Text>().text = set.settingName;
+                print("dsdsd");
+                print(_set.settingName);
+                _obj.GetComponentInChildren<Text>().text = _set.settingName;
             });
         }
 

@@ -17,7 +17,7 @@ public class DongWuZhuanJia : AbstractSetting
         info = "饲养员以普通攻击治疗时，随从回血效果翻倍";
         lables = new List<string> { "角色", "随从" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

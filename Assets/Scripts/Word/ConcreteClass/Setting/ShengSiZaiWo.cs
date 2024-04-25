@@ -20,7 +20,7 @@ public class ShengSiZaiWo : AbstractSetting
 
         hasAdd = false;
 
-        Init();
+    
 
 
     }

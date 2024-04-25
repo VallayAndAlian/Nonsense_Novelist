@@ -17,7 +17,7 @@ public class XiXiXiangTong : AbstractSetting
         info = "通感词条在场地内的时间增加10s";
         lables = new List<string> { "弹射" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

@@ -160,7 +160,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
         if (CharacterManager.instance.pause)
         {
-            if(this.transform.parent.parent.gameObject.name != "CardGroup")
+           // if(this.transform.parent.parent.gameObject.name != "CardGroup")
                  return;
         }
            

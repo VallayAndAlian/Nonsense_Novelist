@@ -17,7 +17,7 @@ public class ZhiHuiHeXin : AbstractSetting
         info = "全场每层“卓越性能”使角色攻击+10%";
         lables = new List<string> { "改造" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

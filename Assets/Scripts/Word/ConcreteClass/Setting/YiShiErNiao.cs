@@ -17,7 +17,7 @@ public class YiShiErNiao : AbstractSetting
         info = "递进每次撞击墙体，会视作撞击2次";
         lables = new List<string> { "弹射" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

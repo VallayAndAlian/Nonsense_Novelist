@@ -17,7 +17,7 @@ public class FuFuDeZheng : AbstractSetting
         info = "当所有友方，同时获得了3种相同种类的负面状态，将其全部净化";
         lables = new List<string> { "净化" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

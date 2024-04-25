@@ -17,7 +17,7 @@ public class JinJiJiuYuan : AbstractSetting
         info = "我方低于30%血量以及倒下的角色，受到的治疗提升50%";
         lables = new List<string> { "治疗" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

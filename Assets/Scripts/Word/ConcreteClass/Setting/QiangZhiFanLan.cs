@@ -17,7 +17,7 @@ public class QiangZhiFanLan : AbstractSetting
         info = "全场角色每使用6个动词，额外释放一次枪击";
         lables = new List<string> { "高频" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

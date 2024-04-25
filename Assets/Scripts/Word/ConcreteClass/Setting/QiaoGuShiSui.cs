@@ -17,7 +17,7 @@ public class QiaoGuShiSui : AbstractSetting
         info = "垄断公司造成技能与攻击特效伤害的15%，恢复自身与随从的生命";
         lables = new List<string> { "角色"};
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

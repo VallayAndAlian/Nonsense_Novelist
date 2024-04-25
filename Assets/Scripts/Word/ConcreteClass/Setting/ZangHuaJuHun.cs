@@ -17,7 +17,7 @@ public class ZangHuaJuHun : AbstractSetting
         info = "当我方角色倒下时，消耗50花瓣使其复活";
         lables = new List<string> { "花瓣","复活" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class SuoDuoMaZhiNv : AbstractSetting
         info = "莎乐美攻击意志低于20的角色，有10%概率造成2s俘获";
         lables = new List<string> { "角色", "俘获" };
         hasAdd = false;
-        Init();
+       
     }
 
     public override void Init()

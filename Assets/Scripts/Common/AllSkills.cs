@@ -122,7 +122,10 @@ public static class AllSkills
     public static List<Type> setting_GuiCai = new List<Type>();
     /// <summary>¶ÀÌØ¿â</summary>
     public static List<Type> setting_DuTe = new List<Type>();
+    /// <summary>½ÇÉ«±êÇ©¿â</summary>
+    public static List<Type> setting_Chara = new List<Type>();
 
+    //¿¨ÅÆÏ¡ÓÐ¶È
     public static List<Type> Rare_1 = new List<Type>();
     public static List<Type> Rare_2 = new List<Type>();
     public static List<Type> Rare_3 = new List<Type>();
@@ -314,6 +317,10 @@ public static class AllSkills
         setting_GuiCai.AddRange(new Type[] { typeof(ChengShengZhuiJi),typeof(MeiFeiSeWu), typeof(DongWuLeYuan), typeof(CanHeYuSheng), typeof(DongWuLeYuan), typeof(QunQingJIFen), typeof(AiYiFanLan)
         , typeof(CiShengBo), typeof(ZhiHuiHeXin), typeof(FangXueLiaoFa), typeof(ChongFenLiYong)});
         setting_DuTe.AddRange(new Type[] { typeof(RenXingShangCun), typeof(ShenJingWenLuan) });
+
+        setting_Chara.AddRange(new Type[] { typeof(ShuoShuShuoShu), typeof(HaiTangChunShui), typeof(CanHeYuSheng), typeof(JinYuManTang), typeof(DongWuZhuanJia)
+        , typeof(ShiPuYouHua), typeof(JuLingQiShu), typeof(ShengSiZaiWo), typeof(SuoDuoMaZhiNv), typeof(LuoJingXiaShi), typeof(QiaoGuShiSui), typeof(KeJuanZaShui)
+        , typeof(YaoHaiZhenCe), typeof(JingXinHeHu), typeof(JiNiTaiMei)});
     }
 
     /// <summary>
@@ -385,4 +392,12 @@ public static class AllSkills
 
         return setting_DuTe[_number];
     }
+    
+    public static Type RandomChara()
+    {
+        int _number = UnityEngine.Random.Range(0, setting_Chara.Count);
+
+        return setting_Chara[_number];
+    }
+
 }

@@ -17,7 +17,7 @@ public class QianXianMingLiao : AbstractSetting
         info = "暗喻仅需要1次撞击即会揭晓";
         lables = new List<string> { "弹射" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class YinKeXiaoYing : AbstractSetting
         info = "宿主释放技能时，随从有50%概率追击一次攻击，附带攻击特效";
         lables = new List<string> { "随从" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

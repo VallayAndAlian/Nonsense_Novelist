@@ -17,7 +17,7 @@ public class YiChanZhuanRang : AbstractSetting
         info = "我方角色倒下时，随机将携带的3个名词复制给队友";
         lables = new List<string> { "牺牲" };
         hasAdd = false;
-        Init();
+      
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class ManXingYanZheng : AbstractSetting
         info = "所有敌方角色的减益状态的时间+2s，患病+4s";
         lables = new List<string> { "异常" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

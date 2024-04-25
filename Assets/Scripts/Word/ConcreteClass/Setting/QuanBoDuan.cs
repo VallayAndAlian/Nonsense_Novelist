@@ -17,7 +17,7 @@ public class QuanBoDuan : AbstractSetting
         info = "共振的层数计算，从计算友方共振，改为计算全场的共振";
         lables = new List<string> { "共振" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

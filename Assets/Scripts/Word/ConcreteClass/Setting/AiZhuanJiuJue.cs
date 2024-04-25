@@ -17,7 +17,7 @@ public class AiZhuanJiuJue : AbstractSetting
         info = "我方角色倒下时，随机2名敌方角色获得10s“沮丧”";
         lables = new List<string> { "牺牲" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

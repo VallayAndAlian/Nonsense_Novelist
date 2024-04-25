@@ -17,7 +17,7 @@ public class ShouShuZhunBei : AbstractSetting
         info = "角色每2次释放动词，都会让下次攻击变成真实伤害";
         lables = new List<string> { "高频" };
         hasAdd = false;
-        Init();
+   
     }
     public override void Init()
     {

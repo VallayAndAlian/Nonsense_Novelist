@@ -17,7 +17,7 @@ public class ZhuRenMingLing : AbstractSetting
         info = "敌方被情迷的角色，攻击有30%概率造成5s随机负面状态";
         lables = new List<string> { "异常" , "情迷" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

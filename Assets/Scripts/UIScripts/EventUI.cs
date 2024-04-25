@@ -267,11 +267,14 @@ public class EventUI : MonoBehaviour
 
 
     #region 访客
-
+    Animator tempAnimator;
+    WaitForFixedUpdate tempAnim= new WaitForFixedUpdate();
     private int KeyCharacter = -1;
+    int triggerName = -1;
     public void OpenInit_FangKe()
     {
-        DataInit(isKey);
+        
+        DataInit(isKey); 
         KeyCharacter = -1;
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         int loopCount = 0;
@@ -286,14 +289,18 @@ public class EventUI : MonoBehaviour
                 return;
             }
         }
-
+       
         //
         Image sprite = this.transform.Find("Sprite").GetComponent<Image>();
         Image bubble= this.transform.Find("bubble").GetComponent<Image>();
         TextMeshProUGUI words = bubble.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
+        sprite.GetComponent<Animator>().SetBool("0", true);
+        if(triggerName != -1) sprite.GetComponent<Animator>().SetBool(triggerName.ToString(), false);
+        tempAnimator = sprite.GetComponent<Animator>();
+        StartCoroutine(FangKeAnimation());
 
-        int triggerName = -1;
+        triggerName = -1;
         if (isKey && KeyCharacter != -1)
         {
             triggerName = KeyCharacter;//本身就是ID 
@@ -303,7 +310,7 @@ public class EventUI : MonoBehaviour
             triggerName = GameMgr.instance.GetNextCreateChara();//数组，非ID
             triggerName += 1;
         }
-
+        
         sprite.GetComponent<Animator>().SetBool(triggerName.ToString(),true);
         //sprite.SetNativeSize();
 
@@ -320,6 +327,17 @@ public class EventUI : MonoBehaviour
         RefreshNowList();
     }
 
+    IEnumerator FangKeAnimation()
+    {
+        int loopMax =0;
+        while ((!tempAnimator.GetBool("0"))||(loopMax<5))
+        {
+            print("loopMax" + loopMax);
+            loopMax++;
+            yield return tempAnim;
+        }
+        tempAnimator.SetBool("0", false);
+    }
     void Close_FangKe()
     {
         if (isKey && KeyCharacter != -1)
@@ -353,6 +371,21 @@ public class EventUI : MonoBehaviour
         Transform cardParent = this.transform.Find("CardGroup");
         checkBotton = this.transform.Find("CheckButton").GetComponent<Button>();
         checkBotton.gameObject.SetActive(false);
+
+        for (int tt = 0;tt < 3; tt++)
+        {
+            //删除
+            if (cardParent.GetChild(tt).GetChild(0).childCount != 0)
+            {
+                for (int i = cardParent.GetChild(tt).GetChild(0).childCount-1; i >= 0; i--)
+                {
+                    Destroy(cardParent.GetChild(tt).GetChild(0).GetChild(i).gameObject);
+                }
+            }
+        }
+       
+
+
         for (int i = 0; i < 3; i++)
         {
             //随机抽书
@@ -687,22 +720,120 @@ public class EventUI : MonoBehaviour
     #endregion
 
 
-    #region 事件触发效果
+    #region 事件触发效果invoke-happen 
+    //对应test1表格happen那一行，写事件的函数名称
 
-    #region 意外
+    ///【意外】调用出设定页面
     void Happen_Setting()
     {
+        print("Happen_Setting");
         string adr = "UI/Setting";
         var obj=ResMgr.GetInstance().Load<GameObject>(adr);
+        obj.GetComponent<Setting>().InitSetting(settingUiType.Quality);
+        obj.transform.parent = GameObject.Find("CharacterCanvas").transform;
         
     }
+    ///【意外】解锁一个发射槽，并获得一个骰子
+    void Happen_UnlochkShoot()
+    {
+        print("Happen_UnlochkShoot");
+        GameMgr.instance.AddDice(1);
 
-    #endregion
+    }  ///发射器因断电而失控
+    void Happen_ShooterBad()
+    {
+        print("Happen_ShooterBad");
 
+
+    }  ///B队出现大量电子羊，并获得“虚拟生命力”设定
+    void Happen_BSettingXNSML()
+    {
+        print("Happen_BSettingXNSML");
+
+        GameMgr.instance.settingR.Add(typeof(XuNiShengMingLi));
+        GameMgr.instance.settingPanel.RefreshList();
+    }
+
+    ///A队获得“化学极乐”设定
+    void Happen_ASettingHXJL()
+    {
+        print("Happen_ASettingHXJL");
+
+        GameMgr.instance.settingL.Add( typeof(HuaXueJiLe));
+        GameMgr.instance.settingPanel.RefreshList();
+    }
+    ///【意外】Nexus-6型手臂加入牌库
+    void Happen_GetNexus6()
+    {
+        print("Happen_GetNexus6");
+        GameMgr.instance.AddCardList(new Nexus_6Arm());
+    }
+
+    ///【意外】随机一队，跳过界面流程，进入危机对抗敌人的环节
+    void Happen_WeiJi()
+    {
+        print("Happen_WeiJi");
+        
+
+    }
+
+    ///【意外】两个队伍都获得“人性尚存”，见细节文档-设定表
+    void Happen_SettingRXSC()
+    {
+        print("Happen_SettingRXSC");
+
+        GameMgr.instance.settingL.Add(typeof(RenXingShangCun));
+        GameMgr.instance.settingR.Add(typeof(RenXingShangCun));
+        GameMgr.instance.settingPanel.RefreshList();
+
+    }
+
+    ///【意外】进入一轮特殊的设定获取，所有的选项都带有【角色】标签，且不限制稀有度
+    void Happen_SettingCharacter()
+    {
+        print("Happen_SettingCharacter");
+        string adr = "UI/Setting";
+        var obj = ResMgr.GetInstance().Load<GameObject>(adr);
+        obj.GetComponent<Setting>().InitSetting(settingUiType.Chara);
+    }
+
+    ///【意外】两个队伍都获得“神经紊乱”，见细节文档-设定表
+    void Happen_SettingSJWL()
+    {
+        print("Happen_SettingSJWL");
+
+        GameMgr.instance.settingL.Add(typeof(ShenJingWenLuan));
+        GameMgr.instance.settingR.Add(typeof(ShenJingWenLuan));
+        GameMgr.instance.settingPanel.RefreshList();
+    }
+
+    ///【意外】三张被植入的记忆加入牌库
+    void Happen_GetBeiZhiRuMemory()
+    {
+        print("Happen_GetBeiZhiRuMemory");
+        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi());
+        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi());
+        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi());
+    }
     #endregion
 
     #region 外部点击/调用事件
-
+    public void RefreshEvent()
+    {
+        //刷新当前
+        switch (type)
+        {
+            case EventType.FangKe:
+                { OpenInit_FangKe(); }
+                break;
+            case EventType.YiWai:
+                { OpenInit_YiWai(); }
+                break;
+            case EventType.XiWang:
+                { OpenInit_XiWang(); }
+                break;
+        }
+    }
 
     public void Open(bool _isKey)
     {
@@ -751,20 +882,21 @@ public class EventUI : MonoBehaviour
 
     public void CloseAnim()
     {
-
         GetComponent<Animator>().Play("EventUI_Dis1");
-
     }
 
     public void Close()
     {
         CharacterManager.instance.pause = false;
         GameMgr.instance.eventHappen = false;
+
         //处理当前的nowChosenEvent
         if ((nowEvent.happen != null) && (nowEvent.happen != ""))
         {
+            print("nowEvent" + nowEvent.happen);
             Invoke(nowEvent.happen,0);
         }
+
         //内容加入草稿本
         GameMgr.instance.draftUi.AddContent(nowEvent.textDraft);
         
@@ -801,9 +933,5 @@ public class EventUI : MonoBehaviour
     #endregion
 
 
-    #region invoke事件
-    //对应test1表格happen那一行，写事件的函数名称
-    
 
-    #endregion
 }

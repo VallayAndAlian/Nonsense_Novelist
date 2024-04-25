@@ -17,7 +17,7 @@ public class ChaoPinChongJi : AbstractSetting
         info = "角色每拥有1能量点，造成的最终伤害+3%";
         lables = new List<string> { "蓄能" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

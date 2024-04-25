@@ -17,7 +17,7 @@ public class RenXingShangCun : AbstractSetting
         info = "我方角色最少拥有10意志";
         lables = new List<string> { "改造" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

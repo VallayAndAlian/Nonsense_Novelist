@@ -17,7 +17,7 @@ public class JingXinHeHu : AbstractSetting
         info = "由贝洛姬·姬妮孵化出的工蚁，生命上限+30";
         lables = new List<string> { "角色" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

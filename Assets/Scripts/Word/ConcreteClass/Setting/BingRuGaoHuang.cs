@@ -17,7 +17,7 @@ public class BingRuGaoHuang : AbstractSetting
         info = "敌方每拥有3层减益状态，受到的伤害+10%";
         lables = new List<string> { "异常" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

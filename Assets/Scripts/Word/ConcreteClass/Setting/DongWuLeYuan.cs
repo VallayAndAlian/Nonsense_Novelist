@@ -17,7 +17,7 @@ public class DongWuLeYuan : AbstractSetting
         info = "我方随从的生命上限+100%，四维+50%，混养笼翻倍";
         lables = new List<string> { "随从" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

@@ -17,7 +17,7 @@ public class AiYiFanLan : AbstractSetting
         info = "敌方情迷结束后，额外进行一次传播，持续3s";
         lables = new List<string> {"情迷" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

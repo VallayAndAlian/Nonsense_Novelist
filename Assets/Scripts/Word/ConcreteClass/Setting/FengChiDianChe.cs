@@ -17,7 +17,7 @@ public class FengChiDianChe : AbstractSetting
         info = "我方角色每次触发追击，获得5s“急速”";
         lables = new List<string> { "高频" };
         hasAdd = false;
-        Init();
+
     }
     public override void Init()
     {

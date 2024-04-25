@@ -17,7 +17,7 @@ public class YaoHaiZhenCe : AbstractSetting
         info = "狄卡德每次攻击的攻击特效，有30%概率翻倍，5%概率变为4倍";
         lables = new List<string> { "角色", "攻击特效" };
         hasAdd = false;
-        Init();
+        
     }
     public override void Init()
     {

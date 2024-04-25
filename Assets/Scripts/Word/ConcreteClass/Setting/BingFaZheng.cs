@@ -17,7 +17,7 @@ public class BingFaZheng : AbstractSetting
         info = "当敌方角色减益状态共有5层时，随机获得一个新的的减益状态5s";
         lables = new List<string> { "异常" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

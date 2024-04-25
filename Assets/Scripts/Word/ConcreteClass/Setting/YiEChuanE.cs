@@ -17,7 +17,7 @@ public class YiEChuanE : AbstractSetting
         info = "夸张有30%概率，传播次数+1";
         lables = new List<string> { "弹射" };
         hasAdd = false;
-        Init();
+    
     }
     public override void Init()
     {

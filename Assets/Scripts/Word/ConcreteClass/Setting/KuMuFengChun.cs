@@ -17,7 +17,7 @@ public class KuMuFengChun : AbstractSetting
         info = "全场角色每成功消除一种负面状态，随机出现10个花瓣";
         lables = new List<string> { "净化" };
         hasAdd = false;
-        Init();
+ 
     }
     public override void Init()
     {

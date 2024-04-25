@@ -5,6 +5,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+public enum settingUiType 
+{
+    Quality,Chara,
+};
 /// <summary>
 /// 挂在设定Setting预制体上面
 /// </summary>
@@ -17,11 +22,14 @@ public class Setting : MonoBehaviour
     public GameObject qs;
     [Header("鬼才")] public int guiCai = 10;
     public GameObject gc;
+    [Header("独特")] public int duTe = 10;
+    public GameObject dt;
 
     public GameObject logo;
     private PointerEventData ed;
     private BaseEventData baseEventData;
 
+    settingUiType typeMe= settingUiType.Quality;
     //是哪一边加入设定？左true右false
     bool isLeft = true;
     void Start()
@@ -29,8 +37,25 @@ public class Setting : MonoBehaviour
 
         if (!CharacterManager.instance.pause)
             CharacterManager.instance.pause = true;
-        Quality();
+        InitSetting(typeMe);
     }
+
+    public void InitSetting(settingUiType type)
+    {
+        typeMe = type;
+        switch (type)
+        {
+            case settingUiType.Chara:
+                Character();
+                break;
+            case settingUiType.Quality:
+                Quality();
+                break;
+
+        }
+    }
+
+
     /// <summary>
     /// 随机出一个品质，并随机其中三个具体设定
     /// </summary>
@@ -43,6 +68,17 @@ public class Setting : MonoBehaviour
         if (numx <= pingYong) { numx = 0; }
         else if (numx > pingYong && numx < pingYong + qiaoSi) numx = 1;
         else if (numx >= pingYong + qiaoSi && numx < pingYong + qiaoSi + guiCai) numx = 2;
+
+
+        //删除
+        if (this.transform.GetChild(1).childCount != 0)
+        {
+            for (int i = this.transform.GetChild(1).childCount - 1; i >= 0; i--)
+            {
+                Destroy(this.transform.GetChild(1).GetChild(i).gameObject);
+            }
+        }
+
 
         //从品质中抽取三个设定（设定写完之后再完成）
         switch (numx)//点击确定按钮的时候push对象池
@@ -73,7 +109,7 @@ public class Setting : MonoBehaviour
                         }
                     });
                 }
-                return;
+                break;
             case 1:
                 for (int j = 0; j < 3; j++)
                 {
@@ -98,7 +134,7 @@ public class Setting : MonoBehaviour
                         }
                     });
                 }
-                return;
+                break;
             case 2:
                 for (int j = 0; j < 3; j++)
                 {
@@ -122,10 +158,177 @@ public class Setting : MonoBehaviour
                         }
                     });
                 }
-                return;
+                break;
+            case 3:
+                for (int j = 0; j < 3; j++)
+                {
+                    PoolMgr.GetInstance().GetObj(dt, (a) => {
+                        Type gc0 = AllSkills.RandomDT();
+                        var gcc = a.AddComponent(gc0) as AbstractSetting;
+                        a.transform.SetParent(this.transform.GetChild(1));
+                        a.transform.localScale = Vector3.one;
+                        //获取抽出的鬼才卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/dute/" + gcc.res_name);
+                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gcc.settingName;//标题
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = gcc.info;//描述
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (data) => { PointerClick(a); });                                                                                                                                             //生成标签
+                        Transform p = a.transform.GetChild(1);
+                        for (int i = 0; i < gcc.lables.Count; i++)
+                        {
+                            GameObject lg = Instantiate(logo);
+                            lg.transform.SetParent(a.transform.GetChild(1));
+                            lg.transform.localScale = Vector3.one;
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + gcc.lables[i]);
+                        }
+                    });
+                }
+                break;
         }
     }
-  
+
+
+
+    /// <summary>
+    /// 出三个character标签的设定
+    /// </summary>
+    void Character()
+    {
+        this.transform.GetChild(3).GetComponentInChildren<Text>().text = "选择一个设定";
+        this.transform.GetChild(3).GetComponent<Button>().interactable = false;
+
+        //删除
+        if (this.transform.GetChild(1).childCount != 0)
+        {
+            for (int i = this.transform.GetChild(1).childCount - 1; i >= 0; i--)
+            {
+                Destroy(this.transform.GetChild(1).GetChild(i).gameObject);
+            }
+        }
+
+
+        //概率抽取                
+        int numx = UnityEngine.Random.Range(1, 101);
+        if (numx <= pingYong) { numx = 0; }
+        else if (numx > pingYong && numx < pingYong + qiaoSi) numx = 1;
+        else if (numx >= pingYong + qiaoSi && numx < pingYong + qiaoSi + guiCai) numx = 2;
+        else if (numx >= pingYong + qiaoSi+ guiCai && numx < pingYong + qiaoSi + guiCai+duTe) numx = 3;
+
+        for (int x = 0; x < 3; x++)
+        {
+            //先抽取一张卡
+            Type py0 = AllSkills.RandomChara();
+            AbstractSetting _py0 = Activator.CreateInstance(py0) as AbstractSetting;
+         
+            //根据卡的品质生成
+            switch (_py0.level)//点击确定按钮的时候push对象池
+            {
+                case SettingLevel.PingYong: //平庸
+                    PoolMgr.GetInstance().GetObj(py, (a) =>
+                    {                   
+                        var ppy = a.AddComponent(py0) as AbstractSetting;
+                        a.transform.SetParent(this.transform.GetChild(1));
+                        a.transform.localScale = Vector3.one;
+                        //获取抽出的平庸卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/pingyong/" + ppy.res_name);
+                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ppy.settingName;//标题
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = ppy.info;//描述
+                                                                                                //a.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load("");
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (obj) => { PointerClick(a); });                                                                                                                                             //生成标签
+                        Transform p = a.transform.GetChild(1);
+                        for (int i = 0; i < ppy.lables.Count; i++)
+                        {
+                            GameObject lg = Instantiate(logo);
+                            lg.transform.SetParent(a.transform.GetChild(1));
+
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + ppy.lables[i]);
+                            lg.GetComponent<Image>().SetNativeSize();
+                            lg.transform.localScale = Vector3.one;
+                        }
+                    });
+                    break;
+                    
+                case SettingLevel.QiaoSi:
+                   
+                    PoolMgr.GetInstance().GetObj(qs, (a) =>
+                    {
+                        var qss = a.AddComponent(py0) as AbstractSetting;
+                        a.transform.SetParent(this.transform.GetChild(1));
+                        a.transform.localScale = Vector3.one;
+                        //获取抽出的巧思卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/qiaosi/" + qss.res_name);
+                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = qss.settingName;//标题
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = qss.info;//描述
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (obj) => { PointerClick(a); });                                                                                                                                             //生成标签
+
+                        Transform p = a.transform.GetChild(1);
+                        for (int i = 0; i < qss.lables.Count; i++)//生成标签
+                        {
+                            GameObject lg = Instantiate(logo);
+                            lg.transform.SetParent(a.transform.GetChild(1));
+                            lg.transform.localScale = Vector3.one;
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + qss.lables[i]);
+                        }
+                    });
+
+                    break;
+                case SettingLevel.GuiCai:
+                   
+                    PoolMgr.GetInstance().GetObj(gc, (a) =>
+                    {
+                        var gcc = a.AddComponent(py0) as AbstractSetting;
+                        a.transform.SetParent(this.transform.GetChild(1));
+                        a.transform.localScale = Vector3.one;
+                        //获取抽出的鬼才卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/guicai/" + gcc.res_name);
+                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gcc.settingName;//标题
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = gcc.info;//描述
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (data) => { PointerClick(a); });                                                                                                                                             //生成标签
+                        Transform p = a.transform.GetChild(1);
+                        for (int i = 0; i < gcc.lables.Count; i++)
+                        {
+                            GameObject lg = Instantiate(logo);
+                            lg.transform.SetParent(a.transform.GetChild(1));
+                            lg.transform.localScale = Vector3.one;
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + gcc.lables[i]);
+                        }
+                    });
+
+                    break;
+                case SettingLevel.DuTe:
+                    PoolMgr.GetInstance().GetObj(dt, (a) => {
+                           
+                        var gcc = a.AddComponent(py0) as AbstractSetting;
+                        a.transform.SetParent(this.transform.GetChild(1));
+                        a.transform.localScale = Vector3.one;
+                        //获取抽出的鬼才卡牌内容
+                        a.GetComponent<Image>().sprite = Resources.Load<Sprite>("settingSprite/dute/" + gcc.res_name);
+                        a.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = gcc.settingName;//标题
+                        a.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = gcc.info;//描述
+                        AddPointerEvent(a.transform.GetComponent<EventTrigger>(), EventTriggerType.PointerClick, (data) => { PointerClick(a); });                                                                                                                                             //生成标签
+                        Transform p = a.transform.GetChild(1);
+                        for (int i = 0; i < gcc.lables.Count; i++)
+                        {
+                            GameObject lg = Instantiate(logo);
+                            lg.transform.SetParent(a.transform.GetChild(1));
+                            lg.transform.localScale = Vector3.one;
+                            lg.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/Settinglogo/" + gcc.lables[i]);
+                        }
+                    });
+                    break;
+
+            }
+        }
+
+    }
+
+    public void RefreshEvent()
+    {
+        InitSetting(typeMe);
+    }
+
+
+
+
     /// <param name="eventTrigger">需要添加事件的EventTrigger</param>
     /// <param name="eventTriggerType">事件类型</param>
     /// <param name="callback">回调函数</param>
@@ -184,13 +387,13 @@ public class Setting : MonoBehaviour
         ///不知道是那一队加入设定欸，先乱写了噢
         if (isLeft)
         {
-            GameMgr.instance.settingL.Add(click.GetComponent<AbstractSetting>());
+            GameMgr.instance.settingL.Add(click.GetComponent<AbstractSetting>().GetType());
             GameMgr.instance.settingPanel.RefreshList();
             Destroy(gameObject);
         }
         else
         {
-            GameMgr.instance.settingR.Add(click.GetComponent<AbstractSetting>());
+            GameMgr.instance.settingR.Add(click.GetComponent<AbstractSetting>().GetType());
             GameMgr.instance.settingPanel.RefreshList();
             Destroy(gameObject);
         }

@@ -17,7 +17,7 @@ public class NengLiangHuanChong : AbstractSetting
         info = "角色每拥有1能量点，受到的最终伤害-5%";
         lables = new List<string> { "蓄能" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

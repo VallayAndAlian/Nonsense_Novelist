@@ -17,7 +17,7 @@ public class JiuHouYuXing : AbstractSetting
         info = "角色每释放4个动词，获得7s“诗情”和“锐利”";
         lables = new List<string> { "高频" };
         hasAdd = false;
-        Init();
+ 
     }
     public override void Init()
     {

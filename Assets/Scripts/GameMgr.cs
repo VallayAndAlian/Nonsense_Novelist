@@ -36,8 +36,8 @@ public class CustomList : List<string>
 public class GameMgr : MonoSingleton<GameMgr>
 {
 
-    [HideInInspector] public List<AbstractSetting> settingL=new List<AbstractSetting>();
-    [HideInInspector] public List<AbstractSetting> settingR = new List<AbstractSetting>();
+    [HideInInspector] public List<Type> settingL=new List<Type>();
+    [HideInInspector] public List<Type> settingR = new List<Type>();
 
 
     //关闭界面相关
@@ -77,6 +77,23 @@ public class GameMgr : MonoSingleton<GameMgr>
     //public List<int> wordCanUseTimes = new List<int>();
     public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();
     public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();
+
+    //骰子数量
+    int diceNumber = 2;
+    public void AddDice(int i)
+    {
+        diceNumber += i;
+    }
+    public int GetDice()
+    {
+        return diceNumber;
+    }
+    public void DeleteDice(int i)
+    {
+        diceNumber -= i;
+        if (diceNumber < 0) diceNumber = 0;
+    }
+
     #region 事件
     //当前触发的所有事件
     [HideInInspector] public CustomList happenEvent = new CustomList();
@@ -125,7 +142,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public bool HaveCanHappenKeyEvent(int _enumNum)
     {
-        var _num = 0;
+       
  
         foreach (var item in canHappenData_Key)
         {

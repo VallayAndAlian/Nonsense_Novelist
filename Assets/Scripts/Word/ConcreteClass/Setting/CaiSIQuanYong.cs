@@ -17,7 +17,7 @@ public class CaiSIQuanYong : AbstractSetting
         info = "我方“亢奋”能够给缺少4能量（原本为5）的动词充能";
         lables = new List<string> { "蓄能" };
         hasAdd = false;
-        Init();
+       
     }
     public override void Init()
     {

@@ -259,8 +259,9 @@ public class CreateOneCharacter : MonoBehaviour
     /// </summary>
     public int GetNextCreateChara()
     {
+
         charaNext = -1;
-        int number = UnityEngine.Random.Range(0, charaPrefabs.Length);
+        int number = UnityEngine.Random.Range(0, charaPrefabs.Length); print("GetNextCreateChara" + number);
         float loopCount = 0;
         while ((array.Contains(number) || isKeyCharacter(number)) && loopCount < 50)//ШЅжи
         {
