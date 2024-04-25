@@ -12,8 +12,8 @@ public static class AllCharacter
 
     static AllCharacter()
     {
-        list_allchara.AddRange(new Type[] { typeof(Anubis),typeof(BeiLuoJi),typeof(DiKaDe), typeof(LinDaiYu), typeof(LiuGrandma),
-            typeof(MuNaiYi),typeof(Rat),typeof(ShiLian), typeof(ShuiShou), typeof(SiYangYuan), typeof(ShaLeMei),typeof(WangXiFeng),
+        list_allchara.AddRange(new Type[] { typeof(Anubis),typeof(BeiLuoJi),typeof(DiKaDe), typeof(LinDaiYu), 
+            typeof(MuNaiYi),typeof(Rat),typeof(ShiLian), typeof(SiYangYuan), typeof(ShaLeMei),typeof(WangXiFeng),
         
         });
     }

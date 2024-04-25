@@ -85,7 +85,7 @@ class TongLingBaoyu : AbstractItems
         a[_count].BeAttack(AttackType.dir, _damage* rate, true, 0, _whoDid);
 
         //自己受伤（把血量加回来）4
-        this.GetComponent<AbstractCharacter>().BeCure(_damage * rate, true, 0);
+        this.GetComponent<AbstractCharacter>().BeCure(_damage * rate, true, 0, _whoDid);
     }
   
     public override void UseVerb()

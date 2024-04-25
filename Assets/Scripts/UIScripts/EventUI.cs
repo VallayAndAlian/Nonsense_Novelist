@@ -745,7 +745,9 @@ public class EventUI : MonoBehaviour
         print("Happen_ShooterBad");
 
 
-    }  ///B队出现大量电子羊，并获得“虚拟生命力”设定
+    }  
+    
+    ///B队出现大量电子羊，并获得“虚拟生命力”设定
     void Happen_BSettingXNSML()
     {
         print("Happen_BSettingXNSML");

@@ -179,8 +179,221 @@ public static class EventCharWord
         return null;
     }
 
+    
+    /// <summary>
+    /// 在角色beAttack里执行
+    /// </summary>
+    /// <param name="_charaUse"></param>
+    /// <param name="_charaBe"></param>
+    /// <param name="_word"></param>
+    /// <returns></returns>
+    public static string HD_Attack(AbstractCharacter _charaUse, AbstractCharacter _charaBe)
+    {
+        switch (_charaUse.characterID)
+        {
+            case 2://林黛玉
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 3)//攻击王熙凤
+                    {
+                        return "王熙凤笑着点林黛玉，“既吃了我家茶，何时来作我们家媳妇？”林黛玉红了脸恼道，“什么贫嘴贱舌，真真讨人厌！”";
+                    }
+                    #endregion
+                }
+                break;
+            case 3://王熙凤
+                {
+                    
+                }
+                break;
+            case 4://木乃伊
+                {
+                    
+                }
+                break;
+            case 5://垄断公司
+                {
+                   
+                }
+                break;
+            case 6://老鼠
+                {
+                    if (_charaBe.characterID == 4)//攻击木乃伊
+                    {
+                        return "地宫的夜总是漫长的，窸窸窣窣的声音将木乃伊从千年的沉睡中唤起，它昏昏沉沉坐起，垂眼看到老鼠正在肆无忌惮啃食它的手臂。";
+                    }
+                    if (_charaBe.characterID == 112)//攻击警察
+                    {
+                        return "老鼠面对着昔日的劲敌黑猫警长，狞笑一声背着包裹钻进了下水道。";
+                    }
+                }
+                break;
+            case 7://阿努比斯
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 114)//攻击赏金猎人
+                    {
+                        return "阿努比斯看着赏金猎人嗤笑一声，“为了金钱摸爬滚打，伤痕累累，真是狼狈，可惜他们的灵魂最后终归我手。”";
+                    }
+                    #endregion
+                }
+                break;
+            case 8://莎乐美
+                {
+                    #region 文本
+                   
+                    #endregion
+                }
+                break;
+            case 9://迪卡德
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 111)//攻击赛博疯子
+                    {
+                        return "“哈哈假的假的！”赛博疯子狂笑着向狄卡德跌跌撞撞扑来，狄卡德冷漠地抬起枪，“但是死亡是真实的。”";
+                    }
+                    #endregion
+                }
+                break;
+            case 11://饲养员
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 113)//攻击偏见
+                    {
+                        return "高原狼因游客过量投喂而超重，饲养员叹气，克服这些偏见仍是道阻且长。";
+                    }
+                    #endregion
+                }
+                break;
+            case 12://失恋
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 2)//攻击林黛玉
+                    {
+                        return "林黛玉在沁芳闸桥边桃花底下一块石头上坐着，风过，桃花落得满身满地满书皆是，林黛玉见此景思及正处失恋，不觉心痛神驰，落下泪来。";
+                    }
+                    #endregion
+                }
+                break;
+            case 110://放射性微尘
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 10)//攻击贝洛姬·姬妮
+                    {
+                        return "蚁穴在杀虫剂释放的放射性微尘下死伤惨重，贝洛姬·姬妮当机立断搬离这里，帝国幸以保存。";
+                    }
+                    #endregion
+                }
+                break;
+        }
 
 
+        return null;
+    }
+
+    public static string HD_Cure(AbstractCharacter _charaUse, AbstractCharacter _charaBe)
+    {
+        switch (_charaUse.characterID)
+        {
+            case 2://林黛玉
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 3)//攻击王熙凤
+                    {
+                        return "王熙凤笑着点林黛玉，“既吃了我家茶，何时来作我们家媳妇？”林黛玉红了脸恼道，“什么贫嘴贱舌，真真讨人厌！”";
+                    }
+                    #endregion
+                }
+                break;
+            case 3://王熙凤
+                {
+
+                }
+                break;
+            case 4://木乃伊
+                {
+
+                }
+                break;
+            case 5://垄断公司
+                {
+
+                }
+                break;
+            case 6://老鼠
+                {
+                    if (_charaBe.characterID == 4)//攻击木乃伊
+                    {
+                        return "地宫的夜总是漫长的，窸窸窣窣的声音将木乃伊从千年的沉睡中唤起，它昏昏沉沉坐起，垂眼看到老鼠正在肆无忌惮啃食它的手臂。";
+                    }
+                    if (_charaBe.characterID == 112)//攻击警察
+                    {
+                        return "老鼠面对着昔日的劲敌黑猫警长，狞笑一声背着包裹钻进了下水道。";
+                    }
+                }
+                break;
+            case 7://阿努比斯
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 114)//攻击赏金猎人
+                    {
+                        return "阿努比斯看着赏金猎人嗤笑一声，“为了金钱摸爬滚打，伤痕累累，真是狼狈，可惜他们的灵魂最后终归我手。”";
+                    }
+                    #endregion
+                }
+                break;
+            case 8://莎乐美
+                {
+                    #region 文本
+
+                    #endregion
+                }
+                break;
+            case 9://迪卡德
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 111)//攻击赛博疯子
+                    {
+                        return "“哈哈假的假的！”赛博疯子狂笑着向狄卡德跌跌撞撞扑来，狄卡德冷漠地抬起枪，“但是死亡是真实的。”";
+                    }
+                    #endregion
+                }
+                break;
+            case 11://饲养员
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 113)//攻击偏见
+                    {
+                        return "高原狼因游客过量投喂而超重，饲养员叹气，克服这些偏见仍是道阻且长。";
+                    }
+                    #endregion
+                }
+                break;
+            case 12://失恋
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 2)//攻击林黛玉
+                    {
+                        return "林黛玉在沁芳闸桥边桃花底下一块石头上坐着，风过，桃花落得满身满地满书皆是，林黛玉见此景思及正处失恋，不觉心痛神驰，落下泪来。";
+                    }
+                    #endregion
+                }
+                break;
+            case 110://放射性微尘
+                {
+                    #region 文本
+                    if (_charaBe.characterID == 10)//攻击贝洛姬·姬妮
+                    {
+                        return "蚁穴在杀虫剂释放的放射性微尘下死伤惨重，贝洛姬·姬妮当机立断搬离这里，帝国幸以保存。";
+                    }
+                    #endregion
+                }
+                break;
+        }
+
+
+        return null;
+    }
     /// <summary>
     /// 有些事件有特殊的动画，则调用此函数执行动画。
     /// </summary>

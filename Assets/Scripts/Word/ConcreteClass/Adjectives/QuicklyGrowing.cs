@@ -27,7 +27,7 @@ public class QuicklyGrowing : AbstractAdjectives
 
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
-        base.UseAdj(aimCharacter); aimCharacter.BeCure(30, true, 0);
+        base.UseAdj(aimCharacter); aimCharacter.BeCure(30, true, 0, aimCharacter);
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {

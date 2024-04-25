@@ -59,6 +59,23 @@ class ShiLian : AbstractCharacter
         event_AttackA -= UpsetAttackA;
     }
 
+
+    List<GrowType> hasAddGrow = new List<GrowType>();
+    public override string GrowText(GrowType type)
+    {
+        if ((!hasAddGrow.Contains(type)) && (type == GrowType.psy))
+        {
+            hasAddGrow.Add(GrowType.psy);
+            string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
+            GameMgr.instance.draftUi.AddContent(it);
+            return it;
+        }
+
+
+
+        return null;
+    }
+
     public override string ShowText(AbstractCharacter otherChara)
     {
         return otherChara + "出场文本";

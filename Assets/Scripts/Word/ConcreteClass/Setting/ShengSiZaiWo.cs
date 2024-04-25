@@ -56,8 +56,8 @@ public class ShengSiZaiWo : AbstractSetting
     }
     void Effect(AbstractCharacter c)
     {
-        c.BeCure(30, true, 0);
-        chara.BeCure(30, true, 0); 
+        c.BeCure(30, true, 0, c);
+        chara.BeCure(30, true, 0, chara); 
     }
 
     private void OnDestroy()

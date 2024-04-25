@@ -52,6 +52,21 @@ class WangXiFeng : AbstractCharacter
     //public override float def { get { return base.def + 5; } set { base.def = value; } }
     //public override float san { get { return base.san + 5; } set { base.san = value; } }
     //public override float psy { get { return base.psy  + 5; } set { base.psy  = value; } }
+    List<GrowType> hasAddGrow = new List<GrowType>();
+    public override string GrowText(GrowType type)
+    {
+        if ((!hasAddGrow.Contains(type)) && (type == GrowType.psy))
+        {
+            hasAddGrow.Add(GrowType.psy);
+            string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
+            GameMgr.instance.draftUi.AddContent(it);
+            return it;
+        }
+
+
+
+        return null;
+    }
 
     public override string ShowText(AbstractCharacter otherChara)
     {

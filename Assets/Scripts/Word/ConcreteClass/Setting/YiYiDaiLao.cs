@@ -34,7 +34,7 @@ public class YiYiDaiLao : AbstractSetting
     //每次获得一个能量点的时候，都执行此函数
     void Effect(AbstractCharacter ac)
     {
-        ac.BeCure(0.03f*ac.maxHp, true, 0);
+        ac.BeCure(0.03f*ac.maxHp, true, 0, ac);
 
     }
 

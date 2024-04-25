@@ -25,7 +25,7 @@ class LinDaiYu : AbstractCharacter
         hp = maxHp = 70;
         atk = 3;
         def = 3;
-        psy = 6;
+        psy = 100;
         san = 3;
 
         attackInterval = 2.2f;
@@ -55,8 +55,21 @@ class LinDaiYu : AbstractCharacter
     //public override float def { get { return base.def*0.8f; } set { base.def = value; } }
 
 
+    List<GrowType> hasAddGrow = new List<GrowType>();
+    public override string GrowText(GrowType type)
+    {
+        if ((!hasAddGrow.Contains(type)) &&(type == GrowType.psy))
+        {
+            hasAddGrow.Add(GrowType.psy);
+            string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
+            GameMgr.instance.draftUi.AddContent(it);
+            return it;
+        }
+           
 
 
+        return null;
+    }
 
     public override string ShowText(AbstractCharacter otherChara)
     {

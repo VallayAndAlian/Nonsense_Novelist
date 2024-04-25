@@ -16,7 +16,7 @@ class CureMode : AbstractSkillMode
     public override float UseMode(AttackType attackType, float value, AbstractCharacter useCharacter, AbstractCharacter aimCharacter, bool hasFloat, float delay)
     {
        
-        aimCharacter.BeCure(value,hasFloat,delay);
+        aimCharacter.BeCure(value,hasFloat,delay, useCharacter);
         return value;
     }
 

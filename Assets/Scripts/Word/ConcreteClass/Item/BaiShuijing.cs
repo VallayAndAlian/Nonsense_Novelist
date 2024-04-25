@@ -44,7 +44,7 @@ class BaiShuijing: AbstractItems,IJiHuo
         base.UseItem(chara);
         if (jiHuo)
         {
-            chara.BeCure(60, true, 0);
+            chara.BeCure(60, true, 0, chara);
            buffs.Add(gameObject.AddComponent<GongZhen>());
            buffs[0].maxTime = Mathf.Infinity;
         }

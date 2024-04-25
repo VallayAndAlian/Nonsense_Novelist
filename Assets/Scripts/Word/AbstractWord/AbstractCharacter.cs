@@ -12,7 +12,13 @@ public enum AttackType
     dir,//真实
     heal//治愈
 }
-
+public enum GrowType
+{
+    psy,//精神
+    atk,//物理
+    san,//真实
+    def//治愈
+}
 //[RequireComponent(typeof(CharaAnim))]
 //[RequireComponent(typeof(AI.MyState0))]
 //[RequireComponent(typeof(Animator))]
@@ -106,6 +112,17 @@ abstract public class AbstractCharacter : AbstractWord0
         //执行外部委托
         if (event_BeAttack != null)
             event_BeAttack(_value, _whoDid);
+        //触发文本
+        if (!(GameMgr.instance.AttackHDList.Contains(_whoDid.characterID * 100 + this.characterID * 1)))
+        {
+            string _s = EventCharWord.HD_Attack(_whoDid, this);
+            if (_s != null)
+            {
+                GameMgr.instance.PopupEvent(this.transform.position, _s, _s);
+                GameMgr.instance.draftUi.AddContent(_s);
+                GameMgr.instance.AttackHDList.Add(_whoDid.characterID * 100 + this.characterID * 1);
+            }
+        }
     }
 
 
@@ -137,6 +154,7 @@ abstract public class AbstractCharacter : AbstractWord0
     public void BeAttack(AttackType _at, float _value, bool _hasFloat, float _delayTime, AbstractCharacter _whoDid)
     {
         //计算伤害
+       
         float value = 0;
         switch (_at)
         {
@@ -177,6 +195,20 @@ abstract public class AbstractCharacter : AbstractWord0
                 //执行外部委托
                 if (event_BeAttack != null)
                     event_BeAttack(value, _whoDid);
+
+                //触发文本
+                if (!(GameMgr.instance.AttackHDList.Contains(_whoDid.characterID * 100 + this.characterID * 1)))
+                {
+                    string _s = EventCharWord.HD_Attack(_whoDid, this);
+                    if (_s != null)
+                    {
+                        GameMgr.instance.PopupEvent(this.transform.position, _s, _s);
+                        GameMgr.instance.draftUi.AddContent(_s);
+                        GameMgr.instance.AttackHDList.Add(_whoDid.characterID * 100 + this.characterID * 1);
+                    }
+                }
+                    
+                    
             }
             else
             {//如果延时，则携程
@@ -199,7 +231,7 @@ abstract public class AbstractCharacter : AbstractWord0
     /// </summary>
     /// <param name="_at"></param>
     /// <param name="_value">使用者的atk、psy或者直接伤害的数值</param>
-    public void BeCure(float _value, bool _hasFloat, float _delayTime)
+    public void BeCure(float _value, bool _hasFloat, float _delayTime,AbstractCharacter _whoDid)
     {
         //无延时
         if (_delayTime == 0)
@@ -207,11 +239,22 @@ abstract public class AbstractCharacter : AbstractWord0
            
             if (_hasFloat) CreateFloatWord(_value, FloatWordColor.heal, true);
             hp += _value;
+            //触发文本
+            if (!(GameMgr.instance.CureHDList.Contains(_whoDid.characterID * 100 + this.characterID * 1)))
+            {
+                string _s = EventCharWord.HD_Cure(_whoDid, this);
+                if (_s != null)
+                {
+                    GameMgr.instance.PopupEvent(this.transform.position, _s, _s);
+                    GameMgr.instance.draftUi.AddContent(_s);
+                    GameMgr.instance.CureHDList.Add(_whoDid.characterID * 100 + this.characterID * 1);
+                }
+            }
         }
         else
         {
             //如果延时，则携程
-            StartCoroutine(DelayAttack(_delayTime, -_value, AttackType.heal, _hasFloat, null));
+            StartCoroutine(DelayAttack(_delayTime, -_value, AttackType.heal, _hasFloat, _whoDid));
         }
 
         if (event_BeCure != null) event_BeCure();
@@ -285,11 +328,11 @@ abstract public class AbstractCharacter : AbstractWord0
 
         if (cure != 0)
         {
-            BeCure(cure, true, 0);
+            BeCure(cure, true, 0,this);
         }
         if (cureHpRate != 0)
         {
-             BeCure(maxHp* cureHpRate, true, 0);
+             BeCure(maxHp* cureHpRate, true, 0,this);
         }
 
     }
@@ -309,6 +352,8 @@ abstract public class AbstractCharacter : AbstractWord0
         set
         {
             ATK = value;
+            if (ATK* ATKmul >= 100) 
+                GrowText(GrowType.atk);
             if (ATK <= 0)
                 ATK = 0;
             CaculateValue();
@@ -323,6 +368,8 @@ abstract public class AbstractCharacter : AbstractWord0
         set
         {
             ATKmul = value;
+            if (ATK * ATKmul >= 100)
+                GrowText(GrowType.atk);
             if (ATKmul < 0) ATKmul = 0;
             CaculateValue();
         }
@@ -337,7 +384,9 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return DEF; }
         set
         {
-            DEF = value;
+            DEF = value; 
+            if (DEF* DEFmul >= 100)
+                GrowText(GrowType.def);
             if (DEF < 0 /*-19*/)
                 DEF = 0;
             CaculateValue();
@@ -351,7 +400,11 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return DEFmul; }
         set
         {
-            DEFmul = value; if (DEFmul < 0) DEFmul = 0;
+            DEFmul = value; 
+            if (DEF * DEFmul >= 100)
+                GrowText(GrowType.def);
+            if (DEFmul < 0) 
+                DEFmul = 0;
             CaculateValue();
         }
     }
@@ -366,6 +419,8 @@ abstract public class AbstractCharacter : AbstractWord0
         set
         {
             PSY = value;
+            if (PSY * PSYmul >= 100)
+                GrowText(GrowType.psy);
             if (PSY <= 0)
                 PSY = 0;
             CaculateValue();
@@ -379,7 +434,10 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return PSYmul; }
         set
         {
-            PSYmul = value; if (PSYmul <= 0)
+            PSYmul = value;
+            if (PSY * PSYmul >= 100)
+                GrowText(GrowType.psy);
+            if (PSYmul <= 0)
                 PSYmul = 0;
             CaculateValue();
         }
@@ -396,6 +454,8 @@ abstract public class AbstractCharacter : AbstractWord0
         set
         {
             SAN = value;
+            if (SAN * SANmul >= 100)
+                GrowText(GrowType.san);
             if (SAN </* -19*/0)
                 SAN = 0;
             CaculateValue();
@@ -409,7 +469,10 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return SANmul; }
         set
         {
-            SANmul = value; if (SANmul < 0)
+            SANmul = value;
+            if (SAN * SANmul >= 100)
+                GrowText(GrowType.san);
+            if (SANmul < 0)
                 SANmul = 0;
             CaculateValue();
         }
@@ -1135,6 +1198,11 @@ abstract public class AbstractCharacter : AbstractWord0
     /// 暴击文本(加到AbstractBook.afterFightText)
     /// </summary>
     abstract public string CriticalText(AbstractCharacter otherChara);
+
+    /// <summary>
+    /// 成长文本(加到AbstractBook.afterFightText)
+    /// </summary>
+    abstract public string GrowText(GrowType type);
 
 
     /// <summary>

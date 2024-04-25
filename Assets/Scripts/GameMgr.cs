@@ -94,6 +94,13 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (diceNumber < 0) diceNumber = 0;
     }
 
+
+
+    //触发特殊文本
+    public List<int> AttackHDList = new List<int>();
+    public List<int> CureHDList = new List<int>();
+
+
     #region 事件
     //当前触发的所有事件
     [HideInInspector] public CustomList happenEvent = new CustomList();

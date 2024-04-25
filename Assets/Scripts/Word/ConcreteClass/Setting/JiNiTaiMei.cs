@@ -45,7 +45,7 @@ public class JiNiTaiMei : AbstractSetting
             loopCount++;
         }
         //若只有贝洛姬自己，则跳出循环默认回复自己血量
-        a[i].BeCure(02 * a[i].san * a[i].sanMul, true, 0);
+        a[i].BeCure(02 * a[i].san * a[i].sanMul, true, 0, chara);
     }
     private void OnDestroy()
     {
