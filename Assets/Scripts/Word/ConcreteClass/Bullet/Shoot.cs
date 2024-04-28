@@ -51,7 +51,7 @@ public class Shoot : MonoBehaviour
         if (CreateOneCharacter.isTwoSides && CreateOneCharacter.isAllCharaUp)
         {
             aimSlider.value = 0; // 重置slider的值
-            WordGrid();
+           //ordGrid();
             if (crtForce >= maxForce && !fired)// 蓄力到最大值
             {
                 crtForce = maxForce;
@@ -167,7 +167,7 @@ public class Shoot : MonoBehaviour
     /// <summary>
     /// 槽位更新
     /// </summary>
-    public void WordGrid()
+   /* public void WordGrid()
     {
         GameObject a = GameObject.Find("combatCanvas");
         if (isShoot)//发射1次刷新1次
@@ -183,17 +183,17 @@ public class Shoot : MonoBehaviour
                 }
             }
         }
-        /*a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
+        *//*a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
         a.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Slider>().value = 1;
-        a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = 1;*/
+        a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = 1;*//*
 
         if (wordCount == 3&&wordCount<=sunWordCount)
         {
 
-            /*a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0] + "");
+            *//*a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0] + "");
             a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
             a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[2] + "");
-            */
+            *//*
         }
         else if (wordCount==2 )
         {
@@ -250,7 +250,7 @@ public class Shoot : MonoBehaviour
 
             }
         }
-    }
+    }*/
     private void DestroyWordBullet()
     {
         if (afterShootTF.childCount > 10)
