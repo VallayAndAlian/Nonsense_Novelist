@@ -179,7 +179,8 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         DealWithData();
         CardRes.SetActive(false);
-        draftUi.InitContent(); 
+        draftUi.InitContent();
+        EventCGAnim.gameObject.SetActive(true);
     }
 
     private void Start()
@@ -887,7 +888,9 @@ public class GameMgr : MonoSingleton<GameMgr>
             StartCoroutine(WaitAndCg(name, delayTime));
         }
         else
-        { GameMgr.instance.EventCGAnim.PlayEventCG(name, EventCharWord.GetCG(name)); }
+
+        { GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
+            GameMgr.instance.EventCGAnim.PlayEventCG(name, EventCharWord.GetCG(name)); }
     }
     IEnumerator WaitAndCg(string name,int delayTime)
     {
@@ -898,7 +901,7 @@ public class GameMgr : MonoSingleton<GameMgr>
             t += Time.deltaTime;
         }
         //播放开场动画
-
+        GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
         GameMgr.instance.EventCGAnim.PlayEventCG(name, EventCharWord.GetCG(name));
     }
 
