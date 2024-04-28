@@ -78,11 +78,43 @@ class MouseDown : MonoBehaviour
                 //{
                 //    absVerbs = hit.collider.GetComponent<AbstractVerbs>();
                 //}
-        
                 
-              
             }
+            else if (hit.collider != null && hit.collider.gameObject.tag == "Slider" && hit.collider.gameObject.transform.GetChild(1).GetComponent<Image>().sprite.name != "排队")//锁定发射槽位
+            {
+                //锁定
+                Shoot.sunWordCount--;
+                GameObject tt = hit.collider.gameObject;
+                GameObject jj = GameObject.Find("combatCanvas");
+                if (tt.name == "Slider0")
+                {
+                    //移除数组中的
+                    GameMgr.instance.wordGoingUseList.RemoveAt(0);
+                    //表现层替换0与2的图片【不能直接替换】，总开放槽位-1
+                    Sprite ss = tt.transform.GetChild(1).GetComponent<Image>().sprite;
+                    tt.transform.GetChild(1).GetComponent<Image>().sprite = jj.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Image>().sprite;
+                    jj.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Image>().sprite = ss;
+                }
+                else if(tt.name == "Slider1")
+                {
+                    GameMgr.instance.wordGoingUseList.RemoveAt(1);
+                    //表现层替换1与2的图片
+                    Sprite ss = tt.transform.GetChild(1).GetComponent<Image>().sprite;
+                    tt.transform.GetChild(1).GetComponent<Image>().sprite = jj.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Image>().sprite;
+                    jj.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Image>().sprite = ss;
 
+                }
+                else if (tt.name == "Slider2")
+                {
+                    GameMgr.instance.wordGoingUseList.RemoveAt(2);
+                    //表现层替换2与2的图片
+                    Sprite ss = tt.transform.GetChild(1).GetComponent<Image>().sprite;
+                    tt.transform.GetChild(1).GetComponent<Image>().sprite = jj.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Image>().sprite;
+                    jj.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Image>().sprite = ss;
+
+                }
+
+            }
         }
     }
 

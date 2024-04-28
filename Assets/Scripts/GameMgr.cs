@@ -66,7 +66,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     List<Type> wordNowList = new List<Type>();
 
     //当前待使用的牌的牌库
-    List<Type> wordGoingUseList = new List<Type>();
+    public List<Type> wordGoingUseList = new List<Type>();
 
     //当前已使用的牌的牌库
     List<Type> wordHasUseList = new List<Type>();
@@ -497,7 +497,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
         var _res = wordNowList[count];
         wordNowList.Remove(_res);
-        wordHasUseList.Add(_res);
+        //wordHasUseList.Add(_res);
         wordGoingUseList.Add(_res);
         RefreshNowList();
 
@@ -527,8 +527,14 @@ public class GameMgr : MonoSingleton<GameMgr>
         for(int i = 0; i < 3; i++)
         {
             GetNowListOne();//待使用词库有5个词
-        }        
-        return wordGoingUseList[5];
+        }
+        wordGoingUseList.Add(wordGoingUseList[0]);
+        return wordGoingUseList[0];
+    }
+    public Type GetGoingUseListOne() {
+        GetNowListOne();
+        wordHasUseList.Add(wordGoingUseList[0]);
+        return wordGoingUseList[0];
     }
     public List<Type> GetAllList()
     {

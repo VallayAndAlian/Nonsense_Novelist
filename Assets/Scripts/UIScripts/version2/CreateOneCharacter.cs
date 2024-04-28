@@ -35,6 +35,7 @@ public class CreateOneCharacter : MonoBehaviour
     
     [Header("比如第一个角色的序号是1，这个数值就为1")]
     public int IDAmount = 1;
+    public static bool isStart = false;
 
     private void Start()
     {
@@ -201,9 +202,21 @@ public class CreateOneCharacter : MonoBehaviour
 
             //触发进度条开始开关
             GameObject.Find("GameProcess").GetComponent<GameProcessSlider>().ProcessStart();
-      
+
         //装载一个shooter
-        if (SceneManager.GetActiveScene().name == "ShootCombat") GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
+        if (SceneManager.GetActiveScene().name == "ShootCombat") {
+            GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
+            isStart = true;
+            GameObject a = GameObject.Find("CombatCanvas");
+            //加载图片等美术给资源
+            print(GameMgr.instance.wordGoingUseList[0]);
+            print(GameMgr.instance.wordGoingUseList[1]);
+            print(GameMgr.instance.wordGoingUseList[2]);
+/*            a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0]+"");
+            a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1]+"");
+            a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[2]+"");
+*/
+        }
         else GameObject.Find("shooter").GetComponent<TestShoot>().ReadyWordBullet();
         // 将所有站位颜色隐藏
         foreach (Situation it in Situation.allSituation)

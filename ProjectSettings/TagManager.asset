@@ -13,6 +13,7 @@ TagManager:
   - portal
   - wall
   - situation
+  - Slider
   layers:
   - Default
   - TransparentFX
