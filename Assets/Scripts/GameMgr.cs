@@ -72,9 +72,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     List<Type> wordHasUseList = new List<Type>();
 
     //名词的消耗性使用相关
-    //public List<int> wordTimes = new List<int>();
-    //public List<int> wordHasUseTimes = new List<int>();
-    //public List<int> wordCanUseTimes = new List<int>();
+
     public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();
     public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();
 
@@ -94,7 +92,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (diceNumber < 0) diceNumber = 0;
     }
 
-
+  
 
     //触发特殊文本
     public List<int> AttackHDList = new List<int>();
@@ -166,21 +164,17 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #endregion
 
+
     [Header("界面设置(手动)")]
     public GameObject UiCanvas;
     public GameObject characterCanvas;
     public DraftUi draftUi;
     public GameObject combatCanvas;
-
+    public EventCg EventCGAnim;
 
     public bool eventHappen = false;
 
-    void OpenCharacterPutting()
-    {
-        combatCanvas.gameObject.SetActive(true);
-        draftUi.gameObject.SetActive(false);
-        UiCanvas.gameObject.SetActive(true);
-    }
+   
     private void Awake()
     {
         DealWithData();
@@ -823,7 +817,12 @@ public class GameMgr : MonoSingleton<GameMgr>
 
 
     #region 调用各种界面
-
+    void OpenCharacterPutting()
+    {
+        combatCanvas.gameObject.SetActive(true);
+        draftUi.gameObject.SetActive(false);
+        UiCanvas.gameObject.SetActive(true);
+    }
 
     public int GetNextCreateChara()
     {
@@ -858,5 +857,44 @@ public class GameMgr : MonoSingleton<GameMgr>
         draftUi.gameObject.SetActive(false);
         UiCanvas.gameObject.SetActive(false);
     }
+
+    public void ShowGameUI()
+    {
+        combatCanvas.gameObject.SetActive(true);
+    }
+
+    public void HideGameUI()
+    {
+        combatCanvas.gameObject.SetActive(false);
+        draftUi.gameObject.SetActive(false);
+        UiCanvas.gameObject.SetActive(false);
+    }
+    #endregion
+
+
+    #region cg
+    WaitForFixedUpdate wait= new WaitForFixedUpdate();
+    public void PlayCG(string name, int delayTime)
+    {
+        if (delayTime > 0)
+        {
+            StartCoroutine(WaitAndCg(name, delayTime));
+        }
+        else
+        { GameMgr.instance.EventCGAnim.PlayEventCG(name, EventCharWord.GetCG(name)); }
+    }
+    IEnumerator WaitAndCg(string name,int delayTime)
+    {
+        float t = 0;
+        while (t < delayTime)
+        {
+            yield return wait;
+            t += Time.deltaTime;
+        }
+        //播放开场动画
+
+        GameMgr.instance.EventCGAnim.PlayEventCG(name, EventCharWord.GetCG(name));
+    }
+
     #endregion
 }

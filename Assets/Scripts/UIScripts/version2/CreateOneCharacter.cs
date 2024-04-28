@@ -243,7 +243,12 @@ public class CreateOneCharacter : MonoBehaviour
         }
         //»Ö¸´ÔÝÍ£
         CharacterManager.instance.pause = false;
+        GameMgr.instance.PlayCG("ElecSheep_start1", 1);
+
+
     }
+
+  
 
     private bool isKeyCharacter(int number)
     {

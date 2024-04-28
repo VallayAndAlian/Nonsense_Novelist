@@ -5,6 +5,25 @@ using UnityEngine;
 
 public static class EventCharWord 
 {
+
+
+    public static Dictionary<string, string> dicCG = new Dictionary<string, string>();
+    static EventCharWord()
+    {
+        dicCG.Add("ElecSheep_start1", "冰冷的雨又落下来了" +
+        "\n而我仍梦到他踏着草甸" + "\n在清晨的迷雾中飘飘荡荡地走来" +
+        "\n轻易刺破我的欢歌\n\n" + "\n那场雨落在2037年，霓虹闪烁，污水横流，在阴暗的巷子里，处处是酩酊大醉的我。" +
+        "\n衣衫破损的人惊惶四顾、人人自疑，紧攥着淘汰的情绪调节器；" + "\n状若癫狂的人挥洒纸币、痛饮黄金，贪婪地吸入放射性微尘；" +
+        "\n我们怀疑自我、彼此痛恨；" + "\n我们无路可走、无路可退；" +
+        "\n这光辉的无路可走的未来！" + "\n这该死的一无所有的时代！");
+    }
+
+    public static string GetCG(string i)
+    {
+        
+        return dicCG[i];
+    }
+
     /// <summary>
     /// 在每个角色获得词条都执行。检测是否有特殊组合触发。
     /// </summary>

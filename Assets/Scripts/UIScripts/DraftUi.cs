@@ -450,13 +450,13 @@ public class DraftUi : MonoBehaviour
         switch (_ink)
         {
             case 0:
-                { inkBlackCount -= 1; }
+                { /*inkBlackCount -= 1;*/ }
                 break;
             case 1:
-                { inkRedCount -= 1; }
+                { /*inkRedCount -= 1;*/ }
                 break;
             case 2:
-                { inkBlueCount -= 1; }
+                {/* inkBlueCount -= 1;*/ }
                 break;
         }
         ChangeInkNum();
