@@ -27,7 +27,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     [Tooltip("是needCD的父物体")] public Image energy;
     [Tooltip("词条图像")] public Image wordImage;
 
-    /// <summary>手动：词条图像读取路径前缀（后加wordname）</summary>
+    /// <summary>手动：词条图像读取路径前缀（后加id）</summary>
     private string resAdrNoun= "WordImage/Noun/";
     private string resAdrAdj = "WordImage/Adj/";
     private string resAdrVerb = "WordImage/Verb/";
@@ -79,7 +79,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
         
                     wordkindText.text = textNoun;
 
-                    resName = resAdrNoun + "noun_" + ((AbstractItems)word).itemID;
+                    resName = resAdrNoun + "n_" + ((AbstractItems)word).itemID;
                     tepSprite = Resources.Load<Sprite>(resName);
                     if (tepSprite == null)
                         wordImage.sprite = defaultWordImage;

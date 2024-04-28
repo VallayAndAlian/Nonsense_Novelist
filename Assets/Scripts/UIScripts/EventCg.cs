@@ -21,6 +21,7 @@ public class EventCg : MonoBehaviour
         {
             director = gameObject.AddComponent<PlayableDirector>();
         }
+        director.playableAsset = null;
 
         this.gameObject.SetActive(false);
     }
@@ -29,13 +30,12 @@ public class EventCg : MonoBehaviour
 
     public void PlayEventCG(string playName, string textContent)
     {
-
         this.gameObject.SetActive(true);
         //播放的时候 暂停游戏
         beforeCGPlay = CharacterManager.instance.pause;
         CharacterManager.instance.pause = true;
         GameMgr.instance.HideGameUI();
-
+        
         //anim.Play(playName);
         //text.text = textContent;
         int x = -1;
@@ -53,7 +53,8 @@ public class EventCg : MonoBehaviour
             print("有错");
             return;
         }
-
+        print(playName + "!!!"+cgs[x].name + x);
+        director.gameObject.SetActive(true);
         director.playableAsset = cgs[x];
         director.Play();
     }
@@ -70,7 +71,7 @@ public class EventCg : MonoBehaviour
         print("PlayEventCGEnd");
         CharacterManager.instance.pause = beforeCGPlay;
         this.gameObject.SetActive(false);
-
+        director.playableAsset = null; 
         GameMgr.instance.ShowGameUI();
     }
 
