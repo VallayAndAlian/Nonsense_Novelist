@@ -183,9 +183,9 @@ public class Shoot : MonoBehaviour
                 }
             }
         }
-        a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
+        /*a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
         a.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Slider>().value = 1;
-        a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = 1;
+        a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = 1;*/
 
         if (wordCount == 3&&wordCount<=sunWordCount)
         {
