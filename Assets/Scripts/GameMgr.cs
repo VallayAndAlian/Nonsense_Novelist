@@ -535,7 +535,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         {
             GetNowListOne();//待使用词库有5个词
         }
-        wordGoingUseList.Add(wordGoingUseList[0]);
+        wordHasUseList.Add(wordGoingUseList[0]);
         return wordGoingUseList[0];
     }
     public Type GetGoingUseListOne() {

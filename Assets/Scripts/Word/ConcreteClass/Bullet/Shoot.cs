@@ -51,7 +51,7 @@ public class Shoot : MonoBehaviour
         if (CreateOneCharacter.isTwoSides && CreateOneCharacter.isAllCharaUp)
         {
             aimSlider.value = 0; // 重置slider的值
-           //ordGrid();
+            WordGrid();
             if (crtForce >= maxForce && !fired)// 蓄力到最大值
             {
                 crtForce = maxForce;
@@ -115,12 +115,11 @@ public class Shoot : MonoBehaviour
         /*//给小球增加词条属性【原版】
         abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = 
             bulletInstance.AddComponent(GameMgr.instance.GetNowListOne()) as AbstractWord0;*/
-        if (CreateOneCharacter.isStart)//true，开始后抽一个
+        if (CreateOneCharacter.isStart)//true，开始之后抽一个
         {
             //给小球增加词条属性【测试】
             abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord =
                 bulletInstance.AddComponent(GameMgr.instance.GetGoingUseListOne()) as AbstractWord0;
-
         }
         else//开始时抽3个
         {
@@ -163,11 +162,11 @@ public class Shoot : MonoBehaviour
     float gridTime = 3f;
     float timer = 0f;
     int wordCount = 3;
-    public static int sunWordCount = 3;
+    public static int sumWordCount = 3;
     /// <summary>
     /// 槽位更新
     /// </summary>
-   /* public void WordGrid()
+    public void WordGrid()
     {
         GameObject a = GameObject.Find("combatCanvas");
         if (isShoot)//发射1次刷新1次
@@ -177,27 +176,28 @@ public class Shoot : MonoBehaviour
             {
                 timer = 0;
                 wordCount++;
-                if (wordCount == sunWordCount)
+                if (wordCount == sumWordCount)
                 {
                     isShoot = false;
                 }
             }
         }
-        *//*a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
+        //开始时解锁的三个初始化
+        a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = 1;
+        a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
         a.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Slider>().value = 1;
-        a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = 1;*//*
 
-        if (wordCount == 3&&wordCount<=sunWordCount)
+        if (wordCount == 3 && wordCount <= sumWordCount)
         {
 
-            *//*a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0] + "");
+/*            a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0] + "");
             a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
             a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[2] + "");
-            *//*
+*/
         }
-        else if (wordCount==2 )
+        else if (wordCount == 2 && wordCount <= sumWordCount)
         {
-            if (sunWordCount == 3)//3号在加载
+            if (sumWordCount == 3)//3号在加载
             {
                 a.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Slider>().value = (float)(timer / 3f);
 
@@ -205,16 +205,16 @@ public class Shoot : MonoBehaviour
                 //a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
 
             }
-            else if(sunWordCount == 2)
+            else if (sumWordCount == 2)//全部展现
             {
                 //a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0]+"");
                 //a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
 
             }
         }
-        else if (wordCount == 1 && wordCount <= sunWordCount)
+        else if (wordCount == 1 && wordCount <= sumWordCount)
         {
-            if (sunWordCount == 3)//2号加载，3号排队
+            if (sumWordCount == 3)//2号加载，3号排队
             {
                 //a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0] + "");
                 a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = (float)(timer / 3f);
@@ -224,33 +224,45 @@ public class Shoot : MonoBehaviour
                 //a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>("");
 
             }
-            else if( sunWordCount == 2)//2号加载
+            else if (sumWordCount == 2)//2号加载
             {
                 a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = (float)(timer / 3f);
+                //a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0] + "");
+
+            }
+            else if (sumWordCount == 1)//全部展现
+            {
+                //a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0] + "");
 
             }
         }
-        else if (wordCount == 0 && wordCount <= sunWordCount)
+        else if (wordCount == 0 && wordCount <= sumWordCount)
         {
-            if (sunWordCount == 3)//1号加载，2、3号排队
+            if (sumWordCount == 3)//1号加载，2、3号排队
+            {
+                a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = (float)(timer / 3f);
+                a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
+                a.transform.Find("ShootTime").transform.GetChild(2).GetComponent<Slider>().value = 1;
+                //排队
+                //a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
+                //a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
+
+            }
+            else if (sumWordCount == 2)//1号加载，2号排队
             {
                 a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = (float)(timer / 3f);
                 a.transform.Find("ShootTime").transform.GetChild(1).GetComponent<Slider>().value = 1;
                 //排队
                 //a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
-                //a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1] + "");
 
             }
-            else if (sunWordCount == 2)//1号加载，2号排队
+            else if (sumWordCount == 1)//1号加载
             {
-
-            }
-            else if (sunWordCount == 1)//1号加载，2号排队
-            {
+                a.transform.Find("ShootTime").transform.GetChild(0).GetComponent<Slider>().value = (float)(timer / 3f);
 
             }
         }
-    }*/
+    }
     private void DestroyWordBullet()
     {
         if (afterShootTF.childCount > 10)
