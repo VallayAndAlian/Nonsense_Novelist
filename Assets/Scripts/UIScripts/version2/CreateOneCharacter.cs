@@ -209,9 +209,9 @@ public class CreateOneCharacter : MonoBehaviour
             isStart = true;
             GameObject a = GameObject.Find("CombatCanvas");
             //加载图片等美术给资源
-            print(GameMgr.instance.wordGoingUseList[0]);
-            print(GameMgr.instance.wordGoingUseList[1]);
-            print(GameMgr.instance.wordGoingUseList[2]);
+            //print(GameMgr.instance.wordGoingUseList[0]);
+            //print(GameMgr.instance.wordGoingUseList[1]);
+            //print(GameMgr.instance.wordGoingUseList[2]);
 /*            a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0]+"");
             a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1]+"");
             a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[2]+"");

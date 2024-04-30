@@ -171,7 +171,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     public DraftUi draftUi;
     public GameObject combatCanvas;
     public EventCg EventCGAnim;
-
+    public LevelController levelController;
     public bool eventHappen = false;
 
    
@@ -212,6 +212,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
 
 
+    #region level
+    public void ChangeLevelTo(int start)
+    {
+        levelController.SetLevelTo(start);
+    }
+    #endregion
 
     #region 事件气泡
     /// <summary>
@@ -890,7 +896,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         else
 
         { GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
-            GameMgr.instance.EventCGAnim.PlayEventCG(name, EventCharWord.GetCG(name)); }
+            GameMgr.instance.EventCGAnim.PlayEventCG(name); }
     }
     IEnumerator WaitAndCg(string name,int delayTime)
     {
@@ -902,7 +908,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
         //播放开场动画
         GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
-        GameMgr.instance.EventCGAnim.PlayEventCG(name, EventCharWord.GetCG(name));
+        GameMgr.instance.EventCGAnim.PlayEventCG(name);
     }
 
     #endregion
