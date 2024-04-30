@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Login1.unity
     guid: 2cd6d1deefe04a745bb814aa12c46f35
   - enabled: 1
+    path: "Assets/Art/4.28\u4E66\u623F/Study.unity"
+    guid: 4c8ce07adffefe242825a0b61d57d16c
+  - enabled: 1
     path: Assets/SecondStage/ShootCombat.unity
     guid: 5df724c6a4a980a429013394dc46aec3
   - enabled: 1

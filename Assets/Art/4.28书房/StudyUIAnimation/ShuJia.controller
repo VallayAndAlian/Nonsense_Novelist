@@ -7,7 +7,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShuJia_hover
+  m_Name: hover
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -59,10 +59,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: -2097562790829789232}
-    m_Position: {x: 200, y: 0, z: 0}
+    m_Position: {x: 500, y: 90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8374452024545743509}
     m_Position: {x: 530, y: 10, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6694851389851451654}
+    m_Position: {x: 90.04846, y: 204.70874, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -72,7 +75,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -2097562790829789232}
+  m_DefaultState: {fileID: 6694851389851451654}
 --- !u!1102 &-2097562790829789232
 AnimatorState:
   serializedVersion: 6
@@ -80,7 +83,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShuJia
+  m_Name: show
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -122,3 +125,29 @@ AnimatorController:
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
+--- !u!1102 &6694851389851451654
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: nothing
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: e26167c9112ea83408465591868b6067, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 

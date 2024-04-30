@@ -76,6 +76,7 @@ public class EventCg : MonoBehaviour
         this.gameObject.SetActive(false);
 
         GameMgr.instance.ShowGameUI();
+  
     }
 
     #endregion
