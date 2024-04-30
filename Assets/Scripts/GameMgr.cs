@@ -174,7 +174,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     public LevelController levelController;
     public bool eventHappen = false;
 
-   
+    [Header("¿ª¹Ø(²âÊÔ)")]
+    public bool playEventCG = true;
+
     private void Awake()
     {
         DealWithData();
@@ -889,6 +891,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     WaitForFixedUpdate wait= new WaitForFixedUpdate();
     public void PlayCG(string name, int delayTime)
     {
+        if (playEventCG == false) return;
         if (delayTime > 0)
         {
             StartCoroutine(WaitAndCg(name, delayTime));

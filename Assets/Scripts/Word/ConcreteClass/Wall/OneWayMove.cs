@@ -4,8 +4,30 @@ using UnityEngine;
 /// <summary>
 /// 各种类型墙壁
 /// </summary>
+/// 
+public enum WallType
+{
+    addHP,
+    move_X,
+    move_Y,
+    move_Rotate,
+    showAndHide
+}
 public class OneWayMove : MonoBehaviour
 {
+
+    [Header("墙壁类型")]
+    public WallType type;
+
+    [Header("作用阵营")]
+    public CampEnum camp;
+
+    [Header("CD时间")]
+    public float cdTime;
+    private float cdTimer;
+    private bool cdOK = true;
+
+    [Header("MOVE相关设置")]
     /// <summary>水平方向</summary>
     private float hori_way;
     public float value1 = 10;
@@ -20,63 +42,93 @@ public class OneWayMove : MonoBehaviour
     public Transform exitPoint;
     /// <summary>出口速度系数</summary>
     public float k = 0.5f;
-    public CampEnum camp;
-    private bool addHP;
-    private float addHPTimer;
-    private float addHPTime;
-    private float cdTime;
-    private bool cdOK=true;
+
+    [Header("ADDHP相关设置")]
+
+    public float addRate;
+    public float addAmount;
+    public float AddingTime;//持续时间
+    private float AddingTime_real;//持续时间计时器
+    private float AddingTimer;//持续时间计时器
+    private bool adding = false;
+
+
 
     /// <summary>判断</summary>
     public int or = 0;
-
+    private void Start()
+    {
+        cdTimer = cdTime;//最开始没有cd
+        AddingTimer = 0;
+    }
     // Update is called once per frame
     void Update()
     {
-        if (or == 0)//水平方向
-        {
-            hori_way = Mathf.PingPong(Time.time, value1);
-            transform.position = new Vector3(hori_way, transform.position.y, transform.position.z);
-        }
-        else if (or == 1)//竖直方向
-        {
-            ver_way = Mathf.PingPong(Time.time, value2);
-            transform.position = new Vector3(transform.position.x, ver_way, transform.position.z);
-        }
-        else if (or == 2)//定点旋转
-        {
-            transform.RotateAround(this.transform.position, Vector3.forward, angle);
+        if (CharacterManager.instance.pause) return;
+        if(!cdOK)cdTimer += Time.deltaTime;
 
-        }
-        else if (addHP)//治疗机关，每秒恢复血量
+        AddingTimer += Time.deltaTime;
+        AddingTime_real -= Time.deltaTime;
+        if (AddingTime_real <= 0)
+        { 
+            AddingTime_real = 0;
+        } 
+        else//如果正在回血
         {
-            cdOK = false;
+           
+            if (AddingTimer > 1)//每秒回血;
+            {
+                 AddCampHP();
+                AddingTimer = 0;
+                print("每秒回血");
+            }
+        }
 
-            addHPTimer += Time.deltaTime;
-            addHPTime += Time.deltaTime;
-            if (addHPTime <= 10)//10秒内每秒恢复血量
-            {
-                if (addHPTimer > 1)
-                {
-                    AddCampHP();
-                    addHPTimer = 0;
-                }
-            }
-            else
-            {
-                addHP = false;
-            }
-        }
-        else if (!cdOK)//治疗机关，冷却时间
+        if (cdTimer < cdTime) return;//cd没加载好，什么也没发生
+
+        //cd触发：
+        if (type == WallType.move_X)//水平方向
         {
-            cdTime += Time.deltaTime;
-            if (cdTime > 120)
-            {
-                cdOK = true;
-                cdTime = 0;
-            }
+            Move_XUpdate();
         }
+        else if (type == WallType.move_Y)//竖直方向
+        {
+            Move_YUpdate();
+        }
+        else if (type == WallType.move_Rotate)//定点旋转
+        {
+            Move_RotateUpdate();
+        }
+
+        cdTimer = 0;//重置cd
+        cdOK = true;
     }
+
+
+    #region update
+
+
+
+
+    void Move_XUpdate()
+    {
+        hori_way = Mathf.PingPong(Time.time, value1);
+        transform.position = new Vector3(hori_way, transform.position.y, transform.position.z);
+    }
+    void Move_YUpdate()
+    {
+ ver_way = Mathf.PingPong(Time.time, value2);
+        transform.position = new Vector3(transform.position.x, ver_way, transform.position.z);
+    }
+    void Move_RotateUpdate()
+    {
+        transform.RotateAround(this.transform.position, Vector3.forward, angle);
+    }
+
+    #endregion
+
+
+
     /// <summary>
     /// 治疗机关，每秒恢复血量
     /// </summary>
@@ -87,8 +139,7 @@ public class OneWayMove : MonoBehaviour
             AbstractCharacter[] left = CharacterManager.charas_left.ToArray();
             for (int i = 0; i < left.Length; i++)
             {
-                left[i].CreateFloatWord(0.05f * left[i].hp, FloatWordColor.heal, false);
-                left[i].hp += 0.05f * left[i].hp;
+                left[i].BeCure(addRate * left[i].hp + addAmount, true, 0, left[i]);
             }
 
         }
@@ -97,8 +148,7 @@ public class OneWayMove : MonoBehaviour
             AbstractCharacter[] right = CharacterManager.charas_right.ToArray();
             for (int i = 0; i < right.Length; i++)
             {
-                right[i].CreateFloatWord(0.05f * right[i].hp, FloatWordColor.heal, false);
-                right[i].hp += 0.05f * right[i].hp;
+                right[i].BeCure(addRate * right[i].hp + addAmount, true, 0, right[i]);
             }
         }
     }
@@ -109,16 +159,19 @@ public class OneWayMove : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
+  
         if (collision.transform.tag == "bullet")
         {
-            if (or == 3)//消失后再出现
+       
+            if (type==WallType.showAndHide)//消失后再出现
             {
                 this.gameObject.SetActive(false);
                 Invoke("EnableBack", disappearTime);
             }
-            if (or == 5&&cdOK)//治疗机关
+            if ((type == WallType.addHP)&&cdOK)//治疗机关
             {
-                addHP = true;
+                AddingTime_real += AddingTime;
+                cdOK = false;
             }
         }
     }
