@@ -1060,7 +1060,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.114767075, y: -2.164166}
+  m_Offset: {x: 0.73147213, y: -2.164166}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1071,7 +1071,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.558298, y: 5.0660086}
+  m_Size: {x: 8.324888, y: 5.0660086}
   m_EdgeRadius: 0
 --- !u!1 &739104131
 GameObject:
@@ -1630,6 +1630,7 @@ GameObject:
   - component: {fileID: 957195843}
   - component: {fileID: 957195845}
   - component: {fileID: 957195844}
+  - component: {fileID: 957195846}
   m_Layer: 0
   m_Name: WriteDesk_BK
   m_TagString: Untagged
@@ -1719,6 +1720,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 11.875378, y: 4.681267}
   m_EdgeRadius: 0
+--- !u!114 &957195846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957195841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ae720e6c62e754490b1f7a699fefbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneName: ShootCombat
+  leastLoadTime: 2
+  canvas: {fileID: 0}
 --- !u!1 &987589227
 GameObject:
   m_ObjectHideFlags: 0
