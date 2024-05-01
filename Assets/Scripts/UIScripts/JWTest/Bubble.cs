@@ -42,7 +42,7 @@ public class Bubble : MonoBehaviour
             case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
                     obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
         }
-          
+
         
     }
     /// <summary>
@@ -51,9 +51,10 @@ public class Bubble : MonoBehaviour
     /// <param name="collision"></param>
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
         {
-
+            
             if (GameMgr.instance.eventHappen) return;
 
             //播放气泡消失动画
@@ -90,7 +91,8 @@ public class Bubble : MonoBehaviour
     /// </summary>
     public void OpenPanal()
     {
-        if(GameObject.Find("CharacterCanvas").transform.childCount>0)
+
+        if (GameObject.Find("CharacterCanvas").transform.childCount>1)
         {
             return;
         }
@@ -102,9 +104,10 @@ public class Bubble : MonoBehaviour
             case "YIWAI(Clone)": { _adr = "UI/Event_YiWai"; } break;
             case "WEIJI(Clone)": { _adr = "UI/Event_WeiJi"; } break;
             case "JIAOYI(Clone)": { _adr = "UI/Event_JiaoYi"; } break;
-        }
+        }print(_adr);
         var a = ResMgr.GetInstance().Load<GameObject>(_adr);
         a.GetComponent<EventUI>().Open(isKey);
+        if(a.GetComponent<EventUI>()==null) print("null");
         a.GetComponent<EventUI>().eventWorldPos = pos;
         a.transform.parent = GameObject.Find("CharacterCanvas").transform;
         a.transform.localPosition = Vector3.zero;

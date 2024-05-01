@@ -7,8 +7,7 @@ using UnityEngine.UI;
 
 class Boss_Huaiyizhuyi : AbstractCharacter
 {
-    [Header("生成后的大小")]
-    public float Scale;
+
   
     private bool hasLowThanHalf = false;
 
@@ -45,8 +44,7 @@ override public void Awake()
     
     private void Start()
     {
-        //调整自己的大小
-        transform.localScale = Vector3.one*Scale;
+       
 
 
         //将boss的血条和技能条移动到主界面来

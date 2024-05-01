@@ -80,7 +80,7 @@ public class OneWayMove : MonoBehaviour
             {
                  AddCampHP();
                 AddingTimer = 0;
-                print("每秒回血");
+                
             }
         }
 
@@ -139,6 +139,7 @@ public class OneWayMove : MonoBehaviour
             AbstractCharacter[] left = CharacterManager.charas_left.ToArray();
             for (int i = 0; i < left.Length; i++)
             {
+                print("left::" + left[i].wordName);
                 left[i].BeCure(addRate * left[i].hp + addAmount, true, 0, left[i]);
             }
 
@@ -148,6 +149,7 @@ public class OneWayMove : MonoBehaviour
             AbstractCharacter[] right = CharacterManager.charas_right.ToArray();
             for (int i = 0; i < right.Length; i++)
             {
+                print("right::" + right[i].wordName);
                 right[i].BeCure(addRate * right[i].hp + addAmount, true, 0, right[i]);
             }
         }
@@ -162,7 +164,9 @@ public class OneWayMove : MonoBehaviour
   
         if (collision.transform.tag == "bullet")
         {
-       
+
+            Destroy(collision.gameObject);
+            
             if (type==WallType.showAndHide)//消失后再出现
             {
                 this.gameObject.SetActive(false);

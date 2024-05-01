@@ -164,6 +164,11 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #endregion
 
+    [Header("数值调整(手动)")]
+    public float afterScale = 0.28f;
+    public float beforeScale = 18;
+    public float afterClickScale = 0.44f;
+
 
     [Header("界面设置(手动)")]
     public GameObject UiCanvas;
@@ -176,6 +181,9 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     [Header("开关(测试)")]
     public bool playEventCG = true;
+
+    private int stageIndex = 0;//游戏阶段
+    public MonsterExcelData monsterDate;
 
     private void Awake()
     {
@@ -237,8 +245,9 @@ public class GameMgr : MonoSingleton<GameMgr>
         obj.transform.parent = characterCanvas.transform;
         obj.transform.localScale = Vector3.one;
          StartCoroutine(MoveToPosCanvas( obj.GetComponent<RectTransform>(), name,info));
-      
-      
+        obj.GetComponentInChildren<Animator>().Play("burst");
+
+
     }
 
     WaitForSeconds waitFrame = new WaitForSeconds(0.02f);
@@ -263,6 +272,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         //移动到草稿本
         while (Mathf.Abs((obj.anchoredPosition- pos).x)>2f)
         {
+            obj.GetComponentInChildren<Animator>().Play("card");
             image.gameObject.SetActive(true);
             text.gameObject.SetActive(false);
             obj.anchoredPosition -= 0.08f * (obj.anchoredPosition - pos);
@@ -275,7 +285,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         int _index = 0;
         float textDelay = 0.06f;
         float textDAll = 0;
-  
+        obj.GetComponentInChildren<Animator>().Play("burst");
         while (i < 0.6f)
         {
             i += 0.02f;
@@ -914,5 +924,44 @@ public class GameMgr : MonoSingleton<GameMgr>
         GameMgr.instance.EventCGAnim.PlayEventCG(name);
     }
 
+    #endregion
+
+    #region 游戏阶段
+    public void CreateMonster(int id)
+    {
+        int _index = -1;
+        for (int ttt = 0; (ttt < monsterDate.items.Length)&&(_index!=-1);ttt++)
+        {
+            if ((monsterDate.items[ttt].Mid == id)&&(monsterDate.items[ttt].name==stageIndex))
+            {
+                _index = ttt;
+            }
+        }
+
+        if (_index == -1) return;
+
+        var _data = monsterDate.items[_index];
+        int _id = id - 110;
+        var _monster = Instantiate<GameObject>(UiCanvas.GetComponent<CreateOneCharacter>().monsterPrefabs[_id]);
+        var _mAc = _monster.GetComponent<AbstractCharacter>();
+        _mAc.camp = CampEnum.stranger;
+        _mAc.maxHp = _data.hp; 
+        _mAc.hp = _mAc.maxHp;
+        _mAc.def = _data.def;
+        _mAc.atk = _data.atk;
+        _mAc.psy = _data.psy;
+        _mAc.san = _data.san;
+        //放置在合适的位置
+
+        //增加自带技能
+        if ((_data.word1 != "") & (_data.word1 != null))
+        {
+            Type type = Type.GetType(_data.word1);
+            if (type != null)
+            {
+                _monster.AddComponent(type);
+            }
+        }
+    }
     #endregion
 }

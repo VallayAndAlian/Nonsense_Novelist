@@ -15,46 +15,66 @@ MonoBehaviour:
   items:
   - id: 
     type: "\u653E\u5C04\u6027\u5FAE\u5C18"
-    name: 1
+    name: 0
     hp: 30
     atk: 6
     def: 20
     psy: 6
     san: 15
-    Mid: 1
+    Mid: 110
+    word1: 
+    word2: 
+    word3: 
+    word4: 
   - id: 
     type: "\u8D5B\u535A\u75AF\u5B50"
-    name: 1
+    name: 0
     hp: 30
     atk: 8
     def: 16
     psy: 6
     san: 15
-    Mid: 2
+    Mid: 111
+    word1: 
+    word2: 
+    word3: 
+    word4: 
   - id: 
     type: "\u8B66\u5BDF"
-    name: 1
+    name: 0
     hp: 21
     atk: 8
     def: 12
     psy: 6
     san: 15
-    Mid: 3
+    Mid: 112
+    word1: 
+    word2: 
+    word3: 
+    word4: 
   - id: 
     type: "\u504F\u89C1"
-    name: 1
+    name: 0
     hp: 18
     atk: 5
     def: 9
     psy: 9
     san: 12
-    Mid: 4
+    Mid: 113
+    word1: 
+    word2: 
+    word3: 
+    word4: 
   - id: 
     type: "\u8D4F\u91D1\u730E\u4EBA"
-    name: 1
+    name: 0
     hp: 27
     atk: 9
     def: 12
     psy: 6
     san: 12
-    Mid: 5
+    Mid: 114
+    word1: 
+    word2: 
+    word3: 
+    word4: 

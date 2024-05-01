@@ -48,7 +48,7 @@ public class EventUI : MonoBehaviour
 
     private void Start()
     {
-      
+        print("Start EventUI");
     }
 
    

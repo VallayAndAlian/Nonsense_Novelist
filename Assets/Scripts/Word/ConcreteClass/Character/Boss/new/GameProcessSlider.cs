@@ -172,7 +172,7 @@ public class GameProcessSlider : MonoBehaviour
         GameObject boss = Instantiate(_boss);
         boss.transform.SetParent(GameObject.Find("Circle5.5").transform);
         boss.transform.localPosition = Vector3.zero;
-      
+        boss.transform.localScale = Vector3.one * GameMgr.instance.afterScale;
 
         //生成调整
         boss.GetComponentInChildren<AI.MyState0>().enabled = true;

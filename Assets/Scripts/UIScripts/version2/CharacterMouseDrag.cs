@@ -30,10 +30,7 @@ public class CharacterMouseDrag : MonoBehaviour
 
     private SpriteRenderer sr;
 
-    //角色战后大小
-    private float afterScale=0.28f;
-    private float beforeScale =18;
-    private float afterClickScale = 0.44f;
+
 
 
     private string characterDetailPrefab = "UI/CharacterDetail";
@@ -41,10 +38,10 @@ public class CharacterMouseDrag : MonoBehaviour
     private Transform oriParent;
     private void Start()
     {        
-        if (SceneManager.GetActiveScene().name == "CombatTest")
-        {
-            beforeScale = 10;
-        }
+        //if (SceneManager.GetActiveScene().name == "CombatTest")
+        //{
+        //    beforeScale = 10;
+        //}
 
         siblingBefore = this.transform.parent.GetSiblingIndex();
 
@@ -52,7 +49,7 @@ public class CharacterMouseDrag : MonoBehaviour
         target = transform;
         sr= GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
         oriParent = GameObject.Find("UICanvas").transform.Find("Panel").Find("charaPos");
-        transform.localScale = Vector3.one * beforeScale;
+        transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
 
 
            
@@ -133,7 +130,7 @@ public class CharacterMouseDrag : MonoBehaviour
 
         //如果位置之间变换，则变大
         if (nowParentTF.GetComponent<Situation>() != null)
-            this.transform.localScale = ScaleWithTure(afterClickScale);
+            this.transform.localScale = ScaleWithTure(GameMgr.instance.afterClickScale);
 
 
         while (Input.GetMouseButton(0))//鼠标左键被持续按下。
@@ -169,7 +166,7 @@ public class CharacterMouseDrag : MonoBehaviour
                     else
                     {
                         transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
-                        this.transform.localScale = ScaleWithTure(afterScale);
+                        this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
                     }
 
                 }
@@ -180,10 +177,10 @@ public class CharacterMouseDrag : MonoBehaviour
             else//没有检测到站位
             {
                 transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
-                this.transform.localScale = ScaleWithTure(afterScale);
+                this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
                 if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))
                 {
-                    this.transform.localScale = ScaleWithTure(beforeScale);
+                    this.transform.localScale = ScaleWithTure(GameMgr.instance.beforeScale);
                     DeleteBlack();
                 }
             }
@@ -196,7 +193,7 @@ public class CharacterMouseDrag : MonoBehaviour
             nowParentTF = transform.parent;
 
             transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
-            transform.localScale = Vector3.one * beforeScale;
+            transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
 
             var chara = this.GetComponent<AbstractCharacter>();
             chara.camp = CampEnum.left;
@@ -207,10 +204,10 @@ public class CharacterMouseDrag : MonoBehaviour
         {
             
             transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
-            this.transform.localScale = ScaleWithTure(afterScale);
+            this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
             if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))
             {
-                DeleteBlack(); this.transform.localScale = ScaleWithTure(beforeScale);
+                DeleteBlack(); this.transform.localScale = ScaleWithTure(GameMgr.instance.beforeScale);
             }
         }
        
@@ -243,15 +240,15 @@ public class CharacterMouseDrag : MonoBehaviour
         
         if (lastParentTF.GetComponent<Situation>() == null && s != null)//如果是从放置后过来，则变大
         {
-            this.transform.localScale = ScaleWithTure( afterScale);
+            this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
         }
         else if(s != null)//位置之间切换
         {
-            this.transform.localScale = ScaleWithTure(afterScale);
+            this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
         }
        
         else if (lastParentTF.GetComponent<Situation>() != null && s == null)  //其它情况，则保持小
-            this.transform.localScale = ScaleWithTure(beforeScale);
+            this.transform.localScale = ScaleWithTure(GameMgr.instance.beforeScale);
 
 
         transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
@@ -335,7 +332,7 @@ public class CharacterMouseDrag : MonoBehaviour
         var _obj = Instantiate<GameObject>(this.gameObject);
 
         _obj.transform.parent = nowParentTF;
-        _obj.transform.localScale = Vector3.one * beforeScale;
+        _obj.transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
         _obj.transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
         _obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().color = Color.black;
        // print(_obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().sortingOrder);

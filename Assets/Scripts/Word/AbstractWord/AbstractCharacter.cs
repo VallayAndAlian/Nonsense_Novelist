@@ -107,11 +107,22 @@ abstract public class AbstractCharacter : AbstractWord0
             if (_at == AttackType.atk) CreateFloatWord(_value, FloatWordColor.physics, true);
             if (_at == AttackType.psy) CreateFloatWord(_value, FloatWordColor.psychic, true);
             if (_at == AttackType.dir) CreateFloatWord(_value, FloatWordColor.physics, true);
+            if(_value<0) CreateFloatWord(_value, FloatWordColor.heal, true);
         }
+
         hp -= _value;
         //执行外部委托
-        if (event_BeAttack != null)
+        if (_value >= 0)
+        {
+            if (event_BeAttack != null)
             event_BeAttack(_value, _whoDid);
+        }
+        else
+        {
+            if (event_BeCure != null)
+                event_BeCure();
+        }
+
         //触发文本
         if (!(GameMgr.instance.AttackHDList.Contains(_whoDid.characterID * 100 + this.characterID * 1)))
         {
@@ -236,8 +247,11 @@ abstract public class AbstractCharacter : AbstractWord0
         //无延时
         if (_delayTime == 0)
         {
-           
-            if (_hasFloat) CreateFloatWord(_value, FloatWordColor.heal, true);
+            if (_hasFloat)
+            {
+             
+                CreateFloatWord(_value, FloatWordColor.heal, true);
+            } 
             hp += _value;
             //触发文本
             if (!(GameMgr.instance.CureHDList.Contains(_whoDid.characterID * 100 + this.characterID * 1)))
@@ -1063,7 +1077,7 @@ abstract public class AbstractCharacter : AbstractWord0
 
             if (color == FloatWordColor.heal) teXiao.PlayTeXiao("hpAdd");
             else if (color == FloatWordColor.healMax) teXiao.PlayTeXiao("hpmaxAdd");
-            else if (color == FloatWordColor.getWord) teXiao.PlayTeXiao("getWord");
+            else if (color == FloatWordColor.getWord)teXiao.PlayTeXiao("getWord");
         });
         //Instantiate<GameObject>(Resources.Load("SecondStageLoad/floatWord") as GameObject, this.transform.position + pos, Quaternion.Euler(Vector3.zero), energyCanvas.transform)
         //    .GetComponent<FloatWord>().InitPopup(value, this.camp == CampEnum.stranger, color, direct);

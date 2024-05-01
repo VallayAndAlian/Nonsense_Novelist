@@ -16,6 +16,10 @@ public class MonsterExcelItem : ExcelItemBase
 	public float psy;
 	public float san;
 	public int Mid;
+	public string word1;
+	public string word2;
+	public string word3;
+	public string word4;
 }
 
 [CreateAssetMenu(fileName = "MonsterExcelData", menuName = "Excel To ScriptableObject/Create MonsterExcelData", order = 1)]
@@ -43,6 +47,10 @@ public class MonsterAssetAssignment
 			items[i].psy = Convert.ToSingle(allItemValueRowList[i]["psy"]);
 			items[i].san = Convert.ToSingle(allItemValueRowList[i]["san"]);
 			items[i].Mid = Convert.ToInt32(allItemValueRowList[i]["Mid"]);
+			items[i].word1 = allItemValueRowList[i]["word1"];
+			items[i].word2 = allItemValueRowList[i]["word2"];
+			items[i].word3 = allItemValueRowList[i]["word3"];
+			items[i].word4 = allItemValueRowList[i]["word4"];
 		}
 		MonsterExcelData excelDataAsset = ScriptableObject.CreateInstance<MonsterExcelData>();
 		excelDataAsset.items = items;
