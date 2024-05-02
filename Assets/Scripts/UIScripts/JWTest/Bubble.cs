@@ -31,20 +31,48 @@ public class Bubble : MonoBehaviour
         //²¥·ÅÊÂ¼þlogo¶¯»­
         switch (this.gameObject.name)
         {
-            case "fangke(Clone)": { _adr = "UI/LOGO/FANGKE"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
-                   obj.GetComponent<Bubble>().isKey = isKey;obj.GetComponent<Bubble>().pos = this.transform.position; } break;
-            case "xiwang(Clone)": { _adr = "UI/LOGO/XIWANG"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
-                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
-            case "yiwai(Clone)": { _adr = "UI/LOGO/YIWAI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
-                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
-            case "weiji(Clone)": { _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
-                    obj.GetComponent<Bubble>().pos = this.transform.position;obj.GetComponent<Bubble>().isKey = isKey; } break;
-            case "jiaoyi(Clone)": { _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
-                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;} break;
+            case "fangke(Clone)":
+                {
+                    _adr = "UI/LOGO/FANGKE"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;
+                }
+                break;
+            case "xiwang(Clone)":
+                {
+                    _adr = "UI/LOGO/XIWANG"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;
+                }
+                break;
+            case "yiwai(Clone)":
+                {
+                    _adr = "UI/LOGO/YIWAI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;
+                }
+                break;
+            case "weiji(Clone)":
+                {
+                    _adr = "UI/LOGO/WEIJI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().pos = this.transform.position; obj.GetComponent<Bubble>().isKey = isKey;
+                }
+                break;
+            case "jiaoyi(Clone)":
+                {
+                    _adr = "UI/LOGO/JIAOYI"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;
+                }
+                break;
+            case "changjing(Clone)":
+                {
+                    _adr = "UI/LOGO/CHANGJING"; obj = ResMgr.GetInstance().Load<GameObject>(_adr); obj.transform.localPosition = new Vector3(0, -1.5f, 0);
+                    obj.GetComponent<Bubble>().isKey = isKey; obj.GetComponent<Bubble>().pos = this.transform.position;
+                }
+                break;
         }
 
-        
     }
+
+
+
     /// <summary>
     /// Óë´ÊÇòÅö×²=>(ÆøÅÝÏûÊ§¶¯»­£¨¶¯»­Ä©Î²É¾³ýÆøÅÝ£©-logo²¥·Å¶¯»­£¨¶¯»­Ä©Î²É¾³ýlogo+ºá·ù²¥·Å¶¯»­£¨¶¯»­Ä©Î²É¾³ýºá·ù+´ò¿ªÃæ°å£©£©)
     /// </summary>
@@ -92,10 +120,7 @@ public class Bubble : MonoBehaviour
     public void OpenPanal()
     {
 
-        if (GameObject.Find("CharacterCanvas").transform.childCount>1)
-        {
-            return;
-        }
+
         string _adr = "";
         switch (this.gameObject.name)
         {
@@ -104,10 +129,13 @@ public class Bubble : MonoBehaviour
             case "YIWAI(Clone)": { _adr = "UI/Event_YiWai"; } break;
             case "WEIJI(Clone)": { _adr = "UI/Event_WeiJi"; } break;
             case "JIAOYI(Clone)": { _adr = "UI/Event_JiaoYi"; } break;
-        }print(_adr);
+            case "CHANGJING(Clone)": { _adr = "UI/Event_ChangJing"; } break;
+        }
+        print(_adr);
         var a = ResMgr.GetInstance().Load<GameObject>(_adr);
-        a.GetComponent<EventUI>().Open(isKey);
+        if (a == null) print("1null");
         if(a.GetComponent<EventUI>()==null) print("null");
+        a.GetComponent<EventUI>().Open(isKey);
         a.GetComponent<EventUI>().eventWorldPos = pos;
         a.transform.parent = GameObject.Find("CharacterCanvas").transform;
         a.transform.localPosition = Vector3.zero;

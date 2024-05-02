@@ -61,7 +61,7 @@ public class GameProcessSlider : MonoBehaviour
     /// 事件气泡功能
     /// </summary>
     [Header("事件位置")] public GameObject[] eventPoint;
-    [Header("事件气泡（气泡顺序不能改变）")] public GameObject[] eventBubblePrefab;
+    [Header("事件气泡（希望-访客-意外-危机-交易-场景）")] public GameObject[] eventBubblePrefab;
 
     [Header("每轮间隔时间")] public int eventTime = 30;
     [Header("重要事件消失时间")] public int keyEventTime = 15;
@@ -71,18 +71,17 @@ public class GameProcessSlider : MonoBehaviour
     private bool isCreate = false;
 
     //概率
-    [Header("事件概率")]
+    [Header("事件概率(总和100)")]
     [Header("希望")] public int xiWang = 10;
-    [Header("交易")] public int jiaoYi = 25;
-    [Header("危机")] public int weiJi = 30;
-    [Header("访客")] public int fangKe = 25;
+    [Header("访客")] public int fangKe = 25; 
     [Header("意外")] public int yiWai = 10;
+    [Header("危机")] public int weiJi = 30;
+    [Header("交易")] public int jiaoYi = 25; 
+    [Header("场景")] public int changJing = 10;
     private void Start()
     {
 
         oriScale = this.transform.localScale;
-
-       
 
         //生成进度条
         sliderProcess = this.GetComponent<Slider>();
@@ -118,9 +117,6 @@ public class GameProcessSlider : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
-
-
         if (CharacterManager.instance.pause) return;
         if (!countTime)
             return;
@@ -242,6 +238,26 @@ public class GameProcessSlider : MonoBehaviour
     /// 生成事件气泡
     /// </summary>
     private float totalTime = 0;
+
+    /// <summary>
+    /// 随机抽取并返回事件ID（希望0-访客1-意外2-危机3-交易4-场景5                
+    /// </summary>
+    /// <returns></returns>
+    private int ChooseEvent()
+    {
+        int result = -1;
+
+        //概率抽取
+        int numx = Random.Range(1, 101);
+        if (numx <= xiWang) { result = 0; }
+        else if (numx > xiWang && numx < xiWang + fangKe) result = 1;
+        else if (numx > xiWang + fangKe && numx < xiWang + fangKe + yiWai) result = 2;
+        else if (numx > xiWang + fangKe + yiWai && numx < xiWang + fangKe + yiWai + weiJi) result = 3;
+        else if (numx > xiWang + fangKe + yiWai + weiJi && numx < xiWang + fangKe + yiWai + weiJi + jiaoYi) result = 4;
+        else result = 5;
+
+        return result;
+    }
     public void CreateEvent()
     {
         
@@ -257,42 +273,25 @@ public class GameProcessSlider : MonoBehaviour
             if (eventCount % 3 == 0)
             {
                 //检测当前的所有事件中，哪些事件是可以生成重要事件的，并且从中随机抽取一件
-                
                 _random = Random.Range(0, event_stage[eventCount].events);
-               
             }
+
             //生成事件气泡预制体
             for(int i = 0; i < event_stage[eventCount].events; i++)
             {
-                int num0= Random.Range(0, eventPoint.Length);
-                //概率抽取                
-                int numx = Random.Range(1, 101);
-                if (numx <= xiWang) { numx = 0; }
-                else if (numx > xiWang && numx < xiWang + jiaoYi) numx = 4;
-                else if (numx >= xiWang + jiaoYi && numx < xiWang + jiaoYi + weiJi) numx = 3;
-                else if (numx >= xiWang + jiaoYi + weiJi && numx < xiWang + jiaoYi + weiJi + fangKe) numx = 1;
-                else numx = 2;
+                int num0 = Random.Range(0, eventPoint.Length);            
+                int numx = ChooseEvent();
 
                 if (i == _random)//是重要事件
                 {
-                   
                     int loop = 0;
                     while ((!GameMgr.instance.HaveCanHappenKeyEvent(numx)) && (loop < 50))
                     {
-                        
                         loop += 1;
-                        numx = Random.Range(1, 101);
-                        if (numx <= xiWang) { numx = 0; }
-                        else if (numx > xiWang && numx < xiWang + jiaoYi) numx = 4;
-                        else if (numx >= xiWang + jiaoYi && numx < xiWang + jiaoYi + weiJi) numx = 3;
-                        else if (numx >= xiWang + jiaoYi + weiJi && numx < xiWang + jiaoYi + weiJi + fangKe) numx = 1;
-                        else numx = 2;
-
+                        numx = ChooseEvent();
                         if (loop > 48) print("死循环");
                     }
                 }
-
-
 
                 while (array.Contains(num0))//位置去重
                 {

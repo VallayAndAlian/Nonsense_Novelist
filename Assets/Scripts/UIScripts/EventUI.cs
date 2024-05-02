@@ -713,7 +713,13 @@ public class EventUI : MonoBehaviour
     #region 场景
     public void OpenInit_ChangJing()
     {
-        
+
+    }
+    public void Close_ChangJing()
+    {
+        GameMgr.instance.happenEvent.Add(nowEvent.name);
+        GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
+        Destroy(this.gameObject);
     }
     #endregion
 
@@ -818,6 +824,8 @@ public class EventUI : MonoBehaviour
         GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi());
     }
     #endregion
+
+
 
     #region 外部点击/调用事件
     public void RefreshEvent()
@@ -927,6 +935,11 @@ public class EventUI : MonoBehaviour
             case EventType.WeiJi:
                 {
                     Close_WeiJi();
+                }
+                break;
+            case EventType.ChangJing:
+                {
+                    Close_ChangJing();
                 }
                 break;
         }

@@ -14325,13 +14325,15 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: b18401dba64c988489d417ad7a636e14, type: 3}
   - {fileID: 296767673687119374, guid: 8228bba66bb0cd2438c23068c5feb655, type: 3}
   - {fileID: 296767673687119374, guid: 1b34a8a16ed0932448303639416a0a4c, type: 3}
+  - {fileID: 296767673687119374, guid: 7864ab0c371e01e46bbcfd4ce474aff3, type: 3}
   eventTime: 3
   keyEventTime: 2
-  xiWang: 20
-  jiaoYi: 20
-  weiJi: 20
-  fangKe: 20
-  yiWai: 100
+  xiWang: 100
+  fangKe: 0
+  yiWai: 0
+  weiJi: 0
+  jiaoYi: 0
+  changJing: 0
 --- !u!114 &1338572143
 MonoBehaviour:
   m_ObjectHideFlags: 0

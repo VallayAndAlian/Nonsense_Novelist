@@ -81,6 +81,25 @@ public class WordCollisionShoot : MonoBehaviour
     }
 
 
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (CharacterManager.instance.pause)
+            return;
+
+
+        if (collision.transform.tag == "wall")
+        {
+            Vector2 globalPositionOfContact = collision.contacts[0].point;
+            PoolMgr.GetInstance().GetObj("Other/wordColEffect", (obj)=>
+            {
+                obj.transform.position = globalPositionOfContact;
+                obj.GetComponent<Animator>().Play("wordCol");
+            });
+
+        }
+    }
     /// <summary>
     /// 计时器(时间结束返回true
     /// </summary>

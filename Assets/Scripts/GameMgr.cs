@@ -245,7 +245,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         obj.transform.parent = characterCanvas.transform;
         obj.transform.localScale = Vector3.one;
          StartCoroutine(MoveToPosCanvas( obj.GetComponent<RectTransform>(), name,info));
-        obj.GetComponentInChildren<Animator>().Play("burst");
+        
 
 
     }
@@ -259,20 +259,21 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         //停留在最开始的点 
         float i = 0;
-        while (i< 0.6f)
+        obj.transform.Find("Image").GetComponent<Animator>().Play("burst");
+        while (i< 1f)
         {
             i += 0.02f;
-            image.gameObject.SetActive(false);
-            text.gameObject.SetActive(true);
+            
+            text.gameObject.SetActive(false);
             text.text = text1;
             yield return waitFrame;
         }
 
-
+        obj.transform.Find("Image").GetComponent<Animator>().Play("card");
         //移动到草稿本
         while (Mathf.Abs((obj.anchoredPosition- pos).x)>2f)
         {
-            obj.GetComponentInChildren<Animator>().Play("card");
+            
             image.gameObject.SetActive(true);
             text.gameObject.SetActive(false);
             obj.anchoredPosition -= 0.08f * (obj.anchoredPosition - pos);
@@ -285,11 +286,11 @@ public class GameMgr : MonoSingleton<GameMgr>
         int _index = 0;
         float textDelay = 0.06f;
         float textDAll = 0;
-        obj.GetComponentInChildren<Animator>().Play("burst");
-        while (i < 0.6f)
+        obj.transform.Find("Image").GetComponent<Animator>().Play("burst");
+        while (i < 1f)
         {
             i += 0.02f;
-            image.gameObject.SetActive(false);
+            
             text.gameObject.SetActive(true);
             if (i > textDAll)
             {
