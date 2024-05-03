@@ -358,10 +358,7 @@ public class EventUI : MonoBehaviour
     #region 希望
     Button checkBotton;
     private List<int> showBook=new List<int>();
-    private float rate_1 = 20;
-    private float rate_2 = 30;
-    private float rate_3 = 30;
-    private float rate_4 = 20;
+
     public void OpenInit_XiWang()
     {
         DataInit(isKey);
@@ -421,19 +418,19 @@ public class EventUI : MonoBehaviour
             {
                 //随机抽取级别
                 int _rb1 = UnityEngine.Random.Range(0, 100);
-                if (_rb1 < rate_1)//稀有度1
+                if (_rb1 < GameMgr.instance.cardRate_1)//稀有度1
                 {
                     _typeListRare = AllSkills.Rare_1;
                 }
-                else if (_rb1 < rate_2)//稀有度2
+                else if (_rb1 < GameMgr.instance.cardRate_2)//稀有度2
                 {
                     _typeListRare = AllSkills.Rare_2;
                 }
-                else if (_rb1 < rate_3)//稀有度3
+                else if (_rb1 < GameMgr.instance.cardRate_3)//稀有度3
                 {
                     _typeListRare = AllSkills.Rare_3;
                 }
-                else if (_rb1 < rate_4)//稀有度4
+                else if (_rb1 < GameMgr.instance.cardRate_4)//稀有度4
                 {
                     _typeListRare = AllSkills.Rare_4;
                 }

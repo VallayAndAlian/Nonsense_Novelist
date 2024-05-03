@@ -103,10 +103,6 @@ public class GameMgr : MonoSingleton<GameMgr>
     //当前触发的所有事件
     [HideInInspector] public CustomList happenEvent = new CustomList();
 
-
-    //全部数据
-    public test1ExcelData data;
-
     //当前可以触发的所有事件
     [HideInInspector] public List<test1ExcelItem> canHappenData_nKey;
     [HideInInspector] public List<test1ExcelItem> canHappenData_Key;
@@ -168,7 +164,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     public float afterScale = 0.28f;
     public float beforeScale = 18;
     public float afterClickScale = 0.44f;
-
+    public float cardRate_1 = 20;
+    public float cardRate_2 = 30;
+    public float cardRate_3 = 30;
+    public float cardRate_4 = 20;
 
     [Header("界面设置(手动)")]
     public GameObject UiCanvas;
@@ -183,7 +182,13 @@ public class GameMgr : MonoSingleton<GameMgr>
     public bool playEventCG = true;
 
     private int stageIndex = 0;//游戏阶段
+
+    [Header("数据")]
+    public test1ExcelData data;
     public MonsterExcelData monsterDate;
+    public cardRareExcelData cardRareDate;
+
+
 
     private void Awake()
     {
@@ -221,6 +226,38 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
     }
 
+    #region 卡牌稀有度&&游戏阶段
+
+    public void AddStage(int i)
+    {
+        stageIndex += i;
+        bool b=SetRareTo(stageIndex);
+        if (!b) print("stageIndex超出游戏设定");
+    }
+
+    public void SetStageTo(int i)
+    {
+        stageIndex = i;
+        bool b = SetRareTo(stageIndex);
+        if (!b) print("stageIndex超出游戏设定");
+    }
+
+    private bool SetRareTo(int _stage)
+    {
+        if (_stage >= cardRareDate.items.Length)
+            return false;
+
+        //这里默认数据顺序和表格一样。如果出错了，加上index检测
+        cardRate_1 = cardRareDate.items[_stage].rate1;
+        cardRate_2 = cardRareDate.items[_stage].rate2;
+        cardRate_3 = cardRareDate.items[_stage].rate3;
+        cardRate_4 = cardRareDate.items[_stage].rate4;
+
+        return true;
+    }
+
+
+    #endregion
 
     #region level
     public void ChangeLevelTo(int start)
