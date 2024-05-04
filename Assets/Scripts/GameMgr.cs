@@ -164,6 +164,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     public float afterScale = 0.28f;
     public float beforeScale = 18;
     public float afterClickScale = 0.44f;
+    public Vector3 charaPosOffset = new Vector3(0,10,0);
     public float cardRate_1 = 20;
     public float cardRate_2 = 30;
     public float cardRate_3 = 30;

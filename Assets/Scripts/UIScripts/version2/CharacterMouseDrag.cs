@@ -86,7 +86,7 @@ public class CharacterMouseDrag : MonoBehaviour
                 {
                     var a = ResMgr.GetInstance().Load<GameObject>(characterDetailPrefab);
                     a.transform.parent = GameObject.Find("combatCanvas").transform;
-                    a.transform.localPosition = Vector3.zero;
+                    a.transform.localPosition = Vector3.zero ;
                     a.transform.localScale = Vector3.one;
                     //获取点击角色的脚本信息
                     a.GetComponentInChildren<CharacterDetail>().Open(this.GetComponent<AbstractCharacter>());
@@ -237,21 +237,27 @@ public class CharacterMouseDrag : MonoBehaviour
             this.transform.SetParent(nowParentTF);
         }
 
-        
+
         if (lastParentTF.GetComponent<Situation>() == null && s != null)//如果是从放置后过来，则变大
         {
             this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
+            this.transform.position = nowParentTF.position + GameMgr.instance.charaPosOffset;
         }
-        else if(s != null)//位置之间切换
+        else if (s != null)//位置之间切换
         {
             this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
+            this.transform.position = nowParentTF.position + GameMgr.instance.charaPosOffset;
         }
-       
+
         else if (lastParentTF.GetComponent<Situation>() != null && s == null)  //其它情况，则保持小
+        {
             this.transform.localScale = ScaleWithTure(GameMgr.instance.beforeScale);
+            this.transform.position = nowParentTF.position;
+        }
+            
 
 
-        transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
+       // transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
 
 
         //隐藏/恢复站位颜色（透明度为0

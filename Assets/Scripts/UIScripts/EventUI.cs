@@ -667,12 +667,13 @@ public class EventUI : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    
+
 
     #endregion
 
 
     #region 危机
+    [HideInInspector] public bool WJ_static = false;//外部在open之前调用
     public void OpenInit_WeiJi()
     {
         DataInit(isKey);
@@ -689,6 +690,19 @@ public class EventUI : MonoBehaviour
             }
         }
 
+        //设置按钮
+        if (WJ_static)
+        {
+            this.transform.Find("button").Find("WelcomeButton").gameObject.SetActive(true);
+            this.transform.Find("button").Find("EscapeButton").gameObject.SetActive(false);
+        }
+        else
+        {
+            this.transform.Find("button").Find("WelcomeButton").gameObject.SetActive(true);
+            this.transform.Find("button").Find("EscapeButton").gameObject.SetActive(true);
+        }
+
+      
         //
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
         //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
@@ -696,6 +710,15 @@ public class EventUI : MonoBehaviour
         nowEvent = tempNowDate[_r];
         RefreshNowList();
 
+    }
+
+    public void Click_WeiJi()
+    {
+        print("Click_WeiJi");
+
+          //随机抽取一个怪物，并显示对应动画
+        GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+        CloseAnim();
     }
 
     public void Close_WeiJi()

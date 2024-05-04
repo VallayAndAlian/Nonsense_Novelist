@@ -275,6 +275,9 @@ public class CreateOneCharacter : MonoBehaviour
         return false;
     }
 
+
+
+
     /// <summary>
     /// 访客专用，提前获得即将创建的角色
     /// </summary>
@@ -294,8 +297,6 @@ public class CreateOneCharacter : MonoBehaviour
         return number;
     }
     int charaNext = -1;
-
-
 
 /// <summary>
 /// 外部和start调用。生成count数量的角色。
@@ -442,6 +443,75 @@ public class CreateOneCharacter : MonoBehaviour
         return true;
     }
 
+
+
+
+
+    /// <summary>
+    /// 危机专用，提前获得即将创建的怪物
+    /// </summary>
+    public int GetNextCreateMonster()
+    {
+        monsterNext = -1;
+        int number = UnityEngine.Random.Range(0, monsterPrefabs.Length);
+
+        monsterNext = number;
+        return number;
+    }
+    int monsterNext = -1;
+
+    public void CreateMonster(int count)
+    {
+        for (int j = 0; j < count; j++)//抽取不同数量的monster，每个monster都随机抽选，种类不同
+        {
+            int number = 0;
+            if (monsterNext != -1)
+            {
+                number = monsterNext;
+                monsterNext = -1;
+            }
+            else
+            {
+                number = UnityEngine.Random.Range(0, monsterPrefabs.Length);
+            }
+         
+
+            GameObject chara = Instantiate(monsterPrefabs[number]);
+            //找空位
+            int _pos = FindOneRandomNullPos();
+ 
+            if (_pos >=0)
+            {
+                chara.transform.SetParent(CharacterManager.instance.transform.GetChild(_pos)) ;
+                chara.transform.position = chara.transform .parent.position+ GameMgr.instance.charaPosOffset;
+                chara.transform.localScale = Vector3.one * GameMgr.instance.afterScale;
+
+                //生成调整
+                chara.GetComponent<AbstractCharacter>().camp = CampEnum.stranger;
+                chara.GetComponent<AbstractCharacter>().situation = CharacterManager.instance.transform.GetChild(_pos).GetComponent<Situation>();
+                chara.gameObject.AddComponent(typeof(AfterStart));
+                Destroy(chara.GetComponent<CharacterMouseDrag>());
+
+                //设置一个随机目标，使其进入攻击状态
+                IAttackRange attackRange = new SingleSelector();
+
+                //这一句越级了
+                AbstractCharacter[] a = attackRange.CaculateRange(100, chara.GetComponent<AbstractCharacter>().situation, NeedCampEnum.all, false); 
+                chara.GetComponentInChildren<AI.MyState0>().aim.Add(a[UnityEngine.Random.Range(0, a.Length)]);
+                chara.GetComponentInChildren<AI.MyState0>().enabled = true;
+                chara.GetComponent<AbstractCharacter>().enabled = true;
+            }
+            else
+            {
+                return;
+                print("生成怪物失败");
+            }
+            
+        }
+       
+    }
+
+
     /// <summary>
     ///把站位和对应灯光的颜色恢复
     /// </summary>
@@ -470,6 +540,42 @@ public class CreateOneCharacter : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 找空位，随机返回一个空位index
+    /// </summary>
+    public int FindOneRandomNullPos()
+    {
+        int _count = 0;
+        int[] _temp=new int[9];
+        for (int X = 0; X < Situation.allSituation.Length; X++)
+        {
+            if (Situation.allSituation[X].GetComponentInChildren<AbstractCharacter>() == null)
+            {
+                _temp[_count] = X;
+                _count++;
+            }
+        }
+
+        if (_count != 0)
+        {
+            int _result = UnityEngine.Random.Range(0, _count);
+            int _loop = 0;
+            while ((_temp[_result] == 8)&&(_loop<50))
+            {
+                _result = UnityEngine.Random.Range(0, _count); 
+                _loop++;
+                if (_loop > 48) print("死循环");
+            }
+            if(_temp[_result] == 8) return -1;
+            else return _temp[_result];
+        } 
+        else return -1;
+    }
+
+    /// <summary>
+    /// 清空角色拜访界面的黑影
+    /// </summary>
     void InitPos()
     {
         var _p = this.transform.Find("Panel").Find("charaPos");

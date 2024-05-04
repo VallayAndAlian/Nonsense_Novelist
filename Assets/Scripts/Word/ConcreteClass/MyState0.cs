@@ -47,6 +47,10 @@ namespace AI
             //character = this.GetComponent<AbstractCharacter>();//在角色那边已写
             nowState = defaultState = allState.Find(p => p.id == StateID.idle);
             nowState.EnterState(this);
+            if (aim == null)
+            {
+                aim = new List<AbstractCharacter>();
+            }
 
             StartCoroutine(Every1Seconds());
             StartCoroutine(EveryZeroOne());
@@ -102,8 +106,17 @@ namespace AI
             {
                 if (!CharacterManager.instance.pause)
                 {
-                    if (aim == null) print(character.wordName);
-                    aim.Clear();
+                    if (aim == null)
+                    {
+                        print(character.wordName);
+                        aim = new List<AbstractCharacter>();
+                    } 
+
+                    else 
+                    {  
+                        aim.Clear();
+                    }
+                 
                     aim .AddRange( FindAim());//不断寻找更近的敌人
                 }
                  
