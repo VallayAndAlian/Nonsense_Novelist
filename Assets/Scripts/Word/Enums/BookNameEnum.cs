@@ -5,7 +5,7 @@
 /// </summary>
 public enum BookNameEnum
 {
-    /// <summary>全书籍 </summary>
+    /// <summary>全书籍/字典 </summary>
     allBooks = 0,
   
     /// <summary>女巫学徒 </summary>

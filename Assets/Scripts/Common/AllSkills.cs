@@ -25,6 +25,8 @@ public static class AllSkills
     public static List<Type> hlmList_verb = new List<Type>();
     /// <summary>红楼梦全部词条</summary>
     public static List<Type> hlmList_all = new List<Type>();
+    /// <summary>红楼梦角色卡牌</summary>
+    public static List<Type> hlmList_chara=new List<Type>();
 
     /// <summary>动物园名词词条</summary>
     public static List<Type> animalList_noun = new List<Type>();
@@ -34,6 +36,7 @@ public static class AllSkills
     public static List<Type> animalList_verb = new List<Type>();
     /// <summary>动物园全部词条</summary>
     public static List<Type> animalList_all = new List<Type>();
+    public static List<Type> animalList_chara = new List<Type>();
 
     /// <summary>仿生人名词词条</summary>
     public static List<Type> humanList_noun = new List<Type>();
@@ -43,6 +46,7 @@ public static class AllSkills
     public static List<Type> humanList_verb = new List<Type>();
     /// <summary>仿生人全部词条</summary>
     public static List<Type> humanList_all = new List<Type>();
+    public static List<Type> humanList_chara = new List<Type>();
 
     /// <summary>水晶能量名词词条</summary>
     public static List<Type> crystalList_noun = new List<Type>();
@@ -52,6 +56,7 @@ public static class AllSkills
     public static List<Type> crystalList_verb = new List<Type>();
     /// <summary>水晶能量全部词条</summary>
     public static List<Type> crystalList_all = new List<Type>();
+        public static List<Type> crystalList_chara = new List<Type>();
 
     /// <summary>莎乐美名词词条</summary>
     public static List<Type> shaLeMeiList_noun = new List<Type>();
@@ -61,7 +66,8 @@ public static class AllSkills
     public static List<Type> shaLeMeiList_verb = new List<Type>();
     /// <summary>莎乐美全部词条</summary>
     public static List<Type> shaLeMeiList_all = new List<Type>();
-    
+    public static List<Type> shaLeMeiList_chara=new List<Type>();
+
     /// <summary>埃及神话名词词条</summary>
     public static List<Type> aiJiShenHuaList_noun = new List<Type>();
     /// <summary>埃及神话形容词词条</summary>
@@ -70,7 +76,8 @@ public static class AllSkills
     public static List<Type> aiJiShenHuaList_verb = new List<Type>();
     /// <summary>埃及神话全部词条</summary>
     public static List<Type> aiJiShenHuaList_all = new List<Type>();
-   
+    public static List<Type> aiJiShenHuaList_chara= new List<Type>();
+
     /// <summary>流行病学名词词条</summary>
     public static List<Type> liuXingBXList_noun = new List<Type>();
     /// <summary>流行病学形容词词条</summary>
@@ -79,7 +86,8 @@ public static class AllSkills
     public static List<Type> liuXingBXList_verb = new List<Type>();
     /// <summary>流行病学全部词条</summary>
     public static List<Type> liuXingBXList_all = new List<Type>();
-   
+    public static List<Type> liuXingBXList_chara=new List<Type>();
+
     /// <summary>蚂蚁帝国名词词条</summary>
     public static List<Type> maYiDiGuoList_noun = new List<Type>();
     /// <summary>蚂蚁帝国形容词词条</summary>
@@ -88,6 +96,7 @@ public static class AllSkills
     public static List<Type> maYiDiGuoList_verb = new List<Type>();
     /// <summary>蚂蚁帝国全部词条</summary>
     public static List<Type> maYiDiGuoList_all = new List<Type>();
+    public static List <Type> maYiDiGuoList_chara = new List<Type>();
    
     /// <summary>通用名词词条</summary>
     public static List<Type> commonList_noun = new List<Type>();
@@ -97,6 +106,7 @@ public static class AllSkills
     public static List<Type> commonList_verb = new List<Type>();
     /// <summary>通用全部词条</summary>
     public static List<Type> commonList_all = new List<Type>();
+    public static List<Type> commonList_chara = new List<Type>();
    
     /// <summary>战斗界面全部词条</summary>
     public static List<Type> combatList_all = new List<Type>();
@@ -159,8 +169,6 @@ public static class AllSkills
              typeof(BeiZhiRuDeJiYi),typeof(VolumeProduction) ,typeof(JiShengChong),typeof(EXingZhongLiu),typeof(WaiGuGe), 
             typeof(DuXian), typeof(FuTouAxe),  typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui),
              //未测试通过：typeof(SheQunFengRong),
-
-      
         
             //缺少的已补完
         });
@@ -176,10 +184,13 @@ public static class AllSkills
         hlmList_adj.AddRange(new Type[] { typeof(ChaFanWuXin), typeof(ShenYouHuanJing)});
         //《红楼梦》添加名词词条
         hlmList_noun.AddRange(new Type[] { typeof(ChaBei), typeof(LengXiangWan),typeof(TongLingBaoyu) });
+        //《红楼梦》添加角色词条
+        hlmList_chara.AddRange(new Type[] { typeof(LinDaiYu), typeof(WangXiFeng) });
         //《红楼梦》全部词条
+        hlmList_all.AddRange(hlmList_chara);
+        hlmList_all.AddRange(hlmList_noun);
         hlmList_all.AddRange(hlmList_verb);
         hlmList_all.AddRange(hlmList_adj);
-        hlmList_all.AddRange(hlmList_noun);
 
         //动物园添加动词词条
         animalList_verb.AddRange(new Type[] { typeof(WanShua), typeof(ShaYu) });
@@ -187,10 +198,13 @@ public static class AllSkills
         animalList_adj.AddRange(new Type[] { typeof(KeBan), typeof(YouAnQuanGan) ,typeof(HunHe),typeof(YongJi)});
         //动物园添加名词词条
         animalList_noun.AddRange(new Type[] { typeof(ShiWuFengRong), typeof(SheQunFengRong) });
+        //动物园添加角色词条
+        hlmList_chara.AddRange(new Type[] { typeof(SiYangYuan), typeof(CS_BenJieShiDui), typeof(CS_YiZhiWeiShiQi), typeof(CS_HunYangLong) });
         //动物园全部词条
+        animalList_all.AddRange(animalList_chara);
+        animalList_all.AddRange(animalList_noun);
         animalList_all.AddRange(animalList_verb);
         animalList_all.AddRange(animalList_adj);
-        animalList_all.AddRange(animalList_noun);
 
         //埃及神话添加动词词条
         aiJiShenHuaList_verb.AddRange(new Type[] { typeof(FangFuShu), typeof(ShenPan) });
@@ -268,8 +282,6 @@ public static class AllSkills
             typeof(JianRuPanShi),typeof(ZhongDu),typeof(YeSheng)});
         //通用添加名词词条
         commonList_noun.AddRange(new Type[] { typeof(FuTouAxe),typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui)});
-
-
         //通用全部词条
         commonList_all.AddRange(commonList_verb);
         commonList_all.AddRange(commonList_adj);

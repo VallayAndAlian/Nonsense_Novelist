@@ -68,6 +68,16 @@ public class StudyMouseOn : MonoBehaviour
                     ls.EnterNextScene();
                 }
                 break;
+            case StudyUIType.shujia: {
+                    var ls = GetComponent<LoadingScene>();
+                    if (ls == null)
+                    {
+                        ls = this.gameObject.AddComponent<LoadingScene>();
+                        ls.sceneName = "BookShelf";
+                    }
+                    ls.EnterNextScene();
+                }
+                break;
         }
     }
     private void OnMouseUp()

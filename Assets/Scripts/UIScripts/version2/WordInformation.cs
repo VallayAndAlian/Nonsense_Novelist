@@ -17,9 +17,9 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     [Tooltip("卡牌底图")]public Image wordkindBg;
 
     [Tooltip("卡牌种类文字")]public Text wordkindText;
-    private string textVerb = "动";
-    private string textNoun = "名";
-    private string textAdj = "形";
+    [HideInInspector]public string textVerb = "动";
+    [HideInInspector]public string textNoun = "名";
+    [HideInInspector] public string textAdj = "形";
 
     [Tooltip("显示CD的文字")]public Text needCD;
     [Tooltip("词条名称")]public Text title;
@@ -28,11 +28,11 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     [Tooltip("词条图像")] public Image wordImage;
 
     /// <summary>手动：词条图像读取路径前缀（后加id）</summary>
-    private string resAdrNoun= "WordImage/Noun/";
-    private string resAdrAdj = "WordImage/Adj/";
-    private string resAdrVerb = "WordImage/Verb/";
-    private Sprite tepSprite;
-    private string resName;
+    [HideInInspector] public string resAdrNoun= "WordImage/Noun/";
+    [HideInInspector]public string resAdrAdj = "WordImage/Adj/";
+    [HideInInspector]public string resAdrVerb = "WordImage/Verb/";
+    [HideInInspector]public Sprite tepSprite;
+    [HideInInspector] public string resName;
 
 
     [Header("默认的词语图像")]
@@ -65,13 +65,14 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
                 {
                     
                     wordkindText.text = textAdj;
-
                     resName = resAdrAdj + "adj_" + ((AbstractAdjectives)word).adjID;
                     tepSprite = Resources.Load<Sprite>(resName);
                     if (tepSprite == null)
-                    { wordImage.sprite = defaultWordImage;}
+                    { wordImage.sprite = defaultWordImage; }
                     else
                         wordImage.sprite = Resources.Load<Sprite>(resName);
+
+
                 }
                 break;
             case WordKindEnum.noun:

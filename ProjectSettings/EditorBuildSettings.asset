@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/SecondStage/ShootCombat.unity
     guid: 5df724c6a4a980a429013394dc46aec3
   - enabled: 1
-    path: Assets/Scenes/BookDesk3.unity
-    guid: 95a8233a272b8534b9098fbfbe682afd
-  - enabled: 1
-    path: Assets/Scenes/NewGame4.unity
-    guid: 705ff6acaa7802645a9ffa853c2030e8
+    path: "Assets/Art/5.5UI\u8865\u5145/BookShelf.unity"
+    guid: 9fbc4a97d7457804eb455b25ed85e386
   m_configObjects: {}

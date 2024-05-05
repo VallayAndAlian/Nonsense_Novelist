@@ -5,7 +5,7 @@ using UnityEngine;
 ///<summary>
 ///
 ///</summary>
-class PanelInstance : MonoBehaviour
+public class PanelInstance : MonoBehaviour
 {
     private PanelInstance PanelBefore;
 }

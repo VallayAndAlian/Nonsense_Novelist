@@ -49,7 +49,7 @@ public class NewGame : MonoBehaviour
 
     private string bookIconAdr = "WordImage/Book/";
     //画面下方的书本列表的顺序
-    private BookNameEnum[] bookList = new BookNameEnum[8] { BookNameEnum.HongLouMeng,BookNameEnum.ZooManual,BookNameEnum.EgyptMyth,BookNameEnum.Salome,
+    private BookNameEnum[] bookList = new BookNameEnum[9] { BookNameEnum.allBooks,BookNameEnum.HongLouMeng,BookNameEnum.ZooManual,BookNameEnum.EgyptMyth,BookNameEnum.Salome,
     BookNameEnum.CrystalEnergy,BookNameEnum.ElectronicGoal,BookNameEnum.FluStudy,BookNameEnum.PHXTwist};
     private int booklistAmount = 0;
     private List<BookNameEnum> nowBook=new List<BookNameEnum>();
