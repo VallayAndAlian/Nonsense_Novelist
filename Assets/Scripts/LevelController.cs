@@ -13,7 +13,8 @@ public class LevelController : MonoBehaviour
 
     public void SetLevelTo(int level)
     {
-        anim.SetInteger("index", 2);
+        print("SetLevelTo:" + level);
+        anim.SetInteger("index", level);
     }
 
     #region ¶¯»­µ÷ÓÃ

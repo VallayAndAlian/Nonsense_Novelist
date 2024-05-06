@@ -263,6 +263,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     #region level
     public void ChangeLevelTo(int start)
     {
+        print("ChangeLevelTo:" + start);
         levelController.SetLevelTo(start);
     }
     #endregion

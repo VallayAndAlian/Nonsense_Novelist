@@ -731,12 +731,41 @@ public class EventUI : MonoBehaviour
 
 
     #region 场景
+    SpriteRenderer sp_cj_image;
+    SpriteRenderer sp_cj_word;
+    int cj_changeTo = -1;
     public void OpenInit_ChangJing()
     {
+        DataInit(isKey);
+
+        cj_changeTo = -1;
+        sp_cj_image =transform.Find("scenephoto").Find("scene_jiuba").GetComponent<SpriteRenderer>();
+        sp_cj_word=transform.Find("scenephoto").Find("scene_jiuba1").GetComponent<SpriteRenderer>();
+
+        //抽场景
+        cj_changeTo = UnityEngine.Random.Range(0, tempNowDate.Count);
+
+        //切换文字内容
+        var titleText = this.transform.Find("EventInfo").GetComponent<TextMeshProUGUI>();
+        StartCoroutine(TypeDelay((tempNowDate[cj_changeTo].name + "\n" + tempNowDate[cj_changeTo].textEvent), titleText, 0.03f));
+        nowEvent = tempNowDate[cj_changeTo];
+        sp_cj_image.sprite = ResMgr.GetInstance().Load<Sprite>("UI/" + (tempNowDate[cj_changeTo].happen));
+        sp_cj_word.sprite = ResMgr.GetInstance().Load<Sprite>("UI/" + (tempNowDate[cj_changeTo].happen) + "_word");
+
+        //刷新已用事件列表
+        tempNowDate.Remove(tempNowDate[cj_changeTo]);
+        RefreshNowList();
 
     }
     public void Close_ChangJing()
     {
+        if (cj_changeTo == -1) return;
+
+        //变更场景
+        print("变化到场景" + cj_changeTo);
+        GameMgr.instance.ChangeLevelTo(cj_changeTo);
+
+        //
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);
@@ -921,10 +950,13 @@ public class EventUI : MonoBehaviour
         GameMgr.instance.eventHappen = false;
 
         //处理当前的nowChosenEvent
-        if ((nowEvent.happen != null) && (nowEvent.happen != ""))
+        if ((type != EventType.FangKe) && (type != EventType.ChangJing))
         {
-            print("nowEvent" + nowEvent.happen);
-            Invoke(nowEvent.happen,0);
+            if ((nowEvent.happen != null) && (nowEvent.happen != ""))
+            {
+                print("nowEvent" + nowEvent.happen);
+                Invoke(nowEvent.happen,0);
+            } 
         }
 
         //内容加入草稿本
