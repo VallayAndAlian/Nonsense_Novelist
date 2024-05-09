@@ -81,7 +81,8 @@ public class DraftUi : MonoBehaviour
         sizeFont = (sentenseObj.transform.Find("showText").GetComponent<TextMeshProUGUI>().fontSize);
     }
 
-    #region 开启草稿本的外部界面
+    #region button绑定
+    /// <summary>开启草稿本界面 </summary>
     public void openDraft()
     {
        // print(content.Count);
@@ -97,7 +98,7 @@ public class DraftUi : MonoBehaviour
  
         InitDraft();
     }
-
+    /// <summary>关闭草稿本界面 </summary>
     public void closeDraft()
     {
         CharacterManager.instance.pause = false;
@@ -114,7 +115,7 @@ public class DraftUi : MonoBehaviour
         this.gameObject.SetActive(false);
         //InitDraft();
     }
-
+    /// <summary>草稿本界面初始化 </summary>
     void InitDraft()
     {
         ChangeInkNum();
@@ -174,7 +175,7 @@ public class DraftUi : MonoBehaviour
 
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parent);
     }
-
+    /// <summary>展示_page页的句子 </summary>
     public void ShowPageSentences(int _page)
     {
         textPage.text =nowPage+ " / " +maxPage;
@@ -223,7 +224,6 @@ public class DraftUi : MonoBehaviour
             }
         }
     }
-
     public void NextPage()
     {
         if (nowPage == maxPage) return;
@@ -236,7 +236,6 @@ public class DraftUi : MonoBehaviour
         nowPage--;
         ShowPageSentences(nowPage);
     }
-
     public void RefreshIndex()
     {
         for (int i = parent.childCount - 1; i >= 0; i--)
@@ -246,10 +245,7 @@ public class DraftUi : MonoBehaviour
     }
     #endregion
 
-
     #region 墨水事件
-
-
     /// <summary>
     /// 外部点击墨水事件调用。0黑1红2蓝-1谁也没选
     /// </summary>
@@ -375,7 +371,6 @@ public class DraftUi : MonoBehaviour
         inkBlueObj.gameObject.GetComponentInChildren<Text>().text = inkBlueCount.ToString();
     }
 
-
     /// <summary>
     /// 打开所有的拖拽事件
     /// </summary>
@@ -387,9 +382,6 @@ public class DraftUi : MonoBehaviour
             _a.canDrag = true;
         }
     }
-
-
-
     /// <summary>
     /// 关闭所有的拖拽事件
     /// </summary>
@@ -401,7 +393,6 @@ public class DraftUi : MonoBehaviour
             _a.canDrag = false;
         }
     }
-
     void OpenAllDelete()
     {
         var _all = this.GetComponentsInChildren<DragDraftText>();
@@ -439,8 +430,6 @@ public class DraftUi : MonoBehaviour
         }
         return false;
     }
-
-
     /// <summary>
     /// 0黑1红2蓝
     /// </summary>
@@ -495,10 +484,7 @@ public class DraftUi : MonoBehaviour
 
     #endregion
 
-
-    
-
-    #region 文本编辑蓝墨水
+    #region 文本编辑（蓝墨水）
     /// <summary>
     /// 实现文本编辑框
     /// </summary>

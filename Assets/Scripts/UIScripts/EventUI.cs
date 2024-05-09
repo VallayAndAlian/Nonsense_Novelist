@@ -181,41 +181,38 @@ public class EventUI : MonoBehaviour
     /// </summary>
     public void OpenInit_YiWai()
     {
+        //根据触发事件的信息，处理筛选所有的文本信息
         DataInit(false);
+
+        //获取组件
         checkBotton = this.transform.Find("CheckButton").GetComponent<Button>();
         checkBotton.gameObject.SetActive(false);
-
         Transform cardParent = this.transform.Find("CardGroup");
         TextMeshProUGUI[] text = cardParent.GetComponentsInChildren<TextMeshProUGUI>();
-
-
 
         for (int i = 0; i < 6; i += 2)
         {
             var et = cardParent.GetChild(i / 2).GetComponent<EventTrigger>();
             AddPointerEvent(et, EventTriggerType.PointerClick, (obj) => { Click_YW(et.gameObject); });
 
+            //抽取满足条件的事件文本
             int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
             int loopCount = 0;
             while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
-            {//如果有条件并且条件没满足,就重找一个
-
+            {
                 _r = UnityEngine.Random.Range(0, tempNowDate.Count); loopCount++;
                 if (loopCount > 50)
                 {
-                    print("死循环");
-                    return;
+                    print("死循环");return;
                 }
             }
 
-
-            //切换文字内容
-            
+            //切换UI文字内容
             text[i].text = tempNowDate[_r].name;
             text[i + 1].text = tempNowDate[_r].textEvent;
             event_YW[i/2] = tempNowDate[_r];
-            //刷新已用事件列表
 
+            //刷新已用事件列表（不重复抽取）
             tempNowDate.Remove(tempNowDate[_r]);
             RefreshNowList();
         }

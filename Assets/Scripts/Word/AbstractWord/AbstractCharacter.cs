@@ -931,7 +931,7 @@ abstract public class AbstractCharacter : AbstractWord0
 
 
     /// <summary>
-    /// 将寻找目标的方式变为true or false
+    /// 随机目标
     /// </summary>
     /// <param name="_bool"></param>
     public void SetAimRandom(bool _bool)
@@ -939,11 +939,8 @@ abstract public class AbstractCharacter : AbstractWord0
         myState.isAimRandom = _bool;
     }
 
-
     /// <summary>能量充能</summary>
     public float energy;
-
-
 
     /// <summary>平A模式</summary>
     [HideInInspector] public AbstractSkillMode attackA;
@@ -963,7 +960,6 @@ abstract public class AbstractCharacter : AbstractWord0
                 energyText.text = _canUseSkills.ToString();
         }
     }
-
 
     //外部可以增加每秒检测的委托入口
     [HideInInspector] public delegate void Event_AttackA();
@@ -993,7 +989,6 @@ abstract public class AbstractCharacter : AbstractWord0
     //攻击段数
     public int AttackTimes=1;
 
-
     /// <summary>
     /// i是攻击的段数
     /// </summary>
@@ -1021,9 +1016,6 @@ abstract public class AbstractCharacter : AbstractWord0
                 event_AttackA();
         // myState.character.charaAnim.Play(AnimEnum.idle);
     }
-
-
-
 
     /// <summary>发出子弹 </summary>
     public virtual void CreateBullet(GameObject aimChara)
@@ -1060,7 +1052,6 @@ abstract public class AbstractCharacter : AbstractWord0
         //Instantiate<GameObject>(Resources.Load("SecondStageLoad/floatWord") as GameObject, this.transform.position + pos, Quaternion.Euler(Vector3.zero), energyCanvas.transform)
         //    .GetComponent<FloatWord>().InitPopup(value, this.camp == CampEnum.stranger, color, direct);
     }
-
 
     /// <summary>漂浮文字 </summary>
     public void CreateFloatWord(string text, FloatWordColor color, bool direct)
