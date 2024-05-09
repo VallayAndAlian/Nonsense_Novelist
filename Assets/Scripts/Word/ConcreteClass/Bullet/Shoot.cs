@@ -77,6 +77,7 @@ public class Shoot : MonoBehaviour
 
                 //2d射线检测需要指定参与碰撞的layer 并且添加射线长度，否则会失效
                 LayerMask layer = 1 << 9;
+                if (gang.childCount == 0) { print("gang.GetChild(0)=null"); ReadyWordBullet(); };
                 hit = Physics2D.Raycast(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), gang.GetChild(0).transform.up, Mathf.Infinity, layer);
                 //Debug.DrawLine(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), hit.point, Color.black);
                 hit2 = Physics2D.CircleCast(new Vector3(gang.GetChild(0).position.x, gang.GetChild(0).position.y, 0), ra, gang.GetChild(0).transform.up, Mathf.Infinity, layer);
@@ -111,6 +112,8 @@ public class Shoot : MonoBehaviour
         bulletInstance.transform.SetParent(gang);
         bulletInstance.transform.localPosition = Vector3.zero;
         bulletInstance.transform.localEulerAngles = Vector3.zero;
+        oriScale = bulletInstance.transform.localScale;
+        bulletInstance.transform.localScale = Vector3.zero;
         bulletInstance.GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
         /*//给小球增加词条属性【原版】
         abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = 
@@ -133,8 +136,7 @@ public class Shoot : MonoBehaviour
         information.ChangeInformation(abs);
 
         //
-        oriScale = bulletInstance.transform.localScale;
-        bulletInstance.transform.localScale = Vector3.zero;
+
     }
     bool isShoot = false;
     /// <summary>

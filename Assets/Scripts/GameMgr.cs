@@ -49,9 +49,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     public SettingList settingPanel;
     public GameObject CardRes;
 
-
+    //当前的场景
+    [HideInInspector] public int levelSenceIndex = 0;
     //当前的剧本
-    public BookNameEnum nowBook;
+    [HideInInspector] public BookNameEnum nowBook;
 
     //玩家已有的书库
     List<BookNameEnum> bookList = new List<BookNameEnum>();
@@ -60,21 +61,21 @@ public class GameMgr : MonoSingleton<GameMgr>
     List<BookNameEnum> bookAllGetList = new List<BookNameEnum>();
 
     //战斗总牌库
-    public List<Type> wordList = new List<Type>();
+    [HideInInspector] public List<Type> wordList = new List<Type>();
 
     //当前未使用的牌的牌库
     List<Type> wordNowList = new List<Type>();
 
     //当前待使用的牌的牌库
-    public List<Type> wordGoingUseList = new List<Type>();
+    [HideInInspector] public List<Type> wordGoingUseList = new List<Type>();
 
     //当前已使用的牌的牌库
     List<Type> wordHasUseList = new List<Type>();
 
     //名词的消耗性使用相关
 
-    public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();
-    public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();
+    [HideInInspector] public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();
+    [HideInInspector] public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();
 
     //骰子数量
     int diceNumber = 2;
@@ -92,11 +93,11 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (diceNumber < 0) diceNumber = 0;
     }
 
-  
+
 
     //触发特殊文本
-    public List<int> AttackHDList = new List<int>();
-    public List<int> CureHDList = new List<int>();
+    [HideInInspector] public List<int> AttackHDList = new List<int>();
+    [HideInInspector] public List<int> CureHDList = new List<int>();
 
 
     #region 事件
@@ -263,7 +264,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     #region level
     public void ChangeLevelTo(int start)
     {
-        print("ChangeLevelTo:" + start);
+
         levelController.SetLevelTo(start);
     }
     #endregion
@@ -401,8 +402,13 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// </summary>
     void StartCardList()
     {
-        //wordList.AddRange(new Type[] { typeof(BuryFlower), typeof(Shuai), typeof(Shuai), typeof(FuTouAxe), typeof(Shuai) , typeof(HeartBroken),typeof(ZiShuiJIng),
-        //typeof(XianZhiHead)});
+        //测试
+        AddCardList(new JuCaiDe());
+        AddCardList(new ZiShuiJIng());
+
+        return;
+        //测试
+
         AddCardList(new BuryFlower());
         AddCardList(new Shuai());AddCardList(new Shuai());
         AddCardList(new FuTouAxe());
@@ -490,14 +496,14 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void DeleteCardList(Type _word)
     {
         if (_word == null) print("null");
-        print("0"+ _word);
+      
         if (wordList.Contains(_word))
         {
-            print("1");
+          
             wordList.Remove(_word);
             if (_word.BaseType == typeof(AbstractItems))
             {
-                print("2");
+               
                 if (NwordTimes.ContainsKey(_word))
                 {
                     NwordTimes[_word].RemoveAll(item => item == 0);

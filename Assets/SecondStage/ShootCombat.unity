@@ -14157,13 +14157,13 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: fb43359205f0c184696ac0a4bb8d9e30, type: 3}
     time_count: 0
   event_stage:
-  - events: 1
-  - events: 2
   - events: 3
-  - events: 4
-  - events: 1
-  - events: 2
-  - events: 0
+  - events: 3
+  - events: 3
+  - events: 3
+  - events: 3
+  - events: 3
+  - events: 3
   - events: 0
   - events: 0
   - events: 0
@@ -14189,7 +14189,7 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: 1b34a8a16ed0932448303639416a0a4c, type: 3}
   - {fileID: 296767673687119374, guid: 7864ab0c371e01e46bbcfd4ce474aff3, type: 3}
   eventTime: 3
-  keyEventTime: 2
+  keyEventTime: 3
   xiWang: 0
   fangKe: 0
   yiWai: 0

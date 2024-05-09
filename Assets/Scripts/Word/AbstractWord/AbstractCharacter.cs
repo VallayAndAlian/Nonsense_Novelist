@@ -1056,6 +1056,7 @@ abstract public class AbstractCharacter : AbstractWord0
     /// <summary>漂浮文字 </summary>
     public void CreateFloatWord(string text, FloatWordColor color, bool direct)
     {
+       
         PoolMgr.GetInstance().GetObj("SecondStageLoad/floatWord", (obj) =>
         {
  obj.transform.localScale = Vector3.one * 20 / 8000f;

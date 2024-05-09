@@ -21,6 +21,7 @@ public class ChuanBoCollision : WordCollisionShoot
         //给absWord赋值
         absWord = Shoot.abs;
     }
+    bool hasBeenTrigger = false;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (CharacterManager.instance.pause)
@@ -28,6 +29,8 @@ public class ChuanBoCollision : WordCollisionShoot
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
+        if (hasBeenTrigger)
+            return;
         ////给absWord赋值
         //absWord = Shoot.abs;
         if (CharacterManager.instance.pause)
@@ -35,9 +38,10 @@ public class ChuanBoCollision : WordCollisionShoot
 
         if (collision.gameObject.layer == LayerMask.NameToLayer("Character"))
         {
-
-            //获取角色与相邻角色
-            AbstractCharacter character = collision.gameObject.GetComponent<AbstractCharacter>();
+           
+            hasBeenTrigger = true;
+             //获取角色与相邻角色
+             AbstractCharacter character = collision.gameObject.GetComponent<AbstractCharacter>();
 
             if (character.myState.nowState == character.myState.allState.Find(p => p.id == AI.StateID.dead)) return;
 
@@ -76,6 +80,7 @@ public class ChuanBoCollision : WordCollisionShoot
                 {
                     if (cha != null)
                     {
+                        
                         AbstractAdjectives _adj = cha.gameObject.AddComponent(absWord.GetType()) as AbstractAdjectives;
                         cha.CreateFloatWord(absWord.wordName, FloatWordColor.getWord, false);
                         _adj.UseAdj(cha);

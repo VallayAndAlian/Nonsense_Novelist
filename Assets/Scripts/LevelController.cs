@@ -13,19 +13,30 @@ public class LevelController : MonoBehaviour
 
     public void SetLevelTo(int level)
     {
-        print("SetLevelTo:" + level);
+
         anim.SetInteger("index", level);
     }
 
     #region ¶¯»­µ÷ÓÃ
-    public void StartChangeLevel()
+    bool enterAnim = false;
+    public void StartEndChangeLevel()
     {
-        CharacterManager.instance.pause = true;
+        print("StartEndChangeLevel");
+        if (!enterAnim)
+        {
+            print( "true");
+            CharacterManager.instance.pause = true;
+            enterAnim = true;
+        }
+        else
+        {
+            print(  "false");
+            CharacterManager.instance.pause = false ;
+            enterAnim = false;
+        }
+
     }
 
-    public void  EndChangeLevel()
-    {
-        CharacterManager.instance.pause = false;
-    }
+
     #endregion
 }

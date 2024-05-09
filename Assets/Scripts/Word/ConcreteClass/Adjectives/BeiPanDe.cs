@@ -1,18 +1,64 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BeiPanDe : MonoBehaviour
+/// <summary>
+/// 形容词：背叛的
+/// </summary>
+
+
+public class BeiPanDe : AbstractAdjectives
 {
-    // Start is called before the first frame update
-    void Start()
+    static public string s_description = "<color=#dd7d0e>疯狂</color>，持续10s";
+    static public string s_wordName = "背叛的";
+    static public int rarity = 1;
+
+
+    public override void Awake()
     {
-        
+
+        adjID = 28;
+        wordName = "背叛的";
+        bookName = BookNameEnum.EgyptMyth;
+        description = "< color =#dd7d0e>疯狂</color>，持续10s";
+
+     
+        skillEffectsTime = 10;
+
+        rarity = 1;
+        base.Awake();
     }
 
-    // Update is called once per frame
-    void Update()
+    override public string[] DetailLable()
     {
+        string[] _s = new string[1];
+        _s[0] = "FengKuang";
+        return _s;
+    }
+
+
+    public override void UseAdj(AbstractCharacter aimCharacter)
+    {
+        base.UseAdj(aimCharacter);
+
+        buffs.Add(aimCharacter.gameObject.AddComponent<FengKuang>());
+        buffs[0].maxTime = skillEffectsTime;
+
         
     }
+    public override void BasicAbility(AbstractCharacter aimCharacter)
+    {
+     
+
+    }
+
+
+
+    public override void End()
+    {
+        base.End();
+     
+    }
+
 }

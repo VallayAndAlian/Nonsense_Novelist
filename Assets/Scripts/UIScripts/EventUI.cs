@@ -46,12 +46,7 @@ public class EventUI : MonoBehaviour
     public GameObject word_verb;
     public GameObject word_item;
 
-    private void Start()
-    {
-        print("Start EventUI");
-    }
-
-   
+  
 
 
     #region 处理data 
@@ -728,6 +723,7 @@ public class EventUI : MonoBehaviour
 
 
     #region 场景
+
     SpriteRenderer sp_cj_image;
     SpriteRenderer sp_cj_word;
     int cj_changeTo = -1;
@@ -741,6 +737,13 @@ public class EventUI : MonoBehaviour
 
         //抽场景
         cj_changeTo = UnityEngine.Random.Range(0, tempNowDate.Count);
+        int _loopC = 0;
+        while ((cj_changeTo == GameMgr.instance.levelSenceIndex) && (_loopC < 50))
+        {
+            cj_changeTo = UnityEngine.Random.Range(0, tempNowDate.Count);  _loopC++;
+        }
+     
+        GameMgr.instance.levelSenceIndex = cj_changeTo;
 
         //切换文字内容
         var titleText = this.transform.Find("EventInfo").GetComponent<TextMeshProUGUI>();
@@ -759,7 +762,7 @@ public class EventUI : MonoBehaviour
         if (cj_changeTo == -1) return;
 
         //变更场景
-        print("变化到场景" + cj_changeTo);
+       
         GameMgr.instance.ChangeLevelTo(cj_changeTo);
 
         //

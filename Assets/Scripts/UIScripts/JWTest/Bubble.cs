@@ -131,7 +131,7 @@ public class Bubble : MonoBehaviour
             case "JIAOYI(Clone)": { _adr = "UI/Event_JiaoYi"; } break;
             case "CHANGJING(Clone)": { _adr = "UI/Event_ChangJing"; } break;
         }
-        print(_adr);
+       
         var a = ResMgr.GetInstance().Load<GameObject>(_adr);
         if (a == null) print("1null");
         if(a.GetComponent<EventUI>()==null) print("null");

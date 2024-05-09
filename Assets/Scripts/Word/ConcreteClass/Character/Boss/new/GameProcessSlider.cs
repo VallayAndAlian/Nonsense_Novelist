@@ -261,7 +261,7 @@ public class GameProcessSlider : MonoBehaviour
     public void CreateEvent()
     {
         
-        if (eventCount > 3) return;
+        if (eventCount > 300) return;
         totalTime += Time.deltaTime;
         if (totalTime > eventTime)
         {
