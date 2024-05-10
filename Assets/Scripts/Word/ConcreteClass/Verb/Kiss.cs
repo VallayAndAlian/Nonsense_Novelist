@@ -6,16 +6,16 @@ using UnityEngine;
 /// </summary>
 class Kiss : AbstractVerbs
 {
-    static public string s_description = "使敌人受到3*<sprite name=\"psy\">的精神伤害，并被<color=#dd7d0e>俘获</color>10s";
+    static public string s_description = "使敌人受到300%<sprite name=\"psy\">的精神伤害，并被<color=#dd7d0e>情迷</color>5s";
     static public string s_wordName = "亲吻";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();
         skillID = 8;
         wordName = "亲吻";
         bookName = BookNameEnum.Salome;
-        description = "使敌人受到3*<sprite name=\"psy\">的精神伤害，并被<color=#dd7d0e>俘获</color>10s";
+        description = "使敌人受到300%<sprite name=\"psy\">的精神伤害，并被<color=#dd7d0e>情迷</color>5s";
 
         skillMode = gameObject.AddComponent<DamageMode>();
         (skillMode as DamageMode).isPhysics = false;
@@ -29,7 +29,7 @@ class Kiss : AbstractVerbs
     override public string[] DetailLable()
     {
         string[] _s = new string[1];
-        _s[0] = "FuHuo";
+        _s[0] = "QingMi";
         return _s;
     }
     public override void UseVerb(AbstractCharacter useCharacter)
@@ -44,7 +44,7 @@ class Kiss : AbstractVerbs
             {
                 skillMode.UseMode(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul, useCharacter, _aims[i], true, 0);
 
-                buffs.Add(_aims[i].gameObject.AddComponent<FuHuo>());
+                buffs.Add(_aims[i].gameObject.AddComponent<QingMi>());
                 buffs[0].maxTime = skillEffectsTime;
                 x++;
             }

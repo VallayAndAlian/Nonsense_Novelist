@@ -9,7 +9,7 @@ class QiChongShaDance : AbstractVerbs
 
     static public string s_description = "被动：攻击额外造成20%的精神伤害；主动：起舞，攻击所有敌人，持续10s";
     static public string s_wordName = "七重纱之舞";
-    static public int rarity = 4;
+    static public int s_rarity = 4;
     public override void Awake()
     {
         base.Awake();

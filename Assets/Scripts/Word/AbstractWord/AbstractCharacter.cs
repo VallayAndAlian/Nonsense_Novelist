@@ -82,8 +82,13 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return MaxHp; }
         set
         {
-            MaxHp = value;
+            float _o = MaxHp;
+            MaxHp = value; 
             HPSetting();
+            if (value > _o)
+            {
+               hp += (value - _o);
+            }
         }
     }
 
@@ -627,6 +632,31 @@ abstract public class AbstractCharacter : AbstractWord0
     }
 
 
+
+    public void AddRandomBuff(bool _isBad, int _count,int _effectTime)
+    {
+        if (_isBad)
+        {
+            for (int i = 0; i < _count; i++)
+            {
+                int _r = Random.Range(0, AllSkills.BadBuff.Count);
+                var _b = gameObject.AddComponent(AllSkills.BadBuff[_r]);
+                (_b as AbstractBuff).maxTime = _effectTime;
+                AddBuff(_b as AbstractBuff);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < _count; i++)
+            {
+                int _r = Random.Range(0, AllSkills.GoodBuff.Count);
+                var _b = gameObject.AddComponent(AllSkills.GoodBuff[_r]);
+                (_b as AbstractBuff).maxTime = _effectTime;
+                AddBuff(_b as AbstractBuff);
+            }
+        }
+    }
+
     #endregion
 
 
@@ -1028,7 +1058,7 @@ abstract public class AbstractCharacter : AbstractWord0
     }
 
     Vector3[] pos =new Vector3[] 
-    { new Vector3(-200, 100, 0) , new Vector3(0, 0, 0) , new Vector3(200, -100, 0), new Vector3(0, 200, 0) };
+    { new Vector3(-300, 150, 0) , new Vector3(0, 0, 0) , new Vector3(300, -150, 0), new Vector3(0, 300, 0) };
     int floatCount = 0;
 
     /// <summary>漂浮文字 </summary>
@@ -1136,7 +1166,7 @@ abstract public class AbstractCharacter : AbstractWord0
         energyCanvas.gameObject.SetActive(true);
     }
 
-
+  
     private void Update()
     {
 

@@ -10,7 +10,7 @@ public class JianRuPanShi : AbstractAdjectives
 {
     static public string s_description = "<sprite name=\"def\">+12，持续10s";
     static public string s_wordName = "坚如磐石的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         adjID = 25;

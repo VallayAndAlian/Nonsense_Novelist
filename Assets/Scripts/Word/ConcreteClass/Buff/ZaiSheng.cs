@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class ZaiSheng : AbstractBuff
 {
-    static public string s_description = "生命恢复+15";
+    static public string s_description = "生命恢复+10";
     static public string s_wordName = "再生";
     float record;
     override protected void Awake()
@@ -14,14 +14,14 @@ public class ZaiSheng : AbstractBuff
         
     
         buffName = "再生";
-        description = "生命恢复+15";
+        description = "生命恢复+10";
         book = BookNameEnum.allBooks;  
 
-        upup = 2;
+        upup = 3;
 
         base.Awake();
        
-        chara.cure += 15f;
+        chara.cure += 10f;
        
         
       
@@ -30,7 +30,7 @@ public class ZaiSheng : AbstractBuff
     public override void OnDestroy()
     {
         base.OnDestroy();
-        chara.defMul -= 15f;
+        chara.cure -= 10f;
     }
 
 }

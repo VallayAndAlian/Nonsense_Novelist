@@ -9,7 +9,7 @@ class XianZhiHead : AbstractItems
 {
     static public string s_description = "<sprite name=\"psy\">+30%，<sprite name=\"san\">-30%，受到的控制时间 - 1s";
     static public string s_wordName = "先知的头颅";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     public override void Awake()
     {
         base.Awake();

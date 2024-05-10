@@ -7,16 +7,16 @@ using UnityEngine;
 class HeartBroken : AbstractVerbs
 {
 
-    static public string s_description = "造成2*<sprite name=\"psy\">的精神伤害";
+    static public string s_description = "造成200%<sprite name=\"psy\">的精神伤害";
     static public string s_wordName = "心碎";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();
         skillID = 15;
         wordName = "心碎";
         bookName = BookNameEnum.allBooks;
-        description = "造成2*<sprite name=\"psy\">的精神伤害";
+        description = "造成200%<sprite name=\"psy\">的精神伤害";
         //nickname.Add( "刺痛");
 
         skillMode = gameObject.AddComponent<DamageMode>();
@@ -24,7 +24,7 @@ class HeartBroken : AbstractVerbs
         skillEffectsTime = Mathf.Infinity;
 
         rarity = 1;
-        needCD=1;
+        needCD=2;
     }
 
     public override void UseVerb(AbstractCharacter useCharacter)

@@ -85,6 +85,10 @@ public class ShooterWordCheck : MonoBehaviour
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
                 obj.GetComponentInChildren<Image>().SetNativeSize();
+
+                if (obj.TryGetComponent<SeeWordDetail>(out var _s))
+                    _s.SetPic(word);
+
                 if (jiaoYi)
                 {
                     obj.GetComponent<Button>().interactable = false;
@@ -92,6 +96,7 @@ public class ShooterWordCheck : MonoBehaviour
                     AddPointerEvent(et, EventTriggerType.PointerClick, (obj) => { ClickThis(et.gameObject); });
 
                 }
+
             });
         }
       
@@ -104,6 +109,8 @@ public class ShooterWordCheck : MonoBehaviour
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
                 obj.GetComponentInChildren<Image>().SetNativeSize();
+                if (obj.TryGetComponent<SeeWordDetail>(out var _s))
+                    _s.SetPic(word);
                 if (jiaoYi)
                 {
                     obj.GetComponent<Button>().interactable = false;

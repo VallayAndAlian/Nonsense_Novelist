@@ -3931,7 +3931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3139a43e28cc82a4bb2e4d9046bed03f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bef128d4e07381943a7909397f3a70bc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14190,7 +14190,7 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: 7864ab0c371e01e46bbcfd4ce474aff3, type: 3}
   eventTime: 3
   keyEventTime: 3
-  xiWang: 0
+  xiWang: 100
   fangKe: 0
   yiWai: 0
   weiJi: 0
@@ -16998,6 +16998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settingPanel: {fileID: 165798656}
   CardRes: {fileID: 1066372324}
+  levelSenceIndex: 0
   nowBook: 0
   AttackHDList: 
   CureHDList: 
@@ -21576,7 +21577,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 44b89753b8ea342448907e70c4415ab8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: de4feb616d82cb645aa6c49da64d286e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21605,7 +21606,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -133, y: 905}
-  m_SizeDelta: {x: 1552, y: 499}
+  m_SizeDelta: {x: 1826, y: 917}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1236676223301117479
 CanvasRenderer:
@@ -22751,6 +22752,7 @@ MonoBehaviour:
   textAdj: "\u5F62"
   needCD: {fileID: 1236676224586640402}
   title: {fileID: 1236676224950006176}
+  titleBg: {fileID: 0}
   description: {fileID: 1763005409}
   energy: {fileID: 1236676223419760927}
   wordImage: {fileID: 1236676224745022920}
@@ -22759,7 +22761,10 @@ MonoBehaviour:
   resAdrVerb: WordImage/Verb/
   tepSprite: {fileID: 0}
   resName: 
-  defaultWordImage: {fileID: 21300000, guid: c7894e92816b6ec4d93511f7b5db37d6, type: 3}
+  resTitleBg: WordImage/wordTitle/
+  tepTBSprite: {fileID: 0}
+  defaultWordImage: {fileID: 21300000, guid: bef128d4e07381943a7909397f3a70bc, type: 3}
+  defaultWordTitleImage: {fileID: 21300000, guid: de4feb616d82cb645aa6c49da64d286e, type: 3}
   detailInfoPrefab: {fileID: 3068904079096217980, guid: a8fde104be3025b4b9687d94a15ced9d, type: 3}
   detailParent: {fileID: 1442791905}
 --- !u!212 &5416437800037489002

@@ -139,7 +139,7 @@ public class OneWayMove : MonoBehaviour
             AbstractCharacter[] left = CharacterManager.charas_left.ToArray();
             for (int i = 0; i < left.Length; i++)
             {
-                print("left::" + left[i].wordName);
+               
                 left[i].BeCure(addRate * left[i].hp + addAmount, true, 0, left[i]);
             }
 
@@ -149,7 +149,7 @@ public class OneWayMove : MonoBehaviour
             AbstractCharacter[] right = CharacterManager.charas_right.ToArray();
             for (int i = 0; i < right.Length; i++)
             {
-                print("right::" + right[i].wordName);
+                
                 right[i].BeCure(addRate * right[i].hp + addAmount, true, 0, right[i]);
             }
         }

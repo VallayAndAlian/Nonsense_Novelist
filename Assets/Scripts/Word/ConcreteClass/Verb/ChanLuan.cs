@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 class ChanLuan : AbstractVerbs
 {
-    static public string s_description = "使队友获得<color=#dd7d0e>虫卵</color>，持续10s";
+    static public string s_description = "使所有队友获得<color=#dd7d0e>虫卵</color>，持续20s";
     static public string s_wordName = "产卵";
-    static public int rarity = 3;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();
@@ -16,16 +16,16 @@ class ChanLuan : AbstractVerbs
         skillID = 14;
         wordName = "产卵";
         bookName = BookNameEnum.PHXTwist;
-        description = "使队友获得<color=#dd7d0e>虫卵</color>，持续10s";
+        description = "使所有队友获得<color=#dd7d0e>虫卵</color>，持续20s";
 
        // nickname.Add( "刺痛");
 
         skillMode = gameObject.AddComponent<CureMode>();
         skillMode.attackRange = new SingleSelector();
-        skillEffectsTime = 10;
+        skillEffectsTime = 20;
 
-        rarity = 3;
-        needCD=1;
+        rarity = 1;
+        needCD=8;
     }
     override public string[] DetailLable()
     {
@@ -43,9 +43,16 @@ class ChanLuan : AbstractVerbs
     {
      
         AbstractCharacter[] aim = skillMode.CalculateAgain(attackDistance, useCharacter);
-        CollectionHelper.OrderByDescending(aim, p => Mathf.Abs(p.situation.number- useCharacter.situation.number));
-        buffs.Add(aim[0].gameObject.AddComponent<ChongLuan>());
-        buffs[0].maxTime = skillEffectsTime;  
+        foreach (var _a in aim)
+        {
+            var b = _a.gameObject.AddComponent<ChongLuan>();
+            buffs.Add(b);
+            b.maxTime = skillEffectsTime;
+        }
+
+
+
+
     }
 
     public override string UseText()

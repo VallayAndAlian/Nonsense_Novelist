@@ -9,7 +9,7 @@ public class ShenYouHuanJing : AbstractAdjectives
 {
     static public string s_description = " <sprite name=\"atk\">和 <sprite name=\"psy\">交换10s";
     static public string s_wordName = "神游幻境的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         adjID = 2;

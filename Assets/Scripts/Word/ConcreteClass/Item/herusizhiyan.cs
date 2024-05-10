@@ -6,19 +6,19 @@ using UnityEngine;
 /// </summary>
 class herusizhiyan : AbstractItems
 {
-    static public string s_description = "<sprite name=\"atk\">+4,每次复活攻击+1";
+    static public string s_description = "<sprite name=\"atk\">+4,每次复活攻击+2";
     static public string s_wordName = "荷鲁斯之眼";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     int record = 0;
     public override void Awake()
     {
         base.Awake();
 
         itemID = 7;
-        useTimes = 3;
+        useTimes = 2;
         wordName = "荷鲁斯之眼";
         bookName = BookNameEnum.EgyptMyth;
-        description = "<sprite name=\"atk\">+4,每次复活攻击+1";
+        description = "<sprite name=\"atk\">+4,每次复活攻击+2";
         VoiceEnum = MaterialVoiceEnum.Ceram;
         rarity = 3;
 
@@ -48,7 +48,7 @@ class herusizhiyan : AbstractItems
 
     void RelifeStronger(AbstractCharacter ac)
     { 
-        GetComponent<AbstractCharacter>().atk += 1;
+        GetComponent<AbstractCharacter>().atk += 2;
         record++;
     }
 

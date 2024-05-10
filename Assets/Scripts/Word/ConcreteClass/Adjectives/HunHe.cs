@@ -10,7 +10,7 @@ public class HunHe : AbstractAdjectives
 {
     static public string s_description = "获得1个随机随从;若有3个随从，则合并为一个<color=#dd7d0e>混养笼</color>";
     static public string s_wordName = "混合的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         adjID = 4;

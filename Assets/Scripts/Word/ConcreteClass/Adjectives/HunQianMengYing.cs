@@ -8,27 +8,28 @@ using UnityEngine;
 /// </summary>
 public class HunQianMengYing : AbstractAdjectives
 {
-    static public string s_description = "<color=#dd7d0e>俘获</color>角色，攻击队友7s";
+    static public string s_description = "<color=#dd7d0e>意乱，虚弱</color>，持续10s";
     static public string s_wordName = "魂牵梦萦的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
 
     public override void Awake()
     {
         adjID = 11;
         wordName = "魂牵梦萦的";
         bookName = BookNameEnum.Salome;
-        description = "<color=#dd7d0e>俘获</color>角色，攻击队友7s";
+        description = "<color=#dd7d0e>意乱，虚弱</color>，持续10s";
 
         skillMode = gameObject.AddComponent<DamageMode>();
 
-        skillEffectsTime = 7;
+        skillEffectsTime = 10;
         rarity = 1;
         base.Awake();
     }
     override public string[] DetailLable()
     {
-        string[] _s = new string[1];
-        _s[0] = "FuHuo";
+        string[] _s = new string[2];
+        _s[0] = "YiLuan";
+        _s[1] = "XuRuo";
         return _s;
     }
 
@@ -37,8 +38,10 @@ public class HunQianMengYing : AbstractAdjectives
         base.UseAdj(aimCharacter);
 
       
-        buffs.Add(aimCharacter.gameObject.AddComponent<FuHuo>());
+        buffs.Add(aimCharacter.gameObject.AddComponent<YiLuan>());
         buffs[0].maxTime = skillEffectsTime;
+        buffs.Add(aimCharacter.gameObject.AddComponent<XuRuo>());
+        buffs[1].maxTime = skillEffectsTime;
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {

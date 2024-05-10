@@ -11,7 +11,7 @@ public class HunFei : AbstractAdjectives
 
     static public string s_description = "散射，获得<color=#dd7d0e>虫卵</color>，持续10s";
     static public string s_wordName = "婚飞的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
 
     public override void Awake()
     {

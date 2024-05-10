@@ -23,6 +23,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
     [Tooltip("显示CD的文字")]public Text needCD;
     [Tooltip("词条名称")]public Text title;
+    public Image titleBg;
     [Tooltip("词条文字")]public TextMeshProUGUI description;
     [Tooltip("是needCD的父物体")] public Image energy;
     [Tooltip("词条图像")] public Image wordImage;
@@ -33,11 +34,13 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     [HideInInspector]public string resAdrVerb = "WordImage/Verb/";
     [HideInInspector]public Sprite tepSprite;
     [HideInInspector] public string resName;
-
+    [HideInInspector] public string resTitleBg= "WordImage/wordTitle/";
+    [HideInInspector] public Sprite tepTBSprite;
+    private string resTBName;
 
     [Header("默认的词语图像")]
     public Sprite defaultWordImage;
-
+    public Sprite defaultWordTitleImage;
 
     [Header("机制解释面板")]
     public GameObject detailInfoPrefab;
@@ -53,11 +56,12 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     {
         if (SceneManager.GetActiveScene().name == "ShootCombat")
             isCombatScene = true;
-
+        titleBg = title.transform.parent.GetComponent<Image>();
 
     }
     public void ChangeInformation(AbstractWord0 word)
     {
+        if(titleBg==null) titleBg = title.transform.parent.GetComponent<Image>();
         nowWord = word;
         switch (word.wordKind)
         {
@@ -67,12 +71,19 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
                     wordkindText.text = textAdj;
                     resName = resAdrAdj + "adj_" + ((AbstractAdjectives)word).adjID;
                     tepSprite = Resources.Load<Sprite>(resName);
+
+                    resTBName = resTitleBg + (((AbstractAdjectives)word).rarity).ToString() + "_" + (((AbstractAdjectives)word).adjID % 10).ToString();
+                    tepTBSprite = Resources.Load<Sprite>(resTBName);
+       
                     if (tepSprite == null)
                     { wordImage.sprite = defaultWordImage; }
                     else
-                        wordImage.sprite = Resources.Load<Sprite>(resName);
+                        wordImage.sprite = tepSprite;
 
-
+                    if (tepTBSprite == null)
+                        titleBg.sprite = defaultWordTitleImage;
+                    else
+                        titleBg.sprite = tepTBSprite;
                 }
                 break;
             case WordKindEnum.noun:
@@ -82,10 +93,20 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
                     resName = resAdrNoun + "n_" + ((AbstractItems)word).itemID;
                     tepSprite = Resources.Load<Sprite>(resName);
+
+                    resTBName = resTitleBg + (((AbstractItems)word).rarity).ToString() + "_" + (((AbstractItems)word).itemID % 10).ToString();
+                    tepTBSprite = Resources.Load<Sprite>(resTBName);
+           
                     if (tepSprite == null)
                         wordImage.sprite = defaultWordImage;
                     else
-                        wordImage.sprite = Resources.Load<Sprite>(resName);
+                        wordImage.sprite = tepSprite;
+
+
+                    if (tepTBSprite == null)
+                        titleBg.sprite = defaultWordTitleImage;
+                    else
+                        titleBg.sprite = tepTBSprite;
                 }
                 break;
             case WordKindEnum.verb:
@@ -95,10 +116,21 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
                     resName = resAdrVerb + "v_" + ((AbstractVerbs)word).skillID;
                     tepSprite = Resources.Load<Sprite>(resName);
+
+                    resTBName = resTitleBg + (((AbstractVerbs)word).rarity).ToString() + "_" + (((AbstractVerbs)word).skillID % 10).ToString();
+                  
+                    tepTBSprite = Resources.Load<Sprite>(resTBName);
+
                     if (tepSprite == null)
                         wordImage.sprite = defaultWordImage;
                     else
-                        wordImage.sprite = Resources.Load<Sprite>(resName);
+                        wordImage.sprite = tepSprite;
+
+                    if (tepTBSprite == null)
+                        titleBg.sprite = defaultWordTitleImage;
+                    else
+                        titleBg.sprite = tepTBSprite;
+
                 }
                 break;
         }
@@ -219,6 +251,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
                 print(_s + "的字段获取失败");
             }
         }
+        LayoutRebuilder.ForceRebuildLayoutImmediate(detailParent.GetComponent<RectTransform>());
     }
 
     void ReturnDetailInfo()

@@ -403,9 +403,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     void StartCardList()
     {
         //≤‚ ‘
-        AddCardList(new JuCaiDe());
-        AddCardList(new ZiShuiJIng());
-
+        AddCardList(new GunShoot());
+        AddCardList(new XianZhiHead());
+        AddCardList(new WanShua());
         return;
         //≤‚ ‘
 
@@ -426,9 +426,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <param name="_word"></param>
     public void AddCardList(AbstractWord0 _word)
     {
+        print("AddCardList");
         wordList.Add(_word.GetType());
         wordNowList.Add(_word.GetType());
-
+        print("wordNowList"+ wordNowList.Count);
         if (_word is AbstractItems)
         {
  
@@ -559,7 +560,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <returns></returns>
     public Type GetNowListOne()
     {
+        
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
+        print("count+" + count);
         var _res = wordNowList[count];
         wordNowList.Remove(_res);
         //wordHasUseList.Add(_res);

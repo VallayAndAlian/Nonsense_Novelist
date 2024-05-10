@@ -8,7 +8,7 @@ class ShiWuFengRong : AbstractItems
 {
     static public string s_description = "随从四维+10%，获得时随机获得一个<color=#dd7d0e>丰容设施</color>";
     static public string s_wordName = "食物丰容";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     public override void Awake()
     {
         base.Awake();

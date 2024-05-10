@@ -12,7 +12,7 @@ public class SheHuiHua : AbstractAdjectives,IJiHuo
     private bool jiHuo;
     static public string s_description = "未揭示，召唤2只<color=#dd7d0e>工蚁</color>；揭示，召唤2只<color=#dd7d0e>工蚁</color>和1个随机随从";
     static public string s_wordName = "社会化的";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     public override void Awake()
     {
         adjID = 18;

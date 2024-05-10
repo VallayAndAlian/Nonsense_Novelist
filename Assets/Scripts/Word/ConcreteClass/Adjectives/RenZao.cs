@@ -10,7 +10,7 @@ public class RenZao : AbstractAdjectives
 
     static public string s_description = "<sprite name=\"hpmax\">+20，获得<color=#dd7d0e>改造</color>";
     static public string s_wordName = "人造的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         adjID = 14;

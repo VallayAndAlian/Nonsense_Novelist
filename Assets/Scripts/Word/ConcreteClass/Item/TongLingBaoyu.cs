@@ -8,7 +8,7 @@ class TongLingBaoyu : AbstractItems
 {
     static public string s_description = "<sprite name=\"psy\">+5，将受到伤害的30%，转移给血量最高的队友";
     static public string s_wordName = "通灵宝玉";
-    static public int rarity = 4;
+    static public int s_rarity = 4;
 
     private bool openDelege = false;
     public override void Awake()

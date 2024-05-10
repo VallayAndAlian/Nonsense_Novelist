@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 class HuYanShi: AbstractItems,IJiHuo
 {
-    static public string s_description = "未激活，<sprite name=\"atk\">+1；\n激活，<sprite name=\"atk\"> + 3，获得<color=#dd7d0e>共振</color>";
+    static public string s_description = "未激活，<sprite name=\"atk\">-1；\n激活，<sprite name=\"atk\"> + 3，获得<color=#dd7d0e>共振</color>";
     static public string s_wordName = "虎眼石";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     /// <summary>是否激活共振 </summary>
     private bool jiHuo;
     private float record;
@@ -18,7 +18,7 @@ class HuYanShi: AbstractItems,IJiHuo
         itemID = 11;
         wordName = "虎眼石";
         bookName = BookNameEnum.CrystalEnergy;
-        description = "未激活，<sprite name=\"atk\">+1；\n激活，<sprite name=\"atk\"> + 3，获得<color=#dd7d0e>共振</color>";
+        description = "未激活，<sprite name=\"atk\">-1；\n激活，<sprite name=\"atk\"> + 3，获得<color=#dd7d0e>共振</color>";
         VoiceEnum = MaterialVoiceEnum.Ceram;
         useTimes = 4;
         rarity = 3;
@@ -52,7 +52,7 @@ class HuYanShi: AbstractItems,IJiHuo
         }
         else
         {
-            record = 1;
+            record = -1;
             chara.atk += record;
         }
     }

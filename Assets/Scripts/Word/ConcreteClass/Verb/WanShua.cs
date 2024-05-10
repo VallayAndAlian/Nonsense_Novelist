@@ -9,7 +9,7 @@ class WanShua : AbstractVerbs
 {
     static public string s_description = "使一名友方获得随机随从，并获得<color=#dd7d0e>亢奋</color>，持续10s";
     static public string s_wordName = "玩耍";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     public override void Awake()
     {
         base.Awake();

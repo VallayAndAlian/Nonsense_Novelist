@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     bool isOpen = false;
@@ -11,6 +12,7 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private Vector3 detailPos = Vector3.zero;
     private Vector3 detailScale = Vector3.one;
 
+    [HideInInspector] public string resTitleBg = "WordImage/wordTitle/";
 
 
     private void Start()
@@ -30,7 +32,66 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             detailPos = Vector3.zero;
             detailScale = Vector3.one * 0.7f;
         }
+
+
+
+       
     }
+
+    /// <summary>
+    /// 012动名形
+    /// </summary>
+    /// <param name="word"></param>
+    /// <param name=""></param>
+
+    public void SetPic(AbstractWord0 word)
+    {
+        string resTBName = "";
+        int type = 0;
+        if (AllSkills.list_noun.Contains(word.GetType())) type = 1;
+        else if (AllSkills.list_adj.Contains(word.GetType())) type = 2;
+        else if (AllSkills.list_verb.Contains(word.GetType())) type = 0;
+        else { print("在任何词语集合里都找不到" + word.wordName); return; }
+
+        if (type == 0)//verb
+        {
+            //AbstractWord0 word;
+            //if (!this.TryGetComponent<AbstractWord0>(out word)) return;
+            resTBName = resTitleBg + (((AbstractVerbs)word).rarity).ToString() + "_" + (((AbstractVerbs)word).skillID % 10).ToString();
+            print(resTBName);
+        }
+        else if (type == 1)//noun
+        {
+            //AbstractWord0 word;
+            //if (!this.TryGetComponent<AbstractWord0>(out word)) return;
+            resTBName = resTitleBg + (((AbstractItems)word).rarity).ToString() + "_" + (((AbstractItems)word).itemID % 10).ToString();
+            print(resTBName);
+        }
+        else if(type==2)//adj
+        {
+            //AbstractWord0 word;
+            //if (!this.TryGetComponent<AbstractWord0>(out word)) return;
+            resTBName = resTitleBg + (((AbstractAdjectives)word).rarity).ToString() + "_" + (((AbstractAdjectives)word).adjID % 10).ToString();
+            print(resTBName);
+        }
+  
+       
+        if (this.TryGetComponent<Image>(out var _i))
+        {
+            var tepTBSprite = Resources.Load<Sprite>(resTBName);
+            if (tepTBSprite == null)
+            {
+                _i.sprite = Resources.Load<Sprite>("WordImage/wordTitle/1_1");
+            }
+            else
+            {
+                _i.sprite = tepTBSprite;
+            }
+        }
+        
+    }
+
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         isOpen = true;

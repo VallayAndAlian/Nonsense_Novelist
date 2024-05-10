@@ -21,6 +21,7 @@ public class JiHuo : WordCollisionShoot
         //absWord = Shoot.abs;
         this.GetComponent<SpriteRenderer>().color  += new Color(color.r, color.g, color.b, 0); ;
     }
+    bool hasBeenTrigger = false;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (CharacterManager.instance.pause)
@@ -39,9 +40,13 @@ public class JiHuo : WordCollisionShoot
     {
         //给absWord赋值
         //absWord = Shoot.abs;
-
+        if (CharacterManager.instance.pause)
+            return; 
+        if (hasBeenTrigger)
+            return;
         if (collision.gameObject.layer == LayerMask.NameToLayer("Character"))
         {
+            hasBeenTrigger = true;
             AbstractCharacter character = collision.gameObject.GetComponent<AbstractCharacter>();
 
 

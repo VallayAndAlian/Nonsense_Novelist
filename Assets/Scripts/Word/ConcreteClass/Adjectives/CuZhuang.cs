@@ -10,7 +10,7 @@ public class CuZhuang : AbstractAdjectives
 {
     static public string s_description = "<sprite name=\"hpmax\">+30";
     static public string s_wordName = "粗壮的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
 
     public override void Awake()
     {

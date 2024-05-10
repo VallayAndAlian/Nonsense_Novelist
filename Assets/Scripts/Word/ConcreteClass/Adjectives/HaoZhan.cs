@@ -8,17 +8,17 @@ using UnityEngine;
 public class HaoZhan : AbstractAdjectives
 {
 
-    static public string s_description = "快速攻击，持续5s";
+    static public string s_description = "获得<color=#dd7d0e>火热</color>*2，持续10s";
     static public string s_wordName = "好战的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {                
-        skillEffectsTime = 5;
+        skillEffectsTime = 10;
        
         adjID = 20;
         wordName = "好战的";
         bookName = BookNameEnum.PHXTwist;
-        description = "快速攻击，持续5s";
+        description = "获得<color=#dd7d0e>火热</color>*2，持续10s";
 
         skillMode = gameObject.AddComponent<SelfMode>();
 
@@ -26,11 +26,24 @@ public class HaoZhan : AbstractAdjectives
         rarity = 1;
         base.Awake();
     }
+
+    override public string[] DetailLable()
+    {
+        string[] _s = new string[1];
+        _s[0] = "WordCollision";
+        return _s;
+    }
+
+
+
     bool hasOther = false;
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
         base.UseAdj(aimCharacter);
-     
+        buffs.Add(aimCharacter.gameObject.AddComponent<HuoRe>());
+        buffs[0].maxTime = skillEffectsTime;
+        buffs.Add(aimCharacter.gameObject.AddComponent<HuoRe>());
+        buffs[1].maxTime = skillEffectsTime;
         BasicAbility(aimCharacter);
     }
 
@@ -38,21 +51,16 @@ public class HaoZhan : AbstractAdjectives
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
    
-        record = aimCharacter.attackSpeedPlus;
-        aimCharacter.attackSpeedPlus += 0.5f;
+      
     
     }
 
-    protected override void Update()
-    {
-      
-        base.Update();
-    }
+
 
     public override void End()
     {
       
-        base.End();  aim.attackSpeedPlus -= 0.5f; Destroy(this);
+        base.End(); Destroy(this);
        
     }
 

@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 /// </summary>
 class ShenPan : AbstractVerbs
 {
-    static public string s_description = "目标生命<400，造成3* <sprite name=\"atk\">的物理伤害；目标生命 > 400，造成伤害翻倍，并获得2能量";
+    static public string s_description = "目标生命<400，造成300% <sprite name=\"atk\">的物理伤害；目标生命 > 400，造成500% <sprite name=\"psy\">的精神伤害，且自身获得<color=#dd7d0e>亢奋</color>*2";
     static public string s_wordName = "审判";
-    static public int rarity = 4;
+    static public int s_rarity = 4;
 
     public override void Awake()
     {
@@ -16,7 +16,7 @@ class ShenPan : AbstractVerbs
         skillID = 6;
         wordName = "审判";
         bookName = BookNameEnum.HongLouMeng;
-        description = "目标生命<400，造成3* <sprite name=\"atk\">的物理伤害；目标生命 > 400，造成伤害翻倍，并获得2能量";
+        description = "目标生命<400，造成300% <sprite name=\"atk\">的物理伤害；目标生命 > 400，造成500% <sprite name=\"psy\">的精神伤害，且自身获得<color=#dd7d0e>亢奋</color>*2";
         skillMode = gameObject.AddComponent<DamageMode>();
         skillMode.attackRange = new SingleSelector();
         skillEffectsTime = 10;
@@ -50,12 +50,9 @@ class ShenPan : AbstractVerbs
                 }
                 if (_aims[i].hp >= 400)
                 {
-                    _aims[i].BeAttack(AttackType.atk, 3 * useCharacter.atk * useCharacter.atkMul * 2, true, 0, useCharacter);
-                    //获得的能量会应用于角色所有技能，是正常的能量
-                    foreach (var _verb in useCharacter.skills)
-                    {
-                        _verb.CD += 2;
-                    }
+                    _aims[i].BeAttack(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul , true, 0, useCharacter);
+                    buffs.Add(useCharacter.gameObject.AddComponent<KangFen>());
+                    buffs[0].maxTime = skillEffectsTime;
                 }
                 x++;
             }
@@ -73,12 +70,10 @@ class ShenPan : AbstractVerbs
             }
             if (useCharacter.myState.aim[i].hp >= 400)
             {
-                useCharacter.myState.aim[i].BeAttack(AttackType.atk, 3 * useCharacter.atk * useCharacter.atkMul*2, true, 0, useCharacter);
+                useCharacter.myState.aim[i].BeAttack(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul, true, 0, useCharacter);
                 //获得的能量会应用于角色所有技能，是正常的能量
-                foreach (var _verb in useCharacter.skills)
-                {
-                    _verb.CD += 2;
-                }
+                buffs.Add(useCharacter.gameObject.AddComponent<KangFen>());
+                buffs[0].maxTime = skillEffectsTime;
             }
         }
       

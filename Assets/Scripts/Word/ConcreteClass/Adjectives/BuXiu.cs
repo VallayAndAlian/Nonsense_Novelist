@@ -10,9 +10,9 @@ using UnityEngine;
 
 public class BuXiu : AbstractAdjectives
 {
-    static public string s_description = "<sprite name=\"hpmax\">+30，获得<color=#dd7d0e>复活</color>";
+    static public string s_description = "<color=#dd7d0e>嘲讽，复活</color>，持续10s";
     static public string s_wordName = "不朽的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
 
 
     public override void Awake()
@@ -21,10 +21,10 @@ public class BuXiu : AbstractAdjectives
         adjID = 7;
         wordName = "不朽的";
         bookName = BookNameEnum.EgyptMyth;
-        description = "<sprite name=\"hpmax\">+30，获得<color=#dd7d0e>复活</color>";
+        description = "<color=#dd7d0e>嘲讽，复活</color>，持续10s";
 
         skillMode = gameObject.AddComponent<CureMode>();
-        skillEffectsTime = Mathf.Infinity;
+        skillEffectsTime = 10;
 
         rarity = 2;
         base.Awake();
@@ -32,8 +32,9 @@ public class BuXiu : AbstractAdjectives
 
     override public string[] DetailLable()
     {
-        string[] _s = new string[1];
+        string[] _s = new string[2];
         _s[0] = "ReLife";
+        _s[1] = "ChaoFeng";
         return _s;
     }
 
@@ -44,13 +45,15 @@ public class BuXiu : AbstractAdjectives
 
         buffs.Add(aimCharacter.gameObject.AddComponent<ReLife>());
         buffs[0].maxTime = skillEffectsTime;
+        buffs.Add(aimCharacter.gameObject.AddComponent<ChaoFeng>());
+        buffs[1].maxTime = skillEffectsTime;
 
         BasicAbility(aimCharacter);
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        aimCharacter.maxHp += 60;
-        aim.CreateFloatWord(60, FloatWordColor.healMax, false);
+       
+      
 
     }
 
@@ -59,7 +62,7 @@ public class BuXiu : AbstractAdjectives
     public override void End()
     {
         base.End();
-        aim.maxHp -= 60;
+       
     }
 
 }

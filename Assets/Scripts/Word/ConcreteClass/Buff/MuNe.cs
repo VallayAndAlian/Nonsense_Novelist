@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class MuNe : AbstractBuff
 {
-    static public string s_description = "<sprite name=\"psy\">-30%，最多3层";
+    static public string s_description = "<sprite name=\"psy\">-30%";
     static public string s_wordName = "木讷";
     float record;
     override protected void Awake()
@@ -14,11 +14,11 @@ public class MuNe : AbstractBuff
         
     
         buffName = "木讷";
-        description = "<sprite name=\"psy\">-30%，最多3层";
+        description = "<sprite name=\"psy\">-30%";
         book = BookNameEnum.allBooks;  
         isBad = true;
-        isAll = true;
-        upup = 3;
+        isAll = false;
+        upup = 2;
 
         base.Awake();
        

@@ -9,7 +9,7 @@ public class YeSheng : AbstractAdjectives
 {
     static public string s_description = "召唤一个随从";
     static public string s_wordName = "野生的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         adjID = 27;

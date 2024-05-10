@@ -10,7 +10,7 @@ public class FengLi : AbstractAdjectives
 {
     static public string s_description = "<sprite name=\"atk\">+4，持续10s";
     static public string s_wordName = "锋利的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
 
     public override void Awake()
     {

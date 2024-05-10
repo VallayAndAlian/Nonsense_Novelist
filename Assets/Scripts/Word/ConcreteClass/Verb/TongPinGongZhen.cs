@@ -8,7 +8,7 @@ class TongPinGongZhen: AbstractVerbs
 {
     static public string s_description = "使2个友方获得<color=#dd7d0e>共振</color>10s，并消除其共振层数的负面状态";
     static public string s_wordName = "同频共振";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     public override void Awake()
     {
         base.Awake();

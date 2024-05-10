@@ -9,7 +9,7 @@ public class QuicklyGrowing : AbstractAdjectives
 {
     static public string s_description = "<sprite name=\"hp\">恢复30";
     static public string s_wordName = "快速成长的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         adjID = 22;

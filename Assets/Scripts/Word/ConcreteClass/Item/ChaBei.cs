@@ -8,7 +8,7 @@ class ChaBei : AbstractItems
 {
     static public string s_description = "<sprite name=\"psy\">+2";
     static public string s_wordName = "茶杯";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();

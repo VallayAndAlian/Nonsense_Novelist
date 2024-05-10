@@ -8,7 +8,7 @@ class JiShengChong : AbstractItems
 {
     static public string s_description = "<sprite name=\"def\">-3，自身与随从的攻击附带<color=#dd7d0e>患病</color>";
     static public string s_wordName = "寄生虫";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         base.Awake();

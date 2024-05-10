@@ -4,57 +4,56 @@ using UnityEngine;
 /// <summary>
 /// 名词：恶性肿瘤
 /// </summary>
-class EXingZhongLiu : AbstractItems,IChongNeng
+class EXingZhongLiu : AbstractItems
 {
-    static public string s_description = "每次弹射<sprite name=\"hpmax\">-30";
+    static public string s_description = "每10s随机获得1种减益状态，持续5s";
     static public string s_wordName = "恶性肿瘤";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();
         itemID = 17;
         wordName = "恶性肿瘤";
         bookName = BookNameEnum.FluStudy;
-        description = "每次弹射<sprite name=\"hpmax\">-30";
+        description = "每10s随机获得1种减益状态，持续5s";
 
         VoiceEnum = MaterialVoiceEnum.Ceram;
         useTimes = 6;
         rarity = 1;
 
-        if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
-            wordCollisionShoots[0] = gameObject.AddComponent<ChongNeng>();
+    
     }
 
-    override public string[] DetailLable()
-    {
-        string[] _s = new string[1];
-        _s[0] = "ChongNeng";
-        return _s;
-    }
-    int count;
+
     float record;
-    public void ChongNeng(int times)
-    {
-        count=times;
-    }
+    WaitForSeconds waitTime = new WaitForSeconds(10);
+    Coroutine cor = null;
 
     public override void UseItem(AbstractCharacter chara)
     {
         base.UseItem(chara);
-        chara.maxHp -= count*30;
-
-        record = count * 30;
+        if (cor != null) StopAllCoroutines();
+        cor = StartCoroutine(Wait());
+        
     }
 
-    public override void UseVerb()
+
+
+    IEnumerator Wait()
     {
-        base.UseVerb();
+        while (TryGetComponent<AbstractCharacter>(out var _c))
+        {
+            yield return waitTime;
+            _c.AddRandomBuff(true, 1, 5);
+        }
     }
 
     public override void End()
     {
+        if (cor != null) StopAllCoroutines();
+        cor = StartCoroutine(Wait());
         base.End();
-        aim.maxHp += record;
+  
     }
 
     

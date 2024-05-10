@@ -8,7 +8,7 @@ class WenYiChuanBo : AbstractVerbs
 {
     static public string s_description = "传播<color=#dd7d0e>疾病</color>，持续5s";
     static public string s_wordName = "瘟疫传播";
-    static public int rarity = 3;
+    static public int s_rarity = 3;
     public override void Awake()
     {
         base.Awake();

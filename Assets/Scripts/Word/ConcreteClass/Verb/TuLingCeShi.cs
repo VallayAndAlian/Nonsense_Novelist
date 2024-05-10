@@ -8,7 +8,7 @@ class TuLingCeShi : AbstractVerbs
 {
     static public string s_description = "被动：对 <sprite name=\"san\">低于10的敌人造成30%额外伤害;主动：使敌人受到自身 <sprite name=\"atk\"> +  <sprite name=\"san\">的精神伤害";
     static public string s_wordName = "图灵测试";
-    static public int rarity = 4;
+    static public int s_rarity = 4;
 
 
     public override void Awake()

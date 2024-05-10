@@ -7,16 +7,16 @@ using UnityEngine;
 /// </summary>
 public class LuanLun : AbstractAdjectives
 {
-    static public string s_description = "<color=#dd7d0e>俘获</color>一群角色，攻击队友7s";
+    static public string s_description = "<color=#dd7d0e>情迷</color>一群角色，攻击队友7s";
     static public string s_wordName = "乱伦的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
       
         adjID = 10;
         wordName = "乱伦的";
         bookName = BookNameEnum.Salome;
-        description = "<color=#dd7d0e>俘获</color>一群角色，攻击队友7s";
+        description = "<color=#dd7d0e>情迷</color>一群角色，攻击队友7s";
         skillMode = gameObject.AddComponent<DamageMode>();
         skillEffectsTime =7;
         rarity = 2;
@@ -31,7 +31,7 @@ public class LuanLun : AbstractAdjectives
     {
         string[] _s = new string[2];
         _s[0] = "ChuanBoCollision";
-        _s[1] = "FuHuo";
+        _s[1] = "QingMi";
         return _s;
     }
 
@@ -39,7 +39,7 @@ public class LuanLun : AbstractAdjectives
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
         base.UseAdj(aimCharacter);
-        buffs.Add(aimCharacter.gameObject.AddComponent<FuHuo>());
+        buffs.Add(aimCharacter.gameObject.AddComponent<QingMi>());
             buffs[0].maxTime = skillEffectsTime;
     }
     public override void BasicAbility(AbstractCharacter aimCharacter)

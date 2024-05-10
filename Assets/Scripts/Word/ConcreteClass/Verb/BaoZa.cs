@@ -9,7 +9,7 @@ class BaoZa : AbstractVerbs
 {
     static public string s_description = "治疗3*<sprite name=\"san\">";
     static public string s_wordName = "包扎";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();

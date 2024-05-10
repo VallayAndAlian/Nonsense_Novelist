@@ -11,7 +11,7 @@ public class JuCaiDe : AbstractAdjectives
 {
     static public string s_description = "使角色获得的下一个名词翻倍";
     static public string s_wordName = "聚财的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
 
 
     public override void Awake()
@@ -33,7 +33,12 @@ public class JuCaiDe : AbstractAdjectives
     }
 
 
-
+    override public string[] DetailLable()
+    {
+        string[] _s = new string[1];
+        _s[0] = "ChuanBoCollision";
+        return _s;
+    }
 
     public override void UseAdj(AbstractCharacter aimCharacter)
     {

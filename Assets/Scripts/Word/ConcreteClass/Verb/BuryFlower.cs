@@ -11,7 +11,7 @@ class BuryFlower : AbstractVerbs
     static public string s_description = "被动：普通攻击使对方获得<color=#dd7d0e>花瓣</color>;" +
         "主动：收回所有<color=#dd7d0e>花瓣</color>，并造成<color=#dd7d0e>花瓣</color>数 * 30 % <sprite name=\"psy\">的伤害";
     static public string s_wordName = "葬花";
-    static public int rarity = 4;
+    static public int s_rarity = 4;
 
     Dictionary<AbstractCharacter,int> aimDic=new Dictionary<AbstractCharacter, int>();
     public override void Awake()

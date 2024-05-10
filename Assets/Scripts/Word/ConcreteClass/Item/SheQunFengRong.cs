@@ -8,7 +8,7 @@ class SheQunFengRong : AbstractItems
 {
     static public string s_description = "自动合成<color=#dd7d0e>混养笼</color>。每种不同生物，使混养笼<sprite name=\"hp\"> + 40";
     static public string s_wordName = "社群丰容";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
 
 
 

@@ -9,7 +9,7 @@ class GunShoot : AbstractVerbs
 {
     static public string s_description = "造成3*<sprite name=\"atk\">的物理伤害";
     static public string s_wordName = "枪击";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         base.Awake();

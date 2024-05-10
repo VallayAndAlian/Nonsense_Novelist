@@ -6,9 +6,9 @@ using UnityEngine;
 /// </summary>
 class LengXiangWan : AbstractItems
 {
-    static public string s_description = "恢复+3，获得时清除负面状态";
+    static public string s_description = "恢复+3，每10s净化1层负面状态";
     static public string s_wordName = "冷香丸";
-    static public int rarity =2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         base.Awake();
@@ -16,16 +16,19 @@ class LengXiangWan : AbstractItems
         wordName = "冷香丸";
         bookName = BookNameEnum.HongLouMeng;
         rarity = 2;
-        useTimes = 2;
+        useTimes = 4;
         VoiceEnum = MaterialVoiceEnum.materialNull;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<XuWu_YunSu>();
 
-        description = "恢复+3，获得时清除负面状态";
+        description = "恢复+3，每10s净化1层负面状态";
 
         nowTime = 0;
     }
+
+    WaitForSeconds waitTime = new WaitForSeconds(10);
+    Coroutine cor = null;
     override public string[] DetailLable()
     {
         string[] _s = new string[1];
@@ -38,11 +41,21 @@ class LengXiangWan : AbstractItems
     {
         base.UseItem(chara);
         chara.cure += 3;
-        //清楚负面效果：
-        chara.DeleteBadBuff(100);
+        if (cor != null)
+            StopCoroutine(cor);
+        cor = StartCoroutine(Wait());
        
 
     }
+    IEnumerator Wait()
+    {
+        while (this.TryGetComponent<AbstractCharacter>(out var _c))
+        {
+            yield return waitTime;
+            _c.DeleteBadBuff(1);
+        }
+    }
+
 
     float nowTime;
     public override void UseVerb()

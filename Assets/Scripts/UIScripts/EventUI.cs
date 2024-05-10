@@ -440,10 +440,14 @@ public class EventUI : MonoBehaviour
                 {
                     var _word = obj.AddComponent(_typeList[_rbb]) as AbstractWord0;
                     obj.GetComponentInChildren<TextMeshProUGUI>().text = _word.wordName;
-                    obj.GetComponentInChildren<Image>().SetNativeSize();
+                    
                     obj.transform.parent = cardParent.GetChild(i).GetChild(0);
                     obj.transform.localScale = Vector3.one;
                     obj.GetComponent<Button>().interactable = false;
+
+             
+                    if (obj.TryGetComponent<SeeWordDetail>(out var _s))
+                        _s.SetPic(_word);
 
                 });
                 GameObject myEventSystem = GameObject.Find("EventSystem");

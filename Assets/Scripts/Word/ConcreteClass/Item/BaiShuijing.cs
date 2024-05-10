@@ -6,9 +6,10 @@ using UnityEngine;
 /// </summary>
 class BaiShuijing: AbstractItems,IJiHuo
 {
-    static public string s_description = "未激活，<sprite name=\"hpmax\">+20；\n激活，<sprite name=\"hp\"> + 60，获得<color=#dd7d0e>共振</color>";
+
+    static public string s_description = "未激活，<sprite name=\"hpmax\">-20；\n激活，<sprite name=\"hp\"> + 60，获得<color=#dd7d0e>共振</color>";
     static public string s_wordName = "白水晶";
-    static public int rarity = 2;
+    static public int s_rarity = 1;
     /// <summary>是否激活共振 </summary>
     private bool jiHuo;
     public override void Awake()
@@ -17,9 +18,9 @@ class BaiShuijing: AbstractItems,IJiHuo
         itemID = 9;
         wordName = "白水晶";
         bookName = BookNameEnum.CrystalEnergy;
-        description = "未激活，<sprite name=\"hpmax\">+20；\n激活，<sprite name=\"hp\"> + 60，获得<color=#dd7d0e>共振</color>";
+        description = "未激活，<sprite name=\"hpmax\">-20；\n激活，<sprite name=\"hp\"> + 60，获得<color=#dd7d0e>共振</color>";
         VoiceEnum = MaterialVoiceEnum.Ceram;
-        rarity = 2;
+        rarity = 1;
         useTimes =6;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
@@ -50,8 +51,8 @@ class BaiShuijing: AbstractItems,IJiHuo
         }
         else
         {
-            chara.CreateFloatWord(20, FloatWordColor.healMax, false);
-            chara.maxHp += 20;
+            chara.CreateFloatWord(20, FloatWordColor.removeWord, false);
+            chara.maxHp -= 20;
 
         }
     }
@@ -68,7 +69,10 @@ class BaiShuijing: AbstractItems,IJiHuo
         if (jiHuo)
             aim.BeAttack(AttackType.dir, 60, true, 0, this.GetComponent<AbstractCharacter>());
         else
-            aim.maxHp -= 20;
+        {
+            aim.maxHp += 20; aim.CreateFloatWord(20, FloatWordColor.healMax, false);
+        }
+            
     }
 
     

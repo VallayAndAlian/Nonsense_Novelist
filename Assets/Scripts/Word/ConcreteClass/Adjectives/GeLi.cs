@@ -9,7 +9,7 @@ public class GeLi : AbstractAdjectives,IChongNeng
 {
     static public string s_description = "<color=#dd7d0e>嘲讽</color>，<color=#dd7d0e>沮丧</color>，每受到一次攻击，恢复+1，持续10s";
     static public string s_wordName = "隔离的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
 
     private float dizzyAdd;
 

@@ -103,7 +103,7 @@ public class FloatWord : MonoBehaviour
         TextMeshProUGUI text = null;
         if (!boss)
         {
-            text = normalTexts[1];
+            text = normalTexts[0];
         }
         else//boss
         {

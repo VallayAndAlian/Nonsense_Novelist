@@ -10,7 +10,7 @@ public class HeWuRan : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>中毒</color>，持续10s";
     static public string s_wordName = "核污染的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {  
         

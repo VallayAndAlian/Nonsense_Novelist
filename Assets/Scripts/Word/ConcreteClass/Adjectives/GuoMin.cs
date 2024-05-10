@@ -9,7 +9,7 @@ public class GuoMin : AbstractAdjectives,IChongNeng
 {
     static public string s_description = "color=#dd7d0e>充能</color>，每次弹射，让角色获得一层随机减益状态，持续10s";
     static public string s_wordName = "过敏的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
 
     private float dizzyAdd;
 

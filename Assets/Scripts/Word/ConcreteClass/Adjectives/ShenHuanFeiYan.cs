@@ -9,7 +9,7 @@ public class ShenHuanFeiYan : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>患病</color>，持续20s";
     static public string s_wordName = "身患肺炎的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         adjID = 15;

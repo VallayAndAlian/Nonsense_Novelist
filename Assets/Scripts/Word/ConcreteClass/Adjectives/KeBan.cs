@@ -10,7 +10,7 @@ public class KeBan : AbstractAdjectives
 {
     static public string s_description = "12s内无法攻击";
     static public string s_wordName = "刻板的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         adjID = 3;

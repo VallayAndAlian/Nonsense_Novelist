@@ -8,7 +8,7 @@ class VolumeProduction : AbstractItems
 {
     static public string s_description = "获得<color=#dd7d0e>改造</color>";
     static public string s_wordName = "量产改装件";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();

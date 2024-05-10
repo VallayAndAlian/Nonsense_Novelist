@@ -12,7 +12,7 @@ public class BeiPanDe : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>·è¿ñ</color>£¬³ÖÐø10s";
     static public string s_wordName = "±³ÅÑµÄ";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
 
 
     public override void Awake()

@@ -6,23 +6,23 @@ using UnityEngine;
 /// </summary>
 class MianYiZengQiang : AbstractVerbs
 {
-    static public string s_description = "<sprite name=\"hpmax\">+40，并消除所有减益状态";
+    static public string s_description = "<sprite name=\"hpmax\">+20，并净化1层减益状态";
     static public string s_wordName = "免疫增强";
-    static public int rarity = 3;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         base.Awake();
         skillID = 13;
         wordName = "免疫增强";
         bookName = BookNameEnum.FluStudy;
-        description = "<sprite name=\"hpmax\">+40，并消除所有减益状态";
+        description = "<sprite name=\"hpmax\">+20，并净化1层减益状态";
 
         skillMode = gameObject.AddComponent<SelfMode>();
         skillMode.attackRange =  new SingleSelector();
         skillEffectsTime = Mathf.Infinity;
 
-        rarity = 3;
-        needCD =5;
+        rarity = 1;
+        needCD =3;
 
     }
     /// <summary>
@@ -43,11 +43,11 @@ class MianYiZengQiang : AbstractVerbs
         //skillMode.UseMode(useCharacter, 40, aim)
         //,FloatWordColor.heal,true);
 
-        useCharacter.maxHp += 40;
-        useCharacter.CreateFloatWord(40, FloatWordColor.healMax, false);
+        useCharacter.maxHp += 20;
+        useCharacter.CreateFloatWord(20, FloatWordColor.healMax, false);
         
 
-        character.DeleteBadBuff(100);
+        character.DeleteBadBuff(1);
     }
 
     public override string UseText()

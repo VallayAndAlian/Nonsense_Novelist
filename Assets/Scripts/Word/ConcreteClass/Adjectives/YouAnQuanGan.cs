@@ -7,23 +7,29 @@ using UnityEngine;
 /// </summary>
 public class YouAnQuanGan : AbstractAdjectives
 {
-    static public string s_description = "恢复+8，持续20s";
+    static public string s_description = "<color=#dd7d0e>坚实，再生</color>，持续10s";
     static public string s_wordName = "有安全感的";
-    static public int rarity = 2;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         adjID = 6;
         wordName = "有安全感的";
         bookName = BookNameEnum.ZooManual;
-        description = "恢复+8，持续20s";
+        description = "<color=#dd7d0e>坚实，再生</color>，持续10s";
         skillMode = gameObject.AddComponent<SelfMode>();
-        skillEffectsTime = 20;
-        rarity = 2;
+        skillEffectsTime = 10;
+        rarity = 1;
 
         base.Awake();
 
     }
-
+    override public string[] DetailLable()
+    {
+        string[] _s = new string[2];
+        _s[0] = "JianShi";
+        _s[1] = "ZaiSheng";
+        return _s;
+    }
     public override void UseAdj(AbstractCharacter aimCharacter)
     {
         base.UseAdj(aimCharacter);
@@ -32,8 +38,11 @@ public class YouAnQuanGan : AbstractAdjectives
     
     public override void BasicAbility(AbstractCharacter aimCharacter)
     {
-        //恢复加8
-        this.GetComponent<AbstractCharacter>().cure += 8;
+        
+        buffs.Add(aimCharacter.gameObject.AddComponent<JianShi>());
+        buffs[0].maxTime = skillEffectsTime;
+        buffs.Add(aimCharacter.gameObject.AddComponent<ZaiSheng>());
+        buffs[1].maxTime = skillEffectsTime;
     }
 
     float time;
@@ -46,7 +55,6 @@ public class YouAnQuanGan : AbstractAdjectives
 
     public override void End()
     {
-        this.GetComponent<AbstractCharacter>().cure += 8;
         base.End();
         
     }

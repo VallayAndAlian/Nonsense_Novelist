@@ -9,7 +9,7 @@ public class XinShenJiDang : AbstractAdjectives,IChongNeng
 {
     static public string s_description = "每次碰撞获得2<sprite name=\"psy\">，并获得<color=#dd7d0e>颠倒</color>";
     static public string s_wordName = "心神激荡的";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     private int psyAdd;
 
     public override void Awake()

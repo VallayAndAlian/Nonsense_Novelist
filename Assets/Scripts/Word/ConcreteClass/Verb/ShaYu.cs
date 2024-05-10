@@ -8,18 +8,18 @@ using System.Collections.Generic;
 /// </summary>
 class ShaYu : AbstractVerbs
 {
-    static public string s_description = "治疗10+100%<sprite name=\"san\">，消除3层减益状态";
+    static public string s_description = "治疗队友100%<sprite name=\"san\">，净化3层减益状态";
     static public string s_wordName = "沙浴";
-    static public int rarity = 2;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         base.Awake();
         skillID = 4;
         wordName = "沙浴";
         bookName = BookNameEnum.ZooManual;
-        description = "治疗10+100%<sprite name=\"san\">，消除3层减益状态";
+        description = "治疗队友100%<sprite name=\"san\">，净化3层减益状态";
 
-        skillMode = gameObject.AddComponent<SelfMode>();
+        skillMode = gameObject.AddComponent<CureMode>();
 
         skillEffectsTime = Mathf.Infinity;
         rarity = 2;
@@ -43,11 +43,11 @@ class ShaYu : AbstractVerbs
     public override void BasicAbility(AbstractCharacter useCharacter)
     {  
         //治疗10+100%意志
-        AbstractCharacter aim = skillMode.CalculateAgain(attackDistance, useCharacter)[0];
-        //aim.CreateFloatWord(
-        //skillMode.UseMode(useCharacter, 10+ useCharacter.san*useCharacter.sanMul*1, aim)
-        //, FloatWordColor.heal, true);
-        skillMode.UseMode(AttackType.heal, 10 + useCharacter.san * useCharacter.sanMul * 1, useCharacter, aim, true, 0);
+        AbstractCharacter[] aims = skillMode.CalculateAgain(attackDistance, useCharacter);
+        var aim = aims[Random.Range(0, aims.Length)];
+            skillMode.UseMode(AttackType.heal, aim.san * aim.sanMul * 1, aim, aim, true, 0);
+        
+        
 
 
         badBuff.Clear();

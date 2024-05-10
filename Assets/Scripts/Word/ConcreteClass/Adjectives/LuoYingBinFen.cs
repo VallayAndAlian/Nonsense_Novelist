@@ -10,7 +10,7 @@ public class LuoYingBinFen : AbstractAdjectives
 
     static public string s_description = "获得<color=#dd7d0e>花瓣</color>";
     static public string s_wordName = "落英缤纷的";
-    static public int rarity = 1;
+    static public int s_rarity = 1;
     public override void Awake()
     {
         adjID = 23;
