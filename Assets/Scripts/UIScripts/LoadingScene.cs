@@ -37,7 +37,13 @@ public class LoadingScene : MonoBehaviour
         obj.GetComponentInChildren<LoadingSlider_t>().LoadSceneAsyn(sceneName, leastLoadTime);
         //加载结束后，关闭面板
     }
+    public void SwitchStudy()
+    {
+        SceneManager.LoadScene("Study");
+    }
+    public void SwitchShelf()
+    {
+        SceneManager.LoadScene("BookShelf");
+    }
 
-
-   
 }
