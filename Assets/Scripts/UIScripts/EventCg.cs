@@ -78,7 +78,57 @@ public class EventCg : MonoBehaviour
         GameMgr.instance.ShowGameUI();
   
     }
+    public void GetChara_JC1()
+    {
+        print("GetChara_JC1");
+        var _jc1=this.transform.Find("¾ç³¡1");
+        var _cs = CharacterManager.instance.charas;
+        if (_cs[0] != null)
+        {
+           
+            _jc1.Find("a1").GetComponent<SpriteRenderer>().sprite =
+                Resources.Load<Sprite>("WordImage/Character/" + _cs[0].wordName);
+            _jc1.Find("a1").GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        }
+        else
+        {
+            
+            _jc1.Find("a1").GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
+        }
 
+        if (_cs[1] != null)
+        {
+            _jc1.Find("a2").GetComponent<SpriteRenderer>().sprite =
+                Resources.Load<Sprite>("WordImage/Character/" + _cs[1].wordName);
+            _jc1.Find("a2").GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        }
+        else
+        {
+            _jc1.Find("a2").GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
+        }
+
+        if (_cs[2] != null)
+        {
+            _jc1.Find("b1").GetComponent<SpriteRenderer>().sprite =
+                Resources.Load<Sprite>("WordImage/Character/" + _cs[2].wordName);
+            _jc1.Find("b1").GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        }
+        else
+        {
+            _jc1.Find("b1").GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
+        }
+
+        if (_cs[3] != null)
+        {
+            _jc1.Find("b2").GetComponent<SpriteRenderer>().sprite =
+                Resources.Load<Sprite>("WordImage/Character/" + _cs[3].wordName);
+            _jc1.Find("b2").GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+        }
+        else
+        {
+            _jc1.Find("b2").GetComponent<SpriteRenderer>().color -= new Color(0, 0, 0, 1);
+        }
+    }
     #endregion
 
 }

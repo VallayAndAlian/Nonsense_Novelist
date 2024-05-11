@@ -41,9 +41,9 @@ class WanShua : AbstractVerbs
 
         cha.AddRandomServant();
 
-
-        buffs.Add(cha.gameObject.AddComponent<KangFen>());
-        buffs[0].maxTime = skillEffectsTime;
+        var _b = cha.gameObject.AddComponent<KangFen>();
+        buffs.Add(_b);
+        _b.maxTime = skillEffectsTime;
     }
 
     public override string UseText()

@@ -15,8 +15,8 @@ public class CreateOneCharacter : MonoBehaviour
     public Transform charaPos;
     private List<Image> LightNowOpen = new List<Image>();
 
-    [Header("（手动挂）灯光父物体")]
-    public Transform lightP;
+    //[Header("（手动挂）灯光父物体")]
+    //public Transform lightP;
 
     [Header("（手动挂）角色预制体池【按角色ID挂】")]
     public GameObject[] charaPrefabs;
@@ -147,27 +147,27 @@ public class CreateOneCharacter : MonoBehaviour
 
         animTrigger = true;
 
-        if (lightDisappear != null) StopCoroutine(lightDisappear);
-        lightDisappear = StartCoroutine(LightDisappear());
+        //if (lightDisappear != null) StopCoroutine(lightDisappear);
+        //lightDisappear = StartCoroutine(LightDisappear());
 
     }
     /// <summary>
     ///缓慢的改变灯光的颜色
     /// </summary>
-    IEnumerator LightDisappear()
-    {
+    //IEnumerator LightDisappear()
+    //{
   
-        float _speed = 1f;
-        while(LightNowOpen[0].color.a > 0.1f)
-        {
-            yield return waitD;
-            foreach (var it in LightNowOpen)
-            {
-                it.color -= Color.white* _speed;
-            }
-        }
+    //    float _speed = 1f;
+    //    while(LightNowOpen[0].color.a > 0.1f)
+    //    {
+    //        yield return waitD;
+    //        foreach (var it in LightNowOpen)
+    //        {
+    //            it.color -= Color.white* _speed;
+    //        }
+    //    }
       
-    }
+    //}
     /// <summary>
     /// 外部Animation调用，用于改变镜头
     /// </summary>
@@ -228,10 +228,10 @@ public class CreateOneCharacter : MonoBehaviour
                 it.GetComponent<CircleCollider2D>().radius = 0.4f;
             it.GetComponent<SpriteRenderer>().color = Color.clear;
             }
-            foreach (var it in lightP.GetComponentsInChildren<Image>())
-            {
-                it.color = Color.clear;
-            }
+            //foreach (var it in lightP.GetComponentsInChildren<Image>())
+            //{
+            //    it.color = Color.clear;
+            //}
 
 
         // 所有角色不可拖拽
@@ -259,7 +259,7 @@ public class CreateOneCharacter : MonoBehaviour
         }
         //恢复暂停
         CharacterManager.instance.pause = false;
-        GameMgr.instance.PlayCG("ElecSheep_start1", 1);
+        GameMgr.instance.PlayCG("ElecSheep_start1", 0.5f);
 
 
     }
@@ -526,15 +526,15 @@ public class CreateOneCharacter : MonoBehaviour
                 Situation.allSituation[X].GetComponent<SpriteRenderer>().color = Color.white;
                 if (Situation.allSituation[X].GetComponent<CircleCollider2D>()!=null)
                     Situation.allSituation[X].GetComponent<CircleCollider2D>().radius = 1.4f;
-                lightP.GetChild(X).GetComponent<Image>().color = Color.white;
-                LightNowOpen.Add(lightP.GetChild(X).GetComponent<Image>());
+                //lightP.GetChild(X).GetComponent<Image>().color = Color.white;
+                //LightNowOpen.Add(lightP.GetChild(X).GetComponent<Image>());
             }
             else
             {
                 Situation.allSituation[X].GetComponent<SpriteRenderer>().color = Color.clear;
                 if (Situation.allSituation[X].GetComponent<CircleCollider2D>() != null)
                     Situation.allSituation[X].GetComponent<CircleCollider2D>().radius = 0.4f;
-                lightP.GetChild(X).GetComponent<Image>().color = Color.clear;
+                //lightP.GetChild(X).GetComponent<Image>().color = Color.clear;
             }
 
         }

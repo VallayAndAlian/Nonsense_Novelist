@@ -197,7 +197,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         DealWithData();
         CardRes.SetActive(false);
         draftUi.InitContent();
-        EventCGAnim.gameObject.SetActive(true);
+        EventCGAnim.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -948,7 +948,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #region cg
     WaitForFixedUpdate wait= new WaitForFixedUpdate();
-    public void PlayCG(string name, int delayTime)
+    public void PlayCG(string name, float delayTime)
     {
         if (playEventCG == false) return;
         if (delayTime > 0)
@@ -960,7 +960,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         { GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
             GameMgr.instance.EventCGAnim.PlayEventCG(name); }
     }
-    IEnumerator WaitAndCg(string name,int delayTime)
+    IEnumerator WaitAndCg(string name,float delayTime)
     {
         float t = 0;
         while (t < delayTime)
