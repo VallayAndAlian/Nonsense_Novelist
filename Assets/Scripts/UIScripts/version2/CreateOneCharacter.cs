@@ -500,6 +500,11 @@ public class CreateOneCharacter : MonoBehaviour
                 chara.GetComponentInChildren<AI.MyState0>().aim.Add(a[UnityEngine.Random.Range(0, a.Length)]);
                 chara.GetComponentInChildren<AI.MyState0>().enabled = true;
                 chara.GetComponent<AbstractCharacter>().enabled = true;
+
+                if ((_pos == 2) || (_pos == 3) || (_pos == 6) || (_pos == 7))
+                {
+                    chara.GetComponent<AbstractCharacter>().turn();
+                }
             }
             else
             {

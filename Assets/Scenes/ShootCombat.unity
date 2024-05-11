@@ -5224,7 +5224,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 41608ee917178f34897f8796992ec14a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8021,7 +8021,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6d9c47d24b74bc649bcdbfaee29297cc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -8262,7 +8262,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1b667b2a6a72a534abd1afbf87b61d87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -9496,7 +9496,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6281a430839f58f41ad586c7e4fbb495, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -10285,7 +10285,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c1049d6bd9ba67d4b8fbacc405f4f347, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -11287,7 +11287,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5120bc95f62be6e46a73bee27f78f286, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -13096,7 +13096,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5120bc95f62be6e46a73bee27f78f286, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -15074,18 +15074,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perfab_icon: {fileID: 4963443990303953719, guid: 3655b1b5195bfcd4890c66c76f9d3c32, type: 3}
   time_stage:
-  - boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    time: 111
-    image: {fileID: 21300000, guid: 2c05e3a0af71ea24a9e98945d20201f3, type: 3}
+  - type: 2
+    t_boss: {fileID: 0}
+    t_eventCount: 1
+    t_eventKey: 0
+    time: 20
+    image: {fileID: 0}
     time_count: 0
-  - boss: {fileID: 0}
-    time: 30
-    image: {fileID: 21300000, guid: b3aeb5fda1370b847b677e10f67f41dd, type: 3}
+    level: 1
+  - type: 1
+    t_boss: {fileID: 0}
+    t_eventCount: 1
+    t_eventKey: 0
+    time: 20
+    image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
     time_count: 0
-  - boss: {fileID: 0}
-    time: 50
-    image: {fileID: 21300000, guid: fb43359205f0c184696ac0a4bb8d9e30, type: 3}
+    level: 1
+  - type: 2
+    t_boss: {fileID: 0}
+    t_eventCount: 2
+    t_eventKey: 0
+    time: 20
+    image: {fileID: 0}
     time_count: 0
+    level: 1
+  - type: 1
+    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
+    t_eventCount: 0
+    t_eventKey: 0
+    time: 20
+    image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
+    time_count: 0
+    level: 2
+  - type: 2
+    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
+    t_eventCount: 3
+    t_eventKey: 0
+    time: 20
+    image: {fileID: 0}
+    time_count: 0
+    level: 2
+  - type: 0
+    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
+    t_eventCount: 3
+    t_eventKey: 0
+    time: 20
+    image: {fileID: 7892919346722411895, guid: a1d3d4c4c192b354a8b9233ac314bc40, type: 3}
+    time_count: 0
+    level: 3
   event_stage:
   - events: 3
   - events: 3
@@ -15120,11 +15156,11 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: 7864ab0c371e01e46bbcfd4ce474aff3, type: 3}
   eventTime: 3
   keyEventTime: 3
-  xiWang: 100
-  fangKe: 0
-  yiWai: 0
-  weiJi: 0
-  jiaoYi: 0
+  xiWang: 20
+  fangKe: 20
+  yiWai: 20
+  weiJi: 20
+  jiaoYi: 20
   changJing: 100
 --- !u!114 &1338572143
 MonoBehaviour:
@@ -18105,7 +18141,7 @@ MonoBehaviour:
   EventCGAnim: {fileID: 968807345}
   levelController: {fileID: 1277053071}
   eventHappen: 0
-  playEventCG: 1
+  playEventCG: 0
   data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
   monsterDate: {fileID: 11400000, guid: 5a21041f03b31df419fd1b9f2ac3e93d, type: 2}
   cardRareDate: {fileID: 11400000, guid: 79a948a4801e85e4f875efab0be8228b, type: 2}
@@ -18921,7 +18957,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2a2f77627ba19ff409bab83d3bccfac0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -20095,7 +20131,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d0dddabac7202aa4985e867c22615082, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

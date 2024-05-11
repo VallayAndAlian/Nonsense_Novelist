@@ -8,13 +8,21 @@ using UnityEngine.SceneManagement;
 #region 结构体
 [System.Serializable]public struct Time_Stage
 {
-    public GameObject boss;//boss 的预制体
+    public StageType type;
+    public GameObject t_boss;//boss 的预制体
+    public int t_eventCount;//boss 的预制体
+    public bool t_eventKey;//boss 的预制体
     public float time;//持续时间
     public Sprite image;//对应图标
-    [HideInInspector]public float time_count;//累计时间
-
-    
+    [HideInInspector]public float time_count;//累计时间   
+    public int level ;
 }
+
+[System.Serializable] public enum StageType
+{
+    boss,weiji,Event
+}
+
 #endregion
 
 [System.Serializable]
@@ -27,18 +35,16 @@ public struct Event_Stage
 
 public class GameProcessSlider : MonoBehaviour
 {
-
-
     [Header("进度图标预制体（手动）")]
     public GameObject perfab_icon;
 
     [Header("【单位：s】游戏进程相关参数（手动）")]
     public Time_Stage[] time_stage;
-    [Header("每轮的事件个数")] 
+    [Header("[废弃]每轮的事件个数")]
     public Event_Stage[] event_stage;
 
-    private int stageCount=0;
-    private float time_all=0;
+    private int stageCount = 0;
+    private float time_all = 0;
     private float timeNow = 0;
 
     private bool countTime = false;//计时开关
@@ -63,9 +69,9 @@ public class GameProcessSlider : MonoBehaviour
     [Header("事件位置")] public GameObject[] eventPoint;
     [Header("事件气泡（希望-访客-意外-危机-交易-场景）")] public GameObject[] eventBubblePrefab;
 
-    [Header("每轮间隔时间")] public int eventTime = 30;
-    [Header("重要事件消失时间")] public int keyEventTime = 15;
-    private int eventCount=0;
+    [Header("[废弃]每轮间隔时间")] public int eventTime = 30;
+    [Header("[废弃]重要事件消失时间")] public int keyEventTime = 15;
+    private int eventCount = 0;
     private List<int> array = new List<int>();
     private List<GameObject> array0 = new List<GameObject>();
     private bool isCreate = false;
@@ -73,59 +79,64 @@ public class GameProcessSlider : MonoBehaviour
     //概率
     [Header("事件概率(总和100)")]
     [Header("希望")] public int xiWang = 10;
-    [Header("访客")] public int fangKe = 25; 
+    [Header("访客")] public int fangKe = 25;
     [Header("意外")] public int yiWai = 10;
     [Header("危机")] public int weiJi = 30;
-    [Header("交易")] public int jiaoYi = 25; 
+    [Header("交易")] public int jiaoYi = 25;
     [Header("场景")] public int changJing = 10;
+
+
     private void Start()
     {
 
         oriScale = this.transform.localScale;
 
-        //生成进度条
+        //按照预先设置的时间生成进度条
         sliderProcess = this.GetComponent<Slider>();
         sliderProcess.value = 0;
 
-        for (int _i=0;_i<time_stage.Length;_i++)
-        { time_all += time_stage[_i].time;}
+        for (int _i = 0; _i < time_stage.Length; _i++)
+        { time_all += time_stage[_i].time; }
         sliderProcess.maxValue = time_all;
 
-        float _timeAmount=0;
+        float _timeAmount = 0;
         float _width = GetComponent<RectTransform>().sizeDelta.x;
         for (int _i = 0; _i < time_stage.Length; _i++)
         {
-          
+
             _timeAmount += time_stage[_i].time;
             time_stage[_i].time_count = _timeAmount;
-       
-            GameObject _icon=GameObject.Instantiate<GameObject>(perfab_icon);
-            _icon.transform.SetParent(this.transform);
-            _icon.GetComponent<RectTransform>().localPosition = Vector3.zero;
-            _icon.GetComponent<RectTransform>().localScale = Vector3.one;
-            _icon.GetComponent<RectTransform>().localPosition += new Vector3(-_width/2+(_timeAmount / time_all)*_width, 0,0);
-            _icon.GetComponent<Image>().sprite = time_stage[_i].image;
+            if (time_stage[_i].image != null)
+            {
+                GameObject _icon = GameObject.Instantiate<GameObject>(perfab_icon);
+                _icon.transform.SetParent(this.transform);
+                _icon.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                _icon.GetComponent<RectTransform>().localScale = Vector3.one;
+                _icon.GetComponent<RectTransform>().localPosition += new Vector3(-_width / 2 + (_timeAmount / time_all) * _width, 0, 0);
+                _icon.GetComponent<Image>().sprite = time_stage[_i].image;
+            }
         }
         sliderProcess.maxValue = time_all;
 
-        if(settingList!=null)
+        if (settingList != null)
             settingList.SetActive(false);
 
         _wordInfo = this.transform.parent.GetComponentInChildren<WordInformation>().gameObject;
-        if(_wordInfo!=null)
+        if (_wordInfo != null)
             _wordInfo.SetActive(false);
     }
     private void FixedUpdate()
     {
         if (CharacterManager.instance.pause) return;
+
         if (!countTime)
             return;
-    
-        CreateEvent();//&&(SceneManager.GetActiveScene().name != "CombatTest")        
-  
+
+        //CreateEventUpdate();
+
 
         timeNow += Time.deltaTime;
-        sliderProcess.value = timeNow ;
+        sliderProcess.value = timeNow;
 
         //如果超出
         if (stageCount >= time_stage.Length)
@@ -135,22 +146,55 @@ public class GameProcessSlider : MonoBehaviour
         }
 
         //如果进入阶段
-        if (timeNow>time_stage[stageCount].time_count)
+        if (timeNow > time_stage[stageCount].time_count)
         {
+            GameMgr.instance.SetStageTo(1);
+
+            if (time_stage[stageCount].type == StageType.boss)
+            {
+                //创建boss事件
+                if (time_stage[stageCount].t_boss != null)
+                {
+                    CreateBoss(time_stage[stageCount].t_boss); 
+                    countTime = false;
+                }
+               stageCount++;
+            }
+            else if (time_stage[stageCount].type == StageType.Event)
+            {
+                //创建Event事件
+                CreateEvent(time_stage[stageCount].t_eventKey, time_stage[stageCount].t_eventCount);
+                countTime = true;
+                stageCount++;
+            }
+            else if (time_stage[stageCount].type == StageType.weiji)
+            {
+                //创建固定危机事件
+                PoolMgr.GetInstance().GetObj(eventBubblePrefab[3], (a) =>
+                {
+                    array0.Add(a);
+                    a.transform.SetParent(eventPoint[0].transform);
+                    a.transform.localPosition = Vector3.zero;
+                   
+                    a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false,true);
+                });
+                countTime = false;
+                stageCount++;
+            }
+
             //demo的结算页面.临时写的，很草率
-            if (time_stage[stageCount].boss == null)
-            {
-                CharacterManager.instance.EndGame();
-            }
-            else
-            {
+            //if (time_stage[stageCount].t_boss == null)
+            //{
+            //    CharacterManager.instance.EndGame();
+            //}
+            //else
+            //{
 
-                CreateBoss(time_stage[stageCount].boss);
-            }
 
-           
-            countTime = false;
-            stageCount++;
+            //}
+
+
+  
         }
     }
 
@@ -181,9 +225,7 @@ public class GameProcessSlider : MonoBehaviour
 
         //这一句越级了
         AbstractCharacter[] a = attackRange.CaculateRange(100, boss.GetComponent<AbstractCharacter>().situation, NeedCampEnum.all, false);
-        boss.GetComponentInChildren<AI.MyState0>().aim .Add (a[Random.Range(0, a.Length)]);
-
-
+        boss.GetComponentInChildren<AI.MyState0>().aim.Add(a[Random.Range(0, a.Length)]);
     }
     public void BossDie()
     {
@@ -213,7 +255,7 @@ public class GameProcessSlider : MonoBehaviour
     /// <summary>
     /// 在BookCanvas的确认按钮Onclick上调用
     /// </summary>
-  
+
 
 
     /// <summary>
@@ -258,68 +300,74 @@ public class GameProcessSlider : MonoBehaviour
 
         return result;
     }
-    public void CreateEvent()
+    public void CreateEventUpdate()
     {
-        
+
         if (eventCount > 300) return;
         totalTime += Time.deltaTime;
         if (totalTime > eventTime)
         {
-        
+
             totalTime = 0;
-            array0.Clear();
-            int _random = -1;
-            //重要事件每三轮出现一次
-            if (eventCount % 3 == 0)
-            {
-                //检测当前的所有事件中，哪些事件是可以生成重要事件的，并且从中随机抽取一件
-                _random = Random.Range(0, event_stage[eventCount].events);
-            }
-
-            //生成事件气泡预制体
-            for(int i = 0; i < event_stage[eventCount].events; i++)
-            {
-                int num0 = Random.Range(0, eventPoint.Length);            
-                int numx = ChooseEvent();
-
-                if (i == _random)//是重要事件
-                {
-                    int loop = 0;
-                    while ((!GameMgr.instance.HaveCanHappenKeyEvent(numx)) && (loop < 50))
-                    {
-                        loop += 1;
-                        numx = ChooseEvent();
-                        if (loop > 48) print("死循环");
-                    }
-                }
-
-                while (array.Contains(num0))//位置去重
-                {
-                    num0 = Random.Range(0, eventPoint.Length);
-                }
-                //实例化事件气泡
-                if (EventPoint.isEvent[num0])//避免纸球位置（未测试）
-                {
-                    PoolMgr.GetInstance().GetObj(eventBubblePrefab[numx], (a) =>
-                    {                        
-                        array.Add(num0);
-                        array0.Add(a);
-                        a.transform.SetParent(eventPoint[num0].transform);
-                        a.transform.localPosition = Vector3.zero;
-                        if (i == _random)
-                        {
-                            a.GetComponent<Bubble>().isKey = true;
-                            a.GetComponent<Bubble>().dTime = keyEventTime;
-                        }
-                    });
-                }                    
-            }
-
-            isCreate = true;
-            eventCount++;
-            array.Clear();
+            CreateEvent((eventCount % 3 == 0)?true:false, event_stage[eventCount].events);
         }
-        
+
     }
-   
+
+
+    public void CreateEvent(bool isKey,int count)
+ 
+    {
+        array0.Clear();
+        int _random = -1;
+        ////重要事件每三轮出现一次
+        if (isKey)
+        {
+            //检测当前的所有事件中，哪些事件是可以生成重要事件的，并且从中随机抽取一件
+            _random = Random.Range(0, event_stage[eventCount].events);
+        }
+
+        //生成事件气泡预制体
+        for (int i = 0; i < count; i++)
+        {
+            int num0 = Random.Range(0, eventPoint.Length);
+            int numx = ChooseEvent();
+
+            if (i == _random)//是重要事件
+            {
+                int loop = 0;
+                while ((!GameMgr.instance.HaveCanHappenKeyEvent(numx)) && (loop < 50))
+                {
+                    loop += 1;
+                    numx = ChooseEvent();
+                    if (loop > 48) print("死循环");
+                }
+            }
+
+            while (array.Contains(num0))//位置去重
+            {
+                num0 = Random.Range(0, eventPoint.Length);
+            }
+            //实例化事件气泡
+            if (EventPoint.isEvent[num0])//避免纸球位置（未测试）
+            {
+                PoolMgr.GetInstance().GetObj(eventBubblePrefab[numx], (a) =>
+                {
+                    array.Add(num0);
+                    array0.Add(a);
+                    a.transform.SetParent(eventPoint[num0].transform);
+                    a.transform.localPosition = Vector3.zero;
+                    if (i == _random)
+                    {
+                        a.GetComponent<Bubble>().isKey = true;
+                        a.GetComponent<Bubble>().dTime = keyEventTime;
+                    }
+                });
+            }
+        }
+
+        isCreate = true;
+        eventCount++;
+        array.Clear();
+    } 
 }

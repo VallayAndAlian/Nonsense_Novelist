@@ -31,7 +31,6 @@ public class EventCg : MonoBehaviour
 
     public void PlayEventCG(string playName)
     {
-        
         //播放的时候 暂停游戏
         beforeCGPlay = CharacterManager.instance.pause;
         CharacterManager.instance.pause = true;

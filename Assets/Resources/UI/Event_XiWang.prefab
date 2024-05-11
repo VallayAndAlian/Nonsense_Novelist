@@ -264,7 +264,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -70.18
+  m_Spacing: -67.87
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -403,7 +403,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -70.18
+  m_Spacing: -67.87
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -787,7 +787,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -70.18
+  m_Spacing: -67.87
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -1029,6 +1029,7 @@ MonoBehaviour:
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
   JY_chooseWord: {fileID: 0}
+  WJ_static: 0
 --- !u!95 &2935532380440314401
 Animator:
   serializedVersion: 5
