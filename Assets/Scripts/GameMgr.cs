@@ -235,12 +235,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// </summary>
     void StartCardList()
     {
-        //测试
-        AddCardList(new FuTouAxe());
-        AddCardList(new WanShua());
-        AddCardList(new XiaYuDe());
+        ////测试
+        //AddCardList(new FuTouAxe());
         //AddCardList(new WanShua());
-        return;
+        //AddCardList(new XiaYuDe());
+        ////AddCardList(new WanShua());
+        //return;
         //测试
 
         AddCardList(new BuryFlower());
@@ -431,11 +431,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <returns></returns>
     public Type GetNowListOne()
     {
-
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
         // print("卡组里没有卡牌+" + count);
         var _res = wordNowList[count];
-        wordNowList.Remove(_res);
+        //wordNowList.Remove(_res);
         //wordHasUseList.Add(_res);
         wordGoingUseList.Add(_res);
         RefreshNowList();
@@ -467,26 +466,28 @@ public class GameMgr : MonoSingleton<GameMgr>
         {
             GetNowListOne();//待使用词库有5个词
         }
-        wordNowList.Remove(wordGoingUseList[0]);
         wordHasUseList.Add(wordGoingUseList[0]);
+        wordNowList.Remove(wordGoingUseList[0]);
         //print(wordGoingUseList[0].)
         //if (wordGoingUseList[0].IsAssignableFrom(typeof(AbstractVerbs)))
         //{
         //    print("动词1");
         //}
-      
+
         return wordGoingUseList[0];
     }
     public Type GetGoingUseListOne()
     {
         GetNowListOne();
         wordHasUseList.Add(wordGoingUseList[0]);
+        wordNowList.Remove(wordGoingUseList[0]);
         return wordGoingUseList[0];
     }
     public List<Type> GetAllList()
     {
         return wordList;
     }
+
 
 
     //获取已有的书本列表

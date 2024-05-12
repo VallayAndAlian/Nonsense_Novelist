@@ -402,6 +402,7 @@ MonoBehaviour:
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
   JY_chooseWord: {fileID: 0}
+  WJ_static: 0
 --- !u!95 &2535933067016786744
 Animator:
   serializedVersion: 5
@@ -917,6 +918,22 @@ PrefabInstance:
       propertyPath: jiaoYi
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1560509488, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
+      propertyPath: color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560509488, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
+      propertyPath: color.b
+      value: 0.6301887
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560509488, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
+      propertyPath: color.g
+      value: 0.482083
+      objectReference: {fileID: 0}
+    - target: {fileID: 1560509488, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
+      propertyPath: color.r
+      value: 0.46491277
+      objectReference: {fileID: 0}
     - target: {fileID: 451553675568390417, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5226964
@@ -967,7 +984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4338117747861965718, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4338117747861965719, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
       propertyPath: m_Pivot.x

@@ -4820,7 +4820,11 @@ MonoBehaviour:
   - {fileID: 3837959891539934793, guid: a06b8b53fc0cf8643ac114e457c92f38, type: 3}
   - {fileID: 8792533845088263391, guid: 32a3c3de17364f840973d1d7c6e21d6f, type: 3}
   monsterPrefabs:
+  - {fileID: 3837959891539934793, guid: 30489501239d9524e838ac2271d98136, type: 3}
   - {fileID: 3837959891539934793, guid: b9059efde06d6ef4b8309bcd90b7a2b3, type: 3}
+  - {fileID: 3837959891539934793, guid: c9ae580301a94814990ff9116453146c, type: 3}
+  - {fileID: 3837959891539934793, guid: 3ec6d85e4a8c60f4f96b0be7db47687a, type: 3}
+  - {fileID: 3837959891539934793, guid: f91325c4d325edd4baf5db16f3be8566, type: 3}
   text: {fileID: 2005642563}
   wallP: {fileID: 2042183113}
   beforeScale: 20
@@ -14948,35 +14952,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   perfab_icon: {fileID: 4963443990303953719, guid: 3655b1b5195bfcd4890c66c76f9d3c32, type: 3}
   time_stage:
-  - type: 1
+  - type: 2
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    t_eventCount: 2
+    t_eventCount: 1
     t_eventKey: 0
-    time: 4
+    time: 20
     image: {fileID: 0}
     time_count: 0
-    level: 5
+    level: 1
   - type: 1
     t_boss: {fileID: 0}
     t_eventCount: 2
     t_eventKey: 0
-    time: 4
+    time: 20
     image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
     time_count: 0
-    level: 3
-  - type: 1
+    level: 1
+  - type: 2
     t_boss: {fileID: 0}
     t_eventCount: 2
     t_eventKey: 0
-    time: 2
+    time: 20
     image: {fileID: 0}
     time_count: 0
-    level: 5
+    level: 1
   - type: 1
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
     t_eventCount: 0
     t_eventKey: 0
-    time: 2
+    time: 20
     image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
     time_count: 0
     level: 2
@@ -17973,7 +17977,7 @@ MonoBehaviour:
   EventCGAnim: {fileID: 968807345}
   levelController: {fileID: 1277053071}
   eventHappen: 0
-  playEventCG: 0
+  playEventCG: 1
   data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
   monsterDate: {fileID: 11400000, guid: 5a21041f03b31df419fd1b9f2ac3e93d, type: 2}
   cardRareDate: {fileID: 11400000, guid: 79a948a4801e85e4f875efab0be8228b, type: 2}
