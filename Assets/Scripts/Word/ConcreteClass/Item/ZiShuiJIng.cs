@@ -10,9 +10,11 @@ class ZiShuiJIng: AbstractItems,IJiHuo
     static public string s_description = "未激活，<sprite name=\"psy\">-1；\n激活，<sprite name=\"psy\"> + 3，获得<color=#dd7d0e>共振</color>";
     static public string s_wordName = "紫水晶";
     static public int s_rarity = 1;
+    static public int s_useTimes = 6;
     /// <summary>是否激活共振 </summary>
     private bool jiHuo;
     private float record;
+
 
     public override void Awake()
     {

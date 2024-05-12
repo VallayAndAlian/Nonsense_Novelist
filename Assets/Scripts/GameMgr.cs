@@ -5,6 +5,7 @@ using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 public class CustomList : List<string>
 {
     public new void Add(string item)
@@ -73,7 +74,6 @@ public class GameMgr : MonoSingleton<GameMgr>
     List<Type> wordHasUseList = new List<Type>();
 
     //名词的消耗性使用相关
-
     [HideInInspector] public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();
     [HideInInspector] public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();
 
@@ -141,6 +141,7 @@ public class GameMgr : MonoSingleton<GameMgr>
             }
         }
     }
+
 
     public bool HaveCanHappenKeyEvent(int _enumNum)
     {
@@ -228,146 +229,29 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
     }
 
-    #region 卡牌稀有度&&游戏阶段
-
-    public void AddStage(int i)
-    {
-        stageIndex += i;
-        bool b=SetRareTo(stageIndex);
-        if (!b) print("stageIndex超出游戏设定");
-    }
-
-    public void SetStageTo(int i)
-    {
-        stageIndex = i;
-        bool b = SetRareTo(stageIndex);
-        if (!b) print("stageIndex超出游戏设定");
-    }
-
-    private bool SetRareTo(int _stage)
-    {
-        if (_stage >= cardRareDate.items.Length)
-            return false;
-
-        //这里默认数据顺序和表格一样。如果出错了，加上index检测
-        cardRate_1 = cardRareDate.items[_stage].rate1;
-        cardRate_2 = cardRareDate.items[_stage].rate2;
-        cardRate_3 = cardRareDate.items[_stage].rate3;
-        cardRate_4 = cardRareDate.items[_stage].rate4;
-
-        return true;
-    }
-
-
-    #endregion
-
-    #region level
-    public void ChangeLevelTo(int start)
-    {
-
-        levelController.SetLevelTo(start);
-    }
-    #endregion
-
-    #region 事件气泡
-    /// <summary>
-    /// 显示事件的飘字
-    /// </summary>
-    public void PopupEvent(Vector3 pos, string name, string info)
-    {
-        var obj=ResMgr.GetInstance().Load<GameObject>("UI/popEvent"); 
-        //世界坐标转画布坐标
-        Vector2 canvasSize = characterCanvas.GetComponent<RectTransform>().sizeDelta;
-        Vector3 viewPortPos3d = Camera.main.WorldToViewportPoint(pos);
-        Vector2 viewPortRelative = new Vector2(viewPortPos3d.x - 0.5f, viewPortPos3d.y - 0.5f);
-        Vector2 cubeScreenPos = new Vector2(viewPortRelative.x * canvasSize.x, viewPortRelative.y );
-        obj.GetComponent<RectTransform>().position = pos;
-        obj.transform.parent = characterCanvas.transform;
-        obj.transform.localScale = Vector3.one;
-         StartCoroutine(MoveToPosCanvas( obj.GetComponent<RectTransform>(), name,info));
-        
-
-
-    }
-
-    WaitForSeconds waitFrame = new WaitForSeconds(0.02f);
-    IEnumerator MoveToPosCanvas(RectTransform obj,string text1,string text2)
-    {  
-        var pos = new Vector2(-796, -425);
-        Image image = obj.gameObject.GetComponentInChildren<Image>();
-        TextMeshProUGUI text = obj.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-
-        //停留在最开始的点 
-        float i = 0;
-        obj.transform.Find("Image").GetComponent<Animator>().Play("burst");
-        while (i< 1f)
-        {
-            i += 0.02f;
-            
-            text.gameObject.SetActive(false);
-            text.text = text1;
-            yield return waitFrame;
-        }
-
-        obj.transform.Find("Image").GetComponent<Animator>().Play("card");
-        //移动到草稿本
-        while (Mathf.Abs((obj.anchoredPosition- pos).x)>2f)
-        {
-            
-            image.gameObject.SetActive(true);
-            text.gameObject.SetActive(false);
-            obj.anchoredPosition -= 0.08f * (obj.anchoredPosition - pos);
-            yield return waitFrame;
-        }
-
-        //停留在草稿本
-        i = 0;
-        text.text = "";
-        int _index = 0;
-        float textDelay = 0.06f;
-        float textDAll = 0;
-        obj.transform.Find("Image").GetComponent<Animator>().Play("burst");
-        while (i < 1f)
-        {
-            i += 0.02f;
-            
-            text.gameObject.SetActive(true);
-            if (i > textDAll)
-            {
-                textDAll += textDelay;
-                if (_index < text2.Length)
-                {
-                    text.text += text2[_index];
-                    _index += 1;
-                }
-            }
-          
-            yield return waitFrame;
-        }
-        Destroy(obj.gameObject);
-    }
-
-
-    #endregion
-
-
-    #region exit菜单相关
-    public void ExitButton()
-    {
-        Application.Quit();
-    }
-    public void BackToGame()
-    {hasOpenExit = false;
-        Destroy(exitObj.gameObject);
-        Time.timeScale = 1f;
-        
-    }
-    #endregion
-
-
-
     #region 新 牌库
+    /// <summary>
+    /// 通用卡组
+    /// </summary>
+    void StartCardList()
+    {
+        //测试
+        AddCardList(new FuTouAxe());
+        AddCardList(new WanShua());
+        AddCardList(new XiaYuDe());
+        //AddCardList(new WanShua());
+        return;
+        //测试
 
+        AddCardList(new BuryFlower());
+        AddCardList(new Shuai()); AddCardList(new Shuai());
+        AddCardList(new FuTouAxe());
+        AddCardList(new Shuai());
+        AddCardList(new ZiShuiJIng());
+        AddCardList(new HeartBroken());
+        AddCardList(new XianZhiHead());
+        RefreshNowList();
+    }
 
     /// <summary>
     /// 牌库初始化(包含初始牌库组)
@@ -397,27 +281,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
 
 
-    /// <summary>
-    /// 通用卡组
-    /// </summary>
-    void StartCardList()
-    {
-        //测试
-        AddCardList(new GunShoot());
-        AddCardList(new XianZhiHead());
-        AddCardList(new WanShua());
-        return;
-        //测试
 
-        AddCardList(new BuryFlower());
-        AddCardList(new Shuai());AddCardList(new Shuai());
-        AddCardList(new FuTouAxe());
-        AddCardList(new Shuai());
-        AddCardList(new ZiShuiJIng());
-        AddCardList(new HeartBroken());
-        AddCardList(new XianZhiHead());
-        RefreshNowList();
-    }
 
 
     /// <summary>
@@ -426,29 +290,33 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <param name="_word"></param>
     public void AddCardList(AbstractWord0 _word)
     {
-        print("AddCardList");
+        
         wordList.Add(_word.GetType());
         wordNowList.Add(_word.GetType());
-        print("wordNowList"+ wordNowList.Count);
+       
         if (_word is AbstractItems)
         {
- 
+
             if (NwordTimes.ContainsKey((_word as AbstractItems).GetType()))
             {
-                NwordTimes[(_word as AbstractItems).GetType()].Add((_word as AbstractItems).useTimes);
+                NwordTimes[(_word as AbstractItems).GetType()].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
+                //print("[NwordTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
             else
             {
-                NwordTimes.Add((_word as AbstractItems).GetType(), new List<int> { (_word as AbstractItems).useTimes });
+                NwordTimes.Add((_word as AbstractItems).GetType(), new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
+                //print("[NwordTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
 
             if (NwordCanUseTimes.ContainsKey((_word as AbstractItems).GetType()))
             {
-                NwordCanUseTimes[(_word as AbstractItems).GetType()].Add((_word as AbstractItems).useTimes);
+                NwordCanUseTimes[(_word as AbstractItems).GetType()].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
+                //print("[NwordCanUseTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
             else
             {
-                NwordCanUseTimes.Add((_word as AbstractItems).GetType(), new List<int> { (_word as AbstractItems).useTimes });
+                NwordCanUseTimes.Add((_word as AbstractItems).GetType(), new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
+                // print("[NwordCanUseTimes]AddNew:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
 
         }
@@ -464,7 +332,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (_word == null) print("null");
         if (wordList.Contains(_word.GetType()))
         {
-            wordList.Remove(_word.GetType()); 
+            wordList.Remove(_word.GetType());
             if (_word is AbstractItems)
             {
                 if (NwordTimes.ContainsKey((_word as AbstractItems).GetType()))
@@ -497,16 +365,17 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void DeleteCardList(Type _word)
     {
         if (_word == null) print("null");
-      
+
         if (wordList.Contains(_word))
         {
-          
+
             wordList.Remove(_word);
             if (_word.BaseType == typeof(AbstractItems))
             {
-               
+
                 if (NwordTimes.ContainsKey(_word))
                 {
+
                     NwordTimes[_word].RemoveAll(item => item == 0);
                 }
                 if (NwordCanUseTimes.ContainsKey(_word))
@@ -543,6 +412,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <returns></returns>
     public List<Type> GetHasUsedList()
     {
+        //wordHasUseList.OrderBy(it => it.Name).ToList();
         return wordHasUseList;
     }
     /// <summary>
@@ -551,6 +421,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <returns></returns>
     public List<Type> GetNowList()
     {
+        //wordNowList.OrderBy(it => it.Name).ToList();
         return wordNowList;
     }
 
@@ -560,9 +431,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <returns></returns>
     public Type GetNowListOne()
     {
-        
+
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
-        print("count+" + count);
+        // print("卡组里没有卡牌+" + count);
         var _res = wordNowList[count];
         wordNowList.Remove(_res);
         //wordHasUseList.Add(_res);
@@ -588,18 +459,25 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
 
 
-    
+
     public Type GetGoingUseList()
     {
         //全部解锁前，只有3个槽位
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             GetNowListOne();//待使用词库有5个词
         }
         wordHasUseList.Add(wordGoingUseList[0]);
+        //print(wordGoingUseList[0].)
+        //if (wordGoingUseList[0].IsAssignableFrom(typeof(AbstractVerbs)))
+        //{
+        //    print("动词1");
+        //}
+      
         return wordGoingUseList[0];
     }
-    public Type GetGoingUseListOne() {
+    public Type GetGoingUseListOne()
+    {
         GetNowListOne();
         wordHasUseList.Add(wordGoingUseList[0]);
         return wordGoingUseList[0];
@@ -616,14 +494,14 @@ public class GameMgr : MonoSingleton<GameMgr>
         return bookList;
     }
 
-   
+
 
     /// <summary>
     /// 检测是否一本书的所有词组都已经获取。返回是或否
     /// </summary>
     /// <param name="_book"></param>
     /// <returns></returns>
-   public  bool IsBookWordAllGet(BookNameEnum _book)
+    public bool IsBookWordAllGet(BookNameEnum _book)
     {
         if (bookAllGetList.Contains(_book)) return true;
 
@@ -714,9 +592,9 @@ public class GameMgr : MonoSingleton<GameMgr>
         List<Type> _typeList = GetBookList(_book);
         if (_typeList == null)
         {
-            print("_typeList == null");return null;
+            print("_typeList == null"); return null;
         }
-        
+
 
         int _R = UnityEngine.Random.Range(0, _typeList.Count);
 
@@ -888,6 +766,148 @@ public class GameMgr : MonoSingleton<GameMgr>
     //    return false;
     //}
     #endregion
+
+
+    #region 卡牌稀有度&&游戏阶段
+
+    public void AddStage(int i)
+    {
+        stageIndex += i;
+        bool b=SetRareTo(stageIndex);
+        if (!b) print("stageIndex超出游戏设定");
+    }
+    public int GetStage()
+    {
+        return stageIndex;
+    }
+    public void SetStageTo(int i)
+    {
+        stageIndex = i;
+        bool b = SetRareTo(stageIndex);
+        if (!b) print("stageIndex超出游戏设定");
+    }
+
+    private bool SetRareTo(int _stage)
+    {
+        if (_stage >= cardRareDate.items.Length)
+            return false;
+
+        //这里默认数据顺序和表格一样。如果出错了，加上index检测
+        cardRate_1 = cardRareDate.items[_stage].rate1;
+        cardRate_2 = cardRareDate.items[_stage].rate2;
+        cardRate_3 = cardRareDate.items[_stage].rate3;
+        cardRate_4 = cardRareDate.items[_stage].rate4;
+
+        return true;
+    }
+
+
+    #endregion
+
+    #region level
+    public void ChangeLevelTo(int start)
+    {
+
+        levelController.SetLevelTo(start);
+    }
+    #endregion
+
+    #region 事件气泡
+    /// <summary>
+    /// 显示事件的飘字
+    /// </summary>
+    public void PopupEvent(Vector3 pos, string name, string info)
+    {
+        var obj=ResMgr.GetInstance().Load<GameObject>("UI/popEvent"); 
+        //世界坐标转画布坐标
+        Vector2 canvasSize = characterCanvas.GetComponent<RectTransform>().sizeDelta;
+        Vector3 viewPortPos3d = Camera.main.WorldToViewportPoint(pos);
+        Vector2 viewPortRelative = new Vector2(viewPortPos3d.x - 0.5f, viewPortPos3d.y - 0.5f);
+        Vector2 cubeScreenPos = new Vector2(viewPortRelative.x * canvasSize.x, viewPortRelative.y );
+        obj.GetComponent<RectTransform>().position = pos;
+        obj.transform.parent = characterCanvas.transform;
+        obj.transform.localScale = Vector3.one;
+         StartCoroutine(MoveToPosCanvas( obj.GetComponent<RectTransform>(), name,info));
+        
+
+
+    }
+
+    WaitForSeconds waitFrame = new WaitForSeconds(0.02f);
+    IEnumerator MoveToPosCanvas(RectTransform obj,string text1,string text2)
+    {  
+        var pos = new Vector2(-796, -425);
+        Image image = obj.gameObject.GetComponentInChildren<Image>();
+        TextMeshProUGUI text = obj.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        //停留在最开始的点 
+        float i = 0;
+        obj.transform.Find("Image").GetComponent<Animator>().Play("burst");
+        while (i< 1f)
+        {
+            i += 0.02f;
+            
+            text.gameObject.SetActive(false);
+            text.text = text1;
+            yield return waitFrame;
+        }
+
+        obj.transform.Find("Image").GetComponent<Animator>().Play("card");
+        //移动到草稿本
+        while (Mathf.Abs((obj.anchoredPosition- pos).x)>2f)
+        {
+            
+            image.gameObject.SetActive(true);
+            text.gameObject.SetActive(false);
+            obj.anchoredPosition -= 0.08f * (obj.anchoredPosition - pos);
+            yield return waitFrame;
+        }
+
+        //停留在草稿本
+        i = 0;
+        text.text = "";
+        int _index = 0;
+        float textDelay = 0.06f;
+        float textDAll = 0;
+        obj.transform.Find("Image").GetComponent<Animator>().Play("burst");
+        while (i < 1f)
+        {
+            i += 0.02f;
+            
+            text.gameObject.SetActive(true);
+            if (i > textDAll)
+            {
+                textDAll += textDelay;
+                if (_index < text2.Length)
+                {
+                    text.text += text2[_index];
+                    _index += 1;
+                }
+            }
+          
+            yield return waitFrame;
+        }
+        Destroy(obj.gameObject);
+    }
+
+
+    #endregion
+
+
+    #region exit菜单相关
+    public void ExitButton()
+    {
+        Application.Quit();
+    }
+    public void BackToGame()
+    {hasOpenExit = false;
+        Destroy(exitObj.gameObject);
+        Time.timeScale = 1f;
+        
+    }
+    #endregion
+
+
 
 
     #region 调用各种界面

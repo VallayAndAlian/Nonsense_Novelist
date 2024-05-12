@@ -9,6 +9,7 @@ class HouZiDian : AbstractItems
     static public string s_description = "<sprite name=\"def\">+3";
     static public string s_wordName = "厚字典";
     static public int s_rarity = 1;
+    static public int s_useTimes = 6;
     public override void Awake()
     {
         base.Awake();

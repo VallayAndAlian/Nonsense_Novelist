@@ -10,6 +10,7 @@ class WaiGuGe : AbstractItems
     static public string s_description = "自身与随从的<sprite name=\"def\">+5";
     static public string s_wordName = "外骨骼";
     static public int s_rarity = 1;
+    static public int s_useTimes = 6;
     public override void Awake()
     {
         base.Awake();

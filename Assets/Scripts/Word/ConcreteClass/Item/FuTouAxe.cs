@@ -9,12 +9,14 @@ class FuTouAxe : AbstractItems
     static public string s_description = "<sprite name=\"atk\">+1";
     static public string s_wordName = "钝斧头";
     static public int s_rarity = 1;
-    public override void Awake()
+    static public int s_useTimes = 6;
+     public override void Awake()
     {
+        useTimes = 6;
         base.Awake();
         itemID = 20;
         wordName = "钝斧头";
-        useTimes = 6;
+       
         bookName = BookNameEnum.allBooks;
         description = "<sprite name=\"atk\">+1";
  

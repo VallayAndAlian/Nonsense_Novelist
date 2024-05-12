@@ -10,6 +10,7 @@ class BaiShuijing: AbstractItems,IJiHuo
     static public string s_description = "未激活，<sprite name=\"hpmax\">-20；\n激活，<sprite name=\"hp\"> + 60，获得<color=#dd7d0e>共振</color>";
     static public string s_wordName = "白水晶";
     static public int s_rarity = 1;
+    static public int s_useTimes = 6;
     /// <summary>是否激活共振 </summary>
     private bool jiHuo;
     public override void Awake()

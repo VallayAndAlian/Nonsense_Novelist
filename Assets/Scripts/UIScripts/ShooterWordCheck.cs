@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using System.Linq;
 /// <summary>
 /// 挂在牌库UI上
 /// </summary>
@@ -24,7 +24,7 @@ public class ShooterWordCheck : MonoBehaviour
     public GameObject word_adj;
     public GameObject word_verb;
     public GameObject word_item;
-
+    public Color color;
     public bool jiaoYi = false;
 
 
@@ -32,6 +32,10 @@ public class ShooterWordCheck : MonoBehaviour
     public Button btn_cancel;
     public Button btn_Check;
     public Button btn_exit;
+
+
+    private Dictionary<AbstractWord0,int > UIHasUsedCard = new Dictionary<AbstractWord0, int>();
+    private Dictionary<AbstractWord0, int> UINoUsedCard = new Dictionary<AbstractWord0, int>();
 
     #region 尝试
 
@@ -57,6 +61,9 @@ public class ShooterWordCheck : MonoBehaviour
 
     public void OpenMainPanal()
     {
+        UIHasUsedCard.Clear();
+        UINoUsedCard.Clear();
+
         mainPanal.SetActive(true); 
         if (!jiaoYi)
         {
@@ -73,14 +80,22 @@ public class ShooterWordCheck : MonoBehaviour
             GetComponent<Animator>().Play("CardRes_Up");
             chooseWord = null;
         }
-        //按照现在的牌库生成
+    
         textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
-       
-        foreach (var _word in GameMgr.instance.GetNowList())
+        //生成未用过的
+        var list= GameMgr.instance.GetNowList().OrderBy(it => it.Name).ToList();
+        foreach (var _word in list)
         { 
+            
             PoolMgr.GetInstance().GetObj(word_adj, (obj) =>
             {
                 var word = obj.AddComponent(_word) as AbstractWord0;
+
+                //if (UINoUsedCard.Contains(word))//如果已有，则将
+                //{
+                    
+                //}
+
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
@@ -99,12 +114,14 @@ public class ShooterWordCheck : MonoBehaviour
 
             });
         }
-      
-        foreach (var _word in GameMgr.instance.GetHasUsedList())
+        //生成已用过的
+        var list2 = GameMgr.instance.GetHasUsedList().OrderBy(it => it.Name).ToList();
+        foreach (var _word in list2)
         {
             PoolMgr.GetInstance().GetObj(word_item, (obj) =>
             {
                 var word = obj.AddComponent(_word) as AbstractWord0;
+                obj.GetComponent<Image>().color = color;
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;

@@ -9,6 +9,7 @@ public class LiWu : AbstractItems, IJiHuo
     static public string s_description = "<sprite name=\"atk\">+1";
     static public string s_wordName = "ÀñÎï";
     static public int s_rarity = 1;
+    static public int s_useTimes = 6;
     public override void Awake()
     {
         base.Awake();

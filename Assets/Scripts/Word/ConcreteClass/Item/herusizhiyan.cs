@@ -9,6 +9,7 @@ class herusizhiyan : AbstractItems
     static public string s_description = "<sprite name=\"atk\">+4,每次复活攻击+2";
     static public string s_wordName = "荷鲁斯之眼";
     static public int s_rarity = 3;
+    static public int s_useTimes = 2;
     int record = 0;
     public override void Awake()
     {

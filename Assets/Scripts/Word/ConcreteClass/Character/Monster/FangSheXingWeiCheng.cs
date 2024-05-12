@@ -17,12 +17,35 @@ public class FangSheXingWeiCheng : AbstractCharacter
         brief = "暂无文案";
         description = "暂无文案";
 
+
+        //读取数据
+        MonsterExcelItem dataD = null;
+        MonsterExcelItem data = null;
+        for (int i = 0; (i < GameMgr.instance.monsterDate.items.Length) && (data == null); i++)
+        {
+            var _data = GameMgr.instance.monsterDate.items[i];
+            if (_data.Mid == characterID)
+            {
+                if (dataD == null) dataD = _data;
+                if (_data.name == GameMgr.instance.GetStage())
+                {
+                    data = _data;
+                }
+            }
+        }
+        if (data == null)
+            data = dataD;
+        if (data == null)
+            return;
+
+        print("读取成功：" + wordName + data.name);
+
         //数值
-        hp = maxHp = 30;
-        atk = 6;
-        def = 20;
-        psy = 6;
-        san = 15;
+        hp = maxHp = data.hp;
+        atk = data.atk;
+        def = data.def;
+        psy = data.psy;
+        san = data.san;
 
         attackInterval = 2.2f;
         AttackTimes = 1;

@@ -9,6 +9,7 @@ class Nexus_6Arm : AbstractItems
     static public string s_description = "<sprite name=\"atk\">+5，攻击造成三段伤害，获得<color=#dd7d0e>改造</color>*3";
     static public string s_wordName = "Nexus-6型手臂";
     static public int s_rarity = 4;
+    static public int s_useTimes = 1;
     public override void Awake()
     {
         base.Awake();

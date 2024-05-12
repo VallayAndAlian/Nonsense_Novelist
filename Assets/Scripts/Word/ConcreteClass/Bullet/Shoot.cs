@@ -118,6 +118,7 @@ public class Shoot : MonoBehaviour
         /*//给小球增加词条属性【原版】
         abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = 
             bulletInstance.AddComponent(GameMgr.instance.GetNowListOne()) as AbstractWord0;*/
+        
         if (CreateOneCharacter.isStart)//true，开始之后抽一个
         {
             //给小球增加词条属性【测试】
@@ -152,8 +153,16 @@ public class Shoot : MonoBehaviour
         bulletInstance.GetComponent<Collider2D>().isTrigger = false;
 
         bulletInstance.GetComponent<SpriteRenderer>().color += new Color(0, 0, 0, 1);
+
+        //if (bulletInstance.TryGetComponent<AbstractVerbs>(out var _v))
+        //{
+        //    print("_v" + _v.wordName);
+        //    GameMgr.instance.DeleteCardList(_v);
+        //}
+        
         //清空待使用牌库第一个
         GameMgr.instance.wordGoingUseList.RemoveAt(0);
+      
         //槽位变量
         wordCount--;
         isShoot = true;

@@ -9,6 +9,7 @@ class LengXiangWan : AbstractItems
     static public string s_description = "恢复+3，每10s净化1层负面状态";
     static public string s_wordName = "冷香丸";
     static public int s_rarity = 2;
+    static public int s_useTimes = 4;
     public override void Awake()
     {
         base.Awake();

@@ -9,6 +9,7 @@ class BeiZhiRuDeJiYi : AbstractItems
     static public string s_description = "<sprite name=\"san\">-5,获得<color=#dd7d0e>改造</color>*2";
     static public string s_wordName = "被植入的记忆";
     static public int s_rarity = 1;
+    static public int s_useTimes = 6;
     public override void Awake()
     {
         base.Awake();

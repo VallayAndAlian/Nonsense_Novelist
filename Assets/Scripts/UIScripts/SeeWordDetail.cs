@@ -58,21 +58,21 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             //AbstractWord0 word;
             //if (!this.TryGetComponent<AbstractWord0>(out word)) return;
             resTBName = resTitleBg + (((AbstractVerbs)word).rarity).ToString() + "_" + (((AbstractVerbs)word).skillID % 10).ToString();
-            print(resTBName);
+            
         }
         else if (type == 1)//noun
         {
             //AbstractWord0 word;
             //if (!this.TryGetComponent<AbstractWord0>(out word)) return;
             resTBName = resTitleBg + (((AbstractItems)word).rarity).ToString() + "_" + (((AbstractItems)word).itemID % 10).ToString();
-            print(resTBName);
+           
         }
         else if(type==2)//adj
         {
             //AbstractWord0 word;
             //if (!this.TryGetComponent<AbstractWord0>(out word)) return;
             resTBName = resTitleBg + (((AbstractAdjectives)word).rarity).ToString() + "_" + (((AbstractAdjectives)word).adjID % 10).ToString();
-            print(resTBName);
+            
         }
   
        

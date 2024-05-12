@@ -9,6 +9,7 @@ class MeiGuiShiYing : AbstractItems,IJiHuo
     static public string s_description = "未激活，<sprite name=\"def\">-2；\n激活，<sprite name=\"def\"> + 6，获得<color=#dd7d0e>共振</color>";
     static public string s_wordName = "玫瑰石英";
     static public int s_rarity = 2;
+    static public int s_useTimes = 4;
 
     /// <summary>是否激活共振 </summary>
     private bool jiHuo;

@@ -9,6 +9,7 @@ class BoLiGuaZhui : AbstractItems
     static public string s_description = "<sprite name=\"san\">+3";
     static public string s_wordName = "玻璃挂坠";
     static public int s_rarity = 1;
+    static public int s_useTimes = 6;
 
     public override void Awake()
     {

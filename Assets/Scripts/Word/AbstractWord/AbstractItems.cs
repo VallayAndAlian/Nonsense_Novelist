@@ -21,7 +21,7 @@ abstract public class AbstractItems : AbstractWord0
     /// <summary>特殊效果存储引用</summary>
     protected List<AbstractBuff> buffs = new List<AbstractBuff>();
     /// <summary>名词</summary>
-    public int useTimes = 2;
+    public int useTimes = 5;
     virtual public void Awake()
     {
         aim = GetComponent<AbstractCharacter>();

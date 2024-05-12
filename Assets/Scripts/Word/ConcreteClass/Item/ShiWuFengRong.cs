@@ -9,6 +9,7 @@ class ShiWuFengRong : AbstractItems
     static public string s_description = "随从四维+10%，获得时随机获得一个<color=#dd7d0e>丰容设施</color>";
     static public string s_wordName = "食物丰容";
     static public int s_rarity = 3;
+    static public int s_useTimes = 2;
     public override void Awake()
     {
         base.Awake();
@@ -17,7 +18,7 @@ class ShiWuFengRong : AbstractItems
         bookName = BookNameEnum.ZooManual;
         description = "随从四维+10%，获得时随机获得一个<color=#dd7d0e>丰容设施</color>";//随从
         rarity =3;
-        useTimes = 3;
+        useTimes = 2;
         VoiceEnum = MaterialVoiceEnum.materialNull;
    
 

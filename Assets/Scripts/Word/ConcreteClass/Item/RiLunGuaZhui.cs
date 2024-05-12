@@ -9,11 +9,12 @@ class RiLunGuaZhui : AbstractItems
     static public string s_description = "<sprite name=\"hpmax\">+30，恢复+3,可消耗进行复活";
     static public string s_wordName = "日轮挂坠";
     static public int s_rarity = 3;
+    static public int s_useTimes = 2;
     public override void Awake()
     {
         base.Awake();
         itemID = 6;
-        useTimes = 3;
+        useTimes = 2;
         wordName = "日轮挂坠";
         bookName = BookNameEnum.EgyptMyth;
         description = "<sprite name=\"hpmax\">+30，恢复+3,可消耗进行复活";

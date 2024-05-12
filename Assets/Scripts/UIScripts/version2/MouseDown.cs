@@ -89,7 +89,8 @@ class MouseDown : MonoBehaviour
                     //}
 
                 }
-                else if (hit.collider.gameObject.tag == "Slider" && hit.collider.gameObject.transform.GetChild(1).GetComponent<Image>().sprite.name != "排队")//锁定发射槽位
+                //锁定发射槽位
+                else if (hit.collider.gameObject.tag == "Slider" && hit.collider.gameObject.transform.GetChild(1).GetComponent<Image>().sprite.name != "排队")
                 {
                     print("sh"+Shoot.sumWordCount);
                     //锁定【表现上交换图片，逻辑上移除当前卡牌直到解锁时add】
