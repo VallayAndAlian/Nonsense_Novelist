@@ -244,7 +244,7 @@ public class CreateOneCharacter : MonoBehaviour
                 it.GetComponent<AbstractCharacter>().enabled = true;
                 it.gameObject.AddComponent(typeof(AfterStart));
                 Destroy(it.GetComponent<CharacterMouseDrag>());
-            GameMgr.instance.draftUi.AddContent(it.ShowText(it));
+           
 
             //碰撞体的设置
             var _colE = it.GetComponent<PolygonCollider2D>();
@@ -474,7 +474,7 @@ public class CreateOneCharacter : MonoBehaviour
             {
                 number = UnityEngine.Random.Range(0, monsterPrefabs.Length);
             }
-         
+            
 
             GameObject chara = Instantiate(monsterPrefabs[number]);
             //找空位
@@ -505,6 +505,9 @@ public class CreateOneCharacter : MonoBehaviour
                 {
                     chara.GetComponent<AbstractCharacter>().turn();
                 }
+
+                CharacterManager.instance.RefreshStanger();
+
             }
             else
             {

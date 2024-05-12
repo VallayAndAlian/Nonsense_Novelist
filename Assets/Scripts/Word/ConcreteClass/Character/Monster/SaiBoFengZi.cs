@@ -22,12 +22,15 @@ public class SaiBoFengZi : AbstractCharacter
         MonsterExcelItem data = null;
         for (int i = 0; (i < GameMgr.instance.monsterDate.items.Length) && (data == null); i++)
         {
+            print("sdsd");
             var _data = GameMgr.instance.monsterDate.items[i];
             if (_data.Mid == characterID)
             {
+                print(_data.Mid + ":" + _data.name+"=?" + GameMgr.instance.GetStage());
                 if (dataD == null) dataD = _data;
                 if (_data.name == GameMgr.instance.GetStage())
                 {
+                    print(_data.name + "==" + GameMgr.instance.GetStage());
                     data = _data;
                 }
             }
@@ -36,7 +39,7 @@ public class SaiBoFengZi : AbstractCharacter
             data = dataD;
         if (data == null)
             return;
-
+        print(GameMgr.instance.GetStage());
         print("读取成功：" + wordName + data.name);
 
         //数值

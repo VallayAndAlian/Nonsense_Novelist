@@ -70,6 +70,16 @@ namespace AI
 
         public override void EnterState(MyState0 myState)
         {
+            if (myState.character.camp == CampEnum.stranger)
+            {
+                myState.character.camp = CampEnum.left;
+                CharacterManager.instance.RefreshStanger();
+                Destroy(myState.character.gameObject);
+                
+            }
+
+
+
             myState.character.charaAnim.Play(AnimEnum.dead);
             //AbstractBook.afterFightText += myState.character.LowHPText();
             AbstractBook.afterFightText += myState.character.DieText();

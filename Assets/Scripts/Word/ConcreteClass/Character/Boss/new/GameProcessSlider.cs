@@ -85,7 +85,7 @@ public class GameProcessSlider : MonoBehaviour
     [Header("交易")] public int jiaoYi = 25;
     [Header("场景")] public int changJing = 10;
 
-
+    bool hasWeiji = false;
     private void Start()
     {
 
@@ -128,10 +128,20 @@ public class GameProcessSlider : MonoBehaviour
     private void FixedUpdate()
     {
         if (CharacterManager.instance.pause) return;
-
-        if (!countTime)
+        if (!countTime)//当countTime=false时进入if
+        {
+            if (CharacterManager.instance.GetStranger() == null)
+            {
+                if (hasWeiji)
+                {
+                    countTime = true; hasWeiji = false;
+                }
+                    
+           
+            }
             return;
-
+        }
+        
         //CreateEventUpdate();
 
 
@@ -148,10 +158,12 @@ public class GameProcessSlider : MonoBehaviour
         //如果进入阶段
         if (timeNow > time_stage[stageCount].time_count)
         {
-            GameMgr.instance.SetStageTo(1);
+         
+            GameMgr.instance.SetStageTo(time_stage[stageCount].level-1);
 
             if (time_stage[stageCount].type == StageType.boss)
             {
+              
                 //创建boss事件
                 if (time_stage[stageCount].t_boss != null)
                 {
@@ -162,6 +174,7 @@ public class GameProcessSlider : MonoBehaviour
             }
             else if (time_stage[stageCount].type == StageType.Event)
             {
+                
                 //创建Event事件
                 CreateEvent(time_stage[stageCount].t_eventKey, time_stage[stageCount].t_eventCount);
                 countTime = true;
@@ -169,6 +182,7 @@ public class GameProcessSlider : MonoBehaviour
             }
             else if (time_stage[stageCount].type == StageType.weiji)
             {
+                
                 //创建固定危机事件
                 PoolMgr.GetInstance().GetObj(eventBubblePrefab[3], (a) =>
                 {
@@ -177,9 +191,12 @@ public class GameProcessSlider : MonoBehaviour
                     a.transform.localPosition = Vector3.zero;
                    
                     a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false,true);
+                    StartCoroutine(Wait_Weiji());
                 });
+
                 countTime = false;
                 stageCount++;
+                
             }
 
             //demo的结算页面.临时写的，很草率
@@ -198,6 +215,12 @@ public class GameProcessSlider : MonoBehaviour
         }
     }
 
+
+    IEnumerator Wait_Weiji()
+    {
+        yield return new WaitForSeconds(5);
+        hasWeiji = true;
+    }
     #region boss
 
     /// <summary>

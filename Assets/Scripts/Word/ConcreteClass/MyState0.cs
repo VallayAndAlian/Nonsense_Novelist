@@ -108,8 +108,17 @@ namespace AI
                 {
                     if (aim == null)
                     {
-                        print(character.wordName);
-                        aim = new List<AbstractCharacter>();
+                        nowState.Action(this);
+                        if (aim == null)
+                        {
+                            print(character.wordName);
+                            aim = new List<AbstractCharacter>();
+                        }
+                        else
+                        {
+                            aim.Clear();
+                        }
+                       
                     } 
 
                     else 

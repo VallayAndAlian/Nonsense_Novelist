@@ -25,6 +25,26 @@ public class CharacterDetail : MonoBehaviour
         nowCharacter = _ac;
         InitDetail();
     }
+
+
+    //public void Open(string _ac)
+    //{
+    //    AbstractCharacter _tempac=new AbstractCharacter();
+    //    switch (_ac)
+    //    {
+    //        case "LinDaiYu":
+    //        {
+    //            _tempac.wordName = "林黛玉";
+    //            _tempac.roleName = "^";
+    //            //……设置一系列参数
+    //        }break;
+    //    }
+        
+    //    nowCharacter = _tempac;
+    //    InitDetail();
+    //}
+
+
     void InitDetail()
     {
         Sprite _s2 = Resources.Load<Sprite>(spriteAdr + nowCharacter.wordName.ToString());

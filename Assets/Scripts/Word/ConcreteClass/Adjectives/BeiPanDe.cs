@@ -21,7 +21,7 @@ public class BeiPanDe : AbstractAdjectives
         adjID = 28;
         wordName = "背叛的";
         bookName = BookNameEnum.EgyptMyth;
-        description = "< color =#dd7d0e>疯狂</color>，持续10s";
+        description = "<color =#dd7d0e>疯狂</color>，持续10s";
 
      
         skillEffectsTime = 10;

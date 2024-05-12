@@ -251,7 +251,12 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
                 print(_s + "的字段获取失败");
             }
         }
-        LayoutRebuilder.ForceRebuildLayoutImmediate(detailParent.GetComponent<RectTransform>());
+        if (detailParent != null)
+        {
+            if(detailParent.GetComponent<RectTransform>()!=null)
+            LayoutRebuilder.ForceRebuildLayoutImmediate(detailParent.GetComponent<RectTransform>());
+        }
+        
     }
 
     void ReturnDetailInfo()

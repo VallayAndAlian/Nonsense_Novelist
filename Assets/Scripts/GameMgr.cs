@@ -467,6 +467,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         {
             GetNowListOne();//待使用词库有5个词
         }
+        wordNowList.Remove(wordGoingUseList[0]);
         wordHasUseList.Add(wordGoingUseList[0]);
         //print(wordGoingUseList[0].)
         //if (wordGoingUseList[0].IsAssignableFrom(typeof(AbstractVerbs)))

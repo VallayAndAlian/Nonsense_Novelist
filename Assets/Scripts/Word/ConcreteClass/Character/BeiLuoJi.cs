@@ -9,7 +9,7 @@ class BeiLuoJi : AbstractCharacter
 {
     override public void Awake()
     {
-        isNaiMa = true;
+        //isNaiMa = true;
 
         base.Awake();
 
@@ -37,48 +37,64 @@ class BeiLuoJi : AbstractCharacter
 
         //特性
         roleName = "蚁后";
-        roleInfo = "同时治疗三个友方";//普通攻击目标为3个低血量的队友，恢复70%意志的血量，不附带攻击攻击特效
-        myState.aimCount = 3;
-
+        roleInfo = "每次普通攻击还会治疗2名队友70%意志";//普通攻击目标为3个低血量的队友，恢复70%意志的血量，不附带攻击攻击特效
+        myState.aimCount = 1;
+        event_AttackA += Role;
     }
 
     AbstractCharacter[] aims;
-
-    int aimCount = 0;
-    public override bool AttackA()
-    {//代替平A
-        aimCount = 0;
-        if (myState.aim != null)
+    float record;
+    void Role()
+    {
+        
+        var chara = CharacterManager.instance.GetFriend(this.camp);
+        if (chara[0] != null)
         {
-            if (myState.character.aAttackAudio != null)
-            {
-                myState.character.source.clip = myState.character.aAttackAudio;
-                myState.character.source.Play();
-            }
-            myState.character.charaAnim.Play(AnimEnum.attack);
+            chara[0].BeCure(chara[0].san * chara[0].sanMul * 0.7f, true, 0.5f, this);
+            CreateBullet(chara[0].gameObject);
+        }
+        if (chara[1] != null)
+        {
+            chara[1].BeCure(chara[1].san * chara[1].sanMul * 0.7f, true, 0.5f, this);
+            CreateBullet(chara[1].gameObject);
+        }
+    }
+    int aimCount = 0;
+    //public override bool AttackA()
+    //{//代替平A
+    //    aimCount = 0;
+    //    if (myState.aim != null)
+    //    {
+    //        if (myState.character.aAttackAudio != null)
+    //        {
+    //            myState.character.source.clip = myState.character.aAttackAudio;
+    //            myState.character.source.Play();
+    //        }
+    //        myState.character.charaAnim.Play(AnimEnum.attack);
 
 
-            aims = attackA.CalculateAgain(100, this);
+    //        aims = attackA.CalculateAgain(100, this);
 
-            foreach (AbstractCharacter aim in aims)
-            {//普通攻击目标为所有队友，恢复70%意志的血量，不附带攻击攻击特效
-                if (aim.myState.nowState == aim.myState.allState.Find(p => p.id == AI.StateID.dead) || (aimCount >= 3))
-                {}
-                else
-                {
-                    aimCount += 1;
-                    attackA.UseMode(AttackType.heal, san *sanMul* 0.7f, myState.character, aim, true, 0);
-                    myState.character.CreateBullet(aim.gameObject);
-                }
+    //        foreach (AbstractCharacter aim in aims)
+    //        {//普通攻击目标为所有队友，恢复70%意志的血量，不附带攻击攻击特效
+    //            if (aim.myState.nowState == aim.myState.allState.Find(p => p.id == AI.StateID.dead) || (aimCount >= 3))
+    //            {}
+    //            else
+    //            {
+    //                aimCount += 1;
+    //                attackA.UseMode(AttackType.heal, san *sanMul* 0.7f, myState.character, aim, true, 0);
+    //                myState.character.CreateBullet(aim.gameObject);
+    //            }
 
 
              
-            }
-            return true;    
-        }
-        return false;
+    //        }
+    //        return true;    
+    //    }
+    //    return false;
 
-    }
+    //}
+
     List<GrowType> hasAddGrow = new List<GrowType>();
     public override string GrowText(GrowType type)
     {

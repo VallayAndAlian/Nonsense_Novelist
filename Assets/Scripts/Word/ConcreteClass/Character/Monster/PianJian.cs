@@ -32,6 +32,8 @@ public class PianJian : AbstractCharacter
                 }
             }
         }
+  
+        print(GameMgr.instance.GetStage());
         if (data == null)
             data = dataD;
         if (data == null)

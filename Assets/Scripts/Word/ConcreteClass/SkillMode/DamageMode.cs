@@ -40,8 +40,6 @@ class DamageMode : AbstractSkillMode
     override public AbstractCharacter[] CalculateAgain(int attackDistance, AbstractCharacter character)
     {
         
-      
-
         //叛变
         if (character.hasBetray)
         {
@@ -50,12 +48,15 @@ class DamageMode : AbstractSkillMode
         }
         else//正常情况
         {
+            if (character.camp != CampEnum.stranger)
+            {
+                var _c = CharacterManager.instance.GetStranger();
+                if (_c != null) return _c; 
+            }
             AbstractCharacter[] a = attackRange.CaculateRange(attackDistance, character.situation, NeedCampEnum.enemy, false);
             return a;
 
         }
-   
-
     }
     override public AbstractCharacter[] CalculateRandom(int attackDistance, AbstractCharacter character, bool _ignoreBoss)
     {

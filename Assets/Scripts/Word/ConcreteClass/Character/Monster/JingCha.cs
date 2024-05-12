@@ -41,7 +41,7 @@ public class JingCha : AbstractCharacter
             return;
 
         print("读取成功：" + wordName + data.name);
-
+        print(GameMgr.instance.GetStage());
         //数值
         hp = maxHp = data.hp;
         atk = data.atk;
@@ -57,10 +57,50 @@ public class JingCha : AbstractCharacter
         attackAmount = 1;
         hasBetray = false;
 
+    
+
         //特性
         roleName = "射手";
         roleInfo = "每3次攻击使对方随机失去1能量";//每第三次攻击使对方的随机一个动词失去1能量
         event_AttackA += AttackMore;
+
+        //自带词条
+        if ((data.word1 != null) && (data.word1 != ""))
+        {
+            var _s = System.Type.GetType(data.word1);
+            if (_s != null)
+            {
+                var _ss=gameObject.AddComponent(_s);
+                print(wordName + "身上的" + (_ss as AbstractWord0).wordName + "挂上了，有生效吗？");
+            }
+        }
+        if ((data.word2 != null) && (data.word2 != ""))
+        {
+            var _s = System.Type.GetType(data.word2);
+            if (_s != null)
+            {
+                var _ss = gameObject.AddComponent(_s);
+                print(wordName + "身上的" + (_ss as AbstractWord0).wordName + "挂上了，有生效吗？");
+            }
+        }
+        if ((data.word3 != null) && (data.word3 != ""))
+        {
+            var _s = System.Type.GetType(data.word3);
+            if (_s != null)
+            {
+                var _ss = gameObject.AddComponent(_s);
+                print(wordName + "身上的" + (_ss as AbstractWord0).wordName + "挂上了，有生效吗？");
+            }
+        }
+        if ((data.word4 != null) && (data.word4 != ""))
+        {
+            var _s = System.Type.GetType(data.word4);
+            if (_s != null)
+            {
+                var _ss = gameObject.AddComponent(_s);
+                print(wordName + "身上的" + (_ss as AbstractWord0).wordName + "挂上了，有生效吗？");
+            }
+        }
     }
     int attackTimes=0;
 

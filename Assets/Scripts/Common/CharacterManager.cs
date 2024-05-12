@@ -13,6 +13,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     public static GameObject father;
     /// <summary>当下全部角色</summary>
     private AbstractCharacter[] Charas;
+    private List<AbstractCharacter> Strangers=new List<AbstractCharacter>();
     public AbstractCharacter[] charas
     {
         get
@@ -35,8 +36,28 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     /// int=situation的number。方便快捷寻找situation的自典
     /// </summary>
     public static Dictionary<float, Situation> situationDic = new Dictionary<float, Situation>();
+    public void RefreshStanger()
+    {
+        Strangers.Clear();
 
+        foreach (var _m in charas)
+        {
+            if (_m.camp == CampEnum.stranger)
+            {
+                Strangers.Add(_m);
+            }
+        }
+     
+    }
 
+    public AbstractCharacter[] GetStranger()
+    {
+      
+        if (Strangers .Count!= 0)
+            return Strangers.ToArray();
+        else
+            return null;
+    }
 
     [HideInInspector] public static SpriteRenderer[] spSituations = new SpriteRenderer[9];
 
