@@ -41,6 +41,8 @@ class LinDaiYu : AbstractCharacter
         roleInfo = "精神+25%，防御力-20%";
         psyMul += 0.25f;
         defMul -= 0.2f;
+        //
+
         #region 弃用
         //mainProperty.Add("精神", "远法dps");
         //trait = gameObject.AddComponent<Sentimental>();

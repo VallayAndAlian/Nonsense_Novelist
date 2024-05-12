@@ -728,6 +728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   logo: {fileID: 7322263338563539426}
+  audioSource: {fileID: 0}
 --- !u!61 &229205663
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1161,6 +1162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   logo: {fileID: 8093493622558100242}
+  audioSource: {fileID: 0}
 --- !u!61 &405505846
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1565,6 +1567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 3
   logo: {fileID: 4000160829094945405}
+  audioSource: {fileID: 0}
 --- !u!61 &872286629
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1808,6 +1811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   logo: {fileID: 8263264672725925360}
+  audioSource: {fileID: 0}
 --- !u!61 &957195845
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3038,6 +3042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   logo: {fileID: 2299161975183645409}
+  audioSource: {fileID: 0}
 --- !u!61 &2142219632
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6714,6 +6719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4697970770193960426}
+  - component: {fileID: 5907194744787637642}
   m_Layer: 0
   m_Name: StudyUI
   m_TagString: Untagged
@@ -6721,6 +6727,102 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!82 &5907194744787637642
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5907194744787637641}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c23c6aad621d79745bda33ed6f278a95, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!212 &5938934364029413213
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -13,7 +13,8 @@ public class BookShelf : MonoBehaviour
     public PanelInstance[] panels;
 
     [Header("手动设置词条显示的父物体")]
-    public Transform wordP;
+    private Transform wordPL;
+    private Transform wordPR;
 
     [Header("词条预制体（手动）")]
     public GameObject prefab_wordinf;
@@ -42,10 +43,14 @@ public class BookShelf : MonoBehaviour
             if (buttonSelf.name == BookNameEnum.HongLouMeng.ToString())
             {//打开红楼梦页面+默认显示全部红楼梦词条
                 panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(true);
+                //角色
+                CharaShow(AllSkills.hlmList_chara, BookNameEnum.HongLouMeng);
                 //名+动+形
-                ShowNowBookWord(2,BookNameEnum.HongLouMeng);//231
-                ShowNowBookWord(3, BookNameEnum.HongLouMeng);
-                ShowNowBookWord(1, BookNameEnum.HongLouMeng);
+                InsWords(AllSkills.hlmList_noun, WordKindEnum.noun,BookNameEnum.HongLouMeng);//231
+                InsWords(AllSkills.hlmList_verb, WordKindEnum.verb, BookNameEnum.HongLouMeng);
+                InsWords(AllSkills.hlmList_adj, WordKindEnum.adj, BookNameEnum.HongLouMeng);
+                //设定
+
             }
             else if (buttonSelf.name == books[1].name)
             {
@@ -72,19 +77,22 @@ public class BookShelf : MonoBehaviour
     void DeleteWords()
     {
 
-        for (int i = wordP.childCount - 1; i >= 0; i--)
+        for (int i = wordPL.childCount - 1; i >= 0; i--)
         {
-            foreach (var a in wordP.GetChild(i).GetComponents<AbstractWord0>())
+            foreach (var a in wordPL.GetChild(i).GetComponents<AbstractWord0>())
             {
                 Destroy(a);
             }
-            PoolMgr.GetInstance().PushObj(wordP.GetChild(i).gameObject.name, wordP.GetChild(i).gameObject);
+            PoolMgr.GetInstance().PushObj(wordPL.GetChild(i).gameObject.name, wordPL.GetChild(i).gameObject);
         }
 
     }
+    public void CloseHLMPanel()
+    {
+        panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(false);
+    }
 
-
-    /// <summary>
+/*    /// <summary>
     /// 展示出nowbook中的所有词
     /// </summary>231
     /// <param name="i">词性。1adj,2noun,3verb</param>
@@ -173,14 +181,14 @@ public class BookShelf : MonoBehaviour
 
                 }
                 break;
-        }
-    }
+        }*/
+    //}
 
 
     /// <summary>
     /// 将书中的名动形词条显示出来
     /// </summary>
-    void InsWords(List<Type> wordsList, WordKindEnum wordKind)
+    void InsWords(List<Type> wordsList, WordKindEnum wordKind, BookNameEnum _book)
     {
         switch (wordKind)
         {
@@ -201,8 +209,15 @@ public class BookShelf : MonoBehaviour
                             else
                                 jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
                             //
-                            obj.transform.parent = wordP;
-                            obj.transform.localScale = Vector3.one * 1.5f;
+                            if (panels[(int)_book].gameObject.transform.Find("wordPL").childCount < 9)
+                            {
+                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPL");
+                            }
+                            else
+                            {
+                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPR");
+                            }
+                            obj.transform.localScale = Vector3.one * 0.1f;
                         });
                     }
                 }
@@ -225,8 +240,15 @@ public class BookShelf : MonoBehaviour
                             else
                                 jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
                             //
-                            obj.transform.parent = wordP;
-                            obj.transform.localScale = Vector3.one * 1.5f;
+                            if (panels[(int)_book].gameObject.transform.Find("wordPL").childCount < 9)
+                            {
+                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPL");
+                            }
+                            else
+                            {
+                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPR");
+                            }
+                            obj.transform.localScale = Vector3.one * 0.1f;
                         });
                     }
                 }
@@ -249,8 +271,15 @@ public class BookShelf : MonoBehaviour
                             else
                                 jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
                             //
-                            obj.transform.parent = wordP;
-                            obj.transform.localScale = Vector3.one * 1.5f;
+                            if (panels[(int)_book].gameObject.transform.Find("wordPL").childCount < 9)
+                            {
+                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPL");
+                            }
+                            else
+                            {
+                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPR");
+                            }
+                            obj.transform.localScale = Vector3.one * 0.1f;
                         });
                     }
                 }
@@ -269,10 +298,18 @@ public class BookShelf : MonoBehaviour
             {
                 var _chara = obj.AddComponent(chara) as AbstractCharacter;
                 //卡牌信息
-                
+                obj.GetComponent<CharacterDetail>().Open(_chara);
                 //
-                obj.transform.parent = wordP;
-                obj.transform.localScale = Vector3.one * 1.5f;
+                print(panels[(int)bookKind].gameObject.transform.Find("wordPL"));
+                if (panels[(int)bookKind].gameObject.transform.Find("wordPL").childCount < 9)
+                {
+                    obj.transform.parent = panels[(int)bookKind].gameObject.transform.Find("wordPL");
+                }
+                else
+                {
+                    obj.transform.parent = panels[(int)bookKind].gameObject.transform.Find("wordPR");
+                }
+                obj.transform.localScale = Vector3.one * 0.1f;
             });
         }
     }

@@ -38,7 +38,7 @@ abstract public class AbstractCharacter : AbstractWord0
     /// <summary>AudioSource</summary>
     [HideInInspector] public AudioSource source;
     /// <summary>平A音效(手动拖拽）</summary>
-    public AudioClip aAttackAudio;
+    public AudioClip aAttackAudio ;
     /// <summary>走路音效（手动拖拽）</summary>
     public AudioClip walkAudio;
 
@@ -994,7 +994,6 @@ abstract public class AbstractCharacter : AbstractWord0
     //外部可以增加每秒检测的委托入口
     [HideInInspector] public delegate void Event_AttackA();
     [HideInInspector] public Event_AttackA event_AttackA;
-
     /// <summary>
     /// 平A
     /// </summary>
@@ -1004,7 +1003,8 @@ abstract public class AbstractCharacter : AbstractWord0
 
         if (myState.aim != null)
         {
-         
+            source.clip = aAttackAudio;
+            source.Play();
             for (int i = 1; i <= AttackTimes; i++)
             {
 
@@ -1025,11 +1025,7 @@ abstract public class AbstractCharacter : AbstractWord0
     /// <param name="i"></param>
     private void AttackAOnce()
     {
-            if (myState.character.aAttackAudio != null)
-            {
-                myState.character.source.clip = myState.character.aAttackAudio;
-                myState.character.source.Play();
-            }
+            
             //攻击
        // myState.character.charaAnim.Play(AnimEnum.attack);
        

@@ -22,11 +22,15 @@ public class StudyMouseOn : MonoBehaviour
     public GameObject logo;
     bool hasEnter = false;
     float enterTime=0;
-    float delayTime = 0.05f;  
+    float delayTime = 0.05f;
+    AudioSource audioSource;
+    GameObject studyUI;
     private void Start()
     {
         animThis = this.GetComponent<Animator>();
         animLogo = logo.GetComponent<Animator>();
+        studyUI = GameObject.Find("StudyUI");
+        audioSource=studyUI.GetComponent<AudioSource>();
     }
 
 
@@ -66,6 +70,7 @@ public class StudyMouseOn : MonoBehaviour
                         ls.sceneName = "ShootCombat";
                     }
                     ls.EnterNextScene();
+                    audioSource.Play();
                 }
                 break;
             case StudyUIType.shujia: {
@@ -77,6 +82,25 @@ public class StudyMouseOn : MonoBehaviour
                     }
                     ls.EnterNextScene();*/
                     SceneManager.LoadScene("BookShelf");
+                    audioSource.Play();
+                }
+                break;
+            case StudyUIType.xinjian:
+                {
+                    //SceneManager.LoadScene("BookShelf");
+                    audioSource.Play();
+                }
+                break;
+            case StudyUIType.zuopin:
+                {
+                    //SceneManager.LoadScene("BookShelf");
+                    audioSource.Play();
+                }
+                break;
+            case StudyUIType.tuichu:
+                {
+                    audioSource.Play();
+                    Application.Quit();
                 }
                 break;
         }
