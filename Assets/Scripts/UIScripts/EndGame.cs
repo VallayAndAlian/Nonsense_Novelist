@@ -65,7 +65,10 @@ public class EndGame : MonoBehaviour
 
 
     #region 外部点击事件
-
+    public void BackToStudyScene()
+    {
+        //RecordMgr.instance.AddRecord()
+    }
     public void ChangeText()
     {
         titleName = textInput.text ;

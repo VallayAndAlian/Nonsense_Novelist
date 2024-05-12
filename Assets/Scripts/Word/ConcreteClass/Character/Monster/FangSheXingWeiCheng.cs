@@ -37,8 +37,7 @@ public class FangSheXingWeiCheng : AbstractCharacter
             data = dataD;
         if (data == null)
             return;
-        print(GameMgr.instance.GetStage());
-        print("读取成功：" + wordName + data.name);
+  
 
         //数值
         hp = maxHp = data.hp;

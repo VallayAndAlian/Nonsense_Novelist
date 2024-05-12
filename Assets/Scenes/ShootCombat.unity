@@ -17977,7 +17977,7 @@ MonoBehaviour:
   EventCGAnim: {fileID: 968807345}
   levelController: {fileID: 1277053071}
   eventHappen: 0
-  playEventCG: 1
+  playEventCG: 0
   data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
   monsterDate: {fileID: 11400000, guid: 5a21041f03b31df419fd1b9f2ac3e93d, type: 2}
   cardRareDate: {fileID: 11400000, guid: 79a948a4801e85e4f875efab0be8228b, type: 2}

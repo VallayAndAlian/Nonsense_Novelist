@@ -128,6 +128,7 @@ public class GameProcessSlider : MonoBehaviour
     private void FixedUpdate()
     {
         if (CharacterManager.instance.pause) return;
+
         if (!countTime)//当countTime=false时进入if
         {
             if (CharacterManager.instance.GetStranger() == null)
@@ -149,11 +150,14 @@ public class GameProcessSlider : MonoBehaviour
         sliderProcess.value = timeNow;
 
         //如果超出
-        if (stageCount >= time_stage.Length)
-        {
-            Debug.LogWarning("time_stage overCount!");
-            countTime = false;
-        }
+        //if (stageCount >= 0)
+        //{
+  
+        //    CharacterManager.instance.EndGame();
+        //    Debug.LogWarning("time_stage overCount!");
+        //    countTime = false;
+        //}
+        //return;
 
         //如果进入阶段
         if (timeNow > time_stage[stageCount].time_count)

@@ -64,7 +64,8 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     #region pauseSetting
 
     public void EndGame()
-    {if (pause) return;
+    {
+        //if (pause) return;
         Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
         Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
         Instantiate(endGame);
