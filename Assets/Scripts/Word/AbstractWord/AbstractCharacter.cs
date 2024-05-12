@@ -935,7 +935,7 @@ abstract public class AbstractCharacter : AbstractWord0
     private float AttackSpeedTemp = -1;
     void attackSpeedSetting()
     {
-        charaAnim.SetSpeed(AnimEnum.attack, AttackSpeedPlus);
+        if(charaAnim!=null)charaAnim.SetSpeed(AnimEnum.attack, AttackSpeedPlus);
     }
     public void AttackSpeedPause(bool _b)
     {
@@ -1167,6 +1167,7 @@ abstract public class AbstractCharacter : AbstractWord0
     {
 
         if (CharacterManager.instance.pause) return;
+        if(myState == null) return;
         if (myState.nowState == myState.allState.Find(p => p.id == AI.StateID.dead)) return;
             //角色的能量条积攒
             energy += Time.deltaTime;
