@@ -617,6 +617,23 @@ public class DraftUi : MonoBehaviour
       
         content.Add(_new);
     }
+
+    public string MergeContent_A()
+    {
+        
+        string Merge = "";
+        foreach (var _content in content)
+        {
+            Merge+=_content;
+            Merge += "\n";
+        }
+
+        return Merge;
+    }
+    public string[] MergeContent_B()
+    {
+        return content.ToArray();
+    }
     public void ChangeIndexContent(int oldIndex,int newIndex)
     {
         if (oldIndex == newIndex) return;

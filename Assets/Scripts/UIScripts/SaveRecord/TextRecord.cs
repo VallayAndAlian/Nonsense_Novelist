@@ -4,11 +4,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TextRecord", menuName = "GameTextRecord/newRecord")]
 public class TextRecord : ScriptableObject
 {
-    public int id;
-    public int rand;
-    public string title;
-    public string content;
-    public string reply;
+    public int id;//文章的序号，从0起，每次+1
+    public int rand;//文章的得分
+    public string title;//文章的标题
+    public string content;//文章的内容
+    public string reply;//系统反馈
+
+
     // Start is called before the first frame update
     void Start()
     {
