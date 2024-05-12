@@ -199,7 +199,7 @@ public static class AllSkills
         //动物园添加名词词条
         animalList_noun.AddRange(new Type[] { typeof(ShiWuFengRong), typeof(SheQunFengRong) });
         //动物园添加角色词条
-        hlmList_chara.AddRange(new Type[] { typeof(SiYangYuan), typeof(CS_BenJieShiDui), typeof(CS_YiZhiWeiShiQi), typeof(CS_HunYangLong) });
+        animalList_chara.AddRange(new Type[] { typeof(SiYangYuan), typeof(CS_BenJieShiDui), typeof(CS_YiZhiWeiShiQi), typeof(CS_HunYangLong) });
         //动物园全部词条
         animalList_all.AddRange(animalList_chara);
         animalList_all.AddRange(animalList_noun);
