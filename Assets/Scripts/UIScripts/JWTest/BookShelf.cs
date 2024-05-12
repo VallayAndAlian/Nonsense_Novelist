@@ -12,14 +12,12 @@ public class BookShelf : MonoBehaviour
     public Button[] books;
     public PanelInstance[] panels;
 
-    [Header("手动设置词条显示的父物体")]
-    private Transform wordPL;
-    private Transform wordPR;
-
     [Header("词条预制体（手动）")]
     public GameObject prefab_wordinf;
     public GameObject prefab_chara;
     public GameObject prefab_setting;
+
+    //private UnityEngine.UI.Toggle toggle;
     void Start()
     {
         
@@ -39,7 +37,6 @@ public class BookShelf : MonoBehaviour
         var buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         if(buttonSelf!=null)
         {
-            print(BookNameEnum.HongLouMeng.ToString());
             if (buttonSelf.name == BookNameEnum.HongLouMeng.ToString())
             {//打开红楼梦页面+默认显示全部红楼梦词条
                 panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(true);
@@ -49,7 +46,7 @@ public class BookShelf : MonoBehaviour
                 InsWords(AllSkills.hlmList_noun, WordKindEnum.noun,BookNameEnum.HongLouMeng);//231
                 InsWords(AllSkills.hlmList_verb, WordKindEnum.verb, BookNameEnum.HongLouMeng);
                 InsWords(AllSkills.hlmList_adj, WordKindEnum.adj, BookNameEnum.HongLouMeng);
-                //设定
+                //设定(先不写)
 
             }
             else if (buttonSelf.name == books[1].name)
@@ -76,114 +73,226 @@ public class BookShelf : MonoBehaviour
     /// </summary>
     void DeleteWords()
     {
+        var toggleSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        Transform a= toggleSelf.gameObject.transform.parent.Find("wordPL");
+        Transform b = toggleSelf.gameObject.transform.parent.Find("wordPR");
 
-        for (int i = wordPL.childCount - 1; i >= 0; i--)
+        for (int i = a.childCount - 1; i >= 0; i--)
         {
-            foreach (var a in wordPL.GetChild(i).GetComponents<AbstractWord0>())
+            foreach (var mm in a.GetChild(i).GetComponents<AbstractWord0>())
             {
-                Destroy(a);
+                Destroy(mm);
             }
-            PoolMgr.GetInstance().PushObj(wordPL.GetChild(i).gameObject.name, wordPL.GetChild(i).gameObject);
+            PoolMgr.GetInstance().PushObj(a.GetChild(i).gameObject.name, a.GetChild(i).gameObject);
         }
-
+        for (int i = b.childCount - 1; i >= 0; i--)
+        {
+            foreach (var mm in b.GetChild(i).GetComponents<AbstractWord0>())
+            {
+                Destroy(mm);
+            }
+            PoolMgr.GetInstance().PushObj(b.GetChild(i).gameObject.name, b.GetChild(i).gameObject);
+        }
     }
     public void CloseHLMPanel()
     {
-        panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(false);
+        var toggleSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        DeleteWords();
+        //所有toggle的ison调成false
+        UnityEngine.UI.Toggle[] tog = toggleSelf.gameObject.transform.parent.GetComponentsInChildren<UnityEngine.UI.Toggle>();
+        foreach (var mm in tog)
+        {
+            mm.isOn = false;
+        }
+        switch (toggleSelf.gameObject.transform.parent.name)
+        {
+            case "HLM":
+                {
+                    panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(false);
+                }
+                break;
+            case "JJJ":
+                {
+                    panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(false);
+                }
+                break;
+        }
+
     }
 
-/*    /// <summary>
-    /// 展示出nowbook中的所有词
-    /// </summary>231
-    /// <param name="i">词性。1adj,2noun,3verb</param>
-    void ShowNowBookWord(int i, BookNameEnum _book)
-    {
-        switch (_book)
+    /*    /// <summary>
+        /// 展示出nowbook中的所有词
+        /// </summary>231
+        /// <param name="i">词性。1adj,2noun,3verb</param>
+        void ShowNowBookWord(int i, BookNameEnum _book)
         {
-            case BookNameEnum.HongLouMeng:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.hlmList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.hlmList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.hlmList_verb, WordKindEnum.verb);
-                }
-                break;
-            case BookNameEnum.CrystalEnergy:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.crystalList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.crystalList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.crystalList_verb, WordKindEnum.verb);
-                }
-                break;
-            case BookNameEnum.ZooManual:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.animalList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.animalList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.animalList_verb, WordKindEnum.verb);
-                }
-                break;
-            case BookNameEnum.PHXTwist:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.maYiDiGuoList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.maYiDiGuoList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.maYiDiGuoList_verb, WordKindEnum.verb);
-                }
-                break;
-            case BookNameEnum.FluStudy:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.liuXingBXList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.liuXingBXList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.liuXingBXList_verb, WordKindEnum.verb);
-                }
-                break;
-            case BookNameEnum.EgyptMyth:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.aiJiShenHuaList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.aiJiShenHuaList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.aiJiShenHuaList_verb, WordKindEnum.verb);
-                }
-                break;
-            case BookNameEnum.ElectronicGoal:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.humanList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.humanList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.humanList_verb, WordKindEnum.verb);
-                }
-                break;
-            case BookNameEnum.Salome:
-                {
-                    if (i == 1)
-                        InsWords(AllSkills.shaLeMeiList_adj, WordKindEnum.adj);
-                    else if (i == 2)
-                        InsWords(AllSkills.shaLeMeiList_noun, WordKindEnum.noun);
-                    else
-                        InsWords(AllSkills.shaLeMeiList_verb, WordKindEnum.verb);
+            switch (_book)
+            {
+                case BookNameEnum.HongLouMeng:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.hlmList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.hlmList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.hlmList_verb, WordKindEnum.verb);
+                    }
+                    break;
+                case BookNameEnum.CrystalEnergy:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.crystalList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.crystalList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.crystalList_verb, WordKindEnum.verb);
+                    }
+                    break;
+                case BookNameEnum.ZooManual:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.animalList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.animalList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.animalList_verb, WordKindEnum.verb);
+                    }
+                    break;
+                case BookNameEnum.PHXTwist:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.maYiDiGuoList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.maYiDiGuoList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.maYiDiGuoList_verb, WordKindEnum.verb);
+                    }
+                    break;
+                case BookNameEnum.FluStudy:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.liuXingBXList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.liuXingBXList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.liuXingBXList_verb, WordKindEnum.verb);
+                    }
+                    break;
+                case BookNameEnum.EgyptMyth:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.aiJiShenHuaList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.aiJiShenHuaList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.aiJiShenHuaList_verb, WordKindEnum.verb);
+                    }
+                    break;
+                case BookNameEnum.ElectronicGoal:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.humanList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.humanList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.humanList_verb, WordKindEnum.verb);
+                    }
+                    break;
+                case BookNameEnum.Salome:
+                    {
+                        if (i == 1)
+                            InsWords(AllSkills.shaLeMeiList_adj, WordKindEnum.adj);
+                        else if (i == 2)
+                            InsWords(AllSkills.shaLeMeiList_noun, WordKindEnum.noun);
+                        else
+                            InsWords(AllSkills.shaLeMeiList_verb, WordKindEnum.verb);
 
-                }
-                break;
-        }*/
+                    }
+                    break;
+            }*/
     //}
+    bool isFirst = true;
+    public void ToggleClick()
+    {
+        if(isFirst) { DeleteWords();isFirst = false; }
+        
 
+        var toggleSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        Transform a = toggleSelf.gameObject.transform.parent.Find("wordPL");
+        Transform b = toggleSelf.gameObject.transform.parent.Find("wordPR");
+        if (toggleSelf.gameObject.transform.parent.name == "HLM")
+        {
+            UnityEngine.UI.Toggle jw = toggleSelf.gameObject.GetComponent<UnityEngine.UI.Toggle>();
+            switch (toggleSelf.name)
+            {
+                case "tag_juese":
+                    {
+                        if (jw.isOn)
+                        {
+                            CharaShow(AllSkills.hlmList_chara, BookNameEnum.HongLouMeng);
+                        }
+                        else
+                        {
+                            CharacterDetail[] bb= a.GetComponentsInChildren<CharacterDetail>();
+                            for (int i = bb.Length - 1; i >= 0; i--)
+                            {
+                                PoolMgr.GetInstance().PushObj(bb[i].gameObject.name, bb[i].gameObject);
+                            }
+                        }
+                    }break;
+                case "tag_mingci":
+                    {
+                        if (jw.isOn)
+                        {
+                            InsWords(AllSkills.hlmList_noun, WordKindEnum.noun, BookNameEnum.HongLouMeng);
+                        }
+                        else
+                        {
+                            AbstractItems[] bb = a.GetComponentsInChildren<AbstractItems>();
+                            for (int i = bb.Length - 1; i >= 0; i--)
+                            {
+                                PoolMgr.GetInstance().PushObj(bb[i].gameObject.name, bb[i].gameObject);
+                            }
+                        }
+                    }
+                    break;
+                case "tag_dongci":
+                    {
+                        if (jw.isOn)
+                        {
+                            InsWords(AllSkills.hlmList_verb, WordKindEnum.verb, BookNameEnum.HongLouMeng);
+                            
+                        }
+                        else
+                        {
+                            AbstractVerbs[] bb = a.GetComponentsInChildren<AbstractVerbs>();
+                            for (int i = bb.Length - 1; i >= 0; i--)
+                            {
+                                PoolMgr.GetInstance().PushObj(bb[i].gameObject.name, bb[i].gameObject);
+                            }
+                        }
+                    }
+                    break;
+                case "tag_xingrongci":
+                    {
+                        if (jw.isOn)
+                        {
+                            InsWords(AllSkills.hlmList_adj, WordKindEnum.adj, BookNameEnum.HongLouMeng);
+                        }
+                        else
+                        {
+                            AbstractAdjectives[] bb = a.GetComponentsInChildren<AbstractAdjectives>();
+                            for (int i = bb.Length - 1; i >= 0; i--)
+                            {
+                                PoolMgr.GetInstance().PushObj(bb[i].gameObject.name, bb[i].gameObject);
+                            }
+                        }
+                    }
+                    break;
+                
+            }
+        }
+    }
 
     /// <summary>
     /// 将书中的名动形词条显示出来
@@ -296,11 +405,9 @@ public class BookShelf : MonoBehaviour
         {
             PoolMgr.GetInstance().GetObj(prefab_chara, (obj) =>
             {
-                var _chara = obj.AddComponent(chara) as AbstractCharacter;
                 //卡牌信息
-                obj.GetComponent<CharacterDetail>().Open(_chara);
+                obj.GetComponent<CharacterDetail>().OpenName(chara.Name);
                 //
-                print(panels[(int)bookKind].gameObject.transform.Find("wordPL"));
                 if (panels[(int)bookKind].gameObject.transform.Find("wordPL").childCount < 9)
                 {
                     obj.transform.parent = panels[(int)bookKind].gameObject.transform.Find("wordPL");
@@ -309,7 +416,7 @@ public class BookShelf : MonoBehaviour
                 {
                     obj.transform.parent = panels[(int)bookKind].gameObject.transform.Find("wordPR");
                 }
-                obj.transform.localScale = Vector3.one * 0.1f;
+                obj.transform.localScale = Vector3.one * 0.42f;
             });
         }
     }

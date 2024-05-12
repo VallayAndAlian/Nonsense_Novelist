@@ -87,7 +87,8 @@ public class StudyMouseOn : MonoBehaviour
                 break;
             case StudyUIType.xinjian:
                 {
-                    //SceneManager.LoadScene("BookShelf");
+
+                    SceneManager.LoadScene("Letters");
                     audioSource.Play();
                 }
                 break;
