@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BookShelf.unity
     guid: 9fbc4a97d7457804eb455b25ed85e386
+  - enabled: 1
+    path: Assets/Scenes/Letters.unity
+    guid: 8ace63efce93cbb47a4d0bb6a33bb870
   m_configObjects: {}
