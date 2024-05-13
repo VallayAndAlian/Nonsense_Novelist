@@ -643,6 +643,7 @@ MonoBehaviour:
   word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
+  color: {r: 0.57701325, g: 0.5016376, b: 0.6226415, a: 1}
   jiaoYi: 0
   btn_cancel: {fileID: 500200641143551609}
   btn_Check: {fileID: 684269349019989369}

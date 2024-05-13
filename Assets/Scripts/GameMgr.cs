@@ -431,13 +431,16 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <returns></returns>
     public Type GetNowListOne()
     {
+        
+        RefreshNowList();
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
+        
         // print("卡组里没有卡牌+" + count);
         var _res = wordNowList[count];
         //wordNowList.Remove(_res);
         //wordHasUseList.Add(_res);
         wordGoingUseList.Add(_res);
-        RefreshNowList();
+     
 
         if (_res.BaseType == typeof(AbstractItems))
         {
@@ -461,6 +464,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public Type GetGoingUseList()
     {
+       // RefreshNowList();
         //全部解锁前，只有3个槽位
         for (int i = 0; i < 3; i++)
         {
@@ -478,6 +482,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
     public Type GetGoingUseListOne()
     {
+       // RefreshNowList();
         GetNowListOne();
         wordHasUseList.Add(wordGoingUseList[0]);
         wordNowList.Remove(wordGoingUseList[0]);
@@ -612,10 +617,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <summary>
     /// 刷新现有卡牌列表
     /// </summary>
-    void RefreshNowList()
+    public void RefreshNowList()
     {
+        print("RefreshNowList"+ wordNowList.Count);
         if (wordNowList.Count == 0)
         {
+            print("wordNowList.Count == 0");
             wordNowList.AddRange(wordList);
             wordHasUseList.Clear();
 

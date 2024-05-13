@@ -202,7 +202,7 @@ public static class AllSkills
         //动物园添加名词词条
         animalList_noun.AddRange(new Type[] { typeof(ShiWuFengRong), typeof(SheQunFengRong) });
         //动物园添加角色词条
-        animalList_chara.AddRange(new Type[] { typeof(SiYangYuan), typeof(CS_BenJieShiDui), typeof(CS_YiZhiWeiShiQi), typeof(CS_HunYangLong) });
+        animalList_chara.AddRange(new Type[] { typeof(SiYangYuan)/*, typeof(CS_BenJieShiDui), typeof(CS_YiZhiWeiShiQi), typeof(CS_HunYangLong)*/ });
         //动物园全部词条
         animalList_all.AddRange(animalList_chara);
         animalList_all.AddRange(animalList_noun);
@@ -215,6 +215,8 @@ public static class AllSkills
         aiJiShenHuaList_adj.AddRange(new Type[] { typeof(FengChan), typeof(BuXiu), typeof(BeiPanDe)});
         //埃及神话添加名词词条
         aiJiShenHuaList_noun.AddRange(new Type[] { typeof(RiLunGuaZhui), typeof(herusizhiyan), });
+
+        aiJiShenHuaList_chara.AddRange(new Type[] { typeof(MuNaiYi),typeof(Anubis)});
         //埃及神话全部词条
         aiJiShenHuaList_all.AddRange(aiJiShenHuaList_verb);
         aiJiShenHuaList_all.AddRange(aiJiShenHuaList_adj);
@@ -227,6 +229,8 @@ public static class AllSkills
         shaLeMeiList_adj.AddRange(new Type[] { typeof(XinShenJiDang), typeof(LuanLun), typeof(HunQianMengYing), });
         //莎乐美添加名词词条
         shaLeMeiList_noun.AddRange(new Type[] { typeof(XianZhiHead),typeof(LiWu) });
+
+        shaLeMeiList_chara.AddRange(new Type[] { typeof(ShaLeMei),typeof(ShiLian)});
         //莎乐美全部词条
         shaLeMeiList_all.AddRange(shaLeMeiList_verb);
         shaLeMeiList_all.AddRange(shaLeMeiList_adj);
@@ -250,6 +254,9 @@ public static class AllSkills
         humanList_adj.AddRange(new Type[] { typeof(HeWuRan), typeof(RenZao),typeof(XiaYuDe) });
         //仿生人添加名词词条
         humanList_noun.AddRange(new Type[] { typeof(Nexus_6Arm), typeof(VolumeProduction), typeof(BeiZhiRuDeJiYi) });
+
+
+        humanList_chara.AddRange(new Type[] { typeof(DiKaDe) ,typeof(LongDuanGongSi) });
         //仿生人全部词条
         humanList_all.AddRange(humanList_verb);
         humanList_all.AddRange(humanList_adj);
@@ -273,6 +280,8 @@ public static class AllSkills
         maYiDiGuoList_adj.AddRange(new Type[] {typeof(HunFei),typeof(HaoZhan),typeof(SheHuiHua)});
         //蚂蚁帝国添加名词词条
         maYiDiGuoList_noun.AddRange(new Type[] { typeof(WaiGuGe),typeof(DuXian),});
+
+        maYiDiGuoList_chara.AddRange(new Type[] { typeof(BeiLuoJi) });
         //蚂蚁帝国全部词条
         maYiDiGuoList_all.AddRange(maYiDiGuoList_verb);
         maYiDiGuoList_all.AddRange(maYiDiGuoList_adj);
@@ -285,6 +294,8 @@ public static class AllSkills
             typeof(JianRuPanShi),typeof(ZhongDu),typeof(YeSheng)});
         //通用添加名词词条
         commonList_noun.AddRange(new Type[] { typeof(FuTouAxe),typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui)});
+
+        commonList_chara.AddRange(new Type[] { typeof(Rat) });
         //通用全部词条
         commonList_all.AddRange(commonList_verb);
         commonList_all.AddRange(commonList_adj);

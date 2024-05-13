@@ -385,8 +385,8 @@ MonoBehaviour:
   resName: 
   resTitleBg: WordImage/wordTitle/
   tepTBSprite: {fileID: 0}
-  defaultWordImage: {fileID: 21300000, guid: c7894e92816b6ec4d93511f7b5db37d6, type: 3}
-  defaultWordTitleImage: {fileID: 0}
+  defaultWordImage: {fileID: 21300000, guid: bef128d4e07381943a7909397f3a70bc, type: 3}
+  defaultWordTitleImage: {fileID: 21300000, guid: 46dc1776f6668374da8a9de93355f3af, type: 3}
   detailInfoPrefab: {fileID: 3068904079096217980, guid: a8fde104be3025b4b9687d94a15ced9d, type: 3}
   detailParent: {fileID: 0}
 --- !u!1 &1934018598177128833
@@ -831,7 +831,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 493.8, y: -683}
+  m_AnchoredPosition: {x: 493.8, y: -713}
   m_SizeDelta: {x: 201.13, y: 153.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1934018599848373680
@@ -863,9 +863,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 0ecacdb66a471fc479af16dbed03be71, type: 3}
     m_FontSize: 124
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 158

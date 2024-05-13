@@ -198,13 +198,13 @@ public class CreateOneCharacter : MonoBehaviour
     private void StartGame()
     {
          //开启枪体
-            wallP.SetActive(true);
+        wallP.SetActive(true);
 
             //将UICanvas隐藏
-            GameObject.Find("UICanvas").SetActive(false);
+        GameObject.Find("UICanvas").SetActive(false);
 
             //触发进度条开始开关
-            GameObject.Find("GameProcess").GetComponent<GameProcessSlider>().ProcessStart();
+        GameObject.Find("GameProcess").GetComponent<GameProcessSlider>().ProcessStart();
 
         //装载一个shooter
         if (SceneManager.GetActiveScene().name == "ShootCombat") {
@@ -218,7 +218,7 @@ public class CreateOneCharacter : MonoBehaviour
 /*            a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0]+"");
             a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1]+"");
             a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[2]+"");
-*/
+            */
         }
         else GameObject.Find("shooter").GetComponent<TestShoot>().ReadyWordBullet();
         // 将所有站位颜色隐藏
@@ -257,13 +257,19 @@ public class CreateOneCharacter : MonoBehaviour
 
 
         }
+
+  
         //恢复暂停
         CharacterManager.instance.pause = false;
-        GameMgr.instance.PlayCG("ElecSheep_start1", 0.5f);
+
+
+        if (temp) return;
+            GameMgr.instance.PlayCG("ElecSheep_start1", 0.5f);
+        temp = true;
 
 
     }
-
+    bool temp = false;
   
 
     private bool isKeyCharacter(int number)

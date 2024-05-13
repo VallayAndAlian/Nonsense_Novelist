@@ -116,6 +116,7 @@ public class Shoot : MonoBehaviour
     /// </summary>
     public void ReadyWordBullet()
     {
+       
         bulletInstance = Instantiate(bullet);
 
         //预制体相关
@@ -129,6 +130,7 @@ public class Shoot : MonoBehaviour
         abs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>().absWord = 
             bulletInstance.AddComponent(GameMgr.instance.GetNowListOne()) as AbstractWord0;*/
         
+       
         if (CreateOneCharacter.isStart)//true，开始之后抽一个
         {
             //给小球增加词条属性【测试】
@@ -172,7 +174,9 @@ public class Shoot : MonoBehaviour
         
         //清空待使用牌库第一个
         GameMgr.instance.wordGoingUseList.RemoveAt(0);
-      
+        print("ReadyWordBullet");
+        GameMgr.instance.RefreshNowList();
+
         //槽位变量
         wordCount--;
         isShoot = true;

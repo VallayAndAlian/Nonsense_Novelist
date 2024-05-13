@@ -4824,7 +4824,6 @@ MonoBehaviour:
   - {fileID: 3837959891539934793, guid: b9059efde06d6ef4b8309bcd90b7a2b3, type: 3}
   - {fileID: 3837959891539934793, guid: c9ae580301a94814990ff9116453146c, type: 3}
   - {fileID: 3837959891539934793, guid: 3ec6d85e4a8c60f4f96b0be7db47687a, type: 3}
-  - {fileID: 3837959891539934793, guid: f91325c4d325edd4baf5db16f3be8566, type: 3}
   text: {fileID: 2005642563}
   wallP: {fileID: 2042183113}
   beforeScale: 20
@@ -5378,7 +5377,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 41608ee917178f34897f8796992ec14a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c39a360acadf76d42addfe3e1951ca8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7823,7 +7822,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6d9c47d24b74bc649bcdbfaee29297cc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60e94fc367e047f499440ab745947397, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -8064,7 +8063,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1b667b2a6a72a534abd1afbf87b61d87, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60e94fc367e047f499440ab745947397, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -9222,7 +9221,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6281a430839f58f41ad586c7e4fbb495, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60e94fc367e047f499440ab745947397, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -10163,7 +10162,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c1049d6bd9ba67d4b8fbacc405f4f347, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c39a360acadf76d42addfe3e1951ca8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -11527,7 +11526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &968807343
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12974,7 +12973,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5120bc95f62be6e46a73bee27f78f286, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c39a360acadf76d42addfe3e1951ca8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -14954,9 +14953,17 @@ MonoBehaviour:
   time_stage:
   - type: 2
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    t_eventCount: 1
+    t_eventCount: 2
     t_eventKey: 0
-    time: 20
+    time: 10
+    image: {fileID: 0}
+    time_count: 0
+    level: 1
+  - type: 2
+    t_boss: {fileID: 0}
+    t_eventCount: 3
+    t_eventKey: 0
+    time: 10
     image: {fileID: 0}
     time_count: 0
     level: 1
@@ -14969,27 +14976,27 @@ MonoBehaviour:
     time_count: 0
     level: 1
   - type: 2
-    t_boss: {fileID: 0}
-    t_eventCount: 2
-    t_eventKey: 0
-    time: 20
-    image: {fileID: 0}
-    time_count: 0
-    level: 1
-  - type: 1
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    t_eventCount: 0
+    t_eventCount: 3
     t_eventKey: 0
-    time: 20
-    image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
+    time: 10
+    image: {fileID: 0}
     time_count: 0
     level: 2
   - type: 2
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
     t_eventCount: 3
     t_eventKey: 0
-    time: 20
+    time: 10
     image: {fileID: 0}
+    time_count: 0
+    level: 2
+  - type: 1
+    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
+    t_eventCount: 3
+    t_eventKey: 0
+    time: 20
+    image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
     time_count: 0
     level: 2
   - type: 0
@@ -15034,12 +15041,12 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: 7864ab0c371e01e46bbcfd4ce474aff3, type: 3}
   eventTime: 3
   keyEventTime: 3
-  xiWang: 20
+  xiWang: 10
   fangKe: 20
-  yiWai: 15
-  weiJi: 15
-  jiaoYi: 15
-  changJing: 15
+  yiWai: 20
+  weiJi: 10
+  jiaoYi: 20
+  changJing: 20
 --- !u!114 &1338572143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17977,7 +17984,7 @@ MonoBehaviour:
   EventCGAnim: {fileID: 968807345}
   levelController: {fileID: 1277053071}
   eventHappen: 0
-  playEventCG: 0
+  playEventCG: 1
   data: {fileID: 11400000, guid: 64f4a988bfcaffc4bb0e54ec850073ff, type: 2}
   monsterDate: {fileID: 11400000, guid: 5a21041f03b31df419fd1b9f2ac3e93d, type: 2}
   cardRareDate: {fileID: 11400000, guid: 79a948a4801e85e4f875efab0be8228b, type: 2}
@@ -18870,7 +18877,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 2a2f77627ba19ff409bab83d3bccfac0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60e94fc367e047f499440ab745947397, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -20044,7 +20051,7 @@ SpriteRenderer:
   m_SortingLayerID: 1069493185
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d0dddabac7202aa4985e867c22615082, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c39a360acadf76d42addfe3e1951ca8d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -23696,7 +23703,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 0ecacdb66a471fc479af16dbed03be71, type: 3}
     m_FontSize: 124
     m_FontStyle: 1
     m_BestFit: 0
@@ -24074,8 +24081,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.65}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -39.6, y: 37.9}
-  m_SizeDelta: {x: 1472.4, y: 306.9}
+  m_AnchoredPosition: {x: -26.3, y: 3.9}
+  m_SizeDelta: {x: 1310.6, y: 347.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1236676224950006179
 CanvasRenderer:

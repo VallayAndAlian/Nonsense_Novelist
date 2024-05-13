@@ -129,6 +129,7 @@ public class GameProcessSlider : MonoBehaviour
     {
         if (CharacterManager.instance.pause) return;
 
+        //CharacterManager.instance.EndGame();
         if (!countTime)//当countTime=false时进入if
         {
             if (CharacterManager.instance.GetStranger() == null)
@@ -137,8 +138,11 @@ public class GameProcessSlider : MonoBehaviour
                 {
                     countTime = true; hasWeiji = false;
                 }
-                    
-           
+                if (hasWeiji)
+                {
+                    countTime = true; hasWeiji = false;
+                }
+
             }
             return;
         }
@@ -152,12 +156,13 @@ public class GameProcessSlider : MonoBehaviour
         //如果超出
         if (stageCount >= time_stage.Length)
         {
-  
+  Debug.LogWarning("time_stage overCount!");
             CharacterManager.instance.EndGame();
-            Debug.LogWarning("time_stage overCount!");
+            
             countTime = false;
+            return;
         }
-        return;
+        
 
         //如果进入阶段
         if (timeNow > time_stage[stageCount].time_count)
@@ -172,7 +177,8 @@ public class GameProcessSlider : MonoBehaviour
                 if (time_stage[stageCount].t_boss != null)
                 {
                     CreateBoss(time_stage[stageCount].t_boss); 
-                    countTime = false;
+                    countTime = false; 
+                    StartCoroutine(Wait_Weiji());
                 }
                stageCount++;
             }

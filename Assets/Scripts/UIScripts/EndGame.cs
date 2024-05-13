@@ -223,6 +223,7 @@ public class EndGame : MonoBehaviour
     public void BackToStudyScene()
     {
         RecordMgr.instance.AddRecord(titleName, GameMgr.instance.draftUi.MergeContent_A(), 2);
+        gameObject.GetComponent<LoadingScene>().EnterNextScene();
     }
     public void ChangeText()
     {

@@ -161,6 +161,22 @@ public class CharacterDetail : MonoBehaviour
                     san.text = "3";
                 }
                 break;
+            case "ShaLeMei":
+                {
+                    Sprite _s2 = Resources.Load<Sprite>(spriteAdr + "莎乐美");
+                    if (_s2 == null) _s2 = Resources.Load<Sprite>(spriteAdr + "莎乐美");
+                    sprite.sprite = _s2;
+
+                    nameText.text = "莎乐美";
+                    roleName.text = "莎乐美";
+                    roleInfo.text = "释放技能后，攻击附带”意乱“";
+
+                    atk.text = "5";
+                    def.text = "3";
+                    psy.text = "3";
+                    san.text = "3";
+                }
+                break;
             case "LongDuanGongSi":
                 {
                     Sprite _s2 = Resources.Load<Sprite>(spriteAdr + "垄断公司");
@@ -225,22 +241,54 @@ public class CharacterDetail : MonoBehaviour
                     san.text = "4";
                 }
                 break;
-            /*case "BenJieShiDui":
-                {
-                    Sprite _s2 = Resources.Load<Sprite>(spriteAdr + "随从：本杰士堆");
-                    if (_s2 == null) _s2 = Resources.Load<Sprite>(spriteAdr + "随从：本杰士堆");
-                    sprite.sprite = _s2;
+            //case "JingCha":
+            //    {
+            //        Sprite _s2 = Resources.Load<Sprite>(spriteAdr + "失恋");
+            //        if (_s2 == null) _s2 = Resources.Load<Sprite>(spriteAdr + "失恋");
+            //        sprite.sprite = _s2;
 
-                    nameText.text = "随从：本杰士堆";
-                    roleName.text = "再生";
-                    roleInfo.text = "每次复活攻击+3防御+6，出场获得“复活”";
+            //        nameText.text = "失恋";
+            //        roleName.text = "负面情绪";
+            //        roleInfo.text = "攻击有几率让对方沮丧";
 
-                    atk.text = "3";
-                    def.text = "5";
-                    psy.text = "3";
-                    san.text = "3";
-                }
-                break;*/
+            //        atk.text = "3";
+            //        def.text = "3";
+            //        psy.text = "4";
+            //        san.text = "4";
+            //    }
+            //    break;
+            //case "FangSheXingWeiCheng":
+            //    {
+            //        Sprite _s2 = Resources.Load<Sprite>(spriteAdr + "失恋");
+            //        if (_s2 == null) _s2 = Resources.Load<Sprite>(spriteAdr + "失恋");
+            //        sprite.sprite = _s2;
+
+            //        nameText.text = "失恋";
+            //        roleName.text = "负面情绪";
+            //        roleInfo.text = "攻击有几率让对方沮丧";
+
+            //        atk.text = "3";
+            //        def.text = "3";
+            //        psy.text = "4";
+            //        san.text = "4";
+            //    }
+            //    break;
+                /*case "BenJieShiDui":
+                    {
+                        Sprite _s2 = Resources.Load<Sprite>(spriteAdr + "随从：本杰士堆");
+                        if (_s2 == null) _s2 = Resources.Load<Sprite>(spriteAdr + "随从：本杰士堆");
+                        sprite.sprite = _s2;
+
+                        nameText.text = "随从：本杰士堆";
+                        roleName.text = "再生";
+                        roleInfo.text = "每次复活攻击+3防御+6，出场获得“复活”";
+
+                        atk.text = "3";
+                        def.text = "5";
+                        psy.text = "3";
+                        san.text = "3";
+                    }
+                    break;*/
         }
     }
 

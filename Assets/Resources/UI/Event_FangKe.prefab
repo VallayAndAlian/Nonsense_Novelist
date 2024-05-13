@@ -580,6 +580,7 @@ MonoBehaviour:
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
   JY_chooseWord: {fileID: 0}
+  WJ_static: 0
 --- !u!95 &619641254747177806
 Animator:
   serializedVersion: 5

@@ -399,7 +399,7 @@ public class EventUI : MonoBehaviour
             //显示书本图画
             var book = (BookNameEnum)int.Parse(_rb.ToString());
             cardParent.GetChild(i).GetComponent<Image>().sprite = Resources.Load<Sprite>("WordImage/Book/" + book.ToString());
-
+            cardParent.GetChild(i).GetComponent<Image>().SetNativeSize();
             if (i == 1) ClickWord_XW(cardParent.GetChild(i).gameObject);
 
             //随机抽取词组

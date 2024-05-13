@@ -118,6 +118,7 @@ public class ShooterWordCheck : MonoBehaviour
         var list2 = GameMgr.instance.GetHasUsedList().OrderBy(it => it.Name).ToList();
         foreach (var _word in list2)
         {
+            
             PoolMgr.GetInstance().GetObj(word_item, (obj) =>
             {
                 var word = obj.AddComponent(_word) as AbstractWord0;

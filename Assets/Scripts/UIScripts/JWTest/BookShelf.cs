@@ -6,6 +6,7 @@ using TMPro;
 using System.Diagnostics;
 using UnityEngine.UIElements;
 
+
 public class BookShelf : MonoBehaviour
 {
     [Header("手动设置书籍顺序（要与panel顺序对应）")]
@@ -16,6 +17,7 @@ public class BookShelf : MonoBehaviour
     public GameObject prefab_wordinf;
     public GameObject prefab_chara;
     public GameObject prefab_setting;
+    public TextMeshProUGUI text;
 
     //private UnityEngine.UI.Toggle toggle;
     void Start()
@@ -39,7 +41,8 @@ public class BookShelf : MonoBehaviour
         {
             if (buttonSelf.name == BookNameEnum.HongLouMeng.ToString())
             {//打开红楼梦页面+默认显示全部红楼梦词条
-                panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(true);
+                panels[0].gameObject.SetActive(true);
+                text.text = "红楼梦";
                 //角色
                 CharaShow(AllSkills.hlmList_chara, BookNameEnum.HongLouMeng);
                 //名+动+形
@@ -49,21 +52,89 @@ public class BookShelf : MonoBehaviour
                 //设定(先不写)
 
             }
-            else if (buttonSelf.name == books[1].name)
+            else if (buttonSelf.name == BookNameEnum.ZooManual.ToString())
             {
-                panels[1].gameObject.SetActive(true);
+                //打开红楼梦页面+默认显示全部红楼梦词条
+                panels[0].gameObject.SetActive(true);
+                text.text = "动物园丰容手册";
+                //角色
+                CharaShow(AllSkills.animalList_chara, BookNameEnum.ZooManual);
+                //名+动+形
+                InsWords(AllSkills.animalList_noun, WordKindEnum.noun, BookNameEnum.ZooManual);//231
+                InsWords(AllSkills.animalList_verb, WordKindEnum.verb, BookNameEnum.ZooManual);
+                InsWords(AllSkills.animalList_adj, WordKindEnum.adj, BookNameEnum.ZooManual);
             }
-            else if (buttonSelf.name == books[2].name)
+            else if (buttonSelf.name == BookNameEnum.Salome.ToString())
             {
-                panels[2].gameObject.SetActive(true);
+                //打开红楼梦页面+默认显示全部红楼梦词条
+                panels[0].gameObject.SetActive(true);
+                text.text = "莎乐美";
+                //角色
+                CharaShow(AllSkills.shaLeMeiList_chara, BookNameEnum.Salome);
+                //名+动+形
+                InsWords(AllSkills.shaLeMeiList_noun, WordKindEnum.noun, BookNameEnum.Salome);//231
+                InsWords(AllSkills.shaLeMeiList_verb, WordKindEnum.verb, BookNameEnum.Salome);
+                InsWords(AllSkills.shaLeMeiList_adj, WordKindEnum.adj, BookNameEnum.Salome);
             }
-            else if (buttonSelf.name == books[3].name)
+            else if (buttonSelf.name == BookNameEnum.CrystalEnergy.ToString())
             {
-                panels[3].gameObject.SetActive(true);
+                //打开红楼梦页面+默认显示全部红楼梦词条
+                panels[0].gameObject.SetActive(true);
+                text.text = "水晶能量疗愈";
+                //角色
+                CharaShow(AllSkills.crystalList_chara, BookNameEnum.CrystalEnergy);
+                //名+动+形
+                InsWords(AllSkills.crystalList_noun, WordKindEnum.noun, BookNameEnum.CrystalEnergy);//231
+                InsWords(AllSkills.crystalList_verb, WordKindEnum.verb, BookNameEnum.CrystalEnergy);
+                InsWords(AllSkills.crystalList_adj, WordKindEnum.adj, BookNameEnum.CrystalEnergy);
             }
-            else if (buttonSelf.name == books[4].name)
+            else if (buttonSelf.name == BookNameEnum.PHXTwist.ToString())
             {
-                panels[4].gameObject.SetActive(true);
+                //打开红楼梦页面+默认显示全部红楼梦词条
+                panels[0].gameObject.SetActive(true);
+                text.text = "蚂蚁帝国";
+                //角色
+                CharaShow(AllSkills.maYiDiGuoList_chara, BookNameEnum.PHXTwist);
+                //名+动+形
+                InsWords(AllSkills.maYiDiGuoList_noun, WordKindEnum.noun, BookNameEnum.PHXTwist);//231
+                InsWords(AllSkills.maYiDiGuoList_verb, WordKindEnum.verb, BookNameEnum.PHXTwist);
+                InsWords(AllSkills.maYiDiGuoList_adj, WordKindEnum.adj, BookNameEnum.PHXTwist);
+            }
+            else if (buttonSelf.name == BookNameEnum.ElectronicGoal.ToString())
+            {
+                //打开红楼梦页面+默认显示全部红楼梦词条
+                panels[0].gameObject.SetActive(true);
+                text.text = "仿生人会梦到电子羊吗";
+                //角色
+                CharaShow(AllSkills.humanList_chara, BookNameEnum.ElectronicGoal);
+                //名+动+形
+                InsWords(AllSkills.humanList_noun, WordKindEnum.noun, BookNameEnum.ElectronicGoal);//231
+                InsWords(AllSkills.humanList_verb, WordKindEnum.verb, BookNameEnum.ElectronicGoal);
+                InsWords(AllSkills.humanList_adj, WordKindEnum.adj, BookNameEnum.ElectronicGoal);
+            }
+            else if (buttonSelf.name == BookNameEnum.allBooks.ToString())
+            {
+                //打开红楼梦页面+默认显示全部红楼梦词条
+                panels[0].gameObject.SetActive(true);
+                text.text = "字典";
+                //角色
+                CharaShow(AllSkills.commonList_chara, BookNameEnum.allBooks);
+                //名+动+形
+                InsWords(AllSkills.commonList_noun, WordKindEnum.noun, BookNameEnum.allBooks);//231
+                InsWords(AllSkills.commonList_verb, WordKindEnum.verb, BookNameEnum.allBooks);
+                InsWords(AllSkills.commonList_adj, WordKindEnum.adj, BookNameEnum.allBooks);
+            }
+            else if (buttonSelf.name == BookNameEnum.FluStudy.ToString())
+            {
+                //打开红楼梦页面+默认显示全部红楼梦词条
+                panels[0].gameObject.SetActive(true);
+                text.text = "流行病毒";
+                //角色
+                CharaShow(AllSkills.liuXingBXList_chara, BookNameEnum.FluStudy);
+                //名+动+形
+                InsWords(AllSkills.liuXingBXList_noun, WordKindEnum.noun, BookNameEnum.FluStudy);//231
+                InsWords(AllSkills.liuXingBXList_verb, WordKindEnum.verb, BookNameEnum.FluStudy);
+                InsWords(AllSkills.liuXingBXList_adj, WordKindEnum.adj, BookNameEnum.FluStudy);
             }
         }
         
@@ -108,12 +179,12 @@ public class BookShelf : MonoBehaviour
         {
             case "HLM":
                 {
-                    panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(false);
+                    panels[0].gameObject.SetActive(false);
                 }
                 break;
             case "JJJ":
                 {
-                    panels[(int)BookNameEnum.HongLouMeng].gameObject.SetActive(false);
+                    panels[0].gameObject.SetActive(false);
                 }
                 break;
         }
@@ -309,22 +380,23 @@ public class BookShelf : MonoBehaviour
                         {
                             var _word = obj.AddComponent(word) as AbstractWord0;
                             //卡牌信息
-                            WordInformation jiuwei = obj.GetComponent<WordInformation>();
-                            jiuwei.wordkindText.text = jiuwei.textAdj;
-                            jiuwei.resName = obj.GetComponent<WordInformation>().resAdrAdj + "adj_" + ((AbstractAdjectives)_word).adjID;
-                            jiuwei.tepSprite = Resources.Load<Sprite>(jiuwei.resName);
-                            if (jiuwei.tepSprite == null)
-                            { jiuwei.wordImage.sprite = obj.GetComponent<WordInformation>().defaultWordImage; }
-                            else
-                                jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
-                            //
-                            if (panels[(int)_book].gameObject.transform.Find("wordPL").childCount < 9)
+                            //WordInformation jiuwei = obj.GetComponent<WordInformation>();
+                            //jiuwei.wordkindText.text = jiuwei.textAdj;
+                            //jiuwei.resName = obj.GetComponent<WordInformation>().resAdrAdj + "adj_" + ((AbstractAdjectives)_word).adjID;
+                            //jiuwei.tepSprite = Resources.Load<Sprite>(jiuwei.resName);
+                            //if (jiuwei.tepSprite == null)
+                            //{ jiuwei.wordImage.sprite = obj.GetComponent<WordInformation>().defaultWordImage; }
+                            //else
+                            //    jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
+                            ////
+                              obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
+                            if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
                             {
-                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPL");
+                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                             }
                             else
                             {
-                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPR");
+                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
                             }
                             obj.transform.localScale = Vector3.one * 0.1f;
                         });
@@ -339,23 +411,24 @@ public class BookShelf : MonoBehaviour
                         {
                             var _word = obj.AddComponent(word) as AbstractWord0;
                             //卡牌信息
-                            WordInformation jiuwei = obj.GetComponent<WordInformation>();
-                            jiuwei.wordkindText.text = jiuwei.textNoun;
+                            //WordInformation jiuwei = obj.GetComponent<WordInformation>();
+                            //jiuwei.wordkindText.text = jiuwei.textNoun;
 
-                            jiuwei.resName = jiuwei.resAdrNoun + "n_" + ((AbstractItems)_word).itemID;
-                            jiuwei.tepSprite = Resources.Load<Sprite>(jiuwei.resName);
-                            if (jiuwei.tepSprite == null)
-                                jiuwei.wordImage.sprite = jiuwei.defaultWordImage;
-                            else
-                                jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
-                            //
-                            if (panels[(int)_book].gameObject.transform.Find("wordPL").childCount < 9)
+                            //jiuwei.resName = jiuwei.resAdrNoun + "n_" + ((AbstractItems)_word).itemID;
+                            //jiuwei.tepSprite = Resources.Load<Sprite>(jiuwei.resName);
+                            //if (jiuwei.tepSprite == null)
+                            //    jiuwei.wordImage.sprite = jiuwei.defaultWordImage;
+                            //else
+                            //    jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
+                            ////
+                             obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
+                            if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
                             {
-                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPL");
+                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                             }
                             else
                             {
-                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPR");
+                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
                             }
                             obj.transform.localScale = Vector3.one * 0.1f;
                         });
@@ -370,23 +443,24 @@ public class BookShelf : MonoBehaviour
                         {
                             var _word = obj.AddComponent(word) as AbstractWord0;
                             //卡牌信息
-                            WordInformation jiuwei = obj.GetComponent<WordInformation>();
-                            jiuwei.wordkindText.text = jiuwei.textVerb;
+                            //WordInformation jiuwei = obj.GetComponent<WordInformation>();
+                            //jiuwei.wordkindText.text = jiuwei.textVerb;
 
-                            jiuwei.resName = jiuwei.resAdrVerb + "v_" + ((AbstractVerbs)_word).skillID;
-                            jiuwei.tepSprite = Resources.Load<Sprite>(jiuwei.resName);
-                            if (jiuwei.tepSprite == null)
-                                jiuwei.wordImage.sprite = jiuwei.defaultWordImage;
-                            else
-                                jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
+                            //jiuwei.resName = jiuwei.resAdrVerb + "v_" + ((AbstractVerbs)_word).skillID;
+                            //jiuwei.tepSprite = Resources.Load<Sprite>(jiuwei.resName);
+                            //if (jiuwei.tepSprite == null)
+                            //    jiuwei.wordImage.sprite = jiuwei.defaultWordImage;
+                            //else
+                            //    jiuwei.wordImage.sprite = Resources.Load<Sprite>(jiuwei.resName);
                             //
-                            if (panels[(int)_book].gameObject.transform.Find("wordPL").childCount < 9)
+                            obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
+                            if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
                             {
-                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPL");
+                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                             }
                             else
                             {
-                                obj.transform.parent = panels[(int)_book].gameObject.transform.Find("wordPR");
+                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
                             }
                             obj.transform.localScale = Vector3.one * 0.1f;
                         });
@@ -408,13 +482,13 @@ public class BookShelf : MonoBehaviour
                 //卡牌信息
                 obj.GetComponent<CharacterDetail>().OpenName(chara.Name);
                 //
-                if (panels[(int)bookKind].gameObject.transform.Find("wordPL").childCount < 9)
+                if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
                 {
-                    obj.transform.parent = panels[(int)bookKind].gameObject.transform.Find("wordPL");
+                    obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                 }
                 else
                 {
-                    obj.transform.parent = panels[(int)bookKind].gameObject.transform.Find("wordPR");
+                    obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
                 }
                 obj.transform.localScale = Vector3.one * 0.42f;
             });

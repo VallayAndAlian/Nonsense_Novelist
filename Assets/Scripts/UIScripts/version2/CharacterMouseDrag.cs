@@ -265,7 +265,7 @@ public class CharacterMouseDrag : MonoBehaviour
         if (lastParentTF.gameObject.GetComponent<SpriteRenderer>())
             lastParentTF.gameObject.GetComponent<SpriteRenderer>().color = colorOnMouseExit;
         if (nowParentTF.gameObject.GetComponent<SpriteRenderer>())
-            nowParentTF.gameObject.GetComponent<SpriteRenderer>().color = Color.grey;
+            nowParentTF.gameObject.GetComponent<SpriteRenderer>().color = Vector4.zero;
 
 
         //根据站位给角色站位赋值

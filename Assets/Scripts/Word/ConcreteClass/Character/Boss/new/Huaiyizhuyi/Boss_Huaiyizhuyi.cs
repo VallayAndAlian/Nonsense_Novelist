@@ -22,7 +22,7 @@ override public void Awake()
         bookName = BookNameEnum.allBooks;
         gender = GenderEnum.noGender;
         camp = CampEnum.stranger;
-        hp =maxHp  =300;
+        hp =maxHp  =200;
         atk = 10;
         def = 15;
         psy = 10;
