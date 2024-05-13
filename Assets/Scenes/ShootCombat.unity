@@ -14975,28 +14975,12 @@ MonoBehaviour:
     image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
     time_count: 0
     level: 1
-  - type: 2
-    t_boss: {fileID: 0}
-    t_eventCount: 2
-    t_eventKey: 0
-    time: 10
-    image: {fileID: 0}
-    time_count: 0
-    level: 1
-  - type: 2
-    t_boss: {fileID: 0}
-    t_eventCount: 2
-    t_eventKey: 0
-    time: 10
-    image: {fileID: 0}
-    time_count: 0
-    level: 1
   - type: 1
-    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    t_eventCount: 3
+    t_boss: {fileID: 0}
+    t_eventCount: 2
     t_eventKey: 0
     time: 20
-    image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
+    image: {fileID: 21300000, guid: 31bd60e587e479b4fbc68aad50ca24f3, type: 3}
     time_count: 0
     level: 2
   - type: 0

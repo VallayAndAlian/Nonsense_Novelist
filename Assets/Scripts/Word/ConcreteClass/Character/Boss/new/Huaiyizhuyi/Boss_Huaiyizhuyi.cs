@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 class Boss_Huaiyizhuyi : AbstractCharacter
 {
-
-  
     private bool hasLowThanHalf = false;
 
     private GameObject hpslider;
@@ -126,15 +124,19 @@ override public void Awake()
 
         }
     }
+
+
+
     private void OnDestroy()
     {
+        print("1");
+        //gameProcess.BossDie();
+        //Destroy(CharacterManager.instance.gameObject.GetComponentInChildren<CaiYi>());
+        //Destroy(hpslider);
+        //Destroy(skillText[0]);
+        //Destroy(skillText[2]);
+        //Destroy(skillText[1]);
 
-        gameProcess.BossDie();
-       Destroy( CharacterManager.instance.gameObject.GetComponentInChildren<CaiYi>());
-        Destroy(hpslider);
-        Destroy(skillText[0]);
-        Destroy(skillText[2]);
-        Destroy(skillText[1]);
     }
     //public override bool AttackA()
     //{
