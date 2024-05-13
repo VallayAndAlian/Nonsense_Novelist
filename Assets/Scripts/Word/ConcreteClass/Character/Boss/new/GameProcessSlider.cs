@@ -150,7 +150,7 @@ public class GameProcessSlider : MonoBehaviour
         sliderProcess.value = timeNow;
 
         //Èç¹û³¬³ö
-        if (stageCount >= 0)
+        if (stageCount >= time_stage.Length)
         {
   
             CharacterManager.instance.EndGame();
