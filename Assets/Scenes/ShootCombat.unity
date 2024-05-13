@@ -14952,8 +14952,8 @@ MonoBehaviour:
   perfab_icon: {fileID: 4963443990303953719, guid: 3655b1b5195bfcd4890c66c76f9d3c32, type: 3}
   time_stage:
   - type: 2
-    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    t_eventCount: 2
+    t_boss: {fileID: 0}
+    t_eventCount: 3
     t_eventKey: 0
     time: 10
     image: {fileID: 0}
@@ -14976,21 +14976,21 @@ MonoBehaviour:
     time_count: 0
     level: 1
   - type: 2
-    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    t_eventCount: 3
+    t_boss: {fileID: 0}
+    t_eventCount: 2
     t_eventKey: 0
     time: 10
     image: {fileID: 0}
     time_count: 0
-    level: 2
+    level: 1
   - type: 2
-    t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
-    t_eventCount: 3
+    t_boss: {fileID: 0}
+    t_eventCount: 2
     t_eventKey: 0
     time: 10
     image: {fileID: 0}
     time_count: 0
-    level: 2
+    level: 1
   - type: 1
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
     t_eventCount: 3
@@ -15043,10 +15043,10 @@ MonoBehaviour:
   keyEventTime: 3
   xiWang: 10
   fangKe: 20
-  yiWai: 20
+  yiWai: 0
   weiJi: 10
   jiaoYi: 20
-  changJing: 20
+  changJing: 40
 --- !u!114 &1338572143
 MonoBehaviour:
   m_ObjectHideFlags: 0

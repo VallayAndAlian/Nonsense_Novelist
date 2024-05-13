@@ -138,10 +138,7 @@ public class GameProcessSlider : MonoBehaviour
                 {
                     countTime = true; hasWeiji = false;
                 }
-                if (hasWeiji)
-                {
-                    countTime = true; hasWeiji = false;
-                }
+
 
             }
             return;
@@ -156,8 +153,8 @@ public class GameProcessSlider : MonoBehaviour
         //Èç¹û³¬³ö
         if (stageCount >= time_stage.Length)
         {
-  Debug.LogWarning("time_stage overCount!");
-            CharacterManager.instance.EndGame();
+            Debug.LogWarning("time_stage overCount!");
+           
             
             countTime = false;
             return;
@@ -178,7 +175,7 @@ public class GameProcessSlider : MonoBehaviour
                 {
                     CreateBoss(time_stage[stageCount].t_boss); 
                     countTime = false; 
-                    StartCoroutine(Wait_Weiji());
+                    //StartCoroutine(Wait_Weiji());
                 }
                stageCount++;
             }
@@ -262,6 +259,7 @@ public class GameProcessSlider : MonoBehaviour
     }
     public void BossDie()
     {
+        CharacterManager.instance.EndGame();
         this.transform.localScale = oriScale;
         //CreateBookCanvas();
     }
