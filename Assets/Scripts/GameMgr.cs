@@ -121,7 +121,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         canHappenData_Key.Clear();
         leftData.Clear();
     
-        foreach (var _t in data.items)
+        foreach (var _t in AllData.data.items)
         {
             if ((_t.textTrigger == null)|| (_t.textTrigger ==""))
             {
@@ -188,21 +188,14 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     private int stageIndex = 0;//游戏阶段
 
-    [Header("数据")]
-    public static test1ExcelData data= AssetDatabase.LoadAssetAtPath<test1ExcelData>(@"Assets/Resources/ExcelAsset/test1ExcelData.asset");
-        //do something
-    public static MonsterExcelData monsterDate = AssetDatabase.LoadAssetAtPath<MonsterExcelData>(@"Assets/Resources/ExcelAsset/MonsterExcelData.asset");
-    public static cardRareExcelData cardRareDate = AssetDatabase.LoadAssetAtPath<cardRareExcelData>(@"Assets/Resources/ExcelAsset/cardRareExcelData.asset");
-    public static CharaInfoExcelData charaInfo = AssetDatabase.LoadAssetAtPath<CharaInfoExcelData>(@"Assets/Resources/ExcelAsset/CharaInfoExcelData.asset");
-    
-
-
     private void Awake()
     {
         DealWithData();
         CardRes.SetActive(false);
         draftUi.InitContent();
         EventCGAnim.gameObject.SetActive(false);
+       
+
     }
 
     private void Start()
@@ -802,14 +795,14 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     private bool SetRareTo(int _stage)
     {
-        if (_stage >= cardRareDate.items.Length)
+        if (_stage >= AllData.cardRareDate.items.Length)
             return false;
 
         //这里默认数据顺序和表格一样。如果出错了，加上index检测
-        cardRate_1 = cardRareDate.items[_stage].rate1;
-        cardRate_2 = cardRareDate.items[_stage].rate2;
-        cardRate_3 = cardRareDate.items[_stage].rate3;
-        cardRate_4 = cardRareDate.items[_stage].rate4;
+        cardRate_1 = AllData.cardRareDate.items[_stage].rate1;
+        cardRate_2 = AllData.cardRareDate.items[_stage].rate2;
+        cardRate_3 = AllData.cardRareDate.items[_stage].rate3;
+        cardRate_4 = AllData.cardRareDate.items[_stage].rate4;
 
         return true;
     }
@@ -1012,9 +1005,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void CreateMonster(int id)
     {
         int _index = -1;
-        for (int ttt = 0; (ttt < monsterDate.items.Length)&&(_index!=-1);ttt++)
+        for (int ttt = 0; (ttt < AllData.monsterDate.items.Length)&&(_index!=-1);ttt++)
         {
-            if ((monsterDate.items[ttt].Mid == id)&&(monsterDate.items[ttt].name==stageIndex))
+            if ((AllData.monsterDate.items[ttt].Mid == id)&&(AllData.monsterDate.items[ttt].name==stageIndex))
             {
                 _index = ttt;
             }
@@ -1022,7 +1015,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         if (_index == -1) return;
 
-        var _data = monsterDate.items[_index];
+        var _data = AllData.monsterDate.items[_index];
         int _id = id - 110;
         var _monster = Instantiate<GameObject>(UiCanvas.GetComponent<CreateOneCharacter>().monsterPrefabs[_id]);
         var _mAc = _monster.GetComponent<AbstractCharacter>();

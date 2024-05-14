@@ -1154,9 +1154,9 @@ abstract public class AbstractCharacter : AbstractWord0
         }
 
         CharaInfoExcelItem data = null;
-        for (int i = 0; (i < GameMgr.charaInfo.items.Length) && (data == null); i++)
+        for (int i = 0; (i < AllData.charaInfo.items.Length) && (data == null); i++)
         {
-            var _data = GameMgr.charaInfo.items[i];
+            var _data = AllData.charaInfo.items[i];
             if (_data.typeName == this.GetType().Name)
             {
                 data = _data;
