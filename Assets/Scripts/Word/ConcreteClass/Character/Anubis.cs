@@ -10,34 +10,8 @@ class Anubis : AbstractCharacter
     float timer = 0;
     override public void Awake()
     {
- 
         base.Awake();
 
-        //基础信息
-        characterID = 7;
-        wordName = "阿努比斯";
-        bookName = BookNameEnum.EgyptMyth;
-        brief = "暂无文案";
-        description = "暂无文案";
-
-        //数值
-        hp = maxHp = 160;
-        atk = 3;
-        def = 3;
-        psy = 3;
-        san = 3;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "死神";
-        roleInfo = "恢复+5%";//每10秒，恢复5%最大生命值
         cureHpRate +=0.05f;
 
     }
@@ -63,7 +37,7 @@ class Anubis : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return "阿努比斯出场文本";
+            return " 阿努比斯拨弄天秤对亡者进行审判，心脏在天秤上微微跳动，“你的心脏是否轻如鸿毛？”";
         else
             return null;
     }

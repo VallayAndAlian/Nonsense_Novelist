@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+
+using UnityEditor;
 public class CustomList : List<string>
 {
     public new void Add(string item)
@@ -187,10 +189,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     private int stageIndex = 0;//ÓÎÏ·½×¶Î
 
     [Header("Êý¾Ý")]
-    public test1ExcelData data;
-    public MonsterExcelData monsterDate;
-    public cardRareExcelData cardRareDate;
-
+    public static test1ExcelData data= AssetDatabase.LoadAssetAtPath<test1ExcelData>(@"Assets/Resources/ExcelAsset/test1ExcelData.asset");
+        //do something
+    public static MonsterExcelData monsterDate = AssetDatabase.LoadAssetAtPath<MonsterExcelData>(@"Assets/Resources/ExcelAsset/MonsterExcelData.asset");
+    public static cardRareExcelData cardRareDate = AssetDatabase.LoadAssetAtPath<cardRareExcelData>(@"Assets/Resources/ExcelAsset/cardRareExcelData.asset");
+    public static CharaInfoExcelData charaInfo = AssetDatabase.LoadAssetAtPath<CharaInfoExcelData>(@"Assets/Resources/ExcelAsset/CharaInfoExcelData.asset");
+    
 
 
     private void Awake()

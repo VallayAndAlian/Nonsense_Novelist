@@ -13,31 +13,7 @@ class SiYangYuan : AbstractCharacter
 
         base.Awake();
 
-        //基础信息
-        characterID = 11;
-        wordName = "饲养员";
-        bookName = BookNameEnum.ZooManual;
-        brief = "暂无介绍";
-        description = "暂无介绍";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 0;
-        def = 5;
-        psy = 3;
-        san = 6;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "喂食";
-        roleInfo = "普通攻击有概率朝队友扔食物，恢复100%意志并赋予“亢奋”5s";//普通攻击有30%几率附带“亢奋”状态，持续5s
+       
         event_AttackA += ThrowFood;
     }
 
@@ -109,7 +85,7 @@ class SiYangYuan : AbstractCharacter
 
     public override string ShowText(AbstractCharacter otherChara)
     {
-        return otherChara + "出场文本";
+        return "饲养员的一天是从早上六点给考拉称重开始的，彼时考拉昏昏欲睡，饲养员强打精神，只有游客神采奕奕，看得津津有味。";
     }
     public override string CriticalText(AbstractCharacter otherChara)
     {

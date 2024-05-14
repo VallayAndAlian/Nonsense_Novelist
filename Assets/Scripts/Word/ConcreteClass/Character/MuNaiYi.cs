@@ -11,34 +11,6 @@ class MuNaiYi : AbstractCharacter
     {
         base.Awake();
 
-        //基础信息
-        characterID = 4;
-        wordName = "木乃伊";
-        bookName = BookNameEnum.EgyptMyth;
-        brief = "暂无文案";
-        description = "沉默者曾经是某个王国的贵族，从小便精通魔法的使用。" +
-            "据说在王国政权被颠覆之后他被叛逃者关在地牢里折磨，痛苦的嘶吼随着时日慢慢沉寂，" +
-            "直到他所有人性都被磨灭。而他身上的魔法能量也被扭曲，变得恶毒不堪。如今的它都蜷缩于阴暗的地窖里，练习着被巫师们唾弃的魔法。";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 3;
-        def = 5;
-        psy = 3;
-        san = 3;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "再生";
-        roleInfo = "每次复活攻击+3防御+6，出场获得“复活”";
-
 
     }
     NoHealthTrigger _nht = null;
@@ -96,7 +68,7 @@ class MuNaiYi : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return "自干燥的沙砾中伸出一只缠满绷带的手，木乃伊咳嗽着吐掉胸腔中的沙子，注视着永不熄灭的太阳骂了一声好热。";
+            return "自干燥的沙砾中伸出一只缠满绷带的手，木乃伊咳嗽着吐掉胸腔中的沙子，注视着永不熄灭的太阳叹了口气。";
         else
             return null;
     }

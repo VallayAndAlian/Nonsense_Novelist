@@ -10,19 +10,12 @@ public class PianJian : AbstractCharacter
     {
         base.Awake();
 
-        //基础信息
-        characterID = 113;
-        wordName = "偏见";
-        bookName = BookNameEnum.allBooks;
-        brief = "暂无文案";
-        description = "暂无文案";
-
         //读取数据
         MonsterExcelItem dataD = null;
         MonsterExcelItem data = null;
-        for (int i = 0; (i < GameMgr.instance.monsterDate.items.Length) && (data == null); i++)
+        for (int i = 0; (i < GameMgr.monsterDate.items.Length) && (data == null); i++)
         {
-            var _data = GameMgr.instance.monsterDate.items[i];
+            var _data = GameMgr.monsterDate.items[i];
             if (_data.Mid == characterID)
             {
                 if (dataD == null) dataD = _data;

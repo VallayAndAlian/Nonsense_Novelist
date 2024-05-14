@@ -11,33 +11,6 @@ class WangXiFeng : AbstractCharacter
 
         base.Awake();
 
-        //基础信息
-        characterID = 3;
-        wordName = "王熙凤";
-        bookName = BookNameEnum.HongLouMeng;
-        brief = "《红楼梦》中一位泼辣且极具备能力的女人。";
-        description = "王熙凤，曹雪芹所著中国古典小说《红楼梦》中的人物，\n金陵十二钗之一，贾琏的妻子。\n在贾府掌握实权，为人心狠手辣，八面玲珑，敢爱敢恨，做事决绝。" +
-            "\n因其深爱丈夫贾琏，故而十分善妒，暗中算计害死尤二姐。\n王熙凤在被休后王家不容她,在监牢里血崩病发,流尽鲜血而死。";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 3;
-        def = 5;
-        psy = 3;
-        san = 3;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "大家长";
-        roleInfo = "初始四维+5，每打败一次危机和boss，四维再+5";
-
         atk += 5;
         def += 5;
         psy += 5;
@@ -58,7 +31,7 @@ class WangXiFeng : AbstractCharacter
         if ((!hasAddGrow.Contains(type)) && (type == GrowType.psy))
         {
             hasAddGrow.Add(GrowType.psy);
-            string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
+            string it = "凤姐歪在填漆床上，挑开大红销金撒花帐子，指着下人轻喝，“若碰到一点儿，可仔细你的皮！”";
             GameMgr.instance.draftUi.AddContent(it);
             return it;
         }

@@ -10,32 +10,7 @@ class Rat : AbstractCharacter
     {
         base.Awake();
 
-        //基础信息
-        characterID = 6;
-        wordName = "老鼠";
-        bookName = BookNameEnum.allBooks;
-        brief = "肮脏且会偷窃物品的老鼠";
-        description = "暂无文案";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 3;
-        def = 5;
-        psy = 3;
-        san = 3;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "小偷";
-        roleInfo = "攻击可以偷取对方的名词";
-       
+      
         event_AttackA += GetNouns;
     }
 
@@ -84,7 +59,7 @@ class Rat : AbstractCharacter
 
     public override string ShowText(AbstractCharacter otherChara)
     {
-        return otherChara+"出场文本";
+        return "老鼠从下水道探出头，背后的包裹鼓鼓囊囊，显然此次出动收获颇丰。";
     }
 
     public override string CriticalText(AbstractCharacter otherChara)

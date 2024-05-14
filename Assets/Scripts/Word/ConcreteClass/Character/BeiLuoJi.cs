@@ -9,36 +9,8 @@ class BeiLuoJi : AbstractCharacter
 {
     override public void Awake()
     {
-        //isNaiMa = true;
 
         base.Awake();
-
-        //基础信息
-        characterID = 10;
-        wordName = "贝洛姬·姬妮";
-        bookName = BookNameEnum.PHXTwist;
-        brief = "暂无介绍";
-        description = "暂无介绍";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 0;
-        def = 4;
-        psy = 3;
-        san = 7;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "蚁后";
-        roleInfo = "每次普通攻击还会治疗2名队友70%意志";//普通攻击目标为3个低血量的队友，恢复70%意志的血量，不附带攻击攻击特效
-        myState.aimCount = 1;
         event_AttackA += Role;
     }
 
@@ -114,7 +86,7 @@ class BeiLuoJi : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return otherChara.wordName + "出场文本" ;
+            return "蚂蚁帝国有条不紊地运转，这都有赖贝洛姬·姬妮的精心筹谋。" ;
         else
             return null;
     }

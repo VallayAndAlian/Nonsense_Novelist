@@ -1153,7 +1153,40 @@ abstract public class AbstractCharacter : AbstractWord0
             attackA = gameObject.AddComponent<CureMode>();
         }
 
-        
+        CharaInfoExcelItem data = null;
+        for (int i = 0; (i < GameMgr.charaInfo.items.Length) && (data == null); i++)
+        {
+            var _data = GameMgr.charaInfo.items[i];
+            if (_data.typeName == this.GetType().Name)
+            {
+                data = _data;
+            }
+        }
+        if (data == null)
+            return;
+
+
+        //数值
+        hp = maxHp = data.maxhp;
+        atk = data.atk;
+        def = data.def;
+        psy = data.psy;
+        san = data.san;
+        wordName = data.name;
+        characterID = data.charaID;
+        description = data.bg;
+        bookName = data.book;
+        roleName = data.roleName;
+        roleInfo = data.roleInfo;
+
+
+        attackInterval = 2.2f;
+        AttackTimes = 1;
+        attackSpeedPlus = 1;
+        attackDistance = 500;
+        myState.aimCount = 1;
+        attackAmount = 1;
+        hasBetray = false;
     }
 
     private void OnEnable()

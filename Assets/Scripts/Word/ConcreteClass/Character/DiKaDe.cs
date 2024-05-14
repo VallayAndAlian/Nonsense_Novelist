@@ -10,31 +10,7 @@ class DiKaDe : AbstractCharacter
     {
         base.Awake();
 
-        //基础信息
-        characterID = 9;
-        wordName = "狄卡德";
-        bookName = BookNameEnum.ElectronicGoal;
-        brief = "暂无介绍";
-        description = "暂无介绍";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 5;
-        def = 3;
-        psy = 3;
-        san = 3;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "银翼杀手";
-        roleInfo = "攻击额外造成对方最大生命值3%的伤害";//普通攻击额外造成3%最大生命值伤害
+       
 
         event_AttackA += AttackMore;
     }

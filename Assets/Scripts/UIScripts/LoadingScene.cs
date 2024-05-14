@@ -24,14 +24,17 @@ public class LoadingScene : MonoBehaviour
     {
         if(canvas==null)
             canvas = Resources.Load<GameObject>("UI/SceneChangeCanvas");
+        //if(sceneName!=null)
+        //    StartCoroutine(ReallyLoadSceneAsyn(sceneName, null));
     }
+    bool hasLoad = false;
     public void EnterNextScene()
     {
-
+        //if(hasLoad) ao.allowSceneActivation = true;
         print("dEnterNextScenesd");
 
         obj = Instantiate<GameObject>(canvas);
-    
+
         slider = obj.GetComponentInChildren<Slider>();
         //生成加载面板，并开始异步加载场景
         obj.GetComponentInChildren<LoadingSlider_t>().LoadSceneAsyn(sceneName, leastLoadTime);
@@ -45,5 +48,21 @@ public class LoadingScene : MonoBehaviour
     {
         SceneManager.LoadScene("BookShelf");
     }
-
+    //AsyncOperation ao = null;
+    //private IEnumerator ReallyLoadSceneAsyn(string name, UnityAction fun)
+    //{
+    //    print("ReallyLoadSceneAsyn");
+    //    ao = SceneManager.LoadSceneAsync(name);
+    //    ao.allowSceneActivation = false;
+    //    print("sdsds" + ao.isDone);
+    //    //可以得到场景加载的一个进度
+    //    while ((!ao.isDone) )
+    //    {
+    //        print("ao.isDone"+ ao.isDone);
+    //        yield return null;
+    //    }
+    //    print("加载好了");
+    //    //加载完成过后 才会去执行fun
+    //    hasLoad = true;
+    //}
 }

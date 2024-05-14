@@ -256,7 +256,7 @@ public static class AllSkills
         humanList_noun.AddRange(new Type[] { typeof(Nexus_6Arm), typeof(VolumeProduction), typeof(BeiZhiRuDeJiYi) });
 
 
-        humanList_chara.AddRange(new Type[] { typeof(DiKaDe) ,typeof(LongDuanGongSi) });
+        humanList_chara.AddRange(new Type[] { typeof(DiKaDe) ,typeof(LongDuanGongSi),typeof(SaiBoFengZi),typeof(FangSheXingWeiCheng),typeof(Boss_Huaiyizhuyi) });
         //仿生人全部词条
         humanList_all.AddRange(humanList_verb);
         humanList_all.AddRange(humanList_adj);
@@ -295,7 +295,7 @@ public static class AllSkills
         //通用添加名词词条
         commonList_noun.AddRange(new Type[] { typeof(FuTouAxe),typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui)});
 
-        commonList_chara.AddRange(new Type[] { typeof(Rat) });
+        commonList_chara.AddRange(new Type[] { typeof(Rat),typeof(PianJian),typeof(JingCha) });
         //通用全部词条
         commonList_all.AddRange(commonList_verb);
         commonList_all.AddRange(commonList_adj);

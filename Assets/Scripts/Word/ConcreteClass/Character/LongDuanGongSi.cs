@@ -9,35 +9,6 @@ class LongDuanGongSi : AbstractCharacter
     override public void Awake()
     {
         base.Awake();
-
-        //基础信息
-        characterID = 5;
-        wordName = "垄断公司";
-        bookName = BookNameEnum.ElectronicGoal;
-        brief = "暂无";
-        description = "暂无";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 3;
-        def = 5;
-        psy = 3;
-        san = 3;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        mainProperty.Add("精神", "远法dps");
-        trait = gameObject.AddComponent<Sentimental>();
-        roleName = "税收";
-        roleInfo = "普通攻击造成伤害的30%，转化为生命";//转化为自身与随从的生命
-
         event_AttackA += RoleFunction;
 
     }
@@ -83,7 +54,7 @@ class LongDuanGongSi : AbstractCharacter
     public override string ShowText(AbstractCharacter otherChara)
     {
         if (otherChara != null)
-            return "当一家公司倒下时，没有人能看到垄断公司庞大的黑影，驱逐，驱逐！";
+            return "当一家公司倒下时，没有人能看到垄断公司庞大的黑影！";
         else
             return null;
     }

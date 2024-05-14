@@ -165,7 +165,7 @@ public class OneWayMove : MonoBehaviour
         if (collision.transform.tag == "bullet")
         {
 
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
             
             if (type==WallType.showAndHide)//消失后再出现
             {

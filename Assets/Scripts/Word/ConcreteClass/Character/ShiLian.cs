@@ -11,31 +11,7 @@ class ShiLian : AbstractCharacter
     {
         base.Awake();
 
-        //基础信息
-        characterID = 12;
-        wordName = "失恋";
-        bookName = BookNameEnum.Salome;
-        brief = "暂无介绍";
-        description = "暂无介绍";
-
-        //数值
-        hp = maxHp = 100;
-        atk = 3;
-        def = 3;
-        psy = 4;
-        san = 4;
-
-        attackInterval = 2.2f;
-        AttackTimes = 1;
-        attackSpeedPlus = 1;
-        attackDistance = 500;
-        myState.aimCount = 1;
-        attackAmount = 1;
-        hasBetray = false;
-
-        //特性
-        roleName = "负面情绪";
-        roleInfo = "攻击有几率让对方沮丧";//普通攻击有20%几率附带“沮丧”状态，持续3s
+      
         event_AttackA += UpsetAttackA;
     }
   
@@ -78,7 +54,7 @@ class ShiLian : AbstractCharacter
 
     public override string ShowText(AbstractCharacter otherChara)
     {
-        return otherChara + "出场文本";
+        return "玫瑰凋谢在昏黄的月色下，月亮又目睹了一次失恋。";
     }
 
     public override string CriticalText(AbstractCharacter otherChara)

@@ -20,7 +20,7 @@ override public void Awake()
         bookName = BookNameEnum.allBooks;
         gender = GenderEnum.noGender;
         camp = CampEnum.stranger;
-        hp =maxHp  =200;
+        hp =maxHp  =100;
         atk = 10;
         def = 15;
         psy = 10;
@@ -130,12 +130,12 @@ override public void Awake()
     private void OnDestroy()
     {
         print("1");
-        //gameProcess.BossDie();
-        //Destroy(CharacterManager.instance.gameObject.GetComponentInChildren<CaiYi>());
-        //Destroy(hpslider);
-        //Destroy(skillText[0]);
-        //Destroy(skillText[2]);
-        //Destroy(skillText[1]);
+        gameProcess.BossDie();
+        Destroy(CharacterManager.instance.gameObject.GetComponentInChildren<CaiYi>());
+        Destroy(hpslider);
+        Destroy(skillText[0]);
+        Destroy(skillText[2]);
+        Destroy(skillText[1]);
 
     }
     //public override bool AttackA()
