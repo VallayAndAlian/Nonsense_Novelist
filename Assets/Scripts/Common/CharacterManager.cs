@@ -59,7 +59,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
             return null;
     }
 
-    [HideInInspector] public static SpriteRenderer[] spSituations = new SpriteRenderer[9];
+    [HideInInspector] public static SpriteRenderer[] spSituations = new SpriteRenderer[12];
 
     #region pauseSetting
 

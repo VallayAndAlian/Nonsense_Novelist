@@ -484,7 +484,7 @@ public class CreateOneCharacter : MonoBehaviour
 
             GameObject chara = Instantiate(monsterPrefabs[number]);
             //找空位
-            int _pos = FindOneRandomNullPos();
+            int _pos = FindMonsterRandomNullPos();
  
             if (_pos >=0)
             {
@@ -584,6 +584,35 @@ public class CreateOneCharacter : MonoBehaviour
             if(_temp[_result] == 8) return -1;
             else return _temp[_result];
         } 
+        else return -1;
+    }
+
+
+    /// <summary>
+    /// 找怪物空位，随机返回一个空位index
+    /// </summary>
+    public int FindMonsterRandomNullPos()
+    {
+        int _count = 0;
+        int[] _temp = new int[3];
+        if (CharacterManager.instance.transform.Find("Circle4.1").childCount == 0)
+        { _temp[_count] = 9;_count++; }
+        if (CharacterManager.instance.transform.Find("Circle4.2").childCount == 0)
+        { _temp[_count] = 10; _count++; }
+        if (CharacterManager.instance.transform.Find("Circle4.3").childCount == 0)
+        { _temp[_count] = 11; _count++; }
+        if (_count != 0)
+        {
+            int _result = UnityEngine.Random.Range(0, _count);
+            int _loop = 0;
+            while ((_temp[_result] == 8) && (_loop < 50))
+            {
+                _result = UnityEngine.Random.Range(0, _count);
+                _loop++;
+                if (_loop > 48) print("死循环");
+            }
+        return _temp[_result];
+        }
         else return -1;
     }
 

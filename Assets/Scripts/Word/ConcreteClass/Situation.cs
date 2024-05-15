@@ -21,6 +21,12 @@ public class Situation : MonoBehaviour
     {
         if (this.number == 4.5f)
             GetComponent<SpriteRenderer>().enabled = false;
+        if (this.number == 4.1f)
+            GetComponent<SpriteRenderer>().enabled = false;
+        if (this.number == 4.2f)
+            GetComponent<SpriteRenderer>().enabled = false;
+        if (this.number == 4.3f)
+            GetComponent<SpriteRenderer>().enabled = false;
         CaculateAllSituation();
     }
 

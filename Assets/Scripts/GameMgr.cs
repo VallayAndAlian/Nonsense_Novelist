@@ -185,8 +185,11 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     [Header("¿ª¹Ø(²âÊÔ)")]
     public bool playEventCG = true;
-
+    public bool DebugUi = false;
     private int stageIndex = 0;//ÓÎÏ·½×¶Î
+    public float time1=0;
+    public float time2=0;
+
 
     private void Awake()
     {
@@ -212,6 +215,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
     private void Update()
     {
+        time1 += Time.deltaTime;
+        if (!CharacterManager.instance.pause) { time2 += Time.deltaTime; }
+
         //ÍË³ö²Ëµ¥
         if (hasOpenExit) return;
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -224,6 +230,16 @@ public class GameMgr : MonoSingleton<GameMgr>
             exitButton.onClick.AddListener(ExitButton);
             cancelButton.onClick.AddListener(BackToGame);
         }
+
+        if (!DebugUi) return;
+      
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (characterCanvas.GetComponentInChildren<DebugUi>()) return;
+            print("sdsdsd");
+            Instantiate<GameObject>(ResMgr.GetInstance().Load<GameObject>("debugUI"), characterCanvas.transform);
+        }
+        
     }
 
     #region ÐÂ ÅÆ¿â
@@ -238,15 +254,14 @@ public class GameMgr : MonoSingleton<GameMgr>
         //AddCardList(new XiaYuDe());
         ////AddCardList(new WanShua());
         //return;
-        //²âÊÔ
+        //
 
-        AddCardList(new BuryFlower());
-        AddCardList(new Shuai()); AddCardList(new Shuai());
         AddCardList(new FuTouAxe());
-        AddCardList(new Shuai());
-        AddCardList(new ZiShuiJIng());
-        AddCardList(new HeartBroken());
-        AddCardList(new XianZhiHead());
+        AddCardList(new QiGuaiShiXiang()); AddCardList(new HeartBroken());
+        AddCardList(new FengLi());
+        AddCardList(new QuicklyGrowing());
+        AddCardList(new LuoYingBinFen());
+        AddCardList(new JianRuPanShi());
         RefreshNowList();
     }
 

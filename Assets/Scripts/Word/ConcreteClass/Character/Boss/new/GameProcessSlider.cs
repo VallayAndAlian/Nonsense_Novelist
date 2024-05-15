@@ -127,6 +127,8 @@ public class GameProcessSlider : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        GameMgr.instance.time1 += Time.deltaTime;
+
         if (CharacterManager.instance.pause) return;
 
         //CharacterManager.instance.EndGame();
@@ -143,10 +145,10 @@ public class GameProcessSlider : MonoBehaviour
             }
             return;
         }
-        
+
         //CreateEventUpdate();
 
-
+        GameMgr.instance.time1 += Time.deltaTime;
         timeNow += Time.deltaTime;
         sliderProcess.value = timeNow;
 
