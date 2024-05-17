@@ -220,7 +220,7 @@ public class CharacterDetail_t : MonoBehaviour
         Camera.main.GetComponent<MouseDown>().CloseDetail();
         Destroy(this.transform.parent.gameObject);
         CharacterManager.instance.pause = false;
-        Time.timeScale = 1f;
+        Time.timeScale = GameMgr.instance.timeSpeed;
     }
     public void SetCharacter(GameObject _ac)
     {

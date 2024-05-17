@@ -187,9 +187,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     public bool playEventCG = true;
     public bool DebugUi = false;
     private int stageIndex = 0;//сно╥╫в╤н
-    public float time1=0;
-    public float time2=0;
-
+    [HideInInspector]public float time1=0;
+    [HideInInspector] public float time2=0;
+    [HideInInspector] public float timeSpeed = 1;
 
     private void Awake()
     {
@@ -197,7 +197,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         CardRes.SetActive(false);
         draftUi.InitContent();
         EventCGAnim.gameObject.SetActive(false);
-       
+    
 
     }
 
@@ -923,7 +923,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void BackToGame()
     {hasOpenExit = false;
         Destroy(exitObj.gameObject);
-        Time.timeScale = 1f;
+        Time.timeScale = GameMgr.instance.timeSpeed;
         
     }
     #endregion

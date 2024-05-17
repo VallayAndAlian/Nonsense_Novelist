@@ -262,7 +262,7 @@ public class EventUI : MonoBehaviour
     Animator tempAnimator;
     WaitForFixedUpdate tempAnim= new WaitForFixedUpdate();
     private int KeyCharacter = -1;
-    int triggerName = -1;
+    [HideInInspector]public int triggerName = -1;
     public void OpenInit_FangKe()
     {
         

@@ -14,7 +14,7 @@ public class Bubble : MonoBehaviour
 
     private EventType type;
     private bool fromBubble = false;//第一个阶段true
-    private bool waiBu;
+    private int waiBu;
     private void Awake()
     {
         type = EventType.WeiJi;
@@ -134,7 +134,7 @@ public class Bubble : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
         {
 
-            StartEventBefore(type,fromBubble,false);
+            StartEventBefore(type,fromBubble,0);
             //词条消失
             Destroy(collision.gameObject);
         }
@@ -142,11 +142,11 @@ public class Bubble : MonoBehaviour
 
 
 
-    public void StartEventBefore(EventType _type,bool _fromBubble,bool _waiBu)
+    public void StartEventBefore(EventType _type,bool _fromBubble,int _waiBu)
     {
         if (GameMgr.instance.eventHappen) return;
 
-        waiBu = _waiBu;
+        waiBu= _waiBu;
 
         //播放气泡消失动画
         animator = this.GetComponent<Animator>();
@@ -197,9 +197,10 @@ public class Bubble : MonoBehaviour
         if (a == null) print("1null");
         if(a.GetComponent<EventUI>()==null) print("null");
         
-        if (waiBu)//外部调用，执行一些特殊操作
+        if (waiBu!=0)//执行一些特殊操作
         {
             a.GetComponent<EventUI>().WJ_static = true;
+            a.GetComponent<EventUI>().triggerName = waiBu;
         }
 
         a.GetComponent<EventUI>().Open(isKey);

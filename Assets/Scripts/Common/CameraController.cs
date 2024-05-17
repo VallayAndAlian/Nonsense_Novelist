@@ -46,7 +46,7 @@ public class CameraController : MonoBehaviour
     }
     IEnumerator ChangeCameraSize()
     {
-      if(pausing)Time.timeScale = 1f;
+      if(pausing)Time.timeScale = GameMgr.instance.timeSpeed;
         print("ChangeCameraSize");
         while (Mathf.Abs(camera.orthographicSize - nowSize) > 0.001f)
         { 
@@ -88,7 +88,7 @@ public class CameraController : MonoBehaviour
 
     IEnumerator ChangeCameraY()
     {
-        if (pausing) Time.timeScale = 1f;
+        if (pausing) Time.timeScale = GameMgr.instance.timeSpeed;
 
         while (Mathf.Abs(camera.transform.position.y - nowY) > 0.001f)
         {

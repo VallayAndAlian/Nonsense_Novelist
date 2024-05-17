@@ -223,7 +223,7 @@ class CharacterDetails_x : MonoBehaviour
     public void CloseCharaPanel()
     {
         Destroy(this.transform.parent.gameObject);
-        Time.timeScale = 1f;
+        Time.timeScale = GameMgr.instance.timeSpeed;
         mouseDown.shoot.GetComponent<Shoot>().enabled = true;
 
         mouseDown.isShow = false;

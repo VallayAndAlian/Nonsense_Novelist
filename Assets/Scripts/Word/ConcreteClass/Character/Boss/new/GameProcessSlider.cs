@@ -199,7 +199,7 @@ public class GameProcessSlider : MonoBehaviour
                     a.transform.SetParent(eventPoint[0].transform);
                     a.transform.localPosition = Vector3.zero;
                    
-                    a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false,true);
+                    a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false,1);
                     StartCoroutine(Wait_Weiji());
                 });
 

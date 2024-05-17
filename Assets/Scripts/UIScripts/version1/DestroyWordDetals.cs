@@ -16,7 +16,7 @@ class DestroyWordDetals : MonoBehaviour
     public void CloseDetails()
     {
         Destroy(this.gameObject.transform.parent.gameObject);
-        Time.timeScale = 1;
+        Time.timeScale = GameMgr.instance.timeSpeed;
     }
     /// <summary>
     /// 查看词条详细信息

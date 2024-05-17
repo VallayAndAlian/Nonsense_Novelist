@@ -24,6 +24,6 @@ class GameManager : MonoBehaviour
     public void BackToGame()
     {
         Destroy(this.gameObject);
-        Time.timeScale = 1f;
+        Time.timeScale = GameMgr.instance.timeSpeed;
     }
 }

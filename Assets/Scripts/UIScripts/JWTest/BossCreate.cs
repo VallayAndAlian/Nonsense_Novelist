@@ -28,7 +28,7 @@ public class BossCreate : MonoBehaviour
     public void ClosePanel()
     {
         this.transform.parent.gameObject.SetActive(false);
-        Time.timeScale = 1;
+        Time.timeScale = GameMgr.instance.timeSpeed;
 
     }
 }
