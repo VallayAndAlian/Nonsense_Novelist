@@ -58,7 +58,7 @@ public class WordCollisionShoot : MonoBehaviour
             {
                 AbstractAdjectives adj= collision.gameObject.AddComponent(absWord.GetType())as AbstractAdjectives;
                 adj.UseAdj(collision.gameObject.GetComponent<AbstractCharacter>());
-                print(this.gameObject.name);
+                //print(this.gameObject.name);
                 Destroy(this.gameObject);
             }
             else if (absWord.wordKind == WordKindEnum.noun)

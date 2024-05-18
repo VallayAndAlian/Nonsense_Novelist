@@ -46,11 +46,17 @@ public class EventUI : MonoBehaviour
     public GameObject word_verb;
     public GameObject word_item;
 
-  
 
 
+    private void Awake()
+    {
+        triggerName = -1;
+        KeyCharacter = -1;
+        WJ_static = false;
+        WJ_monster = -1;
+    }
     #region 处理data 
-    
+
     /// <summary>
     /// 在初始化后,处理isKEY和数据
     /// </summary>
@@ -261,7 +267,7 @@ public class EventUI : MonoBehaviour
     #region 访客
     Animator tempAnimator;
     WaitForFixedUpdate tempAnim= new WaitForFixedUpdate();
-    private int KeyCharacter = -1;
+    [HideInInspector]public int KeyCharacter = -1;
     [HideInInspector]public int triggerName = -1;
     public void OpenInit_FangKe()
     {
@@ -291,18 +297,26 @@ public class EventUI : MonoBehaviour
         if(triggerName != -1) sprite.GetComponent<Animator>().SetBool(triggerName.ToString(), false);
         tempAnimator = sprite.GetComponent<Animator>();
         StartCoroutine(FangKeAnimation());
-
-        triggerName = -1;
-        if (isKey && KeyCharacter != -1)
+        print("triggerName"+ triggerName.ToString());;
+        if (triggerName == -1)
         {
-            triggerName = KeyCharacter;//本身就是ID 
+
+
+            if (KeyCharacter != -1)
+            {
+
+                triggerName = KeyCharacter;//本身就是ID 
+            }
+            else
+            {
+                triggerName = GameMgr.instance.GetNextCreateChara();//数组，非ID
+                triggerName += 1;
+            }
         }
         else
         {
-            triggerName = GameMgr.instance.GetNextCreateChara();//数组，非ID
-            triggerName += 1;
+            GameMgr.instance.GetNextCreateChara(triggerName-1);
         }
-        
         sprite.GetComponent<Animator>().SetBool(triggerName.ToString(),true);
         //sprite.SetNativeSize();
 
@@ -324,7 +338,7 @@ public class EventUI : MonoBehaviour
         int loopMax =0;
         while ((!tempAnimator.GetBool("0"))||(loopMax<5))
         {
-            print("loopMax" + loopMax);
+            //print("loopMax" + loopMax);
             loopMax++;
             yield return tempAnim;
         }
@@ -670,6 +684,7 @@ public class EventUI : MonoBehaviour
 
     #region 危机
     [HideInInspector] public bool WJ_static = false;//外部在open之前调用
+    [HideInInspector] public int WJ_monster = -1;//外部在open之前调用
     public void OpenInit_WeiJi()
     {
         DataInit(isKey);
@@ -698,7 +713,20 @@ public class EventUI : MonoBehaviour
             this.transform.Find("button").Find("EscapeButton").gameObject.SetActive(true);
         }
 
-      
+        //抽取怪物
+        if (WJ_monster >= 0)
+        {
+            GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster(WJ_monster);
+            GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+        }
+        else
+        {
+            WJ_monster= GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster();
+            GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+        }
+        
+
+
         //
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
         //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
@@ -713,7 +741,7 @@ public class EventUI : MonoBehaviour
         print("Click_WeiJi");
 
           //随机抽取一个怪物，并显示对应动画
-        GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+        //GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
         CloseAnim();
     }
 

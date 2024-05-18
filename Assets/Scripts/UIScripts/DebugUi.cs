@@ -9,6 +9,7 @@ public class DebugUi : MonoBehaviour
     Text text1;
     Text text2;
     public GameObject FangKeObj;
+    public GameObject weijiObj;
     public GameObject button;
     private void Awake()
     {
@@ -37,22 +38,39 @@ public class DebugUi : MonoBehaviour
 
 
     bool hasShowCharaButton = false;
+
     public void ShowOrHideCharaButton(GameObject _show)
     {
         if (!hasShowCharaButton)
-        { 
-
-            var _charas = GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().charaPrefabs;
-            for (int i = 0; i < _charas.Length;i++)
+        {
+            if (_show.name == "chara")
             {
-                var _b=Instantiate(button, _show.transform.GetChild(0));
-                _b.transform.localScale = Vector3.one;
-                _b.GetComponentInChildren<Text>().text = _charas[i].name;
-                var _bET= _b.AddComponent<EventTrigger>();
-                AddPointerEvent(_bET, EventTriggerType.PointerClick, (obj) => { AddCharacter(i); });
-                hasShowCharaButton = true;
+                var _charas = GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().charaPrefabs;
+                for (int i = 0; i < _charas.Length;i++)
+                {
+                    var _b=Instantiate(button, _show.transform.GetChild(0));
+                    _b.transform.localScale = Vector3.one;
+                    _b.GetComponentInChildren<Text>().text = _charas[i].name;
+                    var _bET= _b.AddComponent<EventTrigger>();
+                    AddPointerEvent(_bET, EventTriggerType.PointerClick, (obj) => { AddCharacter(_bET.transform); });
 
-
+                    print("0++" + i);
+                    hasShowCharaButton = true;
+                }
+            }
+            if (_show.name == "monster")
+            {
+                var _charas = GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().monsterPrefabs;
+                for (int i = 0; i < _charas.Length; i++)
+                {
+                    var _b = Instantiate(button, _show.transform.GetChild(0));
+                    _b.transform.localScale = Vector3.one;
+                    _b.GetComponentInChildren<Text>().text = _charas[i].name;
+                    var _bET = _b.AddComponent<EventTrigger>();
+                    AddPointerEvent(_bET, EventTriggerType.PointerClick, (obj) => { AddMonster(_bET.transform); });
+                   
+                    hasShowCharaButton = true;
+                }
             }
         }
         else
@@ -64,7 +82,22 @@ public class DebugUi : MonoBehaviour
             hasShowCharaButton = false;
         }
     }
+    public void DeleteCharaButton(GameObject _show)
+    {
+        var _charas = CharacterManager.instance.charas;
+        for (int i = 0; i < _charas.Length; i++)
+        {
+            var _b = Instantiate(button, _show.transform.GetChild(0));
+            _b.transform.localScale = Vector3.one;
+            _b.GetComponentInChildren<Text>().text = _charas[i].name;
+            var _bET = _b.AddComponent<EventTrigger>();
+            AddPointerEvent(_bET, EventTriggerType.PointerClick, (obj) => { DeleteCharacter(_bET.transform); });
+            hasShowCharaButton = true;
 
+
+        }
+
+    }
     /// <summary>
     ///
     /// </summary>
@@ -78,29 +111,50 @@ public class DebugUi : MonoBehaviour
         entry.callback = new EventTrigger.TriggerEvent();
         entry.callback.AddListener(callback);
         eventTrigger.triggers.Add(entry);
-        Debug.Log("AddPointerEnterEvent");
+       
     }
 
 
 
     #endregion
-    public void AddCharacter(int _chara)
+    public void AddCharacter(Transform _chara)
     {
+        print(_chara.GetSiblingIndex());
         //创建固定危机事件
         PoolMgr.GetInstance().GetObj(FangKeObj, (a) =>
         {
 
             a.transform.SetParent(GameMgr.instance.characterCanvas.transform);
             a.transform.localPosition = Vector3.zero;
-            a.transform.localScale = Vector3.one;
-            a.GetComponent<Bubble>().StartEventBefore(EventType.FangKe, false, _chara);
+
+            print("debugUI" +( _chara.GetSiblingIndex() + 1).ToString());
+            a.GetComponent<Bubble>().StartEventBefore(EventType.FangKe, false, _chara.GetSiblingIndex() + 1);
          
         });
+        Exit();
     }
 
-    public void DeleteCharacter(Situation _s)
+    public void AddMonster(Transform _chara)
     {
-        Destroy(_s.GetComponentInChildren<AbstractCharacter>().gameObject);
+        //创建固定危机事件
+        PoolMgr.GetInstance().GetObj(weijiObj, (a) =>
+        {
+
+            a.transform.SetParent(GameMgr.instance.characterCanvas.transform);
+            a.transform.localPosition = Vector3.zero;
+
+            a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false, _chara.GetSiblingIndex()) ;
+            
+        });
+        Exit();
+    }
+
+    public void DeleteCharacter(Transform _s)
+    {
+        var _c = CharacterManager.instance.charas[_s.GetSiblingIndex()];
+        _c.camp = CampEnum.left;
+        CharacterManager.instance.RefreshStanger();
+        Destroy(_c.gameObject);
         Exit();
     }
 

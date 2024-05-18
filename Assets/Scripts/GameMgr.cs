@@ -236,7 +236,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (characterCanvas.GetComponentInChildren<DebugUi>()) return;
-            print("sdsdsd");
+ 
             Instantiate<GameObject>(ResMgr.GetInstance().Load<GameObject>("debugUI"), characterCanvas.transform);
         }
         
@@ -631,10 +631,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// </summary>
     public void RefreshNowList()
     {
-        print("RefreshNowList"+ wordNowList.Count);
+       
         if (wordNowList.Count == 0)
         {
-            print("wordNowList.Count == 0");
+          
             wordNowList.AddRange(wordList);
             wordHasUseList.Clear();
 
@@ -942,6 +942,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     public int GetNextCreateChara()
     {
         return UiCanvas.GetComponentInChildren<CreateOneCharacter>().GetNextCreateChara();
+    }
+    public void GetNextCreateChara(int _sds)
+    {
+         UiCanvas.GetComponentInChildren<CreateOneCharacter>().GetNextCreateChara(_sds);
     }
     public void CreateCharacterPut(int initCharacter)
     {

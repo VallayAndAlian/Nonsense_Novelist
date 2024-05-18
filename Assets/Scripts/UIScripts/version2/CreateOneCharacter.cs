@@ -302,6 +302,11 @@ public class CreateOneCharacter : MonoBehaviour
         charaNext = number;
         return number;
     }
+    public void GetNextCreateChara(int _id)
+    {
+        charaNext = _id;
+        return;
+    }
     int charaNext = -1;
 
 /// <summary>
@@ -464,6 +469,13 @@ public class CreateOneCharacter : MonoBehaviour
         monsterNext = number;
         return number;
     }
+
+    public void GetNextCreateMonster(int _id)
+    {
+ 
+        monsterNext = _id;
+        return;
+    }
     int monsterNext = -1;
 
     public void CreateMonster(int count)
@@ -480,14 +492,14 @@ public class CreateOneCharacter : MonoBehaviour
             {
                 number = UnityEngine.Random.Range(0, monsterPrefabs.Length);
             }
-            
 
-            GameObject chara = Instantiate(monsterPrefabs[number]);
+            print(monsterPrefabs[number].name + number.ToString());
+           
             //找空位
             int _pos = FindMonsterRandomNullPos();
- 
             if (_pos >=0)
-            {
+            { 
+                GameObject chara = Instantiate(monsterPrefabs[number]);
                 chara.transform.SetParent(CharacterManager.instance.transform.GetChild(_pos)) ;
                 chara.transform.position = chara.transform .parent.position+ GameMgr.instance.charaPosOffset;
                 chara.transform.localScale = Vector3.one * GameMgr.instance.afterScale;
@@ -525,6 +537,7 @@ public class CreateOneCharacter : MonoBehaviour
        
     }
 
+    
 
     /// <summary>
     ///把站位和对应灯光的颜色恢复

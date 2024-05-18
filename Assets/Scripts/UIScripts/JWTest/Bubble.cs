@@ -134,7 +134,7 @@ public class Bubble : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
         {
 
-            StartEventBefore(type,fromBubble,0);
+            StartEventBefore(type,fromBubble,-1);
             //词条消失
             Destroy(collision.gameObject);
         }
@@ -197,9 +197,13 @@ public class Bubble : MonoBehaviour
         if (a == null) print("1null");
         if(a.GetComponent<EventUI>()==null) print("null");
         
-        if (waiBu!=0)//执行一些特殊操作
+        if (waiBu>=0)//执行一些特殊操作
         {
             a.GetComponent<EventUI>().WJ_static = true;
+            if (waiBu < GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().monsterPrefabs.Length)
+                a.GetComponent<EventUI>().WJ_monster = waiBu;
+
+            print("waiBu" + waiBu.ToString());
             a.GetComponent<EventUI>().triggerName = waiBu;
         }
 

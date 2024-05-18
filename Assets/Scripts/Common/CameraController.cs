@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
     public void SetCameraSizeTo(float _size)
     {
 
-        print("SetCameraSizeTo");
+        //print("SetCameraSizeTo");
         camera = GetComponent<Camera>();
         nowSize = _size;
 
@@ -47,7 +47,7 @@ public class CameraController : MonoBehaviour
     IEnumerator ChangeCameraSize()
     {
       if(pausing)Time.timeScale = GameMgr.instance.timeSpeed;
-        print("ChangeCameraSize");
+        //print("ChangeCameraSize");
         while (Mathf.Abs(camera.orthographicSize - nowSize) > 0.001f)
         { 
             yield return new WaitForFixedUpdate();
