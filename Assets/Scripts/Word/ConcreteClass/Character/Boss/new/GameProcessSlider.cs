@@ -4,26 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-
 #region 结构体
-[System.Serializable]public struct Time_Stage
+
+[System.Serializable]
+public enum StageType
 {
-    public StageType type;
-    public GameObject t_boss;//boss 的预制体
-    public int t_eventCount;//boss 的预制体
-    public bool t_eventKey;//boss 的预制体
-    public float time;//持续时间
-    public Sprite image;//对应图标
-    [HideInInspector]public float time_count;//累计时间   
-    public int level ;
+    boss, weiji, Event
 }
 
-[System.Serializable] public enum StageType
+[System.Serializable]
+public class OneStageData
 {
-    boss,weiji,Event
+    [Header("阶段类型")]
+    public StageType type;
+    [Header("boss类型填写")]
+    public GameObject t_boss;//boss 的预制体
+    [Header("事件类型填写")]
+    public int t_eventCount;//boss 的预制体
+    public bool t_eventKey;//boss 的预制体
+    [Header("共通数据")]
+    public float time;//持续时间
+    public Sprite image;//对应图标
+    [HideInInspector] public float time_count;//累计时间   
+    public int level;
 }
 
 #endregion
+
 
 [System.Serializable]
 public struct Event_Stage
@@ -39,7 +46,7 @@ public class GameProcessSlider : MonoBehaviour
     public GameObject perfab_icon;
 
     [Header("【单位：s】游戏进程相关参数（手动）")]
-    public Time_Stage[] time_stage;
+    public StagesData time_stage;
     [Header("[废弃]每轮的事件个数")]
     public Event_Stage[] event_stage;
 
@@ -95,25 +102,25 @@ public class GameProcessSlider : MonoBehaviour
         sliderProcess = this.GetComponent<Slider>();
         sliderProcess.value = 0;
 
-        for (int _i = 0; _i < time_stage.Length; _i++)
-        { time_all += time_stage[_i].time; }
+        for (int _i = 0; _i < time_stage.stagesData.Count; _i++)
+        { time_all += time_stage.stagesData[_i].time; }
         sliderProcess.maxValue = time_all;
 
         float _timeAmount = 0;
         float _width = GetComponent<RectTransform>().sizeDelta.x;
-        for (int _i = 0; _i < time_stage.Length; _i++)
+        for (int _i = 0; _i < time_stage.stagesData.Count; _i++)
         {
 
-            _timeAmount += time_stage[_i].time;
-            time_stage[_i].time_count = _timeAmount;
-            if (time_stage[_i].image != null)
+            _timeAmount += time_stage.stagesData[_i].time;
+            time_stage.stagesData[_i].time_count = _timeAmount;
+            if (time_stage.stagesData[_i].image != null)
             {
                 GameObject _icon = GameObject.Instantiate<GameObject>(perfab_icon);
                 _icon.transform.SetParent(this.transform);
                 _icon.GetComponent<RectTransform>().localPosition = Vector3.zero;
                 _icon.GetComponent<RectTransform>().localScale = Vector3.one;
                 _icon.GetComponent<RectTransform>().localPosition += new Vector3(-_width / 2 + (_timeAmount / time_all) * _width, 0, 0);
-                _icon.GetComponent<Image>().sprite = time_stage[_i].image;
+                _icon.GetComponent<Image>().sprite = time_stage.stagesData[_i].image;
             }
         }
         sliderProcess.maxValue = time_all;
@@ -153,7 +160,7 @@ public class GameProcessSlider : MonoBehaviour
         sliderProcess.value = timeNow;
 
         //如果超出
-        if (stageCount >= time_stage.Length)
+        if (stageCount >= time_stage.stagesData.Count)
         {
             Debug.LogWarning("time_stage overCount!");
            
@@ -161,35 +168,34 @@ public class GameProcessSlider : MonoBehaviour
             countTime = false;
             return;
         }
-        
 
         //如果进入阶段
-        if (timeNow > time_stage[stageCount].time_count)
+        if (timeNow > time_stage.stagesData[stageCount].time_count)
         {
          
-            GameMgr.instance.SetStageTo(time_stage[stageCount].level-1);
+            GameMgr.instance.SetStageTo(time_stage.stagesData[stageCount].level-1);
 
-            if (time_stage[stageCount].type == StageType.boss)
+            if (time_stage.stagesData[stageCount].type == StageType.boss)
             {
               
                 //创建boss事件
-                if (time_stage[stageCount].t_boss != null)
+                if (time_stage.stagesData[stageCount].t_boss != null)
                 {
-                    CreateBoss(time_stage[stageCount].t_boss); 
+                    CreateBoss(time_stage.stagesData[stageCount].t_boss); 
                     countTime = false; 
                     //StartCoroutine(Wait_Weiji());
                 }
                stageCount++;
             }
-            else if (time_stage[stageCount].type == StageType.Event)
+            else if (time_stage.stagesData[stageCount].type == StageType.Event)
             {
                 
                 //创建Event事件
-                CreateEvent(time_stage[stageCount].t_eventKey, time_stage[stageCount].t_eventCount);
+                CreateEvent(time_stage.stagesData[stageCount].t_eventKey, time_stage.stagesData[stageCount].t_eventCount);
                 countTime = true;
                 stageCount++;
             }
-            else if (time_stage[stageCount].type == StageType.weiji)
+            else if (time_stage.stagesData[stageCount].type == StageType.weiji)
             {
                 
                 //创建固定危机事件
