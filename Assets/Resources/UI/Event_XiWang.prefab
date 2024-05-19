@@ -481,7 +481,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: b7709796065dbde47b88f089b9cfe4f1, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -586,9 +586,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b7709796065dbde47b88f089b9cfe4f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 95ffc1491fe07f14daaa72e5c2d5455e, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -693,9 +693,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b7709796065dbde47b88f089b9cfe4f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60e13fbfe16beb24e84a04d4095e0b61, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1028,8 +1028,11 @@ MonoBehaviour:
   word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
+  KeyCharacter: -1
+  triggerName: -1
   JY_chooseWord: {fileID: 0}
   WJ_static: 0
+  WJ_monster: -1
 --- !u!95 &2935532380440314401
 Animator:
   serializedVersion: 5

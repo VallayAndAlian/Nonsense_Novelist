@@ -177,6 +177,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     [Header("界面设置(手动)")]
     public GameObject UiCanvas;
     public GameObject characterCanvas;
+    public GameProcessSlider gameProcess;
     public DraftUi draftUi;
     public GameObject combatCanvas;
     public EventCg EventCGAnim;

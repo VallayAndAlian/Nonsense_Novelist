@@ -64,8 +64,7 @@ public class SettingList : MonoBehaviour
                 _obj.transform.parent = groupL;
                 _obj.transform.localPosition = Vector3.zero;
                 _obj.transform.localScale = Vector3.one;
-                print("dsdsd");
-                print(_set.settingName);
+  
                 _obj.GetComponentInChildren<Text>().text = _set.settingName;
             });
         }

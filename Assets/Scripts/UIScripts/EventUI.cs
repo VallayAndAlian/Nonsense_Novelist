@@ -326,9 +326,9 @@ public class EventUI : MonoBehaviour
         nowEvent = tempNowDate[_r];
        
         //info.text = tempNowDate[_r].name;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name ), info, 0.03f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name ), info, 0.05f));
        // words.text = tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].textEvent), words, 0.03f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].textEvent), words, 0.05f));
 
         RefreshNowList();
     }
@@ -413,7 +413,7 @@ public class EventUI : MonoBehaviour
             //显示书本图画
             var book = (BookNameEnum)int.Parse(_rb.ToString());
             cardParent.GetChild(i).GetComponent<Image>().sprite = Resources.Load<Sprite>("WordImage/Book/" + book.ToString());
-            cardParent.GetChild(i).GetComponent<Image>().SetNativeSize();
+            
             if (i == 1) ClickWord_XW(cardParent.GetChild(i).gameObject);
 
             //随机抽取词组
@@ -475,7 +475,7 @@ public class EventUI : MonoBehaviour
         _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         TextMeshProUGUI info = this.transform.Find("info").GetComponentInChildren<TextMeshProUGUI>();
         //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.03f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
         nowEvent = tempNowDate[_r];
 
         RefreshNowList();
@@ -534,7 +534,20 @@ public class EventUI : MonoBehaviour
     Transform choose=null;
     Vector3 chooseScale = new Vector3(0.341f,0.32f,0.341f);
     public void OpenInit_JiaoYi()
-    {
+    {        
+        //读取已拥有的书中，未获得的卡，概率相同
+        TextMeshProUGUI titleText= this.transform.Find("EventInfo").GetComponent<TextMeshProUGUI>();
+        Transform CardGroup = this.transform.Find("CardGroup");
+        if (CardGroup.childCount > 0)
+        {
+            for (int _c = 0; _c < CardGroup.childCount; _c++)
+            {
+                Destroy(CardGroup.GetChild(_c).gameObject);
+            }
+            
+        }
+
+
         DataInit(isKey);
         JY_chooseWord = null;
         choose = this.transform.Find("choose");
@@ -545,9 +558,7 @@ public class EventUI : MonoBehaviour
 
         string adr_detail = "UI/WordInformation";
 
-        //读取已拥有的书中，未获得的卡，概率相同
-        TextMeshProUGUI titleText= this.transform.Find("EventInfo").GetComponent<TextMeshProUGUI>();
-        Transform CardGroup = this.transform.Find("CardGroup");
+
 
 
         //把选择框设置为看不见
@@ -627,7 +638,7 @@ public class EventUI : MonoBehaviour
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
 
         //切换文字内容
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), titleText, 0.03f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), titleText, 0.05f));
         //titleText.text = tempNowDate[_r].name+"\n"+ tempNowDate[_r].textEvent;
         nowEvent = tempNowDate[_r];
 
@@ -730,7 +741,7 @@ public class EventUI : MonoBehaviour
         //
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
         //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.03f));
+        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
         nowEvent = tempNowDate[_r];
         RefreshNowList();
 
@@ -779,7 +790,7 @@ public class EventUI : MonoBehaviour
 
         //切换文字内容
         var titleText = this.transform.Find("EventInfo").GetComponent<TextMeshProUGUI>();
-        StartCoroutine(TypeDelay((tempNowDate[cj_changeTo].name + "\n" + tempNowDate[cj_changeTo].textEvent), titleText, 0.03f));
+        StartCoroutine(TypeDelay((tempNowDate[cj_changeTo].name + "\n" + tempNowDate[cj_changeTo].textEvent), titleText, 0.05f));
         nowEvent = tempNowDate[cj_changeTo];
         sp_cj_image.sprite = ResMgr.GetInstance().Load<Sprite>("UI/" + (tempNowDate[cj_changeTo].happen));
         sp_cj_word.sprite = ResMgr.GetInstance().Load<Sprite>("UI/" + (tempNowDate[cj_changeTo].happen) + "_word");
@@ -810,16 +821,7 @@ public class EventUI : MonoBehaviour
     #region 事件触发效果invoke-happen 
     //对应test1表格happen那一行，写事件的函数名称
 
-    ///【意外】调用出设定页面
-    void Happen_Setting()
-    {
-        print("Happen_Setting");
-        string adr = "UI/Setting";
-        var obj=ResMgr.GetInstance().Load<GameObject>(adr);
-        obj.GetComponent<Setting>().InitSetting(settingUiType.Quality);
-        obj.transform.parent = GameObject.Find("CharacterCanvas").transform;
-        
-    }
+
     ///【意外】解锁一个发射槽，并获得一个骰子
     void Happen_UnlochkShoot()
     {
@@ -883,7 +885,7 @@ public class EventUI : MonoBehaviour
         print("Happen_SettingCharacter");
         string adr = "UI/Setting";
         var obj = ResMgr.GetInstance().Load<GameObject>(adr);
-        obj.GetComponent<Setting>().InitSetting(settingUiType.Chara);
+        obj.GetComponent<Setting>().InitSetting(settingUiType.Chara,false);
     }
 
     ///【意外】两个队伍都获得“神经紊乱”，见细节文档-设定表
@@ -922,6 +924,12 @@ public class EventUI : MonoBehaviour
                 break;
             case EventType.XiWang:
                 { OpenInit_XiWang(); }
+                break;
+            case EventType.JiaoYi:
+                { OpenInit_JiaoYi(); }
+                break;
+            case EventType.ChangJing:
+                { OpenInit_ChangJing(); }
                 break;
         }
     }

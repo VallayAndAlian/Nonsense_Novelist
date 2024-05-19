@@ -204,7 +204,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7703496779099602158}
         m_TargetAssemblyTypeName: Setting, Assembly-CSharp
-        m_MethodName: EndButton
+        m_MethodName: ClickCheck
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

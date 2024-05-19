@@ -401,8 +401,11 @@ MonoBehaviour:
   word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
+  KeyCharacter: -1
+  triggerName: -1
   JY_chooseWord: {fileID: 0}
   WJ_static: 0
+  WJ_monster: -1
 --- !u!95 &2535933067016786744
 Animator:
   serializedVersion: 5
@@ -676,7 +679,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 32
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1172,8 +1175,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4381019750051421908, guid: dc383b3a66f4ed94b99c014b112ee4ec, type: 3}
+      propertyPath: textNumber
+      value: 
+      objectReference: {fileID: 1305864843731519378}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc383b3a66f4ed94b99c014b112ee4ec, type: 3}
+--- !u!114 &1305864843731519378 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5121054790402283411, guid: dc383b3a66f4ed94b99c014b112ee4ec, type: 3}
+  m_PrefabInstance: {fileID: 6129110037768196097}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5224408927561807194 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2129689316346504539, guid: dc383b3a66f4ed94b99c014b112ee4ec, type: 3}

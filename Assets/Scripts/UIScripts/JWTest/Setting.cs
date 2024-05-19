@@ -37,11 +37,13 @@ public class Setting : MonoBehaviour
 
         if (!CharacterManager.instance.pause)
             CharacterManager.instance.pause = true;
-        InitSetting(typeMe);
+
     }
 
-    public void InitSetting(settingUiType type)
+    public void InitSetting(settingUiType type,bool _isLeft)
     {
+        isLeft = _isLeft;
+  
         typeMe = type;
         switch (type)
         {
@@ -323,7 +325,7 @@ public class Setting : MonoBehaviour
 
     public void RefreshEvent()
     {
-        InitSetting(typeMe);
+        InitSetting(typeMe,false);
     }
 
 
@@ -387,12 +389,14 @@ public class Setting : MonoBehaviour
         ///不知道是那一队加入设定欸，先乱写了噢
         if (isLeft)
         {
+
             GameMgr.instance.settingL.Add(click.GetComponent<AbstractSetting>().GetType());
             GameMgr.instance.settingPanel.RefreshList();
             Destroy(gameObject);
         }
         else
         {
+
             GameMgr.instance.settingR.Add(click.GetComponent<AbstractSetting>().GetType());
             GameMgr.instance.settingPanel.RefreshList();
             Destroy(gameObject);

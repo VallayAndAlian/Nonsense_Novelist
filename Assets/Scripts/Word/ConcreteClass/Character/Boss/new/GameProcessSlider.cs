@@ -146,6 +146,24 @@ public class GameProcessSlider : MonoBehaviour
                 if (hasWeiji)
                 {
                     countTime = true; hasWeiji = false;
+                    int _random = Random.Range(0, 6);
+                    switch (_random)
+                    {
+                        case 3:
+                        case 0://访客
+                            { CreateFangke(false, 0); }
+                            break;
+                        case 4:
+                        case 1://设定
+                            {
+                                CreateXiWang(false);
+                                 }
+                            break;
+                        case 5:
+                        case 2://希望
+                            { CreateSetting(false); }
+                            break;
+                    }
                 }
 
 
@@ -197,18 +215,9 @@ public class GameProcessSlider : MonoBehaviour
             }
             else if (time_stage.stagesData[stageCount].type == StageType.weiji)
             {
-                
-                //创建固定危机事件
-                PoolMgr.GetInstance().GetObj(eventBubblePrefab[3], (a) =>
-                {
-                    array0.Add(a);
-                    a.transform.SetParent(eventPoint[0].transform);
-                    a.transform.localPosition = Vector3.zero;
-                   
-                    a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false,99);
-                    StartCoroutine(Wait_Weiji());
-                });
 
+                CreateWeijiEvent(false, 99);
+                StartCoroutine(Wait_Weiji());
                 countTime = false;
                 stageCount++;
                 
@@ -236,6 +245,96 @@ public class GameProcessSlider : MonoBehaviour
         yield return new WaitForSeconds(5);
         hasWeiji = true;
     }
+
+    #region 生成事件
+    //希望-访客-意外-危机-交易-场景
+    public void CreateWeijiEvent(bool isKey,int monster)
+    {
+        //创建固定危机事件
+        PoolMgr.GetInstance().GetObj(eventBubblePrefab[3], (a) =>
+        {
+            array0.Add(a);
+            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.localPosition = Vector3.zero;
+
+            a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false, monster);
+          
+        });
+    }
+
+    public void CreateFangke(bool isKey, int chara)
+    {
+        //创建固定危机事件
+        PoolMgr.GetInstance().GetObj(eventBubblePrefab[1], (a) =>
+        {
+            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.localPosition = Vector3.zero;
+
+            a.GetComponent<Bubble>().StartEventBefore(EventType.FangKe, false, chara );
+
+        });
+    }
+    public void CreateXiWang(bool isKey)
+    {
+        //创建固定危机事件
+        PoolMgr.GetInstance().GetObj(eventBubblePrefab[0], (a) =>
+        {
+            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.localPosition = Vector3.zero;
+
+            a.GetComponent<Bubble>().StartEventBefore(EventType.XiWang, false, 1);
+
+        });
+    }
+    public void CreateSetting(bool _isleft)
+    {
+
+        string adr = "UI/Setting";
+        var obj = ResMgr.GetInstance().Load<GameObject>(adr);
+        obj.GetComponent<Setting>().InitSetting(settingUiType.Quality, _isleft);
+        obj.transform.parent = GameObject.Find("CharacterCanvas").transform;
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = Vector3.one;
+    }
+    public void CreateJiaoYi(bool isKey)
+    { 
+        //创建固定危机事件
+        PoolMgr.GetInstance().GetObj(eventBubblePrefab[4], (a) =>
+        {
+            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.localPosition = Vector3.zero;
+
+            a.GetComponent<Bubble>().StartEventBefore(EventType.JiaoYi, false, 1);
+
+        });
+    }
+    public void CreateChangJing(bool isKey)
+    {
+        //创建固定危机事件
+        PoolMgr.GetInstance().GetObj(eventBubblePrefab[5], (a) =>
+        {
+            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.localPosition = Vector3.zero;
+
+            a.GetComponent<Bubble>().StartEventBefore(EventType.ChangJing, false, 1);
+
+        });
+    }
+    public void CreateYiwai(bool isKey)
+    {
+        //创建固定危机事件
+        PoolMgr.GetInstance().GetObj(eventBubblePrefab[2], (a) =>
+        {
+            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.localPosition = Vector3.zero;
+
+            a.GetComponent<Bubble>().StartEventBefore(EventType.YiWai, false, 1);
+
+        });
+    }
+    #endregion
+
+
     #region boss
 
     /// <summary>

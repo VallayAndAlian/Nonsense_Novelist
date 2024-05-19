@@ -119,21 +119,61 @@ public class DebugUi : MonoBehaviour
     #endregion
     public void AddCharacter(Transform _chara)
     {
-        print(_chara.GetSiblingIndex());
+
         //创建固定危机事件
-        PoolMgr.GetInstance().GetObj(FangKeObj, (a) =>
-        {
+        GameMgr.instance.gameProcess.CreateFangke(false, _chara.GetSiblingIndex() + 1);
+        //PoolMgr.GetInstance().GetObj(FangKeObj, (a) =>
+        //{
 
-            a.transform.SetParent(GameMgr.instance.characterCanvas.transform);
-            a.transform.localPosition = Vector3.zero;
+        //    a.transform.SetParent(GameMgr.instance.characterCanvas.transform);
+        //    a.transform.localPosition = Vector3.zero;
 
-            print("debugUI" +( _chara.GetSiblingIndex() + 1).ToString());
-            a.GetComponent<Bubble>().StartEventBefore(EventType.FangKe, false, _chara.GetSiblingIndex() + 1);
+        //    print("debugUI" +( _chara.GetSiblingIndex() + 1).ToString());
+        //    a.GetComponent<Bubble>().StartEventBefore(EventType.FangKe, false, _chara.GetSiblingIndex() + 1);
          
-        });
+        //});
         Exit();
     }
 
+    public void ClickXiWang_A()
+    {
+        GameMgr.instance.gameProcess.CreateXiWang(false);
+        Exit();
+    }
+    public void ClickXiWang_B()
+    {
+        GameMgr.instance.gameProcess.CreateXiWang(true);
+        Exit();
+    }
+    public void ClickSetting_A()
+    {
+
+        GameMgr.instance.gameProcess.CreateSetting(true);
+        Exit();
+    }
+    public void ClickSetting_B()
+    {
+        GameMgr.instance.gameProcess.CreateSetting(false);
+        Exit();
+    }
+    public void ClickYiwai_A()
+    {
+
+        GameMgr.instance.gameProcess.CreateYiwai(true);
+        Exit();
+    }
+    public void ClickJiaoyi_A()
+    {
+
+        GameMgr.instance.gameProcess.CreateJiaoYi(true);
+        Exit();
+    }
+    public void ClickChangjing_A()
+    {
+
+        GameMgr.instance.gameProcess.CreateChangJing(true);
+        Exit();
+    }
     public void AddMonster(Transform _chara)
     {
         //创建固定危机事件
