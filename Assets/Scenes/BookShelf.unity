@@ -865,7 +865,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 201055629}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1850486820}
+        m_TargetAssemblyTypeName: BookShelf, Assembly-CSharp
+        m_MethodName: SwitchPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &201055629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5123,7 +5135,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1846175209}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1850486820}
+        m_TargetAssemblyTypeName: BookShelf, Assembly-CSharp
+        m_MethodName: SwitchPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1846175209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5262,9 +5286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panels:
   - {fileID: 707073570}
-  - {fileID: 707073570}
-  - {fileID: 707073570}
-  - {fileID: 0}
   prefab_wordinf: {fileID: 1934018598025747759, guid: 76d17fac61767324ea2f1c20ef3db119, type: 3}
   prefab_chara: {fileID: 5905056129475112622, guid: 02103ffd50ae18547a6be7b3692f0697, type: 3}
   prefab_setting: {fileID: 0}

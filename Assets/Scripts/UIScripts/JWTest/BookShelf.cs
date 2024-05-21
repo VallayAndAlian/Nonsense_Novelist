@@ -19,6 +19,7 @@ public class BookShelf : MonoBehaviour
     public GameObject prefab_setting;
     public TextMeshProUGUI text;
     public Color choosenColor = Color.grey;
+    private int cardCount = 9;
 
     private bool b_chara = false;
     private bool b_setting = false;
@@ -273,8 +274,27 @@ public class BookShelf : MonoBehaviour
             
     }
     }
-
-
+    int clickCount = 0;
+    /// <summary>
+    /// 翻页
+    /// </summary>
+    public void SwitchPanel()
+    {
+        buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        clickCount = panels[0].gameObject.transform.childCount / 2 * cardCount;
+        print(panels[0].gameObject.transform.Find("wordPR").childCount);
+        if (buttonSelf.name == "rightbtn")//右键
+        {
+                for (int i = 0; i < cardCount; i++)//第一页的隐藏
+                {
+                    panels[0].gameObject.transform.Find("wordPL").GetChild(i).gameObject.SetActive(false);
+                }
+        }
+        else//左键
+        {
+            if(clickCount< panels[0].gameObject.transform.childCount / 2 * cardCount) { }
+        }
+    }
 
     /// <summary>
     /// 将显示出来的所有词条收回
@@ -530,6 +550,13 @@ public class BookShelf : MonoBehaviour
                             else
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
+                                {
+                                    for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
+                                    {
+                                        panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
+                                    }
+                                }
                             }
                             obj.transform.localScale = Vector3.one * 0.1f;
                         });
@@ -551,6 +578,13 @@ public class BookShelf : MonoBehaviour
                             else
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
+                                {
+                                    for (int i = cardCount ; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
+                                    {
+                                        panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
+                                    }
+                                }
                             }
                             obj.transform.localScale = Vector3.one * 0.1f;
                         });
@@ -573,6 +607,13 @@ public class BookShelf : MonoBehaviour
                             else
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
+                                {
+                                    for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
+                                    {
+                                        panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
+                                    }
+                                }
                             }
                             obj.transform.localScale = Vector3.one * 0.1f;
                         });
@@ -594,13 +635,20 @@ public class BookShelf : MonoBehaviour
                 //卡牌信息
                 obj.GetComponent<CharacterDetail>().OpenName(chara.Name);
                 //
-                if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
+                if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                 {
                     obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                 }
                 else
                 {
                     obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                    if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
+                    {
+                        for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++) {
+                            panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
+                        }
+                    }
+                    
                 }
                 obj.transform.localScale = Vector3.one * 0.42f;
             });
