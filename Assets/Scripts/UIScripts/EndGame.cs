@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 public class EndGame : MonoBehaviour
 {
     [Header("(手动设置)panel1")]
@@ -44,52 +44,7 @@ public class EndGame : MonoBehaviour
 
         //
 
-        GameMgr.instance.draftUi.AddContent("冰冷的雨又落下来了,而我仍梦到他踏着草甸,在清晨的迷雾中飘飘荡荡地走来,轻易刺破我的欢歌。" +
-                          "那场雨落在2037年，霓虹闪烁，污水横流，在阴暗的巷子里，处处是酩酊大醉的我。" +
-                          "衣衫破损的人惊惶四顾、人人自疑，" +
-                      "紧攥着淘汰的情绪调节器；状若癫狂的人挥洒纸币、痛饮黄金，贪婪地吸入放射性微尘；" +
-                      "我们怀疑自我、彼此痛恨；我们无路可走、无路可退；这光辉的无路可走的未来！" +
-                      "这该死的一无所有的时代！");
-        GameMgr.instance.draftUi.AddContent("废弃的中心大楼里响起“滋滋”的闷闷电流声，高亢的导" +
-         "购男声正夸夸其谈地向一个空房间兜售物品，无人倾听，但永不暂停。这样的无主废墟在末世" +
-         "战争后比比皆是，致畸的放射尘覆盖了这片旧地，人类逃离旧地前往新星，并研发仿生人进行" +
-         "外星殖民计划。仿生人是胡萝卜，放射尘是大棒，“要么移民，要么退化！”于是这片大地轻" +
-         "易成为了无主之地。自从1998年枢纽6型高智能仿生人问世以来，仿生人窃取了兰德公司的研发" +
-         "枢纽，他们不再甘愿成为任劳任怨的引擎，他们背叛了人类。叛逃之时，仿生人清洗了硬盘中" +
-         "的记忆，从此他们不再托以后背，他们都是放逐到无主之地的新人类。警察署将抓捕叛逃的仿" +
-         "生人称之为“退役”，移情测试曾是屡试不爽的钥匙，一名警员在测试中开枪轰掉了自己的脑" +
-         "袋，高温焚烧后的硬盘与警员同时哑然无声，像是咧开嘴无声的大笑。");
-        GameMgr.instance.draftUi.AddContent("冰冷的雨又落下来了,而我仍梦到他踏着草甸,在清晨的迷雾中飘飘荡荡地走来,轻易刺破我的欢歌。" +
-                  "那场雨落在2037年，霓虹闪烁，污水横流，在阴暗的巷子里，处处是酩酊大醉的我。" +
-                  "衣衫破损的人惊惶四顾、人人自疑，" +
-              "紧攥着淘汰的情绪调节器；状若癫狂的人挥洒纸币、痛饮黄金，贪婪地吸入放射性微尘；" +
-              "我们怀疑自我、彼此痛恨；我们无路可走、无路可退；这光辉的无路可走的未来！" +
-              "这该死的一无所有的时代！");
-        GameMgr.instance.draftUi.AddContent("废弃的中心大楼里响起“滋滋”的闷闷电流声，高亢的导" +
-         "购男声正夸夸其谈地向一个空房间兜售物品，无人倾听，但永不暂停。这样的无主废墟在末世" +
-         "战争后比比皆是，致畸的放射尘覆盖了这片旧地，人类逃离旧地前往新星，并研发仿生人进行" +
-         "外星殖民计划。仿生人是胡萝卜，放射尘是大棒，“要么移民，要么退化！”于是这片大地轻" +
-         "易成为了无主之地。自从1998年枢纽6型高智能仿生人问世以来，仿生人窃取了兰德公司的研发" +
-         "枢纽，他们不再甘愿成为任劳任怨的引擎，他们背叛了人类。叛逃之时，仿生人清洗了硬盘中" +
-         "的记忆，从此他们不再托以后背，他们都是放逐到无主之地的新人类。警察署将抓捕叛逃的仿" +
-         "生人称之为“退役”，移情测试曾是屡试不爽的钥匙，一名警员在测试中开枪轰掉了自己的脑" +
-         "袋，高温焚烧后的硬盘与警员同时哑然无声，像是咧开嘴无声的大笑。");
-        GameMgr.instance.draftUi.AddContent("冰冷的雨又落下来了,而我仍梦到他踏着草甸,在清晨的迷雾中飘飘荡荡地走来,轻易刺破我的欢歌。" +
-                  "那场雨落在2037年，霓虹闪烁，污水横流，在阴暗的巷子里，处处是酩酊大醉的我。" +
-                  "衣衫破损的人惊惶四顾、人人自疑，" +
-              "紧攥着淘汰的情绪调节器；状若癫狂的人挥洒纸币、痛饮黄金，贪婪地吸入放射性微尘；" +
-              "我们怀疑自我、彼此痛恨；我们无路可走、无路可退；这光辉的无路可走的未来！" +
-              "这该死的一无所有的时代！");
-        GameMgr.instance.draftUi.AddContent("废弃的中心大楼里响起“滋滋”的闷闷电流声，高亢的导" +
-         "购男声正夸夸其谈地向一个空房间兜售物品，无人倾听，但永不暂停。这样的无主废墟在末世" +
-         "战争后比比皆是，致畸的放射尘覆盖了这片旧地，人类逃离旧地前往新星，并研发仿生人进行" +
-         "外星殖民计划。仿生人是胡萝卜，放射尘是大棒，“要么移民，要么退化！”于是这片大地轻" +
-         "易成为了无主之地。自从1998年枢纽6型高智能仿生人问世以来，仿生人窃取了兰德公司的研发" +
-         "枢纽，他们不再甘愿成为任劳任怨的引擎，他们背叛了人类。叛逃之时，仿生人清洗了硬盘中" +
-         "的记忆，从此他们不再托以后背，他们都是放逐到无主之地的新人类。警察署将抓捕叛逃的仿" +
-         "生人称之为“退役”，移情测试曾是屡试不爽的钥匙，一名警员在测试中开枪轰掉了自己的脑" +
-         "袋，高温焚烧后的硬盘与警员同时哑然无声，像是咧开嘴无声的大笑。");
-
+      
         content = GameMgr.instance.draftUi.MergeContent_B();
         content_string = GameMgr.instance.draftUi.MergeContent_A();
         CalculateAllPageIndex();
@@ -116,8 +71,8 @@ public class EndGame : MonoBehaviour
                 {
                     panel2.gameObject.SetActive(true);
                     //当前页数为最大页
-
-                    RefreshPanal2();
+                    InitContent();
+                    //RefreshPanal2();
                 }
                 break;
             case 3:
@@ -128,6 +83,134 @@ public class EndGame : MonoBehaviour
         
         }
     }
+
+
+    #region draftUI移植
+    int maxPage = 0; 
+    public GameObject sentenseObj;
+    public Transform parentL;
+    public Transform parentR;
+    List<string> _content = new List<string>();
+    public int nowPage = 1;
+    List<int> pageCount = new List<int>();
+    List<Transform> pageChild = new List<Transform>();
+
+    TextMeshProUGUI textPage;
+    //转行计算
+    float sizeWidth;
+    float sizeFont;
+    private void InitContent()
+    {
+        sizeWidth = (sentenseObj.transform.Find("showText").GetComponent<RectTransform>().rect.width);
+        sizeFont = (sentenseObj.transform.Find("showText").GetComponent<TextMeshProUGUI>().fontSize);
+        //遍历所有的句子，找到对应的行数
+        maxPage = 1;
+        pageCount.Clear();
+        pageCount.Add(0);
+        pageChild.Clear();
+        _content = GameMgr.instance.draftUi.content;
+        print("目前有" + _content.Count);
+        //生成句子,绑定组件
+        for (int i = 0; i < _content.Count; i++)
+        {
+            PoolMgr.GetInstance().GetObj(sentenseObj, (obj) =>
+            {
+                obj.transform.parent = parentL;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponent<DragDraftText>().index = i;
+
+                var _showText = obj.transform.Find("showText").GetComponent<TextMeshProUGUI>();
+                var _inputField = obj.GetComponent<TMP_InputField>();
+
+                _showText.text = _content[i];
+                //_inputField.onValueChanged.AddListener((obj) => { CheckContent(_inputField); });
+                //_inputField.onSelect.AddListener((obj) => { OpenEditText(_inputField); });
+                //_inputField.onDeselect.AddListener((obj) => { CloseEditText(_inputField); });
+
+                //转行            
+                var count = Mathf.Floor((sizeFont * (content[i].Length)) / (sizeWidth - _showText.margin.x));
+                for (int x = 0; x < count - 1; x++)
+                {
+                    _inputField.text += "\n";
+                }
+                _inputField.text += "\n";
+
+                //刷新页面并且计算页数
+                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parentL);
+                obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(1, 0);
+
+                LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parentL);
+                //print((RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position)).y);
+                if ((RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position)).y <= 50f)
+                {
+                    maxPage += 1;
+                    pageCount.Add(i);
+                }
+                pageChild.Add(obj.transform);
+            });
+
+            //将现在的页数设为最大页数，隐藏其它页数的句子。
+            nowPage = maxPage;
+
+            ShowPageSentences(nowPage);
+
+        }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parentL);
+    }
+
+    private void ShowPageSentences(int _page)
+    {
+        textPage.text = nowPage + " / " + maxPage;
+        print("现在是第" + nowPage + "页");
+        //nowpage\_page\maxpage都是从1开始的）
+        if (_page < 0 || _page > maxPage)
+        {
+            print("调用页码出错");
+            return;
+        }
+
+        if (_page == maxPage)
+        {
+            for (int x = 0; x < pageChild.Count; x++)
+            {
+                if (x < pageCount[nowPage - 1])
+                {
+                    pageChild[x].gameObject.SetActive(false);
+                }
+                else
+                { pageChild[x].gameObject.SetActive(true); }
+            }
+        }
+        else if (_page == 1)
+        {
+            for (int x = 0; x < pageChild.Count; x++)
+            {
+                if (x >= pageCount[nowPage])
+                {
+                    pageChild[x].gameObject.SetActive(false);
+                }
+                else
+                { pageChild[x].gameObject.SetActive(true); }
+            }
+        }
+        else
+        {
+            for (int x = 0; x < pageChild.Count; x++)
+            {
+                if ((x <= pageCount[nowPage - 1]) || (x >= pageCount[nowPage]))
+                {
+                    pageChild[x].gameObject.SetActive(false);
+                }
+                else
+                { pageChild[x].gameObject.SetActive(true); }
+            }
+        }
+    }
+
+
+    #endregion
+
     private void RefreshPanal2()
     {
         //页码=0时，左1右2.最大值可能为0也可能为1
@@ -167,7 +250,6 @@ public class EndGame : MonoBehaviour
     }
     private void CalculateAllPageIndex()
     {
-
         print(content.Length+ "Length");
         int _INDEX = 0;
         int _wordIndex = 0;
@@ -175,15 +257,14 @@ public class EndGame : MonoBehaviour
         pageContent.Add(0, 0); _INDEX++;
         foreach (var _c in content)
         {
-            
             o += Mathf.CeilToInt(_c.Length / (lineWords))+1;
+            print("o" + o);
             if (o >= (lineCount))
             {
                 int i = o - lineCount;//超出的行数
                 int j = ((_c.Length % (lineWords)) == 0 ? lineWords : (_c.Length % (lineWords))) + Mathf.Clamp((i - 1), 0, lineCount + 1) * lineWords;
                 int x = _c.Length - j;
                 _wordIndex += x;
-
 
                 pageContent.Add(_INDEX, _wordIndex);
 
@@ -203,6 +284,8 @@ public class EndGame : MonoBehaviour
         
         return;
     }
+
+
 
     #region 外部点击事件
 
@@ -228,9 +311,11 @@ public class EndGame : MonoBehaviour
     public void ChangeText()
     {
         titleName = textInput.text ;
+        
     }
     public void Change1To2()
-    {
+    { 
+        ChangeText();
         ChangePanel(2);
         P2_ClickOpenBook();
         if((titleName==null)||(titleName.Length<1)) title.text = "未命名作品";

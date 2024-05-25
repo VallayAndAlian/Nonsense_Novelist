@@ -15,6 +15,8 @@ public enum settingUiType
 /// </summary>
 public class Setting : MonoBehaviour
 {
+    private string resName = "UI/addsheding_";
+    public Image uiTitle;
     [Header("品质概率")]
     [Header("平庸")] public int pingYong = 60;
     public GameObject py;
@@ -43,7 +45,16 @@ public class Setting : MonoBehaviour
     public void InitSetting(settingUiType type,bool _isLeft)
     {
         isLeft = _isLeft;
-  
+        if (isLeft)
+        {
+            uiTitle.sprite = ResMgr.GetInstance().Load<Sprite>(resName + "A");
+        }
+        else
+        {
+            uiTitle.sprite = ResMgr.GetInstance().Load<Sprite>(resName + "B");
+
+        }
+
         typeMe = type;
         switch (type)
         {
@@ -63,7 +74,7 @@ public class Setting : MonoBehaviour
     /// </summary>
     void Quality()
     {
-        this.transform.GetChild(3).GetComponentInChildren<Text>().text= "选择一个设定";
+        //this.transform.GetChild(3).GetComponentInChildren<Text>().text= "选择一个设定";
         this.transform.GetChild(3).GetComponent<Button>().interactable = false;
         //概率抽取                
         int numx = UnityEngine.Random.Range(1, 101);
@@ -195,7 +206,7 @@ public class Setting : MonoBehaviour
     /// </summary>
     void Character()
     {
-        this.transform.GetChild(3).GetComponentInChildren<Text>().text = "选择一个设定";
+        //this.transform.GetChild(3).GetComponentInChildren<Text>().text = "选择一个设定";
         this.transform.GetChild(3).GetComponent<Button>().interactable = false;
 
         //删除
@@ -366,12 +377,12 @@ public class Setting : MonoBehaviour
         }
         if (click == null)//click没选中物体
         {
-            this.transform.GetChild(3).GetComponentInChildren<Text>().text = "选择一个设定";
+            //this.transform.GetChild(3).GetComponentInChildren<Text>().text = "选择一个设定";
             this.transform.GetChild(3).GetComponent<Button>().interactable = false;
         }
         else//click选中物体
         {
-            this.transform.GetChild(3).GetComponentInChildren<Text>().text = "确定";
+            //this.transform.GetChild(3).GetComponentInChildren<Text>().text = "确定";
             this.transform.GetChild(3).GetComponent<Button>().interactable = true;
         }
     }

@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class DraftUi : MonoBehaviour
 {
     //文本内容
-    List<string> content=new List<string>();
+    public List<string> content=new List<string>();
 
     // 不换行的的空格符
     public static readonly string NO_BREAKING_SPACE = "\u00A0";//"\u3000";

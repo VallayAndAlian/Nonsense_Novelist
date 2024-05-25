@@ -17,7 +17,7 @@ MonoBehaviour:
     t_boss: {fileID: 0}
     t_eventCount: 0
     t_eventKey: 0
-    time: 2
+    time: 10
     image: {fileID: 0}
-    time_count: 0
+    time_count: 2
     level: 1

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using UnityEngine.UIElements;
 
 
+
 public class BookShelf : MonoBehaviour
 {
     [Header("手动设置书籍顺序（要与panel顺序对应）")]
@@ -17,7 +18,7 @@ public class BookShelf : MonoBehaviour
     public GameObject prefab_wordinf;
     public GameObject prefab_chara;
     public GameObject prefab_setting;
-    public TextMeshProUGUI text;
+
     public Color choosenColor = Color.grey;
     private int cardCount = 9;
 
@@ -27,10 +28,14 @@ public class BookShelf : MonoBehaviour
     private bool b_noun = false;
     private bool b_adj = false;
 
+    public UnityEngine.UI.Image sp_bottom;
+    public UnityEngine.UI.Image sp_top;
+    private string sp_resName= "WordImage/BookShelf/";
     //private UnityEngine.UI.Toggle toggle;
     void Start()
     {
-
+        if (panels[0] != null)
+            panels[0].gameObject.SetActive(false);
     }
 
 
@@ -129,8 +134,10 @@ public class BookShelf : MonoBehaviour
        
         if (buttonSelf.name == BookNameEnum.HongLouMeng.ToString())
         {//打开红楼梦页面+默认显示全部红楼梦词条
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.HongLouMeng.ToString()+"_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.HongLouMeng.ToString() + "_T");
             panels[0].gameObject.SetActive(true);
-            text.text = "红楼梦";
+
             //角色
             if(b_chara)
                 CharaShow(AllSkills.hlmList_chara, BookNameEnum.HongLouMeng);
@@ -146,9 +153,11 @@ public class BookShelf : MonoBehaviour
         }
         else if (buttonSelf.name == BookNameEnum.ZooManual.ToString())
         {
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.ZooManual.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.ZooManual.ToString() + "_T");
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "动物园丰容手册";
+
             //角色
             if (b_chara)
                 CharaShow(AllSkills.animalList_chara, BookNameEnum.ZooManual);
@@ -164,7 +173,9 @@ public class BookShelf : MonoBehaviour
         {
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "埃及神话";
+    
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.EgyptMyth.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.EgyptMyth.ToString() + "_T");
             //角色
             if (b_chara)
                 CharaShow(AllSkills.aiJiShenHuaList_chara, BookNameEnum.EgyptMyth);
@@ -180,7 +191,9 @@ public class BookShelf : MonoBehaviour
         {
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "莎乐美";
+
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.Salome.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.Salome.ToString() + "_T");
             //角色
             if (b_chara)
                 CharaShow(AllSkills.shaLeMeiList_chara, BookNameEnum.Salome);
@@ -196,7 +209,9 @@ public class BookShelf : MonoBehaviour
         {
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "水晶能量疗愈";
+ 
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.CrystalEnergy.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.CrystalEnergy.ToString() + "_T");
             //角色
             if (b_chara)
                 CharaShow(AllSkills.crystalList_chara, BookNameEnum.CrystalEnergy);
@@ -212,7 +227,9 @@ public class BookShelf : MonoBehaviour
         {
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "蚂蚁帝国";
+
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.PHXTwist.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.PHXTwist.ToString() + "_T");
             //角色
             if (b_chara)
                 CharaShow(AllSkills.maYiDiGuoList_chara, BookNameEnum.PHXTwist);
@@ -228,7 +245,9 @@ public class BookShelf : MonoBehaviour
         {
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "仿生人会梦到电子羊吗";
+
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.ElectronicGoal.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.ElectronicGoal.ToString() + "_T");
             //角色
             if (b_chara)
                 CharaShow(AllSkills.humanList_chara, BookNameEnum.ElectronicGoal);
@@ -244,7 +263,8 @@ public class BookShelf : MonoBehaviour
         {
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "字典";
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.allBooks.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.allBooks.ToString() + "_T");
             //角色
             if (b_chara)
                 CharaShow(AllSkills.commonList_chara, BookNameEnum.allBooks);
@@ -260,7 +280,8 @@ public class BookShelf : MonoBehaviour
         {
             //打开红楼梦页面+默认显示全部红楼梦词条
             panels[0].gameObject.SetActive(true);
-            text.text = "流行病毒";
+            sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.FluStudy.ToString() + "_B");
+            sp_top.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.FluStudy.ToString() + "_T");
             //角色
             if (b_chara)
                 CharaShow(AllSkills.liuXingBXList_chara, BookNameEnum.FluStudy);
