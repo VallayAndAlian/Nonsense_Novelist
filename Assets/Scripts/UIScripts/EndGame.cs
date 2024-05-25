@@ -43,11 +43,11 @@ public class EndGame : MonoBehaviour
 
 
         //
-
+        this.GetComponent<Canvas>().worldCamera = Camera.main;
       
         content = GameMgr.instance.draftUi.MergeContent_B();
         content_string = GameMgr.instance.draftUi.MergeContent_A();
-        CalculateAllPageIndex();
+       // CalculateAllPageIndex();
     }
 
     /// <summary>
@@ -86,16 +86,16 @@ public class EndGame : MonoBehaviour
 
 
     #region draftUI移植
-    int maxPage = 0; 
     public GameObject sentenseObj;
     public Transform parentL;
     public Transform parentR;
     List<string> _content = new List<string>();
-    public int nowPage = 1;
-    List<int> pageCount = new List<int>();
+    int maxPage = 0;//最大页数（实际）
+    public int nowPage = 0;//现在页数（0开始）
+    List<int> pageCount = new List<int>();//在最开始加一个0
     List<Transform> pageChild = new List<Transform>();
 
-    TextMeshProUGUI textPage;
+    public TextMeshProUGUI textPage;
     //转行计算
     float sizeWidth;
     float sizeFont;
@@ -113,6 +113,7 @@ public class EndGame : MonoBehaviour
         //生成句子,绑定组件
         for (int i = 0; i < _content.Count; i++)
         {
+            print("i"+ i+ "_content.Count"+ _content.Count);
             PoolMgr.GetInstance().GetObj(sentenseObj, (obj) =>
             {
                 obj.transform.parent = parentL;
@@ -138,43 +139,63 @@ public class EndGame : MonoBehaviour
                 //刷新页面并且计算页数
                 LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parentL);
                 obj.GetComponent<RectTransform>().anchoredPosition = new Vector2(1, 0);
-
+                print("1");
                 LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parentL);
-                //print((RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position)).y);
-                if ((RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position)).y <= 50f)
+                print("2:::::"+ (RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position)).y);
+                if ((RectTransformUtility.WorldToScreenPoint(Camera.main, obj.GetComponent<RectTransform>().position)).y <= 250f)
                 {
+                    print("sdsds");
                     maxPage += 1;
                     pageCount.Add(i);
                 }
                 pageChild.Add(obj.transform);
             });
-
-            //将现在的页数设为最大页数，隐藏其它页数的句子。
-            nowPage = maxPage;
-
-            ShowPageSentences(nowPage);
-
         }
-
+            //将现在的页数设为最大页数，隐藏其它页数的句子。
+        nowPage = maxPage-(maxPage%2);
+        //max=1 nowpage=1-1
+        //max=2 nowpage=2-0
+        //max=2 nowpage=3-1
+        ShowPageSentences(nowPage);
         LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)parentL);
     }
 
     private void ShowPageSentences(int _page)
     {
-        textPage.text = nowPage + " / " + maxPage;
-        print("现在是第" + nowPage + "页");
+        textPage.text = (nowPage+1).ToString() + " / " + (maxPage+1).ToString;
+        
         //nowpage\_page\maxpage都是从1开始的）
         if (_page < 0 || _page > maxPage)
         {
             print("调用页码出错");
             return;
         }
+        //如果maxpage=1,_page=now page=0,,pagechild[_page+1]
+        print("nowPage Index:::" + _page + "[---]pageChild.Count:::" + pageChild.Count+ "[---]maxPage:::" + maxPage);
+         if (_page == 1)//如果在第一面
+        {
+            for (int x = 0; x < pageChild.Count; x++)
+            {
+                pageChild[x].gameObject.SetActive(false);
+                if (pageCount.Count == 1)
+                {
+                     if (x <= pageCount[nowPage])
+                    { pageChild[x].gameObject.SetActive(true); }
+                }
+                if (pageCount.Count >= 2)
+                {
+                    if (x <= pageCount[nowPage+1])
+                    { pageChild[x].gameObject.SetActive(true); }
+                }
 
-        if (_page == maxPage)
+               
+            }
+        }
+        else if (_page == (maxPage - (maxPage % 2)))//如果已经翻到最大页数的那一面
         {
             for (int x = 0; x < pageChild.Count; x++)
             {
-                if (x < pageCount[nowPage - 1])
+                if (x < pageCount[nowPage + 1])
                 {
                     pageChild[x].gameObject.SetActive(false);
                 }
@@ -182,19 +203,7 @@ public class EndGame : MonoBehaviour
                 { pageChild[x].gameObject.SetActive(true); }
             }
         }
-        else if (_page == 1)
-        {
-            for (int x = 0; x < pageChild.Count; x++)
-            {
-                if (x >= pageCount[nowPage])
-                {
-                    pageChild[x].gameObject.SetActive(false);
-                }
-                else
-                { pageChild[x].gameObject.SetActive(true); }
-            }
-        }
-        else
+        else//如果在中间页面
         {
             for (int x = 0; x < pageChild.Count; x++)
             {
@@ -207,6 +216,21 @@ public class EndGame : MonoBehaviour
             }
         }
     }
+
+
+    public void ClickNextPage()
+    {
+        if (nowPage == maxPage) return;
+        nowPage+=2;
+        ShowPageSentences(nowPage);
+    }
+    public void ClickLastPage()
+    {
+        if (nowPage == 1) return;
+        nowPage -= 2;
+        ShowPageSentences(nowPage);
+    }
+
 
 
     #endregion
