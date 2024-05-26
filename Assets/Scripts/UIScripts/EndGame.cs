@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class EndGame : MonoBehaviour
 {
     [Header("( ÷∂Ø…Ë÷√)panel1")]
@@ -453,7 +454,8 @@ public class EndGame : MonoBehaviour
     {
         //RecordMgr.instance.AddRecord(titleName, GameMgr.instance.draftUi.content, 2);
         RecordMgr.instance.SaveByJson(titleName, GameMgr.instance.draftUi.content, 2);
-        gameObject.GetComponent<LoadingScene>().EnterNextScene();
+        SceneManager.LoadScene("Study");
+        //gameObject.GetComponent<LoadingScene>().EnterNextScene();
     }
     public void ChangeText()
     {

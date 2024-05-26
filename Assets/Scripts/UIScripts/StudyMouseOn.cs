@@ -70,13 +70,14 @@ public class StudyMouseOn : MonoBehaviour
         {
             case StudyUIType.xiezuo:
                 {
-                   var ls=GetComponent<LoadingScene>();
-                    if (ls == null)
-                    {
-                        ls=this.gameObject.AddComponent<LoadingScene>();
-                        ls.sceneName = "ShootCombat";
-                    }
-                    ls.EnterNextScene();
+                    //var ls=GetComponent<LoadingScene>();
+                    // if (ls == null)
+                    // {
+                    //     ls=this.gameObject.AddComponent<LoadingScene>();
+                    //     ls.sceneName = "ShootCombat";
+                    // }
+                    // ls.EnterNextScene();
+                    SceneManager.LoadScene("ShootCombat");
                     audioSource.Play();
                 }
                 break;
