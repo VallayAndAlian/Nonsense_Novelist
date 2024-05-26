@@ -1189,17 +1189,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 100
+    m_Left: 130
     m_Right: 0
-    m_Top: 80
+    m_Top: 140
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 110}
-  m_Spacing: {x: 100, y: 130}
+  m_Spacing: {x: 220, y: 250}
   m_Constraint: 1
-  m_ConstraintCount: 3
+  m_ConstraintCount: 2
 --- !u!114 &360202121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4418,17 +4418,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 100
+    m_Left: 130
     m_Right: 0
-    m_Top: 80
+    m_Top: 140
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 110}
-  m_Spacing: {x: 100, y: 130}
+  m_Spacing: {x: 220, y: 250}
   m_Constraint: 1
-  m_ConstraintCount: 3
+  m_ConstraintCount: 2
 --- !u!1 &1815036730
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class BookShelf : MonoBehaviour
     public GameObject prefab_setting;
 
     public Color choosenColor = Color.grey;
-    private int cardCount = 9;
+    private int cardCount = 4;
 
     private bool b_chara = false;
     private bool b_setting = false;
@@ -116,6 +116,9 @@ public class BookShelf : MonoBehaviour
 
 
     GameObject buttonSelf = null;
+    float pageCount = 0;
+    int nowPage = 1;
+
     /// <summary>
     /// 选书进入书本页面
     /// </summary>
@@ -126,7 +129,12 @@ public class BookShelf : MonoBehaviour
         {
             OpenAllTag();
         }
-        
+        //向上取整
+        //pageCount = panels[0].gameObject.transform.Find("wordPL").childCount / cardCount;
+        float a = panels[0].gameObject.transform.Find("wordPL").childCount;
+        float b = cardCount;
+        pageCount = Mathf.CeilToInt(a / b);
+        nowPage = 1;
     }
 
     void CreateWordFromTag()
@@ -295,25 +303,47 @@ public class BookShelf : MonoBehaviour
             
     }
     }
-    int clickCount = 0;
     /// <summary>
     /// 翻页
     /// </summary>
     public void SwitchPanel()
     {
         buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        clickCount = panels[0].gameObject.transform.childCount / 2 * cardCount;
-        print(panels[0].gameObject.transform.Find("wordPR").childCount);
-        if (buttonSelf.name == "rightbtn")//右键
+        
+        if (buttonSelf.name == "rightbtn"&&nowPage<pageCount)//右键
         {
-                for (int i = 0; i < cardCount; i++)//第一页的隐藏
-                {
-                    panels[0].gameObject.transform.Find("wordPL").GetChild(i).gameObject.SetActive(false);
-                }
+            
+           for (int i = (nowPage-1)*cardCount; i < nowPage*cardCount; i++)//第一页的隐藏
+           {
+                panels[0].gameObject.transform.Find("wordPL").GetChild(i).gameObject.SetActive(false);
+                panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
+           }
+           for (int i = nowPage * cardCount; i < (nowPage+1) * cardCount; i++)//同时第二页展现
+           {
+                if(panels[0].gameObject.transform.Find("wordPL").childCount> i)
+                panels[0].gameObject.transform.Find("wordPL").GetChild(i).gameObject.SetActive(true);
+                if (panels[0].gameObject.transform.Find("wordPR").childCount > i) 
+                panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(true);
+           }
+            nowPage++;
+            print(nowPage);
+            print(pageCount);
         }
-        else//左键
+        else if(buttonSelf.name == "leftbtn" && nowPage >1)//左键
         {
-            if(clickCount< panels[0].gameObject.transform.childCount / 2 * cardCount) { }
+            for (int i = (nowPage - 1) * cardCount; i < nowPage * cardCount; i++)//第二页隐藏
+            {
+                if (panels[0].gameObject.transform.Find("wordPL").childCount > i)
+                    panels[0].gameObject.transform.Find("wordPL").GetChild(i).gameObject.SetActive(false);
+                if (panels[0].gameObject.transform.Find("wordPR").childCount > i)
+                    panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
+            }
+            for (int i = (nowPage-2) * cardCount; i < (nowPage - 1) * cardCount; i++)//同时第一页显现
+            {
+                panels[0].gameObject.transform.Find("wordPL").GetChild(i).gameObject.SetActive(true);
+                panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(true);
+            }
+            nowPage--;
         }
     }
 
@@ -564,13 +594,14 @@ public class BookShelf : MonoBehaviour
                         {
                             var _word = obj.AddComponent(word) as AbstractWord0;
                               obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
-                            if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
+                            if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                             }
                             else
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                //隐藏后面页面的卡牌
                                 if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                                 {
                                     for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
@@ -578,8 +609,16 @@ public class BookShelf : MonoBehaviour
                                         panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
                                     }
                                 }
+                                //右侧比左侧panel子物体数量多
+                                if (panels[0].gameObject.transform.Find("wordPR").childCount >= panels[0].gameObject.transform.Find("wordPL").childCount && panels[0].gameObject.transform.Find("wordPR").childCount % cardCount != 0)
+                                {
+                                    for (int i = panels[0].gameObject.transform.Find("wordPL").childCount - 1; i < panels[0].gameObject.transform.Find("wordPL").childCount + 3; i++)//隐藏
+                                    {
+                                        obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                                    }
+                                }
                             }
-                            obj.transform.localScale = Vector3.one * 0.1f;
+                            obj.transform.localScale = Vector3.one * 0.15f;
                         });
                     }
                 }
@@ -592,22 +631,31 @@ public class BookShelf : MonoBehaviour
                         {
                             var _word = obj.AddComponent(word) as AbstractWord0;
                              obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
-                            if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
+                            if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                             }
                             else
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                //隐藏后面页面的卡牌
                                 if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                                 {
-                                    for (int i = cardCount ; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
+                                    for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
                                     {
                                         panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
                                     }
                                 }
+                                //右侧比左侧panel子物体数量多
+                                if (panels[0].gameObject.transform.Find("wordPR").childCount >= panels[0].gameObject.transform.Find("wordPL").childCount && panels[0].gameObject.transform.Find("wordPR").childCount % cardCount != 0)
+                                {
+                                    for (int i = panels[0].gameObject.transform.Find("wordPL").childCount - 1; i < panels[0].gameObject.transform.Find("wordPL").childCount + 3; i++)//隐藏
+                                    {
+                                        obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                                    }
+                                }
                             }
-                            obj.transform.localScale = Vector3.one * 0.1f;
+                            obj.transform.localScale = Vector3.one * 0.15f;
                         });
                     }
                 }
@@ -621,13 +669,14 @@ public class BookShelf : MonoBehaviour
                             var _word = obj.AddComponent(word) as AbstractWord0;
                            
                             obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
-                            if (panels[0].gameObject.transform.Find("wordPL").childCount < 9)
+                            if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
                             }
                             else
                             {
                                 obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                //隐藏后面页面的卡牌
                                 if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                                 {
                                     for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
@@ -635,8 +684,16 @@ public class BookShelf : MonoBehaviour
                                         panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
                                     }
                                 }
+                                //右侧比左侧panel子物体数量多
+                                if (panels[0].gameObject.transform.Find("wordPR").childCount >= panels[0].gameObject.transform.Find("wordPL").childCount && panels[0].gameObject.transform.Find("wordPR").childCount % cardCount != 0)
+                                {
+                                    for (int i = panels[0].gameObject.transform.Find("wordPL").childCount - 1; i < panels[0].gameObject.transform.Find("wordPL").childCount + 3; i++)//隐藏
+                                    {
+                                        obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                                    }
+                                }
                             }
-                            obj.transform.localScale = Vector3.one * 0.1f;
+                            obj.transform.localScale = Vector3.one * 0.15f;
                         });
                     }
                 }
@@ -663,15 +720,24 @@ public class BookShelf : MonoBehaviour
                 else
                 {
                     obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                    //隐藏后面页面的卡牌
                     if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                     {
-                        for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++) {
+                        for (int i = cardCount; i < panels[0].gameObject.transform.Find("wordPR").childCount; i++)
+                        {
                             panels[0].gameObject.transform.Find("wordPR").GetChild(i).gameObject.SetActive(false);
                         }
                     }
-                    
+                    //右侧比左侧panel子物体数量多
+                    if (panels[0].gameObject.transform.Find("wordPR").childCount >= panels[0].gameObject.transform.Find("wordPL").childCount&& panels[0].gameObject.transform.Find("wordPR").childCount%cardCount!=0)
+                    {
+                        for (int i = panels[0].gameObject.transform.Find("wordPL").childCount-1; i < panels[0].gameObject.transform.Find("wordPL").childCount + 3; i++)//隐藏
+                        {
+                            obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                        }
+                    }
                 }
-                obj.transform.localScale = Vector3.one * 0.35f;
+                obj.transform.localScale = Vector3.one * 0.5f;
             });
         }
     }
