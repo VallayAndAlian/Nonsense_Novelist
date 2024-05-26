@@ -47,7 +47,7 @@ public class DraftUi : MonoBehaviour
     public int nowPage = 1;
     List<int> pageCount = new List<int>();
     List<Transform> pageChild = new List<Transform>();
-
+    bool readOnly;
     private void Awake()
     {
         sentenseObj = ResMgr.GetInstance().Load<GameObject>(sentenseAdr);

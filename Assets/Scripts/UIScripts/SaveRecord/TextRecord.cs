@@ -9,17 +9,17 @@ public class TextRecord : ScriptableObject
     public string title;//文章的标题
     public List<string> content;//文章的内容
     public string reply;//系统反馈
+    public bool hasRead;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
+    //// Start is called before the first frame update
+    //void Start()
+    //{
         
-    }
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
         
-    }
+    //}
 }

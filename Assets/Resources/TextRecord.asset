@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1f4b0a38362aee4fb642283e581557d, type: 3}
   m_Name: TextRecord
   m_EditorClassIdentifier: 
-  textList: []
+  textList:
+  - {fileID: 11400000, guid: 3903e4cd08b9a064b88beb5450fbe1ec, type: 2}
+  - {fileID: 11400000, guid: 3903e4cd08b9a064b88beb5450fbe1ec, type: 2}
+  - {fileID: 11400000, guid: 3903e4cd08b9a064b88beb5450fbe1ec, type: 2}

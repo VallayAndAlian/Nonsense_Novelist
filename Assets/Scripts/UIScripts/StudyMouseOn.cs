@@ -28,6 +28,7 @@ public class StudyMouseOn : MonoBehaviour
 
 
     public GameObject zuopinUI;
+    public static bool hasOpenUI=false;
     private void Start()
     {
         animThis = this.GetComponent<Animator>();
@@ -42,7 +43,7 @@ public class StudyMouseOn : MonoBehaviour
 
     private void OnMouseOver()
     {
-
+        if (hasOpenUI) return;
         enterTime += Time.deltaTime;
 
         if (hasEnter) return;
@@ -55,7 +56,7 @@ public class StudyMouseOn : MonoBehaviour
     }
     private void OnMouseExit()
     {
-        print("OnMouseExit");
+    
         animThis.Play("nothing");
         animLogo.Play("nothing");
         hasEnter = false;
@@ -63,7 +64,7 @@ public class StudyMouseOn : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        print("OnMouseDown");
+        if (hasOpenUI) return;
         animThis.Play("press");
         switch (type)
         {
@@ -103,7 +104,7 @@ public class StudyMouseOn : MonoBehaviour
                     audioSource.Play();
                     if (zuopinUI == null)
                         return;
-
+                    hasOpenUI = true;
                     zuopinUI.SetActive(true);
                 }
                 break;
@@ -117,15 +118,13 @@ public class StudyMouseOn : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        print("OnMouseUp");
+      
     }
+
 
 
     #region Õ‚≤ø
 
-    public void ExitZuoPinUI()
-    {
-        if (zuopinUI != null) zuopinUI.SetActive(false);
-    }
+
     #endregion
 }

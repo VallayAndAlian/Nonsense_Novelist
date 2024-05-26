@@ -29,10 +29,14 @@ public class RecordMgr : MonoSingleton<RecordMgr>
         _record.content= _content;
         _record.rand = _RAND;
         _record.reply = "нч";
+        _record.hasRead = false;
         AssetDatabase.CreateAsset(_record, res+id+".asset");
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         recordList.Add(_record);
-
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
     }
+
+   
 }
