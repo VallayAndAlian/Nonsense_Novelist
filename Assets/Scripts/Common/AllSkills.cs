@@ -184,11 +184,11 @@ public static class AllSkills
         //《红楼梦》添加动词词条
         hlmList_verb.AddRange(new Type[] { typeof(BuryFlower), typeof(WritePoem)});
         //《红楼梦》添加形容词词条
-        hlmList_adj.AddRange(new Type[] { typeof(ChaFanWuXin), typeof(ShenYouHuanJing)});
+        hlmList_adj.AddRange(new Type[] { typeof(ChaFanWuXin), typeof(ShenYouHuanJing), });
         //《红楼梦》添加名词词条
-        hlmList_noun.AddRange(new Type[] { typeof(ChaBei), typeof(LengXiangWan),typeof(TongLingBaoyu) });
+        hlmList_noun.AddRange(new Type[] { typeof(ChaBei), typeof(LengXiangWan),typeof(TongLingBaoyu), });
         //《红楼梦》添加角色词条
-        hlmList_chara.AddRange(new Type[] { typeof(LinDaiYu), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng), typeof(WangXiFeng) });
+        hlmList_chara.AddRange(new Type[] { typeof(LinDaiYu), typeof(WangXiFeng), });
         //《红楼梦》全部词条
         hlmList_all.AddRange(hlmList_chara);
         hlmList_all.AddRange(hlmList_noun);
