@@ -56,10 +56,10 @@ public class ReadZuoPin : MonoBehaviour
 
     #region button绑定
 
-    public void SetContent(int _index)
+    public void SetContent(Save _index)
     {
-        content = RecordMgr.instance.recordList[_index].content;
-        bookName.text = RecordMgr.instance.recordList[_index].title;
+        content = _index.content;
+        bookName.text = _index.title;
     }
 
     /// <summary>开启草稿本界面 </summary>
@@ -146,7 +146,7 @@ public class ReadZuoPin : MonoBehaviour
     public void ShowPageSentences(int _page)
     {
         textPage.text = nowPage + " / " + maxPage;
-        print("现在是第" + nowPage + "页");
+ 
         //nowpage\_page\maxpage都是从1开始的）
         if (_page < 0 || _page > maxPage)
         {

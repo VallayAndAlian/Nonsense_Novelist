@@ -451,7 +451,8 @@ public class EndGame : MonoBehaviour
 
     public void BackToStudyScene()
     {
-        RecordMgr.instance.AddRecord(titleName, GameMgr.instance.draftUi.content, 2);
+        //RecordMgr.instance.AddRecord(titleName, GameMgr.instance.draftUi.content, 2);
+        RecordMgr.instance.SaveByJson(titleName, GameMgr.instance.draftUi.content, 2);
         gameObject.GetComponent<LoadingScene>().EnterNextScene();
     }
     public void ChangeText()

@@ -13,9 +13,9 @@ public class PianJian : AbstractCharacter
         //¶ÁÈ¡Êý¾Ý
         MonsterExcelItem dataD = null;
         MonsterExcelItem data = null;
-        for (int i = 0; (i < AllData.monsterDate.items.Length) && (data == null); i++)
+        for (int i = 0; (i < AllData.instance.monsterDate.items.Length) && (data == null); i++)
         {
-            var _data = AllData.monsterDate.items[i];
+            var _data = AllData.instance.monsterDate.items[i];
             if (_data.Mid == characterID)
             {
                 if (dataD == null) dataD = _data;

@@ -20,10 +20,10 @@ public class SaiBoFengZi : AbstractCharacter
         //¶ÁÈ¡Êý¾Ý
         MonsterExcelItem dataD = null;
         MonsterExcelItem data = null;
-        for (int i = 0; (i < AllData.monsterDate.items.Length) && (data == null); i++)
+        for (int i = 0; (i < AllData.instance.monsterDate.items.Length) && (data == null); i++)
         {
             print("sdsd");
-            var _data = AllData.monsterDate.items[i];
+            var _data = AllData.instance.monsterDate.items[i];
             if (_data.Mid == characterID)
             {
                 print(_data.Mid + ":" + _data.name+"=?" + GameMgr.instance.GetStage());

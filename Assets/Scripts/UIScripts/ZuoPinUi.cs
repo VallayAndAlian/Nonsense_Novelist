@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.UI;
+using UnityEngine.UI;
 using TMPro;
 using System;
 using UnityEngine.EventSystems;
-using UnityEditor;
+
+using System.IO;
 public class ZuoPinUi : MonoBehaviour
 {
     [Header("（手动设置）")]
@@ -35,72 +36,122 @@ public class ZuoPinUi : MonoBehaviour
     }
     public void InitBookIcon()
     {
-        if (RecordMgr.instance.recordList.Count == 0)
+        int _numberCount = 0;
+        DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/StreamingAssets");
+        var _files = di.GetFiles("*");
+     
+        if (_files.Length == 0)
         {
             tipText.gameObject.SetActive(true);
             tipText.text = "作品库现在空空如也";
             return;
         }
-        tipText.gameObject.SetActive(false);
-        int i = RecordMgr.instance.recordList.Count - 1;
-        int j = 0;
-        //读取最新的10个存档，生成icon和名称
-        //第一个生成的一定是最新的
-        for (; (i >= 0) && (j < 10); i--, j++)
+
+        for (int _i = 0; _i < _files.Length; _i++)
         {
-            var _temp = RecordMgr.instance.recordList[i];
+
+            if (_files[_i].Name.EndsWith(".meta"))
+            {
+                continue;
+            }
+            if (_numberCount >= 10) continue;
+
+            var _temp = RecordMgr.instance.LoadByJson(_files[_i].FullName);
             PoolMgr.GetInstance().GetObj(bookIconPrefabs, (obj) =>
-             {
-                 obj.transform.parent = bookIconParent;
-                 obj.transform.localPosition = Vector3.zero;
-                 obj.transform.localScale = Vector3.one;
+            {
+                obj.transform.parent = bookIconParent;
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localScale = Vector3.one;
 
-                 obj.GetComponentInChildren<TextMeshProUGUI>().text = RecordMgr.instance.recordList[i].title;
-                 obj.name = i.ToString() ;
-                 if (!_temp.hasRead)//第一本
-                 {
-                     PoolMgr.GetInstance().GetObj(bookNew, (_new) =>
-                     {
-                         _new.transform.parent = obj.transform;
-                         _new.name = "new";
-                         _new.transform.localPosition = Vector3.zero+ newICONoffset;
-                         _new.transform.localScale = Vector3.one*0.3f;
-                     });
-                 }
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = _temp.title;
+                obj.name = _files[_i].FullName;
+                if (!_temp.hasRead)//第一本
+                {
+                    PoolMgr.GetInstance().GetObj(bookNew, (_new) =>
+                    {
+                        _new.transform.parent = obj.transform;
+                        _new.name = "new";
+                        _new.transform.localPosition = Vector3.zero + newICONoffset;
+                        _new.transform.localScale = Vector3.one * 0.3f;
+                    });
+                }
 
 
-                 var et = obj.GetComponent<EventTrigger>();
-                 AddPointerEvent(et, EventTriggerType.PointerClick, (_obj) => { ClickBookIcon(obj); });
-             });
+                var et = obj.GetComponent<EventTrigger>();
+                AddPointerEvent(et, EventTriggerType.PointerClick, (_obj) => { ClickBookIcon(obj); });
+            });
 
-            
+            _numberCount++;
+          
         }
+        #region 废弃
+        //if (RecordMgr.instance.recordList2.Count == 0)
+        //{
+        //    tipText.gameObject.SetActive(true);
+        //    tipText.text = "作品库现在空空如也";
+        //    return;
+        //}
+        //tipText.gameObject.SetActive(false);
+        //int i = RecordMgr.instance.recordList2.Count - 1;
+        //int j = 0;
+        ////读取最新的10个存档，生成icon和名称
+        ////第一个生成的一定是最新的
+        //for (; (i >= 0) && (j < 10); i--, j++)
+        //{
+        //    var _temp = RecordMgr.instance.recordList2[i];
+        //    PoolMgr.GetInstance().GetObj(bookIconPrefabs, (obj) =>
+        //     {
+        //         obj.transform.parent = bookIconParent;
+        //         obj.transform.localPosition = Vector3.zero;
+        //         obj.transform.localScale = Vector3.one;
+
+        //         obj.GetComponentInChildren<TextMeshProUGUI>().text = RecordMgr.instance.recordList2[i].title;
+        //         obj.name = i.ToString() ;
+        //         if (!_temp.hasRead)//第一本
+        //         {
+        //             PoolMgr.GetInstance().GetObj(bookNew, (_new) =>
+        //             {
+        //                 _new.transform.parent = obj.transform;
+        //                 _new.name = "new";
+        //                 _new.transform.localPosition = Vector3.zero+ newICONoffset;
+        //                 _new.transform.localScale = Vector3.one*0.3f;
+        //             });
+        //         }
+
+
+        //         var et = obj.GetComponent<EventTrigger>();
+        //         AddPointerEvent(et, EventTriggerType.PointerClick, (_obj) => { ClickBookIcon(obj); });
+        //     });
+
+
+        //}
+        #endregion
     }
 
 
     public void ClickBookIcon(GameObject obj)
     {
-      
 
+        print("ClickBookIcon");
         //删除【新】标签
         if (obj.transform.Find("new")!=null)
         {
             Destroy(obj.transform.Find("new").gameObject);
         }
         //如果已选中，取消选中
-        if (obj.transform.Find("chosen")!= null)
+        if (obj.GetComponentInChildren<Button>()!=null)
         {
-            bookChosen .parent=this.transform;
+            print("如果已选中");
+            bookChosen.parent=this.transform;
             bookChosen.localScale = Vector3.zero;
             return;
         }
         //将选中表现换为当前
-        int _i = int.Parse(obj.name);
-        if (RecordMgr.instance.recordList[_i].hasRead == false)
+        string _i = obj.name;
+        if (RecordMgr.instance.LoadByJson(_i).hasRead == false)
         {
-             RecordMgr.instance.recordList[_i].hasRead = true;
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
+            RecordMgr.instance.ChangeReadJson(_i);
+   
         }
            
 
@@ -124,14 +175,22 @@ public class ZuoPinUi : MonoBehaviour
             {
                 Destroy(bookIconParent.GetChild(x).transform.Find("new").gameObject);
             }
+            if (bookIconParent.GetChild(x).transform.Find("chosen") != null)
+            {
+                bookChosen.parent = this.transform;
+                bookChosen.localScale = Vector3.zero;
+            }
             //移除所有监听后放回池子
             var _t = bookIconParent.GetChild(x).GetComponent<EventTrigger>();
             _t.triggers.RemoveRange(0, _t.triggers.Count);
+            bookIconParent.GetChild(x).gameObject.name = poolNameBook;
             PoolMgr.GetInstance().PushObj(poolNameBook,bookIconParent.GetChild(x).gameObject);
         }
         StudyMouseOn.hasOpenUI = false;
         this.gameObject.SetActive(false);
     }
+
+
     private void OnDisable()
     {
         ExitUI();
@@ -141,9 +200,8 @@ public class ZuoPinUi : MonoBehaviour
         readBook.gameObject.SetActive(true);
         
         var _p = _this.parent;
-        int _i=int.Parse( _p.gameObject.name);
-
-        readBook.SetContent(_i);
+     
+        readBook.SetContent(RecordMgr.instance.LoadByJson(_p.gameObject.name));
         readBook.openDraft() ;
     }
 
@@ -152,10 +210,9 @@ public class ZuoPinUi : MonoBehaviour
         var _p=_this.parent;
         bookChosen.parent = this.transform;
         bookChosen.localScale = Vector3.zero;
-        int _i = int.Parse(_p.gameObject.name);
-        RecordMgr.instance.recordList.RemoveAt(_i);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+        string  _i = _p.gameObject.name;
+
+        File.Delete(_i);
 
         for (int x = bookIconParent.childCount - 1; x >= 0; x--)
         {
@@ -163,9 +220,16 @@ public class ZuoPinUi : MonoBehaviour
             {
                 Destroy(bookIconParent.GetChild(x).transform.Find("new").gameObject);
             }
+            if (bookIconParent.GetChild(x).transform.Find("chosen") != null)
+            {
+                bookChosen.parent = this.transform;
+                bookChosen.localScale = Vector3.zero;
+                return;
+            }
             //移除所有监听后放回池子
             var _t = bookIconParent.GetChild(x).GetComponent<EventTrigger>();
             _t.triggers.RemoveRange(0, _t.triggers.Count);
+            bookIconParent.GetChild(x).gameObject.name = poolNameBook;
             PoolMgr.GetInstance().PushObj(poolNameBook, bookIconParent.GetChild(x).gameObject);
         }
    

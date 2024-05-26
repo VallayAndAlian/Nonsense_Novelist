@@ -64,9 +64,9 @@ public class CharacterDetail : MonoBehaviour
     public void OpenName(string ac)
     {
         CharaInfoExcelItem data = null;
-        for (int i = 0; (i < AllData.charaInfo.items.Length) && (data == null); i++)
+        for (int i = 0; (i < AllData.instance.charaInfo.items.Length) && (data == null); i++)
         {
-            var _data = AllData.charaInfo.items[i];
+            var _data = AllData.instance.charaInfo.items[i];
             if (_data.typeName == ac)
             {
                 data = _data;
