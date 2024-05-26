@@ -646,7 +646,7 @@ MonoBehaviour:
   myState: {fileID: 0}
   characterID: 0
   source: {fileID: 0}
-  aAttackAudio: {fileID: 8300000, guid: 677425152d8c7254a814b22947ab038e, type: 3}
+  aAttackAudio: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
   walkAudio: {fileID: 8300000, guid: 336cc2b14d4b27641a1c4408bd39c99d, type: 3}
   teXiao: {fileID: 0}
   bullet: {fileID: 5396089893936509290, guid: 767f667755cd0c247aa64b5b5d83c016, type: 3}
