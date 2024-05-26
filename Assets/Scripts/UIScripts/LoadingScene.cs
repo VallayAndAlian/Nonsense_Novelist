@@ -30,9 +30,8 @@ public class LoadingScene : MonoBehaviour
     bool hasLoad = false;
     public void EnterNextScene()
     {
-        //if(hasLoad) ao.allowSceneActivation = true;
-        print("dEnterNextScenesd");
 
+       
         obj = Instantiate<GameObject>(canvas);
 
         slider = obj.GetComponentInChildren<Slider>();
@@ -48,21 +47,5 @@ public class LoadingScene : MonoBehaviour
     {
         SceneManager.LoadScene("BookShelf");
     }
-    //AsyncOperation ao = null;
-    //private IEnumerator ReallyLoadSceneAsyn(string name, UnityAction fun)
-    //{
-    //    print("ReallyLoadSceneAsyn");
-    //    ao = SceneManager.LoadSceneAsync(name);
-    //    ao.allowSceneActivation = false;
-    //    print("sdsds" + ao.isDone);
-    //    //可以得到场景加载的一个进度
-    //    while ((!ao.isDone) )
-    //    {
-    //        print("ao.isDone"+ ao.isDone);
-    //        yield return null;
-    //    }
-    //    print("加载好了");
-    //    //加载完成过后 才会去执行fun
-    //    hasLoad = true;
-    //}
+
 }

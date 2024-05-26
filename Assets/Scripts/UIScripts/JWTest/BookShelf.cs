@@ -671,7 +671,7 @@ public class BookShelf : MonoBehaviour
                     }
                     
                 }
-                obj.transform.localScale = Vector3.one * 0.42f;
+                obj.transform.localScale = Vector3.one * 0.35f;
             });
         }
     }

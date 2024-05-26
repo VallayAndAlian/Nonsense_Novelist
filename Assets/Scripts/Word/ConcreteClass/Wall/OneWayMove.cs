@@ -44,7 +44,8 @@ public class OneWayMove : MonoBehaviour
     public float k = 0.5f;
 
     [Header("ADDHP相关设置")]
-
+    public Animator animator;
+    public SpriteRenderer cdshow;
     public float addRate;
     public float addAmount;
     public float AddingTime;//持续时间
@@ -70,7 +71,13 @@ public class OneWayMove : MonoBehaviour
         AddingTimer += Time.deltaTime;
         AddingTime_real -= Time.deltaTime;
         if (AddingTime_real <= 0)
-        { 
+        {
+            if (adding)
+            {
+                //恢复结束
+                animator.Play("end");
+                adding = false;
+            }
             AddingTime_real = 0;
         } 
         else//如果正在回血
@@ -102,6 +109,7 @@ public class OneWayMove : MonoBehaviour
 
         cdTimer = 0;//重置cd
         cdOK = true;
+        cdshow.color = Color.white;
     }
 
 
@@ -171,11 +179,16 @@ public class OneWayMove : MonoBehaviour
             {
                 this.gameObject.SetActive(false);
                 Invoke("EnableBack", disappearTime);
+               
             }
             if ((type == WallType.addHP)&&cdOK)//治疗机关
             {
+                //开始回血
+                animator.Play("start"); 
+                adding = true;
                 AddingTime_real += AddingTime;
                 cdOK = false;
+                cdshow.color = Color.grey;
             }
         }
     }

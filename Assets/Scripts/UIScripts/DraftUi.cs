@@ -340,9 +340,9 @@ public class DraftUi : MonoBehaviour
         }
         ChangeInkNum();
     }
-    Vector3 blackpen = new Vector3(734,234,0);
-    Vector3 redpen = new Vector3(734,34,0);
-    Vector3 bluepen = new Vector3(734,-166,0);
+    Vector3 blackpen = new Vector3(839, 234,0);
+    Vector3 redpen = new Vector3(839, 34,0);
+    Vector3 bluepen = new Vector3(839, -166,0);
     void DefualtState()
     {
         inkRedOn = false;

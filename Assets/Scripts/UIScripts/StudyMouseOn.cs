@@ -25,12 +25,18 @@ public class StudyMouseOn : MonoBehaviour
     float delayTime = 0.05f;
     AudioSource audioSource;
     GameObject studyUI;
+
+
+    public GameObject zuopinUI;
     private void Start()
     {
         animThis = this.GetComponent<Animator>();
         animLogo = logo.GetComponent<Animator>();
         studyUI = GameObject.Find("StudyUI");
         audioSource=studyUI.GetComponent<AudioSource>();
+
+
+        if (zuopinUI != null) zuopinUI.SetActive(false);
     }
 
 
@@ -94,8 +100,11 @@ public class StudyMouseOn : MonoBehaviour
                 break;
             case StudyUIType.zuopin:
                 {
-                    //SceneManager.LoadScene("BookShelf");
                     audioSource.Play();
+                    if (zuopinUI == null)
+                        return;
+
+                    zuopinUI.SetActive(true);
                 }
                 break;
             case StudyUIType.tuichu:
@@ -110,4 +119,13 @@ public class StudyMouseOn : MonoBehaviour
     {
         print("OnMouseUp");
     }
+
+
+    #region Õ‚≤ø
+
+    public void ExitZuoPinUI()
+    {
+        if (zuopinUI != null) zuopinUI.SetActive(false);
+    }
+    #endregion
 }

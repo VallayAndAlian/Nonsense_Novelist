@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: BookShelf
-  leastLoadTime: 5
+  leastLoadTime: 0
   canvas: {fileID: 0}
 --- !u!114 &598339262
 MonoBehaviour:

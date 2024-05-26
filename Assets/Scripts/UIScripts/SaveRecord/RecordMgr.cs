@@ -20,7 +20,7 @@ public class RecordMgr : MonoSingleton<RecordMgr>
     } 
     
     
-    public void AddRecord(string _name,string _content,int _RAND)
+    public void AddRecord(string _name,List<string> _content,int _RAND)
     {
         int id = recordList.Count;
         TextRecord _record = ScriptableObject.CreateInstance<TextRecord>(); 
