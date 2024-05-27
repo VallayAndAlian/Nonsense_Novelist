@@ -10,7 +10,7 @@ namespace AI
     class DeadState :AbstractState
     {
         private UIManager uIManager;
-
+        private AudioPlay audioPlay;
         private void Start()
         {
             if (GameObject.Find("UIManager")!=null)
@@ -18,6 +18,7 @@ namespace AI
                 uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
             }
+            audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
 
         }
         override public void Awake()
@@ -27,6 +28,7 @@ namespace AI
             id = StateID.dead;
             triggers.Add(gameObject.AddComponent<ReLifeTrigger>());
             map.Add(TriggerID.ReLife, StateID.idle);
+
         }
         public override void Action(MyState0 myState)
         {
@@ -74,6 +76,9 @@ namespace AI
             {
                 myState.character.camp = CampEnum.left;
                 CharacterManager.instance.RefreshStanger();
+                //≈–∂œπ÷ŒÔorBossÀ¿Õˆ
+                audioPlay.RandomPlay();
+
                 Destroy(myState.character.gameObject);
                 
             }

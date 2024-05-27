@@ -226,7 +226,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -382,7 +382,7 @@ MonoBehaviour:
   myState: {fileID: 0}
   characterID: 0
   source: {fileID: 0}
-  aAttackAudio: {fileID: 0}
+  aAttackAudio: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
   walkAudio: {fileID: 0}
   teXiao: {fileID: 0}
   bullet: {fileID: 5396089893936509290, guid: 767f667755cd0c247aa64b5b5d83c016, type: 3}

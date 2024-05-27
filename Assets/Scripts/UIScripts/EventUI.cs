@@ -27,7 +27,7 @@ public class EventUI : MonoBehaviour
     [Header("这是哪一个界面的UI")]
     public EventType type;
     bool isKey=false;
-
+    private AudioPlay audioPlay;
     [HideInInspector]public Vector3 eventWorldPos = Vector3.one;
 
     //不重要数据
@@ -54,6 +54,7 @@ public class EventUI : MonoBehaviour
         KeyCharacter = -1;
         WJ_static = false;
         WJ_monster = -1;
+        audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
     }
     #region 处理data 
 
@@ -729,11 +730,13 @@ public class EventUI : MonoBehaviour
         {
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster(WJ_monster);
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+            audioPlay.Boss_GuaiWu();
         }
         else
         {
             WJ_monster= GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster();
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+            audioPlay.Boss_GuaiWu();
         }
         
 

@@ -69,7 +69,7 @@ public class GameProcessSlider : MonoBehaviour
 
 
     private Vector3 oriScale;
-
+    private AudioPlay audioPlay;
     /// <summary>
     /// 事件气泡功能
     /// </summary>
@@ -95,7 +95,7 @@ public class GameProcessSlider : MonoBehaviour
     bool hasWeiji = false;
     private void Start()
     {
-
+        audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
         oriScale = this.transform.localScale;
 
         //按照预先设置的时间生成进度条
@@ -207,14 +207,18 @@ public class GameProcessSlider : MonoBehaviour
             }
             else if (time_stage.stagesData[stageCount].type == StageType.Event)
             {
-                
+                //切换BGM-1
+                audioPlay.Event_QiTa();
+                countTime = true;
                 //创建Event事件
                 CreateEvent(time_stage.stagesData[stageCount].t_eventKey, time_stage.stagesData[stageCount].t_eventCount);
-                countTime = true;
+                
                 stageCount++;
             }
             else if (time_stage.stagesData[stageCount].type == StageType.weiji)
             {
+                //切换BGM-2
+                audioPlay.Event_WeiJi();
 
                 CreateWeijiEvent(false, 99);
                 StartCoroutine(Wait_Weiji());
@@ -350,7 +354,8 @@ public class GameProcessSlider : MonoBehaviour
         boss.transform.SetParent(GameObject.Find("Circle5.5").transform);
         boss.transform.localPosition = Vector3.zero;
         boss.transform.localScale = Vector3.one * GameMgr.instance.afterScale;
-
+        //bossBGM
+        audioPlay.Boss_HuaiYiZhuYi();
         //生成调整
         boss.GetComponentInChildren<AI.MyState0>().enabled = true;
         boss.GetComponent<AbstractCharacter>().enabled = true;
@@ -366,6 +371,9 @@ public class GameProcessSlider : MonoBehaviour
     }
     public void BossDie()
     {
+        //BGM
+      //audioPlay.RandomPlay();
+
         CharacterManager.instance.EndGame();
         this.transform.localScale = oriScale;
         //CreateBookCanvas();

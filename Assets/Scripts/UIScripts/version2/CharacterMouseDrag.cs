@@ -16,6 +16,7 @@ public class CharacterMouseDrag : MonoBehaviour
     private Vector3 offset;//偏移量
     private int siblingBefore = 0;//最初的站位
     private GameObject black;
+    private AudioSource yx;
 
     /// <summary>记录目前所在的站位</summary>
     [HideInInspector]public Transform nowParentTF;
@@ -37,12 +38,12 @@ public class CharacterMouseDrag : MonoBehaviour
 
     private Transform oriParent;
     private void Start()
-    {        
+    {
         //if (SceneManager.GetActiveScene().name == "CombatTest")
         //{
         //    beforeScale = 10;
         //}
-
+        yx = GameObject.Find("yinxiaoSource").GetComponent<AudioSource>();
         siblingBefore = this.transform.parent.GetSiblingIndex();
 
         nowParentTF = transform.parent;

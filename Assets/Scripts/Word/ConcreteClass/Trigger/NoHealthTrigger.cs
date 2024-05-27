@@ -46,7 +46,8 @@ namespace AI
                 }
                 else//死亡
                 {
-                   
+                   //BGM 
+
                       return true;
                 }
                   
