@@ -16,7 +16,6 @@ public class CharacterMouseDrag : MonoBehaviour
     private Vector3 offset;//偏移量
     private int siblingBefore = 0;//最初的站位
     private GameObject black;
-    private AudioSource yx;
 
     /// <summary>记录目前所在的站位</summary>
     [HideInInspector]public Transform nowParentTF;
@@ -30,7 +29,7 @@ public class CharacterMouseDrag : MonoBehaviour
     private Color colorOnMouseExit = new Color((float)255 / 255, (float)255 / 255, (float)255 / 255, (float)255 / 255);
 
     private SpriteRenderer sr;
-
+    private AudioYinXiao yinXiao;
 
 
 
@@ -43,7 +42,6 @@ public class CharacterMouseDrag : MonoBehaviour
         //{
         //    beforeScale = 10;
         //}
-        yx = GameObject.Find("yinxiaoSource").GetComponent<AudioSource>();
         siblingBefore = this.transform.parent.GetSiblingIndex();
 
         nowParentTF = transform.parent;
@@ -51,7 +49,7 @@ public class CharacterMouseDrag : MonoBehaviour
         sr= GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
         oriParent = GameObject.Find("UICanvas").transform.Find("Panel").Find("charaPos");
         transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
-
+        yinXiao=GameObject.Find("yinxiaoSource").GetComponent<AudioYinXiao>();
 
            
 }
@@ -155,6 +153,8 @@ public class CharacterMouseDrag : MonoBehaviour
                 if ((hit.collider.transform.childCount == 0))//如果站位上没有其它角色
                 {
                     SetCharacterToSituation(hit.collider.transform.GetComponent<Situation>());
+                 //成功放上去的音效
+                    yinXiao.ClickPlay();
                 }
                 else //如果站位上有其它角色
                 {
@@ -169,7 +169,8 @@ public class CharacterMouseDrag : MonoBehaviour
                         transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
                         this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
                     }
-
+                    //弹回原位置的音效
+                    yinXiao.TanHui();
                 }
 
 
@@ -184,11 +185,14 @@ public class CharacterMouseDrag : MonoBehaviour
                     this.transform.localScale = ScaleWithTure(GameMgr.instance.beforeScale);
                     DeleteBlack();
                 }
+                yinXiao.TanHui();
+
             }
         }
         else if (Camera.main.WorldToViewportPoint(target.position).y<0.4)
         {
-            
+            yinXiao.TanHui();
+
             DeleteBlack();
             this.transform.parent =oriParent.GetChild(siblingBefore);
             nowParentTF = transform.parent;
@@ -203,7 +207,8 @@ public class CharacterMouseDrag : MonoBehaviour
         }
         else//没有检测到站位
         {
-            
+            yinXiao.TanHui();
+
             transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
             this.transform.localScale = ScaleWithTure(GameMgr.instance.afterScale);
             if (nowParentTF.parent.TryGetComponent<UnityEngine.UI.HorizontalLayoutGroup>(out var _sdsd))

@@ -344,6 +344,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1032947879908762529}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1032947879522425231
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +581,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c23c6aad621d79745bda33ed6f278a95, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -672,8 +684,11 @@ MonoBehaviour:
   word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
+  KeyCharacter: -1
+  triggerName: -1
   JY_chooseWord: {fileID: 0}
   WJ_static: 0
+  WJ_monster: -1
 --- !u!95 &1661176706358123109
 Animator:
   serializedVersion: 5

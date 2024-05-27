@@ -8651,6 +8651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 614092560}
   - component: {fileID: 614092559}
+  - component: {fileID: 614092561}
   m_Layer: 0
   m_Name: yinxiaoSource
   m_TagString: Untagged
@@ -8769,6 +8770,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &614092561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614092557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 656945b84d44917428dd0bf245bc7653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  click: {fileID: 8300000, guid: c23c6aad621d79745bda33ed6f278a95, type: 3}
+  hover: {fileID: 8300000, guid: c23c6aad621d79745bda33ed6f278a95, type: 3}
+  wallCol: {fileID: 8300000, guid: 7579e4525e3791a45913e9dcd44931ae, type: 3}
 --- !u!1 &615503391
 GameObject:
   m_ObjectHideFlags: 0
@@ -14832,6 +14848,18 @@ MonoBehaviour:
       - m_Target: {fileID: 232375205}
         m_TargetAssemblyTypeName: CreateOneCharacter, Assembly-CSharp
         m_MethodName: CombatStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 614092561}
+        m_TargetAssemblyTypeName: AudioYinXiao, Assembly-CSharp
+        m_MethodName: ClickPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
