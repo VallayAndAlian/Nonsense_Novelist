@@ -29,7 +29,7 @@ MonoBehaviour:
     time: 20
     level: 1
     image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
-    imageScale: 0.6
+    imageScale: 0.8
     time_count: 40
   - type: 2
     t_boss: {fileID: 0}
@@ -38,7 +38,7 @@ MonoBehaviour:
     time: 20
     level: 1
     image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
-    imageScale: 0.6
+    imageScale: 0.65
     time_count: 60
   - type: 1
     t_boss: {fileID: 0}
@@ -47,7 +47,7 @@ MonoBehaviour:
     time: 20
     level: 2
     image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
-    imageScale: 0.6
+    imageScale: 0.8
     time_count: 80
   - type: 2
     t_boss: {fileID: 0}
@@ -56,7 +56,7 @@ MonoBehaviour:
     time: 20
     level: 3
     image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
-    imageScale: 0.6
+    imageScale: 0.65
     time_count: 100
   - type: 1
     t_boss: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
     time: 30
     level: 4
     image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
-    imageScale: 0.6
+    imageScale: 0.8
     time_count: 130
   - type: 2
     t_boss: {fileID: 0}
@@ -74,7 +74,7 @@ MonoBehaviour:
     time: 30
     level: 1
     image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
-    imageScale: 0.6
+    imageScale: 0.65
     time_count: 160
   - type: 0
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}

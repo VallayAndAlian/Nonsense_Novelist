@@ -11,7 +11,7 @@ public class WordCollisionShoot : MonoBehaviour
     public AbstractWord0 absWord;
     /// <summary>计时器 </summary>
     public float timer;
-
+    private AudioYinXiao yx;
 
     Collider2D collider;
     public virtual void Awake()
@@ -19,8 +19,13 @@ public class WordCollisionShoot : MonoBehaviour
         collider = this.gameObject.GetComponent<Collider2D>();
         if(collider!=null)
             collider.sharedMaterial = Resources.Load<PhysicsMaterial2D>("Other/word");
-    }
 
+    }
+    private void Start()
+    {
+        yx = GameObject.Find("yinxiaoSource").GetComponent<AudioYinXiao>();
+
+    }
     /// <summary>
     /// 词条实体碰撞到角色，将词条施加到角色身上
     /// </summary>
@@ -91,6 +96,7 @@ public class WordCollisionShoot : MonoBehaviour
 
         if (collision.transform.tag == "wall")
         {
+            yx.WallCol();
             Vector2 globalPositionOfContact = collision.contacts[0].point;
             PoolMgr.GetInstance().GetObj("Other/wordColEffect", (obj)=>
             {
