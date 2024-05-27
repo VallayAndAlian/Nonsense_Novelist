@@ -12,7 +12,7 @@ public class Letter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FirstLetter();
+     // FirstLetter();
     }
 
     void FirstLetter()

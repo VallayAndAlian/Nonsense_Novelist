@@ -18,7 +18,7 @@ MonoBehaviour:
     t_eventCount: 1
     t_eventKey: 0
     time: 20
-    image: {fileID: 21300000, guid: aa108ef2d53c77b4e978f3480a1eb84b, type: 3}
+    image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     time_count: 20
     level: 1
   - type: 1
@@ -26,7 +26,7 @@ MonoBehaviour:
     t_eventCount: 1
     t_eventKey: 0
     time: 20
-    image: {fileID: 21300000, guid: e4d53ddad7b5b6d4696a6039496dfebe, type: 3}
+    image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
     time_count: 40
     level: 1
   - type: 2
@@ -34,7 +34,7 @@ MonoBehaviour:
     t_eventCount: 1
     t_eventKey: 0
     time: 20
-    image: {fileID: 21300000, guid: c16365a4f5e9ffb49b17aa783fb2484d, type: 3}
+    image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     time_count: 60
     level: 1
   - type: 1
@@ -42,7 +42,7 @@ MonoBehaviour:
     t_eventCount: 0
     t_eventKey: 0
     time: 20
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
     time_count: 80
     level: 2
   - type: 2
@@ -50,7 +50,7 @@ MonoBehaviour:
     t_eventCount: 3
     t_eventKey: 0
     time: 20
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     time_count: 100
     level: 3
   - type: 1
@@ -58,7 +58,7 @@ MonoBehaviour:
     t_eventCount: 0
     t_eventKey: 0
     time: 30
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
     time_count: 130
     level: 4
   - type: 2
@@ -66,7 +66,7 @@ MonoBehaviour:
     t_eventCount: 3
     t_eventKey: 0
     time: 30
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     time_count: 160
     level: 1
   - type: 0
@@ -74,6 +74,6 @@ MonoBehaviour:
     t_eventCount: 3
     t_eventKey: 0
     time: 30
-    image: {fileID: 0}
+    image: {fileID: 21300000, guid: ca7f3cabb5672f74fa02b861ef57a0a6, type: 3}
     time_count: 190
     level: 1
