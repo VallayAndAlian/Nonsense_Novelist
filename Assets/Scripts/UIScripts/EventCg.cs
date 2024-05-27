@@ -8,12 +8,14 @@ public class EventCg : MonoBehaviour
     bool beforeCGPlay = false;
     Animator anim;
     TextMeshProUGUI text;
-
+    GameObject skipButton;
     private PlayableDirector director = null;
     public List<PlayableAsset> cgs;
     void Awake()
     {
-        anim = this.GetComponent<Animator>();
+        skipButton = this.transform.Find("Skip").gameObject;
+        skipButton.SetActive(false);
+           anim = this.GetComponent<Animator>();
         text = this.GetComponentInChildren<TextMeshProUGUI>();
 
         director = GetComponent<PlayableDirector>();
@@ -31,6 +33,7 @@ public class EventCg : MonoBehaviour
 
     public void PlayEventCG(string playName)
     {
+        skipButton.SetActive(true);
         //播放的时候 暂停游戏
         beforeCGPlay = CharacterManager.instance.pause;
         CharacterManager.instance.pause = true;
@@ -60,6 +63,15 @@ public class EventCg : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 和外部按钮绑定，跳过当前的动画
+    /// </summary>
+    public void Skip()
+    {
+        PlayEventCGEnd();
+    }
+
+
     public void HideGameUI()
     {
         GameMgr.instance.HideGameUI();
@@ -73,7 +85,7 @@ public class EventCg : MonoBehaviour
         director.Stop();
         director.playableAsset = null; 
         this.gameObject.SetActive(false);
-
+        skipButton.SetActive(false);
         GameMgr.instance.ShowGameUI();
   
     }
@@ -176,6 +188,8 @@ public class EventCg : MonoBehaviour
         }
       
     }
+
+
 
 
     

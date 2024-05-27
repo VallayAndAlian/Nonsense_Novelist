@@ -14,6 +14,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     /// <summary>当下全部角色</summary>
     private AbstractCharacter[] Charas;
     private List<AbstractCharacter> Strangers=new List<AbstractCharacter>();
+    bool hasEnd = false;
     public AbstractCharacter[] charas
     {
         get
@@ -65,10 +66,12 @@ public class CharacterManager : MonoSingleton<CharacterManager>
 
     public void EndGame()
     {
+        if (hasEnd) return;
         //if (pause) return;
         Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
         Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
         Instantiate(endGame);
+        hasEnd = true;
         pause = true;
     }
     private bool PAUSE;

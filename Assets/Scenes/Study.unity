@@ -726,6 +726,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 16179bd571b50494fbd46a2ec8ca8470, type: 3}
   - {fileID: 8300000, guid: 7ef8b715ecf129b4c9444eb6e90cab29, type: 3}
   - {fileID: 8300000, guid: 32fa9c1d76b84d649a8bae4adf2948d8, type: 3}
+  boss_Clips: []
+  event_Clips: []
 --- !u!1 &225436135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2323,7 +2325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &898510206
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3329,8 +3331,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -3358,7 +3360,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 104.4209, w: 0}
+  m_margin: {x: -83.18174, y: 0, z: 104.4209, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

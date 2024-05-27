@@ -127,6 +127,9 @@ public class GameProcessSlider : MonoBehaviour
                 _icon.GetComponent<Image>().sprite = time_stage.stagesData[_i].image;
             }
         }
+        var handle = this.transform.Find("HandleSlideArea");
+        handle.parent = this.transform.parent;
+        handle.parent = this.transform;
         sliderProcess.maxValue = time_all;
 
         if (settingList != null)

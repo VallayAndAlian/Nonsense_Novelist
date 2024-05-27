@@ -19,12 +19,8 @@ namespace AI
         [HideInInspector] public Event_Relife event_relife;
         public override bool Satisfy(MyState0 myState)
         {
-  
-
             if (myState.character.hp <= 0)
             {
-
-               
                 if (myState.character.reLifes > 0)//复活
                 {
                    // print("1");//print(.ToString());

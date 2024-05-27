@@ -32,21 +32,25 @@ namespace AI
         }
         public override void Action(MyState0 myState)
         {
-    
-            AbstractCharacter myc = this.transform.parent.GetComponent<AbstractCharacter>();
-            bool lastOne = true;
-            if (this.transform.parent.GetComponent<AbstractCharacter>())
-            {
-                  foreach (var _ac in CharacterManager.instance.GetComponentsInChildren<AbstractCharacter>())
-                {
-                    if ((_ac.camp == myc.camp)&& (_ac != myc))lastOne = false;
-                } 
-            }
+
+            //AbstractCharacter myc = this.transform.parent.GetComponent<AbstractCharacter>();
+            //bool lastOne = true;
+            //if (this.transform.parent.GetComponent<AbstractCharacter>())
+            //{
+            //      foreach (var _ac in CharacterManager.instance.GetComponentsInChildren<AbstractCharacter>())
+            //    {
+            //        if ((_ac.camp == myc.camp)&& (_ac != myc))lastOne = false;
+            //    } 
+            //}
 
 
-            if (lastOne&&myc.camp!=CampEnum.stranger)
-            { //CharacterManager.instance.EndGame();
-              }
+            //if (lastOne&&(myc.camp!=CampEnum.stranger))
+            //{
+
+
+            //    CharacterManager.instance.EndGame();
+            //  }
+           
 
             //临时的死亡效果
             SpriteRenderer sp;
@@ -72,6 +76,20 @@ namespace AI
 
         public override void EnterState(MyState0 myState)
         {
+            var _ac = this.transform.parent.GetComponent<AbstractCharacter>();
+            if (_ac.camp == CampEnum.right)
+            {
+                CharacterManager.charas_right.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
+                if (CharacterManager.charas_right.Count == 0) CharacterManager.instance.EndGame();
+                return;
+            }
+
+            if (_ac.camp == CampEnum.left)
+            {
+                CharacterManager.charas_left.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
+                if (CharacterManager.charas_left.Count == 0) CharacterManager.instance.EndGame();
+                return; 
+            }
             if (myState.character.camp == CampEnum.stranger)
             {
                 myState.character.camp = CampEnum.left;
