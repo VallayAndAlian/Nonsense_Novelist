@@ -24,9 +24,13 @@ public class OneStageData
     public bool t_eventKey;//boss 的预制体
     [Header("共通数据")]
     public float time;//持续时间
-    public Sprite image;//对应图标
-    [HideInInspector] public float time_count;//累计时间   
     public int level;
+
+    [Header("slider图标")]
+    public Sprite image;//对应图标
+    public float imageScale;//持续时间
+    [HideInInspector] public float time_count;//累计时间   
+
 }
 
 #endregion
@@ -118,7 +122,7 @@ public class GameProcessSlider : MonoBehaviour
                 GameObject _icon = GameObject.Instantiate<GameObject>(perfab_icon);
                 _icon.transform.SetParent(this.transform);
                 _icon.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                _icon.GetComponent<RectTransform>().localScale = Vector3.one;
+                _icon.GetComponent<RectTransform>().localScale = Vector3.one* time_stage.stagesData[_i].imageScale;
                 _icon.GetComponent<RectTransform>().localPosition += new Vector3(-_width / 2 + (_timeAmount / time_all) * _width, 0, 0);
                 _icon.GetComponent<Image>().sprite = time_stage.stagesData[_i].image;
             }
