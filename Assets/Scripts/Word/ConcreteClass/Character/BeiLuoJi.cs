@@ -19,7 +19,7 @@ class BeiLuoJi : AbstractCharacter
     void Role()
     {
         
-        var chara = CharacterManager.instance.GetFriend(this.camp);
+        var chara = CharacterManager.instance.GetFriend(this.Camp);
         if (chara[0] != null)
         {
             chara[0].BeCure(chara[0].san * chara[0].sanMul * 0.7f, true, 0.5f, this);

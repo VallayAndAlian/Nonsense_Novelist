@@ -54,7 +54,7 @@ public class XuanZhan : AbstractVerbs
             }
 
             //使我方所有随从加速
-            if (useCharacter.camp == CampEnum.left)
+            if (useCharacter.Camp == CampEnum.left)
             {
                 AbstractCharacter[] left = CharacterManager.charas_left.ToArray();
                 for (int i = 0; i < left.Length; i++)
@@ -67,7 +67,7 @@ public class XuanZhan : AbstractVerbs
                 }
 
             }
-            else if (useCharacter.camp == CampEnum.right)
+            else if (useCharacter.Camp == CampEnum.right)
             {
                 AbstractCharacter[] right = CharacterManager.charas_right.ToArray();
                 for (int i = 0; i < right.Length; i++)

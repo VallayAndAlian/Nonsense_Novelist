@@ -38,7 +38,7 @@ abstract public class AbstractCharacter : AbstractWord0
     /// <summary>AudioSource</summary>
     [HideInInspector] public AudioSource source;
     /// <summary>平A音效(手动拖拽）</summary>
-    public AudioClip aAttackAudio ;
+    public AudioClip aAttackAudio;
     /// <summary>走路音效（手动拖拽）</summary>
     public AudioClip walkAudio;
 
@@ -48,7 +48,32 @@ abstract public class AbstractCharacter : AbstractWord0
     public GameObject bullet;
 
     /// <summary>阵营</summary>
-    public CampEnum camp;
+    private CampEnum camp;
+    public CampEnum Camp
+    {
+        get
+        {
+            return camp; 
+        }
+        set
+        { camp = value;
+            Sprite _sp = ResMgr.GetInstance().Load<Sprite>("UI/hpbar_A");
+            if (Camp == CampEnum.left)
+            {
+                _sp = ResMgr.GetInstance().Load<Sprite>("UI/hpbar_A");
+            }
+            else if (camp == CampEnum.right)
+            {
+                _sp = ResMgr.GetInstance().Load<Sprite>("UI/hpbar_B");
+            }
+            else if (camp == CampEnum.stranger)
+                _sp = ResMgr.GetInstance().Load<Sprite>("UI/hpbar_Monster");
+            if (_sp != null)
+                hpSlider.transform.Find("FillArea").Find("Fill").GetComponent<Image>().sprite = _sp;
+            
+        }
+
+    }
 
     /// <summary>身份名</summary>
     [HideInInspector] public string roleName;
@@ -56,7 +81,7 @@ abstract public class AbstractCharacter : AbstractWord0
 
     public bool isNaiMa = false;
 
-
+    
     #region 血量
 
     private Slider hpSlider;
@@ -1091,7 +1116,7 @@ abstract public class AbstractCharacter : AbstractWord0
             obj.transform.SetParent(energyCanvas.transform);
             obj.transform.localPosition = this.transform.position + pos[(floatCount++) % 4];
            
-            obj.GetComponent<FloatWord>().InitPopup(text, this.camp == CampEnum.stranger, color, direct);
+            obj.GetComponent<FloatWord>().InitPopup(text, this.Camp == CampEnum.stranger, color, direct);
 
             if (color == FloatWordColor.heal) teXiao.PlayTeXiao("hpAdd");
             else if (color == FloatWordColor.healMax) teXiao.PlayTeXiao("hpmaxAdd");
@@ -1110,7 +1135,11 @@ abstract public class AbstractCharacter : AbstractWord0
         
         if (energyCanvas.worldCamera == null) print(" energyCanvas.worldCamera==null");
         energySlider = energyCanvas.transform.Find("CD").GetComponent<Slider>();
+
         hpSlider = energyCanvas.transform.Find("HP").GetComponent<Slider>();
+       
+
+
         energyText = this.GetComponentInChildren<Text>();
         energyCanvas.gameObject.SetActive(false);
 

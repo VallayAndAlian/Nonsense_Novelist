@@ -34,7 +34,7 @@ public class KeJuanZaShui : AbstractSetting
         chara = CharacterManager.instance.gameObject.GetComponentInChildren<LinDaiYu>();
         if (chara != null)
         {
-            foreach (var it in CharacterManager.instance.GetEnemy(chara.camp))//获取敌方所有角色
+            foreach (var it in CharacterManager.instance.GetEnemy(chara.Camp))//获取敌方所有角色
             {
                 it.event_UseVerb += Effect;//每个释放动词的行为加一个效果
             }
@@ -52,7 +52,7 @@ public class KeJuanZaShui : AbstractSetting
     {
         if (hasAdd)
         {
-            foreach (var it in CharacterManager.instance.GetEnemy(chara.camp))
+            foreach (var it in CharacterManager.instance.GetEnemy(chara.Camp))
             {
                 it.event_UseVerb -= Effect;
             }

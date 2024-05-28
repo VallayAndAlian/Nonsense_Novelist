@@ -12,7 +12,7 @@ using UnityEngine;
         wordName = "冠状病毒";
         bookName = BookNameEnum.allBooks;
         gender = GenderEnum.noGender;
-        camp = CampEnum.stranger;
+        Camp = CampEnum.stranger;
         hp =maxHp  = 600;
         atk = 30;
         def = 60;

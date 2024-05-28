@@ -881,7 +881,7 @@ public class GameMgr : MonoSingleton<GameMgr>
             
             image.gameObject.SetActive(true);
             text.gameObject.SetActive(false);
-            obj.anchoredPosition -= 0.08f * (obj.anchoredPosition - pos);
+            obj.anchoredPosition -= 0.04f * (obj.anchoredPosition - pos);
             yield return waitFrame;
         }
 
@@ -1039,7 +1039,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         int _id = id - 110;
         var _monster = Instantiate<GameObject>(UiCanvas.GetComponent<CreateOneCharacter>().monsterPrefabs[_id]);
         var _mAc = _monster.GetComponent<AbstractCharacter>();
-        _mAc.camp = CampEnum.stranger;
+        _mAc.Camp = CampEnum.stranger;
         _mAc.maxHp = _data.hp; 
         _mAc.hp = _mAc.maxHp;
         _mAc.def = _data.def;

@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: test
   m_EditorClassIdentifier: Assembly-CSharp::StagesData
   stagesData:
-  - type: 1
+  - type: 2
     t_boss: {fileID: 0}
-    t_eventCount: 0
+    t_eventCount: 5
     t_eventKey: 0
-    time: 10
-    image: {fileID: 0}
-    time_count: 2
+    eventTime: 10
+    eventTime_Key: 20
+    time: 2
     level: 1
+    image: {fileID: 0}
+    imageScale: 0
+    time_count: 2

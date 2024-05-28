@@ -22,7 +22,7 @@ class SiYangYuan : AbstractCharacter
         int _r = Random.Range(0, 100);
         if (_r < 30)
         {
-            var chara = CharacterManager.instance.GetFriend(this.camp);
+            var chara = CharacterManager.instance.GetFriend(this.Camp);
             if (chara[0] != null)
             {
                 var _b=chara[0].gameObject.AddComponent<KangFen>();

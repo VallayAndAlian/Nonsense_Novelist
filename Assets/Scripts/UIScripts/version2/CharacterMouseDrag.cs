@@ -201,7 +201,7 @@ public class CharacterMouseDrag : MonoBehaviour
             transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
 
             var chara = this.GetComponent<AbstractCharacter>();
-            chara.camp = CampEnum.left;
+            chara.Camp = CampEnum.left;
             if (CharacterManager.charas_left.Contains(chara)) CharacterManager.charas_left.Remove(chara);
             if (CharacterManager.charas_right.Contains(chara)) CharacterManager.charas_right.Remove(chara);
         }
@@ -289,18 +289,18 @@ public class CharacterMouseDrag : MonoBehaviour
         //根据站位给角色阵营赋值
         if (s == null)
         {
-            chara.camp = CampEnum.left;
+            chara.Camp = CampEnum.left;
             if (CharacterManager.charas_left.Contains(chara)) CharacterManager.charas_left.Remove(chara);
             if (CharacterManager.charas_right.Contains(chara)) CharacterManager.charas_right.Remove(chara);
         }
         else if (s.number < 5)
         {
             //图片翻转方向
-            if (chara.camp == CampEnum.right)
+            if (chara.Camp == CampEnum.right)
             {
                 this.GetComponent<AbstractCharacter>().turn();
             }
-            chara.camp = CampEnum.left;
+            chara.Camp = CampEnum.left;
             //去重
             if (CharacterManager.charas_right.Contains(chara))
             {
@@ -315,12 +315,12 @@ public class CharacterMouseDrag : MonoBehaviour
         }
         else
         {
-            if (chara.camp != CampEnum.right)
+            if (chara.Camp != CampEnum.right)
             {
                 this.GetComponent<AbstractCharacter>().turn();
 
             }
-            chara.camp = CampEnum.right;
+            chara.Camp = CampEnum.right;
             if (CharacterManager.charas_left.Contains(chara)) CharacterManager.charas_left.Remove(chara);
             if (!CharacterManager.charas_right.Contains(chara)) CharacterManager.charas_right.Add(chara);
         }

@@ -48,7 +48,7 @@ class DamageMode : AbstractSkillMode
         }
         else//正常情况
         {
-            if (character.camp != CampEnum.stranger)
+            if (character.Camp != CampEnum.stranger)
             {
                 var _c = CharacterManager.instance.GetStranger();
                 if (_c != null) return _c; 

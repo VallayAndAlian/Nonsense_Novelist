@@ -19,7 +19,7 @@ override public void Awake()
         wordName = "怀疑主义";
         bookName = BookNameEnum.allBooks;
         gender = GenderEnum.noGender;
-        camp = CampEnum.stranger;
+        Camp = CampEnum.stranger;
         hp =maxHp  =100;
         atk = 10;
         def = 15;

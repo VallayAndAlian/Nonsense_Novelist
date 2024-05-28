@@ -35,7 +35,7 @@ public class JiNiTaiMei : AbstractSetting
     void Effect(AbstractVerbs verb)
     {
         //获取友方所有角色（包含自己）
-        List<AbstractCharacter> a = CharacterManager.instance.GetFriend(chara.camp);
+        List<AbstractCharacter> a = CharacterManager.instance.GetFriend(chara.Camp);
         int i = Random.Range(0, a.Count);
         int loopCount = 0;
         while (a[i].wordName == "贝洛姬·姬妮"&&loopCount<50)

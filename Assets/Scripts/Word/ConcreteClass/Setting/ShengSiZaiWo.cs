@@ -33,7 +33,7 @@ public class ShengSiZaiWo : AbstractSetting
         chara = CharacterManager.instance.gameObject.GetComponentInChildren<Anubis>();
         if (chara != null)
         {
-            foreach (var it in CharacterManager.instance.GetFriend(chara.camp))//获取友方所有角色（包含自己）
+            foreach (var it in CharacterManager.instance.GetFriend(chara.Camp))//获取友方所有角色（包含自己）
             {
                 if (it.name == "阿努比斯") { }
                 else
@@ -64,7 +64,7 @@ public class ShengSiZaiWo : AbstractSetting
     {
         if (hasAdd)
         {
-            foreach (var it in CharacterManager.instance.GetFriend(chara.camp))//获取友方所有角色（包含自己）
+            foreach (var it in CharacterManager.instance.GetFriend(chara.Camp))//获取友方所有角色（包含自己）
             {
                 if (it.name == "阿努比斯") { }
                 else

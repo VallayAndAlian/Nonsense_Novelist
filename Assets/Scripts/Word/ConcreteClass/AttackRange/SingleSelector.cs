@@ -20,11 +20,11 @@ public class SingleSelector : IAttackRange
         CampEnum myCamp;
         if (situation == null) { Debug.Log("situation== null"); return null; }
        
-        myCamp = situation.transform.GetChild(0).GetComponent<AbstractCharacter>().camp;
+        myCamp = situation.transform.GetChild(0).GetComponent<AbstractCharacter>().Camp;
 
 
 
-        secondResult= CollectionHelper.FindAll<Situation>(firstResult, p => isAim(myCamp, p.GetComponentInChildren<AbstractCharacter>().camp, needCamp));
+        secondResult= CollectionHelper.FindAll<Situation>(firstResult, p => isAim(myCamp, p.GetComponentInChildren<AbstractCharacter>().Camp, needCamp));
 
         //降序升序
         if(isJiangXu) CollectionHelper.OrderByDescending(secondResult, p => Situation.Distance(situation, p));

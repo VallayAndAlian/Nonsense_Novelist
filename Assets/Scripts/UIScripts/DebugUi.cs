@@ -263,7 +263,7 @@ public class DebugUi : MonoBehaviour
     public void DeleteCharacter(Transform _s)
     {
         var _c = CharacterManager.instance.charas[_s.GetSiblingIndex()];
-        _c.camp = CampEnum.left;
+        _c.Camp = CampEnum.left;
         CharacterManager.instance.RefreshStanger();
         Destroy(_c.gameObject);
         Exit();

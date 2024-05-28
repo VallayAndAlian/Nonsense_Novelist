@@ -52,7 +52,7 @@ public class XiaYuDe : AbstractAdjectives, IJiHuo
 
         if (jiHuo)
         {
-            if (aimCharacter.camp == CampEnum.left)
+            if (aimCharacter.Camp == CampEnum.left)
             {
                 AbstractCharacter[] left = CharacterManager.charas_left.ToArray();
                 for (int i = 0; i < left.Length; i++)
@@ -61,7 +61,7 @@ public class XiaYuDe : AbstractAdjectives, IJiHuo
                 }
 
             }
-            else if (aimCharacter.camp == CampEnum.right)
+            else if (aimCharacter.Camp == CampEnum.right)
             {
                 AbstractCharacter[] right = CharacterManager.charas_right.ToArray();
                 for (int i = 0; i < right.Length; i++)

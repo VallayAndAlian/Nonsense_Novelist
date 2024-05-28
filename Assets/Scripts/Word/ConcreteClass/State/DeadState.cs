@@ -77,22 +77,22 @@ namespace AI
         public override void EnterState(MyState0 myState)
         {
             var _ac = this.transform.parent.GetComponent<AbstractCharacter>();
-            if (_ac.camp == CampEnum.right)
+            if (_ac.Camp == CampEnum.right)
             {
                 CharacterManager.charas_right.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
                 if (CharacterManager.charas_right.Count == 0) CharacterManager.instance.EndGame();
                 return;
             }
 
-            if (_ac.camp == CampEnum.left)
+            if (_ac.Camp == CampEnum.left)
             {
                 CharacterManager.charas_left.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
                 if (CharacterManager.charas_left.Count == 0) CharacterManager.instance.EndGame();
                 return; 
             }
-            if (myState.character.camp == CampEnum.stranger)
+            if (myState.character.Camp == CampEnum.stranger)
             {
-                myState.character.camp = CampEnum.left;
+                myState.character.Camp = CampEnum.left;
                 CharacterManager.instance.RefreshStanger();
                 //ÅĞ¶Ï¹ÖÎïorBossËÀÍö
                 audioPlay.RandomPlay();

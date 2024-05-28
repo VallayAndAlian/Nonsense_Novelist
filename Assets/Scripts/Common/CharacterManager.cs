@@ -43,7 +43,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
 
         foreach (var _m in charas)
         {
-            if (_m.camp == CampEnum.stranger)
+            if (_m.Camp == CampEnum.stranger)
             {
                 Strangers.Add(_m);
             }

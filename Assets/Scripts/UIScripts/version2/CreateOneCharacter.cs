@@ -86,7 +86,7 @@ public class CreateOneCharacter : MonoBehaviour
             {
                 for (int j = i + 1; j < CharacterManager.instance.charas.Length; j++)
                 {
-                    if (CharacterManager.instance.charas[i].camp != CharacterManager.instance.charas[j].camp)
+                    if (CharacterManager.instance.charas[i].Camp != CharacterManager.instance.charas[j].Camp)
                     {
                         isTwoSides = true;
                     }
@@ -505,7 +505,7 @@ public class CreateOneCharacter : MonoBehaviour
                 chara.transform.localScale = Vector3.one * GameMgr.instance.afterScale;
 
                 //生成调整
-                chara.GetComponent<AbstractCharacter>().camp = CampEnum.stranger;
+                chara.GetComponent<AbstractCharacter>().Camp = CampEnum.stranger;
                 chara.GetComponent<AbstractCharacter>().situation = CharacterManager.instance.transform.GetChild(_pos).GetComponent<Situation>();
                 chara.gameObject.AddComponent(typeof(AfterStart));
                 Destroy(chara.GetComponent<CharacterMouseDrag>());

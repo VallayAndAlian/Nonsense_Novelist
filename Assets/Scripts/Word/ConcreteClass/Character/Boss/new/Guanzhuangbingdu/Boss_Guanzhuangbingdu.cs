@@ -18,7 +18,7 @@ public class Boss_Guanzhuangbingdu : AbstractCharacter
         wordName = "¹Ú×´²¡¶¾";
         bookName = BookNameEnum.FluStudy;
         gender = GenderEnum.noGender;
-        camp = CampEnum.stranger;
+        Camp = CampEnum.stranger;
 
         hp = maxHp = 600;//600
         atk = 20;//20
