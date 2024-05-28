@@ -22,7 +22,7 @@ public class FengLi : AbstractAdjectives
         skillMode = gameObject.AddComponent<UpATKMode>();
 
         skillEffectsTime = 10;
-        rarity = 0;
+        rarity = 1;
         base.Awake();
     }
 

@@ -483,8 +483,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.27, y: -99.29}
-  m_SizeDelta: {x: 1391.4, y: 438.9}
+  m_AnchoredPosition: {x: 8.68, y: -87.26}
+  m_SizeDelta: {x: 1231.38, y: 462.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4338117747291018344
 MonoBehaviour:
@@ -506,8 +506,8 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 200, y: 86.1}
-  m_Spacing: {x: -14.73, y: -20.86}
+  m_CellSize: {x: 240, y: 150}
+  m_Spacing: {x: -10, y: -20}
   m_Constraint: 0
   m_ConstraintCount: 6
 --- !u!1 &4338117747310523732
@@ -608,7 +608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4338117747861965719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -656,7 +656,7 @@ MonoBehaviour:
   word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
-  color: {r: 0.57701325, g: 0.5016376, b: 0.6226415, a: 1}
+  color: {r: 0.51600426, g: 0.4955571, b: 0.6150943, a: 1}
   jiaoYi: 0
   btn_cancel: {fileID: 500200641143551609}
   btn_Check: {fileID: 684269349019989369}
