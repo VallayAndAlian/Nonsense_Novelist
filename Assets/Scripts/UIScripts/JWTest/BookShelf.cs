@@ -11,8 +11,9 @@ using UnityEngine.UIElements;
 public class BookShelf : MonoBehaviour
 {
     [Header("手动设置书籍顺序（要与panel顺序对应）")]
-    public Button[] books;
     public PanelInstance[] panels;
+    [Header("界面返回按钮")]
+    public GameObject back;
 
     [Header("词条预制体（手动）")]
     public GameObject prefab_wordinf;
@@ -36,6 +37,10 @@ public class BookShelf : MonoBehaviour
     {
         if (panels[0] != null)
             panels[0].gameObject.SetActive(false);
+        /*for(int i = 0; i < books.Length; i++)
+        {
+            books[i].GetComponent<UnityEngine.UI.Image>().alphaHitTestMinimumThreshold = 0.5f;
+        }*/
     }
 
 
@@ -49,11 +54,11 @@ public class BookShelf : MonoBehaviour
         b_noun = true;
         b_adj = true;
         RefreshTag();
-        panels[0].transform.Find("tag_juese").GetComponent<UnityEngine.UI.Image>().color = choosenColor;
-        panels[0].transform.Find("tag_xingrongci").GetComponent<UnityEngine.UI.Image>().color = choosenColor;
-        panels[0].transform.Find("tag_mingci").GetComponent<UnityEngine.UI.Image>().color = choosenColor;
-        panels[0].transform.Find("tag_dongci").GetComponent<UnityEngine.UI.Image>().color = choosenColor;
-        panels[0].transform.Find("tag_sheding").GetComponent<UnityEngine.UI.Image>().color = choosenColor;
+        panels[0].transform.Find("tag_juese").GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        panels[0].transform.Find("tag_xingrongci").GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        panels[0].transform.Find("tag_mingci").GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        panels[0].transform.Find("tag_dongci").GetComponent<UnityEngine.UI.Image>().color = Color.white;
+        panels[0].transform.Find("tag_sheding").GetComponent<UnityEngine.UI.Image>().color = Color.white;
     }
 
     void RefreshTag()
@@ -69,45 +74,45 @@ public class BookShelf : MonoBehaviour
             case "tag_juese":
             {
                 if (b_chara)
-                    {b_chara = false; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
+                    {b_chara = false; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
                 else
-                    { b_chara = true; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
+                    { b_chara = true; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
                 RefreshTag();
             }
             break;
             case "tag_xingrongci":
                 {
                     if (b_adj)
-                    { b_adj = false; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
+                    { b_adj = false; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
                     else
-                    { b_adj = true; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
+                    { b_adj = true; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
                     RefreshTag();
                 }
                 break;
             case "tag_mingci":
                 {
                     if (b_noun)
-                    { b_noun = false; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
+                    { b_noun = false; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
                     else
-                    { b_noun = true; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
+                    { b_noun = true; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
                     RefreshTag();
                 }
                 break;
             case "tag_dongci":
                 {
                     if (b_verb)
-                    { b_verb = false; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
+                    { b_verb = false; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
                     else
-                    { b_verb = true; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
+                    { b_verb = true; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
                     RefreshTag();
                 }
                 break;
             case "tag_sheding":
                 {
                     if (b_setting)
-                    { b_setting = false; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
+                    { b_setting = false; _name.GetComponent<UnityEngine.UI.Image>().color =choosenColor; }
                     else
-                    { b_setting = true; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
+                    { b_setting = true; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
                     RefreshTag();
                 }
                 break;
@@ -124,6 +129,7 @@ public class BookShelf : MonoBehaviour
     /// </summary>
     public void ClickBook()
     {
+        back.GetComponent<UnityEngine.UI.Button>().interactable = false;
         buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         if(buttonSelf!=null)
         {
@@ -381,6 +387,7 @@ public class BookShelf : MonoBehaviour
 
     public void CloseHLMPanel()
     {
+        back.GetComponent<UnityEngine.UI.Button>().interactable = true;
         var toggleSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         DeleteWords();
         //所有toggle的ison调成false

@@ -256,7 +256,7 @@ public static class AllSkills
         humanList_noun.AddRange(new Type[] { typeof(Nexus_6Arm), typeof(VolumeProduction), typeof(BeiZhiRuDeJiYi) });
 
 
-        humanList_chara.AddRange(new Type[] { typeof(DiKaDe) ,typeof(LongDuanGongSi),typeof(SaiBoFengZi),typeof(FangSheXingWeiCheng),typeof(Boss_Huaiyizhuyi) });
+        humanList_chara.AddRange(new Type[] { typeof(DiKaDe), typeof(LongDuanGongSi), });
         //仿生人全部词条
         humanList_all.AddRange(humanList_verb);
         humanList_all.AddRange(humanList_adj);

@@ -16,7 +16,7 @@ public class KeBan : AbstractAdjectives
         adjID = 3;
         wordName = "刻板的";
         bookName = BookNameEnum.ZooManual;
-        description = "12s内无法攻击";
+        description = "  12s内无法攻击              ";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = 12;
         rarity = 1;
