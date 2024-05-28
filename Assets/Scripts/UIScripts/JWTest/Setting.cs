@@ -367,7 +367,7 @@ public class Setting : MonoBehaviour
         {
             if (click != null)//click²»ÊÇ¿Õ
                 click.GetComponent<Image>().color = Color.white;
-            a.GetComponent<Image>().color = Color.black;
+            a.GetComponent<Image>().color = new Color(210/255f,200/255f,170/255f);
             click = a;
         }
         else

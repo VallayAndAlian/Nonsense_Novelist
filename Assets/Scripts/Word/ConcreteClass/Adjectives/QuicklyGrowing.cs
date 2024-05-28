@@ -18,7 +18,7 @@ public class QuicklyGrowing : AbstractAdjectives
         description = "<sprite name=\"hp\">恢复30";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = Mathf.Infinity;
-        rarity = 0;
+        rarity = 1;
         time = skillEffectsTime;
         base.Awake();
 
