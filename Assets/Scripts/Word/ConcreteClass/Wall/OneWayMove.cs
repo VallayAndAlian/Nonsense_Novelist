@@ -109,6 +109,7 @@ public class OneWayMove : MonoBehaviour
 
         cdTimer = 0;//重置cd
         cdOK = true;
+        if (cdshow == null) return;
         cdshow.color = Color.white;
     }
 
