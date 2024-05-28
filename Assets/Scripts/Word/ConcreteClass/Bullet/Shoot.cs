@@ -332,7 +332,6 @@ public class Shoot : MonoBehaviour
         {
             AbstractWord0 abs00 = shootChild.GetChild(i).GetChild(3).gameObject.AddComponent(GameMgr.instance.wordGoingUseList[i]) as AbstractWord0;
             shootChild.GetChild(i).GetChild(3).GetComponentInChildren<UnityEngine.UI.Text>().text = abs00.wordName;
-            print(shootChild.GetChild(i).GetChild(3).gameObject.GetComponent<AbstractWord0>());
         }
     }
     void DestroyComponent()
