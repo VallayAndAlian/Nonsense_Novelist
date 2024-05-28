@@ -45,6 +45,8 @@ public class EventUI : MonoBehaviour
     public GameObject word_adj;
     public GameObject word_verb;
     public GameObject word_item;
+    private AudioSource audioSource;
+    private float volume = 0.4f;
 
 
 
@@ -55,6 +57,10 @@ public class EventUI : MonoBehaviour
         WJ_static = false;
         WJ_monster = -1;
         audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
+    }
+    private void Start()
+    {
+        audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
     }
     #region 处理data 
 
@@ -730,13 +736,13 @@ public class EventUI : MonoBehaviour
         {
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster(WJ_monster);
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
-            audioPlay.Boss_GuaiWu();
+            //audioPlay.Boss_GuaiWu();
         }
         else
         {
             WJ_monster= GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster();
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
-            audioPlay.Boss_GuaiWu();
+            //audioPlay.Boss_GuaiWu();
         }
         
 
@@ -985,13 +991,16 @@ public class EventUI : MonoBehaviour
     public void CloseAnim()
     {
         GetComponent<Animator>().Play("EventUI_Dis1");
+        //BGM恢复
+        audioSource.volume = 0.4f;
     }
 
     public void Close()
     {
         CharacterManager.instance.pause = false;
         GameMgr.instance.eventHappen = false;
-
+        //BGM恢复
+        audioSource.volume = 0.4f;
         //处理当前的nowChosenEvent
         if ((type != EventType.FangKe) && (type != EventType.ChangJing))
         {

@@ -8,7 +8,7 @@ class Kiss : AbstractVerbs
 {
     static public string s_description = "使敌人受到300%<sprite name=\"psy\">的精神伤害，并被<color=#dd7d0e>情迷</color>5s";
     static public string s_wordName = "亲吻";
-    static public int s_rarity = 1;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         base.Awake();
@@ -22,7 +22,7 @@ class Kiss : AbstractVerbs
         skillMode.attackRange =  new SingleSelector();
 
         skillEffectsTime =5;
-        rarity = 1;
+        rarity = 2;
         needCD = 5;
 
     }

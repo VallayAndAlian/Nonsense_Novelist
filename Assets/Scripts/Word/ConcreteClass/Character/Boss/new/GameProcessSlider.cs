@@ -74,6 +74,8 @@ public class GameProcessSlider : MonoBehaviour
 
     private Vector3 oriScale;
     private AudioPlay audioPlay;
+    private AudioSource audioSource;
+    //[Header("BGM音量")] public float volume=0.2f;
     /// <summary>
     /// 事件气泡功能
     /// </summary>
@@ -100,6 +102,7 @@ public class GameProcessSlider : MonoBehaviour
     private void Start()
     {
         audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
+        audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
         oriScale = this.transform.localScale;
 
         //按照预先设置的时间生成进度条
@@ -211,8 +214,7 @@ public class GameProcessSlider : MonoBehaviour
             }
             else if (time_stage.stagesData[stageCount].type == StageType.Event)
             {
-                //切换BGM-1
-                audioPlay.Event_QiTa();
+                
                 countTime = true;
                 //创建Event事件
                 CreateEvent(time_stage.stagesData[stageCount].t_eventKey, time_stage.stagesData[stageCount].t_eventCount);
@@ -222,7 +224,8 @@ public class GameProcessSlider : MonoBehaviour
             else if (time_stage.stagesData[stageCount].type == StageType.weiji)
             {
                 //切换BGM-2
-                audioPlay.Event_WeiJi();
+                audioPlay.Boss_GuaiWu();
+               
 
                 CreateWeijiEvent(false, 99);
                 StartCoroutine(Wait_Weiji());

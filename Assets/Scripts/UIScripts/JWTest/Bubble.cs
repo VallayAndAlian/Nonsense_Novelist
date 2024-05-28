@@ -10,7 +10,9 @@ public class Bubble : MonoBehaviour
     public Vector3 pos = Vector3.one;
     [Header("事件消失时间")] public float dTime = 4;
     public static string b_name = "";
-
+    private AudioSource audioSource;
+    private AudioYinXiao audioSource_yx;
+    private float volume = 0.2f;
 
     private EventType type;
     private bool fromBubble = false;//第一个阶段true
@@ -60,7 +62,11 @@ public class Bubble : MonoBehaviour
 
         }
     }
-
+    private void Start()
+    {
+        audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
+        audioSource_yx= GameObject.Find("yinxiaoSource").GetComponent<AudioYinXiao>();
+    }
 
     private void Update()
     {
@@ -181,7 +187,10 @@ public class Bubble : MonoBehaviour
     public void OpenPanal()
     {
 
-
+        //BGM音量降低
+        audioSource.volume = volume;
+        //播放事件音效
+        audioSource_yx.RandomPlay();
         string _adr = "";
         switch (type)
         {
