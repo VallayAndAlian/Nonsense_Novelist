@@ -8,7 +8,7 @@ class HuYanShi: AbstractItems,IJiHuo
 {
     static public string s_description = "未激活，<sprite name=\"atk\">-1；\n激活，<sprite name=\"atk\"> + 3，获得<color=#dd7d0e>共振</color>";
     static public string s_wordName = "虎眼石";
-    static public int s_rarity = 3;
+    static public int s_rarity = 2;
     static public int s_useTimes = 4;
     /// <summary>是否激活共振 </summary>
     private bool jiHuo;
@@ -22,7 +22,7 @@ class HuYanShi: AbstractItems,IJiHuo
         description = "未激活，<sprite name=\"atk\">-1；\n激活，<sprite name=\"atk\"> + 3，获得<color=#dd7d0e>共振</color>";
         VoiceEnum = MaterialVoiceEnum.Ceram;
         useTimes = 4;
-        rarity = 3;
+        rarity = 2;
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
             wordCollisionShoots[0] = gameObject.AddComponent<JiHuo>();
     }

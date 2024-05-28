@@ -7,7 +7,6 @@ public class AudioPlay : MonoBehaviour
     public AudioClip[] main_Clips;
     public AudioClip[] boss_Clips;
     private AudioSource audioSource;
-    public AudioClip[] event_Clips;
     int a = 0;
     void Start()
     {
@@ -45,16 +44,5 @@ public class AudioPlay : MonoBehaviour
         audioSource.Play();
         audioSource.loop = true;
     }
-    public void Event_WeiJi()
-    {
-        audioSource.clip = event_Clips[0];
-        audioSource.Play();
-        audioSource.loop = true;
-    }
-    public void Event_QiTa()
-    {
-        audioSource.clip = event_Clips[1];
-        audioSource.Play();
-        audioSource.loop = true;
-    }
+    
 }

@@ -9,7 +9,7 @@ public class YouAnQuanGan : AbstractAdjectives
 {
     static public string s_description = "<color=#dd7d0e>坚实，再生</color>，持续10s";
     static public string s_wordName = "有安全感的";
-    static public int s_rarity = 1;
+    static public int s_rarity = 2;
     public override void Awake()
     {
         adjID = 6;
@@ -18,7 +18,7 @@ public class YouAnQuanGan : AbstractAdjectives
         description = "<color=#dd7d0e>坚实，再生</color>，持续10s";
         skillMode = gameObject.AddComponent<SelfMode>();
         skillEffectsTime = 10;
-        rarity = 1;
+        rarity = 2;
 
         base.Awake();
 
