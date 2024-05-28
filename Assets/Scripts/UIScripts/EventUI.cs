@@ -463,7 +463,7 @@ public class EventUI : MonoBehaviour
                     obj.GetComponentInChildren<TextMeshProUGUI>().text = _word.wordName;
                     
                     obj.transform.parent = cardParent.GetChild(i).GetChild(0);
-                    obj.transform.localScale = Vector3.one;
+                    obj.transform.localScale = new Vector3(1.7f,1.7f,1.7f);
                     obj.GetComponent<Button>().interactable = false;
 
              

@@ -103,7 +103,10 @@ MonoBehaviour:
   allState: []
   nowState: {fileID: 0}
   defaultState: {fileID: 0}
-  aim: {fileID: 0}
+  aim:
+  - {fileID: 0}
+  aimTemp: []
+  aimCount: 1
   speed: 0.1
   isAimRandom: 0
 --- !u!114 &3192201577338753410
@@ -416,6 +419,7 @@ MonoBehaviour:
   camp: 0
   roleName: 
   roleInfo: 
+  isNaiMa: 0
   gender: 0
   trait: {fileID: 0}
   criticalChance: 0
@@ -424,12 +428,12 @@ MonoBehaviour:
   skills: []
   servants: []
   maxSkillsCount: 3
+  hasBetray: 0
   skillText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   attackInterval: 2.2
-  attackSpeedPlus: 1
   situation: {fileID: 0}
   attackDistance: 99
   charaAnim: {fileID: 0}
@@ -486,6 +490,22 @@ PrefabInstance:
     - target: {fileID: 673065747963997081, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306441908484667631, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8818280296233398531, guid: 86fc7b269e745eb42a9d31714cb7a868, type: 3}
+    - target: {fileID: 1306441908484667631, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306441908484667631, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
+      propertyPath: m_Color.g
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306441908484667631, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
+      propertyPath: m_Color.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1825122111681662695, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_Layer
