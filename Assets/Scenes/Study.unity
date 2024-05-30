@@ -727,7 +727,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7ef8b715ecf129b4c9444eb6e90cab29, type: 3}
   - {fileID: 8300000, guid: 32fa9c1d76b84d649a8bae4adf2948d8, type: 3}
   boss_Clips: []
-  event_Clips: []
 --- !u!1 &225436135
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,7 +2288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &880395119
 Transform:
   m_ObjectHideFlags: 0
