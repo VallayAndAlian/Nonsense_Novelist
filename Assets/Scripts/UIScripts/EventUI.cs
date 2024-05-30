@@ -481,8 +481,10 @@ public class EventUI : MonoBehaviour
 
         _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         TextMeshProUGUI info = this.transform.Find("info").GetComponentInChildren<TextMeshProUGUI>();
-        //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
+        TextMeshProUGUI title = this.transform.Find("title").GetComponentInChildren<TextMeshProUGUI>();
+        title .text = tempNowDate[_r].name;
+        //打字机效果
+        StartCoroutine(TypeDelay((tempNowDate[_r].textEvent), info, 0.05f));
         nowEvent = tempNowDate[_r];
 
         RefreshNowList();
@@ -544,6 +546,7 @@ public class EventUI : MonoBehaviour
     {        
         //读取已拥有的书中，未获得的卡，概率相同
         TextMeshProUGUI titleText= this.transform.Find("EventInfo").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI title = this.transform.Find("title").GetComponent<TextMeshProUGUI>();
         Transform CardGroup = this.transform.Find("CardGroup");
         if (CardGroup.childCount > 0)
         {
@@ -643,9 +646,10 @@ public class EventUI : MonoBehaviour
         //抽取事件信息
 
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
+        title.text = tempNowDate[_r].name;
 
         //切换文字内容
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), titleText, 0.05f));
+        StartCoroutine(TypeDelay(( tempNowDate[_r].textEvent), titleText, 0.05f));
         //titleText.text = tempNowDate[_r].name+"\n"+ tempNowDate[_r].textEvent;
         nowEvent = tempNowDate[_r];
 
@@ -749,8 +753,9 @@ public class EventUI : MonoBehaviour
 
         //
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
-        //info.text = tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent;
-        StartCoroutine(TypeDelay((tempNowDate[_r].name + "\n" + tempNowDate[_r].textEvent), info, 0.05f));
+        TextMeshProUGUI title = this.transform.Find("title").GetComponentInChildren<TextMeshProUGUI>();
+        title.text = tempNowDate[_r].name ;
+        StartCoroutine(TypeDelay((tempNowDate[_r].textEvent), info, 0.05f));
         nowEvent = tempNowDate[_r];
         RefreshNowList();
 
