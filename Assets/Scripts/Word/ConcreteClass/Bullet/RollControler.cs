@@ -9,6 +9,8 @@ public class RollControler : MonoBehaviour
 {
 
     // Update is called once per frame
+    public float leftAngle = 60;
+    public float rightAngle = 300;
     void Update()
     {
         if (Time.timeScale == 0f)
@@ -27,11 +29,11 @@ public class RollControler : MonoBehaviour
             float angle = 0;
         if (v3.z > 0)
         {
-            angle = Vector3.Angle(dic1, dic2); transform.eulerAngles = new Vector3(0, 0, /*angle*/ Mathf.Clamp (angle,0, 90));
+            angle = Vector3.Angle(dic1, dic2); transform.eulerAngles = new Vector3(0, 0, /*angle*/ Mathf.Clamp (angle,0, leftAngle));
         }
         else
         {
-            angle = 360 - Vector3.Angle(dic1, dic2); transform.eulerAngles = new Vector3(0, 0, /*angle*/ Mathf.Clamp(angle, 260, 360));
+            angle = 360 - Vector3.Angle(dic1, dic2); transform.eulerAngles = new Vector3(0, 0, /*angle*/ Mathf.Clamp(angle, rightAngle, 360));
         }
                 
 
