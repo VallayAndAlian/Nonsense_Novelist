@@ -79,7 +79,7 @@ public class SanShe : WordCollisionShoot
                     Destroy(clone.GetComponent<Common>());
                     clone.GetComponent<SpriteRenderer>().color =color + new Color(0.4f, 0.4f, 0.4f, 0);
 
-                    clone.GetComponent<Rigidbody2D>().velocity = Quaternion.Euler(0, 0, 60) * reflectionDirection;
+                    clone.GetComponent<Rigidbody2D>().velocity = Quaternion.Euler(0, 0, 80) * reflectionDirection;
 
                 }
                 else if (num == 1)
@@ -88,7 +88,7 @@ public class SanShe : WordCollisionShoot
                     Destroy(clone.GetComponent<Common>());
                     clone.GetComponent<SpriteRenderer>().color = color- new Color(0.4f, 0.4f, 0.4f, 0);
                   
-                    clone.GetComponent<Rigidbody2D>().velocity = Quaternion.Euler(0, 0, -60) * reflectionDirection;
+                    clone.GetComponent<Rigidbody2D>().velocity = Quaternion.Euler(0, 0, -80) * reflectionDirection;
                    
                 }
                 foreach (var _c in clone.GetComponents<SanShe>())
