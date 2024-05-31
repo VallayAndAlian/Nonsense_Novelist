@@ -8,7 +8,7 @@ public class BossCreate : MonoBehaviour
     public void CreateTestBoss()
     {
         GameObject boss = Instantiate(huaiYiZhuYi);
-        boss.transform.SetParent(GameObject.Find("Circle5.5").transform);
+        boss.transform.SetParent(GameObject.Find("Circle4.5").transform);
         boss.transform.localPosition = Vector3.zero;
 
 

@@ -34,7 +34,7 @@ override public void Awake()
         description = "暂无";
 
 
-        situation = GameObject.Find("Circle5.5").GetComponentInChildren<Situation>();
+        situation = GameObject.Find("Circle4.5").GetComponentInChildren<Situation>();
         if (situation == null)
             print("situation5.5==null");
     }

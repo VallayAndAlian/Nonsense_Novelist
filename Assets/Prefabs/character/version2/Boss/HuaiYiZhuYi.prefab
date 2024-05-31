@@ -201,7 +201,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6027698775285536365
 Transform:
   m_ObjectHideFlags: 0
@@ -639,7 +639,6 @@ MonoBehaviour:
   walkAudio: {fileID: 0}
   teXiao: {fileID: 0}
   bullet: {fileID: 3424991713766038287, guid: 9cfb782ead826aa4883ddaac0089618e, type: 3}
-  camp: 0
   roleName: 
   roleInfo: 
   isNaiMa: 0
@@ -2277,7 +2276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3182886413621638322}
   m_Layer: 5
-  m_Name: Fill Area
+  m_Name: FillArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

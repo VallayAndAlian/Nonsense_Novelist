@@ -56,7 +56,9 @@ abstract public class AbstractCharacter : AbstractWord0
             return camp; 
         }
         set
-        { camp = value;
+        { 
+            camp = value;
+            if (wordName == "怀疑主义") return;
             Sprite _sp = ResMgr.GetInstance().Load<Sprite>("UI/hpbar_A");
             if (Camp == CampEnum.left)
             {
@@ -68,6 +70,7 @@ abstract public class AbstractCharacter : AbstractWord0
             }
             else if (camp == CampEnum.stranger)
                 _sp = ResMgr.GetInstance().Load<Sprite>("UI/hpbar_Monster");
+            if (hpSlider.transform.Find("FillArea") == null) return;
             if (_sp != null)
                 hpSlider.transform.Find("FillArea").Find("Fill").GetComponent<Image>().sprite = _sp;
             

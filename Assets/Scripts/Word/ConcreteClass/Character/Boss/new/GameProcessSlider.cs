@@ -181,6 +181,7 @@ public class GameProcessSlider : MonoBehaviour
             return;
         }
 
+        
         //CreateEventUpdate();
 
         GameMgr.instance.time1 += Time.deltaTime;
@@ -209,6 +210,8 @@ public class GameProcessSlider : MonoBehaviour
                 //创建boss事件
                 if (time_stage.stagesData[stageCount].t_boss != null)
                 {
+                    print("CreateBossCreateBoss"+ countTime);
+             
                     CreateBoss(time_stage.stagesData[stageCount].t_boss); 
                     countTime = false; 
                     //StartCoroutine(Wait_Weiji());
@@ -357,11 +360,13 @@ public class GameProcessSlider : MonoBehaviour
     /// <param name="_boss"></param>
     void CreateBoss(GameObject _boss)
     {
+        print("CreateBoss");
+
         this.transform.localScale = Vector3.zero;
 
         //生成boss
         GameObject boss = Instantiate(_boss);
-        boss.transform.SetParent(GameObject.Find("Circle5.5").transform);
+        boss.transform.SetParent(GameObject.Find("Circle4.5").transform);
         boss.transform.localPosition = Vector3.zero;
         boss.transform.localScale = Vector3.one * GameMgr.instance.afterScale;
         //bossBGM
