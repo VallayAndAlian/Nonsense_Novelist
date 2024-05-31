@@ -300,10 +300,12 @@ public class EventUI : MonoBehaviour
         Image bubble= this.transform.Find("bubble").GetComponent<Image>();
         TextMeshProUGUI words = bubble.GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI info = this.transform.Find("EventInfo").GetComponentInChildren<TextMeshProUGUI>();
+
         sprite.GetComponent<Animator>().SetBool("0", true);
         if(triggerName != -1) sprite.GetComponent<Animator>().SetBool(triggerName.ToString(), false);
         tempAnimator = sprite.GetComponent<Animator>();
-        StartCoroutine(FangKeAnimation());
+        StartCoroutine(FangKeAnimation());//将动画机清零
+
         print("triggerName"+ triggerName.ToString());;
         if (triggerName == -1)
         {
@@ -324,7 +326,7 @@ public class EventUI : MonoBehaviour
         {
             GameMgr.instance.GetNextCreateChara(triggerName-1);
         }
-        sprite.GetComponent<Animator>().SetBool(triggerName.ToString(),true);
+        //sprite.GetComponent<Animator>().SetBool(triggerName.ToString(),true);
         //sprite.SetNativeSize();
 
 
@@ -343,13 +345,14 @@ public class EventUI : MonoBehaviour
     IEnumerator FangKeAnimation()
     {
         int loopMax =0;
-        while ((!tempAnimator.GetBool("0"))||(loopMax<5))
+        while ((!tempAnimator.GetBool("0"))&&(loopMax<25))
         {
             //print("loopMax" + loopMax);
             loopMax++;
             yield return tempAnim;
         }
         tempAnimator.SetBool("0", false);
+        tempAnimator.SetBool(triggerName.ToString(), true);
     }
     void Close_FangKe()
     {
@@ -712,6 +715,7 @@ public class EventUI : MonoBehaviour
         DataInit(isKey);
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         int loopCount = 0;
+        var _spAnim = this.transform.Find("SpriteGroup").Find("L").GetComponent<Animator>();
         while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
         {//如果有条件并且条件没满足,就重找一个
 
@@ -748,7 +752,7 @@ public class EventUI : MonoBehaviour
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
             //audioPlay.Boss_GuaiWu();
         }
-        
+        _spAnim.Play(WJ_monster.ToString());
 
 
         //
@@ -945,6 +949,7 @@ public class EventUI : MonoBehaviour
             case EventType.ChangJing:
                 { OpenInit_ChangJing(); }
                 break;
+
         }
     }
 
