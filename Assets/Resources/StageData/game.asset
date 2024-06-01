@@ -17,10 +17,10 @@ MonoBehaviour:
     t_boss: {fileID: 0}
     t_eventCount: 3
     t_eventKey: 0
-    t_eventtime: 10
-    t_eventtime_key: 10
+    t_eventtime: 20
+    t_eventtime_key: 20
     time: 20
-    level: 1
+    level: 2
     image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     imageScale: 0.6
     time_count: 20
@@ -31,7 +31,7 @@ MonoBehaviour:
     t_eventtime: 10
     t_eventtime_key: 10
     time: 20
-    level: 1
+    level: 2
     image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
     imageScale: 0.8
     time_count: 40
@@ -39,10 +39,10 @@ MonoBehaviour:
     t_boss: {fileID: 0}
     t_eventCount: 1
     t_eventKey: 0
-    t_eventtime: 10
-    t_eventtime_key: 10
+    t_eventtime: 20
+    t_eventtime_key: 20
     time: 20
-    level: 1
+    level: 4
     image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     imageScale: 0.65
     time_count: 60
@@ -53,7 +53,7 @@ MonoBehaviour:
     t_eventtime: 10
     t_eventtime_key: 10
     time: 20
-    level: 2
+    level: 4
     image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
     imageScale: 0.8
     time_count: 80
@@ -61,10 +61,10 @@ MonoBehaviour:
     t_boss: {fileID: 0}
     t_eventCount: 3
     t_eventKey: 0
-    t_eventtime: 10
-    t_eventtime_key: 10
+    t_eventtime: 20
+    t_eventtime_key: 20
     time: 20
-    level: 3
+    level: 6
     image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     imageScale: 0.65
     time_count: 100
@@ -75,7 +75,7 @@ MonoBehaviour:
     t_eventtime: 10
     t_eventtime_key: 10
     time: 30
-    level: 4
+    level: 6
     image: {fileID: 21300000, guid: a255be95e296d974197ecd939d44e45d, type: 3}
     imageScale: 0.8
     time_count: 130
@@ -83,10 +83,10 @@ MonoBehaviour:
     t_boss: {fileID: 0}
     t_eventCount: 3
     t_eventKey: 0
-    t_eventtime: 10
-    t_eventtime_key: 10
+    t_eventtime: 20
+    t_eventtime_key: 20
     time: 30
-    level: 1
+    level: 8
     image: {fileID: 21300000, guid: 0e6e753b6c04a3a419b276829020917f, type: 3}
     imageScale: 0.65
     time_count: 160

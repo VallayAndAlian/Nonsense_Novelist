@@ -15982,16 +15982,16 @@ MonoBehaviour:
   characterCanvas: {fileID: 232375200}
   settingList: {fileID: 165798654}
   eventPoint:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 270498152}
+  - {fileID: 1360151845}
+  - {fileID: 1575827599}
+  - {fileID: 1173430194}
+  - {fileID: 131646085}
+  - {fileID: 1356567826}
+  - {fileID: 1178375583}
+  - {fileID: 396702285}
   - {fileID: 841065771}
-  - {fileID: 0}
+  - {fileID: 772689353}
   eventBubblePrefab:
   - {fileID: 296767673687119374, guid: a8b4700e44fff0041bb7b0a6a770e147, type: 3}
   - {fileID: 296767673687119374, guid: 29e9109d5fd453c40b4e2264c78e01d8, type: 3}
@@ -16001,12 +16001,12 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: 7864ab0c371e01e46bbcfd4ce474aff3, type: 3}
   eventTime: 3
   keyEventTime: 3
-  xiWang: 0
-  fangKe: 100
-  yiWai: 0
-  weiJi: 0
-  jiaoYi: 0
-  changJing: 0
+  xiWang: 17
+  fangKe: 17
+  yiWai: 17
+  weiJi: 16
+  jiaoYi: 17
+  changJing: 16
 --- !u!114 &1338572143
 MonoBehaviour:
   m_ObjectHideFlags: 0
