@@ -511,29 +511,33 @@ public class GameProcessSlider : MonoBehaviour
                 }
             }
             
-            while (array.Contains(num0))//位置去重
+
+            //实例化事件气泡
+
+            int _looppp = 0;
+            while (((!EventPoint.isEvent[num0])||(array.Contains(num0)))&&(_looppp<50))//避免纸球位置
             {
+                _looppp++;
                 num0 = Random.Range(0, eventPoint.Length);
             }
-            //实例化事件气泡
-           
-            if (EventPoint.isEvent[num0])//避免纸球位置（未测试）
+
+            //实例化事件气泡               
+            PoolMgr.GetInstance().GetObj(eventBubblePrefab[numx], (a) =>
             {
-              
-                PoolMgr.GetInstance().GetObj(eventBubblePrefab[numx], (a) =>
+                array.Add(num0);
+                array0.Add(a);
+                a.transform.SetParent(eventPoint[num0].transform);
+                a.transform.localPosition = Vector3.zero;
+                a.GetComponent<Bubble>().dTime = _time;
+                if (i == _random)
                 {
-                    array.Add(num0);
-                    array0.Add(a);
-                    a.transform.SetParent(eventPoint[num0].transform);
-                    a.transform.localPosition = Vector3.zero;
-                    a.GetComponent<Bubble>().dTime = _time;
-                    if (i == _random)
-                    {
-                        a.GetComponent<Bubble>().isKey = true;
-                        a.GetComponent<Bubble>().dTime = _timeKey;
-                    }
-                });
-            }
+                    a.GetComponent<Bubble>().isKey = true;
+                    a.GetComponent<Bubble>().dTime = _timeKey;
+                }
+            });
+
+       
+
         }
 
         isCreate = true;
