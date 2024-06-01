@@ -306,11 +306,9 @@ public class EventUI : MonoBehaviour
         tempAnimator = sprite.GetComponent<Animator>();
         StartCoroutine(FangKeAnimation());//将动画机清零
 
-        print("triggerName"+ triggerName.ToString());;
+
         if (triggerName == -1)
         {
-
-
             if (KeyCharacter != -1)
             {
 
@@ -326,7 +324,9 @@ public class EventUI : MonoBehaviour
         {
             GameMgr.instance.GetNextCreateChara(triggerName-1);
         }
-        //sprite.GetComponent<Animator>().SetBool(triggerName.ToString(),true);
+
+        print("triggerName" + triggerName.ToString()); ;
+        sprite.GetComponent<Animator>().SetBool(triggerName.ToString(),true);
         //sprite.SetNativeSize();
 
 
@@ -352,6 +352,7 @@ public class EventUI : MonoBehaviour
             yield return tempAnim;
         }
         tempAnimator.SetBool("0", false);
+        if(triggerName!=-1)
         tempAnimator.SetBool(triggerName.ToString(), true);
     }
     void Close_FangKe()

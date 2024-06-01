@@ -17,11 +17,14 @@ public class OneStageData
 {
     [Header("阶段类型")]
     public StageType type;
-    [Header("boss类型填写")]
+    [Header("【boss类型】")]
     public GameObject t_boss;//boss 的预制体
-    [Header("事件类型填写")]
+    [Header("【事件类型】")]
     public int t_eventCount;//boss 的预制体
     public bool t_eventKey;//boss 的预制体
+    public float t_eventtime;//boss 的预制体
+    public float t_eventtime_key;//boss 的预制体
+
     [Header("共通数据")]
     public float time;//持续时间
     public int level;
@@ -223,7 +226,9 @@ public class GameProcessSlider : MonoBehaviour
                 
                 countTime = true;
                 //创建Event事件
-                CreateEvent(time_stage.stagesData[stageCount].t_eventKey, time_stage.stagesData[stageCount].t_eventCount);
+                print("创建Event事件");
+                CreateEvent(time_stage.stagesData[stageCount].t_eventKey, time_stage.stagesData[stageCount].t_eventCount
+                    , time_stage.stagesData[stageCount].t_eventtime, time_stage.stagesData[stageCount].t_eventtime_key);
                 
                 stageCount++;
             }
@@ -470,13 +475,13 @@ public class GameProcessSlider : MonoBehaviour
         {
 
             totalTime = 0;
-            CreateEvent((eventCount % 3 == 0)?true:false, event_stage[eventCount].events);
+            CreateEvent((eventCount % 3 == 0)?true:false, event_stage[eventCount].events,eventTime,keyEventTime);
         }
 
     }
 
 
-    public void CreateEvent(bool isKey,int count)
+    public void CreateEvent(bool isKey,int count,float _time,float _timeKey)
  
     {
         array0.Clear();
@@ -491,6 +496,7 @@ public class GameProcessSlider : MonoBehaviour
         //生成事件气泡预制体
         for (int i = 0; i < count; i++)
         {
+            print("生成事件气泡预制体");
             int num0 = Random.Range(0, eventPoint.Length);
             int numx = ChooseEvent();
 
@@ -518,10 +524,11 @@ public class GameProcessSlider : MonoBehaviour
                     array0.Add(a);
                     a.transform.SetParent(eventPoint[num0].transform);
                     a.transform.localPosition = Vector3.zero;
+                    a.GetComponent<Bubble>().dTime = _time;
                     if (i == _random)
                     {
                         a.GetComponent<Bubble>().isKey = true;
-                        a.GetComponent<Bubble>().dTime = keyEventTime;
+                        a.GetComponent<Bubble>().dTime = _timeKey;
                     }
                 });
             }
