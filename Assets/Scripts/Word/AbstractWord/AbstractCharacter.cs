@@ -1053,10 +1053,11 @@ abstract public class AbstractCharacter : AbstractWord0
     /// <param name="i"></param>
     private void AttackAOnce()
     {
-            
-            //攻击
-       // myState.character.charaAnim.Play(AnimEnum.attack);
-       
+
+        //攻击
+        // myState.character.charaAnim.Play(AnimEnum.attack);
+
+        if (myState.aim ==null) return;
 
         for (int x = 0; x < myState.aim.Count; x++)
         {

@@ -496,10 +496,10 @@ public class GameProcessSlider : MonoBehaviour
         //生成事件气泡预制体
         for (int i = 0; i < count; i++)
         {
-            print("生成事件气泡预制体");
+          
             int num0 = Random.Range(0, eventPoint.Length);
             int numx = ChooseEvent();
-
+         
             if (i == _random)//是重要事件
             {
                 int loop = 0;
@@ -510,14 +510,16 @@ public class GameProcessSlider : MonoBehaviour
                     if (loop > 48) print("死循环");
                 }
             }
-
+            
             while (array.Contains(num0))//位置去重
             {
                 num0 = Random.Range(0, eventPoint.Length);
             }
             //实例化事件气泡
+           
             if (EventPoint.isEvent[num0])//避免纸球位置（未测试）
             {
+              
                 PoolMgr.GetInstance().GetObj(eventBubblePrefab[numx], (a) =>
                 {
                     array.Add(num0);
