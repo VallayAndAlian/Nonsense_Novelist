@@ -213,11 +213,11 @@ MonoBehaviour:
     name: "\u6000\u7591\u4E3B\u4E49"
     typeName: Boss_Huaiyizhuyi
     book: 7
-    maxhp: 150
-    atk: 19
-    def: 20
-    psy: 20
-    san: 27
+    maxhp: 434
+    atk: 55
+    def: 58
+    psy: 58
+    san: 78
     roleName: "\u601D\u6F6E"
     roleInfo: "\u524A\u5F31\u6240\u6709\u4EBA3\u610F\u5FD7\uFF0C\u7528\u4E8E\u5F3A\u5316\u81EA\u8EAB\u7684\u610F\u5FD7"
     bg: "\u65E0"
