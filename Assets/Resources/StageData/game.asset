@@ -15,7 +15,7 @@ MonoBehaviour:
   stagesData:
   - type: 2
     t_boss: {fileID: 0}
-    t_eventCount: 3
+    t_eventCount: 1
     t_eventKey: 0
     t_eventtime: 20
     t_eventtime_key: 20
@@ -37,7 +37,7 @@ MonoBehaviour:
     time_count: 40
   - type: 2
     t_boss: {fileID: 0}
-    t_eventCount: 1
+    t_eventCount: 2
     t_eventKey: 0
     t_eventtime: 20
     t_eventtime_key: 20

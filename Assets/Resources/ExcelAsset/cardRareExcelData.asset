@@ -15,59 +15,59 @@ MonoBehaviour:
   items:
   - id: 
     stage: 0
-    rate1: 100
-    rate2: 0
-    rate3: 0
-    rate4: 0
-    sum: 100
-  - id: 
-    stage: 1
-    rate1: 100
-    rate2: 0
-    rate3: 0
-    rate4: 0
-    sum: 100
-  - id: 
-    stage: 2
     rate1: 70
     rate2: 25
     rate3: 5
     rate4: 0
     sum: 100
   - id: 
-    stage: 3
+    stage: 1
     rate1: 50
     rate2: 35
     rate3: 15
     rate4: 0
     sum: 100
   - id: 
-    stage: 4
+    stage: 2
     rate1: 35
     rate2: 35
     rate3: 25
     rate4: 5
     sum: 100
   - id: 
-    stage: 5
+    stage: 3
     rate1: 25
     rate2: 35
     rate3: 30
     rate4: 10
     sum: 100
   - id: 
-    stage: 6
+    stage: 4
     rate1: 20
     rate2: 30
     rate3: 35
     rate4: 15
     sum: 100
   - id: 
-    stage: 7
+    stage: 5
     rate1: 15
     rate2: 20
     rate3: 40
     rate4: 25
+    sum: 100
+  - id: 
+    stage: 6
+    rate1: 10
+    rate2: 15
+    rate3: 37
+    rate4: 38
+    sum: 100
+  - id: 
+    stage: 7
+    rate1: 10
+    rate2: 15
+    rate3: 37
+    rate4: 38
     sum: 100
   - id: 
     stage: 8

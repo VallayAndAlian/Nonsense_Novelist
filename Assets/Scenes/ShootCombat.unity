@@ -10456,7 +10456,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772689353}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.62, y: -0.57, z: 0}
+  m_LocalPosition: {x: -3.97, y: -1.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22144,9 +22144,9 @@ MonoBehaviour:
   bullet: {fileID: 6359337495731723507, guid: 81e66e01c2d552f4ca2c50d4e93178b2, type: 3}
   afterShootTF: {fileID: 139772534}
   crtForce: 0
-  minForce: 10
-  maxForce: 120
-  forceSpeed: 120
+  minForce: 3
+  maxForce: 80
+  forceSpeed: 80
   forceAmount: 12
   aimSlider: {fileID: 540562076}
   information: {fileID: 5293158394419421231}
