@@ -17,7 +17,8 @@ public class LoadingScript : MonoBehaviour
     public void OnEnable()//非加载画面场景设置为不启用, 需跳转场景时再启用此脚本
     {
        a = SceneManager.LoadSceneAsync(LoadingSceneName);
-        if(loadingSlider != null)
+        PoolMgr.GetInstance().Clear();
+        if (loadingSlider != null)
        a.allowSceneActivation = false;
     }
     public void Update()

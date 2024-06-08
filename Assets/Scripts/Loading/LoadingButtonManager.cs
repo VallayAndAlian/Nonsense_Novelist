@@ -36,15 +36,18 @@ class LoadingButtonManager : MonoBehaviour
     public void BackToStartGame()
     {
         SceneManager.LoadSceneAsync(startGame);
+        PoolMgr.GetInstance().Clear();
      
     }
     public void NextToNewGame()
     {
         SceneManager.LoadSceneAsync(newGame);
+        PoolMgr.GetInstance().Clear();
     }
     public void BackToBookDesk()
     {
         SceneManager.LoadSceneAsync(bookDesk);
+        PoolMgr.GetInstance().Clear();
     }
     /// <summary>
     /// 启用加载场景脚本

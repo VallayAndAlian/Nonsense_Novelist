@@ -11,6 +11,7 @@ class LoadingTest : MonoBehaviour
     public void NextLayer()
     {        
         SceneManager.LoadSceneAsync(sceneName);
+        PoolMgr.GetInstance().Clear();
     }
     /// <summary>
     /// 新游戏界面的start按钮

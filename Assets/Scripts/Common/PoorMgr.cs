@@ -91,7 +91,7 @@ public class PoolMgr : BaseManager<PoolMgr>
     public void GetObj(GameObject obj, UnityAction<GameObject> callBack)
     {
         //有抽屉 并且抽屉里有东西
-        if (poolDic.ContainsKey(obj.name) && poolDic[obj.name].poolList.Count > 0)
+        if ((poolDic.ContainsKey(obj.name) && poolDic[obj.name].poolList.Count > 0)&&(poolObj!=null))
         {
             callBack(poolDic[obj.name].GetObj());
         }

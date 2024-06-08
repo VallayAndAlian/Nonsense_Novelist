@@ -107,9 +107,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     [HideInInspector] public CustomList happenEvent = new CustomList();
 
     //当前可以触发的所有事件
-    [HideInInspector] public List<test1ExcelItem> canHappenData_nKey;
-    [HideInInspector] public List<test1ExcelItem> canHappenData_Key;
-    [HideInInspector] public List<test1ExcelItem> leftData;
+    [HideInInspector] public List<eventExcelItem> canHappenData_nKey;
+    [HideInInspector] public List<eventExcelItem> canHappenData_Key;
+    [HideInInspector] public List<eventExcelItem> leftData;
 
     /// <summary>
     /// 读取excel表数据，加入所有没有前置条件的data
@@ -120,10 +120,10 @@ public class GameMgr : MonoSingleton<GameMgr>
         canHappenData_nKey.Clear();
         canHappenData_Key.Clear();
         leftData.Clear();
-    
+
         foreach (var _t in AllData.instance.data.items)
         {
-            if ((_t.textTrigger == null)|| (_t.textTrigger ==""))
+            if ((_t.textTrigger == null) || (_t.textTrigger == ""))
             {
                 if (!_t.isKey)
                 {

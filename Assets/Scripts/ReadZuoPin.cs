@@ -81,7 +81,7 @@ public class ReadZuoPin : MonoBehaviour
                 content.RemoveAt(parent.GetChild(i).GetComponent<DragDraftText>().index);
 
             }
-            PoolMgr.GetInstance().PushObj(parent.GetChild(i).name, parent.GetChild(i).gameObject);
+            PoolMgr.GetInstance().PushObj(sentenseObj.name, parent.GetChild(i).gameObject);
         }
         this.gameObject.SetActive(false);
 

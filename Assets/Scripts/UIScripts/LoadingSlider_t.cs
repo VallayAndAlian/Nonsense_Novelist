@@ -53,6 +53,7 @@ public class LoadingSlider_t : MonoBehaviour
     private IEnumerator ReallyLoadSceneAsyn(string name, UnityAction fun)
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(name);
+        PoolMgr.GetInstance().Clear();
         ao.allowSceneActivation = false;
         //可以得到场景加载的一个进度
         while ((!ao.isDone) && (!hasLeastTime))

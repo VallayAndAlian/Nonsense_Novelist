@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AllData :MonoSingleton<AllData>
 {
-    public test1ExcelData data;
+    public eventExcelData data;
     public MonsterExcelData monsterDate;/* AssetDatabase.LoadAssetAtPath<MonsterExcelData>(@"Assets/Resources/ExcelAsset/MonsterExcelData.asset");*/
     public cardRareExcelData cardRareDate;
     public CharaInfoExcelData charaInfo ;

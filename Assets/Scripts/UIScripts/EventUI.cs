@@ -21,7 +21,6 @@ public enum EventType
     ChangJing=5
 }
 
-
 public class EventUI : MonoBehaviour
 {
     [Header("这是哪一个界面的UI")]
@@ -31,14 +30,14 @@ public class EventUI : MonoBehaviour
     [HideInInspector]public Vector3 eventWorldPos = Vector3.one;
 
     //不重要数据
-    List<test1ExcelItem> needAllDate_nKey = new List<test1ExcelItem>();
-    List<test1ExcelItem> needNowDate_nKey = new List<test1ExcelItem>();
+    List<eventExcelItem> needAllDate_nKey = new List<eventExcelItem>();
+    List<eventExcelItem> needNowDate_nKey = new List<eventExcelItem>();
     //重要数据
-    List<test1ExcelItem> needAllDate_Key = new List<test1ExcelItem>();
-    List<test1ExcelItem> needNowDate_Key = new List<test1ExcelItem>();
+    List<eventExcelItem> needAllDate_Key = new List<eventExcelItem>();
+    List<eventExcelItem> needNowDate_Key = new List<eventExcelItem>();
     //函数中使用的数据
-    List<test1ExcelItem> tempAllDate = new List<test1ExcelItem>();
-    List<test1ExcelItem> tempNowDate = new List<test1ExcelItem>();
+    List<eventExcelItem> tempAllDate = new List<eventExcelItem>();
+    List<eventExcelItem> tempNowDate = new List<eventExcelItem>();
 
 
     [Header("牌库预制物(手动)")]
@@ -163,8 +162,8 @@ public class EventUI : MonoBehaviour
 
 
     //当前正在处理的nowEvent
-    private test1ExcelItem nowEvent;
-    private test1ExcelItem[] event_YW=new test1ExcelItem[3];
+    private eventExcelItem nowEvent;
+    private eventExcelItem[] event_YW=new eventExcelItem[3];
 
 
 
@@ -198,13 +197,14 @@ public class EventUI : MonoBehaviour
         Transform cardParent = this.transform.Find("CardGroup");
         TextMeshProUGUI[] text = cardParent.GetComponentsInChildren<TextMeshProUGUI>();
 
-        for (int i = 0; i < 6; i += 2)
+        for (int i = 0; i < 9; i += 3)
         {
-            var et = cardParent.GetChild(i / 2).GetComponent<EventTrigger>();
+            var et = cardParent.GetChild(i / 3).GetComponent<EventTrigger>();
             AddPointerEvent(et, EventTriggerType.PointerClick, (obj) => { Click_YW(et.gameObject); });
 
             //抽取满足条件的事件文本
             int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
+            print("最大：" + tempNowDate.Count);
             int loopCount = 0;
             while ((tempNowDate[_r].textTrigger != "") && (!GameMgr.instance.happenEvent.Contains(tempNowDate[_r].textTrigger)))
             {
@@ -218,7 +218,8 @@ public class EventUI : MonoBehaviour
             //切换UI文字内容
             text[i].text = tempNowDate[_r].name;
             text[i + 1].text = tempNowDate[_r].textEvent;
-            event_YW[i/2] = tempNowDate[_r];
+            text[i + 2].text = tempNowDate[_r].textEfc;
+            event_YW[i/3] = tempNowDate[_r];
 
             //刷新已用事件列表（不重复抽取）
             tempNowDate.Remove(tempNowDate[_r]);
@@ -883,7 +884,7 @@ public class EventUI : MonoBehaviour
     void Happen_WeiJi()
     {
         print("Happen_WeiJi");
-        
+        GameMgr.instance.gameProcess.CreateWeijiEvent(false,0);
 
     }
 
