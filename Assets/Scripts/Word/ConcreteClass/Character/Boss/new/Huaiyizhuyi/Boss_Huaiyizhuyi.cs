@@ -15,24 +15,7 @@ class Boss_Huaiyizhuyi : AbstractCharacter
 override public void Awake()
     {
         base.Awake();
-        characterID = 0;
-        wordName = "怀疑主义";
-        bookName = BookNameEnum.allBooks;
-        gender = GenderEnum.noGender;
-        Camp = CampEnum.stranger;
-        hp =maxHp  =100;
-        atk = 10;
-        def = 15;
-        psy = 10;
-        san = 15;
-        maxSkillsCount = 3;
-        trait =gameObject.AddComponent<Sentimental>();
-        roleName = "思潮";
-        attackInterval = 2.2f;
-         attackDistance = 200;
-        brief = "暂无";
-        description = "暂无";
-
+        
 
         situation = GameObject.Find("Circle4.5").GetComponentInChildren<Situation>();
         if (situation == null)

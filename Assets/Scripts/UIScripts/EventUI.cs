@@ -533,7 +533,7 @@ public class EventUI : MonoBehaviour
     {
         foreach (var _w in chooseBook.gameObject.GetComponentsInChildren<AbstractWord0>())
         {
-            GameMgr.instance.AddCardList(_w);
+            GameMgr.instance.AddCardList(_w.GetType());
         }
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
@@ -877,7 +877,7 @@ public class EventUI : MonoBehaviour
     void Happen_GetNexus6()
     {
         print("Happen_GetNexus6");
-        GameMgr.instance.AddCardList(new Nexus_6Arm());
+        GameMgr.instance.AddCardList(new Nexus_6Arm().GetType());
     }
 
     ///【意外】随机一队，跳过界面流程，进入危机对抗敌人的环节
@@ -922,9 +922,9 @@ public class EventUI : MonoBehaviour
     void Happen_GetBeiZhiRuMemory()
     {
         print("Happen_GetBeiZhiRuMemory");
-        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi());
-        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi());
-        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi());
+        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi().GetType());
+        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi().GetType());
+        GameMgr.instance.AddCardList(new BeiZhiRuDeJiYi().GetType());
     }
     #endregion
 

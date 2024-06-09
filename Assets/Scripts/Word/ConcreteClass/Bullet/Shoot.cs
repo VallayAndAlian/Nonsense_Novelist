@@ -176,9 +176,11 @@ public class Shoot : MonoBehaviour
         //    print("_v" + _v.wordName);
         //    GameMgr.instance.DeleteCardList(_v);
         //}
-        
+
         //清空待使用牌库第一个
+        GameMgr.instance.UseCard(GameMgr.instance.wordGoingUseList[0]);
         GameMgr.instance.wordGoingUseList.RemoveAt(0);
+
         print("ReadyWordBullet");
         GameMgr.instance.RefreshNowList();
 
@@ -333,7 +335,7 @@ public class Shoot : MonoBehaviour
     }
     void GetTree(int i) {
         if (GameMgr.instance.wordGoingUseList[i] == null)
-        {
+        {//可能原因：
             shootChild.GetChild(i).GetChild(3).GetComponentInChildren<UnityEngine.UI.Text>().text = "无";
             return;
         }

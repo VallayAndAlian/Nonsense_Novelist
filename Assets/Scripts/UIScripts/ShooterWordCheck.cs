@@ -82,7 +82,7 @@ public class ShooterWordCheck : MonoBehaviour
             chooseWord = null;
         }
     
-        textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
+        textCount.text = GameMgr.instance.GetGoingToUseList().Count.ToString()+"/"+GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
         //生成未用过的
         var list3 = GameMgr.instance.GetGoingToUseList().OrderBy(it => it.Name).ToList();
         foreach (var _word in list3)
@@ -234,7 +234,7 @@ public class ShooterWordCheck : MonoBehaviour
     {
         GetComponent<Animator>().Play("CardRes_Down");
         GameMgr.instance.DeleteCardList(chooseWord.GetComponent<AbstractWord0>());
-        GameMgr.instance.AddCardList(this.transform.parent.GetComponent<EventUI>().JY_chooseWord);
+        GameMgr.instance.AddCardList(this.transform.parent.GetComponent<EventUI>().JY_chooseWord.GetType());
         this.transform.parent.GetComponent<EventUI>().CloseAnim();
     }
 

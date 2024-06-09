@@ -1,13 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using TMPro;
-using System.Linq;
-
-using UnityEditor;
+using UnityEngine;
+using UnityEngine.UI;
 public class CustomList : List<string>
 {
     public new void Add(string item)
@@ -78,7 +74,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     //名词的消耗性使用相关
     [HideInInspector] public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();//目前的所有牌库中，名词和其使用次数。
     [HideInInspector] public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();//目前待使用的牌库中，名词和其使用次数。
-
+    [HideInInspector] public List<Type> outVerbs=new List<Type>();
     //骰子数量
     int diceNumber = 2;
     public void AddDice(int i)
@@ -250,19 +246,19 @@ public class GameMgr : MonoSingleton<GameMgr>
     void StartCardList()
     {
         ////测试
-        //AddCardList(new FuTouAxe());
-        //AddCardList(new WanShua());
-        //AddCardList(new XiaYuDe());
-        ////AddCardList(new WanShua());
+        //AddCardList(new XiaYuDe().GetType());
+        //AddCardList(new XiaYuDe().GetType());
+        //AddCardList(new XiaYuDe().GetType());
+        //AddCardList(new BuryFlower().GetType());
         //return;
-        //
+        ////
 
-        AddCardList(new FuTouAxe());
-        AddCardList(new QiGuaiShiXiang()); AddCardList(new HeartBroken());
-        AddCardList(new FengLi());
-        AddCardList(new QuicklyGrowing());
-        AddCardList(new LuoYingBinFen());
-        AddCardList(new JianRuPanShi());
+        AddCardList(new FuTouAxe().GetType());
+        AddCardList(new QiGuaiShiXiang().GetType()); AddCardList(new HeartBroken().GetType());
+        AddCardList(new FengLi().GetType());
+        AddCardList(new QuicklyGrowing().GetType());
+        AddCardList(new LuoYingBinFen().GetType());
+        AddCardList(new JianRuPanShi().GetType());
         RefreshNowList();
     }
 
@@ -301,35 +297,34 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// 往卡组里加入卡牌
     /// </summary>
     /// <param name="_word"></param>
-    public void AddCardList(AbstractWord0 _word)
+    public void AddCardList(Type _word)
     {
         
-        wordList.Add(_word.GetType());
-        wordNowList.Add(_word.GetType());
+        wordList.Add(_word);
+        wordNowList.Add(_word);
     
 
-        if (_word is AbstractItems)
+        if (_word.BaseType == typeof(AbstractItems))
         {
-
-            if (NwordTimes.ContainsKey((_word as AbstractItems).GetType()))
+            //如果输入的词语是名词，则往可用名词列表中加入词语与其次数
+            if (NwordTimes.ContainsKey(_word))
             {
-                NwordTimes[(_word as AbstractItems).GetType()].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
-                //print("[NwordTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
+                NwordTimes[_word].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
             else
             {
-                NwordTimes.Add((_word as AbstractItems).GetType(), new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
+                NwordTimes.Add(_word, new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
                 //print("[NwordTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
 
-            if (NwordCanUseTimes.ContainsKey((_word as AbstractItems).GetType()))
+            if (NwordCanUseTimes.ContainsKey(_word))
             {
-                NwordCanUseTimes[(_word as AbstractItems).GetType()].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
+                NwordCanUseTimes[_word].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
                 //print("[NwordCanUseTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
             else
             {
-                NwordCanUseTimes.Add((_word as AbstractItems).GetType(), new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
+                NwordCanUseTimes.Add(_word, new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
                 // print("[NwordCanUseTimes]AddNew:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
 
@@ -347,15 +342,28 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (wordList.Contains(_word.GetType()))
         {
             wordList.Remove(_word.GetType());
+            //随机删掉一张使用次数还有的词语
             if (_word is AbstractItems)
             {
                 if (NwordTimes.ContainsKey((_word as AbstractItems).GetType()))
                 {
-                    NwordTimes[(_word as AbstractItems).GetType()].RemoveAll(item => item == 0);
+                    //NwordTimes[(_word as AbstractItems).GetType()].Remove(0);
+                     NwordTimes[(_word as AbstractItems).GetType()].RemoveAll(item => item == 0);
+                    if (NwordTimes[(_word as AbstractItems).GetType()].Count <= 0)
+                    {
+                        NwordTimes.Remove((_word as AbstractItems).GetType());
+                        
+                    }
                 }
                 if (NwordCanUseTimes.ContainsKey((_word as AbstractItems).GetType()))
                 {
+                    //NwordCanUseTimes[(_word as AbstractItems).GetType()].Remove(0);
                     NwordCanUseTimes[(_word as AbstractItems).GetType()].RemoveAll(item => item == 0);
+                    if (NwordCanUseTimes[(_word as AbstractItems).GetType()].Count <= 0)
+                    {
+                        NwordCanUseTimes.Remove((_word as AbstractItems).GetType());
+                       
+                    }
                 }
             }
         }
@@ -373,8 +381,19 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
         else if (wordGoingUseList.Contains(_word.GetType()))
         {
-            wordGoingUseList.Remove(_word.GetType());
+            bool not = false;
+            int i = 0;
+            while ( (wordGoingUseList[i] != _word.GetType()) && (i < wordGoingUseList.Count))
+            {
+                i++;
+            }
+            if (wordGoingUseList[i] == _word.GetType())
+            {
+                wordGoingUseList[i]=GetNowListOne();
+            }
+            
         }
+        RefreshNowList();
     }
 
     public void DeleteCardList(Type _word)
@@ -390,12 +409,23 @@ public class GameMgr : MonoSingleton<GameMgr>
 
                 if (NwordTimes.ContainsKey(_word))
                 {
-
+                    //NwordTimes[_word].Remove(0);
                     NwordTimes[_word].RemoveAll(item => item == 0);
+                    if (NwordTimes[_word].Count <= 0)
+                    {
+                        NwordTimes.Remove(_word);
+                        
+                    }
                 }
                 if (NwordCanUseTimes.ContainsKey(_word))
                 {
+                    //NwordCanUseTimes[_word].Remove(0);
                     NwordCanUseTimes[_word].RemoveAll(item => item == 0);
+                    if (NwordCanUseTimes[_word].Count <= 0)
+                    {
+                        NwordCanUseTimes.Remove(_word);
+                      
+                    }
                 }
             }
         }
@@ -404,23 +434,75 @@ public class GameMgr : MonoSingleton<GameMgr>
         if (wordNowList.Contains(_word))
         {
             wordNowList.Remove(_word);
-            return;
+    
         }
         else if (wordHasUseList.Contains(_word))
         {
             wordHasUseList.Remove(_word);
-            return;
+       
         }
         else if (wordGoingUseList.Contains(_word))
         {
-            wordGoingUseList.Remove(_word);
+            int i = 0;
+            while ((wordGoingUseList[i] != _word.GetType())&&(i<wordGoingUseList.Count-1))
+            {
+                i++;
+                if (i >= wordGoingUseList.Count-1) break;
+            }
+            if (wordGoingUseList[i] == _word.GetType())
+            {
+                wordGoingUseList[i] = GetNowListOne();
+            }
         }
 
+        RefreshNowList();
+    }
 
+    public void UseCard(Type _word)
+    {
+        if (_word.BaseType == typeof(AbstractItems))
+        {
+
+            if (NwordCanUseTimes.ContainsKey(_word))
+            {
+
+                int _r = UnityEngine.Random.Range(0, NwordCanUseTimes[_word].Count);
+
+                print("times:" + NwordCanUseTimes[_word][_r]);
+                if (NwordCanUseTimes[_word][_r]>0)
+                    NwordCanUseTimes[_word][_r] -= 1;
+                if (NwordCanUseTimes[_word][_r] <= 0)
+                {
+                    DeleteCardList(_word);
+                    //NwordCanUseTimes[_word].Remove(_r);
+                    //if (NwordCanUseTimes[_word].Count <= 0)
+                    //{
+                    //    NwordCanUseTimes.Remove(_word);
+                    //    DeleteCardList(_word);
+                    //}
+                }
+                  
+                RefreshNowList();
+                
+            }
+            
+        }
+        if (_word.BaseType == typeof(AbstractVerbs))
+        {
+            DeleteCardList(_word);
+            outVerbs.Add(_word);
+        }
     }
 
 
-
+    public void DetectVerb(Type _word)
+    {
+        if (outVerbs.Contains(_word))
+        {
+            AddCardList(_word);
+            outVerbs.Remove(_word);
+        }
+    }
     /// <summary>
     /// 返回已经使用的词条们
     /// </summary>
@@ -541,20 +623,20 @@ public class GameMgr : MonoSingleton<GameMgr>
             wordNowList.AddRange(wordList);
             wordHasUseList.Clear();
 
-            //NwordCanUseTimes.Clear();
-            //foreach (var _card in NwordTimes)
-            //{
-            //    if (NwordCanUseTimes.ContainsKey(_card.Key))
-            //    {
-            //        NwordCanUseTimes[_card.Key].Clear();
-            //        NwordCanUseTimes[_card.Key].AddRange(_card.Value);
+            NwordCanUseTimes.Clear();
+            foreach (var _card in NwordTimes)
+            {
+                if (NwordCanUseTimes.ContainsKey(_card.Key))
+                {
+                    NwordCanUseTimes[_card.Key].Clear();
+                    NwordCanUseTimes[_card.Key].AddRange(_card.Value);
 
-            //    }
-            //    else
-            //    {
-            //        NwordCanUseTimes.Add(_card.Key, _card.Value);
-            //    }
-            //}
+                }
+                else
+                {
+                    NwordCanUseTimes.Add(_card.Key, _card.Value);
+                }
+            }
         }
     }
 

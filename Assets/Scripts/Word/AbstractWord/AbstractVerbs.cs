@@ -28,7 +28,8 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
     public float skillEffectsTime;
     /// <summary>是否正在使用该技能 </summary>
     public bool isUsing;
-    
+
+    public bool onChara = false;
     /// <summary>当前能量(每个技能有自己的能量值)</summary>
     private int cd;
     public int CD
@@ -57,10 +58,13 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
         character=this.GetComponent<AbstractCharacter>();
         if (character != null)
         {
-           
+            onChara = true;
             character.OnEnergyFull += CdAdd;
         }
-
+        if (this.gameObject.name=="word")
+        {
+            onChara = true;
+        }
         wordKind = WordKindEnum.verb;
 
         if (this.gameObject.layer == LayerMask.NameToLayer("WordCollision"))
@@ -135,6 +139,10 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
 
     virtual public void OnDestroy()
     {
+        if (onChara)
+        {
+            GameMgr.instance.DetectVerb(this.GetType());
+        }
         foreach (AbstractBuff buff in buffs)
         {
             Destroy(buff);
