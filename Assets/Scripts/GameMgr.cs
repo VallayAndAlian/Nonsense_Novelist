@@ -306,7 +306,8 @@ public class GameMgr : MonoSingleton<GameMgr>
         
         wordList.Add(_word.GetType());
         wordNowList.Add(_word.GetType());
-       
+    
+
         if (_word is AbstractItems)
         {
 
@@ -361,6 +362,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         if (wordNowList.Contains(_word.GetType()))
         {
+     
             wordNowList.Remove(_word.GetType());
             return;
         }
@@ -437,7 +439,11 @@ public class GameMgr : MonoSingleton<GameMgr>
         //wordNowList.OrderBy(it => it.Name).ToList();
         return wordNowList;
     }
-
+    public List<Type> GetGoingToUseList()
+    {
+        //wordNowList.OrderBy(it => it.Name).ToList();
+        return wordGoingUseList;
+    }
     /// <summary>
     /// 随机返回一个未使用的词条
     /// </summary>
@@ -446,30 +452,36 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         
         RefreshNowList();
+
+        if (wordNowList.Count == 0)
+        {
+            return null;
+        }
+
         int count = UnityEngine.Random.Range(0, wordNowList.Count);
         
+      
         // print("卡组里没有卡牌+" + count);
         var _res = wordNowList[count];
-        //wordNowList.Remove(_res);
+        wordNowList.Remove(_res);
+      
         //wordHasUseList.Add(_res);
-        wordGoingUseList.Add(_res);
-     
 
-        if (_res.BaseType == typeof(AbstractItems))
-        {
-            if (!NwordCanUseTimes.ContainsKey(_res))
-            {
-                print("!GameMgr.instance.NwordCanUseTimes.ContainsKey(this)");
-            }
-            int _random = UnityEngine.Random.Range(0, NwordCanUseTimes[_res].Count);
-            NwordCanUseTimes[_res][_random] -= 1;
+        //if (_res.BaseType == typeof(AbstractItems))
+        //{
+        //    if (!NwordCanUseTimes.ContainsKey(_res))
+        //    {
+        //        print("!GameMgr.instance.NwordCanUseTimes.ContainsKey(this)");
+        //    }
+        //    int _random = UnityEngine.Random.Range(0, NwordCanUseTimes[_res].Count);
+        //    NwordCanUseTimes[_res][_random] -= 1;
 
-            if (NwordCanUseTimes[_res][_random] <= 0)
-            {
-                DeleteCardList(_res);
-            }
+        //    if (NwordCanUseTimes[_res][_random] <= 0)
+        //    {
+        //        DeleteCardList(_res);
+        //    }
 
-        }
+        //}
         return _res;
     }
 
@@ -481,10 +493,14 @@ public class GameMgr : MonoSingleton<GameMgr>
         //全部解锁前，只有3个槽位
         for (int i = 0; i < 3; i++)
         {
-            GetNowListOne();//待使用词库有5个词
+           
+            wordGoingUseList.Add(GetNowListOne());
+         
+
         }
-        wordHasUseList.Add(wordGoingUseList[0]);
-        wordNowList.Remove(wordGoingUseList[0]);
+        CreateOneCharacter.firstUseCardlist = false ;
+        //wordHasUseList.Add(wordGoingUseList[0]);
+
         //print(wordGoingUseList[0].)
         //if (wordGoingUseList[0].IsAssignableFrom(typeof(AbstractVerbs)))
         //{
@@ -495,10 +511,10 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
     public Type GetGoingUseListOne()
     {
-       // RefreshNowList();
-        GetNowListOne();
-        wordHasUseList.Add(wordGoingUseList[0]);
-        wordNowList.Remove(wordGoingUseList[0]);
+        // RefreshNowList();
+        wordGoingUseList.Add(GetNowListOne());
+        //wordHasUseList.Add(wordGoingUseList[0]);
+
         return wordGoingUseList[0];
     }
     public List<Type> GetAllList()
@@ -506,8 +522,43 @@ public class GameMgr : MonoSingleton<GameMgr>
         return wordList;
     }
 
+    /// <summary>
+    /// 刷新现有卡牌列表
+    /// </summary>
+    public void RefreshNowList()
+    {
+        wordHasUseList.Clear();
+        foreach (var _c in wordList)
+        {
+            if ((!wordNowList.Contains(_c)) && (!wordGoingUseList.Contains(_c)))
+            {
+                wordHasUseList.Add(_c);
+            }
+        }
+        if ((wordNowList.Count == 0) )
+        {
+            
+            wordNowList.AddRange(wordList);
+            wordHasUseList.Clear();
 
+            //NwordCanUseTimes.Clear();
+            //foreach (var _card in NwordTimes)
+            //{
+            //    if (NwordCanUseTimes.ContainsKey(_card.Key))
+            //    {
+            //        NwordCanUseTimes[_card.Key].Clear();
+            //        NwordCanUseTimes[_card.Key].AddRange(_card.Value);
 
+            //    }
+            //    else
+            //    {
+            //        NwordCanUseTimes.Add(_card.Key, _card.Value);
+            //    }
+            //}
+        }
+    }
+
+    #region 书本
     //获取已有的书本列表
     public List<BookNameEnum> GetBookList()
     {
@@ -626,35 +677,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         return _typeList[_R];
     }
 
-
-    /// <summary>
-    /// 刷新现有卡牌列表
-    /// </summary>
-    public void RefreshNowList()
-    {
-       
-        if (wordNowList.Count == 0)
-        {
-          
-            wordNowList.AddRange(wordList);
-            wordHasUseList.Clear();
-
-            NwordCanUseTimes.Clear();
-            foreach (var _card in NwordTimes)
-            {
-                if (NwordCanUseTimes.ContainsKey(_card.Key))
-                {
-                    NwordCanUseTimes[_card.Key].Clear();
-                    NwordCanUseTimes[_card.Key].AddRange(_card.Value);
-
-                }
-                else
-                {
-                    NwordCanUseTimes.Add(_card.Key, _card.Value);
-                }
-            }
-        }
-    }
+    #endregion
 
 
 

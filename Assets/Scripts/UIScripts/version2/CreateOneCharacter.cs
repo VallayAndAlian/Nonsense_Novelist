@@ -38,7 +38,7 @@ public class CreateOneCharacter : MonoBehaviour
     
     [Header("比如第一个角色的序号是1，这个数值就为1")]
     public int IDAmount = 1;
-    public static bool isStart = false;
+    public static bool firstUseCardlist = true;
 
     private void Start()
     {
@@ -209,7 +209,7 @@ public class CreateOneCharacter : MonoBehaviour
         //装载一个shooter
         if (SceneManager.GetActiveScene().name == "ShootCombat") {
             GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
-            isStart = true;
+        
             GameObject a = GameObject.Find("CombatCanvas");
             //加载图片等美术给资源
             //print(GameMgr.instance.wordGoingUseList[0]);

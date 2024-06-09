@@ -24,7 +24,8 @@ public class ShooterWordCheck : MonoBehaviour
     public GameObject word_adj;
     public GameObject word_verb;
     public GameObject word_item;
-    public Color color;
+    public Color color_hasUse;
+    public Color color_GoingToUse;
     public bool jiaoYi = false;
 
 
@@ -83,6 +84,29 @@ public class ShooterWordCheck : MonoBehaviour
     
         textCount.text = GameMgr.instance.GetNowList().Count.ToString()+"/" + GameMgr.instance.GetAllList().Count.ToString();
         //生成未用过的
+        var list3 = GameMgr.instance.GetGoingToUseList().OrderBy(it => it.Name).ToList();
+        foreach (var _word in list3)
+        {
+
+            PoolMgr.GetInstance().GetObj(word_item, (obj) =>
+            {
+                var word = obj.AddComponent(_word) as AbstractWord0;
+                obj.GetComponent<Image>().color = color_GoingToUse;
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
+                obj.transform.parent = wordsArea;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponentInChildren<Image>().SetNativeSize();
+                if (obj.TryGetComponent<SeeWordDetail>(out var _s))
+                    _s.SetPic(word);
+                if (jiaoYi)
+                {
+                    obj.GetComponent<Button>().interactable = false;
+                    var et = obj.AddComponent<EventTrigger>();
+                    AddPointerEvent(et, EventTriggerType.PointerClick, (obj) => { ClickThis(et.gameObject); });
+
+                }
+            });
+        }
         var list= GameMgr.instance.GetNowList().OrderBy(it => it.Name).ToList();
         foreach (var _word in list)
         { 
@@ -122,7 +146,7 @@ public class ShooterWordCheck : MonoBehaviour
             PoolMgr.GetInstance().GetObj(word_item, (obj) =>
             {
                 var word = obj.AddComponent(_word) as AbstractWord0;
-                obj.GetComponent<Image>().color = color;
+                obj.GetComponent<Image>().color = color_hasUse;
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = word.wordName;
                 obj.transform.parent = wordsArea;
                 obj.transform.localScale = Vector3.one;
@@ -138,8 +162,8 @@ public class ShooterWordCheck : MonoBehaviour
                 }
             });
         }
-
        
+
     }
 
     void CloseMainPanal()
