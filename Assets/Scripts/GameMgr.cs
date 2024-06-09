@@ -76,8 +76,8 @@ public class GameMgr : MonoSingleton<GameMgr>
     List<Type> wordHasUseList = new List<Type>();
 
     //名词的消耗性使用相关
-    [HideInInspector] public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();
-    [HideInInspector] public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();
+    [HideInInspector] public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();//目前的所有牌库中，名词和其使用次数。
+    [HideInInspector] public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();//目前待使用的牌库中，名词和其使用次数。
 
     //骰子数量
     int diceNumber = 2;
