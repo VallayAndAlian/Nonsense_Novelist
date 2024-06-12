@@ -712,8 +712,10 @@ public class EventUI : MonoBehaviour
     #region 危机
     [HideInInspector] public bool WJ_static = false;//外部在open之前调用
     [HideInInspector] public int WJ_monster = -1;//外部在open之前调用
+    private GameObject monster;
     public void OpenInit_WeiJi()
     {
+        monster = null;
         DataInit(isKey);
         int _r = UnityEngine.Random.Range(0, tempNowDate.Count);
         int loopCount = 0;
@@ -745,13 +747,13 @@ public class EventUI : MonoBehaviour
         if (WJ_monster >= 0)
         {
             GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster(WJ_monster);
-            GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+            monster=GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1)[0];
             //audioPlay.Boss_GuaiWu();
         }
         else
         {
             WJ_monster= GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster();
-            GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
+            monster=GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1)[0];
             //audioPlay.Boss_GuaiWu();
         }
         _spAnim.Play(WJ_monster.ToString());
@@ -767,17 +769,20 @@ public class EventUI : MonoBehaviour
 
     }
 
-    public void Click_WeiJi()
+
+    public void Click_WeiJi()//点击逃离危机
     {
         print("Click_WeiJi");
-
-          //随机抽取一个怪物，并显示对应动画
-        //GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1);
-        CloseAnim();
+        if (monster != null)
+            Destroy(monster);
+        Destroy(this.gameObject);
+    
     }
 
-    public void Close_WeiJi()
+    public void Close_WeiJi()//点击迎接危机
     {
+ 
+        GameMgr.instance.gameProcess.WeiJiOpen();
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);

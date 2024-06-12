@@ -102,6 +102,11 @@ public class GameProcessSlider : MonoBehaviour
     [Header("³¡¾°")] public int changJing = 10;
 
     bool hasWeiji = false;
+    public void WeiJiOpen()
+    {
+        StartCoroutine(Wait_Weiji());
+        countTime = false;
+    }
     private void Start()
     {
         audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();

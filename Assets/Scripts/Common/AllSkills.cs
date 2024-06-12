@@ -295,7 +295,7 @@ public static class AllSkills
         //通用添加名词词条
         commonList_noun.AddRange(new Type[] { typeof(FuTouAxe),typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui)});
 
-        commonList_chara.AddRange(new Type[] { typeof(Rat),typeof(PianJian),typeof(JingCha) });
+        commonList_chara.AddRange(new Type[] { typeof(Rat)/*,typeof(PianJian),typeof(JingCha)*/ });
         //通用全部词条
         commonList_all.AddRange(commonList_verb);
         commonList_all.AddRange(commonList_adj);

@@ -478,8 +478,9 @@ public class CreateOneCharacter : MonoBehaviour
     }
     int monsterNext = -1;
 
-    public void CreateMonster(int count)
+    public List<GameObject> CreateMonster(int count)
     {
+        List<GameObject> _return = new List<GameObject>();
         for (int j = 0; j < count; j++)//抽取不同数量的monster，每个monster都随机抽选，种类不同
         {
             int number = 0;
@@ -525,16 +526,16 @@ public class CreateOneCharacter : MonoBehaviour
                 }
 
                 CharacterManager.instance.RefreshStanger();
-
+                _return.Add(chara);
             }
             else
-            {
-                return;
-                print("生成怪物失败");
+            {print("生成怪物失败");
+                return null;
+                
             }
             
         }
-       
+        return _return;
     }
 
     

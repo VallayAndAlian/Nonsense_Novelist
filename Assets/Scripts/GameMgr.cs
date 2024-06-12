@@ -245,20 +245,25 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// </summary>
     void StartCardList()
     {
-        ////测试
-        //AddCardList(new XiaYuDe().GetType());
-        //AddCardList(new XiaYuDe().GetType());
-        //AddCardList(new XiaYuDe().GetType());
-        //AddCardList(new BuryFlower().GetType());
-        //return;
+        //测试
+        AddCardList(new HuYanShi().GetType());
+        AddCardList(new HuYanShi().GetType());
+        AddCardList(new HuYanShi().GetType());
+        AddCardList(new HuYanShi().GetType());
+        AddCardList(new HuYanShi().GetType());
+        AddCardList(new HuYanShi().GetType());
+
+        return;
         ////
 
         AddCardList(new FuTouAxe().GetType());
-        AddCardList(new QiGuaiShiXiang().GetType()); AddCardList(new HeartBroken().GetType());
+        AddCardList(new QiGuaiShiXiang().GetType()); 
+        AddCardList(new HeartBroken().GetType());
         AddCardList(new FengLi().GetType());
         AddCardList(new QuicklyGrowing().GetType());
         AddCardList(new LuoYingBinFen().GetType());
         AddCardList(new JianRuPanShi().GetType());
+  
         RefreshNowList();
     }
 
@@ -309,22 +314,22 @@ public class GameMgr : MonoSingleton<GameMgr>
             //如果输入的词语是名词，则往可用名词列表中加入词语与其次数
             if (NwordTimes.ContainsKey(_word))
             {
-                NwordTimes[_word].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
+                NwordTimes[_word].Add((int)_word.GetField("s_useTimes").GetValue(null));
             }
             else
             {
-                NwordTimes.Add(_word, new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
+                NwordTimes.Add(_word, new List<int> { (int)_word.GetField("s_useTimes").GetValue(null) });
                 //print("[NwordTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
 
             if (NwordCanUseTimes.ContainsKey(_word))
             {
-                NwordCanUseTimes[_word].Add((int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
+                NwordCanUseTimes[_word].Add((int)_word.GetField("s_useTimes").GetValue(null));
                 //print("[NwordCanUseTimes]Add:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
             else
             {
-                NwordCanUseTimes.Add(_word, new List<int> { (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null) });
+                NwordCanUseTimes.Add(_word, new List<int> { (int)_word.GetField("s_useTimes").GetValue(null) });
                 // print("[NwordCanUseTimes]AddNew:" + (_word as AbstractItems).wordName + (int)Type.GetType(_word.GetType().Name).GetField("s_useTimes").GetValue(null));
             }
 
