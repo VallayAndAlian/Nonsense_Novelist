@@ -77,6 +77,7 @@ public class StudyMouseOn : MonoBehaviour
                     //     ls.sceneName = "ShootCombat";
                     // }
                     // ls.EnterNextScene();
+                    PoolMgr.GetInstance().Clear();
                     SceneManager.LoadScene("ShootCombat");
                     audioSource.Play();
                 }
@@ -89,6 +90,7 @@ public class StudyMouseOn : MonoBehaviour
                         ls.sceneName = "BookShelf";
                     }
                     ls.EnterNextScene();*/
+                    PoolMgr.GetInstance().Clear();
                     SceneManager.LoadScene("BookShelf");
                     audioSource.Play();
                 }

@@ -191,18 +191,15 @@ public class GameMgr : MonoSingleton<GameMgr>
     [HideInInspector] public float time2=0;
     [HideInInspector] public float timeSpeed = 1;
 
-    private void Awake()
+    override public void Awake()
     {
+        base.Awake();
         DealWithData();
         CardRes.SetActive(false);
         draftUi.InitContent();
         EventCGAnim.gameObject.SetActive(false);
-    
+        print("Awake");
 
-    }
-
-    private void Start()
-    {
         //界面设置
         OpenCharacterPutting();
 
@@ -210,8 +207,25 @@ public class GameMgr : MonoSingleton<GameMgr>
         exitPanel = Resources.Load<GameObject>("UI/exitPanel");
         //DontDestroyOnLoad(this.gameObject);
 
-        //牌库
+       // 牌库
         InitCardList();
+        Time.timeScale = 1;
+        CharacterManager.instance.pause = false;
+    }
+
+    private void Start()
+    {
+        ////print("Start");
+        ////InitCardList();
+        //////界面设置
+        ////OpenCharacterPutting();
+
+        ////退出菜单
+        ////exitPanel = Resources.Load<GameObject>("UI/exitPanel");
+        ////DontDestroyOnLoad(this.gameObject);
+
+        ////牌库
+        ////InitCardList();
     }
     private void Update()
     {
@@ -295,6 +309,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         //加入通用词组
         StartCardList();
+        print("牌库初始化完成" + wordList.Count + wordGoingUseList.Count);
     }
 
 
@@ -579,6 +594,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public Type GetGoingUseList()
     {
+
        // RefreshNowList();
         //全部解锁前，只有3个槽位
         for (int i = 0; i < 3; i++)

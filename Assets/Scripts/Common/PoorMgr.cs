@@ -43,10 +43,13 @@ public class PoolData
     public GameObject GetObj()
     {
         GameObject obj = null;
+        if (poolList.Count == 0) Debug.Log("poolList==null");
+        if (poolList[0] == null) Debug.Log("poolList[0]==null");
         //取出第一个
         obj = poolList[0];
         poolList.RemoveAt(0);
         //激活 让其显示
+        if (obj == null) Debug.Log("obj==null");
         obj.SetActive(true);
         //断开了父子关系
         obj.transform.parent = null;
@@ -110,6 +113,7 @@ public class PoolMgr : BaseManager<PoolMgr>
     /// </summary>
     public void PushObj(string name, GameObject obj)
     {
+        if (obj == null) return;
         if (poolObj == null)
             poolObj = new GameObject("Pool");
 

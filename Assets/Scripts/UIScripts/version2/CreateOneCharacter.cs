@@ -42,6 +42,7 @@ public class CreateOneCharacter : MonoBehaviour
 
     private void Start()
     {
+        firstUseCardlist = true;
         CharacterManager.instance.pause = true;
         Camera.main.GetComponent<CameraController>().SetCameraSize(4);
         Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);

@@ -144,6 +144,11 @@ public class Shoot : MonoBehaviour
         }
         else//开始时抽3个
         {
+            if (GameMgr.instance == null) print("null!!!");
+            if (wcs == null) wcs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>();
+            if (wcs.absWord == null) print("null3333");
+            if (bulletInstance == null) print("null3asdadasd");
+            if (GameMgr.instance.GetGoingUseList() == null) print("null3a555555d");
             //给小球增加词条属性【测试】
             abs = wcs.absWord =
                 bulletInstance.AddComponent(GameMgr.instance.GetGoingUseList()) as AbstractWord0;

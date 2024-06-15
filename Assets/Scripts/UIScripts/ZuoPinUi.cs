@@ -134,7 +134,7 @@ public class ZuoPinUi : MonoBehaviour
     public void ClickBookIcon(GameObject obj)
     {
 
-        print("ClickBookIcon");
+      
         //删除【新】标签
         if (obj.transform.Find("new")!=null)
         {
@@ -143,7 +143,7 @@ public class ZuoPinUi : MonoBehaviour
         //如果已选中，取消选中
         if (obj.GetComponentInChildren<Button>()!=null)
         {
-            print("如果已选中");
+          
             bookChosen.parent=this.transform;
             bookChosen.localScale = Vector3.zero;
             return;
