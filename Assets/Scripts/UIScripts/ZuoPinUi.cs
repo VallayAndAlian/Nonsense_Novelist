@@ -58,6 +58,7 @@ public class ZuoPinUi : MonoBehaviour
 
             var _temp = RecordMgr.instance.LoadByJson(_files[_i].FullName);
             if (bookIconPrefabs == null) print("bookIconPrefabs==null");
+            if (PoolMgr.GetInstance() == null) print("PoolMgr==null");
             PoolMgr.GetInstance().GetObj(bookIconPrefabs, (obj) =>
             {
                 obj.transform.parent = bookIconParent;
