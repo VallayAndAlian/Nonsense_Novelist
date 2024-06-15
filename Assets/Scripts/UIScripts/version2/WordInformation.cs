@@ -49,7 +49,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     private bool isDetail = false;
 
     private bool isCombatScene = false;
-
+    private AbstractWord0 abs;
 
 
     private void Start()
@@ -265,6 +265,10 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
         {
             PoolMgr.GetInstance().PushObj(detailInfoPrefab.name, s.gameObject);
         }
+    }
+    public void ClickClose()
+    {
+        Destroy(this.gameObject);
     }
 
 }

@@ -94,6 +94,7 @@ public class CharacterDetail : MonoBehaviour
     public void ClickClose()
     {
         Destroy(this.gameObject);
+        BookShelfInf.isfirst = true;
     }
     #endregion
 }
