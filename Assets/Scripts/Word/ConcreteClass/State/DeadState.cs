@@ -52,24 +52,24 @@ namespace AI
             //  }
            
 
-            //临时的死亡效果
-            SpriteRenderer sp;
-            if (this.TryGetComponent<SpriteRenderer>(out sp))
-            {
-                sp.color = Color.black;
-            }
-            
-            //var _sa = this.transform.parent.GetComponent<ServantAbstract>();
-            ////如果是随从，额外手续
-            //if (_sa != null)
+            ////临时的死亡效果
+            //SpriteRenderer sp;
+            //if (this.TryGetComponent<SpriteRenderer>(out sp))
             //{
-            //    _sa.masterNow.DeleteServant(_sa.gameObject);
+            //    sp.color = Color.black;
             //}
+
+            var _sa = this.transform.parent.GetComponent<ServantAbstract>();
+            //如果是随从，额外手续
+            if (_sa != null)
+            {
+                _sa.masterNow.DeleteServant(_sa.gameObject);
+            }
             //临时去掉了这个if
             //if (myState.character.charaAnim.IsEnd(AnimEnum.dead))
             //{ 
-            //    //播放完动画后销毁
-            //    Destroy(this.transform.parent.gameObject);
+            //播放完动画后销毁
+            Destroy(this.transform.parent.gameObject);
             //}
         }
 
