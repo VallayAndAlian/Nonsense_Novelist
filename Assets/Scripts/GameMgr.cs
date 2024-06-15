@@ -77,6 +77,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     [HideInInspector] public List<Type> outVerbs=new List<Type>();
     //骰子数量
     int diceNumber = 2;
+
+    [Header("（策划）伤害参数")]
+    public float attackAmount=5;
     public void AddDice(int i)
     {
         diceNumber += i;

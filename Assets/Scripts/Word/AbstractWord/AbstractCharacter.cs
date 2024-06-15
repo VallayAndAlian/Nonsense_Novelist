@@ -205,13 +205,13 @@ abstract public class AbstractCharacter : AbstractWord0
             case AttackType.atk: //物理
                 {
                    
-                    value = ((_value * 5) / (def + 5))*_whoDid.attackAmount;
+                    value = ((_value * GameMgr.instance.attackAmount) / (def + GameMgr.instance.attackAmount))*_whoDid.attackAmount;
                     
                 }
                 break;
             case AttackType.psy: //精神
                 {
-                    value = ((_value * 5) / (san + 5))*_whoDid.attackAmount;
+                    value = ((_value * GameMgr.instance.attackAmount) / (san + GameMgr.instance.attackAmount))*_whoDid.attackAmount;
                 } break;
             case AttackType.dir: //真实
                 {
