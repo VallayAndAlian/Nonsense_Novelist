@@ -16,23 +16,7 @@ public class CS_MG42gun : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 4;
-        wordName = "MG-42机枪";
-        bookName = BookNameEnum.allBooks;
-        //gender = GenderEnum.boy;
-
-        hp = maxHp = 40;
-        atk = 5;
-        def = 00;
-        psy = 0;
-        san = 0;
-
-        //mainProperty.Add("防御", "肉T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "弹链";
-
-        brief = "攻速更快，需要换弹";
-        description = "攻速更快，需要换弹";
+      
 
         //攻击间隔为1s，每进行8次攻击，停止攻击5s
         attackInterval = 1f;

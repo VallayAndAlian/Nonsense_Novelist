@@ -17,22 +17,7 @@ public class CS_Bing : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 8;
-        wordName = "饼";
-        bookName = BookNameEnum.allBooks;
-
-        hp = maxHp = 40;
-        atk = 5;
-        def = 20;
-        psy = 5;
-        san = 20;
-
-        //mainProperty.Add("防御", "肉T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "美味在其中";
-
-        brief = "死亡时，宿主获得高级名词";
-        description = "死亡时，宿主获得高级名词";
+        
 
 
      

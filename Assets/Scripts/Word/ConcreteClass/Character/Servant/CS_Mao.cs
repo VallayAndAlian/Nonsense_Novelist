@@ -17,23 +17,7 @@ public class CS_Mao : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 6;
-        wordName = "√®";
-        bookName = BookNameEnum.EgyptMyth;
-
-        hp = maxHp = 40;
-        atk = 5;
-        def = 10;
-        psy = 5;
-        san = 10;
-
-        //mainProperty.Add("∑¿”˘", "»‚T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "Œﬁ";
-
-        brief = "Œﬁ";
-        description = "Œﬁ";
-
+       
 
      
     }

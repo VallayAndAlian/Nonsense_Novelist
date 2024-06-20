@@ -11,6 +11,7 @@ public class ServantAbstract : AbstractCharacter
     override public void Awake()
     {
        base.Awake();
+
     }
 
 

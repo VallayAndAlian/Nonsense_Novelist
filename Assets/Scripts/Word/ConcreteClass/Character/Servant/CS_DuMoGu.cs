@@ -17,23 +17,7 @@ public class CS_DuMoGu : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 7;
-        wordName = "毒蘑菇";
-        bookName = BookNameEnum.FluStudy;
-
-        hp = maxHp = 40;
-        atk = 5;
-        def = 5;
-        psy = 10;
-        san = 10;
-
-        //mainProperty.Add("防御", "肉T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "不可食用";
-
-        brief = "对攻击者造成1*<sprite name=\"psy\">的魔法伤害，3s“中毒”";
-        description = "对攻击者造成1*<sprite name=\"psy\">的魔法伤害，3s“中毒”";
-
+       
         this.event_BeAttack += DoToAttacker;
 
 

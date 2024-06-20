@@ -17,23 +17,7 @@ public class CS_HunYangLong : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 5;
-        wordName = "混养笼";
-        bookName = BookNameEnum.ZooManual;
-
-
-        hp = maxHp = 1340.25f;
-        atk = 0;
-        def = 0;
-        psy = 0;
-        san = 0;
-
-        //mainProperty.Add("防御", "肉T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "丰容";
-
-        brief = "暂无介绍文本";
-        description = "暂无介绍文本";
+        
 
     }
 

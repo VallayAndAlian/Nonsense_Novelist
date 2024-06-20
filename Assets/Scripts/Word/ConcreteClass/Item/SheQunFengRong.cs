@@ -51,7 +51,11 @@ class SheQunFengRong : AbstractItems
         { 
             print("chara=null");return;
         }
-
+        if (chara.servants.Count <= 3)
+        {
+            chara.AddRandomServant();
+            return;
+        }
 
         servantsNow.Clear();
         foreach (var _s in chara.servants)

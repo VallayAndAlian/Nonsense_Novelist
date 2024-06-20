@@ -11,24 +11,7 @@ public class CS_BenJieShiDui : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 2;
-        wordName = "本杰士堆";
-        bookName = BookNameEnum.ZooManual;
-
-        hp = maxHp = 80;
-        atk = 0;
-        def = 20;
-        psy = 10;
-        san = 10;
-
-        //mainProperty.Add("防御", "肉T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "庇护所";
-
-        brief = "普通攻击治疗队友";
-        description = "普通攻击治疗队友";
-
-
+        
         Destroy(attackA);
         attackA = gameObject.AddComponent<CureMode>();
     }

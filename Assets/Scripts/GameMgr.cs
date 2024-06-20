@@ -263,14 +263,14 @@ public class GameMgr : MonoSingleton<GameMgr>
     void StartCardList()
     {
         //≤‚ ‘
-        //AddCardList(new HuYanShi().GetType());
-        //AddCardList(new HuYanShi().GetType());
-        //AddCardList(new HuYanShi().GetType());
-        //AddCardList(new HuYanShi().GetType());
-        //AddCardList(new HuYanShi().GetType());
-        //AddCardList(new HuYanShi().GetType());
+        AddCardList(new SheQunFengRong().GetType());
+        AddCardList(new WanShua().GetType());
+        AddCardList(new WanShua().GetType());
+        AddCardList(new SheQunFengRong().GetType());
+        AddCardList(new HuYanShi().GetType());
+        AddCardList(new HuYanShi().GetType());
 
-        //return;
+        return;
         ////
 
         AddCardList(new FuTouAxe().GetType());

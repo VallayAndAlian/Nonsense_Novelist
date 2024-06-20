@@ -282,7 +282,7 @@ public class GameProcessSlider : MonoBehaviour
         {
             array0.Add(a);
             a.transform.SetParent(eventPoint[0].transform);
-            a.transform.localPosition = Vector3.zero;
+            a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false, monster);
           
@@ -295,7 +295,7 @@ public class GameProcessSlider : MonoBehaviour
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[1], (a) =>
         {
             a.transform.SetParent(eventPoint[0].transform);
-            a.transform.localPosition = Vector3.zero;
+            a.transform.localPosition = Vector3.one*1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.FangKe, false, chara );
 
@@ -307,7 +307,7 @@ public class GameProcessSlider : MonoBehaviour
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[0], (a) =>
         {
             a.transform.SetParent(eventPoint[0].transform);
-            a.transform.localPosition = Vector3.zero;
+            a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.XiWang, false, 1);
 
@@ -329,7 +329,7 @@ public class GameProcessSlider : MonoBehaviour
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[4], (a) =>
         {
             a.transform.SetParent(eventPoint[0].transform);
-            a.transform.localPosition = Vector3.zero;
+            a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.JiaoYi, false, 1);
 
@@ -341,7 +341,7 @@ public class GameProcessSlider : MonoBehaviour
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[5], (a) =>
         {
             a.transform.SetParent(eventPoint[0].transform);
-            a.transform.localPosition = Vector3.zero;
+            a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.ChangJing, false, 1);
 
@@ -353,7 +353,7 @@ public class GameProcessSlider : MonoBehaviour
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[2], (a) =>
         {
             a.transform.SetParent(eventPoint[0].transform);
-            a.transform.localPosition = Vector3.zero;
+            a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.YiWai, false, 1);
 

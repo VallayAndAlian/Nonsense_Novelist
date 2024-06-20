@@ -9,24 +9,7 @@ public class CS_GongYi : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 1;
-        wordName = "工蚁";
-        bookName = BookNameEnum.PHXTwist;
-
-
-        hp = maxHp = 30;
-        atk = 3;
-        def = 10;
-        psy = 0;
-        san = 10;
-
-        //mainProperty.Add("防御", "肉T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "蚁群";
-
-        brief = "己方的工蚁越多越强大";
-        description = "己方的工蚁越多越强大";
-
+       
 
         
     }

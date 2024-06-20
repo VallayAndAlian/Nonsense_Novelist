@@ -788,6 +788,7 @@ abstract public class AbstractCharacter : AbstractWord0
         var _sa = _servant.GetComponent<ServantAbstract>();
         //将随从的主人设置成这个
         _sa.masterNow = this;
+        _sa.Camp = this.Camp;
         _sa.enabled = true;
 
         _servant.GetComponentInChildren<AI.MyState0>().enabled = true;

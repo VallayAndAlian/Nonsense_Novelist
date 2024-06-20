@@ -15,26 +15,7 @@ public class CS_YiZhiWeiShiQi : ServantAbstract
     override public void Awake()
     {
         base.Awake();
-        characterID = 3;
-        wordName = "益智喂食器";
-        bookName = BookNameEnum.ZooManual;
-
-
-        hp = maxHp = 30;
-        atk = 0;
-        def = 10;
-        psy = 5;
-        san = 0;
-
-        //mainProperty.Add("防御", "肉T");
-        //trait = gameObject.AddComponent<Pride>();
-        roleName = "丰容";
-
-        brief = "周期给队友提供“亢奋”";
-        description = "周期给队友提供“亢奋”";
-
-
-
+       
         Destroy(attackA);
         attackA = gameObject.AddComponent<CureMode>();
         if (coroutineAttack != null) StopCoroutine(coroutineAttack);
