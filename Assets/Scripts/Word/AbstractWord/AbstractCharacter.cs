@@ -1075,11 +1075,19 @@ abstract public class AbstractCharacter : AbstractWord0
     /// <summary>发出子弹 </summary>
     public virtual void CreateBullet(GameObject aimChara)
     {
-        DanDao danDao = GameObjectPool.instance.CreateObject(bullet.gameObject.name, bullet.gameObject, this.transform.position, aimChara.transform.rotation)
+        
+        Vector3 _createpos= this.transform.position;
+        if (this.transform.Find("BulletPos") != null)
+        {
+            print("bulletPos");
+            _createpos = this.transform.Find("BulletPos").position;
+        }
+        
+        DanDao danDao = GameObjectPool.instance.CreateObject(bullet.gameObject.name, bullet.gameObject, _createpos, aimChara.transform.rotation)
             .GetComponent<DanDao>();
         danDao.aim = aimChara;
         danDao.bulletSpeed = 0.5f;
-        danDao.SetOff(this.transform.position);
+        danDao.SetOff(_createpos);
     }
 
     Vector3[] pos =new Vector3[] 

@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class ChuanBo: AbstractBuff
 {
+    static public string s_description = "弃用buff，怎么会在这里";
+    static public string s_wordName = "传播";
     override protected void Awake()
     {
        

@@ -56,7 +56,7 @@ public class OneWayMove : MonoBehaviour
 
 
     /// <summary>判断</summary>
-    public int or = 0;
+    [HideInInspector]public int or = 0;
     private void Start()
     {
         cdTimer = cdTime;//最开始没有cd
@@ -149,7 +149,7 @@ public class OneWayMove : MonoBehaviour
             for (int i = 0; i < left.Length; i++)
             {
                
-                left[i].BeCure(addRate * left[i].hp + addAmount, true, 0, left[i]);
+                left[i].BeCure(addRate * left[i].maxHp* left[i].maxHpMul + addAmount, true, 0, left[i]);
             }
 
         }
@@ -159,7 +159,7 @@ public class OneWayMove : MonoBehaviour
             for (int i = 0; i < right.Length; i++)
             {
                 
-                right[i].BeCure(addRate * right[i].hp + addAmount, true, 0, right[i]);
+                right[i].BeCure(addRate * right[i].maxHp * right[i].maxHpMul + addAmount, true, 0, right[i]);
             }
         }
     }

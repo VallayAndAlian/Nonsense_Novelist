@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: test
   m_EditorClassIdentifier: Assembly-CSharp::StagesData
   stagesData:
-  - type: 2
+  - type: 0
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}
     t_eventCount: 5
     t_eventKey: 0
