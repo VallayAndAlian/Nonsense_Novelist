@@ -455,6 +455,7 @@ public class EndGame : MonoBehaviour
         //RecordMgr.instance.AddRecord(titleName, GameMgr.instance.draftUi.content, 2);
         RecordMgr.instance.SaveByJson(titleName, GameMgr.instance.draftUi.content, 2);
         SceneManager.LoadScene("Study");
+        PoolMgr.GetInstance().Clear();
         //gameObject.GetComponent<LoadingScene>().EnterNextScene();
     }
     public void ChangeText()

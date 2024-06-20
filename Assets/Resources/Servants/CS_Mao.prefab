@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723217449379156723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.76, y: -0.59, z: 0}
-  m_LocalScale: {x: 1.3618, y: 1.3618, z: 1.3618}
+  m_LocalPosition: {x: -0.33, y: 0.76, z: 0}
+  m_LocalScale: {x: 2.7568076, y: 2.7568076, z: 2.7568076}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3837959891539934792}
@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 626459831
   m_SortingLayer: 1
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: fe0aa5a00db465946bfb58ec8e7801bc, type: 3}
-  m_Color: {r: 0.26452088, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 43acdb4719745014c850a4a0ada1529d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723217449379156723}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c6e908473309d24abf8212e935898f7, type: 3}
   m_Name: 
@@ -131,9 +131,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723217449379156723}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 01606da8a4de5374385e4372192aaf0c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 412d5335649a0af4e87700566a83b870, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 897282651725383747}
   - component: {fileID: 7715683749898041194}
   - component: {fileID: 6874424216209686046}
+  - component: {fileID: 6559450748116988244}
   m_Layer: 8
   m_Name: CS_Mao
   m_TagString: Untagged
@@ -409,13 +410,13 @@ MonoBehaviour:
   nickname: []
   rarity: 0
   wordCollisionShoots: []
-  myState: {fileID: 0}
+  myState: {fileID: 1531393132438752471}
   characterID: 0
   source: {fileID: 0}
   aAttackAudio: {fileID: 0}
   walkAudio: {fileID: 0}
   teXiao: {fileID: 0}
-  bullet: {fileID: 0}
+  bullet: {fileID: 7617887590883620401, guid: 78a625ad23a1cc342bb5aba92387dad9, type: 3}
   roleName: 
   roleInfo: 
   isNaiMa: 0
@@ -440,6 +441,39 @@ MonoBehaviour:
   attackA: {fileID: 0}
   AttackTimes: 1
   masterNow: {fileID: 0}
+--- !u!60 &6559450748116988244
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837959891539934793}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 7f8d485a9562d3c469d5168f11c7156e, type: 2}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -4.165394, y: 0.74982476}
+      - {x: -5.958579, y: 0.09445834}
+      - {x: -3.3470259, y: -4.4911323}
+      - {x: 2.5028975, y: -5.048938}
+      - {x: 1.9169931, y: -3.356122}
+      - {x: -0.43060732, y: -2.575883}
+      - {x: 0.44577885, y: -0.62438226}
+      - {x: -1.9152992, y: 2.015643}
 --- !u!1 &7266290056929868227
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.PlayerSettings;
+
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class BookShelfInf : MonoBehaviour

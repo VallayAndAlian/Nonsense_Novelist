@@ -385,7 +385,7 @@ MonoBehaviour:
   aAttackAudio: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
   walkAudio: {fileID: 0}
   teXiao: {fileID: 0}
-  bullet: {fileID: 5396089893936509290, guid: 767f667755cd0c247aa64b5b5d83c016, type: 3}
+  bullet: {fileID: 7617887590883620401, guid: 78a625ad23a1cc342bb5aba92387dad9, type: 3}
   roleName: 
   roleInfo: 
   isNaiMa: 0

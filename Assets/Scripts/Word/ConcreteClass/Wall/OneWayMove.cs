@@ -170,7 +170,7 @@ public class OneWayMove : MonoBehaviour
     /// <param name="collision"></param>
     private void OnCollisionEnter2D(Collision2D collision)
     {
-  
+        if (!cdOK) return;
         if (collision.transform.tag == "bullet")
         {
 
@@ -182,13 +182,13 @@ public class OneWayMove : MonoBehaviour
                 Invoke("EnableBack", disappearTime);
                
             }
-            if ((type == WallType.addHP)&&cdOK)//治疗机关
+            if (type == WallType.addHP)//治疗机关
             {
                 //开始回血
+                cdOK = false;
                 animator.Play("start"); 
                 adding = true;
                 AddingTime_real += AddingTime;
-                cdOK = false;
                 cdshow.color = Color.grey;
             }
         }

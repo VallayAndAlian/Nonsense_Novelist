@@ -97,7 +97,7 @@ public class StudyMouseOn : MonoBehaviour
                 break;
             case StudyUIType.xinjian:
                 {
-
+                    PoolMgr.GetInstance().Clear();
                     SceneManager.LoadScene("Letters");
                     audioSource.Play();
                 }

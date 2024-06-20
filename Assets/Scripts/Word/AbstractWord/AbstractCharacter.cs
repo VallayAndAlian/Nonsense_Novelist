@@ -790,12 +790,12 @@ abstract public class AbstractCharacter : AbstractWord0
         _sa.masterNow = this;
         _sa.Camp = this.Camp;
         _sa.enabled = true;
-
+     
         _servant.GetComponentInChildren<AI.MyState0>().enabled = true;
         //_servant.gameObject.AddComponent(typeof(AfterStart));
 
         //给随从增加一个目标，使其立刻进入攻击状态
-        _servant.GetComponentInChildren<AI.MyState0>().aim = null;
+        _servant.GetComponentInChildren<AI.MyState0>().aim = this.myState.aim;
         _sa.situation = this.situation;
 
         //移除最先得的随从
@@ -803,7 +803,9 @@ abstract public class AbstractCharacter : AbstractWord0
         {
             print(this.gameObject.name + "随从数超出，移除" + servants[0].name);
             //技能数超出，移除最前面的（此处可能有问题）
+            var _s = servants[0];
             servants.RemoveAt(0);
+            Destroy(_s.gameObject);
         }
 
         if(servants.Count>0)
@@ -837,22 +839,30 @@ abstract public class AbstractCharacter : AbstractWord0
     /// </summary>
     public void AddRandomServant()
     {
-        //为角色增加一个随从
-        var _random = UnityEngine.Random.Range(0, 7);
+        var _random = UnityEngine.Random.Range(0, 3);
         if (_random == 0)
             this.AddServant("CS_BenJieShiDui");
         if (_random == 1)
-            this.AddServant("CS_YiZhiWeiShiQi");
-        if (_random == 2)
-            this.AddServant("CS_GongYi");
-        if (_random == 3)
             this.AddServant("CS_DuMoGu");
-        if (_random == 4)
-            this.AddServant("CS_Bing");
-        if (_random == 5)
-            this.AddServant("CS_MG42gun");
-        if (_random == 6)
+        if (_random == 2)
             this.AddServant("CS_Mao");
+
+        //为角色增加一个随从
+        //var _random = UnityEngine.Random.Range(0, 7);
+        //if (_random == 0)
+        //    this.AddServant("CS_BenJieShiDui");
+        //if (_random == 1)
+        //    this.AddServant("CS_YiZhiWeiShiQi");
+        //if (_random == 2)
+        //    this.AddServant("CS_GongYi");
+        //if (_random == 3)
+        //    this.AddServant("CS_DuMoGu");
+        //if (_random == 4)
+        //    this.AddServant("CS_Bing");
+        //if (_random == 5)
+        //    this.AddServant("CS_MG42gun");
+        //if (_random == 6)
+        //    this.AddServant("CS_Mao");
 
 
     }
@@ -895,12 +905,12 @@ abstract public class AbstractCharacter : AbstractWord0
         {
             servants[i].transform.parent = this.transform.Find("Servants").GetChild(i);
             servants[i].transform.localPosition = Vector3.zero;
-            servants[i].transform.localEulerAngles = Vector3.zero;
-            servants[i].transform.localScale = Vector3.one;
-            if (servants[i].transform.parent.parent.parent.parent.GetComponent<Situation>().number >= 5)
-            {
-                servants[i].transform.localScale = new Vector3(-1, 1, 1);
-            }
+        
+            servants[i].transform.localScale = Vector3.one*1.5f;
+            //if (this.camp==CampEnum.right)
+            //{
+            //    servants[i].GetComponent<ServantAbstract>().turn();
+            //}
         }
     }
 
@@ -1289,7 +1299,7 @@ abstract public class AbstractCharacter : AbstractWord0
     /// </summary>
     public void turn()
     {
-  
+        
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         //角色的canvas子物体不转向
         energyCanvas.transform.localScale = new Vector3(-energyCanvas.transform.localScale.x, energyCanvas.transform.localScale.y, energyCanvas.transform.localScale.z);

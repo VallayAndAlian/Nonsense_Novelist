@@ -149,7 +149,7 @@ public static class AllSkills
         //添加动词词条
         list_verb.AddRange(new Type[] {   typeof(WritePoem) , typeof(BuryFlower),typeof(WanShua),typeof(ShaYu), typeof(FangFuShu),
             typeof(ShenPan),typeof(QiChongShaDance),typeof(Kiss),typeof(TongPinGongZhen),typeof(TuLingCeShi),
-             typeof(GunShoot), typeof(MianYiZengQiang),typeof(ChanLuan),typeof(XuanZhan),typeof(HeartBroken),typeof(Shuai),
+             typeof(GunShoot), typeof(MianYiZengQiang),/*typeof(ChanLuan),typeof(XuanZhan),*/typeof(HeartBroken),typeof(Shuai),
             typeof(ToBigger), typeof(BaoZa),typeof(XuanHua)
          //未测试通过：,typeof(WenYiChuanBo) , 
           });
@@ -158,8 +158,8 @@ public static class AllSkills
         list_adj.AddRange(new Type[] {  typeof(ChaFanWuXin),typeof(ShenYouHuanJing),typeof(KeBan),typeof(HunHe),
             typeof(YongJi),  typeof(YouAnQuanGan), typeof(BuXiu),  typeof(FengChan),  typeof(BeiPanDe),typeof(XinShenJiDang),
             typeof(LuanLun),typeof(HunQianMengYing),typeof(QingXi),typeof(JuCaiDe),typeof(FuNengLiangDe),
-            typeof(HeWuRan), typeof(RenZao) , typeof(XiaYuDe),typeof(KeSou),/*typeof(ShenHuanFeiYan)*/typeof(GuoMin),
-            typeof(GeLi),typeof(NanYiXiaoMieDe),typeof(SheHuiHua), typeof(HunFei),typeof(HaoZhan),typeof(FengLi),
+            typeof(HeWuRan), /*typeof(RenZao),*/ typeof(XiaYuDe),typeof(KeSou),/*typeof(ShenHuanFeiYan)*/typeof(GuoMin),
+            typeof(GeLi),typeof(NanYiXiaoMieDe),/*typeof(SheHuiHua), typeof(HunFei),typeof(HaoZhan),*/typeof(FengLi),
             typeof(QuicklyGrowing),typeof(LuoYingBinFen) ,
              typeof(CuZhuang),typeof(JianRuPanShi), typeof(ZhongDu),typeof(YeSheng),
             //未测试通过：
@@ -169,8 +169,8 @@ public static class AllSkills
         list_noun.AddRange(new Type[] {  typeof(ChaBei),typeof(LengXiangWan),typeof(TongLingBaoyu),
             typeof(ShiWuFengRong),typeof(SheQunFengRong),typeof(RiLunGuaZhui),typeof(herusizhiyan),typeof(XianZhiHead),typeof(LiWu),
             typeof(BaiShuijing) ,typeof(ZiShuiJIng),typeof(HuYanShi) ,typeof(MeiGuiShiYing) ,typeof(Nexus_6Arm),
-             typeof(BeiZhiRuDeJiYi),typeof(VolumeProduction) ,typeof(JiShengChong),typeof(EXingZhongLiu),typeof(WaiGuGe), 
-            typeof(DuXian), typeof(FuTouAxe),  typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui),
+             typeof(BeiZhiRuDeJiYi),typeof(VolumeProduction) ,typeof(JiShengChong),typeof(EXingZhongLiu),/*typeof(WaiGuGe), 
+            typeof(DuXian),*/ typeof(FuTouAxe),  typeof(HouZiDian),typeof(QiGuaiShiXiang),typeof(BoLiGuaZhui),
              //未测试通过：typeof(SheQunFengRong),
         
             //缺少的已补完

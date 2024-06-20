@@ -24,7 +24,12 @@ class ShenPan : AbstractVerbs
         needCD = 6;
     }
 
-
+    override public string[] DetailLable()
+    {
+        string[] _s = new string[1];
+        _s[0] = "KangFen";
+        return _s;
+    }
 
 
     AbstractCharacter chara;

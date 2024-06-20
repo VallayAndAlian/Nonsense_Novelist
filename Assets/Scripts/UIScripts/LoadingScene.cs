@@ -42,10 +42,13 @@ public class LoadingScene : MonoBehaviour
     public void SwitchStudy()
     {
         SceneManager.LoadScene("Study");
+        PoolMgr.GetInstance().Clear();
     }
     public void SwitchShelf()
     {
         SceneManager.LoadScene("BookShelf");
+
+        PoolMgr.GetInstance().Clear();
     }
 
 }

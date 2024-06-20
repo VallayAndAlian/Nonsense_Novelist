@@ -366,9 +366,7 @@ public class DraftUi : MonoBehaviour
         inkRedObj.gameObject.GetComponentInChildren<Text>().color = Color.white;
         inkBlackObj.gameObject.GetComponentInChildren<Text>().color = Color.white;
         inkBlueObj.gameObject.GetComponentInChildren<Text>().color = Color.white;
-        inkRedObj.gameObject.GetComponentInChildren<Text>().text = inkRedCount.ToString();
-        inkBlackObj.gameObject.GetComponentInChildren<Text>().text = inkBlackCount.ToString();
-        inkBlueObj.gameObject.GetComponentInChildren<Text>().text = inkBlueCount.ToString();
+       
     }
 
     /// <summary>
@@ -458,24 +456,24 @@ public class DraftUi : MonoBehaviour
     /// <param name="_ink"></param>
     public void InkNotEnough(int _ink)
     {
-        switch (_ink)
-        {
-            case 0:
-                {
-                    inkBlackObj.gameObject.GetComponentInChildren<Text>().color = Color.red;                
-                }
-                break;
-            case 1:
-                {
-                    inkRedObj.gameObject.GetComponentInChildren<Text>().color = Color.red;
-                }
-                break;
-            case 2:
-                {
-                    inkBlueObj.gameObject.GetComponentInChildren<Text>().color = Color.red;
-                }
-                break;
-        }
+        //switch (_ink)
+        //{
+        //    case 0:
+        //        {
+        //            inkBlackObj.gameObject.GetComponentInChildren<Text>().color = Color.red;                
+        //        }
+        //        break;
+        //    case 1:
+        //        {
+        //            inkRedObj.gameObject.GetComponentInChildren<Text>().color = Color.red;
+        //        }
+        //        break;
+        //    case 2:
+        //        {
+        //            inkBlueObj.gameObject.GetComponentInChildren<Text>().color = Color.red;
+        //        }
+        //        break;
+        //}
 
     }
 

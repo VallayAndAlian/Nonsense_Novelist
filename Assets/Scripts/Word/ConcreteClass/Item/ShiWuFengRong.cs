@@ -57,7 +57,7 @@ class ShiWuFengRong : AbstractItems
 
         //为角色增加一个随从 
         //获得后随机获得一个丰容设施，即益智喂食器或者本杰士堆
-        var _random = Random.Range(0, 2);//int型，0或1
+        var _random = Random.Range(0,1);//int型，0或1
         if(_random==0)
             chara.AddServant("CS_BenJieShiDui");
         else
