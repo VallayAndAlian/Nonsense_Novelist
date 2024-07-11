@@ -8965,7 +8965,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fc45b4d32b0e1a46add3c4f7e6aff0c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 498e609d023dea447b3ac324b69dabe6, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -12240,7 +12240,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2bfeaebb16602344f84852baa6976bd7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: faf9195a03870da4e84cfe892e11e87a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17584,6 +17584,10 @@ PrefabInstance:
     - target: {fileID: 4338117747861965718, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
       propertyPath: m_Name
       value: cardRes
+      objectReference: {fileID: 0}
+    - target: {fileID: 4338117747861965718, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4338117747861965719, guid: 751c03870139ec342848fe95d350ce2e, type: 3}
       propertyPath: m_Pivot.x
