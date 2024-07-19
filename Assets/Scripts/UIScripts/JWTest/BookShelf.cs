@@ -6,8 +6,6 @@ using TMPro;
 using System.Diagnostics;
 using UnityEngine.UIElements;
 
-
-
 public class BookShelf : MonoBehaviour
 {
     [Header("手动设置书籍顺序（要与panel顺序对应）")]

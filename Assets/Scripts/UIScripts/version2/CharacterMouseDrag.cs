@@ -18,11 +18,11 @@ public class CharacterMouseDrag : MonoBehaviour
     private GameObject black;
 
     /// <summary>记录目前所在的站位</summary>
-    [HideInInspector]public Transform nowParentTF;
+    [HideInInspector] public Transform nowParentTF;
     /// <summary>记录上一个所在的站位</summary>
     [HideInInspector] public Transform lastParentTF;
     /// <summary>角色和站位position的Y偏移量</summary>
-    public static float offsetY =0f;
+    public static float offsetY = 0f;
 
     //颜色
     private Color colorOnMouseOver = new Color((float)100 / 255, (float)100 / 255, (float)50 / 255, (float)255 / 255);
@@ -46,17 +46,15 @@ public class CharacterMouseDrag : MonoBehaviour
 
         nowParentTF = transform.parent;
         target = transform;
-        sr= GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
+        sr = GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
         oriParent = GameObject.Find("UICanvas").transform.Find("Panel").Find("charaPos");
         transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
-        yinXiao=GameObject.Find("yinxiaoSource").GetComponent<AudioYinXiao>();
-
-           
-}
+        yinXiao = GameObject.Find("yinxiaoSource").GetComponent<AudioYinXiao>();
+    }
 
     private void OnMouseEnter()
     {
-        
+
     }
     #region OnMouseDrag()随鼠标移动(废弃)
 
@@ -68,53 +66,53 @@ public class CharacterMouseDrag : MonoBehaviour
          
      }*/
     #endregion
-    
+
     /// <summary>
     /// 鼠标悬停
     /// </summary>
     private void OnMouseOver()
     {
-       //if (EventSystem.current.IsPointerOverGameObject()) return;
+        //if (EventSystem.current.IsPointerOverGameObject()) return;
         //颜色变黄
         sr.color = colorOnMouseOver;
-        
-            //如果鼠标右键
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (GameObject.Find("combatCanvas").transform.Find("CharacterDetail(Clone)") == null)
-                {
-                    var a = ResMgr.GetInstance().Load<GameObject>(characterDetailPrefab);
-                    a.transform.parent = GameObject.Find("combatCanvas").transform;
-                    a.transform.localPosition = Vector3.zero ;
-                    a.transform.localScale = Vector3.one;
-                    //获取点击角色的脚本信息
-                    a.GetComponentInChildren<CharacterDetail>().Open(this.GetComponent<AbstractCharacter>());
-                }
-              
 
+        //如果鼠标右键
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (GameObject.Find("combatCanvas").transform.Find("CharacterDetail(Clone)") == null)
+            {
+                var a = ResMgr.GetInstance().Load<GameObject>(characterDetailPrefab);
+                a.transform.parent = GameObject.Find("combatCanvas").transform;
+                a.transform.localPosition = Vector3.zero;
+                a.transform.localScale = Vector3.one;
+                //获取点击角色的脚本信息
+                a.GetComponentInChildren<CharacterDetail>().Open(this.GetComponent<AbstractCharacter>());
             }
+
+
+        }
     }
     private void OnMouseExit()
     {
         //颜色恢复
         //鼠标进入黄圈时也会执行此脚本。原因未知
         sr.color = colorOnMouseExit;
-      
+
     }
 
-    
-    
+
+
     //被移动物体需要添加collider组件，以响应OnMouseDown()函数
     //基本思路。当鼠标点击物体时（OnMouseDown（），函数体里面代码只执行一次），
     //记录此时鼠标坐标和物体坐标，并求得差值。如果此后用户仍然按着鼠标左键，那么保持之前的差值不变即可。
     //由于物体坐标是世界坐标，鼠标坐标是屏幕坐标，需要进行转换。具体过程如下所示。
     IEnumerator OnMouseDown()
     {
-       
+
 
         //先让点击物体中心与鼠标点击处同步。
-        mouseScreenpos = new Vector3(Input.mousePosition.x, Input.mousePosition.y , Camera.main.WorldToScreenPoint(target.position).z);
-        target.position= Camera.main.ScreenToWorldPoint(mouseScreenpos)/*-new Vector3(offsetCenter.x/4,offsetCenter.y/4,0)*/;
+        mouseScreenpos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(target.position).z);
+        target.position = Camera.main.ScreenToWorldPoint(mouseScreenpos)/*-new Vector3(offsetCenter.x/4,offsetCenter.y/4,0)*/;
 
         targetScreenpos = Camera.main.WorldToScreenPoint(target.position);
         offset = target.position - Camera.main.ScreenToWorldPoint(mouseScreenpos);
@@ -144,8 +142,8 @@ public class CharacterMouseDrag : MonoBehaviour
     }
     private void OnMouseUp()
     {
-         //加上了检测层级（忽略角色本身）
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero,100,LayerMask.GetMask("Situation"));
+        //加上了检测层级（忽略角色本身）
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, 100, LayerMask.GetMask("Situation"));
         if (hit.collider != null)
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Situation"))//角色拖拽到站位上且位置校准
@@ -153,7 +151,7 @@ public class CharacterMouseDrag : MonoBehaviour
                 if ((hit.collider.transform.childCount == 0))//如果站位上没有其它角色
                 {
                     SetCharacterToSituation(hit.collider.transform.GetComponent<Situation>());
-                 //成功放上去的音效
+                    //成功放上去的音效
                     yinXiao.ClickPlay();
                 }
                 else //如果站位上有其它角色
@@ -189,12 +187,12 @@ public class CharacterMouseDrag : MonoBehaviour
 
             }
         }
-        else if (Camera.main.WorldToViewportPoint(target.position).y<0.4)
+        else if (Camera.main.WorldToViewportPoint(target.position).y < 0.4)
         {
             yinXiao.TanHui();
 
             DeleteBlack();
-            this.transform.parent =oriParent.GetChild(siblingBefore);
+            this.transform.parent = oriParent.GetChild(siblingBefore);
             nowParentTF = transform.parent;
 
             transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
@@ -216,7 +214,7 @@ public class CharacterMouseDrag : MonoBehaviour
                 DeleteBlack(); this.transform.localScale = ScaleWithTure(GameMgr.instance.beforeScale);
             }
         }
-       
+
     }
 
 
@@ -260,10 +258,10 @@ public class CharacterMouseDrag : MonoBehaviour
             this.transform.localScale = ScaleWithTure(GameMgr.instance.beforeScale);
             this.transform.position = nowParentTF.position;
         }
-            
 
 
-       // transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
+
+        // transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
 
 
         //隐藏/恢复站位颜色（透明度为0
@@ -329,7 +327,7 @@ public class CharacterMouseDrag : MonoBehaviour
 
     Vector3 ScaleWithTure(float muti)
     {
-        return  new Vector3(this.transform.localScale.x / Mathf.Abs(this.transform.localScale.x),
+        return new Vector3(this.transform.localScale.x / Mathf.Abs(this.transform.localScale.x),
                     this.transform.localScale.y / Mathf.Abs(this.transform.localScale.y),
                     this.transform.localScale.z / Mathf.Abs(this.transform.localScale.z)) * muti;
     }
@@ -347,7 +345,7 @@ public class CharacterMouseDrag : MonoBehaviour
         _obj.transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
         _obj.transform.position = new Vector3(nowParentTF.position.x, nowParentTF.position.y + offsetY, nowParentTF.position.z);
         _obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().color = Color.black;
-       // print(_obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().sortingOrder);
+        // print(_obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().sortingOrder);
         _obj.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>().sortingOrder -= 1;
 
         _obj.GetComponentInChildren<AI.MyState0>().GetComponent<Animator>().speed = 0;
@@ -357,9 +355,6 @@ public class CharacterMouseDrag : MonoBehaviour
         Destroy(_obj.GetComponent<AbstractCharacter>());
         Destroy(_obj.GetComponentInChildren<AI.MyState0>());
 
-
-      
-
         black = _obj;
     }
 
@@ -367,9 +362,9 @@ public class CharacterMouseDrag : MonoBehaviour
     void DeleteBlack()
     {
         if (black == null) return;
-        
+
         Destroy(black);
         black = null;
     }
-} 
+}
 
