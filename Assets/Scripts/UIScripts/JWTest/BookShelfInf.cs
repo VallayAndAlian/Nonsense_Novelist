@@ -37,6 +37,7 @@ public class BookShelfInf : MonoBehaviour
     {
         MouseRight();
     }
+    
     /// <summary>
     /// ЪѓБъ
     /// </summary>
