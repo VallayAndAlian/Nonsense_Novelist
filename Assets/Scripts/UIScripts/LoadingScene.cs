@@ -20,6 +20,7 @@ public class LoadingScene : MonoBehaviour
 
     private GameObject obj;
     private Slider slider;
+    
     private void Start()
     {
         if(canvas==null)
@@ -27,6 +28,7 @@ public class LoadingScene : MonoBehaviour
         //if(sceneName!=null)
         //    StartCoroutine(ReallyLoadSceneAsyn(sceneName, null));
     }
+
     bool hasLoad = false;
     public void EnterNextScene()
     {
@@ -39,11 +41,13 @@ public class LoadingScene : MonoBehaviour
         obj.GetComponentInChildren<LoadingSlider_t>().LoadSceneAsyn(sceneName, leastLoadTime);
         //加载结束后，关闭面板
     }
+    
     public void SwitchStudy()
     {
         SceneManager.LoadScene("Study");
         PoolMgr.GetInstance().Clear();
     }
+
     public void SwitchShelf()
     {
         SceneManager.LoadScene("BookShelf");

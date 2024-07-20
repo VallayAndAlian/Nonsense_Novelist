@@ -33,7 +33,7 @@ public class PoolData
         //存起来
         poolList.Add(obj);
         //设置父对象
-        obj.transform.parent = fatherObj.transform;
+        obj.transform.SetParent(fatherObj.transform, false);
     }
 
     /// <summary>

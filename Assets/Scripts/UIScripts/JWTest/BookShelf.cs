@@ -30,6 +30,7 @@ public class BookShelf : MonoBehaviour
     public UnityEngine.UI.Image sp_bottom;
     public UnityEngine.UI.Image sp_top;
     private string sp_resName= "WordImage/BookShelf/";
+    
     //private UnityEngine.UI.Toggle toggle;
     void Start()
     {
@@ -41,8 +42,6 @@ public class BookShelf : MonoBehaviour
         }*/
     }
 
-
-
     //打开所有的选择标签
     void OpenAllTag()
     {
@@ -51,7 +50,9 @@ public class BookShelf : MonoBehaviour
         b_verb = true;
         b_noun = true;
         b_adj = true;
+        
         RefreshTag();
+
         panels[0].transform.Find("tag_juese").GetComponent<UnityEngine.UI.Image>().color = Color.white;
         panels[0].transform.Find("tag_xingrongci").GetComponent<UnityEngine.UI.Image>().color = Color.white;
         panels[0].transform.Find("tag_mingci").GetComponent<UnityEngine.UI.Image>().color = Color.white;
@@ -70,14 +71,14 @@ public class BookShelf : MonoBehaviour
         switch (_name.name)
         {
             case "tag_juese":
-            {
-                if (b_chara)
-                    {b_chara = false; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
-                else
-                    { b_chara = true; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
-                RefreshTag();
-            }
-            break;
+                {
+                    if (b_chara)
+                        {b_chara = false; _name.GetComponent<UnityEngine.UI.Image>().color = choosenColor; }
+                    else
+                        { b_chara = true; _name.GetComponent<UnityEngine.UI.Image>().color = Color.white; }
+                    RefreshTag();
+                }
+                break;
             case "tag_xingrongci":
                 {
                     if (b_adj)
@@ -116,7 +117,6 @@ public class BookShelf : MonoBehaviour
                 break;
         }
     }
-
 
     GameObject buttonSelf = null;
     float pageCount = 0;
@@ -380,8 +380,6 @@ public class BookShelf : MonoBehaviour
             PoolMgr.GetInstance().PushObj(b.GetChild(i).gameObject.name, b.GetChild(i).gameObject);
         }
     }
-    
-
 
     public void CloseHLMPanel()
     {
@@ -410,7 +408,8 @@ public class BookShelf : MonoBehaviour
 
     }
 
-    /*    /// <summary>
+    /*  
+        /// <summary>
         /// 展示出nowbook中的所有词
         /// </summary>231
         /// <param name="i">词性。1adj,2noun,3verb</param>
@@ -499,13 +498,13 @@ public class BookShelf : MonoBehaviour
 
                     }
                     break;
-            }*/
-    //}
+            }
+    }*/
+
     bool isFirst = true;
     public void ToggleClick()
     {
         if(isFirst) { DeleteWords();isFirst = false; }
-        
 
         var toggleSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         Transform a = toggleSelf.gameObject.transform.parent.Find("wordPL");
@@ -601,11 +600,13 @@ public class BookShelf : MonoBehaviour
                               obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
                             if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                             {
-                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                                //这将保留局部方向和缩放，而不是世界方向和缩放，这可以防止常见的 UI 缩放问题,以下修改相同
+                                //obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                                obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPL"), false);
                             }
                             else
                             {
-                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPR"), false);
                                 //隐藏后面页面的卡牌
                                 if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                                 {
@@ -638,11 +639,12 @@ public class BookShelf : MonoBehaviour
                              obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
                             if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                             {
-                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                                obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPL"), false);
                             }
                             else
                             {
-                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPR"), false);
+                                //obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
                                 //隐藏后面页面的卡牌
                                 if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                                 {
@@ -676,11 +678,11 @@ public class BookShelf : MonoBehaviour
                             obj.GetComponentInChildren<WordInformation>().ChangeInformation(_word);
                             if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                             {
-                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                                obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPL"), false);
                             }
                             else
                             {
-                                obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                                obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPR"), false);
                                 //隐藏后面页面的卡牌
                                 if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                                 {
@@ -720,11 +722,11 @@ public class BookShelf : MonoBehaviour
                 //
                 if (panels[0].gameObject.transform.Find("wordPL").childCount < cardCount)
                 {
-                    obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                    obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPL"), false);
                 }
                 else
                 {
-                    obj.transform.parent = panels[0].gameObject.transform.Find("wordPR");
+                    obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPR"),false);
                     //隐藏后面页面的卡牌
                     if (panels[0].gameObject.transform.Find("wordPR").childCount > cardCount)
                     {
@@ -738,7 +740,7 @@ public class BookShelf : MonoBehaviour
                     {
                         for (int i = panels[0].gameObject.transform.Find("wordPL").childCount-1; i < panels[0].gameObject.transform.Find("wordPL").childCount + 3; i++)//隐藏
                         {
-                            obj.transform.parent = panels[0].gameObject.transform.Find("wordPL");
+                            obj.transform.SetParent(panels[0].gameObject.transform.Find("wordPL"), false);
                         }
                     }
                 }

@@ -17,7 +17,7 @@ abstract public class AbstractSkillMode : MonoBehaviour
     //public List<AbstractTrait> traitOrde=new List<AbstractTrait>();
 
     /// <summary>影响区域（直线、扇形、圆形）</summary>
-    public IAttackRange attackRange=new SingleSelector();
+    public IAttackRange attackRange = new SingleSelector();
 
     /// <summary>
     /// 再次计算锁定的目标
