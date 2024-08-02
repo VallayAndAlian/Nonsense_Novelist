@@ -52,7 +52,7 @@ public class PoolData
         if (obj == null) Debug.Log("obj==null");
         obj.SetActive(true);
         //断开了父子关系
-        obj.transform.parent = null;
+        obj.transform.SetParent(null, false);
 
         return obj;
     }
