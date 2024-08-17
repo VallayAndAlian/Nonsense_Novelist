@@ -26,7 +26,6 @@ public class StudyMouseOn : MonoBehaviour
     AudioSource audioSource;
     GameObject studyUI;
 
-
     public GameObject zuopinUI;
     public static bool hasOpenUI=false;
     private void Start()
@@ -36,10 +35,8 @@ public class StudyMouseOn : MonoBehaviour
         studyUI = GameObject.Find("StudyUI");
         audioSource=studyUI.GetComponent<AudioSource>();
 
-
         if (zuopinUI != null) zuopinUI.SetActive(false);
     }
-
 
     private void OnMouseOver()
     {
@@ -54,14 +51,15 @@ public class StudyMouseOn : MonoBehaviour
             hasEnter = true;
         } 
     }
+
     private void OnMouseExit()
     {
-    
         animThis.Play("nothing");
         animLogo.Play("nothing");
         hasEnter = false;
         enterTime = 0;
     }
+
     private void OnMouseDown()
     {
         if (hasOpenUI) return;
@@ -119,12 +117,11 @@ public class StudyMouseOn : MonoBehaviour
                 break;
         }
     }
+
     private void OnMouseUp()
     {
       
     }
-
-
 
     #region Õ‚≤ø
 
