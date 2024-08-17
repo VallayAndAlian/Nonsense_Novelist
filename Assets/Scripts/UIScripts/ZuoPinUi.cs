@@ -61,7 +61,7 @@ public class ZuoPinUi : MonoBehaviour
             if (PoolMgr.GetInstance() == null) print("PoolMgr==null");
             PoolMgr.GetInstance().GetObj(bookIconPrefabs, (obj) =>
             {
-                obj.transform.parent = bookIconParent;
+                obj.transform.SetParent(bookIconParent, false);
                 obj.transform.localPosition = Vector3.zero;
                 obj.transform.localScale = Vector3.one;
 
@@ -192,11 +192,11 @@ public class ZuoPinUi : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-
     private void OnDisable()
     {
         ExitUI();
     }
+
     public void CheckMasterPiece(Transform _this)
     {
         readBook.gameObject.SetActive(true);

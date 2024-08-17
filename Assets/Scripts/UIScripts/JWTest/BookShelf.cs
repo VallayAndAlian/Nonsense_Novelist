@@ -30,7 +30,8 @@ public class BookShelf : MonoBehaviour
     public UnityEngine.UI.Image sp_bottom;
     public UnityEngine.UI.Image sp_top;
     private string sp_resName= "WordImage/BookShelf/";
-    
+    int nowPage = 1;
+    float pageCount = 0;
     //private UnityEngine.UI.Toggle toggle;
     void Start()
     {
@@ -41,7 +42,18 @@ public class BookShelf : MonoBehaviour
             books[i].GetComponent<UnityEngine.UI.Image>().alphaHitTestMinimumThreshold = 0.5f;
         }*/
     }
-
+    private void Update()
+    {
+        if(panels[0].gameObject.transform.Find("wordPL").childCount<=4&& panels[0].gameObject.transform.Find("wordPL").childCount <= 4)
+        {
+            nowPage = 1;
+            pageCount = 1;
+        }
+        else if (panels[0].gameObject.transform.Find("wordPL").childCount>4)//只有两页的情况下，若页数增加，需要修改
+        {
+            pageCount = 2;
+        }
+    }
     //打开所有的选择标签
     void OpenAllTag()
     {
@@ -119,8 +131,8 @@ public class BookShelf : MonoBehaviour
     }
 
     GameObject buttonSelf = null;
-    float pageCount = 0;
-    int nowPage = 1;
+    
+    
 
     /// <summary>
     /// 选书进入书本页面
@@ -143,7 +155,7 @@ public class BookShelf : MonoBehaviour
 
     void CreateWordFromTag()
     {
-       
+        print(buttonSelf.name);
         if (buttonSelf.name == BookNameEnum.HongLouMeng.ToString())
         {//打开红楼梦页面+默认显示全部红楼梦词条
             sp_bottom.sprite = ResMgr.GetInstance().Load<Sprite>(sp_resName + BookNameEnum.HongLouMeng.ToString()+"_B");
@@ -312,9 +324,9 @@ public class BookShelf : MonoBehaviour
     /// </summary>
     public void SwitchPanel()
     {
-        buttonSelf = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        var buttonSelf22 = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         
-        if (buttonSelf.name == "rightbtn"&&nowPage<pageCount)//右键
+        if (buttonSelf22.name == "rightbtn"&&nowPage<pageCount)//右键
         {
             
            for (int i = (nowPage-1)*cardCount; i < nowPage*cardCount; i++)//第一页的隐藏
@@ -333,7 +345,7 @@ public class BookShelf : MonoBehaviour
             print(nowPage);
             print(pageCount);
         }
-        else if(buttonSelf.name == "leftbtn" && nowPage >1)//左键
+        else if(buttonSelf22.name == "leftbtn" && nowPage >1)//左键
         {
             for (int i = (nowPage - 1) * cardCount; i < nowPage * cardCount; i++)//第二页隐藏
             {
