@@ -30,11 +30,11 @@ public static class ExcelDataReader
     const int excelDataRow = 5;
 
     //Excel读取路径
-    public static string excelFilePath = Application.dataPath + "/Excel";
+    public static string excelFilePath = Application.dataPath + "/Other/Excel";
     //public static string excelFilePath = Application.dataPath.Replace("Assets/Excel", "Excel");
 
     //自动生成C#类文件路径
-    static string excelCodePath = Application.dataPath + "/Script/Excel/AutoCreateCSCode";
+    static string excelCodePath = Application.dataPath + "/Scripts/Excel/AutoCreateCSCode";
     //自动生成Asset文件路径
     static string excelAssetPath = "Assets/Resources/ExcelAsset";
 
