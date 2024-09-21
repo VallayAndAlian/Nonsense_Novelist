@@ -1,13 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 /// <summary>
 /// 信件作者,根据其筛选
 /// </summary>
-public enum E_MailAuther 
+public enum E_MailAuther
 {
-    
+    Auther1,
+    Auther2,
+    Auther3,
+    NULLAuther
 }
 
 /// <summary>
@@ -16,18 +15,33 @@ public enum E_MailAuther
 /// </summary>
 public class MailInfo
 {
-    //新建序号
+    //信件序号
     public int id;
     //发件人
     public E_MailAuther auther;
-    //称呼内容
-    public string dearContent;
-    //信件题内容
+    //称呼内容:也许可以根据发件人优化
+    public string dear;
+    //信件内容
     public string mailBody;
     //信件读者评分
     public int score;
-
-    //附件内容:当前存储路径,可能会加载预设体作为动画等
+    //是否已读
+    public bool isRead;
+    //附件内容:配置为id等,根据其可以增加游戏中的道具
     public string path;
+
+    public MailInfo()
+    {
+        
+    }
+
+    /// <summary>
+    /// 仅初始化auther字段的信件
+    /// </summary>
+    /// <param name="auther"></param>
+    public MailInfo(E_MailAuther auther)
+    {
+        this.auther = auther;
+    }
 }
 
