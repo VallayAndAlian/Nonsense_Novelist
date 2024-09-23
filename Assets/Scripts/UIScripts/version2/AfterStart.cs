@@ -15,7 +15,6 @@ public class AfterStart : MonoBehaviour
     //生成面板的大小。
     private float scale = 1.6f / 1900;
 
-
     /// <summary>角色简要预制体克隆</summary>
     private GameObject charaShortP;
     private Transform charaShort;
