@@ -27,8 +27,14 @@ public class MailInfo
     public int score;
     //是否已读
     public bool isRead;
+    //是否应该显示
+    public bool isDisPlay;
     //附件内容:配置为id等,根据其可以增加游戏中的道具
-    public string path;
+    public string attch;
+    //附件数量
+    public string attchNum;
+    //附件是否已经被领取(拿出)
+    public string attchIsOut;
 
     public MailInfo()
     {
@@ -43,5 +49,6 @@ public class MailInfo
     {
         this.auther = auther;
     }
+
 }
 

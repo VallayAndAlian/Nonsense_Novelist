@@ -1,11 +1,12 @@
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
+using LitJson;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PreviewPanel : MonoBehaviour
+public class MailPreviewPanel : MonoBehaviour
 {
     //信件对象在场景的父节点位置
     public Transform MailPosFather;
@@ -48,6 +49,8 @@ public class PreviewPanel : MonoBehaviour
         print("初始显示范围: " + startIndex + " " + lastIndex) ;
         //显示信件
         ShowMail();
+        //更新翻页按钮显示
+        butnApprUpdate();
         //绑定筛选事件:重新筛选待显示数据,重新信件
         Author1Toggle.onValueChanged.AddListener((isOn) =>
         {
@@ -71,6 +74,7 @@ public class PreviewPanel : MonoBehaviour
         SubPageBtn.onClick.AddListener(() => {
             TurnPage(false);
         });
+        
     }
 
     /// <summary>
@@ -89,6 +93,13 @@ public class PreviewPanel : MonoBehaviour
         mailDataList.Add(new MailInfo(E_MailAuther.Auther1));
         mailDataList.Add(new MailInfo(E_MailAuther.Auther2));
         mailDataList.Add(new MailInfo(E_MailAuther.Auther1));
+
+        //读取streamingAssets中的配置初始化信件列表
+        string path = Application.streamingAssetsPath + "/mailData.json";
+        string JsonStr = "";
+        if (File.Exists(path))
+            JsonStr = File.ReadAllText(path);
+        mailDataList = JsonMapper.ToObject<List<MailInfo>>(JsonStr);
     }
 
     /// <summary>
@@ -101,6 +112,10 @@ public class PreviewPanel : MonoBehaviour
         //然后根据标签是否开启将每个数据加入待显示列表
         for (int i = 0; i < mailDataList.Count; i++) 
         {
+            //如果配置此信件当前不显示则跳过此信件
+            if (mailDataList[i].isDisPlay == false)
+                continue;
+
             if (mailDataList[i].auther == E_MailAuther.Auther1 && Author1Toggle.isOn) 
                 prepMailData.Add(mailDataList[i]);
             
@@ -140,9 +155,25 @@ public class PreviewPanel : MonoBehaviour
             pageNumText.text = pageNum.ToString();
             //显示数据
             ShowMail();
-            //根据startIndex和lastIndex显示和隐藏左/右翻页按钮
-
+            //更新翻页按钮的显示
+            butnApprUpdate();
         }
+    }
+
+    /// <summary>
+    /// 更新翻页按钮的显示情况:根据startIndex和lastIndex显示和隐藏左/右翻页按钮
+    /// </summary>
+    private void butnApprUpdate()
+    {
+        if (startIndex <= 1)
+            SubPageBtn.gameObject.SetActive(false);
+        else
+            SubPageBtn.gameObject.SetActive(true);
+
+        if (lastIndex >= prepMailData.Count - 1)
+            AddPageBtn.gameObject.SetActive(false);
+        else
+            AddPageBtn.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -215,6 +246,5 @@ public class PreviewPanel : MonoBehaviour
             mailObjs[j].gameObject.SetActive(true);
         }
     }
-
 }
 
