@@ -44,7 +44,6 @@ namespace AI
         }
         public void Start()
         {
-            //character = this.GetComponent<AbstractCharacter>();//在角色那边已写
             nowState = defaultState = allState.Find(p => p.id == StateID.idle);
             nowState.EnterState(this);
             if (aim == null)
@@ -83,12 +82,13 @@ namespace AI
         #endregion
 
 
+        private WaitForSeconds zeroOne= new WaitForSeconds(0.1f);
         IEnumerator EveryZeroOne()
         {
-            while (true)
+            while (GameMgr.instance.pause)
             {
                 nowState.CheckTrigger(this);//更新状态
-                yield return new WaitForSeconds(0.1f);
+                yield return zeroOne;
                 if(event_EveryZeroOne!=null)
                     event_EveryZeroOne();
             }

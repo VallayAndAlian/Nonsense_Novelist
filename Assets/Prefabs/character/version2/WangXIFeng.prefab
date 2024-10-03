@@ -690,6 +690,7 @@ GameObject:
   - component: {fileID: 8538700404350343044}
   - component: {fileID: 4332648218392505838}
   - component: {fileID: 3959252412521699988}
+  - component: {fileID: 696261294400713477}
   m_Layer: 3
   m_Name: WangXIFeng
   m_TagString: character
@@ -755,7 +756,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 6589d07411d3fc64e8a2e8df41dbdb18, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -822,6 +823,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8538700404350343044}
   currentAnim: 0
+--- !u!114 &696261294400713477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8865985208204811243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8d49de34fd0724ca8c1ae3c44afe59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 213842799075530814}
+  statesAndAnimations:
+  - stateName: idle
+    animation: {fileID: 11400000, guid: b5b08f3750a5704428e54929cf119ece, type: 2}
+  - stateName: attack
+    animation: {fileID: 11400000, guid: 8a71ad90c9e356d4fa476a420aeb259d, type: 2}
+  transitions: []
 --- !u!1 &8946512891811353343
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,12 +856,12 @@ GameObject:
   - component: {fileID: 197838807431028661}
   - component: {fileID: 6933621752769062382}
   m_Layer: 0
-  m_Name: New SkeletonAnimation
+  m_Name: spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5159976798992924145
 Transform:
   m_ObjectHideFlags: 0
@@ -897,7 +917,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &213842799075530814
 MonoBehaviour:

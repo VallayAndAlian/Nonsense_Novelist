@@ -2,18 +2,33 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 /// <summary>
 /// 角色动画组件（不要用Play用这个）
 /// </summary>
 public class CharaAnim : MonoBehaviour
 {
     /// <summary>实际动画组件</summary>
-    public Animator anim;
+    [HideInInspector]public Animator anim;
     /// <summary>当前动画名</summary>
+    [Header("仅作显示用")]
     public AnimEnum currentAnim;
+    
+    private SkeletonAnimation spineAnim;
+
+
     void Start()
     {
         currentAnim=AnimEnum.idle;
+        spineAnim = GetComponentInChildren<SkeletonAnimation>();
+        if (spineAnim != null)
+        {
+            spineAnim.Initialize(true);
+        }
+
+
+        TryGetComponent<Animator>(out anim);
+
     }
 
     private string newAnimName;//新动画字符串(仅用于↓）
@@ -30,6 +45,19 @@ public class CharaAnim : MonoBehaviour
         anim.SetBool(newAnimName, true);
         currentAnim = newAnimEnum;
     }
+
+
+    /// <summary>
+    /// 播放动画用这个
+    /// </summary>
+    /// <param name="paramName">新动画枚举</param>
+    public void Play(string newAnimEnum)
+    {
+        spineAnim.AnimationState.SetAnimation(0, newAnimEnum, true);
+    }
+
+
+
     /// <summary>
     /// 判断是否播放完毕
     /// </summary>
@@ -55,7 +83,8 @@ public class CharaAnim : MonoBehaviour
 
     public void SetSpeed(AnimEnum animEnum, float speed)
     {
-            anim.speed = 1 * speed;
-
+        anim.speed = 1 * speed;
+        if (spineAnim != null)
+            spineAnim.timeScale = 1 * speed;
     }
 }

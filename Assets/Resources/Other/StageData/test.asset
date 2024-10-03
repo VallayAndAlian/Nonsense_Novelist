@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607f763b3b79f7549aaf5eb2dad0aba8, type: 3}
   m_Name: test
   m_EditorClassIdentifier: Assembly-CSharp::StagesData
+  info: "\u65E7\u6D4B\u8BD5\u6570\u636E"
+  groupMaxHp: 100
+  energyRecover: 0.2
+  oneCardLoad: 3
+  cardListLoad: 5
+  eventDelayTime: 5
+  xiWang: 10
+  fangKe: 25
+  yiWai: 10
+  weiJi: 30
+  jiaoYi: 25
+  changJing: 10
   stagesData:
   - type: 0
     t_boss: {fileID: 1998518449765752747, guid: 07ea40c337681b0468e927324bc4eb7b, type: 3}

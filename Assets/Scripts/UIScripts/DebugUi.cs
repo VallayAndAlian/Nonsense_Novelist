@@ -104,7 +104,7 @@ public class DebugUi : MonoBehaviour
     public void EndGame()
     {
        
-        CharacterManager.instance.EndGame();
+        GameMgr.instance.EndGame();
         Exit();
     }
 

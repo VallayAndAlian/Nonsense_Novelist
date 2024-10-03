@@ -15,64 +15,172 @@ MonoBehaviour:
   items:
   - id: 
     stage: 0
+    rank: "1\u7EA7"
+    LoseHp: 15
+    eventCount: 1
+    eventKey: 0
     rate1: 70
     rate2: 25
     rate3: 5
     rate4: 0
     sum: 100
+    Monster1: 1
+    Monster1Rate: 1
+    Monster2: 1
+    Monster2Rate: 0
+    EliteRate: 0
+    EliteCount: 1
+    HardMonsterCount: 1
+    HardEliteCount: 1
   - id: 
     stage: 1
+    rank: "2\u7EA7"
+    LoseHp: 20
+    eventCount: 2
+    eventKey: 0
     rate1: 50
     rate2: 35
     rate3: 15
     rate4: 0
     sum: 100
+    Monster1: 1
+    Monster1Rate: 0.7
+    Monster2: 2
+    Monster2Rate: 0.3
+    EliteRate: 0.2
+    EliteCount: 1
+    HardMonsterCount: 2
+    HardEliteCount: 1
   - id: 
     stage: 2
+    rank: "3\u7EA7"
+    LoseHp: 25
+    eventCount: 3
+    eventKey: 0
     rate1: 35
     rate2: 35
     rate3: 25
     rate4: 5
     sum: 100
+    Monster1: 1
+    Monster1Rate: 0.5
+    Monster2: 2
+    Monster2Rate: 0.5
+    EliteRate: 0.4
+    EliteCount: 1
+    HardMonsterCount: 2
+    HardEliteCount: 1
   - id: 
     stage: 3
+    rank: "4\u7EA7"
+    LoseHp: 30
+    eventCount: 1
+    eventKey: 0
     rate1: 25
     rate2: 35
     rate3: 30
     rate4: 10
     sum: 100
+    Monster1: 1
+    Monster1Rate: 0.3
+    Monster2: 2
+    Monster2Rate: 0.7
+    EliteRate: 0.3
+    EliteCount: 2
+    HardMonsterCount: 2
+    HardEliteCount: 2
   - id: 
     stage: 4
+    rank: "5\u7EA7"
+    LoseHp: 35
+    eventCount: 2
+    eventKey: 0
     rate1: 20
     rate2: 30
     rate3: 35
     rate4: 15
     sum: 100
+    Monster1: 2
+    Monster1Rate: 0.7
+    Monster2: 3
+    Monster2Rate: 0.3
+    EliteRate: 0.5
+    EliteCount: 2
+    HardMonsterCount: 2
+    HardEliteCount: 2
   - id: 
     stage: 5
+    rank: "6\u7EA7"
+    LoseHp: 40
+    eventCount: 3
+    eventKey: 0
     rate1: 15
     rate2: 20
     rate3: 40
     rate4: 25
     sum: 100
+    Monster1: 2
+    Monster1Rate: 0.5
+    Monster2: 3
+    Monster2Rate: 0.5
+    EliteRate: 0.7
+    EliteCount: 2
+    HardMonsterCount: 3
+    HardEliteCount: 2
   - id: 
     stage: 6
+    rank: "7\u7EA7"
+    LoseHp: 40
+    eventCount: 1
+    eventKey: 0
     rate1: 10
     rate2: 15
     rate3: 37
     rate4: 38
     sum: 100
+    Monster1: 2
+    Monster1Rate: 0.3
+    Monster2: 3
+    Monster2Rate: 0.7
+    EliteRate: 0.4
+    EliteCount: 3
+    HardMonsterCount: 3
+    HardEliteCount: 3
   - id: 
     stage: 7
+    rank: "8\u7EA7"
+    LoseHp: 40
+    eventCount: 2
+    eventKey: 0
     rate1: 10
     rate2: 15
     rate3: 37
     rate4: 38
     sum: 100
+    Monster1: 3
+    Monster1Rate: 1
+    Monster2: 3
+    Monster2Rate: 0
+    EliteRate: 0.6
+    EliteCount: 3
+    HardMonsterCount: 3
+    HardEliteCount: 3
   - id: 
     stage: 8
+    rank: "9\u7EA7"
+    LoseHp: 40
+    eventCount: 3
+    eventKey: 0
     rate1: 10
     rate2: 15
     rate3: 37
     rate4: 38
     sum: 100
+    Monster1: 3
+    Monster1Rate: 1
+    Monster2: 3
+    Monster2Rate: 0
+    EliteRate: 0.8
+    EliteCount: 3
+    HardMonsterCount: 3
+    HardEliteCount: 3

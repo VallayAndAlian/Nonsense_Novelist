@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+
+
+
 public class CustomList : List<string>
 {
     public new void Add(string item)
@@ -35,11 +39,15 @@ public class CustomList : List<string>
 public class GameMgr : MonoSingleton<GameMgr>
 {
 
-    [HideInInspector] public List<Type> settingL=new List<Type>();
+    #region 属性
+
+
+    [HideInInspector] public List<Type> settingL = new List<Type>();
     [HideInInspector] public List<Type> settingR = new List<Type>();
 
 
     //关闭界面相关
+    public string endGameAdr = "UI/EndGame";
     private GameObject exitPanel;
     GameObject exitObj;
     Button exitButton;
@@ -74,12 +82,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     //名词的消耗性使用相关
     [HideInInspector] public Dictionary<Type, List<int>> NwordTimes = new Dictionary<Type, List<int>>();//目前的所有牌库中，名词和其使用次数。
     [HideInInspector] public Dictionary<Type, List<int>> NwordCanUseTimes = new Dictionary<Type, List<int>>();//目前待使用的牌库中，名词和其使用次数。
-    [HideInInspector] public List<Type> outVerbs=new List<Type>();
+    [HideInInspector] public List<Type> outVerbs = new List<Type>();
     //骰子数量
     int diceNumber = 2;
 
     [Header("（策划）伤害参数")]
-    public float attackAmount=5;
+    public float attackAmount = 5;
     public void AddDice(int i)
     {
         diceNumber += i;
@@ -146,18 +154,18 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public bool HaveCanHappenKeyEvent(int _enumNum)
     {
-       
- 
+
+
         foreach (var item in canHappenData_Key)
         {
-          
+
             if (item.type == (EventType)(Convert.ToInt32(_enumNum)))
             {
 
                 return true;
             }
         }
-  
+
         return false;
     }
 
@@ -167,7 +175,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     public float afterScale = 0.28f;
     public float beforeScale = 18;
     public float afterClickScale = 0.44f;
-    public Vector3 charaPosOffset = new Vector3(0,10,0);
+    public Vector3 charaPosOffset = new Vector3(0, 10, 0);
     public float cardRate_1 = 20;
     public float cardRate_2 = 30;
     public float cardRate_3 = 30;
@@ -187,9 +195,74 @@ public class GameMgr : MonoSingleton<GameMgr>
     public bool playEventCG = true;
     public bool DebugUi = false;
     private int stageIndex = 0;//游戏阶段
-    [HideInInspector]public float time1=0;
-    [HideInInspector] public float time2=0;
+    [HideInInspector] public float time1 = 0;
+    [HideInInspector] public float time2 = 0;
     [HideInInspector] public float timeSpeed = 1;
+
+    [Header("新增-游戏回合")]
+    public int stageCount = 0;
+    public StageType nowStage = StageType.other;
+
+
+    [Header("新增-阵营血量")]
+
+    //左边阵营的血量
+    public float leftGroupMaxHp = 1;
+    private float LeftGroupNowHp = 1;
+    public float leftGroupNowHp
+    {
+        set
+        {
+            if (value < LeftGroupNowHp)
+            {
+                if (onGroupLostHp != null) onGroupLostHp(true);
+            }
+            LeftGroupNowHp = value;
+        }
+        get
+        {
+            return LeftGroupNowHp;
+        }
+    }
+    //右边阵营的血量
+    public float rightGroupMaxHp = 1;
+    private float RightGroupNowHp = 1;
+    public float rightGroupNowHp
+    {
+        set
+        {
+            if (value < RightGroupNowHp)
+            {
+                if (onGroupLostHp != null) onGroupLostHp(false);
+            }
+            RightGroupNowHp = value;
+        }
+        get
+        {
+            return RightGroupNowHp;
+        }
+    }
+
+    public delegate void OnGroupLostHp(bool isleft);
+    public event OnGroupLostHp onGroupLostHp;
+
+
+
+    public bool pause
+    {
+        set
+        {
+            CharacterManager.instance.pause = value;
+        }
+        get 
+        {
+            return CharacterManager.instance.pause;
+        }
+    }
+
+    #endregion
+
+
 
     override public void Awake()
     {
@@ -918,33 +991,28 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #region 卡牌稀有度&&游戏阶段
 
-    public void AddStage(int i)
-    {
-        stageIndex += i;
-        bool b=SetRareTo(stageIndex);
-        if (!b) print("stageIndex超出游戏设定");
-    }
+  
     public int GetStage()
     {
         return stageIndex;
     }
-    public void SetStageTo(int i)
+    public void SetStageTo(cardRareExcelItem i)
     {
-        stageIndex = i;
-        bool b = SetRareTo(stageIndex);
+        stageIndex = i.stage;
+        bool b = SetRareTo(i);
         if (!b) print("stageIndex超出游戏设定");
     }
 
-    private bool SetRareTo(int _stage)
+    private bool SetRareTo(cardRareExcelItem _stage)
     {
-        if (_stage >= AllData.instance.cardRareDate.items.Length)
+        if (_stage==null)
             return false;
 
         //这里默认数据顺序和表格一样。如果出错了，加上index检测
-        cardRate_1 = AllData.instance.cardRareDate.items[_stage].rate1;
-        cardRate_2 = AllData.instance.cardRareDate.items[_stage].rate2;
-        cardRate_3 = AllData.instance.cardRareDate.items[_stage].rate3;
-        cardRate_4 = AllData.instance.cardRareDate.items[_stage].rate4;
+        cardRate_1 = _stage.rate1;
+        cardRate_2 = _stage.rate2;
+        cardRate_3 = _stage.rate3;
+        cardRate_4 = _stage.rate4;
 
         return true;
     }
@@ -1184,5 +1252,33 @@ public class GameMgr : MonoSingleton<GameMgr>
             }
         }
     }
+
+    public void EndGame()
+    {
+        //if (GameObject.Find(endGame.name)!=null) return;
+     
+        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
+        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
+        Instantiate(ResMgr.GetInstance().Load<GameObject>(endGameAdr));
+        CharacterManager.instance.pause = true;
+    }
+
+    /// <summary>
+    /// 进入休息回合
+    /// </summary>
+    public void EnterRestStage()
+    { 
+
+    }
+
+
+    /// <summary>
+    /// 进入战斗回合
+    /// </summary>
+    public void EnterFightStage()
+    {
+
+    }
+
     #endregion
 }

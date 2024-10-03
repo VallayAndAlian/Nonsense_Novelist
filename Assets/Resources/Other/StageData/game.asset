@@ -12,6 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 607f763b3b79f7549aaf5eb2dad0aba8, type: 3}
   m_Name: game
   m_EditorClassIdentifier: Assembly-CSharp::StagesData
+  info: "\u65E7\u6B63\u5F0F\u6570\u636E"
+  groupMaxHp: 100
+  energyRecover: 0.2
+  oneCardLoad: 3
+  cardListLoad: 5
+  eventDelayTime: 5
+  xiWang: 10
+  fangKe: 25
+  yiWai: 10
+  weiJi: 30
+  jiaoYi: 25
+  changJing: 10
   stagesData:
   - type: 2
     t_boss: {fileID: 0}

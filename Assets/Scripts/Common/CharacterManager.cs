@@ -64,16 +64,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
 
     #region pauseSetting
 
-    public void EndGame()
-    {
-        if (hasEnd) return;
-        //if (pause) return;
-        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
-        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
-        Instantiate(endGame);
-        hasEnd = true;
-        pause = true;
-    }
+   
     private bool PAUSE;
     /// <summary>
     /// 手动设置设置。同时，发射器弃用禁用、子弹速度也会被同时设置。所有的角色都会脱离攻击状态

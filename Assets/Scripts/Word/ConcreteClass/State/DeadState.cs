@@ -80,14 +80,14 @@ namespace AI
             if (_ac.Camp == CampEnum.right)
             {
                 CharacterManager.charas_right.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
-                if (CharacterManager.charas_right.Count == 0) CharacterManager.instance.EndGame();
+                if (CharacterManager.charas_right.Count == 0) GameMgr.instance.EndGame();
                 return;
             }
 
             if (_ac.Camp == CampEnum.left)
             {
                 CharacterManager.charas_left.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
-                if (CharacterManager.charas_left.Count == 0) CharacterManager.instance.EndGame();
+                if (CharacterManager.charas_left.Count == 0) GameMgr.instance.EndGame();
                 return; 
             }
             if (myState.character.Camp == CampEnum.stranger)

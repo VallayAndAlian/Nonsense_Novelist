@@ -9,29 +9,35 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public enum StageType
 {
-    boss, weiji, Event
+    fight_Pvp = 0,//战斗状态 - 两队互打
+    fight_Pve_l = 1,//战斗状态 - 怪物打左
+    fight_Pve_r = 2,//战斗状态 - 怪物打右
+    fight_Pve_boss = 3,//战斗状态 - 打boss
+    rest = 4,//休息状态
+    other = 5,//新手状态等
 }
 
 [System.Serializable]
 public class OneStageData
 {
     [Header("阶段类型")]
-    public StageType type;
-    [Header("【boss类型】")]
-    public GameObject t_boss;//boss 的预制体
-    [Header("【事件类型】")]
-    public int t_eventCount;//boss 的预制体
-    public bool t_eventKey;//boss 的预制体
-    public float t_eventtime;//boss 的预制体
-    public float t_eventtime_key;//boss 的预制体
 
-    [Header("共通数据")]
-    public float time;//持续时间
-    public int level;
+     public StageType type;
+
+
+    [Header("【如果是boss类型】")]
+
+    [Tooltip("boss 的预制体")] public GameObject t_boss;
+
+   
+    [Header("基本属性")]
+    [Tooltip("持续时间")] public float time;
+    [Tooltip("难度等级")] public cardRareExcelItem level;
 
     [Header("slider图标")]
-    public Sprite image;//对应图标
-    public float imageScale;//持续时间
+    [Tooltip("对应图标")] public Sprite image;
+    [Tooltip("图标缩放")] public float imageScale;
+
     [HideInInspector] public float time_count;//累计时间   
 
 }
@@ -92,14 +98,7 @@ public class GameProcessSlider : MonoBehaviour
     private List<GameObject> array0 = new List<GameObject>();
     private bool isCreate = false;
 
-    //概率
-    [Header("事件概率(总和100)")]
-    [Header("希望")] public int xiWang = 10;
-    [Header("访客")] public int fangKe = 25;
-    [Header("意外")] public int yiWai = 10;
-    [Header("危机")] public int weiJi = 30;
-    [Header("交易")] public int jiaoYi = 25;
-    [Header("场景")] public int changJing = 10;
+    
 
     bool hasWeiji = false;
     public void WeiJiOpen()
@@ -210,9 +209,9 @@ public class GameProcessSlider : MonoBehaviour
         if (timeNow > time_stage.stagesData[stageCount].time_count)
         {
          
-            GameMgr.instance.SetStageTo(time_stage.stagesData[stageCount].level-1);
+            GameMgr.instance.SetStageTo(time_stage.stagesData[stageCount].level);
 
-            if (time_stage.stagesData[stageCount].type == StageType.boss)
+            if (time_stage.stagesData[stageCount].type == StageType.fight_Pve_boss)
             {
               
                 //创建boss事件
@@ -226,18 +225,18 @@ public class GameProcessSlider : MonoBehaviour
                 }
                stageCount++;
             }
-            else if (time_stage.stagesData[stageCount].type == StageType.Event)
+            else if (time_stage.stagesData[stageCount].type == StageType.rest)
             {
                 
                 countTime = true;
                 //创建Event事件
                 print("创建Event事件");
-                CreateEvent(time_stage.stagesData[stageCount].t_eventKey, time_stage.stagesData[stageCount].t_eventCount
-                    , time_stage.stagesData[stageCount].t_eventtime, time_stage.stagesData[stageCount].t_eventtime_key);
+                CreateEvent(time_stage.stagesData[stageCount].level.eventKey, time_stage.stagesData[stageCount].level.eventCount
+                    , 0, 0);
                 
                 stageCount++;
             }
-            else if (time_stage.stagesData[stageCount].type == StageType.weiji)
+            else if (time_stage.stagesData[stageCount].type == StageType.fight_Pve_l)
             {
                 //切换BGM-2
                 audioPlay.Boss_GuaiWu();
@@ -399,7 +398,7 @@ public class GameProcessSlider : MonoBehaviour
         //BGM
       //audioPlay.RandomPlay();
 
-        CharacterManager.instance.EndGame();
+        GameMgr.instance.EndGame();
         this.transform.localScale = oriScale;
         //CreateBookCanvas();
     }
@@ -462,11 +461,11 @@ public class GameProcessSlider : MonoBehaviour
 
         //概率抽取
         int numx = Random.Range(1, 101);
-        if (numx <= xiWang) { result = 0; }
-        else if (numx > xiWang && numx < xiWang + fangKe) result = 1;
-        else if (numx > xiWang + fangKe && numx < xiWang + fangKe + yiWai) result = 2;
-        else if (numx > xiWang + fangKe + yiWai && numx < xiWang + fangKe + yiWai + weiJi) result = 3;
-        else if (numx > xiWang + fangKe + yiWai + weiJi && numx < xiWang + fangKe + yiWai + weiJi + jiaoYi) result = 4;
+        if (numx <= time_stage.xiWang) { result = 0; }
+        else if (numx > time_stage.xiWang && numx < time_stage.xiWang + time_stage.fangKe) result = 1;
+        else if (numx > time_stage.xiWang + time_stage.fangKe && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai) result = 2;
+        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi) result = 3;
+        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi + time_stage.jiaoYi) result = 4;
         else result = 5;
 
         return result;
@@ -548,5 +547,26 @@ public class GameProcessSlider : MonoBehaviour
         isCreate = true;
         eventCount++;
         array.Clear();
-    } 
+    }
+
+
+    #region 进入不同阶段
+
+    private void EnterStage_Rest()
+    {
+        //进入休息状态：工具界面;刷新事件；所有角色不战斗
+    }
+
+
+    private void EnterStage_Fight(StageType _type)
+    {
+       //进入战斗状态：隐藏工具界面;不刷新事件;所有角色战斗
+        
+
+
+    }
+
+
+
+    #endregion
 }
