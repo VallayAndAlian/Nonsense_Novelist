@@ -1,5 +1,4 @@
 using UnityEngine.UI;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -12,9 +11,8 @@ public class AfterStart : MonoBehaviour
     /// <summary>角色简要预制体（手动挂）</summary>
     private GameObject charaShortInstance;
 
-    //生成面板的大小。
+    //生成面板的大小
     private float scale = 1.6f / 1900;
-
 
     /// <summary>角色简要预制体克隆</summary>
     private GameObject charaShortP;
@@ -22,7 +20,7 @@ public class AfterStart : MonoBehaviour
 
     private string buffShortAdr="UI/buffShort";
 
-    /// <summary></summary>
+    /// <summary>标识鼠标进入和退出,用于销毁/实例化简要信息面板</summary>
     private bool one;
     private SpriteRenderer sr;
 
@@ -52,12 +50,7 @@ public class AfterStart : MonoBehaviour
 
     private void Start()
     {
-
-
-
-
         mainCamera = Camera.main;
-
 
         charaShortInstance = Resources.Load<GameObject>("UI/CharacterShort");
 
@@ -71,7 +64,6 @@ public class AfterStart : MonoBehaviour
         buffCount.OnVariableChange += WhenBuffCountChange;
         buffSprite_default = Resources.Load<Sprite>("WordImage/Buffs/Default");
 
-
     }
 
 
@@ -80,17 +72,12 @@ public class AfterStart : MonoBehaviour
         buffCount.OnVariableChange -= WhenBuffCountChange;
     }
 
-
-  
     Vector3 vector3_100 = new Vector3(1, 0, 0);
     private void OnMouseOver()
     {
         if (CharacterManager.instance.pause) return;
-        
-
         //颜色变黄
         sr.color = colorIn;
-
         if (!one)
         {
             one = true;
@@ -129,7 +116,7 @@ public class AfterStart : MonoBehaviour
     void WhenBuffCountChange(int _i)
     {
 
-      //获取bufflist的母物体并且收回之前生成的全部buff。
+        //获取bufflist的母物体并且收回之前生成的全部buff。
         buffList = charaShort.transform.GetChild(5);
         foreach (var _buff in buffList.GetComponentsInChildren<Image>())
         {
@@ -180,10 +167,9 @@ public class AfterStart : MonoBehaviour
 
 
     //在最开始和刷新后使用。内涵生成物体代码
-
-    //给角色简要赋值
     AbstractCharacter abschara;
-void FunctionInis()
+    //给角色简要赋值
+    void FunctionInis()
     {
 
         //给角色简要赋值
@@ -198,10 +184,10 @@ void FunctionInis()
         //psy2
         charaShort.transform.GetChild(1).GetComponentInChildren<Text>().text = (abschara.psy * abschara.psyMul).ToString();
 
-
         //获取角色的技能列表
         skillList = charaShort.transform.GetChild(4);
-        if (abschara.skills.Count > 3) print(abschara.name + "技能数超过3个");
+        if (abschara.skills.Count > 3) 
+            print(abschara.name + "技能数超过3个");
 
         skillList.GetComponentsInChildren<Text>()[0].text = "";
         skillList.GetComponentsInChildren<Text>()[1].text = "";
@@ -210,10 +196,9 @@ void FunctionInis()
         skillList.GetChild(2).GetComponent<RawImage>().color = Color.clear;
         skillList.GetChild(1).GetComponent<RawImage>().color = Color.clear;
 
-
         //
         energy[0].Clear(); 
-         energy[1].Clear();
+        energy[1].Clear();
         energy[2].Clear();
         for (int x = 0; x < abschara.skills.Count; x++)
         {
@@ -236,7 +221,10 @@ void FunctionInis()
 
             }
         }
-       
+
+        //by--铭心:仅在初始化显示角色的信息
+        //判断此为角色或怪物 通过`abschara`??怎么判断,缩略框显示的内容在哪里???
+
 
         ////获取角色的状态列表
         //buffList = charaShort.transform.GetChild(5);
@@ -297,7 +285,6 @@ void FunctionInis()
 
         FunctionUpdate();
         buffCount.Value = GetComponents<AbstractBuff>().Length;
-
     }
    
     Coroutine destoryEnergyIEnumerator;
@@ -314,7 +301,6 @@ void FunctionInis()
         //FunctionInis();
 
     }
-
 
     private bool IsUIOffscreen()
     {
@@ -348,8 +334,6 @@ void FunctionInis()
         FunctionInis();
         
     }
-   
-
 
 
     private void OnMouseExit()
@@ -357,8 +341,6 @@ void FunctionInis()
         //颜色恢复
 
         sr.color = colorOut;
-
-    
 
         if (one)
         {
@@ -369,6 +351,4 @@ void FunctionInis()
             one = false;
         }
     }
-
-
 }

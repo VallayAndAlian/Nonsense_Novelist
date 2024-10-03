@@ -20,6 +20,7 @@ public class MailObj : MailObjBase
     private Vector3 originPos;
     //信件UI浮动目标位置
     private Vector3 floatPos;
+    
     //信件数据
     private MailInfo mailInfo;
 
@@ -56,7 +57,7 @@ public class MailObj : MailObjBase
     }
 
     /// <summary>
-    /// 鼠标在悬浮在信件上,信件跳动和回复
+    /// 信件的鼠标悬浮效果
     /// </summary>
     /// <param name="targetPos">目标位置</param>
     /// <param name="dir">跳动方向</param>
@@ -96,6 +97,7 @@ public class MailObj : MailObjBase
         //根据新数据设置页面显示
         textTag.text = mailInfo.auther.ToString();
         //其他信息待UI完善设置即可显示...
+
     }
     
     /// <summary>
