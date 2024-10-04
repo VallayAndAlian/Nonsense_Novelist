@@ -55,6 +55,11 @@ namespace AI
             StartCoroutine(EveryZeroOne());
         }
 
+        public void SetStateTo(StateID _id)
+        {
+            nowState  = allState.Find(p => p.id == _id);
+            nowState.EnterState(this);
+        }
         public void FixedUpdate()
         {
             nowState.Action(this);
@@ -85,7 +90,7 @@ namespace AI
         private WaitForSeconds zeroOne= new WaitForSeconds(0.1f);
         IEnumerator EveryZeroOne()
         {
-            while (GameMgr.instance.pause)
+            while (!GameMgr.instance.pause)
             {
                 nowState.CheckTrigger(this);//更新状态
                 yield return zeroOne;

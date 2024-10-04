@@ -16,13 +16,10 @@ namespace AI
 
         virtual public void Awake()
         {
-
-                var t = gameObject.AddComponent<NoHealthTrigger>();
-                    triggers.Add(t);
-               // t.aaa = this;
-                map.Add(TriggerID.NoHealth, StateID.dead);
+            var t = gameObject.AddComponent<NoHealthTrigger>();
+            triggers.Add(t);
+            map.Add(TriggerID.NoHealth, StateID.dead);
           
-     
             triggers.Add(gameObject.AddComponent<BeDizzyTrigger>());
             map.Add(TriggerID.BeDizzy, StateID.dizzy);
         }

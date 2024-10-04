@@ -17,7 +17,6 @@ MonoBehaviour:
   energyRecover: 0.3
   oneCardLoad: 0.2
   cardListLoad: 3
-  eventDelayTime: 3
   xiWang: 10
   fangKe: 25
   yiWai: 10
@@ -25,223 +24,223 @@ MonoBehaviour:
   jiaoYi: 25
   changJing: 10
   stagesData:
-  - type: 2
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
-    time: 0
+  - type: 4
+    time: 3
     level: 0
-    image: {fileID: 0}
-    imageScale: 0
-    time_count: 0
-  - type: 0
+    image: {fileID: 21300000, guid: 9fe55e934549573439e45ebb5ab14dbb, type: 3}
+    imageScale: 1
+    time_count: 3
+    cg: 
     t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
-    time: 0
-    level: 0
-    image: {fileID: 0}
-    imageScale: 0
-    time_count: 0
+    eventCount: 3
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 1
+    time: 2
+    level: 2
+    image: {fileID: 21300000, guid: 1ddc475a110afa747a9b768b2b5e2a68, type: 3}
+    imageScale: 1
+    time_count: 5
+    cg: 
     t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
-    time: 0
-    level: 0
-    image: {fileID: 0}
-    imageScale: 0
-    time_count: 0
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
+  - type: 1
+    time: 3
+    level: 3
+    image: {fileID: 21300000, guid: 2b0490520eac4144ab269f413702a089, type: 3}
+    imageScale: 1
+    time_count: 8
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
-    time: 0
+    time: 5
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 2
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 3
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5
   - type: 0
-    t_boss: {fileID: 0}
-    t_eventCount: 0
-    t_eventKey: 0
-    t_eventtime: 0
-    t_eventtime_key: 0
     time: 0
     level: 0
     image: {fileID: 0}
     imageScale: 0
-    time_count: 0
+    time_count: 13
+    cg: 
+    t_boss: {fileID: 0}
+    eventCount: 0
+    eventIsKey: 0
+    eventDelayTime: 5

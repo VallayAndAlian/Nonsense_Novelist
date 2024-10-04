@@ -40,11 +40,12 @@ public class GameMgr : MonoSingleton<GameMgr>
 {
 
     #region 属性
-
+    [Header("【单位：s】游戏进程相关参数（手动）")]
+    public StagesData time_stage;
+    [HideInInspector] public StageType nowStageType;
 
     [HideInInspector] public List<Type> settingL = new List<Type>();
     [HideInInspector] public List<Type> settingR = new List<Type>();
-
 
     //关闭界面相关
     public string endGameAdr = "UI/EndGame";
@@ -1215,6 +1216,57 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #endregion
 
+
+    #region
+    /// <summary>
+    /// 回收场上的所有纸条
+    /// </summary>
+    public void RecycleWordsInScene()
+    {
+        //清除场上的纸条
+        //纸条回到词库
+    }
+
+
+    /// <summary>
+    /// 开启/关闭休息回合UI的显示
+    /// </summary>
+    /// <param name="_display"></param>
+    public void SwitchRestUiDisplay(bool _display)
+    {
+
+    }
+
+
+    //删除场上的所有事件
+    public void DeleteAllEventsInScene()
+    {
+
+    }
+
+/// <summary>
+/// 随机抽取一种类型的事件
+/// </summary>
+/// <returns></returns>
+    public int GetRandomEventType()
+    {
+        int result = -1;
+
+        //概率抽取
+
+        int numx = UnityEngine.Random.Range(1, 101);
+        if (numx <= time_stage.xiWang) { result = 0; }
+        else if (numx > time_stage.xiWang && numx < time_stage.xiWang + time_stage.fangKe) result = 1;
+        else if (numx > time_stage.xiWang + time_stage.fangKe && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai) result = 2;
+        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi) result = 3;
+        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi + time_stage.jiaoYi) result = 4;
+        else result = 5;
+
+        return result;
+    }
+    #endregion
+
+
     #region 游戏阶段
     public void CreateMonster(int id)
     {
@@ -1263,20 +1315,54 @@ public class GameMgr : MonoSingleton<GameMgr>
         CharacterManager.instance.pause = true;
     }
 
-    /// <summary>
-    /// 进入休息回合
-    /// </summary>
-    public void EnterRestStage()
-    { 
+    //进入下一个阶段，切换对应UI、事件、角色状态
+    public void EnterTheStage(int _stage)
+    {
+        if (_stage >= time_stage.stagesData.Count)
+        {
+            Debug.LogError("stageCount wrong"); return;
+        }
 
+        stageCount = _stage;
+
+        var OneStageData = time_stage.stagesData[stageCount];
+        nowStageType = OneStageData.type;
+        switch (OneStageData.type)
+        {
+            case StageType.fight_Pvp: { } break;
+            case StageType.fight_Pve_r: { } break;
+            case StageType.fight_Pve_l: { } break;
+            case StageType.fight_Pve_boss: { } break;
+            case StageType.rest: 
+                {
+                    EnterStage_Rest();
+                } break;
+            case StageType.other: { } break;
+        }
     }
 
 
-    /// <summary>
-    /// 进入战斗回合
-    /// </summary>
-    public void EnterFightStage()
+
+    private void EnterStage_Rest()
     {
+        //进入休息状态：工具界面;刷新事件；所有角色不战斗；
+
+        //所有角色脱离战斗状态
+        foreach (var _chara in CharacterManager.instance.charas)
+        {
+            _chara.myState.SetStateTo(AI.StateID.idle);
+        }
+        //激活事件生成
+        gameProcess.CreateEventUpdate(time_stage.stagesData[stageCount].eventDelayTime,
+            time_stage.stagesData[stageCount].eventIsKey, time_stage.stagesData[stageCount].eventCount);
+    }
+
+    
+    private void EnterStage_Fight(StageType _type)
+    {
+        //进入战斗状态：隐藏工具界面;不刷新事件;所有角色战斗
+
+
 
     }
 

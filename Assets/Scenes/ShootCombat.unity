@@ -15804,18 +15804,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perfab_icon: {fileID: 4963443990303953719, guid: 3655b1b5195bfcd4890c66c76f9d3c32, type: 3}
-  time_stage: {fileID: 11400000, guid: 0a7ecd26e559bdc40a857576e7818289, type: 2}
-  event_stage:
-  - events: 3
-  - events: 3
-  - events: 3
-  - events: 3
-  - events: 3
-  - events: 3
-  - events: 3
-  - events: 0
-  - events: 0
-  - events: 0
   bookCanvas: {fileID: 0}
   characterCanvas: {fileID: 232375200}
   settingList: {fileID: 165798654}
@@ -15837,14 +15825,6 @@ MonoBehaviour:
   - {fileID: 296767673687119374, guid: 8228bba66bb0cd2438c23068c5feb655, type: 3}
   - {fileID: 296767673687119374, guid: 1b34a8a16ed0932448303639416a0a4c, type: 3}
   - {fileID: 296767673687119374, guid: 7864ab0c371e01e46bbcfd4ce474aff3, type: 3}
-  eventTime: 3
-  keyEventTime: 3
-  xiWang: 17
-  fangKe: 17
-  yiWai: 17
-  weiJi: 17
-  jiaoYi: 17
-  changJing: 16
 --- !u!114 &1338572143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18911,6 +18891,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef64ea5a9eed4af4ebd612669fe61ebf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  time_stage: {fileID: 11400000, guid: 834dca8cd15820548b995ec805bccfda, type: 2}
+  endGameAdr: UI/EndGame
   settingPanel: {fileID: 165798656}
   CardRes: {fileID: 1066372324}
   levelSenceIndex: 0
@@ -18942,6 +18924,10 @@ MonoBehaviour:
   time1: 0
   time2: 0
   timeSpeed: 1
+  stageCount: 0
+  nowStage: 5
+  leftGroupMaxHp: 1
+  rightGroupMaxHp: 1
 --- !u!4 &1671282608
 Transform:
   m_ObjectHideFlags: 0
@@ -24537,8 +24523,8 @@ MonoBehaviour:
   - {fileID: 5554665689463608179}
   - {fileID: 7122938362444373632}
   m_Bounds:
-    m_Center: {x: -0.004020691, y: 0.0000009536743, z: 0}
-    m_Extent: {x: 4.65098, y: 5.8200016, z: 0}
+    m_Center: {x: -0.004020691, y: 0.00000047683716, z: 0}
+    m_Extent: {x: 4.6509795, y: 5.8200026, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -25556,8 +25542,8 @@ MonoBehaviour:
   - {fileID: 6244387100325110482}
   - {fileID: 4808532571342208698}
   m_Bounds:
-    m_Center: {x: -0.00213027, y: -0.0030899048, z: 0}
-    m_Extent: {x: 1.2978702, y: 1.2769101, z: 0}
+    m_Center: {x: -0.00213027, y: -0.003090024, z: 0}
+    m_Extent: {x: 1.2978699, y: 1.2769101, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -25729,8 +25715,8 @@ MonoBehaviour:
   - {fileID: 311580695304259648}
   - {fileID: 2002351549380431290}
   m_Bounds:
-    m_Center: {x: -0.004070163, y: -0.0016001463, z: 0}
-    m_Extent: {x: 1.2709303, y: 1.2483999, z: 0}
+    m_Center: {x: -0.004069805, y: -0.0016001463, z: 0}
+    m_Extent: {x: 1.2709303, y: 1.2484, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -26034,7 +26020,7 @@ MonoBehaviour:
   - {fileID: 4257508509302705095}
   m_Bounds:
     m_Center: {x: 0.0017745495, y: -0.0000019073486, z: 0}
-    m_Extent: {x: 3.8882265, y: 1.1950005, z: 0}
+    m_Extent: {x: 3.888226, y: 1.1950006, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -26190,8 +26176,8 @@ MonoBehaviour:
   - {fileID: 1770433945922693371}
   - {fileID: 7403842680435012246}
   m_Bounds:
-    m_Center: {x: -0.00019991398, y: -0.0028440952, z: 0}
-    m_Extent: {x: 1.1586597, y: 1.1393743, z: 0}
+    m_Center: {x: -0.0002001524, y: -0.0028440952, z: 0}
+    m_Extent: {x: 1.1586595, y: 1.1393743, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -26342,7 +26328,7 @@ MonoBehaviour:
   - {fileID: 4257508509302705095}
   m_Bounds:
     m_Center: {x: -0.0047051907, y: -0.002974987, z: 0}
-    m_Extent: {x: 3.8102963, y: 3.4029763, z: 0}
+    m_Extent: {x: 3.8102958, y: 3.4029768, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
