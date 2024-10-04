@@ -65,7 +65,6 @@ public class GameProcessSlider : MonoBehaviour
     public GameObject characterCanvas;
 
     [Header("设定获取列表")]
-    public GameObject settingList;
 
     private GameObject _wordInfo;
 
@@ -142,14 +141,26 @@ public class GameProcessSlider : MonoBehaviour
         CreateProcessSlider();
 
         //关闭面板显示
-        if (settingList != null)
-            settingList.SetActive(false);
+        if (GameMgr.instance.settingPanel != null)
+            GameMgr.instance.settingPanel.gameObject.SetActive(false);
 
         _wordInfo = this.transform.parent.GetComponentInChildren<WordInformation>().gameObject;
         if (_wordInfo != null)
             _wordInfo.SetActive(false);
     }
 
+    private void FixedUpdate()
+    {
+        GameMgr.instance.time1 += Time.deltaTime;
+
+        if (CharacterManager.instance.pause) return;
+        sliderProcess.value = timeNow;
+
+        GameMgr.instance.time2 += Time.deltaTime;
+
+       
+        
+    }
     //private void FixedUpdate()
     //{
     //    GameMgr.instance.time1 += Time.deltaTime;
@@ -175,7 +186,7 @@ public class GameProcessSlider : MonoBehaviour
     //                    case 1://设定
     //                        {
     //                            CreateXiWang(false);
-    //                             }
+    //                        }
     //                        break;
     //                    case 5:
     //                    case 2://希望
@@ -189,7 +200,7 @@ public class GameProcessSlider : MonoBehaviour
     //        return;
     //    }
 
-        
+
     //    //CreateEventUpdate();
 
     //    GameMgr.instance.time1 += Time.deltaTime;
@@ -200,8 +211,8 @@ public class GameProcessSlider : MonoBehaviour
     //    if (stageCount >= time_stage.stagesData.Count)
     //    {
     //        Debug.LogWarning("time_stage overCount!");
-           
-            
+
+
     //        countTime = false;
     //        return;
     //    }
@@ -209,45 +220,45 @@ public class GameProcessSlider : MonoBehaviour
     //    //如果进入阶段
     //    if (timeNow > time_stage.stagesData[stageCount].time_count)
     //    {
-         
+
     //        GameMgr.instance.SetStageTo(time_stage.stagesData[stageCount].level);
 
     //        if (time_stage.stagesData[stageCount].type == StageType.fight_Pve_boss)
     //        {
-              
+
     //            //创建boss事件
     //            if (time_stage.stagesData[stageCount].t_boss != null)
     //            {
-    //                print("CreateBossCreateBoss"+ countTime);
-             
-    //                CreateBoss(time_stage.stagesData[stageCount].t_boss); 
-    //                countTime = false; 
+    //                print("CreateBossCreateBoss" + countTime);
+
+    //                CreateBoss(time_stage.stagesData[stageCount].t_boss);
+    //                countTime = false;
     //                //StartCoroutine(Wait_Weiji());
     //            }
-    //           stageCount++;
+    //            stageCount++;
     //        }
     //        else if (time_stage.stagesData[stageCount].type == StageType.rest)
     //        {
-                
+
     //            countTime = true;
     //            //创建Event事件
     //            print("创建Event事件");
     //            CreateEvent(time_stage.stagesData[stageCount].level.eventKey, time_stage.stagesData[stageCount].level.eventCount
     //                , 0, 0);
-                
+
     //            stageCount++;
     //        }
     //        else if (time_stage.stagesData[stageCount].type == StageType.fight_Pve_l)
     //        {
     //            //切换BGM-2
     //            audioPlay.Boss_GuaiWu();
-               
+
 
     //            CreateWeijiEvent(false, 99);
     //            StartCoroutine(Wait_Weiji());
     //            countTime = false;
     //            stageCount++;
-                
+
     //        }
 
     //        //demo的结算页面.临时写的，很草率
@@ -262,7 +273,7 @@ public class GameProcessSlider : MonoBehaviour
     //        //}
 
 
-  
+
     //    }
     //}
 
@@ -436,8 +447,8 @@ public class GameProcessSlider : MonoBehaviour
     {
         countTime = true;
         CharacterManager.instance.pause = false;
-        if (settingList != null)
-            settingList.SetActive(true);
+        if (GameMgr.instance.settingPanel != null)
+            GameMgr.instance.settingPanel.gameObject.SetActive(true);
 
         GameMgr.instance.settingPanel.RefreshList();
 
@@ -457,11 +468,22 @@ public class GameProcessSlider : MonoBehaviour
     /// </summary>
     /// <returns></returns>
 
-    
+    private Coroutine coroutineEvent = null;
     public void CreateEventUpdate(float _delayTime, bool isKey, int count)
     {
-        StartCoroutine(CreateEvent(_delayTime,isKey,count));
+        if (coroutineEvent != null) StopCoroutine(coroutineEvent);
+         coroutineEvent =StartCoroutine(CreateEvent(_delayTime,isKey,count));
     }
+
+
+    public void StopEventUpdate()
+    {
+        if (coroutineEvent == null)
+            return;
+        StopCoroutine(coroutineEvent);
+        coroutineEvent = null;
+    }
+
 
     WaitForFixedUpdate waitFixedUpdate = new WaitForFixedUpdate();
     /// <summary>
@@ -533,6 +555,7 @@ public class GameProcessSlider : MonoBehaviour
         isCreate = true;
         eventCount++;
         array.Clear();
+        coroutineEvent = null;
     }
 
 

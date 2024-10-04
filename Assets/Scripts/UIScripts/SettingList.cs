@@ -9,6 +9,7 @@ public class SettingList : MonoBehaviour
     [Header("左右组别基物体（手动设置）")]
     public Transform groupL;
     public Transform groupR;
+
     [Header("设定预制体（手动设置）")]
     public GameObject pingYong;
     public GameObject guiCai;
@@ -17,10 +18,21 @@ public class SettingList : MonoBehaviour
     [Header("左右背景基物体（手动设置）")]
     public Transform groupBGL;
     public Transform groupBGR;
+
+    [Header("左右血条（手动设置）")]
+    public Image L_HP;
+    public Image R_HP;
+
     [Header("设定背景预制体（手动设置）")]
     public GameObject settingBg_U;
     public GameObject settingBg_M;
     public GameObject settingBg_B;
+
+    public void RefreshGroupHP()
+    {
+        L_HP.fillAmount = GameMgr.instance.leftGroupNowHp / GameMgr.instance.leftGroupMaxHp;
+        R_HP.fillAmount = GameMgr.instance.rightGroupNowHp / GameMgr.instance.rightGroupMaxHp;
+    }
 
     public void RefreshList()
     {

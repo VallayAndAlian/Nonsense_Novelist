@@ -55,6 +55,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     Button cancelButton;
     bool hasOpenExit = false;
     public SettingList settingPanel;
+    public RestUI restUI;
     public GameObject CardRes;
 
     //当前的场景
@@ -196,8 +197,8 @@ public class GameMgr : MonoSingleton<GameMgr>
     public bool playEventCG = true;
     public bool DebugUi = false;
     private int stageIndex = 0;//游戏阶段
-    [HideInInspector] public float time1 = 0;
-    [HideInInspector] public float time2 = 0;
+    [HideInInspector] public float time1 = 0;//实际游戏时间(含暂停）
+    [HideInInspector] public float time2 = 0;//游戏时间（不含暂停）
     [HideInInspector] public float timeSpeed = 1;
 
     [Header("新增-游戏回合")]
@@ -219,6 +220,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 if (onGroupLostHp != null) onGroupLostHp(true);
             }
             LeftGroupNowHp = value;
+            settingPanel.RefreshGroupHP();
         }
         get
         {
@@ -237,6 +239,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 if (onGroupLostHp != null) onGroupLostHp(false);
             }
             RightGroupNowHp = value;
+            settingPanel.RefreshGroupHP();
         }
         get
         {
@@ -1268,6 +1271,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
 
     #region 游戏阶段
+    
     public void CreateMonster(int id)
     {
         int _index = -1;
@@ -1329,10 +1333,26 @@ public class GameMgr : MonoSingleton<GameMgr>
         nowStageType = OneStageData.type;
         switch (OneStageData.type)
         {
-            case StageType.fight_Pvp: { } break;
-            case StageType.fight_Pve_r: { } break;
-            case StageType.fight_Pve_l: { } break;
-            case StageType.fight_Pve_boss: { } break;
+            case StageType.fight_Pvp:
+                { 
+                    EnterStage_Fight(StageType.fight_Pvp); 
+                } 
+                break;
+            case StageType.fight_Pve_r:
+                {
+                    EnterStage_Fight(StageType.fight_Pve_r);
+                } 
+                break;
+            case StageType.fight_Pve_l: 
+                {
+                    EnterStage_Fight(StageType.fight_Pve_l);
+                } 
+                break;
+            case StageType.fight_Pve_boss: 
+                {
+                    EnterStage_Fight(StageType.fight_Pve_boss);
+                } 
+                break;
             case StageType.rest: 
                 {
                     EnterStage_Rest();
@@ -1346,7 +1366,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void EnterStage_Rest()
     {
         //进入休息状态：工具界面;刷新事件；所有角色不战斗；
-
+        GameMgr.instance.restUI.gameObject.SetActive(true);
         //所有角色脱离战斗状态
         foreach (var _chara in CharacterManager.instance.charas)
         {
@@ -1361,8 +1381,14 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void EnterStage_Fight(StageType _type)
     {
         //进入战斗状态：隐藏工具界面;不刷新事件;所有角色战斗
+        GameMgr.instance.restUI.gameObject.SetActive(false);
 
+        foreach (var _chara in CharacterManager.instance.charas)
+        {
+            _chara.myState.SetStateTo(AI.StateID.attack);
+        }
 
+        gameProcess.StopEventUpdate();
 
     }
 

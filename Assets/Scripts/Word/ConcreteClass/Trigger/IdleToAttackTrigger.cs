@@ -15,7 +15,7 @@ namespace AI
         }
         public override bool Satisfy(MyState0 myState)
         {
-            print(myState.character.name + myState.character.Camp);
+           
             if (myState.character.hp <= 0) return false;
             if (CharacterManager.instance.pause)return false;
             switch (GameMgr.instance.nowStageType )

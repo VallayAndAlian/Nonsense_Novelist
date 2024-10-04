@@ -35,7 +35,7 @@ MonoBehaviour:
     eventCount: 3
     eventIsKey: 0
     eventDelayTime: 5
-  - type: 1
+  - type: 0
     time: 2
     level: 2
     image: {fileID: 21300000, guid: 1ddc475a110afa747a9b768b2b5e2a68, type: 3}

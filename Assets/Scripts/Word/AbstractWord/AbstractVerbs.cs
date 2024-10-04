@@ -76,8 +76,9 @@ abstract public class AbstractVerbs : AbstractWord0 ,ICD
 
     public virtual void CdAdd(AbstractCharacter ac)
     {
-        CD++;
+        if (GameMgr.instance.nowStage == StageType.rest) return;
 
+        CD++;
 
         if (CD+1>=needCD) 
             character.canUseSkills++;

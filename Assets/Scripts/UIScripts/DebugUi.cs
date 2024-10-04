@@ -245,6 +245,14 @@ public class DebugUi : MonoBehaviour
         GameMgr.instance.gameProcess.CreateChangJing(true);
         Exit();
     }
+
+    public void ClickStage()
+    {
+
+        GameMgr.instance.EnterTheStage(GameMgr.instance.stageCount+1);
+        Exit();
+    }
+
     public void AddMonster(Transform _chara)
     {
         //创建固定危机事件
