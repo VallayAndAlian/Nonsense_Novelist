@@ -50,7 +50,7 @@ public class MailPreviewPanel : MonoBehaviour
         //显示信件
         ShowMail();
         //更新翻页按钮显示
-        butnApprUpdate();
+        //butnApprUpdate();
         //绑定筛选事件:重新筛选待显示数据,重新信件
         Author1Toggle.onValueChanged.AddListener((isOn) =>
         {
@@ -95,11 +95,11 @@ public class MailPreviewPanel : MonoBehaviour
         mailDataList.Add(new MailInfo(E_MailAuther.Auther1));
 
         //读取streamingAssets中的配置初始化信件列表
-        string path = Application.streamingAssetsPath + "/mailData.json";
-        string JsonStr = "";
-        if (File.Exists(path))
-            JsonStr = File.ReadAllText(path);
-        mailDataList = JsonMapper.ToObject<List<MailInfo>>(JsonStr);
+        //string path = Application.streamingAssetsPath + "/mailData.json";
+        //string JsonStr = "";
+        //if (File.Exists(path))
+        //    JsonStr = File.ReadAllText(path);
+        //mailDataList = JsonMapper.ToObject<List<MailInfo>>(JsonStr);
     }
 
     /// <summary>
@@ -113,8 +113,8 @@ public class MailPreviewPanel : MonoBehaviour
         for (int i = 0; i < mailDataList.Count; i++) 
         {
             //如果配置此信件当前不显示则跳过此信件
-            if (mailDataList[i].isDisPlay == false)
-                continue;
+            //if (mailDataList[i].isDisPlay == false)
+            //    continue;
 
             if (mailDataList[i].auther == E_MailAuther.Auther1 && Author1Toggle.isOn) 
                 prepMailData.Add(mailDataList[i]);
