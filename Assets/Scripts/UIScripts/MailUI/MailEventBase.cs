@@ -5,9 +5,9 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// 信件对象基类,用于实现鼠标点击信件等行为
+/// 信件事件对象基类,用于实现鼠标点击信件等行为
 /// </summary>
-public class MailObjBase : MonoBehaviour, IPointerEnterHandler, IPointerUpHandler, IPointerExitHandler
+public class MailEventBase : MonoBehaviour, IPointerEnterHandler, IPointerUpHandler, IPointerExitHandler
 {
     //鼠标进入时的动作
     protected UnityAction enterAction;

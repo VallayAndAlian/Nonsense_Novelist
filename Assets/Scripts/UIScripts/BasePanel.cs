@@ -13,12 +13,11 @@ public abstract class BasePanel<T> : MonoBehaviour
     //管理面板透明度的组件
     CanvasGroup canvasGroup;
     //表示面板是否隐藏的标识
-    private bool isShow = false;
+    private bool isShow = true;
     //UI渐变显示/隐藏速度
     private float showSpeed = 5f;
     //隐藏面板后的回调
     UnityAction hideCallback = null;
-
 
     private void Awake()
     {
@@ -48,9 +47,8 @@ public abstract class BasePanel<T> : MonoBehaviour
     public virtual void Show()
     {
         isShow = true;
-        //先设置面板透明度为0
+        //先设置面板透明度为0,待渐变为1
         canvasGroup.alpha = 0;
-        this.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -61,9 +59,9 @@ public abstract class BasePanel<T> : MonoBehaviour
     public virtual void Hide(UnityAction callBack = null)
     {
         isShow = false;
-        //设置面板透明度为0
+        //先设置面板透明度为1,待渐变为0
         canvasGroup.alpha = 1;
-        hideCallback = callBack;
+        hideCallback += callBack;
     }
     
     /// <summary>
