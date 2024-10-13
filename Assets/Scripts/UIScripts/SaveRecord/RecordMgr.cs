@@ -9,6 +9,7 @@ public class RecordMgr : MonoSingleton<RecordMgr>
     public List<TextRecord> recordList =null;
 
     private string res = "Assets/Record/";
+    
     private void Awake()
     {
         base.Awake();
@@ -16,12 +17,8 @@ public class RecordMgr : MonoSingleton<RecordMgr>
         //{
         //    recordList = ResMgr.GetInstance().Load<FinalText>("TextRecord").textList;
         //}
-
-
-       
     } 
-    
-    
+
     //public void AddRecord(string _name,List<string> _content,int _RAND)
     //{
     //    int id = recordList2.Count;
@@ -39,9 +36,6 @@ public class RecordMgr : MonoSingleton<RecordMgr>
     //    AssetDatabase.SaveAssets();
     //    AssetDatabase.Refresh();
     //}
-
-
-
 
     public void SaveByJson(string _name, List<string> _content, int _RAND)
     {
@@ -87,14 +81,10 @@ public class RecordMgr : MonoSingleton<RecordMgr>
         sw.Write(saveJsonStr);
         //关闭StreamWriter
         sw.Close();
-
-
     }
-
 
     public Save LoadByJson(string filepath)
     {
-
         if (File.Exists(filepath))
         {
             //创建一个StreamReader,用来读取流
@@ -106,13 +96,8 @@ public class RecordMgr : MonoSingleton<RecordMgr>
 
             //将字符串jsonStr转换为Save对象
             Save save = JsonMapper.ToObject<Save>(jsonStr);
-
             return save;
-
-          
         }
         return null;
     }
-
-
 }
