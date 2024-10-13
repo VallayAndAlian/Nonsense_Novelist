@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -9,12 +10,16 @@ enum moveDir
     ToDown
 }
 
-public class MailObj : MailObjBase
+public class MailObj : MailEventBase
 {
     //背景图片
     public Image bgImg;
-    //[调试使用]:信件标签,筛选条件
-    public TextMeshProUGUI textTag;
+    //dear信件头部
+    public TextMeshProUGUI dearText;
+    //信件内容
+    public TextMeshProUGUI contentText;
+    //信件作者
+    public TextMeshProUGUI authorText;
 
     //信件UI原位置
     private Vector3 originPos;
@@ -32,9 +37,7 @@ public class MailObj : MailObjBase
 
         //初始化信件信息为NULL
         if (mailInfo == null)
-            SetMailInfo(new MailInfo(E_MailAuther.NULLAuther));
-        //显示初始标签内容
-        textTag.text = mailInfo.auther.ToString();
+            SetMailInfo(new MailInfo(E_MailAuther.未知发信人));
 
         /* 注册鼠标事件 */
         //鼠标进入:UI上浮动
@@ -95,11 +98,13 @@ public class MailObj : MailObjBase
         this.mailInfo = mailInfo;
 
         //根据新数据设置页面显示
-        textTag.text = mailInfo.auther.ToString();
+        this.dearText.text = mailInfo.dear;
+        this.contentText.text = mailInfo.mailBody;
+        this.authorText.text = mailInfo.auther.ToString();
         //其他信息待UI完善设置即可显示...
 
     }
-    
+
     /// <summary>
     /// 点击此信件后的动作
     /// </summary>

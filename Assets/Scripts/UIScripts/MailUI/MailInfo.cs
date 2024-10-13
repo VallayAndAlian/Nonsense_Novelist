@@ -3,10 +3,11 @@
 /// </summary>
 public enum E_MailAuther
 {
-    Auther1,
-    Auther2,
-    Auther3,
-    NULLAuther
+    报社编辑,
+    安德鲁医生,
+    您的忠实粉丝彼得,
+    佐佐木编辑,
+    未知发信人,
 }
 
 /// <summary>

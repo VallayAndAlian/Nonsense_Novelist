@@ -6,14 +6,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MailPreviewPanel : MonoBehaviour
+public class MailPreviewPanel : BasePanel<MailPreviewPanel>
 {
     //信件对象在场景的父节点位置
     public Transform MailPosFather;
-    //分类标签
-    public Toggle Author1Toggle;
-    public Toggle Author2Toggle;
-    public Toggle Author3Toggle;
+    /*
+     分类标签
+        -报社编辑
+        -佐佐木编辑
+        -安德鲁医生
+        -您的忠实粉丝彼得
+     */
+    public Toggle[] AuthorToggles;
+
     //界面上的信件对象
     public MailObj[] mailObjs;
     //翻页按钮上一页下一页
@@ -31,42 +36,35 @@ public class MailPreviewPanel : MonoBehaviour
     private int maxMailCount;
     //当前应该显示的数据在prepMailData的开始和结束索引
     private int startIndex ,lastIndex;
-
-    private void Start()
+    
+    //初始化面板字段
+    protected override void Init()
     {
         /* 初始化字段 */
-        //页码初始为1
+        //显示页码
         pageNum = 1;
-        //信箱可以容纳的信件数量
+        //信箱可容纳信件数量
         maxMailCount = mailObjs.Length;
-        //初始化所有信件数据
+        //所有信件数据
         ReadMailsData();
-        //初始化待显示数据
+        //待显示数据
         RefreshPrepMail();
-        //初始化显示索引
+        //显示索引
         startIndex = 0;
         lastIndex = maxMailCount > prepMailData.Count ? prepMailData.Count - 1 : maxMailCount - 1;
-        print("初始显示范围: " + startIndex + " " + lastIndex) ;
+        //print("初始显示范围: " + startIndex + " " + lastIndex) ;
         //显示信件
         ShowMail();
         //更新翻页按钮显示
         butnApprUpdate();
-        //绑定筛选事件:重新筛选待显示数据,重新信件
-        Author1Toggle.onValueChanged.AddListener((isOn) =>
+        //绑定筛选事件:重新筛选待显示数据,显示信件
+        for (int i = 0; i < AuthorToggles.Length; i++)
         {
-            RefreshPrepMail();
-            ShowMail();
-        });
-        Author2Toggle.onValueChanged.AddListener((isOn) =>
-        {
-            RefreshPrepMail();
-            ShowMail();
-        });
-        Author3Toggle.onValueChanged.AddListener((isOn) =>
-        {
-            RefreshPrepMail();
-            ShowMail();
-        });
+            AuthorToggles[i].onValueChanged.AddListener((isOn) => {
+                RefreshPrepMail();
+                ShowMail();
+            });
+        }
         //上下翻页事件
         AddPageBtn.onClick.AddListener(() => {
             TurnPage(true);
@@ -74,7 +72,6 @@ public class MailPreviewPanel : MonoBehaviour
         SubPageBtn.onClick.AddListener(() => {
             TurnPage(false);
         });
-        
     }
 
     /// <summary>
@@ -82,18 +79,6 @@ public class MailPreviewPanel : MonoBehaviour
     /// </summary>
     private void ReadMailsData()
     {
-        //当前测试手动模拟数据
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther1));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther2));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther3));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther2));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther2));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther1));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther3));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther1));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther2));
-        mailDataList.Add(new MailInfo(E_MailAuther.Auther1));
-
         //读取streamingAssets中的配置初始化信件列表
         string path = Application.streamingAssetsPath + "/mailData.json";
         string JsonStr = "";
@@ -113,16 +98,19 @@ public class MailPreviewPanel : MonoBehaviour
         for (int i = 0; i < mailDataList.Count; i++) 
         {
             //如果配置此信件当前不显示则跳过此信件
-            if (mailDataList[i].isDisPlay == false)
-                continue;
+            //if (mailDataList[i].isDisPlay == false)
+            //    continue;
 
-            if (mailDataList[i].auther == E_MailAuther.Auther1 && Author1Toggle.isOn) 
+            if (mailDataList[i].auther == E_MailAuther.报社编辑 && AuthorToggles[0].isOn) 
                 prepMailData.Add(mailDataList[i]);
             
-            if (mailDataList[i].auther == E_MailAuther.Auther2 && Author2Toggle.isOn)
+            if (mailDataList[i].auther == E_MailAuther.佐佐木编辑 && AuthorToggles[1].isOn)
                 prepMailData.Add(mailDataList[i]);
 
-            if (mailDataList[i].auther == E_MailAuther.Auther3 && Author3Toggle.isOn)
+            if (mailDataList[i].auther == E_MailAuther.安德鲁医生 && AuthorToggles[2].isOn)
+                prepMailData.Add(mailDataList[i]);
+        
+            if (mailDataList[i].auther == E_MailAuther.您的忠实粉丝彼得 && AuthorToggles[3].isOn)
                 prepMailData.Add(mailDataList[i]);
         }
 
@@ -246,5 +234,7 @@ public class MailPreviewPanel : MonoBehaviour
             mailObjs[j].gameObject.SetActive(true);
         }
     }
+
+
 }
 
