@@ -100,16 +100,16 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
             //if (mailDataList[i].isDisPlay == false)
             //    continue;
 
-            if (mailDataList[i].auther == E_MailAuther.报社编辑 && AuthorToggles[0].isOn) 
+            if (mailDataList[i].autherType == E_MailAuther.报社编辑 && AuthorToggles[0].isOn) 
                 prepMailData.Add(mailDataList[i]);
             
-            if (mailDataList[i].auther == E_MailAuther.佐佐木编辑 && AuthorToggles[1].isOn)
+            if (mailDataList[i].autherType == E_MailAuther.佐佐木编辑 && AuthorToggles[1].isOn)
                 prepMailData.Add(mailDataList[i]);
 
-            if (mailDataList[i].auther == E_MailAuther.安德鲁医生 && AuthorToggles[2].isOn)
+            if (mailDataList[i].autherType == E_MailAuther.安德鲁医生 && AuthorToggles[2].isOn)
                 prepMailData.Add(mailDataList[i]);
         
-            if (mailDataList[i].auther == E_MailAuther.您的忠实粉丝彼得 && AuthorToggles[3].isOn)
+            if (mailDataList[i].autherType == E_MailAuther.您的忠实粉丝彼得 && AuthorToggles[3].isOn)
                 prepMailData.Add(mailDataList[i]);
         }
 

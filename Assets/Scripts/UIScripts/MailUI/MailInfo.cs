@@ -18,8 +18,10 @@ public class MailInfo
 {
     //信件序号
     public int id;
-    //发件人
-    public E_MailAuther auther;
+    //发件人类型:区分发件人,同一发件人类型可能以不同称呼出现
+    public E_MailAuther autherType;
+    //发件人实际显示姓名
+    public string autherName;
     //称呼内容:也许可以根据发件人优化
     public string dear;
     //信件内容
@@ -30,10 +32,10 @@ public class MailInfo
     public bool isRead;
     //是否应该显示
     public bool isDisPlay;
-    //附件内容:配置为id等,根据其可以增加游戏中的道具
-    public string attch;
+    //附件id
+    public int attchId;
     //附件数量
-    public string attchNum;
+    public int attchNum;
     //附件是否已经被领取(拿出)
     public string attchIsOut;
 
@@ -48,7 +50,7 @@ public class MailInfo
     /// <param name="auther"></param>
     public MailInfo(E_MailAuther auther)
     {
-        this.auther = auther;
+        this.autherType = auther;
     }
 
 }

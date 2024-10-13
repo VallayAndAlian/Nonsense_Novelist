@@ -33,7 +33,7 @@ public class MailObj : MailEventBase
     {
         //初始化记录原此信件位置和浮动的目标位置
         originPos = this.transform.localPosition;
-        floatPos = originPos + new Vector3(0, 30, 0);
+        floatPos = originPos + new Vector3(0, 300, 0);
 
         //初始化信件信息为NULL
         if (mailInfo == null)
@@ -101,7 +101,7 @@ public class MailObj : MailEventBase
         this.mailInfo = mailInfo;
         this.dearText.text = mailInfo.dear;
         this.contentText.text = mailInfo.mailBody;
-        this.authorText.text = mailInfo.auther.ToString();
+        this.authorText.text = mailInfo.autherType.ToString();
         //MailInfo其他信息补充显示
 
         //显示对象
