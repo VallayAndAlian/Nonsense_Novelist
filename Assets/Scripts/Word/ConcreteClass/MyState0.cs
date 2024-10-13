@@ -55,11 +55,7 @@ namespace AI
             StartCoroutine(EveryZeroOne());
         }
 
-        public void SetStateTo(StateID _id)
-        {
-            nowState  = allState.Find(p => p.id == _id);
-            nowState.EnterState(this);
-        }
+        
         public void FixedUpdate()
         {
             nowState.Action(this);

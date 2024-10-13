@@ -96,7 +96,6 @@ abstract public class AbstractCharacter : AbstractWord0
         get { return HP; }
         set
         {
-
             HP = value;
             HPSetting();
         }
@@ -314,7 +313,10 @@ abstract public class AbstractCharacter : AbstractWord0
     void HPSetting()
     {
         if (HP < 0)
+        {
             HP = 0;
+            myState.ChangeActiveState(StateID.dead);
+        }
         if (HP > MaxHp * MaxHpMul)
             HP = MaxHp * MaxHpMul;
         if (hpSlider != null)

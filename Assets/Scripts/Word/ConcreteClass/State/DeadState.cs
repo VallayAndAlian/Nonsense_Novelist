@@ -33,24 +33,26 @@ namespace AI
         public override void Action(MyState0 myState)
         {
 
-            //AbstractCharacter myc = this.transform.parent.GetComponent<AbstractCharacter>();
-            //bool lastOne = true;
-            //if (this.transform.parent.GetComponent<AbstractCharacter>())
-            //{
-            //      foreach (var _ac in CharacterManager.instance.GetComponentsInChildren<AbstractCharacter>())
-            //    {
-            //        if ((_ac.camp == myc.camp)&& (_ac != myc))lastOne = false;
-            //    } 
-            //}
+            AbstractCharacter myc = this.transform.parent.GetComponent<AbstractCharacter>();
+            CharacterManager.instance.deadChara.Add(myc);
+            bool lastOne = true;
+            if (this.transform.parent.GetComponent<AbstractCharacter>())
+            {
+                foreach (var _ac in CharacterManager.instance.GetComponentsInChildren<AbstractCharacter>())
+                {
+                    if ((_ac.Camp == myc.Camp) && (_ac != myc)) lastOne = false;
+                }
+            }
 
 
-            //if (lastOne&&(myc.camp!=CampEnum.stranger))
-            //{
+            if (lastOne && (myc.Camp != CampEnum.stranger))
+            {
 
+                GameMgr.instance.GroupLose(myc.Camp);
+              
 
-            //    CharacterManager.instance.EndGame();
-            //  }
-           
+            }
+
 
             ////临时的死亡效果
             //SpriteRenderer sp;
@@ -69,7 +71,7 @@ namespace AI
             //if (myState.character.charaAnim.IsEnd(AnimEnum.dead))
             //{ 
             //播放完动画后销毁
-            Destroy(this.transform.parent.gameObject);
+            //Destroy(this.transform.parent.gameObject);
             //}
         }
 
@@ -80,14 +82,14 @@ namespace AI
             if (_ac.Camp == CampEnum.right)
             {
                 CharacterManager.charas_right.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
-                if (CharacterManager.charas_right.Count == 0) GameMgr.instance.EndGame();
+                //if (CharacterManager.charas_right.Count == 0) GameMgr.instance.EndGame();
                 return;
             }
 
             if (_ac.Camp == CampEnum.left)
             {
                 CharacterManager.charas_left.Remove(this.transform.parent.GetComponent<AbstractCharacter>());
-                if (CharacterManager.charas_left.Count == 0) GameMgr.instance.EndGame();
+                //if (CharacterManager.charas_left.Count == 0) GameMgr.instance.EndGame();
                 return; 
             }
             if (myState.character.Camp == CampEnum.stranger)

@@ -34,7 +34,7 @@ MonoBehaviour:
     t_boss: {fileID: 0}
     eventCount: 3
     eventIsKey: 0
-    eventDelayTime: 5
+    eventDelayTime: 0.6
   - type: 0
     time: 2
     level: 2
@@ -45,7 +45,7 @@ MonoBehaviour:
     t_boss: {fileID: 0}
     eventCount: 0
     eventIsKey: 0
-    eventDelayTime: 5
+    eventDelayTime: 0.1
   - type: 1
     time: 3
     level: 3

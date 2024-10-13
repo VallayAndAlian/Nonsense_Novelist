@@ -73,10 +73,19 @@ public class GameProcessSlider : MonoBehaviour
     private AudioPlay audioPlay;
     private AudioSource audioSource;
 
-    [Header("事件位置")] public GameObject[] eventPoint;
+    [Header("事件位置")] public GameObject eventPoint;
     [Header("事件气泡（希望-访客-意外-危机-交易-场景）")] public GameObject[] eventBubblePrefab;
+    private Bubble[] EventBubble;
+    public Bubble[] eventBubble
+    {
+        get
+        {
+            //获取全部角色
+            EventBubble = eventPoint.GetComponentsInChildren<Bubble>();
+            return EventBubble;
+        }
+    }
 
-   
     private int eventCount = 0;
     private List<int> array = new List<int>();
     private List<GameObject> array0 = new List<GameObject>();
@@ -292,7 +301,7 @@ public class GameProcessSlider : MonoBehaviour
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[3], (a) =>
         {
             array0.Add(a);
-            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.SetParent(eventPoint.transform.GetChild(0));
             a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.WeiJi, false, monster);
@@ -305,7 +314,7 @@ public class GameProcessSlider : MonoBehaviour
         //创建固定危机事件
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[1], (a) =>
         {
-            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.SetParent(eventPoint.transform.GetChild(0));
             a.transform.localPosition = Vector3.one*1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.FangKe, false, chara );
@@ -317,7 +326,7 @@ public class GameProcessSlider : MonoBehaviour
         //创建固定危机事件
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[0], (a) =>
         {
-            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.SetParent(eventPoint.transform.GetChild(0));
             a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.XiWang, false, 1);
@@ -339,7 +348,7 @@ public class GameProcessSlider : MonoBehaviour
         //创建固定危机事件
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[4], (a) =>
         {
-            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.SetParent(eventPoint.transform.GetChild(0));
             a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.JiaoYi, false, 1);
@@ -351,7 +360,7 @@ public class GameProcessSlider : MonoBehaviour
         //创建固定危机事件
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[5], (a) =>
         {
-            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.SetParent(eventPoint.transform.GetChild(0));
             a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.ChangJing, false, 1);
@@ -363,7 +372,7 @@ public class GameProcessSlider : MonoBehaviour
         //创建固定危机事件
         PoolMgr.GetInstance().GetObj(eventBubblePrefab[2], (a) =>
         {
-            a.transform.SetParent(eventPoint[0].transform);
+            a.transform.SetParent(eventPoint.transform.GetChild(0));
             a.transform.localPosition = Vector3.one * 1010;
 
             a.GetComponent<Bubble>().StartEventBefore(EventType.YiWai, false, 1);
@@ -471,8 +480,9 @@ public class GameProcessSlider : MonoBehaviour
     private Coroutine coroutineEvent = null;
     public void CreateEventUpdate(float _delayTime, bool isKey, int count)
     {
-        if (coroutineEvent != null) StopCoroutine(coroutineEvent);
-         coroutineEvent =StartCoroutine(CreateEvent(_delayTime,isKey,count));
+
+        if (coroutineEvent != null) { StopCoroutine(coroutineEvent);  }
+            coroutineEvent =StartCoroutine(CreateEvent(_delayTime,isKey,count));
     }
 
 
@@ -480,6 +490,7 @@ public class GameProcessSlider : MonoBehaviour
     {
         if (coroutineEvent == null)
             return;
+       
         StopCoroutine(coroutineEvent);
         coroutineEvent = null;
     }
@@ -494,14 +505,16 @@ public class GameProcessSlider : MonoBehaviour
     IEnumerator CreateEvent(float _delayTime,bool isKey,int count)
     {
         float _timeCountr = 0;
-        while ((_timeCountr<=_delayTime))
+        while (_timeCountr<=_delayTime)
         {
-            yield return waitFixedUpdate;
+            print("(_timeCountr <= _delayTime)"+ _timeCountr+ GameMgr.instance.pause);
+            yield return new WaitForSeconds(Time.deltaTime);
             if (!GameMgr.instance.pause) _timeCountr += Time.deltaTime;
            
         }
+        print("(array0.Clear())");
 
-            array0.Clear();
+           array0.Clear();
             int _random = -1;
         //if (isKey)
         //{
@@ -512,7 +525,7 @@ public class GameProcessSlider : MonoBehaviour
         //生成事件气泡预制体
         for (int i = 0; i < count; i++)
         {
-            int num0 = Random.Range(0, eventPoint.Length);
+            int num0 = Random.Range(0, eventPoint.transform.childCount);
             int numx = GameMgr.instance.GetRandomEventType();
          
             if (i == _random)//是重要事件
@@ -533,7 +546,7 @@ public class GameProcessSlider : MonoBehaviour
             while (((!EventPoint.isEvent[num0])||(array.Contains(num0)))&&(_looppp<50))//避免纸球位置
             {
                 _looppp++;
-                num0 = Random.Range(0, eventPoint.Length);
+                num0 = Random.Range(0, eventPoint.transform.childCount);
             }
 
             //实例化事件气泡               
@@ -541,7 +554,7 @@ public class GameProcessSlider : MonoBehaviour
             {
                 array.Add(num0);
                 array0.Add(a);
-                a.transform.SetParent(eventPoint[num0].transform);
+                a.transform.SetParent(eventPoint.transform.GetChild(num0).transform);
                 a.transform.localPosition = Vector3.zero;
                 a.GetComponent<Bubble>().dTime = Mathf.Infinity;
                 if (i == _random)

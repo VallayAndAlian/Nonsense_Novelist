@@ -28,6 +28,7 @@ public class CharacterManager : MonoSingleton<CharacterManager>
             Charas = value;
         }
     }
+    public List<AbstractCharacter> deadChara = new List<AbstractCharacter>();
     /// <summary>×ó²à½ÇÉ«</summary>
     public  static List<AbstractCharacter> charas_left = new List<AbstractCharacter>();
     /// <summary>ÓÒ²à½ÇÉ«</summary>

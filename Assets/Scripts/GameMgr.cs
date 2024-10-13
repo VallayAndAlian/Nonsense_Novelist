@@ -221,6 +221,7 @@ public class GameMgr : MonoSingleton<GameMgr>
             }
             LeftGroupNowHp = value;
             settingPanel.RefreshGroupHP();
+            if (value <= 0) GameMgr.instance.EndGame();
         }
         get
         {
@@ -240,6 +241,7 @@ public class GameMgr : MonoSingleton<GameMgr>
             }
             RightGroupNowHp = value;
             settingPanel.RefreshGroupHP();
+            if (value <= 0) GameMgr.instance.EndGame();
         }
         get
         {
@@ -1237,15 +1239,41 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// <param name="_display"></param>
     public void SwitchRestUiDisplay(bool _display)
     {
-
+       restUI.gameObject.SetActive(_display);
     }
 
 
     //删除场上的所有事件
     public void DeleteAllEventsInScene()
     {
-
+        foreach (var _eventBubble in gameProcess.eventBubble)
+        {
+            Destroy(_eventBubble.gameObject);
+        }
     }
+
+    public void DeleteAllMonsterInScene()
+    {
+        foreach (var _monster in CharacterManager.instance.charas)
+        {
+            if (_monster.Camp == CampEnum.stranger)
+                Destroy(_monster.gameObject);
+        }
+    }
+
+
+    public void AllCharacterRelife()
+    {
+        foreach (var _deadChara in CharacterManager.instance.deadChara)
+        {
+            if (_deadChara.Camp == CampEnum.stranger) return;
+            _deadChara.hp = _deadChara.maxHp;
+            _deadChara.myState.ChangeActiveState(AI.StateID.idle);
+            CharacterManager.instance.deadChara.Remove(_deadChara);
+        }
+    }
+
+
 
 /// <summary>
 /// 随机抽取一种类型的事件
@@ -1359,6 +1387,18 @@ public class GameMgr : MonoSingleton<GameMgr>
                 } break;
             case StageType.other: { } break;
         }
+
+        //回收纸条
+        RecycleWordsInScene();
+
+        //清除上一回合的怪物
+        DeleteAllEventsInScene();
+
+        //清楚上一回合的事件
+        DeleteAllMonsterInScene();
+
+        //所有死亡角色回血且复活
+        AllCharacterRelife();
     }
 
 
@@ -1366,12 +1406,14 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void EnterStage_Rest()
     {
         //进入休息状态：工具界面;刷新事件；所有角色不战斗；
-        GameMgr.instance.restUI.gameObject.SetActive(true);
+        SwitchRestUiDisplay(true);
+
         //所有角色脱离战斗状态
         foreach (var _chara in CharacterManager.instance.charas)
         {
-            _chara.myState.SetStateTo(AI.StateID.idle);
+            _chara.myState.ChangeActiveState(AI.StateID.idle);
         }
+
         //激活事件生成
         gameProcess.CreateEventUpdate(time_stage.stagesData[stageCount].eventDelayTime,
             time_stage.stagesData[stageCount].eventIsKey, time_stage.stagesData[stageCount].eventCount);
@@ -1381,16 +1423,28 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void EnterStage_Fight(StageType _type)
     {
         //进入战斗状态：隐藏工具界面;不刷新事件;所有角色战斗
-        GameMgr.instance.restUI.gameObject.SetActive(false);
+        SwitchRestUiDisplay(false);
 
         foreach (var _chara in CharacterManager.instance.charas)
         {
-            _chara.myState.SetStateTo(AI.StateID.attack);
+            _chara.myState.ChangeActiveState(AI.StateID.attack);
         }
 
         gameProcess.StopEventUpdate();
 
     }
 
+    public void GroupLose(CampEnum _camp)
+    {
+        //扣血
+        switch (_camp)
+        {
+            case CampEnum.left: { LeftGroupNowHp -= AllData.instance.cardRareDate.items[time_stage.stagesData[stageCount].level].LoseHp; }break;
+            case CampEnum.right: { RightGroupNowHp -= AllData.instance.cardRareDate.items[time_stage.stagesData[stageCount].level].LoseHp; } break;
+        }
+
+        //进入下一回合
+        EnterTheStage(stageCount++);
+    }
     #endregion
 }

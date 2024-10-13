@@ -7381,7 +7381,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &510670188
 Transform:
   m_ObjectHideFlags: 0
@@ -13695,6 +13695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endGame: {fileID: 2807466146540498537, guid: 6504774b1e200614e99dd1f2f74d5e3f, type: 3}
+  deadChara: []
 --- !u!1 &1095542138
 GameObject:
   m_ObjectHideFlags: 0
@@ -16145,17 +16146,7 @@ MonoBehaviour:
   perfab_icon: {fileID: 4963443990303953719, guid: 3655b1b5195bfcd4890c66c76f9d3c32, type: 3}
   bookCanvas: {fileID: 0}
   characterCanvas: {fileID: 232375200}
-  eventPoint:
-  - {fileID: 270498152}
-  - {fileID: 1360151845}
-  - {fileID: 1575827599}
-  - {fileID: 1173430194}
-  - {fileID: 131646085}
-  - {fileID: 1356567826}
-  - {fileID: 1178375583}
-  - {fileID: 396702285}
-  - {fileID: 841065771}
-  - {fileID: 772689353}
+  eventPoint: {fileID: 1398369192}
   eventBubblePrefab:
   - {fileID: 296767673687119374, guid: a8b4700e44fff0041bb7b0a6a770e147, type: 3}
   - {fileID: 296767673687119374, guid: 29e9109d5fd453c40b4e2264c78e01d8, type: 3}
