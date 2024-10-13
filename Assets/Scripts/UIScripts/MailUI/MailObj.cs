@@ -37,13 +37,14 @@ public class MailObj : MailEventBase
 
         //初始化信件信息为NULL
         if (mailInfo == null)
-            SetMailInfo(new MailInfo(E_MailAuther.未知发信人));
+            ShowPreMail(new MailInfo(E_MailAuther.未知发信人));
 
         /* 注册鼠标事件 */
         //鼠标进入:UI上浮动
-        enterAction += () =>{
-            MoveTarget(floatPos,moveDir.ToTop);
-         };
+        enterAction += () =>
+        {
+            MoveTarget(floatPos, moveDir.ToTop);
+        };
         //鼠标退出:UI下浮动
         exitAction += () =>
         {
@@ -52,6 +53,7 @@ public class MailObj : MailEventBase
         //鼠标点击
         clickAction += () =>
         {
+            print("鼠标点击了");
             /* 打开信件详情UI界面:传入MailInfo,显示信件详情
                取消未读的发光显示等
             */
@@ -90,19 +92,28 @@ public class MailObj : MailEventBase
     }
 
     /// <summary>
-    /// 更新信件数据MailInfo,并刷新页面显示
+    /// 根据MailInfo对象刷新页面信息,并显示信件
     /// </summary>
     /// <param name="mailInfo"></param>
-    public void SetMailInfo(MailInfo mailInfo)
+    public void ShowPreMail(MailInfo mailInfo)
     {
-        this.mailInfo = mailInfo;
-
         //根据新数据设置页面显示
+        this.mailInfo = mailInfo;
         this.dearText.text = mailInfo.dear;
         this.contentText.text = mailInfo.mailBody;
         this.authorText.text = mailInfo.auther.ToString();
-        //其他信息待UI完善设置即可显示...
+        //MailInfo其他信息补充显示
 
+        //显示对象
+        this.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 隐藏此预览信件
+    /// </summary>
+    public void HidePreMail()
+    {
+        this.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -110,11 +121,10 @@ public class MailObj : MailEventBase
     /// </summary>
     public void ClickAction()
     {
-        //打开信件
-        /*
-         打开信件详情UI界面:传入MailInfo,显示信件详情
-         取消未读的发光显示等,并存储信件相关状态
-         */
+        //传入信件对象mailInfo,调用面板方法,打开信件详情
+        MailDetailPanel.Instance.ShowMailDetailInfo(this.mailInfo);
+        //隐藏预览面板
+        MailPreviewPanel.Instance.Hide();
     }
 
 }

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 信件事件对象基类,用于实现鼠标点击信件等行为
 /// </summary>
-public class MailEventBase : MonoBehaviour, IPointerEnterHandler, IPointerUpHandler, IPointerExitHandler
+public class MailEventBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     //鼠标进入时的动作
     protected UnityAction enterAction;
@@ -16,29 +16,12 @@ public class MailEventBase : MonoBehaviour, IPointerEnterHandler, IPointerUpHand
     //鼠标在其中点击时的动作
     protected UnityAction clickAction;
 
+
     //鼠标进入调用
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        print("鼠标进入了");
-        enterAction?.Invoke();
-    }
-
+    public void OnPointerEnter(PointerEventData eventData) => enterAction?.Invoke();
     //鼠标退出调用
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        print("鼠标退出了");
-        exitAction?.Invoke();
-    }
+    public void OnPointerExit(PointerEventData eventData) => exitAction?.Invoke();
+    //鼠标点击调用
+    public void OnPointerClick(PointerEventData eventData) => clickAction?.Invoke();
 
-    //鼠标点击且抬起时调用
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        print("鼠标点击了");
-        clickAction?.Invoke();
-    }
-
-    /* 其他可能用到事件
-     IPointerExitHandler  - 	OnPointerExit  - 	当指针退出对象时调用 (鼠标离开)
-     IPointerUpHandler 	 -  	OnPointerUp    - 	    松开指针时/触屏点击松开调用(抬起)
-    */
 }
