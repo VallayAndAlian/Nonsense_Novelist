@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,8 +9,13 @@ using UnityEngine.Events;
 /// UI面板继承此类即可获取Mono的支持和常用父类功能
 /// </summary>
 /// <typeparam name="T">子类面板</typeparam>
-public abstract class BasePanel<T> : MonoBehaviour
+public abstract class BasePanel<T> : MonoBehaviour where T:class
 {
+    /// <summary>
+    /// 单例对象,方便面板间的调用和信息交换
+    /// </summary>
+    public static T Instance;
+
     //管理面板透明度的组件
     CanvasGroup canvasGroup;
     //表示面板是否隐藏的标识
@@ -21,6 +27,7 @@ public abstract class BasePanel<T> : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this as T;
         //初始化Panel的CanvasGroup组件
         canvasGroup = this.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
@@ -46,6 +53,7 @@ public abstract class BasePanel<T> : MonoBehaviour
     /// </summary>
     public virtual void Show()
     {
+        this.gameObject.SetActive(true);
         isShow = true;
         //先设置面板透明度为0,待渐变为1
         canvasGroup.alpha = 0;
@@ -84,6 +92,7 @@ public abstract class BasePanel<T> : MonoBehaviour
             if (canvasGroup.alpha <= 0)
             {
                 canvasGroup.alpha = 0;
+                this.gameObject.SetActive(false);   
                 //隐藏后调用委托移除面板对象
                 hideCallback?.Invoke();
             }

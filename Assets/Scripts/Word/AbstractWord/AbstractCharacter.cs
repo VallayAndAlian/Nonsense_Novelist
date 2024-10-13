@@ -1,3 +1,4 @@
+using System;
 using AI;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,8 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
+
 public enum AttackType
 { 
     psy,//精神
@@ -84,6 +87,44 @@ abstract public class AbstractCharacter : AbstractWord0
 
     public bool isNaiMa = false;
 
+
+    #region TempNewMember
+    
+    protected List<CharacterComponent> mCharacterComponents = new List<CharacterComponent>();
+    public List<CharacterComponent> CharacterComponents => mCharacterComponents;
+    
+    
+    protected AbilityAgent mAbilityAgent = null;
+    public AbilityAgent AbilityAgent => mAbilityAgent;
+    
+    protected EffectAgent mEffectAgent = null;
+    public EffectAgent EffectAgent => mEffectAgent;
+    
+
+    protected StatusManager mStatusManager = new StatusManager();
+    public StatusManager StatusManager => mStatusManager;
+    
+    protected AttributeSet mAttributeSet = new AttributeSet();
+    public AttributeSet AttributeSet => mAttributeSet;
+    
+
+    protected List<AbstractCharacter> mAllies = new List<AbstractCharacter>();
+    public List<AbstractCharacter> Allies => mAllies;
+    
+    protected List<AbstractCharacter> mEnemies = new List<AbstractCharacter>();
+    public List<AbstractCharacter> Enemies => mEnemies;
+    
+
+    protected bool mAlive = false;
+    public bool IsAlive => mAlive;
+    
+    protected bool mStart = false;
+    public bool IsStart => mStart;
+
+    protected CharaInfoExcelItem mData = null;
+    
+    #endregion
+
     
     #region 血量
 
@@ -129,7 +170,6 @@ abstract public class AbstractCharacter : AbstractWord0
             HPSetting();
         }
     }
-
 
     IEnumerator DelayAttack(float _delayTime, float _value, AttackType _at, bool _hasFloat, AbstractCharacter _whoDid)
     {
@@ -1219,6 +1259,7 @@ abstract public class AbstractCharacter : AbstractWord0
         if (data == null)
             return;
 
+        mData = data;
 
         //数值
         hp = maxHp = data.maxhp;
@@ -1241,6 +1282,18 @@ abstract public class AbstractCharacter : AbstractWord0
         myState.aimCount = 1;
         attackAmount = 1;
         hasBetray = false;
+        
+        Init();
+    }
+    
+    public void Start()
+    {
+        foreach (var comp in CharacterComponents)
+        {
+            comp.OnStart();
+        }
+
+        mStart = true;
     }
 
     private void OnEnable()
@@ -1252,17 +1305,22 @@ abstract public class AbstractCharacter : AbstractWord0
   
     private void Update()
     {
+        if (CharacterManager.instance.pause) 
+            return;
+        
+        if(myState == null) 
+            return;
+        
+        if (myState.nowState == myState.allState.Find(p => p.id == AI.StateID.dead)) 
+            return;
 
-        if (CharacterManager.instance.pause) return;
-        if(myState == null) return;
-        if (myState.nowState == myState.allState.Find(p => p.id == AI.StateID.dead)) return;
-            //角色的能量条积攒
-            energy += Time.deltaTime;
-    
-
+        float deltaTime = Time.deltaTime;
+        
+        //角色的能量条积攒
+        energy += deltaTime;
+        
         if (energy > 5)//每5秒恢复一点能量
         {
-        
             energy = 0;
             _canUseSkills = 0;
             if (OnEnergyFull != null)
@@ -1286,13 +1344,68 @@ abstract public class AbstractCharacter : AbstractWord0
 
         //【恢复】计时
         if (cureOpen)
-            cureTime += Time.deltaTime;
+            cureTime += deltaTime;
         if (cureTime >= 10)
         {
             cureTime = 0;
             CureHp();
         }
- 
+
+        foreach (var comp in CharacterComponents)
+        {
+            comp.OnUpdate(deltaTime);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        float deltaTime = Time.deltaTime;
+        
+        foreach (var comp in CharacterComponents)
+        {
+            comp.OnLateUpdate(deltaTime);
+        }
+    }
+
+    public void Init()
+    {
+        InitAttributes();
+        AddComponents();
+    }
+
+    protected void InitAttributes()
+    {
+        AttributeSet.Define(AttributeType.MaxHp, mData.maxhp);
+        AttributeSet.Define(AttributeType.Attack, mData.atk);
+        AttributeSet.Define(AttributeType.Def, mData.def);
+        AttributeSet.Define(AttributeType.Psy, mData.psy);
+        AttributeSet.Define(AttributeType.San, mData.san);
+    }
+
+    protected void AddComponents()
+    {
+        mAbilityAgent = new AbilityAgent();
+        RegisterComponent(mAbilityAgent);
+        
+        mEffectAgent = new EffectAgent();
+        RegisterComponent(mEffectAgent);
+    }
+
+    protected void RegisterComponent(CharacterComponent component)
+    {
+        if (component.IsRegistered)
+            return;
+        
+        component.Owner = this;
+        mCharacterComponents.Add(component);
+
+        if (IsStart)
+            component.OnStart();
+    }
+
+    public float GetAttributeValue(AttributeType type)
+    {
+        return AttributeSet.Get(type);
     }
 
 
@@ -1335,6 +1448,180 @@ abstract public class AbstractCharacter : AbstractWord0
     /// 死亡文本(加到AbstractBook.afterFightText)
     /// </summary>
     abstract public string DieText();
+    #endregion
+
+    #region DamageProcess
+
+    /// <summary>
+    /// 造成伤害计算预处理
+    /// </summary>
+    public void PreDealDamageCalc(DealDamageCalc damageCalc)
+    {
+        if ((damageCalc.mFlag & DealDamageFlag.Fixed) == 0)
+        {
+            foreach (var abi in AbilityAgent.Abilities)
+            {
+                if (abi == damageCalc.mAbility)
+                {
+                    abi.OnPreDealDamageCalc(damageCalc);
+                }
+                else
+                {
+                    abi.OnPreDealDamageCalcOtherAbility(damageCalc);
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// 受到伤害计算预处理
+    /// </summary>
+    public TakeDamageCalc PreTakingDamageCalc(AbstractCharacter instigator, DealDamageCalc damageCalc)
+    {
+        TakeDamageCalc takeDamageCalc = BattleStatics.ReusableTakeDamageCalc;
+        
+        //todo: fill take damage calc info
+        takeDamageCalc.mInstigator = instigator;
+        takeDamageCalc.mAbility = damageCalc.mAbility;
+        takeDamageCalc.mFlag = damageCalc.mFlag;
+        takeDamageCalc.mMagic = damageCalc.mMagic;
+        takeDamageCalc.mDefense = 0;
+        takeDamageCalc.mResistance = 0;
+        
+        
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnPreTakeDamageCalc(takeDamageCalc);
+        }
+
+        // process ally
+        foreach (var p in Allies)
+        {
+            foreach (var abi in p.AbilityAgent.Abilities)
+            {
+                abi.OnAllyPreTakeDamageCalc(takeDamageCalc);
+            }
+        }
+
+        return takeDamageCalc;
+    }
+
+    public void PreDealDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            if (report.mMeta.mAbility == abi)
+            {
+                abi.OnPreDealDamage(report);
+            }
+            else
+            {
+                abi.OnPreDealDamageOtherAbility(report);
+            }
+        }
+    }
+    
+    public void PreTakeDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnPreTakeDamage(report);
+        }
+    }
+    
+    public void PostDealDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            if (abi == report.mMeta.mAbility)
+            {
+                abi.OnPostDealDamage(report);
+            }
+            else
+            {
+                abi.OnPostDealDamageOtherAbility(report);
+            }
+        }
+    }
+    
+    public void PostTakeDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnPostTakeDamage(report);
+        }
+    }
+
+    public void AllyDealDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnAllyDealDamage(report);
+        }
+    }
+    
+    public void AllyTakeDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnAllyTakeDamage(report);
+        }
+    }
+    
+    public void EnemyDealDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnEnemyDealDamage(report);
+        }
+    }
+    
+    public void EnemyTakeDamage(DamageReport report)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnEnemyTakeDamage(report);
+        }
+    }
+
+    public float ApplyDamage(float damageValue, bool cannotKill, out bool kill)
+    {
+        float number = 0;
+        
+        kill = false;
+
+        if (damageValue > 0)
+        {
+            float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
+            float max = cannotKill ? currentMaxHp - 1 : currentMaxHp;
+            number = Mathf.Max(damageValue, max);
+            
+            hp -= number;
+            if (hp < 0.99f)
+            {
+                kill = true;
+            }
+        }
+
+        return number;
+    }
+
+    public void Die(DamageReport report)
+    {
+        if (!mAlive)
+            return;
+
+        hp = 0f;
+        mAlive = false;
+
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnSelfDeath(report);
+        }
+
+        // todo: 死亡事件通知
+    }
+
     #endregion
 }
 

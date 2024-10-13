@@ -52,11 +52,10 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         //显示索引
         startIndex = 0;
         lastIndex = maxMailCount > prepMailData.Count ? prepMailData.Count - 1 : maxMailCount - 1;
-        //print("初始显示范围: " + startIndex + " " + lastIndex) ;
         //显示信件
         ShowMail();
         //更新翻页按钮显示
-        butnApprUpdate();
+        ButnApprUpdate();
         //绑定筛选事件:重新筛选待显示数据,显示信件
         for (int i = 0; i < AuthorToggles.Length; i++)
         {
@@ -144,14 +143,14 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
             //显示数据
             ShowMail();
             //更新翻页按钮的显示
-            butnApprUpdate();
+            ButnApprUpdate();
         }
     }
 
     /// <summary>
     /// 更新翻页按钮的显示情况:根据startIndex和lastIndex显示和隐藏左/右翻页按钮
     /// </summary>
-    private void butnApprUpdate()
+    private void ButnApprUpdate()
     {
         if (startIndex <= 1)
             SubPageBtn.gameObject.SetActive(false);
@@ -220,21 +219,12 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         //根据数据激活对应信件
         //更新页码先隐藏之前数据
         for (int i = 0; i < mailObjs.Length; i++) 
-        {
             mailObjs[i].gameObject.SetActive(false);
-        }
 
-        print("准备显示:" + startIndex + " - " + lastIndex);
-        //更新数据显示
+        //根据数据显示预览信件
         for (int i = startIndex, j = 0; i <= lastIndex; i++, j++)  
-        {
-            //将数据设置到对象并更新界面显示
-            mailObjs[j].SetMailInfo(prepMailData[i]);
-            //激活对象
-            mailObjs[j].gameObject.SetActive(true);
-        }
+            mailObjs[j].ShowPreMail(prepMailData[i]);
     }
-
 
 }
 
