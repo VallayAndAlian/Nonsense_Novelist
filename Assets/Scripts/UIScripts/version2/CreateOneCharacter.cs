@@ -265,7 +265,7 @@ public class CreateOneCharacter : MonoBehaviour
 
 
         if (temp) return;
-            GameMgr.instance.PlayCG("ElecSheep_start1", 0.5f);
+            GameMgr.instance.PlayCG("ElecSheep_start1", 0f);
         temp = true;
 
 

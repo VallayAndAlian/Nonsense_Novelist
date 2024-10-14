@@ -1208,12 +1208,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
     IEnumerator WaitAndCg(string name,float delayTime)
     {
-        float t = 0;
-        while (t < delayTime)
-        {
-            yield return wait;
-            t += Time.deltaTime;
-        }
+        yield return new WaitForSeconds(delayTime);
         //播放开场动画
         GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
         GameMgr.instance.EventCGAnim.PlayEventCG(name);
@@ -1284,14 +1279,13 @@ public class GameMgr : MonoSingleton<GameMgr>
         int result = -1;
 
         //概率抽取
-
-        int numx = UnityEngine.Random.Range(1, 101);
+        int max = time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.jiaoYi + time_stage.changJing;
+        int numx = UnityEngine.Random.Range(1, max);
         if (numx <= time_stage.xiWang) { result = 0; }
         else if (numx > time_stage.xiWang && numx < time_stage.xiWang + time_stage.fangKe) result = 1;
         else if (numx > time_stage.xiWang + time_stage.fangKe && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai) result = 2;
-        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi) result = 3;
-        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai + time_stage.weiJi + time_stage.jiaoYi) result = 4;
-        else result = 5;
+        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai && numx < time_stage.xiWang + time_stage.fangKe + time_stage.yiWai+ time_stage.jiaoYi) result = 3;
+        else if (numx > time_stage.xiWang + time_stage.fangKe + time_stage.yiWai+ time_stage.jiaoYi && numx < time_stage.jiaoYi) result = 4;
 
         return result;
     }

@@ -37,7 +37,7 @@ public class EventCg : MonoBehaviour
         //播放的时候 暂停游戏
         beforeCGPlay = CharacterManager.instance.pause;
         CharacterManager.instance.pause = true;
-        GameMgr.instance.HideGameUI();
+        //GameMgr.instance.HideGameUI();
         Ele_Kc(playName);
         //anim.Play(playName);
         //text.text = textContent;

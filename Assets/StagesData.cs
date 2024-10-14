@@ -16,12 +16,11 @@ public class StagesData : ScriptableObject
     [Tooltip("牌库再装填时间")] public float cardListLoad=5;
 
 
-    [Header("事件概率(总和100)")]
+    [Header("事件概率")]
 
     [Tooltip("希望")] public int xiWang = 10;
     [Tooltip("访客")] public int fangKe = 25;
     [Tooltip("意外")] public int yiWai = 10;
-    [Tooltip("危机")] public int weiJi = 30;
     [Tooltip("交易")] public int jiaoYi = 25;
     [Tooltip("场景")] public int changJing = 10;	
 
