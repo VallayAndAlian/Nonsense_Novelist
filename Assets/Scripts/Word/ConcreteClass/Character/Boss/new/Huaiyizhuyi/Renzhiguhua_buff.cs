@@ -68,14 +68,26 @@ public class Renzhiguhua_buff : AbstractBuff
         if (_endAttack >= 20)
         { 
            
-            usingChara.BeAttack(AttackType.dir, 20, true, 0, this.GetComponent<AbstractCharacter>());
-            print(usingChara.wordName + "的怀疑主义结束，一次性造成伤害:" + 20); 
+            //usingChara.BeAttack(AttackType.dir, 20, true, 0, this.GetComponent<AbstractCharacter>());
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = this.GetComponent<AbstractCharacter>();
+            _temp.mTarget = usingChara;
+            _temp.mMinAttack = 20;
+            _temp.mMaxAttack = 20;
+
+            DamageHelper.ProcessDamage(_temp);
         }
         else
         {
-            usingChara.BeAttack(AttackType.dir, _endAttack, true, 0, this.GetComponent<AbstractCharacter>());
-           
-            print(usingChara.wordName + "的怀疑主义结束，一次性造成伤害:"+ _endAttack);
+            //usingChara.BeAttack(AttackType.dir, _endAttack, true, 0, this.GetComponent<AbstractCharacter>());
+
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = this.GetComponent<AbstractCharacter>();
+            _temp.mTarget = usingChara;
+            _temp.mMinAttack = _endAttack;
+            _temp.mMaxAttack = _endAttack;
+
+            DamageHelper.ProcessDamage(_temp);
         }
     }
 

@@ -24,7 +24,7 @@ public class DamageHelper
         meta.mInstigator = instigator;
         meta.mTarget = target;
         meta.mAbility = damageCalc.mAbility;
-
+      
         // 计算伤害数值
         if ((damageCalc.mFlag & DealDamageFlag.Fixed) > 0)
         {
@@ -64,11 +64,12 @@ public class DamageHelper
         {
             instigator.PreDealDamage(report);
         }
-        
+     
         target.PreTakeDamage(report);
 
-        
+
         // 开始应用伤害
+       
         target.ApplyDamage(result.mDamage, true, out var killed);
         if (killed)
         {

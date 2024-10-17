@@ -44,8 +44,14 @@ public class ShuoShuShuoShu :AbstractSetting
         foreach(var it in chara.myState.aim)
         {
             int a = math.abs(it.GetComponents<AbstractItems>().Length - chara_num);
-            it.BeAttack(AttackType.atk, a*0.05f * chara.atk * chara.atkMul, true, 0, chara);
+            //it.BeAttack(AttackType.atk, a*0.05f * chara.atk * chara.atkMul, true, 0, chara);
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = chara;
+            _temp.mTarget = it;
+            _temp.mMinAttack = a * 0.05f * chara.atk * chara.atkMul;
+            _temp.mMaxAttack = a * 0.05f * chara.atk * chara.atkMul;
 
+            DamageHelper.ProcessDamage(_temp);
         }
 
     }

@@ -49,16 +49,28 @@ class ShenPan : AbstractVerbs
             int x=0;
             for (int i = 0; (i < _aims.Length)&&(x<useCharacter.myState.aimCount); i++)
             {
-                if (_aims[i].hp < 400)
-                {
-                    _aims[i].BeAttack(AttackType.atk, 3 * useCharacter.atk * useCharacter.atkMul, true, 0, useCharacter);
-                }
+                //_aims[i].BeAttack(AttackType.atk, 3 * useCharacter.atk * useCharacter.atkMul, true, 0, useCharacter);
+
+                DealDamageCalc _temp = new DealDamageCalc();
+
+                _temp.mInstigator = useCharacter;
+                _temp.mTarget = _aims[i];
+
+                float count = 3 * useCharacter.atk * useCharacter.atkMul;
+
                 if (_aims[i].hp >= 400)
                 {
-                    _aims[i].BeAttack(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul , true, 0, useCharacter);
+                    _temp.mMagic = true;
                     buffs.Add(useCharacter.gameObject.AddComponent<KangFen>());
                     buffs[0].maxTime = skillEffectsTime;
+                    count = 3 * useCharacter.psy * useCharacter.psyMul;
                 }
+
+                _temp.mMinAttack = count;
+                _temp.mMaxAttack = count;
+                DamageHelper.ProcessDamage(_temp);
+                
+               
                 x++;
             }
 
@@ -69,17 +81,24 @@ class ShenPan : AbstractVerbs
         //
         for (int i = 0; i < useCharacter.myState.aim.Count; i++)
         {
-            if (useCharacter.myState.aim[i].hp < 400)
-            {
-                useCharacter.myState.aim[i].BeAttack(AttackType.atk, 3 * useCharacter.atk * useCharacter.atkMul, true, 0,useCharacter);
-            }
+            DealDamageCalc _temp = new DealDamageCalc();
+
+            float count = 3 * useCharacter.atk * useCharacter.atkMul;
+            _temp.mInstigator = useCharacter;
+            _temp.mTarget = useCharacter.myState.aim[i];
+
             if (useCharacter.myState.aim[i].hp >= 400)
             {
-                useCharacter.myState.aim[i].BeAttack(AttackType.psy, 3 * useCharacter.psy * useCharacter.psyMul, true, 0, useCharacter);
-                //获得的能量会应用于角色所有技能，是正常的能量
+                count = 3 * useCharacter.psy * useCharacter.psyMul;
+
                 buffs.Add(useCharacter.gameObject.AddComponent<KangFen>());
                 buffs[0].maxTime = skillEffectsTime;
             }
+
+            _temp.mMinAttack = count;
+            _temp.mMaxAttack = count;
+
+            DamageHelper.ProcessDamage(_temp);
         }
       
 

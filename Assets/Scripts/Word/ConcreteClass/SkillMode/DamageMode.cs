@@ -23,7 +23,16 @@ class DamageMode : AbstractSkillMode
     /// <param name="character">目标（来自目标数组）</param>
     public override float UseMode(AttackType attackType, float value, AbstractCharacter useCharacter, AbstractCharacter aimCharacter, bool hasFloat, float delay)
     {
-        aimCharacter.BeAttack(attackType, value, hasFloat, delay, useCharacter);
+        //aimCharacter.BeAttack(attackType, value, hasFloat, delay, useCharacter);
+
+        DealDamageCalc _temp = new DealDamageCalc();
+        _temp.mInstigator = useCharacter;
+        _temp.mTarget = aimCharacter;
+        _temp.mMinAttack = value;
+        _temp.mMaxAttack = value;
+
+        DamageHelper.ProcessDamage(_temp);
+
         return value;
     }
 

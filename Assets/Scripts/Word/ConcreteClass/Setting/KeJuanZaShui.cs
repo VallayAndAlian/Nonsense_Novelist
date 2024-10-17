@@ -43,7 +43,16 @@ public class KeJuanZaShui : AbstractSetting
     }
     void Effect(AbstractVerbs buff)
     {
-        buff.GetComponent<AbstractCharacter>().BeAttack(AttackType.atk, 0.2f * chara.atk * chara.atkMul, true, 0, chara);
+        //buff.GetComponent<AbstractCharacter>().BeAttack(AttackType.atk, 0.2f * chara.atk * chara.atkMul, true, 0, chara);
+
+        DealDamageCalc _temp = new DealDamageCalc();
+        _temp.mInstigator = chara;
+        _temp.mTarget = buff.GetComponent<AbstractCharacter>();
+        _temp.mMinAttack = 0.2f * chara.atk * chara.atkMul;
+        _temp.mMaxAttack = 0.2f * chara.atk * chara.atkMul;
+
+        DamageHelper.ProcessDamage(_temp);
+
         //由动词获取到角色本身，被攻击
         //攻击效果未写
     }

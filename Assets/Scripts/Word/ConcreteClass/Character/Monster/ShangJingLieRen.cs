@@ -46,7 +46,16 @@ public class ShangJingLieRen : AbstractCharacter
         for (int i = 0; i < myState.aim.Count; i++)
         {
             int _count = myState.aim[i].GetComponents<AbstractItems>().Length;
-            myState.aim[i].BeAttack(AttackType.dir, 1* _count, true, 0, this);
+            // myState.aim[i].BeAttack(AttackType.dir, 1* _count, true, 0, this);
+
+
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = this;
+            _temp.mTarget = myState.aim[i]; 
+            _temp.mMinAttack = 1 * _count;
+            _temp.mMaxAttack = 1 * _count;
+
+            DamageHelper.ProcessDamage(_temp);
         }
     }
 

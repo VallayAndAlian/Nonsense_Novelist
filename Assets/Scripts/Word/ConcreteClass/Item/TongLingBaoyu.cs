@@ -83,7 +83,14 @@ class TongLingBaoyu : AbstractItems
         if (_count == -1) return;
 
         //转移血量
-        a[_count].BeAttack(AttackType.dir, _damage* rate, true, 0, _whoDid);
+        //a[_count].BeAttack(AttackType.dir, _damage* rate, true, 0, _whoDid);
+        DealDamageCalc _temp = new DealDamageCalc();
+        _temp.mInstigator = _whoDid;
+        _temp.mTarget = a[_count];
+        _temp.mMinAttack = _damage * rate;
+        _temp.mMaxAttack = _damage * rate;
+
+        DamageHelper.ProcessDamage(_temp);
 
         //自己受伤（把血量加回来）4
         this.GetComponent<AbstractCharacter>().BeCure(_damage * rate, true, 0, _whoDid);

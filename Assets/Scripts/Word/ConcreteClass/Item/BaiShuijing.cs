@@ -68,7 +68,17 @@ class BaiShuijing: AbstractItems,IJiHuo
         base.End();
 
         if (jiHuo)
-            aim.BeAttack(AttackType.dir, 60, true, 0, this.GetComponent<AbstractCharacter>());
+            //aim.BeAttack(AttackType.dir, 60, true, 0, this.GetComponent<AbstractCharacter>());
+        {
+            var _chara = this.GetComponent<AbstractCharacter>();
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = _chara;
+            _temp.mTarget = aim;
+            _temp.mMinAttack = 60;
+            _temp.mMaxAttack = 60;
+
+            DamageHelper.ProcessDamage(_temp);
+        }
         else
         {
             aim.maxHp += 20; aim.CreateFloatWord(20, FloatWordColor.healMax, false);

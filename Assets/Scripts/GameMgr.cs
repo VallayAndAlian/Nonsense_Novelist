@@ -1416,6 +1416,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     
     private void EnterStage_Fight(StageType _type)
     {
+
         //进入战斗状态：隐藏工具界面;不刷新事件;所有角色战斗
         SwitchRestUiDisplay(false);
 
@@ -1426,6 +1427,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         gameProcess.StopEventUpdate();
 
+        //显示战斗环节的开始面板
     }
 
     public void GroupLose(CampEnum _camp)

@@ -54,9 +54,19 @@ class QiChongShaDance : AbstractVerbs
         for (int i = 0; i < character.myState.aim.Count; i++)
         {
             //攻击额外造成20%的精神伤害；
-            character.myState.aim[i].BeAttack(AttackType.psy, 0.2f * character.psy * character.psyMul, true, 0, character);
+            //character.myState.aim[i].BeAttack(AttackType.psy, 0.2f * character.psy * character.psyMul, true, 0, character);
+
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = character;
+            _temp.mTarget = character.myState.aim[i];
+            _temp.mMagic = true;
+            _temp.mMinAttack = 0.2f * character.psy * character.psyMul;
+            _temp.mMaxAttack = 0.2f * character.psy * character.psyMul;
+
+            DamageHelper.ProcessDamage(_temp);
+
         }
-       
+
     }
 
     private void OnDestroy()

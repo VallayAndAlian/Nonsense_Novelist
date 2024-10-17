@@ -25,7 +25,16 @@ public class CS_DuMoGu : ServantAbstract
 
     void DoToAttacker(float _value,AbstractCharacter _attacker)
     {
-        _attacker.BeAttack(AttackType.psy, 1 * this.atk * atkMul, true, 0, this);
+        //_attacker.BeAttack(AttackType.psy, 1 * this.atk * atkMul, true, 0, this);
+
+        DealDamageCalc _temp = new DealDamageCalc();
+        _temp.mInstigator = this;
+        _temp.mTarget = _attacker;
+        _temp.mMinAttack = 1 * this.atk * atkMul;
+        _temp.mMaxAttack = 1 * this.atk * atkMul;
+
+        DamageHelper.ProcessDamage(_temp);
+
         var buff=_attacker.gameObject.AddComponent<Upset>();buff.maxTime =3;
     }
 

@@ -76,8 +76,15 @@ class BuryFlower : AbstractVerbs
             var huabans = _aim.Key.GetComponents<HuaBan>();
             float count = _aim.Value * 0.3f * psy;
             if (!useCharacter.isNaiMa)
-            {   //不是一个阵营的时候，才伤血（？）
-                _aim.Key.BeAttack(AttackType.dir, count, true, 0, useCharacter);
+            {   
+               // _aim.Key.BeAttack(AttackType.dir, count, true, 0, useCharacter);
+                DealDamageCalc _temp = new DealDamageCalc();
+                _temp.mInstigator = useCharacter;
+                _temp.mTarget = _aim.Key;
+                _temp.mMinAttack = count;
+                _temp.mMaxAttack = count;
+
+                DamageHelper.ProcessDamage(_temp);
             }
             for(int x=0; (x<huabans.Length)&&(x<_aim.Value);x++) 
             {

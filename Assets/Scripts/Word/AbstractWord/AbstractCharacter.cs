@@ -1114,7 +1114,14 @@ abstract public class AbstractCharacter : AbstractWord0
 
         for (int x = 0; x < myState.aim.Count; x++)
         {
-             attackA.UseMode(AttackType.atk, myState.character.atk/ AttackTimes, myState.character, myState.aim[x], true, 0);
+            DealDamageCalc _temp=new DealDamageCalc();
+            _temp.mInstigator = this;
+            _temp.mTarget = myState.aim[x];
+            _temp.mMinAttack = atk / AttackTimes;
+            _temp.mMaxAttack = atk / AttackTimes;
+
+            DamageHelper.ProcessDamage(_temp);
+            //attackA.UseMode(AttackType.atk, myState.character.atk/ AttackTimes, myState.character, myState.aim[x], true, 0);
         }
            
 
@@ -1594,8 +1601,8 @@ abstract public class AbstractCharacter : AbstractWord0
         {
             float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
             float max = cannotKill ? currentMaxHp - 1 : currentMaxHp;
-            number = Mathf.Max(damageValue, max);
-            
+            number = Mathf.Min(damageValue, max);
+        
             hp -= number;
             if (hp < 0.99f)
             {

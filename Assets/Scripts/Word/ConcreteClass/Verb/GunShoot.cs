@@ -43,7 +43,17 @@ class GunShoot : AbstractVerbs
             int x = 0;
             for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
             {
-                _aims[i].BeAttack(AttackType.atk, character.atk * character.atkMul * 3, true, 0, character);
+                //_aims[i].BeAttack(AttackType.atk, character.atk * character.atkMul * 3, true, 0, character);
+
+                DealDamageCalc _temp = new DealDamageCalc();
+                _temp.mInstigator = character;
+                _temp.mTarget = _aims[i];
+                _temp.mMinAttack = character.atk * character.atkMul * 3;
+                _temp.mMaxAttack = character.atk * character.atkMul * 3;
+
+                DamageHelper.ProcessDamage(_temp);
+
+
                 x++;
             }
 

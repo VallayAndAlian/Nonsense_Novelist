@@ -22,7 +22,14 @@ class DiKaDe : AbstractCharacter
     {
         for (int i = 0; i < myState.aim.Count; i++)
         {
-            myState.aim[i].BeAttack(AttackType.dir, myState.aim[i].maxHp * 0.03f, true, 0, this) ;
+            //myState.aim[i].BeAttack(AttackType.dir, myState.aim[i].maxHp * 0.03f, true, 0, this) ;
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = this;
+            _temp.mTarget = myState.aim[i];
+            _temp.mMinAttack = myState.aim[i].maxHp * 0.03f;
+            _temp.mMaxAttack = myState.aim[i].maxHp * 0.03f;
+
+            DamageHelper.ProcessDamage(_temp);
         }
     }
 

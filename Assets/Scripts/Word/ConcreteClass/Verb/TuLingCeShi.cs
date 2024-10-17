@@ -42,7 +42,14 @@ class TuLingCeShi : AbstractVerbs
         {
             if (character.myState.aim[i].san < 10)
             {
-                character.myState.aim[i].BeAttack(AttackType.dir, 0.3f * character.atk * character.atkMul, true, 0, character);
+                //character.myState.aim[i].BeAttack(AttackType.dir, 0.3f * character.atk * character.atkMul, true, 0, character);
+                DealDamageCalc _temp = new DealDamageCalc();
+                _temp.mInstigator = character;
+                _temp.mTarget = character.myState.aim[i];
+                _temp.mMinAttack = 0.3f * character.atk * character.atkMul;
+                _temp.mMaxAttack = 0.3f * character.atk * character.atkMul;
+
+                DamageHelper.ProcessDamage(_temp);
             }
         }
     }
@@ -73,7 +80,17 @@ class TuLingCeShi : AbstractVerbs
             int x = 0;
             for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
             {
-                _aims[i].BeAttack(AttackType.psy, _aims[i].atk * _aims[i].atkMul + _aims[i].san * _aims[i].sanMul, true, 0, character);
+                //_aims[i].BeAttack(AttackType.psy, _aims[i].atk * _aims[i].atkMul + _aims[i].san * _aims[i].sanMul, true, 0, character);
+
+                DealDamageCalc _temp = new DealDamageCalc();
+                _temp.mInstigator = character;
+                _temp.mTarget = _aims[i];
+                _temp.mMagic = true;
+                _temp.mMinAttack = _aims[i].atk * _aims[i].atkMul + _aims[i].san * _aims[i].sanMul;
+                _temp.mMaxAttack = _aims[i].atk * _aims[i].atkMul + _aims[i].san * _aims[i].sanMul;
+
+                DamageHelper.ProcessDamage(_temp);
+
                 x++;
             }
 
@@ -84,7 +101,14 @@ class TuLingCeShi : AbstractVerbs
         for (int i = 0; i < character.myState.aim.Count; i++)
         {
             ac = character.myState.aim[i];
-            ac.BeAttack(AttackType.psy, ac.atk * ac.atkMul + ac.san * ac.sanMul, true, 0, character);
+            //ac.BeAttack(AttackType.psy, ac.atk * ac.atkMul + ac.san * ac.sanMul, true, 0, character);
+            DealDamageCalc _temp = new DealDamageCalc();
+            _temp.mInstigator = character;
+            _temp.mTarget = ac;
+            _temp.mMinAttack = ac.atk * ac.atkMul + ac.san * ac.sanMul;
+            _temp.mMaxAttack = ac.atk * ac.atkMul + ac.san * ac.sanMul;
+
+            DamageHelper.ProcessDamage(_temp);
         }
     }
     public override string UseText()

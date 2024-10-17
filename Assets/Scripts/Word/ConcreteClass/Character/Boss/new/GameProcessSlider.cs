@@ -507,12 +507,12 @@ public class GameProcessSlider : MonoBehaviour
         float _timeCountr = 0;
         while (_timeCountr<=_delayTime)
         {
-            print("(_timeCountr <= _delayTime)"+ _timeCountr+ GameMgr.instance.pause);
+           
             yield return new WaitForSeconds(Time.deltaTime);
             if (!GameMgr.instance.pause) _timeCountr += Time.deltaTime;
            
         }
-        print("(array0.Clear())");
+        
 
            array0.Clear();
             int _random = -1;
