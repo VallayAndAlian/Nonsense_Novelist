@@ -2,21 +2,19 @@
 
 public class AbilityBase
 {
-    public class Data
-    {
-        public int mKind;
-        public int mType;
-        public string mName;
-        public string mDesc;
-        
-    }
-    
     protected AbstractCharacter mCharacter = null;
 
     public AbstractCharacter Character
     {
         set => mCharacter = value;
         get => mCharacter;
+    }
+
+    protected AbilityTable.Data mData = null;
+    public AbilityTable.Data Data
+    {
+        set => mData = value;
+        get => mData;
     }
     
     public void Init()

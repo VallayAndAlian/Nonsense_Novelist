@@ -43,6 +43,93 @@ public class AbilityTemplate : AbilityBase
     {
         mTrigger?.Update(deltaTime);
     }
+
+    protected override void TickEvenWhenDead(float deltaTime)
+    {
+        for (int i = 0; i < mAppliers.Count; ++i)
+        {
+            mAppliers[i].Update(deltaTime);
+        }
+    }
+    
+    #region TriggerEvents
+
+    protected override void OnInit()
+    {
+        mTrigger.OnInit();
+
+        foreach (var applier in mAppliers)
+        {
+            applier.OnInit();
+        }
+    }
+
+    public override void OnPreDealDamageCalc(DealDamageCalc dmgCalc)
+    {
+        mTrigger.OnPreDealDamageCalc(dmgCalc);
+    }
+
+    public override void OnPreDealDamageCalcOtherAbility(DealDamageCalc dmgCalc)
+    {
+        mTrigger.OnPreDealDamageCalcOtherAbility(dmgCalc);
+    }
+
+    public override void OnPreDealDamage(DamageReport report)
+    {
+        mTrigger.OnPreDealDamage(report);
+    }
+
+    public override void OnPreDealDamageOtherAbility(DamageReport report)
+    {
+        mTrigger.OnPreDealDamageOtherAbility(report);
+    }
+
+    public override void OnPreTakeDamageCalc(TakeDamageCalc dmgCalc)
+    {
+        mTrigger.OnPreTakeDamageCalc(dmgCalc);
+    }
+
+    public override void OnAllyPreTakeDamageCalc(TakeDamageCalc dmgCalc)
+    {
+        mTrigger.OnAllyPreTakeDamageCalc(dmgCalc);
+    }
+
+    public override void OnPreTakeDamage(DamageReport report)
+    {
+        mTrigger.OnPreTakeDamage(report);
+    }
+
+    public override void OnPostDealDamage(DamageReport dmg)
+    {
+        mTrigger.OnPostDealDamage(dmg);
+    }
+
+    public override void OnPostDealDamageOtherAbility(DamageReport dmg)
+    {
+        mTrigger.OnPostDealDamageOtherAbility(dmg);
+    }
+
+    public override void OnPostTakeDamage(DamageReport dmg)
+    {
+        mTrigger.OnPostTakeDamage(dmg);
+    }
+
+    public override void OnAllyDealDamage(DamageReport dmg)
+    {
+        mTrigger.OnAllyDealDamage(dmg);
+    }
+
+    public override void OnPawnDeath(AbstractCharacter deceased, DamageReport dmg)
+    {
+        mTrigger.OnPawnDeath(deceased, dmg);
+    }
+
+    public override void OnSelfDeath(DamageReport dmg)
+    {
+        mTrigger.OnSelfDeath(dmg);
+    }
+
+    #endregion
 }
 
 public class AbilityModule

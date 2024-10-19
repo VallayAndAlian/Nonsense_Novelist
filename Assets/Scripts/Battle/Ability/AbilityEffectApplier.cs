@@ -46,9 +46,29 @@ public class AbilityEffectApplier : AbilityModule
     List<ScheduleData> mScheduleList = new List<ScheduleData>();
     const int MaxSchedulePerFrame = 64;
 
+    protected override int CommonArgCount => 2;
+
     public Type mType = Type.None;
     
+    protected bool mCanBePurgedOrExpelled = true;
+
+    protected bool mHasDuration = false;
+
+    protected int mStackLimit = 0;
+    public int StackLimit => mStackLimit;
+    
     protected virtual bool DelayApply => true;
+    
+    public virtual void OnInit() {}
+
+    protected override bool ParseParams()
+    {
+        mCanBePurgedOrExpelled = GetArg(0) > 0.5f;
+        mStackLimit = Mathf.RoundToInt(GetArg(1));
+        mHasDuration = mStackLimit <= 0;
+        
+        return true;
+    }
 
     public void AddTask(List<AbstractCharacter> targets, object triggerData)
     {

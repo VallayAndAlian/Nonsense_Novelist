@@ -9,7 +9,7 @@ public class AbilityTrigger : AbilityModule
         Direct,                                // 直接触发
     }
 
-    public AbilityTrigger Create(Type type)
+    public static AbilityTrigger Create(Type type)
     {
         AbilityTrigger trigger = null;
 
@@ -93,6 +93,44 @@ public class AbilityTrigger : AbilityModule
         
         return true;
     }
+    
+    public virtual void OnInit() {}
+    
+    public virtual void OnPreDealDamageCalc(DealDamageCalc dmgCalc) { }
+
+    public virtual void OnPreDealDamageCalcOtherAbility(DealDamageCalc dmgCalc) { }
+
+    public virtual void OnPreTakeDamageCalc(TakeDamageCalc dmgCalc) { }
+
+    public virtual void OnAllyPreTakeDamageCalc(TakeDamageCalc dmgCalc) { }
+    
+
+    public virtual void OnPreDealDamage(DamageReport report) { }
+    
+    public virtual void OnPreDealDamageOtherAbility(DamageReport report) { }
+
+    public virtual void OnPostDealDamage(DamageReport report) { }
+
+    public virtual void OnPostDealDamageOtherAbility(DamageReport report) { }
+    
+    public virtual void OnAllyDealDamage(DamageReport report) { }
+
+    public virtual void OnEnemyDealDamage(DamageReport report) { }
+    
+
+    public virtual void OnPreTakeDamage(DamageReport report) { }
+
+    public virtual void OnAllyPreTakeDamage(DamageReport report) { }
+
+    public virtual void OnPostTakeDamage(DamageReport report) { }
+    
+    public virtual void OnAllyTakeDamage(DamageReport report) { }
+
+    public virtual void OnEnemyTakeDamage(DamageReport report) { }
+    
+    public virtual void OnPawnDeath(AbstractCharacter deceased, DamageReport report) { }
+    
+    public virtual void OnSelfDeath(DamageReport report) { }
 }
 
 public class AMTDirect : AbilityTrigger
