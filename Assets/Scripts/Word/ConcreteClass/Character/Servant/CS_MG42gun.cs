@@ -58,7 +58,7 @@ public class CS_MG42gun : ServantAbstract
                  myState.character.CreateBullet(myState.aim[x].gameObject); 
                
             //myState.aim.CreateFloatWord(
-            //    attackA.UseMode(myState.character, myState.character.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
+            //    attackA.UseMode(myState.other, myState.other.atk * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
             //    , FloatWordColor.physics, false);
             attackA.UseMode(AttackType.atk, myState.character.atk, myState.character, myState.aim[x], true, 0);
             

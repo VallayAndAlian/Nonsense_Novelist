@@ -80,7 +80,7 @@ public class WordCollisionShoot : MonoBehaviour
            
             if (_s == null) return;
             GameMgr.instance.PopupEvent(collision.transform.position, absWord.wordName, _s);
-            GameMgr.instance.draftUi.AddContent(_s);
+            DraftMgr.instance.AddContent(_s);
 
         }
     }

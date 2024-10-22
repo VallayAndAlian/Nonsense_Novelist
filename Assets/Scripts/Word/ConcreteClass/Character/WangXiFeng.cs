@@ -32,7 +32,7 @@ class WangXiFeng : AbstractCharacter
         {
             hasAddGrow.Add(GrowType.psy);
             string it = "凤姐歪在填漆床上，挑开大红销金撒花帐子，指着下人轻喝，“若碰到一点儿，可仔细你的皮！”";
-            GameMgr.instance.draftUi.AddContent(it);
+            DraftMgr.instance.AddContent(it);
             return it;
         }
 

@@ -32,7 +32,7 @@ namespace AI
 
         public override void Exit(MyState0 myState)
         {
-           // myState.character.buffs[4] = 0;
+           // myState.other.buffs[4] = 0;
             myState.character.dizzyTime = 0;
         }
 

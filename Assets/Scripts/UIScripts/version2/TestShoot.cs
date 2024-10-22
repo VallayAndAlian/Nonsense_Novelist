@@ -50,7 +50,7 @@ public class TestShoot : MonoBehaviour
     }
     private void Update()
     {        
-            if (CreateOneCharacter.isTwoSides)
+            if (PutCharacter.isTwoSides)
             {
                 aimSlider.value = 0; // ÷ÿ÷√sliderµƒ÷µ
 

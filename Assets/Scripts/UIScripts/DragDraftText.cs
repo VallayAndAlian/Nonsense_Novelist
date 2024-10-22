@@ -16,7 +16,7 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     //关联
     private Transform parent;
-    private DraftUi draftUi;
+    private DraftBook draftUi;
 
     //canDrag在进入黒墨水状态时开启；CanBegin在墨水次数大于0时开启
     [HideInInspector]public bool canDrag = false;
@@ -44,7 +44,7 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnBeginDrag(PointerEventData eventData)
     {
         parent = this.transform.parent;
-        draftUi = parent.parent.GetComponent<DraftUi>();
+        draftUi = parent.parent.GetComponent<DraftBook>();
         if (!canDrag) return;
         if (!draftUi.IsInkEnough(0)) { canBegin = false; return; }
         else  canBegin = true;
@@ -76,7 +76,7 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (!canBegin) return;
 
         parent = this.transform.parent;
-        draftUi = parent.parent.GetComponent<DraftUi>();
+        draftUi = parent.parent.GetComponent<DraftBook>();
         //判断是否在某个ui之上
         int changeIndex=-1;
         int index = parent.childCount-1;
@@ -93,7 +93,7 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                         
                         changeIndex = index;
                         this.transform.SetSiblingIndex(index);
-                        draftUi.ChangeIndexContent(this.index, index);
+                        DraftMgr.instance.ChangeIndexContent(this.index, index);
                         draftUi.RefreshIndex();
                         draftUi.UseInkOnce(0);
                     } 
@@ -117,7 +117,7 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
                         changeIndex = index;
                         this.transform.SetSiblingIndex(index);
-                        draftUi.ChangeIndexContent(this.index, index);
+                        DraftMgr.instance.ChangeIndexContent(this.index, index);
                         draftUi.RefreshIndex();
                         draftUi.UseInkOnce(0);
                     }
@@ -145,7 +145,7 @@ public class DragDraftText : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         { hasDelete = true; } else { hasDelete = false; }
 
         parent = this.transform.parent;
-        draftUi = parent.parent.GetComponent<DraftUi>();
+        draftUi = parent.parent.GetComponent<DraftBook>();
         if ((!hasDelete)&&(draftUi.IsInkEnough(1)))
         {
            _text = this.transform.Find("showText").GetComponent<TextMeshProUGUI>().text;

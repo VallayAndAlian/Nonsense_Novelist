@@ -43,7 +43,7 @@ class GunShoot : AbstractVerbs
             int x = 0;
             for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
             {
-                //_aims[i].BeAttack(AttackType.atk, character.atk * character.atkMul * 3, true, 0, character);
+                //_aims[i].BeAttack(AttackType.atk, other.atk * other.atkMul * 3, true, 0, other);
 
                 DealDamageCalc _temp = new DealDamageCalc();
                 _temp.mInstigator = character;
@@ -68,7 +68,7 @@ class GunShoot : AbstractVerbs
     public override string UseText()
     {
         AbstractCharacter character = this.GetComponent<AbstractCharacter>();
-        //if (character == null || aimState==null)
+        //if (other == null || aimState==null)
             //return null;
 
         return character.wordName + "拿起小刀，将腹部开出一个小缺口，并将香脂油灌满其中。再将树脂填入名字2的头颅，防止头部的变形。接下来将他整个埋于碱粉中一个月，这样就可以做到肉体不被腐朽所困扰了。";

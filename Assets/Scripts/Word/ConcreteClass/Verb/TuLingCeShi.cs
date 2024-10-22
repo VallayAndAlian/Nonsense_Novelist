@@ -42,7 +42,7 @@ class TuLingCeShi : AbstractVerbs
         {
             if (character.myState.aim[i].san < 10)
             {
-                //character.myState.aim[i].BeAttack(AttackType.dir, 0.3f * character.atk * character.atkMul, true, 0, character);
+                //other.myState.aim[i].BeAttack(AttackType.dir, 0.3f * other.atk * other.atkMul, true, 0, other);
                 DealDamageCalc _temp = new DealDamageCalc();
                 _temp.mInstigator = character;
                 _temp.mTarget = character.myState.aim[i];
@@ -80,7 +80,7 @@ class TuLingCeShi : AbstractVerbs
             int x = 0;
             for (int i = 0; (i < _aims.Length) && (x < useCharacter.myState.aimCount); i++)
             {
-                //_aims[i].BeAttack(AttackType.psy, _aims[i].atk * _aims[i].atkMul + _aims[i].san * _aims[i].sanMul, true, 0, character);
+                //_aims[i].BeAttack(AttackType.psy, _aims[i].atk * _aims[i].atkMul + _aims[i].san * _aims[i].sanMul, true, 0, other);
 
                 DealDamageCalc _temp = new DealDamageCalc();
                 _temp.mInstigator = character;
@@ -101,7 +101,7 @@ class TuLingCeShi : AbstractVerbs
         for (int i = 0; i < character.myState.aim.Count; i++)
         {
             ac = character.myState.aim[i];
-            //ac.BeAttack(AttackType.psy, ac.atk * ac.atkMul + ac.san * ac.sanMul, true, 0, character);
+            //ac.BeAttack(AttackType.psy, ac.atk * ac.atkMul + ac.san * ac.sanMul, true, 0, other);
             DealDamageCalc _temp = new DealDamageCalc();
             _temp.mInstigator = character;
             _temp.mTarget = ac;
@@ -114,7 +114,7 @@ class TuLingCeShi : AbstractVerbs
     public override string UseText()
     {
         AbstractCharacter character = this.GetComponent<AbstractCharacter>();
-        //if (character == null || aimState==null)
+        //if (other == null || aimState==null)
             //return null;
 
         return character.wordName + "拿起小刀，将腹部开出一个小缺口，并将香脂油灌满其中。再将树脂填入名字2的头颅，防止头部的变形。接下来将他整个埋于碱粉中一个月，这样就可以做到肉体不被腐朽所困扰了。";

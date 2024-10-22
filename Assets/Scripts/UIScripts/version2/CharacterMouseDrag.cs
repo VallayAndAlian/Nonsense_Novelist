@@ -47,7 +47,7 @@ public class CharacterMouseDrag : MonoBehaviour
         nowParentTF = transform.parent;
         target = transform;
         sr = GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
-        oriParent = GameObject.Find("UICanvas").transform.Find("Panel").Find("charaPos");
+        oriParent = UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").charaPos;
         transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
         yinXiao = GameObject.Find("yinxiaoSource").GetComponent<AudioYinXiao>();
     }

@@ -122,9 +122,13 @@ public class MailObj : MailEventBase
     public void ClickAction()
     {
         //传入信件对象mailInfo,调用面板方法,打开信件详情
-        MailDetailPanel.Instance.ShowMailDetailInfo(this.mailInfo);
+        //MailDetailPanel.Instance.ShowMailDetailInfo(this.mailInfo);
+        UIManager.GetInstance().ShowPanel<MailDetailPanel>("MailDetailPanel",E_UI_Layer.Top,(_obj)=> 
+        {
+        });
         //隐藏预览面板
-        MailPreviewPanel.Instance.Hide();
+        //MailPreviewPanel.Instance.Hide();
+        UIManager.GetInstance().HidePanel("MailPreviewPanel");
     }
 
 }

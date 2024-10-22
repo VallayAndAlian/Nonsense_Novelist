@@ -70,14 +70,14 @@ namespace AI
          
             }
             //如果没有技能在使用&&平A冷却完毕
-            //else if (attackAtime >= (myState.character.attackInterval/myState.character.attackSpeedPlus))
+            //else if (attackAtime >= (myState.other.attackInterval/myState.other.attackSpeedPlus))
             //{
              
-            //    if (/*myState.character.AttackA()*/myState.hasAttackAAnim)
+            //    if (/*myState.other.AttackA()*/myState.hasAttackAAnim)
             //    {
             //        attackAtime = 0;
             //        //myState.hasAttackAAnim = false;
-            //      // myState.character.charaAnim.Play(AnimEnum.attack);
+            //      // myState.other.charaAnim.Play(AnimEnum.attack);
 
             //    }
             //    else
@@ -89,7 +89,7 @@ namespace AI
             else
             {
                
-               // myState.character.charaAnim.Play(AnimEnum.idle);
+               // myState.other.charaAnim.Play(AnimEnum.idle);
             }
         }
 
@@ -115,7 +115,7 @@ namespace AI
         public override void EnterState(MyState0 myState)
         {
             myState.character.charaAnim.Play(AnimEnum.attack);
-            //myState.character.charaAnim.Play(AnimEnum.attack);
+            //myState.other.charaAnim.Play(AnimEnum.attack);
         }
 
         public override void Exit(MyState0 myState)

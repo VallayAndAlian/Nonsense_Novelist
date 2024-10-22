@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MailPreviewPanel : BasePanel<MailPreviewPanel>
+public class MailPreviewPanel : BasePanel
 {
     //信件对象在场景的父节点位置
     public Transform MailPosFather;

@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 1177453108370840105}
   - component: {fileID: 1082456508607495751}
   - component: {fileID: 693352989946369302}
+  - component: {fileID: 97154063597105288}
   m_Layer: 5
   m_Name: ExitPanel
   m_TagString: Untagged
@@ -312,6 +313,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &97154063597105288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736033009369413505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1107851a1a346049a41ca967a5642ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5956496856570763996
 GameObject:
   m_ObjectHideFlags: 0

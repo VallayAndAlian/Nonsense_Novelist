@@ -7,20 +7,19 @@ using UnityEngine.UI;
 /// 挂在父物体上.负责角色和situation的单例
 /// </summary>
 public class CharacterManager : MonoSingleton<CharacterManager>
-{
-    public GameObject endGame;
+{ 
 
     public static GameObject father;
-    /// <summary>当下全部角色</summary>
-    private AbstractCharacter[] Charas;
-    private List<AbstractCharacter> Strangers=new List<AbstractCharacter>();
-    bool hasEnd = false;
-    public AbstractCharacter[] charas
+
+    /// <summary>当下在战场上的全部角色(存活+死亡)</summary>
+    private List<AbstractCharacter> Charas=new List<AbstractCharacter>();
+    public List<AbstractCharacter> charas
     {
         get
         {
             //获取全部角色
-            Charas = GetComponentsInChildren<AbstractCharacter>();
+            Charas.Clear();
+            Charas.AddRange(GetComponentsInChildren<AbstractCharacter>());
             return Charas;
         }
         set
@@ -28,6 +27,41 @@ public class CharacterManager : MonoSingleton<CharacterManager>
             Charas = value;
         }
     }
+    /// <summary>待放置列表里的所有角色</summary>
+    public List<string> CanPutCharas = new List<string>();
+    ///<summary>当下在战场上的全部角色+待放置列表里的所有角色</summary>
+    private List<string> hasUsedCharas
+    {
+        get
+        {
+            //获取全部角色
+            HasUsedCharas.Clear();
+            foreach (var _chara in charas)
+            {
+                HasUsedCharas.Add(_chara.name);
+            }
+            foreach (var _chara in CanPutCharas)
+            {
+                HasUsedCharas.Add(_chara);
+            }
+            return HasUsedCharas;
+        }
+        set
+        {
+            HasUsedCharas = value;
+        }
+    }
+    private List<string> HasUsedCharas=new List<string>();
+     
+ 
+    /// <summary>场上的所有怪物</summary>
+    private List<AbstractCharacter> Strangers=new List<AbstractCharacter>();
+
+
+
+
+    bool hasEnd = false;
+    
     public List<AbstractCharacter> deadChara = new List<AbstractCharacter>();
     /// <summary>左侧角色</summary>
     public  static List<AbstractCharacter> charas_left = new List<AbstractCharacter>();
@@ -144,7 +178,6 @@ public class CharacterManager : MonoSingleton<CharacterManager>
     public override void Awake()
     {
         base.Awake();
-        Charas = GetComponentsInChildren<AbstractCharacter>();
         father = this.gameObject;
         shooter = GameObject.Find("shooter").transform;
 
@@ -178,6 +211,35 @@ public class CharacterManager : MonoSingleton<CharacterManager>
 
 
     }
+
+    public CharaInfoExcelItem AddToPutCharasList(int _charaID)
+    {
+        //在表中查找对应ID的、未上场也未在待放置列表里的角色
+        if (PoolConfigData.instance.so==null) print("1");
+        if (PoolConfigData.instance.so.charaInfo == null)  print("2");
+        if (PoolConfigData.instance.so.charaInfo.items== null) print("3");
+        var _max = PoolConfigData.instance.so.charaInfo.items.Length;
+        var _random = Random.Range(0, _max);
+        var _loopTime = 0;
+        string randomPrefabName = PoolConfigData.instance.so.charaInfo.items[_random].prefabName;
+        while ((hasUsedCharas.Contains(randomPrefabName) || 
+            (PoolConfigData.instance.so.charaInfo.items[_random].charaID > PoolConfigData.CHARA1_CHARAID_MAX))
+            &&(_loopTime<100))
+            //确保抽到的角色
+        {
+             _random = Random.Range(0, _max);
+             randomPrefabName = PoolConfigData.instance.so.charaInfo.items[_random].prefabName;
+            _loopTime++;
+        }
+        if (hasUsedCharas.Contains(randomPrefabName)) return null;
+
+
+        CanPutCharas.Add(PoolConfigData.instance.so.charaInfo.items[_random].prefabName);
+        hasUsedCharas.Add(PoolConfigData.instance.so.charaInfo.items[_random].prefabName);
+
+        return PoolConfigData.instance.so.charaInfo.items[_random];
+    }
+
 
     Coroutine coroutineColor = null;
     public void SetSituationColorClear(int _speed)

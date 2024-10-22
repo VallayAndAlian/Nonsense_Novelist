@@ -68,7 +68,7 @@ namespace AI
                 _sa.masterNow.DeleteServant(_sa.gameObject);
             }
             //临时去掉了这个if
-            //if (myState.character.charaAnim.IsEnd(AnimEnum.dead))
+            //if (myState.other.charaAnim.IsEnd(AnimEnum.dead))
             //{ 
             //播放完动画后销毁
             //Destroy(this.transform.parent.gameObject);
@@ -106,18 +106,18 @@ namespace AI
 
 
             myState.character.charaAnim.Play(AnimEnum.dead);
-            //AbstractBook.afterFightText += myState.character.LowHPText();
+            //AbstractBook.afterFightText += myState.other.LowHPText();
             AbstractBook.afterFightText += myState.character.DieText();
             
 
             ////结束
             //if (GameObject.Find("LeftAll").GetComponentsInChildren<AbstractCharacter>().Length <= 1 || GameObject.Find("RightAll").GetComponentsInChildren<AbstractCharacter>().Length <= 1)
-            //// if (myState.character.camp == CampEnum.friend)
+            //// if (myState.other.camp == CampEnum.friend)
             //{
             //    UIManager.LoseEnd();
             //}
             /*
-            if (myState.character.camp == CampEnum.enemy&& UIManager.enemyParentF[uIManager.transAndCamera.guanQiaNum].transform.childCount <= 1)
+            if (myState.other.camp == CampEnum.enemy&& UIManager.enemyParentF[uIManager.transAndCamera.guanQiaNum].transform.childCount <= 1)
             {
                 if (uIManager.transAndCamera.guanQiaNum == 0)
                 {

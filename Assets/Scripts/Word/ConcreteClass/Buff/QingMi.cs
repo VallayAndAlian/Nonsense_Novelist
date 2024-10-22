@@ -64,13 +64,13 @@ public class QingMi : AbstractBuff
         //     if(GameObject.Find("AllCharacter").GetComponentsInChildren<FuHuo>().Length<=1)
         //         AbstractVerbs.OnAwake -= FuHuoSkill;
 
-        //     AbstractCharacter character = GetComponent<AbstractCharacter>();
-        //     if (character.attackA.GetType() == typeof(FuHuoMode))
+        //     AbstractCharacter other = GetComponent<AbstractCharacter>();
+        //     if (other.attackA.GetType() == typeof(FuHuoMode))
         //     {
         //         DamageMode newMode = gameObject.AddComponent<DamageMode>();
-        //         newMode.attackRange = character.attackA.attackRange;
-        //         Destroy(character.attackA);
-        //         character.attackA = newMode;
+        //         newMode.attackRange = other.attackA.attackRange;
+        //         Destroy(other.attackA);
+        //         other.attackA = newMode;
         //     }
         //     AbstractVerbs[] allVerb = GetComponents<AbstractVerbs>();
         //     foreach (AbstractVerbs verb in allVerb)

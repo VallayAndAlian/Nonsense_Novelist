@@ -38,7 +38,7 @@ public class CS_BenJieShiDui : ServantAbstract
             myState.character.charaAnim.Play(AnimEnum.attack);
             //普通攻击目标为血量百分比最低的队友，恢复10血量（待定）
             //myState.aim.CreateFloatWord(
-            //attackA.UseMode(myState.character, san * sanMul * 1f, myState.aim)
+            //attackA.UseMode(myState.other, san * sanMul * 1f, myState.aim)
             //, FloatWordColor.heal, false);
            
             return true;

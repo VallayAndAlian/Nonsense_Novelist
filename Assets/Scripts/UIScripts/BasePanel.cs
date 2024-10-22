@@ -1,20 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// UI面板基类
 /// UI面板继承此类即可获取Mono的支持和常用父类功能
 /// </summary>
 /// <typeparam name="T">子类面板</typeparam>
-public abstract class BasePanel<T> : MonoBehaviour where T:class
+public abstract class BasePanel : MonoBehaviour 
 {
-    /// <summary>
-    /// 单例对象,方便面板间的调用和信息交换
-    /// </summary>
-    public static T Instance;
+
 
     //管理面板透明度的组件
     CanvasGroup canvasGroup;
@@ -25,15 +23,26 @@ public abstract class BasePanel<T> : MonoBehaviour where T:class
     //隐藏面板后的回调
     UnityAction hideCallback = null;
 
+    private Dictionary<string, List<UIBehaviour>> controlDic = new Dictionary<string, List<UIBehaviour>>();
+
     private void Awake()
     {
-        Instance = this as T;
         //初始化Panel的CanvasGroup组件
         canvasGroup = this.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
             canvasGroup = this.gameObject.AddComponent<CanvasGroup>();
         }
+
+        //获得并存储所有组件
+        FindChildrenControl<Button>();
+        FindChildrenControl<Image>();
+        FindChildrenControl<RawImage>();
+        FindChildrenControl<Text>();
+        FindChildrenControl<Toggle>();
+        FindChildrenControl<Slider>();
+        FindChildrenControl<ScrollRect>();
+        FindChildrenControl<InputField>();
     }
 
     private void Start()
@@ -70,6 +79,7 @@ public abstract class BasePanel<T> : MonoBehaviour where T:class
         //先设置面板透明度为1,待渐变为0
         canvasGroup.alpha = 1;
         hideCallback += callBack;
+        
     }
     
     /// <summary>
@@ -98,5 +108,98 @@ public abstract class BasePanel<T> : MonoBehaviour where T:class
             }
         }
     }
-    
+
+
+    /// <summary>
+    /// 找到子对象的对应控件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    private void FindChildrenControl<T>() where T : UIBehaviour
+    {
+        T[] controls = this.GetComponentsInChildren<T>();
+        for (int i = 0; i < controls.Length; ++i)
+        {
+            string objName = controls[i].gameObject.name;
+            if (controlDic.ContainsKey(objName))
+                controlDic[objName].Add(controls[i]);
+            else
+                controlDic.Add(objName, new List<UIBehaviour>() { controls[i] });
+            //如果是按钮控件
+            if (controls[i] is Button)
+            {
+                (controls[i] as Button).onClick.AddListener(() =>
+                {
+                    OnClick(objName);
+                });
+
+            }
+            //如果是单选框或者多选框
+            else if (controls[i] is Toggle)
+            {
+                (controls[i] as Toggle).onValueChanged.AddListener((value) =>
+                {
+                    OnValueChanged(objName, value);
+                });
+            }
+            //如果是单选框或者多选框
+            else if (controls[i] is Slider)
+            {
+                (controls[i] as Slider).onValueChanged.AddListener((value) =>
+                {
+                    OnValueChanged(objName, value);
+                });
+            }
+
+        }
+    }
+
+
+    public void SetMouseOnEffect(UIBehaviour uiName, float scaleAmount)
+    {
+        Vector3 _v = new Vector3(scaleAmount, scaleAmount, scaleAmount);
+        UIManager.AddCustomEventListener(uiName, EventTriggerType.PointerEnter, (data) =>
+        {
+            uiName.gameObject.transform.localScale += _v;
+        });
+
+        UIManager.AddCustomEventListener(uiName, EventTriggerType.PointerExit, (data) =>
+        {
+            uiName.gameObject.transform.localScale -= _v;
+        });
+    }
+
+    /// <summary>
+    /// 得到对应名字的对应控件脚本
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="controlName"></param>
+    /// <returns></returns>
+    protected T GetControl<T>(string controlName) where T : UIBehaviour
+    {
+        if (controlDic.ContainsKey(controlName))
+        {
+            for (int i = 0; i < controlDic[controlName].Count; ++i)
+            {
+                if (controlDic[controlName][i] is T)
+                    return controlDic[controlName][i] as T;
+            }
+        }
+
+        return null;
+    }
+    protected virtual void OnClick(string btnName)
+    {
+
+    }
+
+
+    protected virtual void OnValueChanged(string toggleName, bool value)
+    {
+
+    }
+
+    protected virtual void OnValueChanged(string sliderName, float value)
+    {
+
+    }
 }

@@ -111,10 +111,10 @@ class MouseDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandle
                 {
                     AbstractVerbs b = this.GetComponent<AbstractVerbs>();
 
-                    //if(CanUseVerb(character, b))//如果能够使用到角色身上
+                    //if(CanUseVerb(other, b))//如果能够使用到角色身上
                     //{
-                    //character.AddVerb(collision.gameObject.AddComponent(b.GetType()) as AbstractVerbs);
-                    //character.realSkills = character.GetComponents<AbstractVerbs>();
+                    //other.AddVerb(collision.gameObject.AddComponent(b.GetType()) as AbstractVerbs);
+                    //other.realSkills = other.GetComponents<AbstractVerbs>();
                     Destroy(this.gameObject);
                     //}
                    //     else//不能
@@ -124,7 +124,7 @@ class MouseDrag : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandle
                 }
                 else if (absWord.GetType() == typeof(AbstractAdjectives))
                 {
-                   // if (CanUseAdj(character, absWord.GetComponent<AbstractAdjectives>()))
+                   // if (CanUseAdj(other, absWord.GetComponent<AbstractAdjectives>()))
                    // {
                         this.GetComponent<AbstractAdjectives>().UseAdj(hit.collider.gameObject.GetComponent<AbstractCharacter>());
                         Destroy(this.gameObject);

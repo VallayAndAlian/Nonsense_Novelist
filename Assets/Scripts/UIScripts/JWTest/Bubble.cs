@@ -209,7 +209,7 @@ public class Bubble : MonoBehaviour
         if (waiBu>=0)//执行一些特殊操作
         {
             a.GetComponent<EventUI>().WJ_static = true;
-            if (waiBu < GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().monsterPrefabs.Length)
+            if (waiBu < UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").monsterPrefabs.Length)
                 a.GetComponent<EventUI>().WJ_monster = waiBu;
 
             print("waiBu" + waiBu.ToString());

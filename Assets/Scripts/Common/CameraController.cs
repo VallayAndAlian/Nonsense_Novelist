@@ -16,14 +16,37 @@ public class CameraController : MonoBehaviour
         
     }
     bool pausing = false;
+    /// <summary>
+    /// 1=镜头拉远，2=镜头放大
+    /// </summary>
+    /// <param name="_type"></param>
+    public void ZoomChangeTo(int _type)
+    {
+        switch(_type)
+        {
+            case 1:
+                {
+                    SetCameraSizeTo(4);
+                    SetCameraYTo(-1.01f);
+                }
+                break;
+            case 2:
+                {
+                    SetCameraSizeTo(3.57f);
+                    SetCameraYTo(-1.59f);
+                }
+                break;
+        }
+    }
 
-    public void SetCameraSize(float _size)
+
+    void SetCameraSize(float _size)
     {
         if(camera==null)
             camera = GetComponent<Camera>();
         camera.orthographicSize = _size;
     }
-    public void SetCameraSizeTo(float _size)
+    void SetCameraSizeTo(float _size)
     {
 
         //print("SetCameraSizeTo");

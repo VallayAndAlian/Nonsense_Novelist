@@ -59,16 +59,6 @@ public class GameProcessSlider : MonoBehaviour
     private bool countTime = false;//计时开关
     private Slider sliderProcess;
 
-
-    [Header("中场抽取书本加入游戏")]
-    public GameObject bookCanvas;
-    public GameObject characterCanvas;
-
-    [Header("设定获取列表")]
-
-    private GameObject _wordInfo;
-
-
     private Vector3 oriScale;
     private AudioPlay audioPlay;
     private AudioSource audioSource;
@@ -94,6 +84,10 @@ public class GameProcessSlider : MonoBehaviour
     
 
     bool hasWeiji = false;
+
+    GameProcessUI gameprocessUI;
+
+
     public void WeiJiOpen()
     {
         StartCoroutine(Wait_Weiji());
@@ -142,7 +136,8 @@ public class GameProcessSlider : MonoBehaviour
 
     private void Start()
     {
-        audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
+        gameprocessUI = UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI");
+           audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
         audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
         oriScale = this.transform.localScale;
 
@@ -150,12 +145,9 @@ public class GameProcessSlider : MonoBehaviour
         CreateProcessSlider();
 
         //关闭面板显示
-        if (GameMgr.instance.settingPanel != null)
-            GameMgr.instance.settingPanel.gameObject.SetActive(false);
+        gameprocessUI.SwitchSettingList(false);
 
-        _wordInfo = this.transform.parent.GetComponentInChildren<WordInformation>().gameObject;
-        if (_wordInfo != null)
-            _wordInfo.SetActive(false);
+        gameprocessUI.SwitchWordInformatio(false);
     }
 
     private void FixedUpdate()
@@ -456,13 +448,9 @@ public class GameProcessSlider : MonoBehaviour
     {
         countTime = true;
         CharacterManager.instance.pause = false;
-        if (GameMgr.instance.settingPanel != null)
-            GameMgr.instance.settingPanel.gameObject.SetActive(true);
 
-        GameMgr.instance.settingPanel.RefreshList();
-
-        if (_wordInfo != null)
-            _wordInfo.gameObject.SetActive(true);
+       gameprocessUI.SwitchSettingList(true);
+        gameprocessUI.SwitchWordInformatio(true);
     }
 
     #endregion

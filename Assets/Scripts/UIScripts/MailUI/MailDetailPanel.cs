@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MailDetailPanel : BasePanel<MailDetailPanel>
+public class MailDetailPanel : BasePanel
 {
     //返回按钮
     public Button backBtn;
@@ -28,7 +28,11 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
             //当前隐藏面板
             Hide();
             //显示预览面板
-            MailPreviewPanel.Instance.Show();
+            UIManager.GetInstance().ShowPanel<MailPreviewPanel>("MailPreviewPanel", E_UI_Layer.Top, (_obj) =>
+              {
+
+              });
+            //MailPreviewPanel.Instance.Show();
         });
 
         //领取附件:根据MailInfo中的`附件id和数量`领取

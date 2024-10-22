@@ -40,23 +40,27 @@ public class GameMgr : MonoSingleton<GameMgr>
 {
 
     #region 属性
+    private Transform wallP;
+
     [Header("【单位：s】游戏进程相关参数（手动）")]
     public StagesData time_stage;
     [HideInInspector] public StageType nowStageType;
 
     [HideInInspector] public List<Type> settingL = new List<Type>();
     [HideInInspector] public List<Type> settingR = new List<Type>();
-
-    //关闭界面相关
-    public string endGameAdr = "UI/EndGame";
-    private GameObject exitPanel;
-    GameObject exitObj;
-    Button exitButton;
-    Button cancelButton;
-    bool hasOpenExit = false;
-    public SettingList settingPanel;
-    public RestUI restUI;
-    public GameObject CardRes;
+    private GameProcessUI gameProcessUI;
+    public void AddTo(Type _add, bool _left)
+    {
+        if (_left)
+        {
+            settingL.Add(_add);
+        }
+        else
+        {
+            settingR.Add(_add);
+        }
+        gameProcessUI.RefreshSettingList();
+    }
 
     //当前的场景
     [HideInInspector] public int levelSenceIndex = 0;
@@ -130,7 +134,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         canHappenData_Key.Clear();
         leftData.Clear();
 
-        foreach (var _t in AllData.instance.data.items)
+        foreach (var _t in PoolConfigData.instance.so.data.items)
         {
             if ((_t.textTrigger == null) || (_t.textTrigger == ""))
             {
@@ -183,13 +187,8 @@ public class GameMgr : MonoSingleton<GameMgr>
     public float cardRate_3 = 30;
     public float cardRate_4 = 20;
 
-    [Header("界面设置(手动)")]
-    public GameObject UiCanvas;
-    public GameObject characterCanvas;
-    public GameProcessSlider gameProcess;
-    public DraftUi draftUi;
-    public GameObject combatCanvas;
-    public EventCg EventCGAnim;
+
+  
     public LevelController levelController;
     public bool eventHappen = false;
 
@@ -220,7 +219,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 if (onGroupLostHp != null) onGroupLostHp(true);
             }
             LeftGroupNowHp = value;
-            settingPanel.RefreshGroupHP();
+            gameProcessUI.RefreshGroupHP();
             if (value <= 0) GameMgr.instance.EndGame();
         }
         get
@@ -240,7 +239,7 @@ public class GameMgr : MonoSingleton<GameMgr>
                 if (onGroupLostHp != null) onGroupLostHp(false);
             }
             RightGroupNowHp = value;
-            settingPanel.RefreshGroupHP();
+            gameProcessUI.RefreshGroupHP();
             if (value <= 0) GameMgr.instance.EndGame();
         }
         get
@@ -274,65 +273,44 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         base.Awake();
         DealWithData();
-        CardRes.SetActive(false);
-        draftUi.InitContent();
-        EventCGAnim.gameObject.SetActive(false);
-        print("Awake");
+
+        wallP = GameObject.Find("wallCol").transform;
+        //draftUi.InitContent();
 
         //界面设置
         OpenCharacterPutting();
 
-        //退出菜单
-        exitPanel = Resources.Load<GameObject>("UI/exitPanel");
-        //DontDestroyOnLoad(this.gameObject);
 
-       // 牌库
+        //牌库
         InitCardList();
         Time.timeScale = 1;
         CharacterManager.instance.pause = false;
+
     }
 
-    private void Start()
-    {
-        ////print("Start");
-        ////InitCardList();
-        //////界面设置
-        ////OpenCharacterPutting();
 
-        ////退出菜单
-        ////exitPanel = Resources.Load<GameObject>("UI/exitPanel");
-        ////DontDestroyOnLoad(this.gameObject);
-
-        ////牌库
-        ////InitCardList();
-    }
     private void Update()
     {
         time1 += Time.deltaTime;
         if (!CharacterManager.instance.pause) { time2 += Time.deltaTime; }
 
         //退出菜单
-        if (hasOpenExit) return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            exitObj = Instantiate(exitPanel);
-            Time.timeScale = 0f;
-            hasOpenExit = true;
-            exitButton = exitObj.transform.GetComponentsInChildren<Button>()[0];
-            cancelButton = exitObj.transform.GetComponentsInChildren<Button>()[1];
-            exitButton.onClick.AddListener(ExitButton);
-            cancelButton.onClick.AddListener(BackToGame);
+            UIManager.GetInstance().ShowPanel<ExitPanel>("ExitPanel", E_UI_Layer.System, (obj) =>
+             {
+                 Time.timeScale = 0f;
+             });
         }
 
-        if (!DebugUi) return;
-      
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (characterCanvas.GetComponentInChildren<DebugUi>()) return;
- 
-            Instantiate<GameObject>(ResMgr.GetInstance().Load<GameObject>("debugUI"), characterCanvas.transform);
+            if (!DebugUi) return;
+            UIManager.GetInstance().ShowPanel<DebugUi>("DebugUi", E_UI_Layer.System, (obj) =>
+            {
+            });
         }
-        
+
     }
 
     #region 新 牌库
@@ -680,7 +658,7 @@ public class GameMgr : MonoSingleton<GameMgr>
          
 
         }
-        CreateOneCharacter.firstUseCardlist = false ;
+        PutCharacter.firstUseCardlist = false ;
         //wordHasUseList.Add(wordGoingUseList[0]);
 
         //print(wordGoingUseList[0].)
@@ -1026,6 +1004,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     #endregion
 
+    
     #region level
     public void ChangeLevelTo(int start)
     {
@@ -1042,12 +1021,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         var obj=ResMgr.GetInstance().Load<GameObject>("UI/popEvent"); 
         //世界坐标转画布坐标
-        Vector2 canvasSize = characterCanvas.GetComponent<RectTransform>().sizeDelta;
+       Vector2 canvasSize = UIManager.GetInstance().canvas.GetComponent<RectTransform>().sizeDelta;
         Vector3 viewPortPos3d = Camera.main.WorldToViewportPoint(pos);
         Vector2 viewPortRelative = new Vector2(viewPortPos3d.x - 0.5f, viewPortPos3d.y - 0.5f);
         Vector2 cubeScreenPos = new Vector2(viewPortRelative.x * canvasSize.x, viewPortRelative.y );
         obj.GetComponent<RectTransform>().position = pos;
-        obj.transform.parent = characterCanvas.transform;
+        obj.transform.parent = UIManager.GetInstance().canvas.transform;
         obj.transform.localScale = Vector3.one;
          StartCoroutine(MoveToPosCanvas( obj.GetComponent<RectTransform>(), name,info));
         
@@ -1116,79 +1095,110 @@ public class GameMgr : MonoSingleton<GameMgr>
     #endregion
 
 
-    #region exit菜单相关
-    public void ExitButton()
+   
+
+
+    public void WallSwitch(bool _open)
     {
-        Application.Quit();
+        if (wallP == null) return;
+        if (_open)
+        {
+            wallP.gameObject.SetActive(true); 
+        }
+        else
+        {
+            wallP.gameObject.SetActive(false);
+        }
     }
-    public void BackToGame()
-    {hasOpenExit = false;
-        Destroy(exitObj.gameObject);
-        Time.timeScale = GameMgr.instance.timeSpeed;
-        
-    }
-    #endregion
-
-
-
-
-    #region 调用各种界面
-    void OpenCharacterPutting()
-    {
-        combatCanvas.gameObject.SetActive(true);
-        draftUi.gameObject.SetActive(false);
-        UiCanvas.gameObject.SetActive(true);
-    }
-
     public int GetNextCreateChara()
     {
-        return UiCanvas.GetComponentInChildren<CreateOneCharacter>().GetNextCreateChara();
+        return CharacterManager.instance.AddToPutCharasList(-1).charaID;
     }
-    public void GetNextCreateChara(int _sds)
+    public int GetNextCreateChara(int _sds)
     {
-         UiCanvas.GetComponentInChildren<CreateOneCharacter>().GetNextCreateChara(_sds);
+        return CharacterManager.instance.AddToPutCharasList(_sds).charaID;
     }
     public void CreateCharacterPut(int initCharacter)
     {
         //镜头拉远
-        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
-        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f); 
+        Camera.main.GetComponent<CameraController>().ZoomChangeTo(1);
         //生成面板  进入放角色页面
         CharacterManager.instance.pause = true;
-        if (UiCanvas != null)
-            UiCanvas.SetActive(true);
-        UiCanvas.GetComponentInChildren<CreateOneCharacter>().CreateNewCharacter(initCharacter);
+        
+
+        for (int _count = 0; _count < initCharacter; _count++)
+        {
+            CharacterManager.instance.AddToPutCharasList(-1);
+        }
+
+        UIManager.GetInstance().ShowPanel<PutCharacter>("", E_UI_Layer.Mid, (obj) =>
+          {
+              obj.CreateTheCharacter();
+          });
+        
     }
     public void CreateTheCharacterPut(int characterID)
     {
         //镜头拉远
-        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
-        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
+        Camera.main.GetComponent<CameraController>().ZoomChangeTo(1);
         //生成面板  进入放角色页面
         CharacterManager.instance.pause = true;
-        if (UiCanvas != null)
-            UiCanvas.SetActive(true);
-        UiCanvas.GetComponentInChildren<CreateOneCharacter>().CreateTheCharacter(characterID);
+
+        CharacterManager.instance.AddToPutCharasList(characterID);
+
+        UIManager.GetInstance().ShowPanel<PutCharacter>("", E_UI_Layer.Mid, (obj) =>
+        {
+            obj.CreateTheCharacter();
+        });
     }
 
+
+    #region 调用各种界面
+    /// <summary>
+    /// 打开角色放置页面
+    /// </summary>
+    void OpenCharacterPutting()
+    {
+
+        UIManager.GetInstance().HidePanel("DraftBook");
+        UIManager.GetInstance().HidePanel("GameProcessUI");
+        UIManager.GetInstance().HidePanel("CardRes");
+
+        UIManager.GetInstance().ShowPanel<PutCharacter>("PutCharacter", E_UI_Layer.Mid, (obj) =>
+        {
+        });
+    }
+
+    /// <summary>
+    /// 打开事件页面。暂时只做其它页面的隐藏处理
+    /// </summary>
     public void OpenEventUi()
     {
-   
-        draftUi.gameObject.SetActive(false);
-        UiCanvas.gameObject.SetActive(false);
+        UIManager.GetInstance().HidePanel("CardRes");
+        UIManager.GetInstance().HidePanel("DraftBook");
+        UIManager.GetInstance().HidePanel("PutCharacter");
+
+    }
+    /// <summary>
+    /// 打开角色放置页面
+    /// </summary>
+    public void ShowGameUI(bool _display)
+    {
+        UIManager.GetInstance().HidePanel("DraftBook");
+        UIManager.GetInstance().HidePanel("PutCharacter");
+        UIManager.GetInstance().HidePanel("CardRes");
+        if (_display)
+        {
+            UIManager.GetInstance().ShowPanel<GameProcessUI>("GameProcessUI", E_UI_Layer.Mid, (obj) =>
+            {
+            });
+            return;
+        }
+        UIManager.GetInstance().HidePanel("GameProcessUI");
+       
     }
 
-    public void ShowGameUI()
-    {
-        combatCanvas.gameObject.SetActive(true);
-    }
-
-    public void HideGameUI()
-    {
-        combatCanvas.gameObject.SetActive(false);
-        draftUi.gameObject.SetActive(false);
-        UiCanvas.gameObject.SetActive(false);
-    }
+  
     #endregion
 
 
@@ -1203,15 +1213,21 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
         else
 
-        { GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
-            GameMgr.instance.EventCGAnim.PlayEventCG(name); }
+        { 
+            UIManager.GetInstance().ShowPanel<EventCg>("EventCg", E_UI_Layer.Mid, (obj) =>
+                {
+                    obj.PlayEventCG(name);
+                }); }
     }
     IEnumerator WaitAndCg(string name,float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
         //播放开场动画
-        GameMgr.instance.EventCGAnim.gameObject.SetActive(true);
-        GameMgr.instance.EventCGAnim.PlayEventCG(name);
+        UIManager.GetInstance().ShowPanel<EventCg>("EventCg", E_UI_Layer.Mid, (obj) =>
+        {
+            obj.PlayEventCG(name);
+        });
+    
     }
 
     #endregion
@@ -1228,20 +1244,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     }
 
 
-    /// <summary>
-    /// 开启/关闭休息回合UI的显示
-    /// </summary>
-    /// <param name="_display"></param>
-    public void SwitchRestUiDisplay(bool _display)
-    {
-       restUI.gameObject.SetActive(_display);
-    }
 
 
     //删除场上的所有事件
     public void DeleteAllEventsInScene()
     {
-        foreach (var _eventBubble in gameProcess.eventBubble)
+        foreach (var _eventBubble in UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").gameProcessSlider.eventBubble)
         {
             Destroy(_eventBubble.gameObject);
         }
@@ -1297,9 +1305,9 @@ public class GameMgr : MonoSingleton<GameMgr>
     public void CreateMonster(int id)
     {
         int _index = -1;
-        for (int ttt = 0; (ttt < AllData.instance.monsterDate.items.Length)&&(_index!=-1);ttt++)
+        for (int ttt = 0; (ttt < PoolConfigData.instance.so.monsterDate.items.Length)&&(_index!=-1);ttt++)
         {
-            if ((AllData.instance.monsterDate.items[ttt].Mid == id)&&(AllData.instance.monsterDate.items[ttt].name==stageIndex))
+            if ((PoolConfigData.instance.so.monsterDate.items[ttt].Mid == id)&&(PoolConfigData.instance.so.monsterDate.items[ttt].name==stageIndex))
             {
                 _index = ttt;
             }
@@ -1307,9 +1315,9 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         if (_index == -1) return;
 
-        var _data = AllData.instance.monsterDate.items[_index];
+        var _data = PoolConfigData.instance.so.monsterDate.items[_index];
         int _id = id - 110;
-        var _monster = Instantiate<GameObject>(UiCanvas.GetComponent<CreateOneCharacter>().monsterPrefabs[_id]);
+        var _monster = Instantiate<GameObject>(UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").monsterPrefabs[_id]);
         var _mAc = _monster.GetComponent<AbstractCharacter>();
         _mAc.Camp = CampEnum.stranger;
         _mAc.maxHp = _data.hp; 
@@ -1333,11 +1341,8 @@ public class GameMgr : MonoSingleton<GameMgr>
 
     public void EndGame()
     {
-        //if (GameObject.Find(endGame.name)!=null) return;
-     
-        Camera.main.GetComponent<CameraController>().SetCameraSizeTo(4);
-        Camera.main.GetComponent<CameraController>().SetCameraYTo(-1.01f);
-        Instantiate(ResMgr.GetInstance().Load<GameObject>(endGameAdr));
+        Camera.main.GetComponent<CameraController>().ZoomChangeTo(1);
+        UIManager.GetInstance().ShowPanel<EndGame>("EndGame", E_UI_Layer.Top, (obj) => { });
         CharacterManager.instance.pause = true;
     }
 
@@ -1400,7 +1405,7 @@ public class GameMgr : MonoSingleton<GameMgr>
     private void EnterStage_Rest()
     {
         //进入休息状态：工具界面;刷新事件；所有角色不战斗；
-        SwitchRestUiDisplay(true);
+        UIManager.GetInstance().ShowPanel<RestUI>("RestUI", E_UI_Layer.Top, (obj) => { });
 
         //所有角色脱离战斗状态
         foreach (var _chara in CharacterManager.instance.charas)
@@ -1409,7 +1414,8 @@ public class GameMgr : MonoSingleton<GameMgr>
         }
 
         //激活事件生成
-        gameProcess.CreateEventUpdate(time_stage.stagesData[stageCount].eventDelayTime,
+        UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").gameProcessSlider
+        .CreateEventUpdate(time_stage.stagesData[stageCount].eventDelayTime,
             time_stage.stagesData[stageCount].eventIsKey, time_stage.stagesData[stageCount].eventCount);
     }
 
@@ -1418,16 +1424,18 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
 
         //进入战斗状态：隐藏工具界面;不刷新事件;所有角色战斗
-        SwitchRestUiDisplay(false);
+        UIManager.GetInstance().HidePanel("RestUI");
 
         foreach (var _chara in CharacterManager.instance.charas)
         {
             _chara.myState.ChangeActiveState(AI.StateID.attack);
         }
 
-        gameProcess.StopEventUpdate();
+        UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").gameProcessSlider.StopEventUpdate();
 
         //显示战斗环节的开始面板
+       UIManager.GetInstance().ShowPanel<StageUIpvp>("stage_pvp",E_UI_Layer.Mid,(_obj)=> { 
+        });
     }
 
     public void GroupLose(CampEnum _camp)
@@ -1435,8 +1443,8 @@ public class GameMgr : MonoSingleton<GameMgr>
         //扣血
         switch (_camp)
         {
-            case CampEnum.left: { LeftGroupNowHp -= AllData.instance.cardRareDate.items[time_stage.stagesData[stageCount].level].LoseHp; }break;
-            case CampEnum.right: { RightGroupNowHp -= AllData.instance.cardRareDate.items[time_stage.stagesData[stageCount].level].LoseHp; } break;
+            case CampEnum.left: { LeftGroupNowHp -= PoolConfigData.instance.so.cardRareDate.items[time_stage.stagesData[stageCount].level].LoseHp; }break;
+            case CampEnum.right: { RightGroupNowHp -= PoolConfigData.instance.so.cardRareDate.items[time_stage.stagesData[stageCount].level].LoseHp; } break;
         }
 
         //进入下一回合

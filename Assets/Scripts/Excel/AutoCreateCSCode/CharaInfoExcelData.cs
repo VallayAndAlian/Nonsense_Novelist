@@ -11,6 +11,7 @@ public class CharaInfoExcelItem : ExcelItemBase
 	public int charaID;
 	public string name;
 	public string typeName;
+	public string prefabName;
 	public BookNameEnum book;
 	public float maxhp;
 	public float atk;
@@ -42,6 +43,7 @@ public class CharaInfoAssetAssignment
 			items[i].charaID = Convert.ToInt32(allItemValueRowList[i]["charaID"]);
 			items[i].name = allItemValueRowList[i]["name"];
 			items[i].typeName = allItemValueRowList[i]["typeName"];
+			items[i].prefabName = allItemValueRowList[i]["prefabName"];
 			items[i].book = (BookNameEnum)(Convert.ToInt32(allItemValueRowList[i]["book"]));
 			items[i].maxhp = Convert.ToSingle(allItemValueRowList[i]["maxhp"]);
 			items[i].atk = Convert.ToSingle(allItemValueRowList[i]["atk"]);

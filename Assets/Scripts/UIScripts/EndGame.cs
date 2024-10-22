@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-public class EndGame : MonoBehaviour
+public class EndGame : BasePanel
 {
     [Header("(手动设置)panel1")]
     public Transform panel1;//命名
@@ -33,7 +33,7 @@ public class EndGame : MonoBehaviour
     public GameObject letetrScroe;//信件得分
     public Scrollbar scroll;
     private Vector3 letterScroePos;
-    private void Awake()
+    override protected void Init()
     {
         //初始化，打开panel1关闭其它
         ChangePanel(1);
@@ -45,8 +45,8 @@ public class EndGame : MonoBehaviour
         //
         this.GetComponent<Canvas>().worldCamera = Camera.main;
       
-        content = GameMgr.instance.draftUi.MergeContent_B();
-        content_string = GameMgr.instance.draftUi.MergeContent_A();
+        content = DraftMgr.instance.MergeContent_B();
+        content_string = DraftMgr.instance.MergeContent_A();
        // CalculateAllPageIndex();
     }
 
@@ -109,7 +109,7 @@ public class EndGame : MonoBehaviour
         sizeWidth = (sentenseObj.transform.Find("showText").GetComponent<RectTransform>().rect.width);
         sizeFont = (sentenseObj.transform.Find("showText").GetComponent<TextMeshProUGUI>().fontSize);
         maxPage = 0;
-        _content = GameMgr.instance.draftUi.content;
+        _content = DraftMgr.instance.content;
 
         //遍历所有的句子，找到对应的行数
         pageCountL.Clear(); pageCountR.Clear();
@@ -452,8 +452,8 @@ public class EndGame : MonoBehaviour
 
     public void BackToStudyScene()
     {
-        //RecordMgr.instance.AddRecord(titleName, GameMgr.instance.draftUi.content, 2);
-        RecordMgr.instance.SaveByJson(titleName, GameMgr.instance.draftUi.content, 2);
+        //RecordMgr.instance.AddRecord(titleName, DraftMgr.instance.content, 2);
+        RecordMgr.instance.SaveByJson(titleName, DraftMgr.instance.content, 2);
         SceneManager.LoadScene("Study");
         PoolMgr.GetInstance().Clear();
         //gameObject.GetComponent<LoadingScene>().EnterNextScene();

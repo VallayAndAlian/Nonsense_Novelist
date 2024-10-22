@@ -884,7 +884,7 @@ GameObject:
   - component: {fileID: 33247546391060055}
   - component: {fileID: 8470188836497664034}
   m_Layer: 5
-  m_Name: debugUI
+  m_Name: DebugUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

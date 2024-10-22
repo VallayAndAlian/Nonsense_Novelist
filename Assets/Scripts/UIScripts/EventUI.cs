@@ -684,7 +684,7 @@ public class EventUI : MonoBehaviour
             choose.localPosition = Vector3.zero;
 
           
-            //cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
+            //cardPanal.GetComponent<CardRes>().OpenMainPanal();
         }
   
         
@@ -694,7 +694,7 @@ public class EventUI : MonoBehaviour
 
     public void JY_OpenCardRes()
     {
-        cardPanal.GetComponent<ShooterWordCheck>().OpenMainPanal();
+        cardPanal.GetComponent<CardRes>().OpenMainPanal();
     }
 
     void Close_JiaoYi()
@@ -746,14 +746,14 @@ public class EventUI : MonoBehaviour
         //抽取怪物
         if (WJ_monster >= 0)
         {
-            GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster(WJ_monster);
-            monster=GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1)[0];
+           UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").GetNextCreateMonster(WJ_monster);
+            monster= UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").CreateMonster(1)[0];
             //audioPlay.Boss_GuaiWu();
         }
         else
         {
-            WJ_monster= GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().GetNextCreateMonster();
-            monster=GameMgr.instance.UiCanvas.GetComponent<CreateOneCharacter>().CreateMonster(1)[0];
+            WJ_monster= UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").GetNextCreateMonster();
+            monster= UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").CreateMonster(1)[0];
             //audioPlay.Boss_GuaiWu();
         }
         _spAnim.Play(WJ_monster.ToString());
@@ -781,8 +781,8 @@ public class EventUI : MonoBehaviour
 
     public void Close_WeiJi()//点击迎接危机
     {
- 
-        GameMgr.instance.gameProcess.WeiJiOpen();
+
+        UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").gameProcessSlider.WeiJiOpen();
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
         Destroy(this.gameObject);
@@ -866,8 +866,7 @@ public class EventUI : MonoBehaviour
     {
         print("Happen_BSettingXNSML");
 
-        GameMgr.instance.settingR.Add(typeof(XuNiShengMingLi));
-        GameMgr.instance.settingPanel.RefreshList();
+        GameMgr.instance.AddTo(typeof(XuNiShengMingLi),false);
     }
 
     ///A队获得“化学极乐”设定
@@ -875,8 +874,7 @@ public class EventUI : MonoBehaviour
     {
         print("Happen_ASettingHXJL");
 
-        GameMgr.instance.settingL.Add( typeof(HuaXueJiLe));
-        GameMgr.instance.settingPanel.RefreshList();
+        GameMgr.instance.AddTo( typeof(HuaXueJiLe),true);
     }
     ///【意外】Nexus-6型手臂加入牌库
     void Happen_GetNexus6()
@@ -889,7 +887,7 @@ public class EventUI : MonoBehaviour
     void Happen_WeiJi()
     {
         print("Happen_WeiJi");
-        GameMgr.instance.gameProcess.CreateWeijiEvent(false,0);
+        UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").gameProcessSlider.CreateWeijiEvent(false,0);
 
     }
 
@@ -898,10 +896,8 @@ public class EventUI : MonoBehaviour
     {
         print("Happen_SettingRXSC");
 
-        GameMgr.instance.settingL.Add(typeof(RenXingShangCun));
-        GameMgr.instance.settingR.Add(typeof(RenXingShangCun));
-        GameMgr.instance.settingPanel.RefreshList();
-
+        GameMgr.instance.AddTo(typeof(RenXingShangCun),true);
+        GameMgr.instance.AddTo(typeof(RenXingShangCun),false);
     }
 
     ///【意外】进入一轮特殊的设定获取，所有的选项都带有【角色】标签，且不限制稀有度
@@ -918,9 +914,9 @@ public class EventUI : MonoBehaviour
     {
         print("Happen_SettingSJWL");
 
-        GameMgr.instance.settingL.Add(typeof(ShenJingWenLuan));
-        GameMgr.instance.settingR.Add(typeof(ShenJingWenLuan));
-        GameMgr.instance.settingPanel.RefreshList();
+        GameMgr.instance.AddTo(typeof(ShenJingWenLuan),true);
+        GameMgr.instance.AddTo(typeof(ShenJingWenLuan),false);
+     
     }
 
     ///【意外】三张被植入的记忆加入牌库
@@ -1029,7 +1025,7 @@ public class EventUI : MonoBehaviour
         }
 
         //内容加入草稿本
-        GameMgr.instance.draftUi.AddContent(nowEvent.textDraft);
+        DraftMgr.instance.AddContent(nowEvent.textDraft);
         
         //关闭面板
         switch (type)

@@ -71,7 +71,7 @@ public class ShangJingLieRen : AbstractCharacter
         {
             hasAddGrow.Add(GrowType.psy);
             string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
-            GameMgr.instance.draftUi.AddContent(it);
+            DraftMgr.instance.AddContent(it);
             return it;
         }
 

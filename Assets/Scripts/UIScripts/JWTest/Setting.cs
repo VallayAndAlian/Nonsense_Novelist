@@ -401,15 +401,13 @@ public class Setting : MonoBehaviour
         if (isLeft)
         {
 
-            GameMgr.instance.settingL.Add(click.GetComponent<AbstractSetting>().GetType());
-            GameMgr.instance.settingPanel.RefreshList();
+            GameMgr.instance.AddTo(click.GetComponent<AbstractSetting>().GetType(),true);
             Destroy(gameObject);
         }
         else
         {
 
-            GameMgr.instance.settingR.Add(click.GetComponent<AbstractSetting>().GetType());
-            GameMgr.instance.settingPanel.RefreshList();
+            GameMgr.instance.AddTo(click.GetComponent<AbstractSetting>().GetType(),false);
             Destroy(gameObject);
         }
     }

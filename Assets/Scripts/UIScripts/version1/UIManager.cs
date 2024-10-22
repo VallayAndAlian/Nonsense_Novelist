@@ -1,112 +1,176 @@
-
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-///<summary>
-///UI管理器(建立一个UIManager空物体，挂在上面)
-///</summary>
-class UIManager  : MonoBehaviour
+/// <summary>
+/// UI层级
+/// </summary>
+public enum E_UI_Layer
 {
-    /// <summary>战斗场景是否进入下一关</summary>
-    public static bool nextQuanQia;
-    /// <summary>脚本</summary>
-    public static CharacterTranslateAndCamera charaTransAndCamera;
-    /// <summary>获取关卡结束面板</summary>
-    private static GameObject endPanel;
-    /// <summary>获取章节结束面板</summary>
-    public static GameObject bookEndPanel;
-    /// <summary>碰撞体射线遮挡面板</summary>
-    public static GameObject boxColliderF;
-    public static LoadingScript loadingScript;
-    public static AudioSource audioSource_write;
-    private AudioSource audioSource_BGM;
-    public AudioClip[] audioClips;
-    public CharacterTranslateAndCamera transAndCamera;
+    Bot,
+    Mid,
+    Top,
+    System,
+}
 
-    /// <summary>友方父物体数组</summary>
-    public static GameObject[] friendParentF=new GameObject[1];
-    /// <summary>敌方父物体数组</summary>
-    public static GameObject[] enemyParentF= new GameObject[3];
-    /// <summary>敌方父物体数组</summary>
-    public GameObject[] friendParentUseless;
-    public GameObject[] enemyParentsUseless;
+/// <summary>
+/// UI管理器
+/// 1.管理所有显示的面板
+/// 2.提供给外部 显示和隐藏等等接口
+/// </summary>
+public class UIManager : BaseManager<UIManager>
+{
+    public Dictionary<string, BasePanel>  panelDic = new Dictionary<string, BasePanel>();
 
-    public GameObject chapterEndPanel;
-    private void Awake()
+    private Transform bot;//底层
+    private Transform mid;//中层
+    private Transform top;//顶层
+    private Transform system;//顶层的上层
+
+    //记录我们UI的Canvas父对象 方便以后外部可能会使用它
+    public RectTransform canvas;
+
+    public UIManager()
     {
-        charaTransAndCamera = GameObject.Find("MainCamera").GetComponent<CharacterTranslateAndCamera>();
-        endPanel = GameObject.Find("endPanel");
-        bookEndPanel = GameObject.Find("BookEndPanel");
-        loadingScript = GameObject.Find("MainCamera").GetComponent<LoadingScript>();
-        audioSource_write = GameObject.Find("AudioSource_wirte").GetComponent<AudioSource>();
-        transAndCamera = GameObject.Find("MainCamera").GetComponent<CharacterTranslateAndCamera>();
-        audioSource_BGM = GameObject.Find("AudioSource_BGM").GetComponent<AudioSource>();
-        //chapterEndPanel = GameObject.Find("ChapterEndPanel");
-        boxColliderF = GameObject.Find("boxColliderF");
+        //创建Canvas 让其过场景的时候 不被移除
+        GameObject obj = ResMgr.GetInstance().Load<GameObject>("UI/Canvas");
+        canvas = obj.transform as RectTransform;
+        GameObject.DontDestroyOnLoad(obj);
 
-        for (int i = 0; i < friendParentUseless.Length; i++)
-        {
-            friendParentF[i] = friendParentUseless[i];
-        }
-        for(int i = 0; i < enemyParentsUseless.Length; i++)
-        {
-            enemyParentF[i] = enemyParentsUseless[i];
-        }
+        //找到各层
+        bot = canvas.Find("Bot");
+        mid = canvas.Find("Mid");
+        top = canvas.Find("Top");
+        system = canvas.Find("System");
 
+        //创建EventSystem 让其过场景的时候 不被移除
+        obj = ResMgr.GetInstance().Load<GameObject>("UI/EventSystem");
+        GameObject.DontDestroyOnLoad(obj);
     }
+
     /// <summary>
-    /// 每一章的下一关按钮
+    /// 通过层级枚举 得到对应层级的父对象
     /// </summary>
-    public void NextQuanQia()
-    {
-        //打开关卡结束面板
-        endPanel.transform.GetChild(0).gameObject.SetActive(false);
-        audioSource_BGM.clip = audioClips[transAndCamera.guanQiaNum + 1];
-        audioSource_BGM.Play();
-    }
-    /// <summary>
-    /// 关卡战斗胜利
-    /// </summary>
+    /// <param name="layer"></param>
     /// <returns></returns>
-    public static bool WinEnd()
+    public Transform GetLayerFather(E_UI_Layer layer)
     {
-            /*if (GameObject.Find("EnemyCharacter").transform.childCount <= 1 && charaTransAndCamera.guanQiaNum <= 1)
+        switch (layer)
+        {
+            case E_UI_Layer.Bot:
+                return this.bot;
+            case E_UI_Layer.Mid:
+                return this.mid;
+            case E_UI_Layer.Top:
+                return this.top;
+            case E_UI_Layer.System:
+                return this.system;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 显示面板
+    /// </summary>
+    /// <typeparam name="T">面板脚本类型</typeparam>
+    /// <param name="panelName">面板名</param>
+    /// <param name="layer">显示在哪一层</param>
+    /// <param name="callBack">当面板预设体创建成功后 你想做的事</param>
+    public void ShowPanel<T>(string panelName, E_UI_Layer layer = E_UI_Layer.Mid, UnityAction<T> callBack = null) where T : BasePanel
+    {
+        if (panelDic.ContainsKey(panelName))
+        {
+            panelDic[panelName].Show();
+            // 处理面板创建完成后的逻辑
+            if (callBack != null)
+                callBack(panelDic[panelName] as T);
+            //避免面板重复加载 如果存在该面板 即直接显示 调用回调函数后  直接return 不再处理后面的异步加载逻辑
+            return;
+        }
+
+        ResMgr.GetInstance().LoadAsync<GameObject>("UI/" + panelName, (obj) =>
+        {
+            //把他作为 Canvas的子对象
+            //并且 要设置它的相对位置
+            //找到父对象 你到底显示在哪一层
+            Transform father = bot;
+            switch (layer)
             {
-                //打开关卡结束面板
-                endPanel.transform.GetChild(0).gameObject.SetActive(true);
-                return true;
-            }*/
-            if (enemyParentF[2].transform.childCount <= 1 && charaTransAndCamera.guanQiaNum == 2)
-            {
-                //打开章节结束面板
-                bookEndPanel.transform.GetChild(0).gameObject.SetActive(true);
-                boxColliderF.transform.GetChild(0).gameObject.SetActive(true);
-                audioSource_write.Play();
-                return true;
+                case E_UI_Layer.Mid:
+                    father = mid;
+                    break;
+                case E_UI_Layer.Top:
+                    father = top;
+                    break;
+                case E_UI_Layer.System:
+                    father = system;
+                    break;
             }
-        
-        return false;
+            //设置父对象  设置相对位置和大小
+            obj.transform.SetParent(father);
+
+            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localScale = Vector3.one;
+
+            (obj.transform as RectTransform).offsetMax = Vector2.zero;
+            (obj.transform as RectTransform).offsetMin = Vector2.zero;
+
+            //得到预设体身上的面板脚本
+            T panel = obj.GetComponent<T>();
+            // 处理面板创建完成后的逻辑
+            if (callBack != null)
+                callBack(panel);
+
+            panel.Show();
+
+            //把面板存起来
+            panelDic.Add(panelName, panel);
+        });
     }
 
     /// <summary>
-    /// 关卡战斗失败
+    /// 隐藏面板
     /// </summary>
-    /// <returns></returns>
-    public static bool LoseEnd()
+    /// <param name="panelName">放在RES/UI里的面板的预制体名称</param>
+    public void HidePanel(string panelName)
     {
-        if (friendParentF[0].transform.childCount <= 1)
+        if (panelDic.ContainsKey(panelName))
         {
-            //失败先跳转到loading界面，再跳转到startgame界面
-            loadingScript.enabled = true;
-            return true;
+            panelDic[panelName].Hide();
+            GameObject.Destroy(panelDic[panelName].gameObject);
+            panelDic.Remove(panelName);
         }
-        return false;
     }
+
     /// <summary>
-    /// 章节结束界面的接下来的start按钮
+    /// 得到某一个已经显示的面板 方便外部使用
     /// </summary>
-    public void ShowEndBook()
+    public T GetPanel<T>(string name) where T : BasePanel
     {
-        chapterEndPanel.SetActive(false);
+        if (panelDic.ContainsKey(name))
+            return panelDic[name] as T;
+        return null;
     }
+
+    /// <summary>
+    /// 给控件添加自定义事件监听
+    /// </summary>
+    /// <param name="control">控件对象</param>
+    /// <param name="type">事件类型</param>
+    /// <param name="callBack">事件的响应函数</param>
+    public static void AddCustomEventListener(UIBehaviour control, EventTriggerType type, UnityAction<BaseEventData> callBack)
+    {
+        EventTrigger trigger = control.GetComponent<EventTrigger>();
+        if (trigger == null)
+            trigger = control.gameObject.AddComponent<EventTrigger>();
+
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = type;
+        entry.callback.AddListener(callBack);
+
+        trigger.triggers.Add(entry);
+    }
+
 }

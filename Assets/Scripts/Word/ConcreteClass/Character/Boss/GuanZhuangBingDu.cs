@@ -49,7 +49,7 @@ using UnityEngine;
             if (randomEnemy != null)
             {
                 //myState.aim.CreateFloatWord(
-                //    skillMode.UseMode(myState.character, 10 * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
+                //    skillMode.UseMode(myState.other, 10 * (1 - myState.aim.def / (myState.aim.def + 20)), myState.aim)
                 //    ,FloatWordColor.physics,false);
                 skillMode.UseMode(AttackType.atk, 10, myState.character, myState.aim[0], true, 0);
             }
@@ -73,7 +73,7 @@ using UnityEngine;
         {
             hasAddGrow.Add(GrowType.psy);
             string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
-            GameMgr.instance.draftUi.AddContent(it);
+            DraftMgr.instance.AddContent(it);
             return it;
         }
 

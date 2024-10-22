@@ -21,9 +21,9 @@ public class FangSheXingWeiCheng : AbstractCharacter
         //读取数据
         MonsterExcelItem dataD = null;
         MonsterExcelItem data = null;
-        for (int i = 0; (i < AllData.instance.monsterDate.items.Length) && (data == null); i++)
+        for (int i = 0; (i < PoolConfigData.instance.so.monsterDate.items.Length) && (data == null); i++)
         {
-            var _data = AllData.instance.monsterDate.items[i];
+            var _data = PoolConfigData.instance.so.monsterDate.items[i];
             if (_data.Mid == characterID)
             {
                 if (dataD == null) dataD = _data;
@@ -91,7 +91,7 @@ public class FangSheXingWeiCheng : AbstractCharacter
         {
             hasAddGrow.Add(GrowType.psy);
             string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
-            GameMgr.instance.draftUi.AddContent(it);
+            DraftMgr.instance.AddContent(it);
             return it;
         }
 

@@ -202,7 +202,7 @@ abstract public class AbstractCharacter : AbstractWord0
             if (_s != null)
             {
                 GameMgr.instance.PopupEvent(this.transform.position, _s, _s);
-                GameMgr.instance.draftUi.AddContent(_s);
+                DraftMgr.instance.AddContent(_s);
                 GameMgr.instance.AttackHDList.Add(_whoDid.characterID * 100 + this.characterID * 1);
             }
         }
@@ -286,7 +286,7 @@ abstract public class AbstractCharacter : AbstractWord0
                     if (_s != null)
                     {
                         GameMgr.instance.PopupEvent(this.transform.position, _s, _s);
-                        GameMgr.instance.draftUi.AddContent(_s);
+                        DraftMgr.instance.AddContent(_s);
                         GameMgr.instance.AttackHDList.Add(_whoDid.characterID * 100 + this.characterID * 1);
                     }
                 }
@@ -332,7 +332,7 @@ abstract public class AbstractCharacter : AbstractWord0
                 if (_s != null)
                 {
                     GameMgr.instance.PopupEvent(this.transform.position, _s, _s);
-                    GameMgr.instance.draftUi.AddContent(_s);
+                    DraftMgr.instance.AddContent(_s);
                     GameMgr.instance.CureHDList.Add(_whoDid.characterID * 100 + this.characterID * 1);
                 }
             }
@@ -1108,7 +1108,7 @@ abstract public class AbstractCharacter : AbstractWord0
     {
 
         //攻击
-        // myState.character.charaAnim.Play(AnimEnum.attack);
+        // myState.other.charaAnim.Play(AnimEnum.attack);
 
         if (myState.aim ==null) return;
 
@@ -1121,7 +1121,7 @@ abstract public class AbstractCharacter : AbstractWord0
             _temp.mMaxAttack = atk / AttackTimes;
 
             DamageHelper.ProcessDamage(_temp);
-            //attackA.UseMode(AttackType.atk, myState.character.atk/ AttackTimes, myState.character, myState.aim[x], true, 0);
+            //attackA.UseMode(AttackType.atk, myState.other.atk/ AttackTimes, myState.other, myState.aim[x], true, 0);
         }
            
 
@@ -1129,7 +1129,7 @@ abstract public class AbstractCharacter : AbstractWord0
         //执行外部委托
         if (event_AttackA != null)
                 event_AttackA();
-        // myState.character.charaAnim.Play(AnimEnum.idle);
+        // myState.other.charaAnim.Play(AnimEnum.idle);
     }
 
     /// <summary>发出子弹 </summary>
@@ -1255,9 +1255,9 @@ abstract public class AbstractCharacter : AbstractWord0
         }
 
         CharaInfoExcelItem data = null;
-        for (int i = 0; (i < AllData.instance.charaInfo.items.Length) && (data == null); i++)
+        for (int i = 0; (i < PoolConfigData.instance.so.charaInfo.items.Length) && (data == null); i++)
         {
-            var _data = AllData.instance.charaInfo.items[i];
+            var _data = PoolConfigData.instance.so.charaInfo.items[i];
             if (_data.typeName == this.GetType().Name)
             {
                 data = _data;

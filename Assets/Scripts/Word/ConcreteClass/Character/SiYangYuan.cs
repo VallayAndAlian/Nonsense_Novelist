@@ -39,18 +39,18 @@ class SiYangYuan : AbstractCharacter
     //    if (myState.aim != null)
     //    {
           
-    //        if (myState.character.aAttackAudio != null)
+    //        if (myState.other.aAttackAudio != null)
     //        {
-    //            myState.character.source.clip = myState.character.aAttackAudio;
-    //            myState.character.source.Play();
+    //            myState.other.source.clip = myState.other.aAttackAudio;
+    //            myState.other.source.Play();
     //        }
-    //        myState.character.charaAnim.Play(AnimEnum.attack);
+    //        myState.other.charaAnim.Play(AnimEnum.attack);
 
 
 
     //        for (int i = 0; i < myState.aim.Count; i++)
     //        {
-    //            attackA.UseMode(AttackType.heal, san * sanMul * 1.2f, myState.character, myState.aim[i], true, 0);
+    //            attackA.UseMode(AttackType.heal, san * sanMul * 1.2f, myState.other, myState.aim[i], true, 0);
     //            if (Random.Range(1, 101) <= 20)
     //            {
     //                myState.aim[i].gameObject.AddComponent<KangFen>().maxTime = 5;
@@ -74,7 +74,7 @@ class SiYangYuan : AbstractCharacter
         {
             hasAddGrow.Add(GrowType.psy);
             string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
-            GameMgr.instance.draftUi.AddContent(it);
+            DraftMgr.instance.AddContent(it);
             return it;
         }
 

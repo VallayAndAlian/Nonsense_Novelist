@@ -37,12 +37,12 @@ class BeiLuoJi : AbstractCharacter
     //    aimCount = 0;
     //    if (myState.aim != null)
     //    {
-    //        if (myState.character.aAttackAudio != null)
+    //        if (myState.other.aAttackAudio != null)
     //        {
-    //            myState.character.source.clip = myState.character.aAttackAudio;
-    //            myState.character.source.Play();
+    //            myState.other.source.clip = myState.other.aAttackAudio;
+    //            myState.other.source.Play();
     //        }
-    //        myState.character.charaAnim.Play(AnimEnum.attack);
+    //        myState.other.charaAnim.Play(AnimEnum.attack);
 
 
     //        aims = attackA.CalculateAgain(100, this);
@@ -54,8 +54,8 @@ class BeiLuoJi : AbstractCharacter
     //            else
     //            {
     //                aimCount += 1;
-    //                attackA.UseMode(AttackType.heal, san *sanMul* 0.7f, myState.character, aim, true, 0);
-    //                myState.character.CreateBullet(aim.gameObject);
+    //                attackA.UseMode(AttackType.heal, san *sanMul* 0.7f, myState.other, aim, true, 0);
+    //                myState.other.CreateBullet(aim.gameObject);
     //            }
 
 
@@ -74,7 +74,7 @@ class BeiLuoJi : AbstractCharacter
         {
             hasAddGrow.Add(GrowType.psy);
             string it = "那天渐渐的黄昏，且阴的沉重，兼着那雨滴竹梢，更觉凄凉，黛玉不觉心有所感，亦不禁发于章句，遂成诗一首。";
-            GameMgr.instance.draftUi.AddContent(it);
+            DraftMgr.instance.AddContent(it);
             return it;
         }
 

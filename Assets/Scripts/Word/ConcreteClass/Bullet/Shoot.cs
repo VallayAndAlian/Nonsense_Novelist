@@ -56,14 +56,14 @@ public class Shoot : MonoBehaviour
     WordCollisionShoot wcs;
     private void Start()
     {
-        shootChild = GameObject.Find("combatCanvas").transform.Find("ShootTime");
-        wcs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>();
+        //shootChild = GameObject.Find("combatCanvas").transform.Find("ShootTime");
+        //wcs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>();
     }
     private void Update()
     {
         if (CharacterManager.instance.pause) return;
         if(wcs==null) wcs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>();
-        if (CreateOneCharacter.isTwoSides && CreateOneCharacter.isAllCharaUp)
+        if (PutCharacter.isTwoSides && PutCharacter.isAllCharaUp)
         {
             aimSlider.value = 0; // 重置slider的值
             WordGrid();
@@ -136,7 +136,7 @@ public class Shoot : MonoBehaviour
             bulletInstance.AddComponent(GameMgr.instance.GetNowListOne()) as AbstractWord0;*/
         
        
-        if (!CreateOneCharacter.firstUseCardlist)//true，开始之后抽一个
+        if (!PutCharacter.firstUseCardlist)//true，开始之后抽一个
         {
             //给小球增加词条属性【测试】
             abs = wcs.absWord =
