@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 1361692303}
   - component: {fileID: 619641254747177806}
   - component: {fileID: 633007054116016421}
+  - component: {fileID: 1710318411071017823}
   m_Layer: 5
   m_Name: Event_FangKe
   m_TagString: Untagged
@@ -714,6 +715,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &1710318411071017823
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3387635199026244096}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3387635199273526455
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,20 +30,21 @@ public class UIManager : BaseManager<UIManager>
     private Transform system;//顶层的上层
 
     //记录我们UI的Canvas父对象 方便以后外部可能会使用它
-    public RectTransform canvas;
-
+    public RectTransform uiCanvas;
+    public RectTransform worldCanvas;
     public UIManager()
     {
         //创建Canvas 让其过场景的时候 不被移除
         GameObject obj = ResMgr.GetInstance().Load<GameObject>("UI/Canvas");
-        canvas = obj.transform as RectTransform;
+        uiCanvas = obj.transform.Find("UICanvas").transform as RectTransform;
+        worldCanvas = obj.transform.Find("WorldCanvas").transform as RectTransform;
         GameObject.DontDestroyOnLoad(obj);
 
         //找到各层
-        bot = canvas.Find("Bot");
-        mid = canvas.Find("Mid");
-        top = canvas.Find("Top");
-        system = canvas.Find("System");
+        bot = uiCanvas.Find("Bot");
+        mid = uiCanvas.Find("Mid");
+        top = uiCanvas.Find("Top");
+        system = uiCanvas.Find("System");
 
         //创建EventSystem 让其过场景的时候 不被移除
         obj = ResMgr.GetInstance().Load<GameObject>("UI/EventSystem");
@@ -78,7 +79,7 @@ public class UIManager : BaseManager<UIManager>
     /// <param name="panelName">面板名</param>
     /// <param name="layer">显示在哪一层</param>
     /// <param name="callBack">当面板预设体创建成功后 你想做的事</param>
-    public void ShowPanel<T>(string panelName, E_UI_Layer layer = E_UI_Layer.Mid, UnityAction<T> callBack = null) where T : BasePanel
+    public void ShowPanel<T>(string panelName, E_UI_Layer layer = E_UI_Layer.Mid, UnityAction<T> callBack = null, bool _inWorldCanvas = false) where T : BasePanel
     {
         if (panelDic.ContainsKey(panelName))
         {
@@ -91,42 +92,54 @@ public class UIManager : BaseManager<UIManager>
         }
 
         ResMgr.GetInstance().LoadAsync<GameObject>("UI/" + panelName, (obj) =>
-        {
-            //把他作为 Canvas的子对象
-            //并且 要设置它的相对位置
-            //找到父对象 你到底显示在哪一层
-            Transform father = bot;
-            switch (layer)
-            {
-                case E_UI_Layer.Mid:
-                    father = mid;
-                    break;
-                case E_UI_Layer.Top:
-                    father = top;
-                    break;
-                case E_UI_Layer.System:
-                    father = system;
-                    break;
-            }
-            //设置父对象  设置相对位置和大小
-            obj.transform.SetParent(father);
-
-            obj.transform.localPosition = Vector3.zero;
-            obj.transform.localScale = Vector3.one;
-
-            (obj.transform as RectTransform).offsetMax = Vector2.zero;
-            (obj.transform as RectTransform).offsetMin = Vector2.zero;
-
-            //得到预设体身上的面板脚本
+        { 
             T panel = obj.GetComponent<T>();
+            panelDic.Add(panelName, panel);
+            panel.Show();
+
+            if (!_inWorldCanvas)
+            {
+                //把他作为 Canvas的子对象
+                //并且 要设置它的相对位置
+                //找到父对象 你到底显示在哪一层
+                Transform father = bot;
+                switch (layer)
+                {
+                    case E_UI_Layer.Mid:
+                        father = mid;
+                        break;
+                    case E_UI_Layer.Top:
+                        father = top;
+                        break;
+                    case E_UI_Layer.System:
+                        father = system;
+                        break;
+                }
+                //设置父对象  设置相对位置和大小
+                obj.transform.SetParent(father);
+
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localScale = Vector3.one;
+
+                (obj.transform as RectTransform).offsetMax = Vector2.zero;
+                (obj.transform as RectTransform).offsetMin = Vector2.zero;
+            }
+            else
+            {
+                //设置父对象  设置相对位置和大小
+                obj.transform.SetParent(worldCanvas);
+
+                obj.transform.localPosition = Vector3.zero;
+                obj.transform.localScale = Vector3.one;
+
+                (obj.transform as RectTransform).offsetMax = Vector2.zero;
+                (obj.transform as RectTransform).offsetMin = Vector2.zero;
+            }
+
             // 处理面板创建完成后的逻辑
             if (callBack != null)
                 callBack(panel);
 
-            panel.Show();
-
-            //把面板存起来
-            panelDic.Add(panelName, panel);
         });
     }
 
@@ -151,6 +164,7 @@ public class UIManager : BaseManager<UIManager>
     {
         if (panelDic.ContainsKey(name))
             return panelDic[name] as T;
+        
         return null;
     }
 

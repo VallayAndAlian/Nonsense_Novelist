@@ -791,7 +791,7 @@ abstract public class AbstractCharacter : AbstractWord0
         }
         //刷新short列表
 
-        GetComponentInChildren<AfterStart>().GetNewVerbs();
+       
 
         if (event_AddVerb != null)
         {

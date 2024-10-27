@@ -887,6 +887,7 @@ GameObject:
   - component: {fileID: 2154538887337362379}
   - component: {fileID: 2935532380440314401}
   - component: {fileID: 5130928685788174056}
+  - component: {fileID: 2274030510786046633}
   m_Layer: 5
   m_Name: Event_XiWang
   m_TagString: Untagged
@@ -1164,6 +1165,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &2274030510786046633
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 636881733489395108}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &920753022255022120
 GameObject:
   m_ObjectHideFlags: 0

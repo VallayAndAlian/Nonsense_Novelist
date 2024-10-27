@@ -194,35 +194,35 @@ public class Bubble : MonoBehaviour
         string _adr = "";
         switch (type)
         {
-            case EventType.FangKe: { _adr = "UI/Event_FangKe"; } break;
-            case EventType.XiWang: { _adr = "UI/Event_XiWang"; } break;
-            case EventType.YiWai: { _adr = "UI/Event_YiWai"; } break;
-            case EventType.WeiJi: { _adr = "UI/Event_WeiJi"; } break;
-            case EventType.JiaoYi: { _adr = "UI/Event_JiaoYi"; } break;
-            case EventType.ChangJing: { _adr = "UI/Event_ChangJing"; } break;
+            case EventType.FangKe: { _adr = "Event_FangKe"; } break;
+            case EventType.XiWang: { _adr = "Event_XiWang"; } break;
+            case EventType.YiWai: { _adr = "Event_YiWai"; } break;
+            case EventType.WeiJi: { _adr = "Event_WeiJi"; } break;
+            case EventType.JiaoYi: { _adr = "Event_JiaoYi"; } break;
+            case EventType.ChangJing: { _adr = "Event_ChangJing"; } break;
         }
-       
-        var a = ResMgr.GetInstance().Load<GameObject>(_adr);
-        if (a == null) print("1null");
-        if(a.GetComponent<EventUI>()==null) print("null");
-        
-        if (waiBu>=0)//执行一些特殊操作
+        UIManager.GetInstance().ShowPanel<EventUI>(_adr,E_UI_Layer.Top,(obj)=>
         {
-            a.GetComponent<EventUI>().WJ_static = true;
-            if (waiBu < UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").monsterPrefabs.Length)
-                a.GetComponent<EventUI>().WJ_monster = waiBu;
+            obj.gameObject.name = _adr;
+            if (waiBu>=0)//执行一些特殊操作
+            {
+                obj.GetComponent<EventUI>().WJ_static = true;
+                if (waiBu < UIManager.GetInstance().GetPanel<PutCharacter>("PutCharacter").monsterPrefabs.Length)
+                    obj.GetComponent<EventUI>().WJ_monster = waiBu;
 
-            print("waiBu" + waiBu.ToString());
-            a.GetComponent<EventUI>().triggerName = waiBu;
-        }
+                print("waiBu" + waiBu.ToString());
+                obj.GetComponent<EventUI>().triggerName = waiBu;
+            }
+            obj.GetComponent<EventUI>().Open(isKey);
+            obj.GetComponent<EventUI>().eventWorldPos = pos;
 
-        a.GetComponent<EventUI>().Open(isKey);
-        a.GetComponent<EventUI>().eventWorldPos = pos;
-  
 
-        a.transform.parent = GameObject.Find("CharacterCanvas").transform;
-        a.transform.localPosition = Vector3.zero;
-        a.transform.localScale = Vector3.one;
+     
+        });
+       
+        
+        
+
 
     }
 }

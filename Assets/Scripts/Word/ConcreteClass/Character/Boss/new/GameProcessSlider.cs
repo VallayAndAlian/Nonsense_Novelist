@@ -63,7 +63,7 @@ public class GameProcessSlider : MonoBehaviour
     private AudioPlay audioPlay;
     private AudioSource audioSource;
 
-    [Header("事件位置")] public GameObject eventPoint;
+    [Header("事件位置")]  GameObject eventPoint;
     [Header("事件气泡（希望-访客-意外-危机-交易-场景）")] public GameObject[] eventBubblePrefab;
     private Bubble[] EventBubble;
     public Bubble[] eventBubble
@@ -85,7 +85,19 @@ public class GameProcessSlider : MonoBehaviour
 
     bool hasWeiji = false;
 
-    GameProcessUI gameprocessUI;
+    GameProcessUI Gameprocessui;
+    GameProcessUI gameprocessUI
+    {
+        get
+        {
+            if(Gameprocessui == null)UIManager.GetInstance().ShowPanel<GameProcessUI>("GameProcessUI",
+                E_UI_Layer.Top,(obj)=>
+                {
+                    Gameprocessui = obj;
+                });
+            return Gameprocessui;
+        }
+    }
 
 
     public void WeiJiOpen()
@@ -129,6 +141,7 @@ public class GameProcessSlider : MonoBehaviour
         handle.parent = this.transform;
         sliderProcess.maxValue = time_all;
 
+       
         GameMgr.instance.EnterTheStage(0);
 
     }
@@ -136,8 +149,8 @@ public class GameProcessSlider : MonoBehaviour
 
     private void Start()
     {
-        gameprocessUI = UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI");
-           audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
+        eventPoint = GameObject.Find("EventPoint");
+             audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
         audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
         oriScale = this.transform.localScale;
 
@@ -449,9 +462,23 @@ public class GameProcessSlider : MonoBehaviour
         countTime = true;
         CharacterManager.instance.pause = false;
 
-       gameprocessUI.SwitchSettingList(true);
+        if (gameprocessUI == null)
+        {
+            UIManager.GetInstance().ShowPanel<GameProcessUI>("GameProcessUI",
+                E_UI_Layer.Top, (obj) =>
+                {
+                    Gameprocessui.SwitchSettingList(true);
+                    gameprocessUI.SwitchWordInformatio(true);
+                    return;
+                });
+        }
+        else
+        {
+             gameprocessUI.SwitchSettingList(true);
         gameprocessUI.SwitchWordInformatio(true);
     }
+        }
+      
 
     #endregion
 

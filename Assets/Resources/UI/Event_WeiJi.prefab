@@ -904,6 +904,7 @@ GameObject:
   - component: {fileID: 8861099596511052627}
   - component: {fileID: 714216965729484416}
   - component: {fileID: 3695888733118926353}
+  - component: {fileID: 8118337676364604797}
   m_Layer: 5
   m_Name: Event_WeiJi
   m_TagString: Untagged
@@ -1180,6 +1181,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &8118337676364604797
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459307741901535931}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6750428780876524546
 GameObject:
   m_ObjectHideFlags: 0

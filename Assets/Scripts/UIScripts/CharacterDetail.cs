@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class CharacterDetail : MonoBehaviour
+public class CharacterDetail : BasePanel
 {
     [Header("设置组件（手动）")]
     public Image sprite;
@@ -20,30 +20,15 @@ public class CharacterDetail : MonoBehaviour
     private AbstractCharacter nowCharacter;
     private string spriteAdr = "WordImage/Character/";
 
+    protected override void Init()
+    {
+        
+    }
     public void Open(AbstractCharacter _ac)
     {
         nowCharacter = _ac;
         InitDetail();
     }
-
-
-    //public void Open(string _ac)
-    //{
-    //    AbstractCharacter _tempac=new AbstractCharacter();
-    //    switch (_ac)
-    //    {
-    //        case "LinDaiYu":
-    //        {
-    //            _tempac.wordName = "林黛玉";
-    //            _tempac.roleName = "^";
-    //            //……设置一系列参数
-    //        }break;
-    //    }
-        
-    //    nowCharacter = _tempac;
-    //    InitDetail();
-    //}
-
 
     void InitDetail()
     {
@@ -93,7 +78,7 @@ public class CharacterDetail : MonoBehaviour
 
     public void ClickClose()
     {
-        Destroy(this.gameObject);
+        UIManager.GetInstance().HidePanel("CharacterDetail");
         BookShelfInf.isfirst = true;
     }
     #endregion

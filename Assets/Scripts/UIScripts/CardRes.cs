@@ -1,18 +1,15 @@
-using System.Collections;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Linq;
 /// <summary>
 /// 挂在牌库UI上
 /// </summary>
-public class CardRes : MonoBehaviour
+public class CardRes : BasePanel
 {
-
-    [Header("牌库主面板(手动)")]
-    public GameObject mainPanal;
 
     [Header("牌库主面板组件(手动)")]
     public Text textCount;
@@ -30,14 +27,42 @@ public class CardRes : MonoBehaviour
 
 
     [Header("牌库主面板组件(手动)")]
-    public Button btn_cancel;
-    public Button btn_Check;
-    public Button btn_exit;
+    Button btn_cancel;
+     Button btn_Check;
+     Button btn_exit;
 
 
     private Dictionary<AbstractWord0,int > UIHasUsedCard = new Dictionary<AbstractWord0, int>();
     private Dictionary<AbstractWord0, int> UINoUsedCard = new Dictionary<AbstractWord0, int>();
+    protected override void Init()
+    {
+        btn_cancel = GetControl<Button>("btnCancel");
+        btn_Check = GetControl<Button>("btnCheck");
+        btn_exit = GetControl<Button>("exit");
 
+        OpenMainPanal();
+    }
+    protected override void OnClick(string btnName)
+    {
+        switch (btnName)
+        {
+            case "btnCancel":
+                {
+                    ClickCancelButton();
+                }
+                break;
+            case "exit":
+                {
+                    ClickExitButton();
+                }
+                break;
+            case "btnCheck":
+                {
+                    ClickCheckButton();
+                }
+                break;
+        }
+    }
     #region 尝试
 
     /// <summary>
@@ -65,7 +90,7 @@ public class CardRes : MonoBehaviour
         UIHasUsedCard.Clear();
         UINoUsedCard.Clear();
 
-        mainPanal.SetActive(true); 
+        
         if (!jiaoYi)
         {
    
@@ -166,10 +191,9 @@ public class CardRes : MonoBehaviour
 
     }
 
-    void CloseMainPanal()
+    override public void Hide(UnityAction callBack = null)
     {
-        mainPanal.SetActive(false);
-
+        base.Hide(callBack);
         for(int i= wordsArea.childCount-1; i>=0;i--)
         {
             PoolMgr.GetInstance().PushObj(wordsArea.GetChild(i).gameObject.name, wordsArea.GetChild(i).gameObject);
@@ -223,7 +247,7 @@ public class CardRes : MonoBehaviour
 
     public void ClickExitButton()
     {
-        CloseMainPanal();
+        UIManager.GetInstance().HidePanel("CardRes");
         CharacterManager.instance.pause = false;
     }
     public void ClickCancelButton()
@@ -243,7 +267,7 @@ public class CardRes : MonoBehaviour
     #region 动画事件
     public void Anim_Down()
     {
-        CloseMainPanal();
+        UIManager.GetInstance().HidePanel("CardRes");
     }
     #endregion
 }

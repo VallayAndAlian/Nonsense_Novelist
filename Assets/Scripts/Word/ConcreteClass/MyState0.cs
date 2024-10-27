@@ -248,7 +248,7 @@ namespace AI
         /// </summary> 
         public void ChangeActiveState(StateID stateID)
         {
-            nowState.Exit(this);
+            nowState.Exit(this); 
             nowState = allState.Find(p => p.id == stateID);
             nowState.EnterState(this);
         }

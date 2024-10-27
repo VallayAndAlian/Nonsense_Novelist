@@ -1021,12 +1021,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     {
         var obj=ResMgr.GetInstance().Load<GameObject>("UI/popEvent"); 
         //世界坐标转画布坐标
-       Vector2 canvasSize = UIManager.GetInstance().canvas.GetComponent<RectTransform>().sizeDelta;
+       Vector2 canvasSize = UIManager.GetInstance().uiCanvas.GetComponent<RectTransform>().sizeDelta;
         Vector3 viewPortPos3d = Camera.main.WorldToViewportPoint(pos);
         Vector2 viewPortRelative = new Vector2(viewPortPos3d.x - 0.5f, viewPortPos3d.y - 0.5f);
         Vector2 cubeScreenPos = new Vector2(viewPortRelative.x * canvasSize.x, viewPortRelative.y );
         obj.GetComponent<RectTransform>().position = pos;
-        obj.transform.parent = UIManager.GetInstance().canvas.transform;
+        obj.transform.parent = UIManager.GetInstance().uiCanvas.transform;
         obj.transform.localScale = Vector3.one;
          StartCoroutine(MoveToPosCanvas( obj.GetComponent<RectTransform>(), name,info));
         
@@ -1131,10 +1131,10 @@ public class GameMgr : MonoSingleton<GameMgr>
             CharacterManager.instance.AddToPutCharasList(-1);
         }
 
-        UIManager.GetInstance().ShowPanel<PutCharacter>("", E_UI_Layer.Mid, (obj) =>
+        UIManager.GetInstance().ShowPanel<PutCharacter>("PutCharacter", E_UI_Layer.Mid, (obj) =>
           {
               obj.CreateTheCharacter();
-          });
+          },true);
         
     }
     public void CreateTheCharacterPut(int characterID)
@@ -1149,7 +1149,7 @@ public class GameMgr : MonoSingleton<GameMgr>
         UIManager.GetInstance().ShowPanel<PutCharacter>("", E_UI_Layer.Mid, (obj) =>
         {
             obj.CreateTheCharacter();
-        });
+        }, true);
     }
 
 
@@ -1166,7 +1166,7 @@ public class GameMgr : MonoSingleton<GameMgr>
 
         UIManager.GetInstance().ShowPanel<PutCharacter>("PutCharacter", E_UI_Layer.Mid, (obj) =>
         {
-        });
+        }, true);
     }
 
     /// <summary>

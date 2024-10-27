@@ -2986,8 +2986,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   perfab_icon: {fileID: 4963443990303953719, guid: 3655b1b5195bfcd4890c66c76f9d3c32, type: 3}
-  bookCanvas: {fileID: 0}
-  characterCanvas: {fileID: 0}
   eventPoint: {fileID: 0}
   eventBubblePrefab:
   - {fileID: 296767673687119374, guid: a8b4700e44fff0041bb7b0a6a770e147, type: 3}
@@ -4705,19 +4703,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4787339804128711976}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShooterWordCheck, Assembly-CSharp
-        m_MethodName: ClickShooterButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &4787339804132971213
 GameObject:
   m_ObjectHideFlags: 0

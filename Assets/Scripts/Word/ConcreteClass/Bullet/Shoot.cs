@@ -35,11 +35,19 @@ public class Shoot : MonoBehaviour
     /// <summary>有无发射</summary>
     private bool fired = false;
     /// <summary>蓄力Slider</summary>
-    public Slider aimSlider;
+    private Slider AimSlider;
+    private Slider aimSlider {
+    get{
+            if (AimSlider == null)
+                AimSlider = UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").
+                    transform.Find("Slider").GetComponent<Slider>();
+            return AimSlider;
+        }
+    }
+    /// <summary>蓄力Slider</summary>
     /// <summary>存储WordCollisionShoot的词条属性</summary>
     public static AbstractWord0 abs;
-    /// <summary>手动，词条信息板 </summary>
-    public WordInformation information;
+
     /// <summary>手动，轨迹脚本 </summary>
     public Track track;
     public float dotScale = 0.15f;
@@ -62,7 +70,8 @@ public class Shoot : MonoBehaviour
     private void Update()
     {
         if (CharacterManager.instance.pause) return;
-        if(wcs==null) wcs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>();
+        if (aimSlider == null) return;
+        if (wcs==null) wcs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>();
         if (PutCharacter.isTwoSides && PutCharacter.isAllCharaUp)
         {
             aimSlider.value = 0; // 重置slider的值
@@ -144,7 +153,6 @@ public class Shoot : MonoBehaviour
         }
         else//开始时抽3个
         {
-            if (GameMgr.instance == null) print("null!!!");
             if (wcs == null) wcs = GameObject.Find("WordCollisionShoot").GetComponent<WordCollisionShoot>();
             if (wcs.absWord == null) print("null3333");
             if (bulletInstance == null) print("null3asdadasd");
@@ -156,7 +164,7 @@ public class Shoot : MonoBehaviour
         //小球信息
         foreach (var _col in (bulletInstance.GetComponentsInChildren<WordCollisionShoot>()))
             _col.absWord = abs;
-        information.ChangeInformation(abs);
+        UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").wordInfo.ChangeInformation(abs);
 
         //
 
@@ -186,7 +194,7 @@ public class Shoot : MonoBehaviour
         GameMgr.instance.UseCard(GameMgr.instance.wordGoingUseList[0]);
         GameMgr.instance.wordGoingUseList.RemoveAt(0);
 
-        print("ReadyWordBullet");
+
         GameMgr.instance.RefreshNowList();
 
         //槽位变量
@@ -207,7 +215,10 @@ public class Shoot : MonoBehaviour
     {
         if (isShoot)//发射1次刷新1次
         {
-            timer += Time.deltaTime;
+            if (shootChild == null) 
+                shootChild = UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").shootChild;
+
+             timer += Time.deltaTime;
             if (timer > gridTime)
             {
                 timer = 0;
@@ -219,6 +230,9 @@ public class Shoot : MonoBehaviour
             }
         }
         //开始时解锁的三个初始化
+
+        if (shootChild == null)
+            shootChild = UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").shootChild;
         shootChild.GetChild(0).GetComponent<Slider>().value = 1;
         shootChild.GetChild(1).GetComponent<Slider>().value = 1;
         shootChild.GetChild(2).GetComponent<Slider>().value = 1;

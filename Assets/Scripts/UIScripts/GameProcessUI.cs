@@ -4,16 +4,66 @@ using UnityEngine;
 
 public class GameProcessUI: BasePanel
 {
-    SettingList SettingList;
-    WordInformation wordInfo;
-    public GameProcessSlider gameProcessSlider;
-    protected override void Init()
-    {
-        SettingList = transform.Find("SettingList").GetComponent<SettingList>();
-        wordInfo = transform.Find("WordInformation").GetComponent<WordInformation>();
-        gameProcessSlider= transform.Find("GameProcess").GetComponent<GameProcessSlider>();
+    private SettingList SettingList;
+    public SettingList settingList 
+    { get 
+        {
+            if(SettingList==null) SettingList= transform.Find("SettingList").GetComponent<SettingList>();
+            return SettingList;
+        }
     }
 
+
+    private WordInformation WordInfo;
+    public WordInformation wordInfo
+    {
+        get
+        {
+            if (WordInfo == null) WordInfo = transform.Find("WordInformation").GetComponent<WordInformation>();
+            return WordInfo;
+        }
+    }
+
+
+    private GameProcessSlider GameProcessSlider;
+    public GameProcessSlider gameProcessSlider
+    {
+        get
+        {
+            if (GameProcessSlider == null) GameProcessSlider = transform.Find("GameProcess").GetComponent<GameProcessSlider>();
+            return GameProcessSlider;
+        }
+    }
+
+
+    private Transform ShootChild;
+    public Transform shootChild
+    {
+        get
+        {
+            if (ShootChild == null) 
+                ShootChild = transform.Find("ShootTime");
+            return ShootChild;
+        }
+    }
+    protected override void Init()
+    {
+    }
+
+
+    protected override void OnClick(string btnName)
+    {
+        switch (btnName)
+        {
+            case "ShootButton":
+                {
+                    UIManager.GetInstance().ShowPanel<CardRes>("CardRes",E_UI_Layer.Top,(obj)=>
+                    {
+                        
+                    });
+                }break;
+        }
+    }
     #region settingList
     public void RefreshSettingList()
     {

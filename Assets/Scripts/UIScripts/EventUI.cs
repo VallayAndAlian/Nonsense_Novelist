@@ -21,12 +21,12 @@ public enum EventType
     ChangJing=5
 }
 
-public class EventUI : MonoBehaviour
+public class EventUI : BasePanel
 {
     [Header("这是哪一个界面的UI")]
     public EventType type;
     bool isKey=false;
-    private AudioPlay audioPlay;
+
     [HideInInspector]public Vector3 eventWorldPos = Vector3.one;
 
     //不重要数据
@@ -44,22 +44,21 @@ public class EventUI : MonoBehaviour
     public GameObject word_adj;
     public GameObject word_verb;
     public GameObject word_item;
-    private AudioSource audioSource;
     private float volume = 0.4f;
 
 
-
-    private void Awake()
+    protected override void Init()
     {
         triggerName = -1;
         KeyCharacter = -1;
         WJ_static = false;
         WJ_monster = -1;
-        audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
+
     }
+   
     private void Start()
     {
-        audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
+       
     }
     #region 处理data 
 
@@ -264,7 +263,7 @@ public class EventUI : MonoBehaviour
        
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
-        Destroy(this.gameObject);
+        
         
     }
 
@@ -368,7 +367,7 @@ public class EventUI : MonoBehaviour
         }   
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
-        Destroy(this.gameObject);
+       
     }
     #endregion
 
@@ -537,7 +536,7 @@ public class EventUI : MonoBehaviour
         }
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
-        Destroy(this.gameObject);
+   
     }
     #endregion
 
@@ -701,7 +700,7 @@ public class EventUI : MonoBehaviour
     {
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
-        Destroy(this.gameObject);
+       
     }
 
 
@@ -785,7 +784,7 @@ public class EventUI : MonoBehaviour
         UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").gameProcessSlider.WeiJiOpen();
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
-        Destroy(this.gameObject);
+        
     }
     #endregion
 
@@ -836,7 +835,7 @@ public class EventUI : MonoBehaviour
         //
         GameMgr.instance.happenEvent.Add(nowEvent.name);
         GameMgr.instance.PopupEvent(eventWorldPos, nowEvent.name, nowEvent.textDraft);
-        Destroy(this.gameObject);
+       
     }
     #endregion
 
@@ -1004,16 +1003,14 @@ public class EventUI : MonoBehaviour
     public void CloseAnim()
     {
         GetComponent<Animator>().Play("EventUI_Dis1");
-        //BGM恢复
-        audioSource.volume = 0.4f;
+
     }
 
     public void Close()
     {
         CharacterManager.instance.pause = false;
         GameMgr.instance.eventHappen = false;
-        //BGM恢复
-        audioSource.volume = 0.4f;
+
         //处理当前的nowChosenEvent
         if ((type != EventType.FangKe) && (type != EventType.ChangJing))
         {
@@ -1060,6 +1057,7 @@ public class EventUI : MonoBehaviour
                 }
                 break;
         }
+        UIManager.GetInstance().HidePanel(this.gameObject.name);
     }
 
     #endregion

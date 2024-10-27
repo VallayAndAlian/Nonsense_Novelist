@@ -43,8 +43,8 @@ public class PutCharacter : BasePanel
 
     protected override void Init()
     {
-        charaPos = this.transform.Find("charaPos");
-        text = this.transform.Find("Text").GetComponent<Text>();
+        charaPos = this.transform.Find("Panel/charaPos");
+        text = this.transform.Find("Panel/Text").GetComponent<Text>();
 
         firstUseCardlist = true;
         CharacterManager.instance.pause = true;
@@ -250,27 +250,16 @@ public class PutCharacter : BasePanel
         //开启枪体
         GameMgr.instance.WallSwitch(true);
 
-            //将UICanvas隐藏
-        GameObject.Find("UICanvas").SetActive(false);
+        //将UICanvas隐藏
+        UIManager.GetInstance().HidePanel("PutCharacter");
+    
+        //触发进度条开始开关
+        UIManager.GetInstance().ShowPanel<GameProcessUI>("GameProcessUI", E_UI_Layer.Mid, (obj) =>
+        {obj.transform.Find("GameProcess").GetComponent<GameProcessSlider>().ProcessStart();
+        });
 
-            //触发进度条开始开关
-        GameObject.Find("GameProcess").GetComponent<GameProcessSlider>().ProcessStart();
 
-        //装载一个shooter
-        if (SceneManager.GetActiveScene().name == "ShootCombat") {
-            GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
-        
-            GameObject a = GameObject.Find("CombatCanvas");
-            //加载图片等美术给资源
-            //print(GameMgr.instance.wordGoingUseList[0]);
-            //print(GameMgr.instance.wordGoingUseList[1]);
-            //print(GameMgr.instance.wordGoingUseList[2]);
-/*            a.transform.Find("ShootTime/Slider0/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[0]+"");
-            a.transform.Find("ShootTime/Slider1/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[1]+"");
-            a.transform.Find("ShootTime/Slider2/Fill").GetComponent<Image>().sprite = Resources.Load<Sprite>(GameMgr.instance.wordGoingUseList[2]+"");
-            */
-        }
-        else GameObject.Find("shooter").GetComponent<TestShoot>().ReadyWordBullet();
+       
         // 将所有站位颜色隐藏
         foreach (Situation it in Situation.allSituation)
             {
@@ -278,17 +267,18 @@ public class PutCharacter : BasePanel
                 it.GetComponent<CircleCollider2D>().radius = 0.4f;
             it.GetComponent<SpriteRenderer>().color = Color.clear;
             }
-            //foreach (var it in lightP.GetComponentsInChildren<Image>())
-            //{
-            //    it.color = Color.clear;
-            //}
+        //foreach (var it in lightP.GetComponentsInChildren<Image>())
+        //{
+        //    it.color = Color.clear;
+        //}
 
-
+      
         // 所有角色不可拖拽
         foreach (AbstractCharacter it in CharacterManager.instance.charas)
-            {
-                //角色的显示图层恢复正常
-                it.charaAnim.GetComponent<SpriteRenderer>().sortingLayerName = "Character";
+        {
+            
+            //角色的显示图层恢复正常
+            it.charaAnim.GetComponent<SpriteRenderer>().sortingLayerName = "Character";
             it.charaAnim.GetComponent<SpriteRenderer>().sortingOrder = 2;
                 it.charaAnim.GetComponent<AI.MyState0>().enabled = true;
                 it.GetComponent<AbstractCharacter>().enabled = true;
@@ -312,6 +302,11 @@ public class PutCharacter : BasePanel
         //恢复暂停
         CharacterManager.instance.pause = false;
 
+        //装载一个shooter
+       
+        GameObject.Find("shooter").GetComponent<Shoot>().ReadyWordBullet();
+        GameObject a = UIManager.GetInstance().GetPanel<GameProcessUI>("GameProcessUI").gameObject;
+        
 
         if (temp) return;
             GameMgr.instance.PlayCG("ElecSheep_start1", 0f);
@@ -344,6 +339,7 @@ public class PutCharacter : BasePanel
     /// <returns></returns>
     public void CreateTheCharacter()
     {
+       
         InitPos();
         SetTipStyle(3);
 
@@ -352,6 +348,7 @@ public class PutCharacter : BasePanel
         //生成角色
         for (int _inx = 0; ((_inx < CharacterManager.instance.CanPutCharas.Count) && (_inx < charaPos.childCount));)
         {
+            
             var _chara = CharacterManager.instance.CanPutCharas[_inx];
             //array.Add(number);
 
@@ -360,6 +357,7 @@ public class PutCharacter : BasePanel
             chara.transform.SetParent(charaPos.GetChild(_inx));
             chara.transform.position = new Vector3(charaPos.GetChild(1).position.x, charaPos.GetChild(1).position.y + CharacterMouseDrag.offsetY, charaPos.GetChild(1).position.z);
             SpriteRenderer _sr = chara.GetComponentInChildren<AI.MyState0>().GetComponent<SpriteRenderer>();
+        
 
             //角色的显示图层恢复正常
             _sr.sortingLayerName = "UICanvas";

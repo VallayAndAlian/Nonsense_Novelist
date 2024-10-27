@@ -30,11 +30,6 @@ public class CharacterMouseDrag : MonoBehaviour
 
     private SpriteRenderer sr;
     private AudioYinXiao yinXiao;
-
-
-
-    private string characterDetailPrefab = "UI/CharacterDetail";
-
     private Transform oriParent;
     private void Start()
     {
@@ -56,16 +51,7 @@ public class CharacterMouseDrag : MonoBehaviour
     {
 
     }
-    #region OnMouseDrag()随鼠标移动(废弃)
-
-    /* private void OnMouseDrag()
-     {
-         //随鼠标移动
-         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-         transform.position = new Vector3(pos.x, pos.y, transform.position.z);
-         
-     }*/
-    #endregion
+   
 
     /// <summary>
     /// 鼠标悬停
@@ -79,16 +65,8 @@ public class CharacterMouseDrag : MonoBehaviour
         //如果鼠标右键
         if (Input.GetMouseButtonDown(1))
         {
-            if (GameObject.Find("combatCanvas").transform.Find("CharacterDetail(Clone)") == null)
-            {
-                var a = ResMgr.GetInstance().Load<GameObject>(characterDetailPrefab);
-                a.transform.parent = GameObject.Find("combatCanvas").transform;
-                a.transform.localPosition = Vector3.zero;
-                a.transform.localScale = Vector3.one;
-                //获取点击角色的脚本信息
-                a.GetComponentInChildren<CharacterDetail>().Open(this.GetComponent<AbstractCharacter>());
-            }
-
+            UIManager.GetInstance().ShowPanel<CharacterDetail>("CharacterDetail", E_UI_Layer.Mid, (obj) =>
+              { obj.Open(this.GetComponent<AbstractCharacter>()); });
 
         }
     }
@@ -279,6 +257,7 @@ public class CharacterMouseDrag : MonoBehaviour
         }
         else
         {
+            CharacterManager.instance.CanPutCharas.Remove(s.name);
             chara.situation = s;
         }
 

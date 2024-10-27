@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 5225503857246262559}
   - component: {fileID: 2535933067016786744}
   - component: {fileID: 4381049016152853526}
+  - component: {fileID: 736651651484528486}
   m_Layer: 5
   m_Name: Event_JiaoYi
   m_TagString: Untagged
@@ -537,6 +538,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &736651651484528486
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6151446038305411695}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6151446038630390551
 GameObject:
   m_ObjectHideFlags: 0

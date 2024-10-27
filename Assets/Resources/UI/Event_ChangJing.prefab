@@ -357,6 +357,7 @@ GameObject:
   - component: {fileID: 1978085765391488863}
   - component: {fileID: 8861099596511052627}
   - component: {fileID: 7578465119123302781}
+  - component: {fileID: -7081952477502617432}
   m_Layer: 5
   m_Name: Event_ChangJing
   m_TagString: Untagged
@@ -510,8 +511,11 @@ MonoBehaviour:
   word_adj: {fileID: 8106038040960395429, guid: 0d50a4fe8d34fc94392e8e55898ce4df, type: 3}
   word_verb: {fileID: 3014157109519298988, guid: c3bdd08e537384c4e90ce9aae79f77d2, type: 3}
   word_item: {fileID: 1974951472033222757, guid: d4d014dac235f0b4ba864480b67a2bd7, type: 3}
+  KeyCharacter: -1
+  triggerName: -1
   JY_chooseWord: {fileID: 0}
   WJ_static: 0
+  WJ_monster: -1
 --- !u!95 &7578465119123302781
 Animator:
   serializedVersion: 5
@@ -533,6 +537,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!225 &-7081952477502617432
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459307741901535931}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7434979524906439202
 GameObject:
   m_ObjectHideFlags: 0
