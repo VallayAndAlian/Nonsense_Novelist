@@ -18,7 +18,7 @@ public class AbilityTemplateTable : MapTable<int, AbilityTemplateTable.Data>
         public List<ModuleData> mEffectApplyDataList = new List<Data.ModuleData>();
     }
 
-    public override string AssetName => "AbilityTemplateTable";
+    public override string AssetName => "AbilityTemplateData";
     
     protected override KeyValuePair<int, Data> ParseMapEntry(TokenReader reader)
     {

@@ -23,7 +23,7 @@ public class BattleUnit : BattleObject
         set => mCamp = value;
     }
 
-    protected CharaInfoExcelItem mData = null;
+    protected BattleUnitTable.Data mData = null;
     
     
     protected List<UnitComponent> mComponents = new List<UnitComponent>();
@@ -59,7 +59,7 @@ public class BattleUnit : BattleObject
     }
     
 
-    public BattleUnit(CharaInfoExcelItem data)
+    public BattleUnit(BattleUnitTable.Data data)
     {
         mData = data;
     }
@@ -72,11 +72,11 @@ public class BattleUnit : BattleObject
 
     protected void InitAttributes()
     {
-        AttributeSet.Define(AttributeType.MaxHp, mData.maxhp);
-        AttributeSet.Define(AttributeType.Attack, mData.atk);
-        AttributeSet.Define(AttributeType.Def, mData.def);
-        AttributeSet.Define(AttributeType.Psy, mData.psy);
-        AttributeSet.Define(AttributeType.San, mData.san);
+        AttributeSet.Define(AttributeType.MaxHp, mData.mMaxHp);
+        AttributeSet.Define(AttributeType.Attack, mData.mAttack);
+        AttributeSet.Define(AttributeType.Def, mData.mDefense);
+        AttributeSet.Define(AttributeType.Psy, mData.mPsy);
+        AttributeSet.Define(AttributeType.San, mData.mSan);
     }
 
     protected void AddComponents()
@@ -108,7 +108,7 @@ public class BattleUnit : BattleObject
     public override void Start()
     {
         mHp = GetAttributeValue(AttributeType.MaxHp);
-        
+
         foreach (var comp in Components)
         {
             comp.Start();

@@ -11,7 +11,7 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         public string mDesc;
     }
 
-    public override string AssetName => "AbilityTable";
+    public override string AssetName => "AbilityData";
     
     protected override KeyValuePair<int, Data> ParseMapEntry(TokenReader reader)
     {
