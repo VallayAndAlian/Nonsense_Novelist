@@ -45,7 +45,7 @@ public class AbilityEffectApplier : AbilityModule
     
     List<ScheduleData> mScheduleList = new List<ScheduleData>();
     const int MaxSchedulePerFrame = 64;
-
+ 
     protected override int CommonArgCount => 2;
 
     public Type mType = Type.None;

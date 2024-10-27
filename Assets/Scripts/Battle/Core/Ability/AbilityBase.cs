@@ -2,9 +2,9 @@
 
 public class AbilityBase
 {
-    protected AbstractCharacter mCharacter = null;
+    protected BattleUnit mCharacter = null;
 
-    public AbstractCharacter Character
+    public BattleUnit Character
     {
         set => mCharacter = value;
         get => mCharacter;
@@ -23,12 +23,12 @@ public class AbilityBase
     }
 
     protected virtual void OnInit() { }
-    
-    public virtual void PostInit() { }
+
+    public virtual bool ParseParams() { return false; }
 
     public void Update(float deltaTime)
     {
-        if (Character.isActiveAndEnabled)
+        if (Character.IsAlive)
         {
             Tick(deltaTime);
         }

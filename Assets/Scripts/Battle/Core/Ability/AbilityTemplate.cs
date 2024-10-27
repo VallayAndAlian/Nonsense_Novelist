@@ -39,6 +39,8 @@ public class AbilityTemplate : AbilityBase
         }
     }
 
+    public override bool ParseParams()  { return true; }
+
     protected override void Tick(float deltaTime)
     {
         mTrigger?.Update(deltaTime);

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.Build.Content;
 
 public enum TableErrorType : byte
 {
@@ -30,6 +31,10 @@ public abstract class TableBase
 
         return Parse(textAsset.text);
     }
+    
+    public virtual void PreLoad() { }
+    
+    public virtual void PostLoad() { }
 
     public abstract TableErrorMeta Parse(string text);
 }
@@ -53,6 +58,11 @@ public abstract class VecTable<TV> : TableBase
     public static int GetIndex(TV val)
     {
         return DataList.IndexOf(val);
+    }
+
+    public override void PreLoad()
+    {
+        DataList.Clear();
     }
 
     public override TableErrorMeta Parse(string text)
@@ -105,6 +115,11 @@ public abstract class MapTable<TK, TV> : TableBase
     }
 
     protected abstract KeyValuePair<TK, TV> ParseMapEntry(TokenReader reader);
+    
+    public override void PreLoad()
+    {
+        DataList.Clear();
+    }
 
     public override TableErrorMeta Parse(string text)
     {

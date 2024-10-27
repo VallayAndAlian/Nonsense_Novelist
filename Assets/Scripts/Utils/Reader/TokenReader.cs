@@ -45,9 +45,15 @@ public class TokenReader
         GenerateTokens(line);
     }
     
-    public void GenerateTokens(string line)
+    public TokenReader(string line, char[] separator)
     {
-        _mTokens = line.Split(Separator, StringSplitOptions.RemoveEmptyEntries);
+        GenerateTokens(line, separator);
+    }
+    
+    public void GenerateTokens(string line, char[] separator = null)
+    {
+        _mTokens = line.Split(separator ?? Separator, StringSplitOptions.RemoveEmptyEntries);
+
         _mPos = 0;
         _mValid = true;
     }
@@ -106,5 +112,31 @@ public class TokenReader
         }
         
         return (T)Parse(_mTokens[_mPos++], typeof(T));
+    }
+    
+    public List<T> ReadVec<T>()
+    {
+        if (!IsReadValid())
+            return default;
+
+        if (_mTokens.Length <= _mPos)
+        {
+            MarkReadInvalid();
+            return default;
+        }
+
+        var reader = new TokenReader(_mTokens[_mPos++], new []{'|'});
+        var vec = new List<T>();
+
+        for (int i = 0; i < reader._mTokens.Length; i++)
+        {
+            var val = reader.Read<T>();
+            if (!reader.IsReadValid())
+                break;
+            
+            vec.Add(val);
+        }
+
+        return vec;
     }
 }

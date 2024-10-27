@@ -1,12 +1,12 @@
 ﻿
 
-public class CharacterComponent
+public class UnitComponent
 {
-    protected AbstractCharacter mOwner = null;
+    protected BattleUnit mOwner = null;
     protected bool mEnabled = false;
     protected bool mRegistered = false;
 
-    public AbstractCharacter Owner
+    public BattleUnit Owner
     {
         set
         {
@@ -48,10 +48,10 @@ public class CharacterComponent
     protected virtual void OnDisabled() { }
     
 
-    public virtual void OnStart() { }
+    public virtual void Start() { }
     
-    public virtual void OnUpdate(float deltaTime) { }
+    public virtual void Update(float deltaTime) { }
     
-    public virtual void OnLateUpdate(float deltaTime) { }
+    public virtual void LateUpdate(float deltaTime) { }
     
 }

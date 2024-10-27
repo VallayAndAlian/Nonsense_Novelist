@@ -1,6 +1,9 @@
 ﻿
 
-public class BattleStatics
+using UnityEditor;
+using UnityEngine;
+
+public class BattleHelper
 {
     protected static DealDamageCalc mReusableDealDamageCalc = new DealDamageCalc();
     public static DealDamageCalc GetReusableDealDamageCalc(AbstractCharacter instigator)

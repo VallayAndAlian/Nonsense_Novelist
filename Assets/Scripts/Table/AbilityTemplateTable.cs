@@ -11,8 +11,7 @@ public class AbilityTemplateTable : MapTable<int, AbilityTemplateTable.Data>
             public int mType;
             public List<float> mParams;
         }
-        
-        
+
         public int mKind;
         public ModuleData mTriggerData = new ModuleData();
         public ModuleData mSelectorData = new ModuleData();
@@ -28,8 +27,8 @@ public class AbilityTemplateTable : MapTable<int, AbilityTemplateTable.Data>
 
         {
             data.mTriggerData.mType = reader.Read<int>();
-            int Num = reader.Read<int>();
-            for (int i = 0; i < Num; i++)
+            int num = reader.Read<int>();
+            for (int i = 0; i < num; i++)
             {
                 data.mTriggerData.mParams.Add(reader.Read<float>());
             }

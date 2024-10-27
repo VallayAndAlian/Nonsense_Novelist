@@ -83,7 +83,7 @@ public class DamageHelper
             
         target.PostTakeDamage(report);
 
-        if (instigator)
+        if (instigator != null)
         {
             foreach (var p in instigator.Allies)
             {

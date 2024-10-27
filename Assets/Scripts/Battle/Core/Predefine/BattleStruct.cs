@@ -29,8 +29,8 @@ public enum TakeDamageFlag
 public class DealDamageCalc
 {
     public DamageSource mDamageSource;
-    public AbstractCharacter mInstigator;
-    public AbstractCharacter mTarget;
+    public BattleUnit mInstigator;
+    public BattleUnit mTarget;
     public AbilityBase mAbility;
 
     public bool mMagic;
@@ -67,7 +67,7 @@ public class DealDamageCalc
 
 public class TakeDamageCalc
 {
-    public AbstractCharacter mInstigator;
+    public BattleUnit mInstigator;
     public AbilityBase mAbility;
     
     public bool mMagic;
@@ -102,8 +102,8 @@ public class TakeDamageCalc
 public class DamageMeta
 {
     public DamageSource mDamageSource;
-    public AbstractCharacter mInstigator;
-    public AbstractCharacter mTarget;
+    public BattleUnit mInstigator;
+    public BattleUnit mTarget;
     public AbilityBase mAbility;
     public DealDamageFlag mFlag;
 

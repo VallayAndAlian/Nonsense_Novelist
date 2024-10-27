@@ -24,7 +24,7 @@ public class StatusManager
         mStatusMod |= status;
     }
 
-    public void Apply()
+    public void ApplyMod()
     {
         mStatus = mStatusMod;
         mStatusMod = 0;
