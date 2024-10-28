@@ -20,11 +20,18 @@ public class BattleObject
     public bool IsTickEnable
     {
         set => mTickEnable = value;
-        get => mTickEnable;
+        get => mTickEnable && !mPendingKill;
     }
     
-    public virtual void OnRegistered() {}
-    public virtual void Init() {}
+    protected bool mPendingKill = false;
+    
+    public bool IsPendingKill => mPendingKill;
+
+    public void MarkPendingKill()
+    {
+        mPendingKill = true;
+    }
+
     public virtual void Start() {}
     public virtual void Update(float deltaSec) {}
     public virtual void LateUpdate(float deltaSec) {}

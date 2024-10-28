@@ -71,7 +71,17 @@ public abstract class VecTable<TV> : TableBase
         StringReader stringReader = new StringReader(text);
 
         // ignore first line
-        stringReader.ReadLine();
+
+        bool bAdvance = false;
+        {
+            string headLine = stringReader.ReadLine();
+            TokenReader tokenReader = new TokenReader(headLine);
+            
+            if (tokenReader.Read<string>().Contains("//"))
+            {
+                bAdvance = true;
+            }
+        }
 
         int lineCnt = 1;
 
@@ -85,6 +95,12 @@ public abstract class VecTable<TV> : TableBase
                 ++lineCnt;
 
                 TokenReader tokenReader = new TokenReader(line);
+
+                if (bAdvance)
+                {
+                    tokenReader.Advance();
+                }
+                
                 TV data = ParseVecEntry(tokenReader);
                 if (!tokenReader.IsReadValid())
                 {
@@ -127,7 +143,16 @@ public abstract class MapTable<TK, TV> : TableBase
         StringReader stringReader = new StringReader(text);
 
         // ignore first line
-        stringReader.ReadLine();
+        bool bAdvance = false;
+        {
+            string headLine = stringReader.ReadLine();
+            TokenReader tokenReader = new TokenReader(headLine);
+            
+            if (tokenReader.Read<string>().Contains("//"))
+            {
+                bAdvance = true;
+            }
+        }
 
         int lineCnt = 1;
 
@@ -141,6 +166,11 @@ public abstract class MapTable<TK, TV> : TableBase
                 ++lineCnt;
 
                 TokenReader tokenReader = new TokenReader(line);
+                if (bAdvance)
+                {
+                    tokenReader.Advance();
+                }
+
                 var data = ParseMapEntry(tokenReader);
                 if (!tokenReader.IsReadValid())
                 {

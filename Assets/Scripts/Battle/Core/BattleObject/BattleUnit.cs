@@ -64,7 +64,7 @@ public class BattleUnit : BattleObject
         mData = data;
     }
 
-    public override void Init()
+    public virtual void Init()
     {
         InitAttributes();
         AddComponents();

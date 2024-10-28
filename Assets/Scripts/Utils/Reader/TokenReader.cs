@@ -57,7 +57,11 @@ public class TokenReader
         _mPos = 0;
         _mValid = true;
     }
-    
+
+    public void Advance(int offset = 1)
+    {
+        _mPos += offset;
+    }
 
     public void Reset()
     {

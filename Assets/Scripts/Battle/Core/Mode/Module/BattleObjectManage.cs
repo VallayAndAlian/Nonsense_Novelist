@@ -31,27 +31,25 @@ public class BattleObjectManage : BattleModule
         obj.ID = ++mGenID;
         obj.IsRegistered = true;
         
-        obj.Init();
-        obj.OnRegistered();
+        obj.Start();
         
         mObjects.TryAdd(obj.ID, obj);
-
+        
         return true;
     }
 
 
     public bool RegisterUnit(BattleUnit unit)
     {
-        if (!RegisterObject(unit))
+        if (!unit.IsRegistered)
             return false;
-
+            
+        unit.Init();
+        
+        RegisterObject(unit);
+        
         mUnits.Add(unit.ID, unit);
         
-        if (Battle.mState == BattleBase.BattleState.Inprogress)
-        {
-            unit.Start();
-        }
-
         return true;
     }
 
@@ -59,9 +57,10 @@ public class BattleObjectManage : BattleModule
     {
         if (obj != null)
         {
-            obj.IsTickEnable = false;
+            obj.MarkPendingKill();
+            
             mRemovedObjects.Add(obj.ID);
-
+            
             if (obj is BattleUnit unit)
             {
                 mRemovedUnits.Add(obj.ID);
