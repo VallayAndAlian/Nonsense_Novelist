@@ -262,12 +262,12 @@ public class GameMgr : MonoSingleton<GameMgr>
     /// </summary>
     void StartCardList()
     {
-        //≤‚ ‘
-        AddCardList(new HunHe().GetType());
-        AddCardList(new HunHe().GetType());
-        AddCardList(new HunHe().GetType()); AddCardList(new HunHe().GetType()); AddCardList(new HunHe().GetType());
+        ////≤‚ ‘
+        //AddCardList(new HunHe().GetType());
+        //AddCardList(new HunHe().GetType());
+        //AddCardList(new HunHe().GetType()); AddCardList(new HunHe().GetType()); AddCardList(new HunHe().GetType());
 
-        return;
+        //return;
         ////
 
         AddCardList(new FuTouAxe().GetType());
