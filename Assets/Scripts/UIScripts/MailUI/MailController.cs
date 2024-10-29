@@ -20,10 +20,12 @@ public class MailController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     protected UnityAction clickAction;
 
     //初始化其控制的信件对象
-    //private void Awake()
-    //{
-    //    mailObj = transform.GetComponentInParent<MailObj>();
-    //}
+    /*
+    private void Awake()
+    {
+        mailObj = transform.GetComponentInParent<MailObj>();
+    }
+    */
 
     //注册信件相关事件
     private void Start()
