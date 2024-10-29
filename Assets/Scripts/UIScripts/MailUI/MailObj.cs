@@ -1,34 +1,36 @@
-using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-enum moveDir
+public enum moveDir
 {
     ToTop,
     ToDown
 }
 
-public class MailObj : MailEventBase
+public class MailObj : MonoBehaviour
 {
     //背景图片
     public Image bgImg;
-    //dear信件头部
+    //收件人
     public TextMeshProUGUI dearText;
     //信件内容
     public TextMeshProUGUI contentText;
-    //信件作者
+    //发件人
     public TextMeshProUGUI authorText;
 
     //信件UI原位置
-    private Vector3 originPos;
+    [HideInInspector]
+    public Vector3 originPos;
     //信件UI浮动目标位置
-    private Vector3 floatPos;
+    [HideInInspector]
+    public Vector3 floatPos;
     
     //信件数据
     private MailInfo mailInfo;
-
+    //背景图片路径
+    private string imgPath = "UI/Mail/";
+    
     private void Start()
     {
         //初始化记录原此信件位置和浮动的目标位置
@@ -37,28 +39,7 @@ public class MailObj : MailEventBase
 
         //初始化信件信息为NULL
         if (mailInfo == null)
-            ShowPreMail(new MailInfo(E_MailAuther.未知发信人));
-
-        /* 注册鼠标事件 */
-        //鼠标进入:UI上浮动
-        enterAction += () =>
-        {
-            MoveTarget(floatPos, moveDir.ToTop);
-        };
-        //鼠标退出:UI下浮动
-        exitAction += () =>
-        {
-            MoveTarget(originPos, moveDir.ToDown);
-        };
-        //鼠标点击
-        clickAction += () =>
-        {
-            print("鼠标点击了");
-            /* 打开信件详情UI界面:传入MailInfo,显示信件详情
-               取消未读的发光显示等
-            */
-            ClickAction();
-        };
+            ShowPreMail(new MailInfo(E_MailAutherType.Default));
     }
 
     /// <summary>
@@ -66,7 +47,7 @@ public class MailObj : MailEventBase
     /// </summary>
     /// <param name="targetPos">目标位置</param>
     /// <param name="dir">跳动方向</param>
-    private void MoveTarget(Vector3 targetPos,moveDir dir)
+    public void MoveTarget(Vector3 targetPos,moveDir dir)
     {
         //当前位置
         Vector3 curPos = this.transform.localPosition;
@@ -101,11 +82,40 @@ public class MailObj : MailEventBase
         this.mailInfo = mailInfo;
         this.dearText.text = mailInfo.dear;
         this.contentText.text = mailInfo.mailBody;
-        this.authorText.text = mailInfo.autherType.ToString();
+        this.authorText.text = mailInfo.autherName;
+
+        //根据信件类型显示背景图片
+        switch (mailInfo.autherType)
+        {
+            //报社
+            case E_MailAutherType.BaoShe:
+                bgImg.sprite = LoadImg(imgPath + "officepaper");
+                break;
+                //安德鲁
+            case E_MailAutherType.AnDelu:
+                bgImg.sprite = LoadImg(imgPath + "doctorpaper");
+                break;
+                //粉丝彼得
+            case E_MailAutherType.BiDe:
+                bgImg.sprite = LoadImg(imgPath + "fanspaper");
+                break;
+                //佐佐木
+            case E_MailAutherType.ZuoZuoMu:
+                bgImg.sprite = LoadImg(imgPath + "friendpaper");
+                break;
+        }
+        
         //MailInfo其他信息补充显示
 
         //显示对象
         this.gameObject.SetActive(true);
+    }
+
+    public Sprite LoadImg(string imgPath)
+    {
+        Sprite sprite = Resources.Load<Sprite>(imgPath);
+        //使用加载的图片或者默认图片
+        return sprite ?? bgImg.sprite;
     }
 
     /// <summary>
