@@ -1,5 +1,4 @@
 using LitJson;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -10,13 +9,10 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
 {
     //信件对象在场景的父节点位置
     public Transform MailPosFather;
-    /*
-     分类标签
-        -报社编辑
-        -佐佐木编辑
-        -安德鲁医生
-        -您的忠实粉丝彼得
-     */
+    /// <summary>
+    /// 分类标签对象
+    /// 报社编辑 | 安德鲁医生 | 粉丝彼得 | 佐佐木编辑 
+    /// </summary>
     public Toggle[] AuthorToggles;
 
     //界面上的信件对象
@@ -100,16 +96,16 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
             //if (mailDataList[i].isDisPlay == false)
             //    continue;
 
-            if (mailDataList[i].autherType == E_MailAuther.报社编辑 && AuthorToggles[0].isOn) 
+            if (mailDataList[i].autherType == E_MailAutherType.BaoShe && AuthorToggles[0].isOn) 
                 prepMailData.Add(mailDataList[i]);
             
-            if (mailDataList[i].autherType == E_MailAuther.佐佐木编辑 && AuthorToggles[1].isOn)
+            if (mailDataList[i].autherType == E_MailAutherType.AnDelu && AuthorToggles[1].isOn)
                 prepMailData.Add(mailDataList[i]);
 
-            if (mailDataList[i].autherType == E_MailAuther.安德鲁医生 && AuthorToggles[2].isOn)
+            if (mailDataList[i].autherType == E_MailAutherType.BiDe && AuthorToggles[2].isOn)
                 prepMailData.Add(mailDataList[i]);
         
-            if (mailDataList[i].autherType == E_MailAuther.您的忠实粉丝彼得 && AuthorToggles[3].isOn)
+            if (mailDataList[i].autherType == E_MailAutherType.ZuoZuoMu && AuthorToggles[3].isOn)
                 prepMailData.Add(mailDataList[i]);
         }
 
