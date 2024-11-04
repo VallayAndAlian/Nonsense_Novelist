@@ -17,6 +17,8 @@ public class BattleObject
 
     protected bool mTickEnable = true;
 
+    public BattleBase Battle { get; set; }
+
     public bool IsTickEnable
     {
         set => mTickEnable = value;

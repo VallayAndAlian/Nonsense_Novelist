@@ -64,6 +64,7 @@ public class BattleUnit : BattleObject
         mData = data;
     }
 
+    // init with no battle
     public virtual void Init()
     {
         InitAttributes();
@@ -135,7 +136,16 @@ public class BattleUnit : BattleObject
         mAttributeSet.ApplyMod();
         mStatus.ApplyMod();
     }
+
+    public void AddMod(AttributeType type, float mod)
+    {
+        AttributeSet.AddMod(type, mod);
+    }
     
+    public void AddPercentMod(AttributeType type, float mod)
+    {
+        AttributeSet.AddPercentMod(type, mod);
+    }
     
     #region DamageProcess
 

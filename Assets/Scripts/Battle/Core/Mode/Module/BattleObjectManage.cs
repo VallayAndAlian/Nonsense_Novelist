@@ -8,8 +8,7 @@ public class BattleObjectManage : BattleModule
     protected Dictionary<int, BattleObject> mObjects = new Dictionary<int, BattleObject>();
     protected Dictionary<int, BattleUnit> mUnits = new Dictionary<int, BattleUnit>();
 
-    protected List<int> mRemovedObjects = new List<int>();
-    protected List<int> mRemovedUnits = new List<int>();
+    protected List<int> mRemovedIDs = new List<int>();
 
     protected bool mStarted = false;
 
@@ -29,6 +28,7 @@ public class BattleObjectManage : BattleModule
             return false;
 
         obj.ID = ++mGenID;
+        obj.Battle = Battle;
         obj.IsRegistered = true;
         
         obj.Start();
@@ -58,30 +58,43 @@ public class BattleObjectManage : BattleModule
         if (obj != null)
         {
             obj.MarkPendingKill();
-            
-            mRemovedObjects.Add(obj.ID);
-            
-            if (obj is BattleUnit unit)
-            {
-                mRemovedUnits.Add(obj.ID);
-            }
         }
     }
 
     public void ClearTrashObjects()
     {
-        foreach (var objId in mRemovedObjects)
         {
-            mObjects.Remove(objId);
+            foreach (var objIt in mObjects.Values)
+            {
+                if (objIt.IsPendingKill)
+                {
+                    mRemovedIDs.Add(objIt.ID);
+                }
+            }
+
+            foreach (var objId in mRemovedIDs)
+            {
+                mObjects.Remove(objId);
+            }
+
+            mRemovedIDs.Clear();
         }
-        
-        foreach (var objId in mRemovedUnits)
+
         {
-            mUnits.Remove(objId);
+            foreach (var objIt in mUnits.Values)
+            {
+                if (objIt.IsPendingKill)
+                {
+                    mRemovedIDs.Add(objIt.ID);
+                }
+            }
+
+            foreach (var objId in mRemovedIDs)
+            {
+                mUnits.Remove(objId);
+            }
         }
-        
-        mRemovedObjects.Clear();
-        mRemovedUnits.Clear();
+        mRemovedIDs.Clear();
     }
 
     public override void Update(float deltaSec)

@@ -46,13 +46,15 @@ public class AbilityEffectApplier : AbilityModule
     List<ScheduleData> mScheduleList = new List<ScheduleData>();
     const int MaxSchedulePerFrame = 64;
  
-    protected override int CommonArgCount => 2;
+    protected override int CommonArgCount => 3;
 
     public Type mType = Type.None;
     
     protected bool mCanBePurgedOrExpelled = true;
 
     protected bool mHasDuration = false;
+
+    protected float mDuration = 0;
 
     protected int mStackLimit = 0;
     public int StackLimit => mStackLimit;
@@ -65,7 +67,8 @@ public class AbilityEffectApplier : AbilityModule
     {
         mCanBePurgedOrExpelled = GetArg(0) > 0.5f;
         mStackLimit = Mathf.RoundToInt(GetArg(1));
-        mHasDuration = mStackLimit <= 0;
+        mDuration = GetArg(2);
+        mHasDuration = mDuration > 0;
         
         return true;
     }
@@ -80,7 +83,7 @@ public class AbilityEffectApplier : AbilityModule
             }
             else
             {
-                // Debug.Log("Ability kind {0} with applier {1} has reached schedule limit.", mOwner.data.mKind, mType);
+                Debug.Log($"Ability kind {mOwner.Data.mKind} with applier {mType} has reached schedule limit.");
             }
         }
         else

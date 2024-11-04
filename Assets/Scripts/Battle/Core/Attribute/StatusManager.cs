@@ -5,6 +5,8 @@ public enum Status
 {
     None = 0,
     Stun = 0x1,
+    BlockPositive = 0x2,
+    BlockNegative = 0x4,
 }
 
 public class StatusManager

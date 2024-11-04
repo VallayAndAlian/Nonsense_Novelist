@@ -19,6 +19,8 @@ public class BattleBase : MonoBehaviour
     public BattleStage mStage = null;
     public BattleGameState mGameState = null;
     public BattleObjectManage mObjectManager = null;
+    
+    public float Now => mClock?.ElapsedSec ?? 0;
 
     public void Init()
     {
