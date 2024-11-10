@@ -1,5 +1,5 @@
 ﻿
-
+using UnityEngine;
 using System.Collections.Generic;
 
 public class AbilityTargetSelector : AbilityModule
@@ -9,6 +9,8 @@ public class AbilityTargetSelector : AbilityModule
         None = 0,
         Instigator,
         Target,
+        Enemy,
+        Alley,
     }
 
     public static AbilityTargetSelector Create(Type type)
@@ -31,13 +33,23 @@ public class AbilityTargetSelector : AbilityModule
 
         return selector;
     }
-
+    protected int mTargetCount = 1;
     public Type mType = Type.None;
-    
+
+    protected override bool ParseParams()
+    {
+        mTargetCount = Mathf.RoundToInt(GetArg(0));
+
+
+        mParseIndex = 1;
+        return true;
+    }
+
     public virtual List<AbstractCharacter> Pick(object triggerData)
     {
         return null;
     }
+
 }
 
 public class AMTSInstigator : AbilityTargetSelector

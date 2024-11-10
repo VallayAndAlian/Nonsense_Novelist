@@ -1,0 +1,35 @@
+﻿using UnityEngine;
+
+[CreateAssetMenu(fileName = "NewBattleUnitSO", menuName = "BattleUnitData")]
+    public class BattleUnitSO : ScriptableObject
+    {
+        [Header("基础信息信息")][Space(5)]
+
+        [Tooltip("角色正式名称")]
+        public string unitName;
+
+        [Tooltip("角色预制体")]
+        public GameObject prefab;
+
+        [Tooltip("角色缩略描述")][TextArea]
+        public string infoShort;
+
+        [Tooltip("角色详细描述")][TextArea]
+        public string infoDetail;
+
+        [Tooltip("角色立绘")]
+        public Texture2D pic;
+
+
+
+        [Space(20)][Header("角色特性")][Space(5)]
+
+    [Tooltip("角色特性名称")]
+        public string roleName;
+
+        [Tooltip("角色特性描述")][TextArea]
+        public string roleInfo;
+
+
+    
+    }

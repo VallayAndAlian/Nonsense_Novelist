@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,45 +6,54 @@ public class BattleUnit : BattleObject
 {
     protected bool mAlive = false;
     public bool IsAlive => mAlive;
-    
+
     protected bool mStart = false;
     public bool IsStart => mStart;
-    
+
     protected float mHp = 0;
     public float Hp => mHp;
-    
+
     // camp would be enum
-    protected int mCamp = 0;
-    public int Camp
+    protected CampEnum mCamp = 0;
+    public CampEnum Camp
     {
         get => mCamp;
         set => mCamp = value;
     }
 
+    protected BattleUnitPos mPos = 0;
+    public BattleUnitPos Pos
+    {
+        get => mPos;
+        set => mPos = value;
+    }
+
     protected BattleUnitTable.Data mData = null;
-    
-    
+    public BattleUnitTable.Data Daata => mData;
+
     protected List<UnitComponent> mComponents = new List<UnitComponent>();
     public List<UnitComponent> Components => mComponents;
-    
-    
+
+
     protected AbilityAgent mAbilityAgent = null;
     public AbilityAgent AbilityAgent => mAbilityAgent;
-    
+
     protected EffectAgent mEffectAgent = null;
     public EffectAgent EffectAgent => mEffectAgent;
-    
+
+    protected ServantsAgent mServantsAgent = null;
+    public ServantsAgent ServantsAgent => mServantsAgent;
 
     protected StatusManager mStatus = new StatusManager();
     public StatusManager Status => mStatus;
-    
+
     protected AttributeSet mAttributeSet = new AttributeSet();
     public AttributeSet AttributeSet => mAttributeSet;
-    
+
 
     protected List<BattleUnit> mAllies = new List<BattleUnit>();
     public List<BattleUnit> Allies => mAllies;
-    
+
     protected List<BattleUnit> mEnemies = new List<BattleUnit>();
     public List<BattleUnit> Enemies => mEnemies;
 
@@ -57,18 +64,19 @@ public class BattleUnit : BattleObject
         set => mView = value;
         get => mView;
     }
-    
+
 
     public BattleUnit(BattleUnitTable.Data data)
     {
         mData = data;
     }
 
-    // init with no battle
     public virtual void Init()
     {
         InitAttributes();
         AddComponents();
+        AddInitSkills();
+        AddInitServants();
     }
 
     protected void InitAttributes()
@@ -84,16 +92,38 @@ public class BattleUnit : BattleObject
     {
         mAbilityAgent = new AbilityAgent();
         RegisterComponent(mAbilityAgent);
-        
+
         mEffectAgent = new EffectAgent();
         RegisterComponent(mEffectAgent);
+
+        if (Daata.mInitType != BattleUnitType.Servant)
+        {
+            mServantsAgent = new ServantsAgent();
+            RegisterComponent(mServantsAgent);
+        }
+    }
+
+    protected void AddInitServants()
+    {
+        foreach (var ser in mData.mInitServants)
+        {
+            ServantsAgent.RegisterServants(ser);
+        }
+    }
+    protected void AddInitSkills()
+    {
+        foreach (var abi in mData.mTalents)
+        {
+            AbilityAgent.RegisterAbility(abi);
+        }
+        AbilityAgent.RegisterAbility(mData.mRoles);
     }
 
     protected void RegisterComponent(UnitComponent component)
     {
         if (component.IsRegistered)
             return;
-        
+
         component.Owner = this;
         mComponents.Add(component);
 
@@ -132,21 +162,12 @@ public class BattleUnit : BattleObject
         {
             comp.LateUpdate(deltaSec);
         }
-        
+
         mAttributeSet.ApplyMod();
         mStatus.ApplyMod();
     }
 
-    public void AddMod(AttributeType type, float mod)
-    {
-        AttributeSet.AddMod(type, mod);
-    }
-    
-    public void AddPercentMod(AttributeType type, float mod)
-    {
-        AttributeSet.AddPercentMod(type, mod);
-    }
-    
+
     #region DamageProcess
 
     /// <summary>
@@ -169,14 +190,14 @@ public class BattleUnit : BattleObject
             }
         }
     }
-    
+
     /// <summary>
     /// 受到伤害计算预处理
     /// </summary>
     public TakeDamageCalc PreTakingDamageCalc(BattleUnit instigator, DealDamageCalc damageCalc)
     {
         TakeDamageCalc takeDamageCalc = BattleHelper.ReusableTakeDamageCalc;
-        
+
         //todo: fill take damage calc info
         takeDamageCalc.mInstigator = instigator;
         takeDamageCalc.mAbility = damageCalc.mAbility;
@@ -184,8 +205,8 @@ public class BattleUnit : BattleObject
         takeDamageCalc.mMagic = damageCalc.mMagic;
         takeDamageCalc.mDefense = 0;
         takeDamageCalc.mResistance = 0;
-        
-        
+
+
         foreach (var abi in AbilityAgent.Abilities)
         {
             abi.OnPreTakeDamageCalc(takeDamageCalc);
@@ -217,7 +238,7 @@ public class BattleUnit : BattleObject
             }
         }
     }
-    
+
     public void PreTakeDamage(DamageReport report)
     {
         foreach (var abi in AbilityAgent.Abilities)
@@ -225,7 +246,7 @@ public class BattleUnit : BattleObject
             abi.OnPreTakeDamage(report);
         }
     }
-    
+
     public void PostDealDamage(DamageReport report)
     {
         foreach (var abi in AbilityAgent.Abilities)
@@ -240,7 +261,7 @@ public class BattleUnit : BattleObject
             }
         }
     }
-    
+
     public void PostTakeDamage(DamageReport report)
     {
         foreach (var abi in AbilityAgent.Abilities)
@@ -256,7 +277,7 @@ public class BattleUnit : BattleObject
             abi.OnAllyDealDamage(report);
         }
     }
-    
+
     public void AllyTakeDamage(DamageReport report)
     {
         foreach (var abi in AbilityAgent.Abilities)
@@ -264,7 +285,7 @@ public class BattleUnit : BattleObject
             abi.OnAllyTakeDamage(report);
         }
     }
-    
+
     public void EnemyDealDamage(DamageReport report)
     {
         foreach (var abi in AbilityAgent.Abilities)
@@ -272,7 +293,7 @@ public class BattleUnit : BattleObject
             abi.OnEnemyDealDamage(report);
         }
     }
-    
+
     public void EnemyTakeDamage(DamageReport report)
     {
         foreach (var abi in AbilityAgent.Abilities)
@@ -284,7 +305,7 @@ public class BattleUnit : BattleObject
     public float ApplyDamage(float damageValue, bool cannotKill, out bool kill)
     {
         float number = 0;
-        
+
         kill = false;
 
         if (damageValue > 0)
@@ -292,7 +313,7 @@ public class BattleUnit : BattleObject
             float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
             float max = cannotKill ? currentMaxHp - 1 : currentMaxHp;
             number = Mathf.Max(damageValue, max);
-            
+
             mHp -= number;
             if (mHp < 0.99f)
             {
@@ -316,8 +337,15 @@ public class BattleUnit : BattleObject
             abi.OnSelfDeath(report);
         }
 
+        foreach (var ser in ServantsAgent.Servants)
+        {
+            ser.Die(report);
+        }
         // todo: 死亡事件通知
     }
 
     #endregion
+
+
+
 }

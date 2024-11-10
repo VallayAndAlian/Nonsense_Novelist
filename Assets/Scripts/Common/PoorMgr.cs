@@ -91,6 +91,22 @@ public class PoolMgr : BaseManager<PoolMgr>
             
         }
     }
+     public GameObject GetObj(string name)
+    {
+        //有抽屉 并且抽屉里有东西
+        if (poolDic.ContainsKey(name) && poolDic[name].poolList.Count > 0)
+        {
+            return poolDic[name].GetObj();
+        }
+        else
+        {
+            //通过异步加载资源 创建对象给外部用
+            GameObject o=ResMgr.GetInstance().Load<GameObject>(name);
+                o.name = name;
+            return o;
+
+        }
+    }
     public void GetObj(GameObject obj, UnityAction<GameObject> callBack)
     {
         //有抽屉 并且抽屉里有东西
@@ -100,8 +116,6 @@ public class PoolMgr : BaseManager<PoolMgr>
         }
         else
         {
-
-           
             //通过异步加载资源 创建对象给外部用
             GameObject o = GameObject.Instantiate(obj);
             callBack(o);

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
-
+using System;
 
 public class AttributeSet
 {
     public Dictionary<AttributeType, Attribute> mAttributes = new Dictionary<AttributeType, Attribute>();
+    
+    public event Action<AttributeSet> OnAttributeChanged;
 
     public void Define(AttributeType type, float initValue = 0)
     {
@@ -61,5 +63,6 @@ public class AttributeSet
             attr.mMod = 0;
             attr.mPercentMod = 0;
         }
+        OnAttributeChanged.Invoke(this);
     }
 }
