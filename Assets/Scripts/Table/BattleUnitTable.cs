@@ -6,15 +6,18 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
     public class Data
     {
         public int mKind;
+        public BattleUnitType mInitType;
         public string mAsset;
         public string mName;
-        public BookNameEnum mBook;
         public float mAttack;
         public float mMaxHp;
         public float mDefense;
         public float mPsy;
         public float mSan;
         public List<int> mTalents = new List<int>();
+        public int mRoles;
+        public List<int> mInitServants = new List<int>();
+        public Dictionary<int, List<int>> mTrees = new Dictionary<int, List<int>>();
     }
 
     public override string AssetName => "BattleUnitData";
@@ -23,23 +26,24 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         Data data = new Data();
 
         data.mKind = reader.Read<int>();
+        data.mInitType = (BattleUnitType)reader.Read<int>();
         data.mAsset = reader.Read<string>();
         data.mName = reader.Read<string>();
-        data.mBook = (BookNameEnum)reader.Read<int>();
         data.mAttack = reader.Read<float>();
         data.mMaxHp = reader.Read<float>();
         data.mDefense = reader.Read<float>();
         data.mPsy = reader.Read<float>();
         data.mSan = reader.Read<float>();
-
-        int talentNum = reader.Read<int>();
-
-        for (int i = 0; i < talentNum; i++)
+        data.mTalents.AddRange(reader.ReadVec<int>());
+        data.mRoles = reader.Read<int>();
+        data.mInitServants.AddRange(reader.ReadVec<int>());
+        for (int _temp = 0; _temp < 6; _temp++)
         {
-            int temp = reader.Read<int>();
-            data.mTalents.Add(temp);
+            data.mTrees.Add(reader.Read<int>(), reader.ReadVec<int>());
         }
-        
+
+
+
         return new KeyValuePair<int, Data>(data.mKind, data);
     }
 }
