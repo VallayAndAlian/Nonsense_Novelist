@@ -445,7 +445,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3520198320366189385}
-  - component: {fileID: 3520198320366189386}
+  - component: {fileID: 390287906299051353}
   m_Layer: 5
   m_Name: MailObj
   m_TagString: Untagged
@@ -478,7 +478,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3520198320366189386
+--- !u!114 &390287906299051353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -487,13 +487,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3520198320366189384}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfc298f3f659d9f4c85cd125376249ea, type: 3}
+  m_Script: {fileID: 11500000, guid: d01d93f7a056a434c8a470b63e52df10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   bgImg: {fileID: 3520198319460134155}
   dearText: {fileID: 6062732262437765804}
   contentText: {fileID: 1623957559}
   authorText: {fileID: 2067287439}
+  ctrlerImgObj: {fileID: 3315995437716626415}
   originPos: {x: 0, y: 0, z: 0}
   floatPos: {x: 0, y: 0, z: 0}
 --- !u!1 &7437633450789997259
