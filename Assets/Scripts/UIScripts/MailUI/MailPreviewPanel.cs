@@ -16,11 +16,13 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     public Toggle[] AuthorToggles;
 
     //界面上的信件对象
-    public MailObj[] mailObjs;
+    public PreMailObj[] mailObjs;
     //翻页按钮上一页下一页
     public TextMeshProUGUI pageNumText;
     public Button AddPageBtn;
     public Button SubPageBtn;
+    //无邮件文字
+    public TextMeshProUGUI noneMailText;
 
     //存储所有Mail
     private List<MailInfo> mailDataList = new List<MailInfo>();
@@ -51,7 +53,7 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         //显示信件
         ShowMail();
         //更新翻页按钮显示
-        ButnApprUpdate();
+        BtnApprUpdate();
         //绑定筛选事件:重新筛选待显示数据,显示信件
         for (int i = 0; i < AuthorToggles.Length; i++)
         {
@@ -93,19 +95,19 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         for (int i = 0; i < mailDataList.Count; i++) 
         {
             //如果配置此信件当前不显示则跳过此信件
-            //if (mailDataList[i].isDisPlay == false)
+            //if (mailDataList[i].isDisplay == false)
             //    continue;
 
             if (mailDataList[i].autherType == E_MailAutherType.BaoShe && AuthorToggles[0].isOn) 
                 prepMailData.Add(mailDataList[i]);
             
-            if (mailDataList[i].autherType == E_MailAutherType.AnDelu && AuthorToggles[1].isOn)
+            if (mailDataList[i].autherType == E_MailAutherType.KeLao && AuthorToggles[1].isOn)
                 prepMailData.Add(mailDataList[i]);
 
             if (mailDataList[i].autherType == E_MailAutherType.BiDe && AuthorToggles[2].isOn)
                 prepMailData.Add(mailDataList[i]);
         
-            if (mailDataList[i].autherType == E_MailAutherType.ZuoZuoMu && AuthorToggles[3].isOn)
+            if (mailDataList[i].autherType == E_MailAutherType.WenTeCen && AuthorToggles[3].isOn)
                 prepMailData.Add(mailDataList[i]);
         }
 
@@ -115,6 +117,8 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         lastIndex = maxMailCount > prepMailData.Count ? prepMailData.Count - 1 : maxMailCount - 1;
         //更新UI页码为pageNum
         pageNumText.text = pageNum.ToString();
+        //更新翻页按钮
+        BtnApprUpdate();
     }
 
     /// <summary>
@@ -139,24 +143,39 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
             //显示数据
             ShowMail();
             //更新翻页按钮的显示
-            ButnApprUpdate();
+            BtnApprUpdate();
         }
     }
 
     /// <summary>
     /// 更新翻页按钮的显示情况:根据startIndex和lastIndex显示和隐藏左/右翻页按钮
     /// </summary>
-    private void ButnApprUpdate()
+    private void BtnApprUpdate()
     {
+        //无信件显示
+        if(prepMailData.Count == 0)
+        {
+            //隐藏按钮
+            SubPageBtn.gameObject.SetActive(false);
+            AddPageBtn.gameObject.SetActive(false);
+            //显示无信件按钮
+            noneMailText.gameObject.SetActive(true);
+            return;
+        }
+
+        noneMailText.gameObject.SetActive(false);
+        //左边按钮
         if (startIndex <= 1)
             SubPageBtn.gameObject.SetActive(false);
         else
             SubPageBtn.gameObject.SetActive(true);
 
+        //右边按钮
         if (lastIndex >= prepMailData.Count - 1)
             AddPageBtn.gameObject.SetActive(false);
         else
             AddPageBtn.gameObject.SetActive(true);
+
     }
 
     /// <summary>
@@ -202,25 +221,58 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
             lastIndex = nextLast;
             //上一页翻页应该不会出现越界
         }
-        print("页码" + pageNum);
-        print("页码" + startIndex + " - " + lastIndex);
         return true;
     }
 
     /// <summary>
-    /// 根据页码显示内容
+    /// 根据显示索引范围显示预览信件
     /// </summary>
     public void ShowMail()
     {
         //根据数据激活对应信件
         //更新页码先隐藏之前数据
         for (int i = 0; i < mailObjs.Length; i++) 
-            mailObjs[i].gameObject.SetActive(false);
+            mailObjs[i].Hide();
 
         //根据数据显示预览信件
         for (int i = startIndex, j = 0; i <= lastIndex; i++, j++)  
-            mailObjs[j].ShowPreMail(prepMailData[i]);
+            mailObjs[j].Show(prepMailData[i]);
     }
+
+    /// <summary>
+    /// 根据id在信箱显示信件
+    /// </summary>
+    /// <param name="id">信件的id</param>
+    public void displayMailById(int id)
+    {
+
+    }
+
+    /// <summary>
+    /// 设置信件的附件内容[暂未实现,功能API形式]
+    /// </summary>
+    /// <param name="id">信件的id</param>
+    /// <param name="attachId">附件的道具id</param>
+    /// <param name="attachNum">附件的数量</param>
+    public void setAttachById(int id,int attachId,int attachNum)
+    {
+        
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="attachId"></param>
+    /// <param name="attachNum"></param>
+    public void setScoreById(int id, int attachId, int attachNum)
+    {
+        //只有报社编辑类型才有读者评分
+    
+    }
+
+
+    //持久化功能
 
 }
 

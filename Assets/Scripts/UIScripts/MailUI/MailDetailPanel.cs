@@ -27,6 +27,16 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
     //储存附件列表:从UpdateDetailInfo函数读入
     protected override void Init()
     {
+        //附件已经领取,则取消领取按钮,不能重复领取
+        if(mailInfo.attachIsTake)
+            attchBtn.gameObject.SetActive(false);
+
+        //只有报社编辑才有读者评分
+        if(mailInfo.autherType == E_MailAutherType.BaoShe)
+            scoreText.gameObject.SetActive(true);
+        else
+            scoreText.gameObject.SetActive(false);
+
         //返回按钮
         backBtn.onClick.AddListener(() => {
             //当前隐藏面板
@@ -37,7 +47,8 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
 
         //领取附件:根据MailInfo中的`附件id和数量`领取
         attchBtn.onClick.AddListener(() => {
-
+            //领取附件
+            tackAttach();
         });
 
         //初始化完成后,详情面板暂时隐藏
@@ -70,7 +81,7 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
                 contentImage.sprite = LoadImg(imgPath + "officepaper");
                 break;
             //安德鲁
-            case E_MailAutherType.AnDelu:
+            case E_MailAutherType.KeLao:
                 contentImage.sprite = LoadImg(imgPath + "doctorpaper");
                 break;
             //粉丝彼得
@@ -78,7 +89,7 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
                 contentImage.sprite = LoadImg(imgPath + "fanspaper");
                 break;
             //佐佐木
-            case E_MailAutherType.ZuoZuoMu:
+            case E_MailAutherType.WenTeCen:
                 contentImage.sprite = LoadImg(imgPath + "friendpaper");
                 break;
         }
@@ -95,5 +106,15 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
         Sprite sprite = Resources.Load<Sprite>(imgPath);
         //使用加载的图片或者默认图片
         return sprite ?? contentImage.sprite;
+    }
+
+
+    public void tackAttach()
+    {
+
+        //调用数据持久化方法存储已经领取的状态
+        
+        //领取根据附件id领取信件的逻辑
+        this.mailInfo.attachIsTake = false;
     }
 }

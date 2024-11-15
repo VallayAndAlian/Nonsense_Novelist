@@ -8,7 +8,10 @@ public enum moveDir
     ToDown
 }
 
-public class MailObj : MonoBehaviour
+/// <summary>
+/// 预览信件对象
+/// </summary>
+public class PreMailObj : MonoBehaviour
 {
     //背景图片
     public Image bgImg;
@@ -18,6 +21,8 @@ public class MailObj : MonoBehaviour
     public TextMeshProUGUI contentText;
     //发件人
     public TextMeshProUGUI authorText;
+    //判断框
+    public GameObject ctrlerImgObj;
 
     //信件UI原位置
     [HideInInspector]
@@ -39,7 +44,7 @@ public class MailObj : MonoBehaviour
 
         //初始化信件信息为NULL
         if (mailInfo == null)
-            ShowPreMail(new MailInfo(E_MailAutherType.Default));
+            Show(new MailInfo(E_MailAutherType.Default));
     }
 
     /// <summary>
@@ -76,7 +81,7 @@ public class MailObj : MonoBehaviour
     /// 根据MailInfo对象刷新页面信息,并显示信件
     /// </summary>
     /// <param name="mailInfo"></param>
-    public void ShowPreMail(MailInfo mailInfo)
+    public void Show(MailInfo mailInfo)
     {
         //根据新数据设置页面显示
         this.mailInfo = mailInfo;
@@ -92,7 +97,7 @@ public class MailObj : MonoBehaviour
                 bgImg.sprite = LoadImg(imgPath + "officepaper");
                 break;
                 //安德鲁
-            case E_MailAutherType.AnDelu:
+            case E_MailAutherType.KeLao:
                 bgImg.sprite = LoadImg(imgPath + "doctorpaper");
                 break;
                 //粉丝彼得
@@ -100,15 +105,16 @@ public class MailObj : MonoBehaviour
                 bgImg.sprite = LoadImg(imgPath + "fanspaper");
                 break;
                 //佐佐木
-            case E_MailAutherType.ZuoZuoMu:
+            case E_MailAutherType.WenTeCen:
                 bgImg.sprite = LoadImg(imgPath + "friendpaper");
                 break;
         }
-        
+
         //MailInfo其他信息补充显示
 
         //显示对象
         this.gameObject.SetActive(true);
+        ctrlerImgObj.SetActive(true);
     }
 
     public Sprite LoadImg(string imgPath)
@@ -119,11 +125,12 @@ public class MailObj : MonoBehaviour
     }
 
     /// <summary>
-    /// 隐藏此预览信件
+    /// 隐藏此预览信件及其判断框
     /// </summary>
-    public void HidePreMail()
+    public void Hide()
     {
         this.gameObject.SetActive(false);
+        ctrlerImgObj.SetActive(false);
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ public class MailController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     /// <summary>
     /// 控制的信件对象
     /// </summary>
-    public MailObj mailObj;
+    public PreMailObj mailObj;
 
     //鼠标进入时的动作
     protected UnityAction enterAction;
@@ -18,14 +18,6 @@ public class MailController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     protected UnityAction exitAction;
     //鼠标在其中点击时的动作
     protected UnityAction clickAction;
-
-    //初始化其控制的信件对象
-    /*
-    private void Awake()
-    {
-        mailObj = transform.GetComponentInParent<MailObj>();
-    }
-    */
 
     //注册信件相关事件
     private void Start()

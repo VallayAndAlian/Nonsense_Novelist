@@ -1,13 +1,30 @@
+using System;
+
 /// <summary>
 /// 信件作者,根据其筛选
 /// </summary>
 public enum E_MailAutherType
 {
+    /// <summary>
+    /// 默认信息,空的邮件作者类型
+    /// </summary>
     Default,
+    /// <summary>
+    /// 报社编辑
+    /// </summary>
     BaoShe,
-    AnDelu,
+    /// <summary>
+    /// 安德鲁医生
+    /// </summary>
+    KeLao,
+    /// <summary>
+    /// 忠实粉丝彼得
+    /// </summary>
     BiDe,
-    ZuoZuoMu,
+    /// <summary>
+    /// 文特森
+    /// </summary>
+    WenTeCen,
 }
 
 /// <summary>
@@ -47,9 +64,10 @@ public class MailInfo
     }
 
     /// <summary>
-    /// 仅初始化auther字段的信件
+    /// 仅初始化auther字段的信件[测试阶段使用]
     /// </summary>
     /// <param name="auther"></param>
+    [Obsolete("MailInfo中仅初始化信件类型的方法,该方法仅限于测试使用")]
     public MailInfo(E_MailAutherType auther)
     {
         this.autherType = auther;
