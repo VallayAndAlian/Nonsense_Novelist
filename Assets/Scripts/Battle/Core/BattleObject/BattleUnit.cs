@@ -31,12 +31,12 @@ public class BattleUnit : BattleObject
         set => mCamp = value;
     }
 
-    // protected BattleUnitPos mPos = 0;
-    // public BattleUnitPos Pos
-    // {
-    //     get => mPos;
-    //     set => mPos = value;
-    // }
+    protected BattleUnitPos mPos = 0;
+    public BattleUnitPos Pos
+    {
+        get => mPos;
+        set => mPos = value;
+    }
 
     protected BattleUnitTable.Data mData = null;
     public BattleUnitTable.Data Daata => mData;

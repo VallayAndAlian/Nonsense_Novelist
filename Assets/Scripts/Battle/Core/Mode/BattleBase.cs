@@ -18,7 +18,8 @@ public class BattleBase : MonoBehaviour
     public BattleClock mClock = null;
     public BattleStage mStage = null;
     public BattleGameState mGameState = null;
-    public BattleObjectManage mObjectManager = null;
+    public BattleObjectManager mObjectManager = null;
+    public BattleObjectFactory mObjectFactory = null;
     
     public float Now => mClock?.ElapsedSec ?? 0;
 
@@ -82,8 +83,11 @@ public class BattleBase : MonoBehaviour
         mGameState = new BattleGameState();
         RegisterModule(mGameState);
         
-        mObjectManager = new BattleObjectManage();
+        mObjectManager = new BattleObjectManager();
         RegisterModule(mObjectManager);
+        
+        mObjectFactory = new BattleObjectFactory();
+        RegisterModule(mObjectFactory);
     }
 
     protected void RegisterModule(BattleModule module)

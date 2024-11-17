@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class BattleObjectManage : BattleModule
+public class BattleObjectManager : BattleModule
 {
     protected int mGenID = 0;
     protected Dictionary<int, BattleObject> mObjects = new Dictionary<int, BattleObject>();

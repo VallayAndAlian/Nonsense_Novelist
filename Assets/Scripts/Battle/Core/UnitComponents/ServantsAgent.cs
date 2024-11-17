@@ -7,28 +7,27 @@ public class ServantsAgent : UnitComponent
     public List<BattleUnit> Servants => mServants;
     public BattleUnit RegisterServants(int servantID)
     {
-        BattleUnit newServant = BattleObjectFactory.CreateBattleUnit(servantID);
+        BattleUnit newServant = mOwner.Battle.mObjectFactory.CreateBattleUnit(servantID);
 
         if (!IsVaildServants(newServant)) 
             return null;
 
         if (newServant == null)
             return null;
-
-        newServant.Init();
-        while (mServants.Count >= 2)
+        
+        while (mServants.Count > 2)
         {
-            mServants[0].Die(new DamageReport());
             RemoveServants();
         }
-        newServant.Init();
+        
         Servants.Add(newServant);
         return newServant;
     }
 
     public void RemoveServants(int index = 0)
     {
-        if (Servants.Count <= index) return;
+        if (Servants.Count <= index) 
+            return;
 
         Servants[index].Die(new DamageReport());
         Servants.RemoveAt(index);
@@ -36,7 +35,8 @@ public class ServantsAgent : UnitComponent
 
     public bool RemoveServants(BattleUnit servant)
     {
-        if (!Servants.Contains(servant)) return false;
+        if (!Servants.Contains(servant)) 
+            return false;
 
         servant.Die(new DamageReport());
         Servants.Remove(servant);
@@ -45,7 +45,9 @@ public class ServantsAgent : UnitComponent
 
     protected bool IsVaildServants(BattleUnit servant)
     {
-        if (servant.Daata.mInitType != BattleUnitType.Servant) return false;
+        if (servant.Daata.mInitType != BattleUnitType.Servant) 
+            return false;
+        
         return true;
     }
 

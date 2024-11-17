@@ -15,6 +15,7 @@ public class WordEntry
 public class WordComponent : UnitComponent
 {
     protected Dictionary<WordType, List<WordEntry>> mWordEntries = new Dictionary<WordType, List<WordEntry>>();
+    protected List<WordEntry> mAdjectiveWords = null;
 
     public List<WordEntry> GetWordsByType(WordType wt)
     {
@@ -31,27 +32,25 @@ public class WordComponent : UnitComponent
                 mWordEntries.Add(wt, new List<WordEntry>());
             }
         }
+
+        mAdjectiveWords = GetWordsByType(WordType.Adjective);
     }
 
     public override void Update(float deltaTime)
     {
-        var words = GetWordsByType(WordType.Adjective);
-        if (words != null && words.Count > 0)
+        List<WordEntry> Removed = new List<WordEntry>();
+        foreach (var w in mAdjectiveWords)
         {
-            List<WordEntry> Removed = new List<WordEntry>();
-            foreach (var w in words)
+            if (w.mEndTime > Owner.Battle.Now)
             {
-                if (w.mEndTime > Owner.Battle.Now)
-                {
-                    Removed.Add(w);
-                }
+                Removed.Add(w);
             }
+        }
 
-            foreach (var w in Removed)
-            {
-                ClearAbilities(w);
-                words.Remove(w);
-            }
+        foreach (var w in Removed)
+        {
+            ClearAbilities(w);
+            mAdjectiveWords.Remove(w);
         }
     }
 

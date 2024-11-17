@@ -9,20 +9,20 @@ public enum BattleObjectType
 }
 public enum BattleUnitType
 {
-    Character = 0,  // Êé±¾½ÇÉ«
-    Servant = 1, // ½ÇÉ«Ëæ´Ó
-    Monster = 2, // ¹ÖÎï
+    Character = 0,  // ï¿½é±¾ï¿½ï¿½É«
+    Servant = 1, // ï¿½ï¿½É«ï¿½ï¿½ï¿½
+    Monster = 2, // ï¿½ï¿½ï¿½ï¿½
 
 }
 
-public class BattleObjectFactory
+public class BattleObjectFactory : BattleModule
 {
     private static Dictionary<BattleObjectType, System.Type> mBattleObjectClassMap = new Dictionary<BattleObjectType, System.Type>()
     {
         { BattleObjectType.BattleUnit, typeof(BattleUnit) }
     };
     
-    public static BattleUnit CreateBattleUnit(int ID)
+    public BattleUnit CreateBattleUnit(int ID)
     {
         var data = BattleUnitTable.Find(ID);
         if (data == null)
@@ -31,7 +31,7 @@ public class BattleObjectFactory
         return CreateBattleUnit(data);
     }
 
-    public static BattleUnit CreateBattleUnit(BattleUnitTable.Data data)
+    public BattleUnit CreateBattleUnit(BattleUnitTable.Data data)
     {
         var unitData = BattleUnitTable.Find(data.mKind);
         if (unitData == null)
@@ -40,6 +40,8 @@ public class BattleObjectFactory
         var unit =new BattleUnit(unitData);
         if (unit == null)
             return null;
+
+        Battle.mObjectManager.RegisterUnit(unit);
 
         return unit;
 
