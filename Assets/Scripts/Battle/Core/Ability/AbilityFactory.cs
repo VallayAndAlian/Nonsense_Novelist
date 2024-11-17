@@ -7,13 +7,17 @@ public enum AbilityType
 {
     None = 0,
     TemplateAbility,                            // 模板类技能
+    PermanentAttribute,
+    AttributeMod,
+    AttributePercentMod,
 }
 
 public class AbilityFactory
 {
     private static Dictionary<AbilityType, System.Type> mAbilityClassMap = new Dictionary<AbilityType, System.Type>()
     {
-        { AbilityType.TemplateAbility, typeof(AbilityTemplate) }
+        { AbilityType.TemplateAbility, typeof(AbilityTemplate) },
+        { AbilityType.PermanentAttribute, typeof(AbilityPermanentAttribute) },
     };
 
     public static AbilityBase CreateAbility(int abiID)

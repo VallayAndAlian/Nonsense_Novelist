@@ -12,12 +12,14 @@ public class AttributeSet
         if (mAttributes.ContainsKey(type))
         {
             mAttributes[type].mBaseValue = initValue;
+            mAttributes[type].mOriginValue = initValue;
         }
         else
         {
             Attribute attr = new Attribute
             {
                 mType = type,
+                mOriginValue = initValue,
                 mBaseValue = initValue,
                 mValue = initValue,
                 mMod = 0,
@@ -52,6 +54,21 @@ public class AttributeSet
         if (mAttributes.TryGetValue(type, out var attr))
         {
             attr.mPercentMod += mod;
+        }
+    }
+
+    public void ModifyBase(AttributeType type, float mod, bool isPercent = false)
+    {
+        if (mAttributes.TryGetValue(type, out var attr))
+        {
+            if (isPercent)
+            {
+                attr.mBaseValue += attr.mOriginValue * mod;
+            }
+            else
+            {
+                attr.mBaseValue += mod;
+            }
         }
     }
 

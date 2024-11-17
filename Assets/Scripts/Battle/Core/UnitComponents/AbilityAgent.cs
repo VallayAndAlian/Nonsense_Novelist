@@ -12,7 +12,7 @@ public class AbilityAgent : UnitComponent
 
         if (newAbi != null)
         {
-            newAbi.Character = Owner;
+            newAbi.Unit = Owner;
             newAbi.Init();
             
             mAbilities.Add(newAbi);

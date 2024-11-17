@@ -198,11 +198,18 @@ public abstract class MapTable<TK, TV> : TableBase
 
 public abstract class JsonTable<TV> : TableBase
 {
-    public static TV Data;
+    public static TV mData;
     
     public override TableErrorMeta Parse(string text)
     {
-        Data = JsonUtility.FromJson<TV>(text);
-        return new TableErrorMeta();
+        TableErrorMeta errorMeta = new TableErrorMeta();
+        
+        mData = JsonUtility.FromJson<TV>(text);
+        if (mData == null)
+        {
+            errorMeta.mErrorType = TableErrorType.ParseLine;
+        }
+        
+        return errorMeta;
     }
 }

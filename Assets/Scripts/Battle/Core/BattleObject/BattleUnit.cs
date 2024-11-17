@@ -13,6 +13,16 @@ public class BattleUnit : BattleObject
     protected float mHp = 0;
     public float Hp => mHp;
 
+    
+    public float HpPercent
+    {
+        get
+        {
+            var maxHp = GetAttributeValue(AttributeType.MaxHp);
+            return maxHp > 0 ? mHp / maxHp : 0;
+        }
+    }
+
     // camp would be enum
     protected CampEnum mCamp = 0;
     public CampEnum Camp
@@ -21,12 +31,12 @@ public class BattleUnit : BattleObject
         set => mCamp = value;
     }
 
-    protected BattleUnitPos mPos = 0;
-    public BattleUnitPos Pos
-    {
-        get => mPos;
-        set => mPos = value;
-    }
+    // protected BattleUnitPos mPos = 0;
+    // public BattleUnitPos Pos
+    // {
+    //     get => mPos;
+    //     set => mPos = value;
+    // }
 
     protected BattleUnitTable.Data mData = null;
     public BattleUnitTable.Data Daata => mData;
@@ -40,6 +50,10 @@ public class BattleUnit : BattleObject
 
     protected EffectAgent mEffectAgent = null;
     public EffectAgent EffectAgent => mEffectAgent;
+    
+    protected WordComponent mWordComponent = null;
+    public WordComponent WordComponent => mWordComponent;
+    
 
     protected ServantsAgent mServantsAgent = null;
     public ServantsAgent ServantsAgent => mServantsAgent;
@@ -97,7 +111,10 @@ public class BattleUnit : BattleObject
         mEffectAgent = new EffectAgent();
         RegisterComponent(mEffectAgent);
 
-        if (Daata.mInitType != BattleUnitType.Servant)
+        mWordComponent = new WordComponent();
+        RegisterComponent(mWordComponent);
+
+		if (Daata.mInitType != BattleUnitType.Servant)
         {
             mServantsAgent = new ServantsAgent();
             RegisterComponent(mServantsAgent);
@@ -164,8 +181,12 @@ public class BattleUnit : BattleObject
             comp.LateUpdate(deltaSec);
         }
 
+        float oldHpPercent = HpPercent;
+
         mAttributeSet.ApplyMod();
         mStatus.ApplyMod();
+
+        mHp = GetAttributeValue(AttributeType.MaxHp) * oldHpPercent;
     }
 
     public void AddMod(AttributeType type, float mod)
@@ -178,6 +199,18 @@ public class BattleUnit : BattleObject
         AttributeSet.AddPercentMod(type, mod);
     }
 
+    public void ModifyBase(AttributeType type, float mod, bool isPercent = false)
+    {
+        if (type == AttributeType.MaxHp)
+        {
+            AttributeSet.ModifyBase(type, mod, isPercent);
+        }
+        else
+        {
+            AttributeSet.ModifyBase(type, mod, isPercent);
+        }
+    }
+    
     #region DamageProcess
 
     /// <summary>

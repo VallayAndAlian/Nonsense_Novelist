@@ -14,6 +14,7 @@ public enum AttributeType
 public class Attribute
 {
     public AttributeType mType;
+    public float mOriginValue;
     public float mBaseValue;
     public float mValue;
     public float mMod;

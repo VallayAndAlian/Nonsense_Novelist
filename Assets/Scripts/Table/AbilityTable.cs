@@ -17,7 +17,7 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
             public List<float> mValues;
         }
 
-        public List<CustomParam> mCustomParams;
+        public Dictionary<string, CustomParam> mCustomParams;
     }
 
     public override string AssetName => "AbilityData";
@@ -39,7 +39,7 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
             return default;
         }
 
-        data.mCustomParams = new List<Data.CustomParam>();
+        data.mCustomParams = new Dictionary<string, Data.CustomParam>();
         for (int i = 0; i < paramNum / 2; i++)
         {
             Data.CustomParam param = new Data.CustomParam
@@ -48,7 +48,15 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
                 mValues = reader.ReadVec<float>()
             };
 
-            data.mCustomParams.Add(param);
+            if (param.mValues is { Count: > 0 })
+            {
+                data.mCustomParams.Add(param.mKey, param);
+            }
+            else
+            {
+                reader.MarkReadInvalid();
+                return default;
+            }
         }
             
         return new KeyValuePair<int, Data>(data.mKind, data);
