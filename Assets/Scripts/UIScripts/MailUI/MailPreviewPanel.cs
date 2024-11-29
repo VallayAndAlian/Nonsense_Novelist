@@ -263,14 +263,12 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// 
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="attachId"></param>
-    /// <param name="attachNum"></param>
-    public void setScoreById(int id, int attachId, int attachNum)
+    /// <param name="score"></param>
+    public void setScoreById(int id, int score)
     {
         //只有报社编辑类型才有读者评分
     
     }
-
 
     //持久化功能
 

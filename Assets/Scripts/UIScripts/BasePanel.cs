@@ -92,7 +92,7 @@ public abstract class BasePanel<T> : MonoBehaviour where T:class
             if (canvasGroup.alpha <= 0)
             {
                 canvasGroup.alpha = 0;
-                this.gameObject.SetActive(false);   
+                this.gameObject.SetActive(false);
                 //隐藏后调用委托移除面板对象
                 hideCallback?.Invoke();
             }
