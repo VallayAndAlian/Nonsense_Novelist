@@ -4327,6 +4327,8 @@ MonoBehaviour:
   backBtn: {fileID: 1479599520}
   contentImage: {fileID: 1445515461}
   scoreText: {fileID: 2037398192}
+  scoreTitleImg: {fileID: 561810883}
+  scorebgImg: {fileID: 106874845}
   dearText: {fileID: 1456927846}
   contentText: {fileID: 2102863301}
   autherText: {fileID: 1456927846}
