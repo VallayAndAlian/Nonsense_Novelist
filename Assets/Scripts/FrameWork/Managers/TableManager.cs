@@ -19,6 +19,7 @@ public static class TableManager
         Add(new AbilityTemplateTable());
         Add(new BattleUnitTable());
         Add(new BattleConfig());
+        Add(new MailTable());
     }
 
     public static void ReadTables()
@@ -41,7 +42,7 @@ public static class TableManager
             
             if (meta.mErrorType == TableErrorType.None)
             {
-                table.PostLoad();
+                table.PostLoad(); 
             }
             
             // print table load info

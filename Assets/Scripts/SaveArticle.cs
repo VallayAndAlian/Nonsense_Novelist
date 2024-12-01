@@ -4,7 +4,7 @@ using UnityEngine;
 
 //串行化,串行化是指存储和获取磁盘文件、内存或其他地方中的对象。
 [System.Serializable]
-public class Save
+public class SaveArticle
 {
     public int id;//文章的序号，从0起，每次+1
     public int rand;//文章的得分

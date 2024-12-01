@@ -61,4 +61,5 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
             
         return new KeyValuePair<int, Data>(data.mKind, data);
     }
+
 }
