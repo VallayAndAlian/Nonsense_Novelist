@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OfficeOpenXml.FormulaParsing.Utilities;
 
 public class TokenReader
 {
@@ -31,6 +32,9 @@ public class TokenReader
     
     private static object Parse(string str, System.Type type)
     {
+        if (type != typeof(string) && !decimal.TryParse(str, out var num))
+            return null;
+        
         return _ParseFuncMap.TryGetValue(type, out var parseFunc) ? parseFunc(str) : null;
     }
 
@@ -114,8 +118,15 @@ public class TokenReader
             MarkReadInvalid();
             return default;
         }
+
+        var result = Parse(_mTokens[_mPos++], typeof(T));
+        if (result == null)
+        {
+            MarkReadInvalid();
+            return default;
+        }
         
-        return (T)Parse(_mTokens[_mPos++], typeof(T));
+        return (T)result;
     }
     
     public List<T> ReadVec<T>()
