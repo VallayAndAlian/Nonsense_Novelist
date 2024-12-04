@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class TestLoad :MonoBehaviour
 {
@@ -41,6 +39,7 @@ public class TestLoad :MonoBehaviour
        // Debug.Log(username);
     }
 }
+
 public class Test : Save
 {
     public override string mFileName => "user";
@@ -64,7 +63,6 @@ public class Test : Save
         }
         else
         {
-            
             FileStream stream = new FileStream(path, FileMode.Create);
             binary.Serialize(stream, mName);
             stream.Close();

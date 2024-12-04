@@ -16,7 +16,7 @@ using UnityEngine.Scripting.APIUpdating;
 public abstract class Save
 {
     public abstract string mFileName { get; }
-    public  string mMd5 { get; set; }   
+    public string mMd5 { get; set; }   
     public string GetFolderPath()
     {
         string folderPath = Path.Combine(Application.dataPath + "SaveUserI");
@@ -33,7 +33,7 @@ public abstract class Save
     //获取文件路径
     public string GetFilePath()
     {
-        string folderPath = Path.Combine(Application.dataPath+"SaveUserI");
+        string folderPath = Path.Combine(Application.persistentDataPath+"UserData");
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath); // 创建文件夹
@@ -114,7 +114,7 @@ public abstract class Save
     public List<string> TraverseDirectory(string folderPath)
     {
         List<string> xlsxFiles = new List<string>();
-        string searchPattern = mFileName+"*"; // 使用通配符来匹配文件名的一部分，*表示任意字符
+        string searchPattern = mFileName + "*"; // 使用通配符来匹配文件名的一部分，*表示任意字符
         string[] files = Directory.GetFiles(folderPath, searchPattern);
         foreach (string file in files)
         {
@@ -122,7 +122,7 @@ public abstract class Save
             xlsxFiles.Add(file);
             //Debug.Log(file);
         }
-
+        
         // 遍历当前目录下的所有子目录
         foreach (string subdirectory in Directory.GetDirectories(folderPath))
         {

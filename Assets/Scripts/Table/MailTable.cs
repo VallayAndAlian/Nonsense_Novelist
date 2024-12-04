@@ -1,42 +1,81 @@
-
+ï»¿
+using Spine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Scripting;
 
-public class MailTable : JsonTable<MailTable.Data>
+public class MailTable : MapTable<int, MailTable.Data>
 {
-    public override string AssetName => "MailTable";
+    /// <summary>
+    /// ä¿¡ä»¶ä½œè€…ç±»å‹
+    /// </summary>
+    public enum E_MailAutherType
+    {
+        /// <summary>
+        /// é»˜è®¤ä¿¡æ¯,ç©ºçš„é‚®ä»¶ä½œè€…ç±»å‹
+        /// </summary>
+        Default,
+        /// <summary>
+        /// æŠ¥ç¤¾ç¼–è¾‘
+        /// </summary>
+        BaoShe,
+        /// <summary>
+        /// å®‰å¾·é²åŒ»ç”Ÿ
+        /// </summary>
+        KeLao,
+        /// <summary>
+        /// å¿ å®ç²‰ä¸å½¼å¾—
+        /// </summary>
+        BiDe,
+        /// <summary>
+        /// æ–‡ç‰¹æ£®
+        /// </summary>
+        WenTeCen,
+    }
 
+    /// <summary>
+    /// ä¿¡ä»¶æ•°æ®ç±»:é™æ€æ•°æ®
+    /// </summary>
     public class Data
     {
-        //ĞÅ¼şĞòºÅ
         public int id;
-        //ĞÅ¼şÃû³Æ
+        //ä¿¡ä»¶åç§°
         public string mailName;
-        //·¢¼şÈËÀàĞÍ:Çø·Ö·¢¼şÈË,Í¬Ò»·¢¼şÈËÀàĞÍ¿ÉÄÜÒÔ²»Í¬³Æºô³öÏÖ
+        //å‘ä»¶äººç±»å‹:å› åŒä¸€å‘ä»¶äººå¯èƒ½ä»¥ä¸åŒç§°å‘¼å‡ºç°,æ•…åŒºåˆ†
         public E_MailAutherType autherType;
-        //·¢¼şÈËÊµ¼ÊÏÔÊ¾ĞÕÃû
+        //å°¾æ¬¾:å‘ä»¶äººå®é™…æ˜¾ç¤ºçš„ç§°å‘¼
         public string autherName;
-        //³ÆºôÄÚÈİ:·¢¼şÈË¶ÔÊÕ¼şÈËµÄ³Æºô
+        //ç§°å‘¼å†…å®¹:ä¿¡ä»¶å¤´
         public string dear;
-        //ĞÅ¼şÄÚÈİ
+        //ä¿¡ä»¶å†…å®¹
         public string mailBody;
-        //ĞÅ¼ş¶ÁÕßÆÀ·Ö
-        public int score;
-        //ÊÇ·ñÒÑ¶Á
-        public bool isRead;
-        //ÊÇ·ñÏÔÊ¾:´ËÊ±ĞÅ¼şÊÇ·ñÔØÈëĞÅÏä
-        public bool isDisplay;
-        //¸½¼şid
+        //é™„ä»¶id
         public int attachId;
-        //¸½¼şÊıÁ¿
+        //é™„ä»¶æ•°é‡
         public int attachNum;
-        //¸½¼şÊÇ·ñÒÑ¾­±»ÁìÈ¡(ÄÃ³ö)
-        public bool attachIsTake;
     }
 
-    public override TableErrorMeta Parse(string text)
+    public override string AssetName => "MailData";
+
+    protected override KeyValuePair<int, Data> ParseMapEntry(TokenReader reader)
     {
-        return base.Parse(text);
+        //åºåˆ—åŒ–æ•°æ®ä¸ºData
+        Data data = new Data();
+        data.id = reader.Read<int>();
+        data.mailName = reader.Read<string>();
+        data.autherType = (E_MailAutherType)reader.Read<int>();
+        data.autherName = reader.Read<string>();
+        data.dear = reader.Read<string>();
+        data.mailBody = reader.Read<string>();
+        data.attachId = reader.Read<int>();
+        data.attachNum = reader.Read<int>();
+
+        //é€å›æ•°æ®
+        return new KeyValuePair<int, Data>(data.id, data);
     }
+
+
 }

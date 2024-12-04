@@ -4,6 +4,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MailTable;
 
 public class MailPreviewPanel : BasePanel<MailPreviewPanel>
 {
@@ -76,12 +77,10 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// </summary>
     private void ReadMailsData()
     {
-        //读取streamingAssets中的配置初始化信件列表
-        string path = Application.streamingAssetsPath + "/mailData.json";
-        string JsonStr = "";
-        if (File.Exists(path))
-            JsonStr = File.ReadAllText(path);
-        mailDataList = JsonMapper.ToObject<List<MailInfo>>(JsonStr);
+        //读表先
+        //TableManager.ReadTables();
+        //获取信件数据
+        Dictionary<int, Data> dataList = MailTable.DataList;
     }
 
     /// <summary>
@@ -260,7 +259,7 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     }
 
     /// <summary>
-    /// 
+    /// 根据ID设置读者评分
     /// </summary>
     /// <param name="id"></param>
     /// <param name="score"></param>
@@ -269,8 +268,6 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         //只有报社编辑类型才有读者评分
     
     }
-
-    //持久化功能
 
 }
 

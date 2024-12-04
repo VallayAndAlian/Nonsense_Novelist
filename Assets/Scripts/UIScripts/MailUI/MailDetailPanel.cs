@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MailTable;
 
 public class MailDetailPanel : BasePanel<MailDetailPanel>
 {

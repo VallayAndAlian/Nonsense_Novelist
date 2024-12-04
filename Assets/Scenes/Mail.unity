@@ -484,6 +484,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -411
       objectReference: {fileID: 0}
+    - target: {fileID: 390287906299051353, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
+      propertyPath: ctrlerImgObj
+      value: 
+      objectReference: {fileID: 1964622350}
     - target: {fileID: 3315995437716626415, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1929,6 +1933,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -480.99988
       objectReference: {fileID: 0}
+    - target: {fileID: 390287906299051353, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
+      propertyPath: ctrlerImgObj
+      value: 
+      objectReference: {fileID: 323785559}
     - target: {fileID: 3315995437716626415, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2517,6 +2525,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -325
       objectReference: {fileID: 0}
+    - target: {fileID: 390287906299051353, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
+      propertyPath: ctrlerImgObj
+      value: 
+      objectReference: {fileID: 608150370}
     - target: {fileID: 3315995437716626415, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2738,6 +2750,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -306
       objectReference: {fileID: 0}
+    - target: {fileID: 390287906299051353, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
+      propertyPath: ctrlerImgObj
+      value: 
+      objectReference: {fileID: 125362140}
     - target: {fileID: 3315995437716626415, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5519,6 +5535,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -650
       objectReference: {fileID: 0}
+    - target: {fileID: 390287906299051353, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
+      propertyPath: ctrlerImgObj
+      value: 
+      objectReference: {fileID: 239445045}
     - target: {fileID: 3315995437716626415, guid: b12537e6cea377b419e1a8c312a33439, type: 3}
       propertyPath: m_IsActive
       value: 0
