@@ -1,111 +1,176 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 //using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
+
+
 [System.Serializable]
 public abstract class Save
 {
+    public class SaveHandler
+    {
+        protected BinaryFormatter mBinary;
+        protected FileStream mStream;
+        
+        public SaveHandler(BinaryFormatter binaryFormatter, FileStream stream)
+        {
+            mBinary = binaryFormatter;
+            mStream = stream;
+        }
+
+        public void Write<T>(T data)
+        {
+            mBinary.Serialize(mStream, data);
+        }
+        
+        public T Read<T>()
+        {
+            if (!mStream.CanRead || mStream.Position >= mStream.Length)
+                return default;
+            
+            var obj = mBinary.Deserialize(mStream);
+            if (obj.Equals(null) || obj.GetType() != typeof(T))
+                return default;
+            
+            return (T)obj;
+        }
+    }
+    
     public abstract string mFileName { get; }
-    public string mMd5 { get; set; }   
+    public  string mMd5 { get; set; }   
     public string GetFolderPath()
     {
-        string folderPath = Path.Combine(Application.dataPath + "SaveUserI");
-        if (!Directory.Exists(folderPath))
-        {
-            Debug.LogError("尚未保存信息");
-            return null;
-        }
-        else
-        {
-            return folderPath;
-        }
+        return Path.Combine(Application.persistentDataPath, "UserSaveData");
     }
     //获取文件路径
     public string GetFilePath()
     {
-        string folderPath = Path.Combine(Application.persistentDataPath+"UserData");
+        string folderPath = GetFolderPath();
         if (!Directory.Exists(folderPath))
         {
-            Directory.CreateDirectory(folderPath); // 创建文件夹
+            // 创建文件夹
+            Directory.CreateDirectory(folderPath);
             return Path.Combine(folderPath, mFileName+".bin");
         }
         else
         {
-            //Debug.Log("文件夹已存在。");
             return Path.Combine(folderPath, mFileName + ".bin");
         }
     }
-    public bool LoadData()//rewrite
+    public bool LoadData()
     {
-        string path = GetFilePath();
         string folderPath = GetFolderPath();
-        List<string> data = new List<string>();
-        data = TraverseDirectory(folderPath);
-        foreach (string file in data)
+        
+        // 1.find file
+        List<string> fileList = TraverseDirectory(folderPath);
+        if (fileList == null || fileList.Count == 0)
         {
-            path = file;//获取有md5的文件路径
-        }
-        BinaryFormatter binary = new BinaryFormatter();
-        FileStream stream = new FileStream(path, FileMode.Open);
-        //1.read file data
-        string[] words = path.Split('.');
-        foreach (var word in words)
-        {
-            System.Console.WriteLine($"<{word}>");
-        }
-        mMd5 = words[1];
-        bool isok = VerifyMD5Hash(stream,mMd5);
-        stream.Close();
-        //2.Deseriolize(read)
-        Read(binary,path);
-        if (Read(binary, path)&&isok)
-        {
-            Debug.Log("加载成功！");
-            return true;
-        }
-        else
-        {
+            Debug.Log($"Not found saved file {mFileName}");
             return false;
         }
+
+        string filePath = fileList[0];
+        
+        string[] words = filePath.Split('.');
+        if (words.Length != 3)
+        {
+            Debug.Log($"{mFileName} file format error");
+            return false;
+        }
+        
+        // foreach (var word in words)
+        // {
+        //     System.Console.WriteLine($"<{word}>");
+        // }
+        
+        mMd5 = words[1];
+
+        
+        // 2.verify data
+        {
+            FileStream stream = new FileStream(filePath, FileMode.Open);
+
+            bool bVerify = VerifyMD5Hash(stream, words[1]);
+            
+            stream.Close();
+
+            if (!bVerify)
+            {
+                Debug.Log($"{mFileName} file md5 error!");
+                return true;
+            }
+        }
+        
+        // 3.load data
+        {
+            BinaryFormatter binary = new BinaryFormatter();
+            FileStream stream = new FileStream(filePath, FileMode.Open);
+            
+            if (ReadA(new SaveHandler(binary, stream)))
+            {
+                stream.Close();
+                Debug.Log($"{mFileName} load success!");
+                return true;
+            }
+            else
+            {
+                stream.Close();
+                Debug.Log($"{mFileName} load fail!");
+                return false;
+            }
+        }
     }
+
     public bool SaveData()
     {
         string path = GetFilePath();
-        BinaryFormatter binary = new BinaryFormatter();
-        //1.seriolize(write)
-        bool isw=Write(binary,path);
-        //2.save file data
-        if (isw)//序列化成功用md5加密获取字符串
+
+        // delete old file
+        // todo: find a safe way to delete old file only when write success
+        List<string> data = TraverseDirectory(GetFolderPath());
+        if (data != null)
         {
-            FileStream stream = new FileStream(path, FileMode.Open);
+            foreach (string file in data)
+            {
+                File.Delete(file);
+            }
+        }
+        
+
+        // save file data
+        BinaryFormatter binary = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+        
+        bool isWriteSuccess = WriteA(new SaveHandler(binary, stream));
+        
+        stream.Close();
+
+        if (isWriteSuccess)
+        {
+            //序列化成功用md5加密获取字符串
+            stream = new FileStream(path, FileMode.Open);
             mMd5 = GetMd5FromStream(stream);
             stream.Close();
+
             int index = path.IndexOf('.');
-            string oFileName =path;
-            string nFileName = path.Substring(0, index) + "." + mMd5+".bin";
-            File.Move(oFileName, nFileName);
-           // Debug.Log(nFileName);
-            //Debug.Log(Path.GetFileName(nFileName));
-            Debug.Log("保存成功！");
-            return true;
+            string OldFileName = path;
+            string nFileName = path.Substring(0, index) + "." + mMd5 + ".bin";
+
+            File.Move(OldFileName, nFileName);
+            
+            File.Delete(OldFileName);
+            Debug.Log($"{OldFileName} 保存成功！");
         }
-        else
-        {
-            return false;
-        }
+        
+        return isWriteSuccess;
     }
-    public abstract bool Write(BinaryFormatter binary,string path);
-    public abstract bool Read(BinaryFormatter binary, string path);
+    
+    public abstract bool WriteA(SaveHandler writer);
+    public abstract bool ReadA(SaveHandler reader);
     /// <summary>
     /// 从指定文件夹获取相应文件
     /// </summary>
@@ -113,8 +178,11 @@ public abstract class Save
     /// <returns></returns>
     public List<string> TraverseDirectory(string folderPath)
     {
+        if (!Directory.Exists(folderPath))
+            return null;
+        
         List<string> xlsxFiles = new List<string>();
-        string searchPattern = mFileName + "*"; // 使用通配符来匹配文件名的一部分，*表示任意字符
+        string searchPattern = mFileName + ".*.bin"; // 使用通配符来匹配文件名的一部分，*表示任意字符
         string[] files = Directory.GetFiles(folderPath, searchPattern);
         foreach (string file in files)
         {
@@ -122,7 +190,7 @@ public abstract class Save
             xlsxFiles.Add(file);
             //Debug.Log(file);
         }
-        
+
         // 遍历当前目录下的所有子目录
         foreach (string subdirectory in Directory.GetDirectories(folderPath))
         {
@@ -136,7 +204,7 @@ public abstract class Save
     /// 将一个文件转换为md5字符串，并保存
     /// </summary>
     /// <param name="fileName">File name.</param>
-    void PaseFile(string fileName)
+    void ParseFile(string fileName)
     {
         string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, fileName);//文件路径
         string fileMd5Path = System.IO.Path.Combine(Application.streamingAssetsPath, "md5_" + fileName);//md5 存储路径
@@ -166,8 +234,8 @@ public abstract class Save
         using (System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider())
         {
             buff = md5.ComputeHash(stream);
-
         }
+        
         System.Text.StringBuilder builder = new System.Text.StringBuilder();
         foreach (var item in buff)
         {
@@ -183,7 +251,7 @@ public abstract class Save
     /// <param name="stream">数据流</param>
     /// <param name="hash">保存的MD5码</param>
     /// <returns></returns>
-    public bool VerifyMD5Hash(System.IO.FileStream stream, string md5)
+    public bool VerifyMD5Hash(FileStream stream, string md5)
     {
         string hashOfInput = GetMd5FromStream(stream);
         StringComparer comparer = StringComparer.OrdinalIgnoreCase;

@@ -1,88 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TestLoad :MonoBehaviour
 {
-    public TMP_InputField mTMP;
-    public string mName;
-    public Button mSaveButton; 
-    public Button mLoadButton;
+    private Test mTest = new Test();
+    
+    private void Start()
+    {
+        Load();
+        Save();
+    }
+
     public void Save()
     {
-        if (mTMP.text != "")
-        {
-            Test test = new Test();
-            test.mName = mName;
-            test.SaveData();
-        }
-        else
-        {
-            Debug.Log("信息为空，无法保存");
-        }
+        mTest.mName = "TestSave" + DateTime.Now;
+        mTest.mId = DateTime.Now.ToFileTimeUtc();
+        Debug.Log($"{mTest.mName} + {mTest.mId}");
+        mTest.SaveData();
     }
+    
     public void Load()
     {
-        Test test = new Test();
-        test.LoadData();
-        mTMP.text=test.mName;
-    }
-    public void TextChange(string username)
-    {
-        if (mTMP != null)
-        {
-            mName=username;
-        }
-       // Debug.Log(username);
+        if (mTest.LoadData())
+            Debug.Log($"{mTest.mName} + {mTest.mId}");
     }
 }
 
 public class Test : Save
 {
     public override string mFileName => "user";
-    public string mName;
-    public override bool Write(BinaryFormatter binary, string path)
+    public string mName = "None Name";
+    public long mId = 1;
+    public int mId1 = 2;
+
+    public override bool WriteA(SaveHandler writer)
     {
-        string folderPath = GetFolderPath();
-        List<string> data = new List<string>();
-        data = TraverseDirectory(folderPath);
-        if (data!=null)
-        {
-            foreach (string file in data)
-            {
-                File.Delete(file);
-            }
-            FileStream stream = new FileStream(path, FileMode.Create);
-            binary.Serialize(stream, mName);
-            stream.Close();
-            //Debug.Log("写入成功");
-            return true;
-        }
-        else
-        {
-            FileStream stream = new FileStream(path, FileMode.Create);
-            binary.Serialize(stream, mName);
-            stream.Close();
-            //Debug.Log("写入成功");
-            return true;
-        }
+        writer.Write(mName);
+        writer.Write(mId);
+        writer.Write(mId1);
+        return true;
     }
-    public override bool Read(BinaryFormatter binary, string path)
+    
+    public override bool ReadA(SaveHandler reader)
     {
-        if (File.Exists(path))
-        {
-            FileStream stream = new FileStream(path, FileMode.Open);
-            mName = (string)binary.Deserialize(stream);
-            stream.Close();
-            return true;
-        }
-        else
-        {
-            Debug.LogError("Player data file not found!");
-            return false;
-        }
+        mName = reader.Read<string>();
+        mId = reader.Read<long>();
+        mId1 = reader.Read<int>();
+        return true;
     }
 }
