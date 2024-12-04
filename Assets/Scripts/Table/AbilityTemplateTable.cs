@@ -9,7 +9,7 @@ public class AbilityTemplateTable : MapTable<int, AbilityTemplateTable.Data>
         public class ModuleData
         {
             public int mType;
-            public List<float> mParams;
+            public List<float> mParams = new List<float>();
         }
 
         public int mKind;

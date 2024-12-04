@@ -64,8 +64,6 @@ public static class TableManager
                     Debug.Log($"table {table.AssetName} has duplicate key in line {meta.row}!");
                     break;
             }
-            
-            table.PostLoad();
         }
     }
 }

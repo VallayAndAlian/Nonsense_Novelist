@@ -39,7 +39,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mInitServants.AddRange(reader.ReadVec<int>());
         for (int _temp = 0; _temp < 6; _temp++)
         {
-            data.mTrees.Add(reader.Read<int>(), reader.ReadVec<int>());
+            data.mTrees.TryAdd(reader.Read<int>(), reader.ReadVec<int>());
         }
 
 

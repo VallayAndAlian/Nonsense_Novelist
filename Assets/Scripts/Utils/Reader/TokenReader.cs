@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using OfficeOpenXml.FormulaParsing.Utilities;
 
 public class TokenReader
 {
@@ -15,17 +16,17 @@ public class TokenReader
 
     private static readonly Dictionary<System.Type, ParseFunc> _ParseFuncMap = new()
     {
-        { typeof(bool), str => int.Parse(str) != 0 },
-        { typeof(char), str => char.Parse(str) },
-        { typeof(byte), str => byte.Parse(str) },
-        { typeof(Int16), str => Int16.Parse(str) },
-        { typeof(Int32), str => Int32.Parse(str) },
-        { typeof(Int64), str => Int64.Parse(str) },
-        { typeof(UInt16), str => Int16.Parse(str) },
-        { typeof(UInt32), str => Int32.Parse(str) },
-        { typeof(UInt64), str => Int64.Parse(str) },
-        { typeof(float), str => float.Parse(str) },
-        { typeof(double), str => double.Parse(str) },
+        { typeof(bool), str => int.TryParse(str, out var rst) ? rst != 0: null },
+        { typeof(char), str => char.TryParse(str, out var rst) ? rst : null },
+        { typeof(byte), str => byte.TryParse(str, out var rst) ? rst : null },
+        { typeof(Int16), str => Int16.TryParse(str, out var rst) ? rst : null },
+        { typeof(Int32), str => Int32.TryParse(str, out var rst) ? rst : null },
+        { typeof(Int64), str => Int64.TryParse(str, out var rst) ? rst : null },
+        { typeof(UInt16), str => Int16.TryParse(str, out var rst) ? rst : null },
+        { typeof(UInt32), str => Int32.TryParse(str, out var rst) ? rst : null },
+        { typeof(UInt64), str => Int64.TryParse(str, out var rst) ? rst : null },
+        { typeof(float), str => float.TryParse(str, out var rst) ? rst : null },
+        { typeof(double), str => double.TryParse(str, out var rst) ? rst : null },
         { typeof(string), str => str },
     };
     
@@ -114,8 +115,15 @@ public class TokenReader
             MarkReadInvalid();
             return default;
         }
+
+        var result = Parse(_mTokens[_mPos++], typeof(T));
+        if (result == null)
+        {
+            MarkReadInvalid();
+            return default;
+        }
         
-        return (T)Parse(_mTokens[_mPos++], typeof(T));
+        return (T)result;
     }
     
     public List<T> ReadVec<T>()
