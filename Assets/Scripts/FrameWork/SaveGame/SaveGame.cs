@@ -19,7 +19,7 @@ public abstract class Save
     public string mMd5 { get; set; }   
     public string GetFolderPath()
     {
-        string folderPath = Path.Combine(Application.dataPath + "SaveUserI");
+        string folderPath = Path.Combine(Application.persistentDataPath + "UserData");
         if (!Directory.Exists(folderPath))
         {
             Debug.LogError("尚未保存信息");
