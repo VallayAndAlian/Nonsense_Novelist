@@ -123,10 +123,9 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
 
     public void tackAttach()
     {
-
-        //调用数据持久化方法存储已经领取的状态
-        
         //领取根据附件id领取信件的逻辑
-        this.mailInfo.attachIsTake = false;
+        this.mailInfo.attachIsTake = true;
+        //持久化存储已领取状态
+        MailDataManager.instance.Cover(mailInfo);
     }
 }

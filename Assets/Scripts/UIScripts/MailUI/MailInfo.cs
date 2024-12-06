@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Runtime.Serialization.Formatters.Binary;
 using static MailTable;
+using UnityEngine;
 
 /// <summary>
 /// 信件信息类
 /// 配置格式{信件id,信件作者,信件称呼,信件内容}
 /// </summary>
-public class MailInfo : Save
+public class MailInfo 
 {
     /* 静态数据 */
-    //信件序号:此信件对应的信的id
-    public int id;
     //信件名称
     public string mailName;
     //发件人类型:区分发件人,同一发件人类型可能以不同称呼出现
@@ -21,8 +19,6 @@ public class MailInfo : Save
     public string dear;
     //信件内容
     public string mailBody;
-    //是否已读
-    public bool isRead;
     //附件id
     public int attachId;
     //附件数量
@@ -31,6 +27,10 @@ public class MailInfo : Save
     /* 动态数据 */
     //动态id:用于动态信封的
     public int dId;
+    //信件序号:此信件对应的信的id
+    public int id;
+    //是否已读
+    public bool isRead;
     //是否显示:此时信件是否载入信箱
     public bool isDisplay;
     //信件读者评分
@@ -38,9 +38,32 @@ public class MailInfo : Save
     //附件是否已经被领取(拿出)
     public bool attachIsTake;
 
-    public MailInfo()
+    public MailInfo(MailTable.Data data)
     {
-        
+        this.id = data.id;
+        this.mailName = data.mailName;
+        this.autherType = data.autherType;
+        this.autherName = data.autherName;
+        this.dear = data.dear;
+        this.mailBody = data.mailBody;
+        this.attachId = data.attachId;
+        this.attachNum = data.attachNum;
+    }
+
+    public MailInfo(int id) 
+    {
+        this.id = id;
+        Data data = MailTable.Find(id);
+        if (data != null)
+        {
+           this.mailName = data.mailName;
+           this.autherType = data.autherType;
+           this.autherName = data.autherName;
+           this.dear = data.dear;
+           this.mailBody = data.mailBody;
+           this.attachId = data.attachId;
+           this.attachNum = data.attachNum;
+        }
     }
 
     /// <summary>
@@ -52,18 +75,4 @@ public class MailInfo : Save
     {
         this.autherType = auther;
     }
-
-
-    public override string mFileName => "";
-
-    public override bool Read(BinaryFormatter binary, string path)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override bool Write(BinaryFormatter binary, string path)
-    {
-        throw new NotImplementedException();
-    }
 }
-
