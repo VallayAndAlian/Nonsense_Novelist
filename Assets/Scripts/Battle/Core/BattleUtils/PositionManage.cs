@@ -69,7 +69,23 @@ public class PositionManage
         return _resSits;
     }
 
+    public BattleUnit GetConfront(BattleUnitPos a)
+    {
+        BattleUnit _resSits=null;
 
+        switch (a)
+        {
+            case BattleUnitPos.pos1: {_resSits=SituationDic[BattleUnitPos.pos1];} break;
+            case BattleUnitPos.pos2: {_resSits=SituationDic[BattleUnitPos.pos1];} break;
+            case BattleUnitPos.pos3: {_resSits=SituationDic[BattleUnitPos.pos1];} break;
+            case BattleUnitPos.pos4: {_resSits=SituationDic[BattleUnitPos.pos1];} break;
+            case BattleUnitPos.pos5: { _resSits=SituationDic[BattleUnitPos.pos1];} break;
+            case BattleUnitPos.pos6: {_resSits=SituationDic[BattleUnitPos.pos1]; } break;
+            case BattleUnitPos.pos7: { _resSits=SituationDic[BattleUnitPos.pos1];} break;
+            case BattleUnitPos.pos8: { _resSits=SituationDic[BattleUnitPos.pos1]; } break;
+        }
+        return _resSits;
+    }
 
 
 }

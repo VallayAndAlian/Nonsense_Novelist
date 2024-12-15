@@ -3,88 +3,110 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// ³éÌëÊý¾Ý  ³Ø×ÓÖÐµÄÒ»ÁÐÈÝÆ÷
-/// </summary>
+
 public class PoolData
 {
-    //³éÌëÖÐ ¶ÔÏó¹ÒÔØµÄ¸¸½Úµã
+   
     public GameObject fatherObj;
-    //¶ÔÏóµÄÈÝÆ÷
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public List<GameObject> poolList;
 
     public PoolData(GameObject obj, GameObject poolObj)
     {
-        //¸øÎÒÃÇµÄ³éÌë ´´½¨Ò»¸ö¸¸¶ÔÏó ²¢ÇÒ°ÑËû×÷ÎªÎÒÃÇpool(ÒÂ¹ñ)¶ÔÏóµÄ×ÓÎïÌå
+        
         fatherObj = new GameObject(obj.name);
         fatherObj.transform.parent = poolObj.transform;
         poolList = new List<GameObject>() { };
         PushObj(obj);
     }
 
-    /// <summary>
-    /// Íù³éÌëÀïÃæ Ñ¹¶¼¶«Î÷
-    /// </summary>
-    /// <param name="obj"></param>
+ 
     public void PushObj(GameObject obj)
     {
-        //Ê§»î ÈÃÆäÒþ²Ø
+        //Ê§ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         obj.SetActive(false);
-        //´æÆðÀ´
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         poolList.Add(obj);
-        //ÉèÖÃ¸¸¶ÔÏó
+        //ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½
         obj.transform.SetParent(fatherObj.transform, false);
     }
 
-    /// <summary>
-    /// ´Ó³éÌëÀïÃæ È¡¶«Î÷
-    /// </summary>
-    /// <returns></returns>
+
     public GameObject GetObj()
     {
         GameObject obj = null;
         if (poolList.Count == 0) Debug.Log("poolList==null");
         if (poolList[0] == null) Debug.Log("poolList[0]==null");
-        //È¡³öµÚÒ»¸ö
+        //È¡ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
         obj = poolList[0];
         poolList.RemoveAt(0);
-        //¼¤»î ÈÃÆäÏÔÊ¾
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
         if (obj == null) Debug.Log("obj==null");
         obj.SetActive(true);
-        //¶Ï¿ªÁË¸¸×Ó¹ØÏµ
+        //ï¿½Ï¿ï¿½ï¿½Ë¸ï¿½ï¿½Ó¹ï¿½Ïµ
         obj.transform.SetParent(null, false);
 
         return obj;
     }
 }
 
-/// <summary>
-/// »º´æ³ØÄ£¿é
-/// 1.Dictionary List
-/// 2.GameObject ºÍ Resources Á½¸ö¹«¹²ÀàÖÐµÄ API 
-/// </summary>
+
 public class PoolMgr : BaseManager<PoolMgr>
-{
-    //»º´æ³ØÈÝÆ÷ £¨ÒÂ¹ñ£©
+{       
+    private PrefabSO prefabData;
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¹ï¿½
     public Dictionary<string, PoolData> poolDic = new Dictionary<string, PoolData>();
 
     private GameObject poolObj;
 
+ 
+    public void GetSOObj(prefabSOType type,int id,UnityAction<GameObject> callBack)
+    {
+        if(prefabData==null)
+            prefabData = Resources.Load<PrefabSO>("SO/PrefabSO");    
+
+        GameObject obj=null;
+        switch(type)
+        {
+            case prefabSOType.Other:
+            {
+                obj=prefabData.OtherpPrefabs[id].mPrefab;
+                }
+            break;
+            case prefabSOType.UI:
+            {
+                obj=prefabData.UIPrefabs[id].mPrefab;
+                }
+            break;
+            case prefabSOType.BattleObj:
+            {
+                obj=prefabData.BattleObjPrefabs[id].mPrefab;
+            }
+            break;
+        }
+
+        if(obj==null)   
+            return;
+
+        GetObj(obj,callBack);
+
+    }
+    
     /// <summary>
-    /// ÍùÍâÄÃ¶«Î÷
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
     public void GetObj(string name, UnityAction<GameObject> callBack)
     {
-        //ÓÐ³éÌë ²¢ÇÒ³éÌëÀïÓÐ¶«Î÷
+        //ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½
         if (poolDic.ContainsKey(name) && poolDic[name].poolList.Count > 0)
         {
             callBack(poolDic[name].GetObj());
         }
         else
         {
-            //Í¨¹ýÒì²½¼ÓÔØ×ÊÔ´ ´´½¨¶ÔÏó¸øÍâ²¿ÓÃ
+            //Í¨ï¿½ï¿½ï¿½ì²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²¿ï¿½ï¿½
             GameObject o=ResMgr.GetInstance().Load<GameObject>(name);
                 o.name = name;
                 callBack(o);
@@ -93,14 +115,14 @@ public class PoolMgr : BaseManager<PoolMgr>
     }
      public GameObject GetObj(string name)
     {
-        //ÓÐ³éÌë ²¢ÇÒ³éÌëÀïÓÐ¶«Î÷
+        //ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½
         if (poolDic.ContainsKey(name) && poolDic[name].poolList.Count > 0)
         {
             return poolDic[name].GetObj();
         }
         else
         {
-            //Í¨¹ýÒì²½¼ÓÔØ×ÊÔ´ ´´½¨¶ÔÏó¸øÍâ²¿ÓÃ
+            //Í¨ï¿½ï¿½ï¿½ì²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²¿ï¿½ï¿½
             GameObject o=ResMgr.GetInstance().Load<GameObject>(name);
                 o.name = name;
             return o;
@@ -109,21 +131,21 @@ public class PoolMgr : BaseManager<PoolMgr>
     }
     public void GetObj(GameObject obj, UnityAction<GameObject> callBack)
     {
-        //ÓÐ³éÌë ²¢ÇÒ³éÌëÀïÓÐ¶«Î÷
+        //ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½
         if ((poolDic.ContainsKey(obj.name) && poolDic[obj.name].poolList.Count > 0)&&(poolObj!=null))
         {
             callBack(poolDic[obj.name].GetObj());
         }
         else
         {
-            //Í¨¹ýÒì²½¼ÓÔØ×ÊÔ´ ´´½¨¶ÔÏó¸øÍâ²¿ÓÃ
+            //Í¨ï¿½ï¿½ï¿½ì²½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²¿ï¿½ï¿½
             GameObject o = GameObject.Instantiate(obj);
             callBack(o);
 
         }
     }
     /// <summary>
-    /// »»ÔÝÊ±²»ÓÃµÄ¶«Î÷¸øÎÒ
+    /// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ÃµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void PushObj(string name, GameObject obj)
     {
@@ -131,12 +153,12 @@ public class PoolMgr : BaseManager<PoolMgr>
         if (poolObj == null)
             poolObj = new GameObject("Pool");
 
-        //ÀïÃæÓÐ³éÌë
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½ï¿½ï¿½
         if (poolDic.ContainsKey(name))
         {
             poolDic[name].PushObj(obj);
         }
-        //ÀïÃæÃ»ÓÐ³éÌë
+        //ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð³ï¿½ï¿½ï¿½
         else
         {
             poolDic.Add(name, new PoolData(obj, poolObj));
@@ -145,8 +167,8 @@ public class PoolMgr : BaseManager<PoolMgr>
 
 
     /// <summary>
-    /// Çå¿Õ»º´æ³ØµÄ·½·¨ 
-    /// Ö÷ÒªÓÃÔÚ ³¡¾°ÇÐ»»Ê±
+    /// ï¿½ï¿½Õ»ï¿½ï¿½ï¿½ØµÄ·ï¿½ï¿½ï¿½ 
+    /// ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ê±
     /// </summary>
     public void Clear()
     {
@@ -156,11 +178,11 @@ public class PoolMgr : BaseManager<PoolMgr>
 }
 public class ResMgr : BaseManager<ResMgr>
 {
-    //Í¬²½¼ÓÔØ×ÊÔ´
+    //Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
     public T Load<T>(string name) where T : Object
     {
         T res = Resources.Load<T>(name);
-        //Èç¹û¶ÔÏóÊÇÒ»¸öGameObjectÀàÐÍµÄ ÎÒ°ÑËûÊµÀý»¯ºó ÔÙ·µ»Ø³öÈ¥ Íâ²¿ Ö±½ÓÊ¹ÓÃ¼´¿É
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½GameObjectï¿½ï¿½ï¿½Íµï¿½ ï¿½Ò°ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ï¿½Ø³ï¿½È¥ ï¿½â²¿ Ö±ï¿½ï¿½Ê¹ï¿½Ã¼ï¿½ï¿½ï¿½
         if (res is GameObject)
             return GameObject.Instantiate(res);
         else//TextAsset AudioClip

@@ -19,6 +19,7 @@ public static class TableManager
         Add(new AbilityTemplateTable());
         Add(new BattleUnitTable());
         Add(new BattleConfig());
+        Add(new WordTable());
         Add(new MailTable());
     }
 
