@@ -9,6 +9,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         public BattleUnitType mInitType;
         public string mAsset;
         public string mName;
+        public BookNameEnum mBook;
         public float mAttack;
         public float mMaxHp;
         public float mDefense;
@@ -17,7 +18,15 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         public List<int> mTalents = new List<int>();
         public int mRoles;
         public List<int> mInitServants = new List<int>();
-        public Dictionary<int, List<int>> mTrees = new Dictionary<int, List<int>>();
+
+        public class TreeData
+        {
+            public int mEffect;
+            public List<int> mCon=new List<int>();
+        }
+
+
+        public List<TreeData> mTrees = new List<TreeData>();
     }
 
     public override string AssetName => "BattleUnitData";
@@ -29,6 +38,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mInitType = (BattleUnitType)reader.Read<int>();
         data.mAsset = reader.Read<string>();
         data.mName = reader.Read<string>();
+        data.mBook = (BookNameEnum)reader.Read<int>();
         data.mAttack = reader.Read<float>();
         data.mMaxHp = reader.Read<float>();
         data.mDefense = reader.Read<float>();
@@ -39,7 +49,10 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mInitServants.AddRange(reader.ReadVec<int>());
         for (int _temp = 0; _temp < 6; _temp++)
         {
-            data.mTrees.Add(reader.Read<int>(), reader.ReadVec<int>());
+            Data.TreeData treeData = new Data.TreeData();
+            treeData.mEffect=reader.Read<int>();
+            treeData.mCon=reader.ReadVec<int>();
+            data.mTrees.Add(treeData);
         }
 
 

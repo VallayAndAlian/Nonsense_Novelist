@@ -20,13 +20,14 @@ public class BattleBase : MonoBehaviour
     public BattleGameState mGameState = null;
     public BattleObjectManager mObjectManager = null;
     public BattleObjectFactory mObjectFactory = null;
+     public CardDeckManager mCardDeckManager = null;
+    public PinBallLauncher mPinBallLauncher = null;
     
     public float Now => mClock?.ElapsedSec ?? 0;
 
     public void Init()
     {
         mState = BattleState.None;
-        
         AddModules();
         InitModules();
     }
@@ -88,6 +89,12 @@ public class BattleBase : MonoBehaviour
         
         mObjectFactory = new BattleObjectFactory();
         RegisterModule(mObjectFactory);
+
+        mCardDeckManager = new CardDeckManager();
+        RegisterModule(mCardDeckManager);
+
+        mPinBallLauncher = new PinBallLauncher();
+        RegisterModule(mPinBallLauncher);
     }
 
     protected void RegisterModule(BattleModule module)
@@ -98,6 +105,7 @@ public class BattleBase : MonoBehaviour
 
     private void InitModules()
     {
+   
         foreach (var module in mModules)
         {
             module.Init();
