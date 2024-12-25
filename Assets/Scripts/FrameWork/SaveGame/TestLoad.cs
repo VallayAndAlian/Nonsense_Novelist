@@ -30,7 +30,7 @@ public class TestLoad :MonoBehaviour
 
 public class Test : Save
 {
-    public override string mFileName => "user";
+    public override string mFileName => "TestSave";
     public string mName = "None Name";
     public long mId = 1;
     public int mId1 = 2;

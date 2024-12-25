@@ -87,41 +87,33 @@ public abstract class Save
         //     System.Console.WriteLine($"<{word}>");
         // }
         
-        mMd5 = words[1];
-
-        
-        // 2.verify data
+        FileStream stream = new FileStream(filePath, FileMode.Open);
+        if (!VerifyMD5Hash(stream, words[1]))
         {
-            FileStream stream = new FileStream(filePath, FileMode.Open);
-
-            bool bVerify = VerifyMD5Hash(stream, words[1]);
-            
             stream.Close();
-
-            if (!bVerify)
-            {
-                Debug.Log($"{mFileName} file md5 error!");
-                return true;
-            }
+            Debug.Log($"{mFileName} file md5 error!");
+            return false;
         }
         
+        mMd5 = words[1];
+        
         // 3.load data
+        BinaryFormatter binary = new BinaryFormatter();
+        
+        // reset read position
+        stream.Position = 0;
+        
+        if (ReadA(new SaveHandler(binary, stream)))
         {
-            BinaryFormatter binary = new BinaryFormatter();
-            FileStream stream = new FileStream(filePath, FileMode.Open);
-            
-            if (ReadA(new SaveHandler(binary, stream)))
-            {
-                stream.Close();
-                Debug.Log($"{mFileName} load success!");
-                return true;
-            }
-            else
-            {
-                stream.Close();
-                Debug.Log($"{mFileName} load fail!");
-                return false;
-            }
+            stream.Close();
+            Debug.Log($"{mFileName} load success!");
+            return true;
+        }
+        else
+        {
+            stream.Close();
+            Debug.Log($"{mFileName} load fail!");
+            return false;
         }
     }
 
@@ -146,13 +138,14 @@ public abstract class Save
         FileStream stream = new FileStream(path, FileMode.Create);
         
         bool isWriteSuccess = WriteA(new SaveHandler(binary, stream));
-        
-        stream.Close();
 
         if (isWriteSuccess)
         {
+            stream.Flush();
+
+            stream.Position = 0;
+            
             //序列化成功用md5加密获取字符串
-            stream = new FileStream(path, FileMode.Open);
             mMd5 = GetMd5FromStream(stream);
             stream.Close();
 
@@ -164,6 +157,10 @@ public abstract class Save
             
             File.Delete(OldFileName);
             Debug.Log($"{OldFileName} 保存成功！");
+        }
+        else
+        {
+            stream.Close();
         }
         
         return isWriteSuccess;

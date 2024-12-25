@@ -20,13 +20,13 @@ public class MailDataManager : Save
     private int startDID = 1;
     public int currentDID = 0;
 
-    public override bool Read(BinaryFormatter binary, string path)
+    public override bool ReadA(SaveHandler saveHandler)
     {
 
         return false;
     }
 
-    public override bool Write(BinaryFormatter binary, string path)
+    public override bool WriteA(SaveHandler saveHandler)
     {
 
         return false;

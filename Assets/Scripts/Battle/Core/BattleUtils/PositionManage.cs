@@ -5,9 +5,9 @@ using UnityEngine;
 
 public enum BattleUnitPos
 {
-    none=0,
+    none = 0,
     pos1 = 1,
-    pos2=2,
+    pos2 = 2,
     pos3 = 3,
     pos4 = 4,
     pos5 = 5,

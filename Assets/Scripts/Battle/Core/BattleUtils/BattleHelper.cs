@@ -6,9 +6,10 @@ using UnityEngine;
 public class BattleHelper
 {
     protected static DealDamageCalc mReusableDealDamageCalc = new DealDamageCalc();
-    public static DealDamageCalc GetReusableDealDamageCalc(AbstractCharacter instigator)
+    public static DealDamageCalc GetReusableDealDamageCalc(BattleUnit instigator)
     {
         //todo : fill calc info
+        mReusableDealDamageCalc.mInstigator = instigator;
         
         return mReusableDealDamageCalc;
     }

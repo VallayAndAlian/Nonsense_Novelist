@@ -9,6 +9,8 @@ public class BattleUnit : BattleObject
 
     protected bool mStart = false;
     public bool IsStart => mStart;
+    
+    public BattleUnit ServantOwner { get; set; }
 
     protected float mHp = 0;
     public float Hp => mHp;
@@ -24,11 +26,10 @@ public class BattleUnit : BattleObject
     }
 
     // camp would be enum
-    protected CampEnum mCamp = 0;
     public CampEnum Camp
     {
-        get => mCamp;
-        set => mCamp = value;
+        get => UnitInstance.mCamp;
+        set => UnitInstance.mCamp = value;
     }
 
     protected BattleUnitPos mPos = 0;
@@ -38,12 +39,24 @@ public class BattleUnit : BattleObject
         set => mPos = value;
     }
 
+    protected UnitSlot mSlot = null;
+    public UnitSlot Slot
+    {
+        get => mSlot;
+        set => mSlot = value;
+    }
+
+    protected UnitInstance mUnitInstance = null;
+    public UnitInstance UnitInstance => mUnitInstance;
+
     protected BattleUnitTable.Data mData = null;
-    public BattleUnitTable.Data Daata => mData;
+    public BattleUnitTable.Data Data => mData;
 
     protected List<UnitComponent> mComponents = new List<UnitComponent>();
     public List<UnitComponent> Components => mComponents;
 
+    protected AIController mAIAgent = null;
+    public AIController AIAgent => mAIAgent;
 
     protected AbilityAgent mAbilityAgent = null;
     public AbilityAgent AbilityAgent => mAbilityAgent;
@@ -54,7 +67,6 @@ public class BattleUnit : BattleObject
     protected WordComponent mWordComponent = null;
     public WordComponent WordComponent => mWordComponent;
     
-
     protected ServantsAgent mServantsAgent = null;
     public ServantsAgent ServantsAgent => mServantsAgent;
 
@@ -63,13 +75,9 @@ public class BattleUnit : BattleObject
 
     protected AttributeSet mAttributeSet = new AttributeSet();
     public AttributeSet AttributeSet => mAttributeSet;
-
-
-    protected List<BattleUnit> mAllies = new List<BattleUnit>();
-    public List<BattleUnit> Allies => mAllies;
-
-    protected List<BattleUnit> mEnemies = new List<BattleUnit>();
-    public List<BattleUnit> Enemies => mEnemies;
+    
+    public List<BattleUnit> Allies => Battle.CampManager.GetAllies(this);
+    public List<BattleUnit> Enemies => Battle.CampManager.GetEnemies(this);
 
     protected UnitViewBase mView = null;
 
@@ -80,9 +88,10 @@ public class BattleUnit : BattleObject
     }
 
 
-    public BattleUnit(BattleUnitTable.Data data)
+    public BattleUnit(BattleUnitTable.Data data, UnitInstance unitInstance)
     {
         mData = data;
+        mUnitInstance = unitInstance;
     }
 
     // init with no battle
@@ -105,6 +114,9 @@ public class BattleUnit : BattleObject
 
     protected void AddComponents()
     {
+        mAIAgent = new AIController();
+        RegisterComponent(mAIAgent);
+        
         mAbilityAgent = new AbilityAgent();
         RegisterComponent(mAbilityAgent);
 
@@ -114,7 +126,7 @@ public class BattleUnit : BattleObject
         mWordComponent = new WordComponent();
         RegisterComponent(mWordComponent);
 
-		if (Daata.mInitType != BattleUnitType.Servant)
+		if (Data.mInitType != BattleUnitType.Servant)
         {
             mServantsAgent = new ServantsAgent();
             RegisterComponent(mServantsAgent);
@@ -256,7 +268,8 @@ public class BattleUnit : BattleObject
         }
 
         // process ally
-        foreach (var p in Allies)
+        var allies = Allies;
+        foreach (var p in allies)
         {
             foreach (var abi in p.AbilityAgent.Abilities)
             {

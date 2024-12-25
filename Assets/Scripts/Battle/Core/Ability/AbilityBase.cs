@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class AbilityBase
 {
+    protected bool mActivated = false;
+    public bool IsActivated => mActivated;
+    
     protected BattleUnit mUnit = null;
 
     public BattleUnit Unit
@@ -12,6 +15,12 @@ public class AbilityBase
         set => mUnit = value;
         get => mUnit;
     }
+
+    public float ElapsedSec => Unit.Battle.Now;
+
+    public UnitViewBase UnitView => Unit?.UnitView;
+
+    protected BattleUnit mTarget = null;
 
     protected AbilityTable.Data mData = null;
     public AbilityTable.Data Data
@@ -27,6 +36,39 @@ public class AbilityBase
 
     protected virtual void OnInit() { }
 
+    public void Dispose()
+    {
+        TryDeactivate();
+        OnRemoved();
+    }
+    
+    protected virtual void OnRemoved() { }
+
+    public bool TryActivate()
+    {
+        if (!mActivated)
+        {
+            mActivated = true;
+            OnActivate();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    protected virtual void OnActivate() {}
+    
+    public void TryDeactivate()
+    {
+        if (!mActivated) 
+            return;
+        
+        mActivated = false;
+        OnDeactivate();
+    }
+    
+    protected virtual void OnDeactivate() {}
+
     public void Update(float deltaTime)
     {
         if (Unit.IsAlive)
@@ -40,6 +82,11 @@ public class AbilityBase
     protected virtual void Tick(float deltaTime) { }
 
     protected virtual void TickEvenWhenDead(float deltaTime) { }
+    
+    public void SetTarget(BattleUnit target)
+    {
+        mTarget = target;
+    }
 
     #region DamageProcess
     

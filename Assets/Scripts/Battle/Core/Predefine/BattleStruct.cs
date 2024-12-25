@@ -1,6 +1,17 @@
 ﻿
 using System;
 
+public class UnitInstance
+{
+    public int mKind;
+    public CampEnum mCamp;
+}
+
+public class UnitPlacement
+{
+    public int mSlotIndex;
+}
+
 public class DealDamageCalc
 {
     public DamageSource mDamageSource;
@@ -96,4 +107,11 @@ public class DamageReport
 {
     public DamageMeta mMeta;
     public DamageResult mResult;
+}
+
+public class EmitMeta
+{
+    public BattleUnit mTarget;
+    public AbilityBase mAbility;
+    public float mDelay;
 }

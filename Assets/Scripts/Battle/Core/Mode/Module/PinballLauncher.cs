@@ -44,8 +44,8 @@ public class PinBallLauncher : BattleModule
             SetNowBallVel();
             nowBall.ShootOut(); 
             nowBall=null;
-            Battle.mCardDeckManager.UseCurrentCard();
-        CreateNewBall();
+            Battle.CardDeckManager.UseCurrentCard();
+            CreateNewBall();
         });
         
     }
@@ -56,8 +56,8 @@ public class PinBallLauncher : BattleModule
         {
             launchPoint=GameObject.Find("bulletroot").transform;
         }  
-        WordTable.Data data=Battle.mCardDeckManager.GetCurrentCard();
-        PinBall pinball=Battle.mObjectFactory.CreatePinBall(data);
+        WordTable.Data data=Battle.CardDeckManager.GetCurrentCard();
+        PinBall pinball=Battle.ObjectFactory.CreatePinBall(data);
         GameObject temp=new GameObject();
         temp.transform.position=launchPoint.position;
         pinball.mBall = new PinBall.Ball

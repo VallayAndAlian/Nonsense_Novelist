@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
+// unit ability manager
 public class AbilityAgent : UnitComponent
 {
     protected List<AbilityBase> mAbilities = new List<AbilityBase>();
@@ -23,7 +24,24 @@ public class AbilityAgent : UnitComponent
     
     public void RemoveAbility(AbilityBase abiInstance)
     {
-        mAbilities.Remove(abiInstance);
+        if (abiInstance != null)
+        {
+            abiInstance.Dispose();
+            mAbilities.Remove(abiInstance);
+        }
+    }
+
+    public AbilityBase GetAbilityByType(AbilityType type)
+    {
+        foreach (var abi in mAbilities)
+        {
+            if (abi.Data.mType == type)
+            {
+                return abi;
+            }
+        }
+
+        return null;
     }
 
     public override void LateUpdate(float deltaTime)

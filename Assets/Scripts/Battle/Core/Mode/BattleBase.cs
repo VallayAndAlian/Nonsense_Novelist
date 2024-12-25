@@ -4,26 +4,33 @@ using UnityEngine;
 
 public class BattleBase : MonoBehaviour
 {
-    public enum BattleState
-    {
-        None = 0,
-        Inprogress,
-        End,
-    }
-    
-    public BattleState mState  { get; set; }
+
+    protected BattleState mState = BattleState.None;
+    public BattleState State => mState;
     
     protected List<BattleModule> mModules = new List<BattleModule>();
 
-    public BattleClock mClock = null;
-    public BattleStage mStage = null;
-    public BattleGameState mGameState = null;
-    public BattleObjectManager mObjectManager = null;
-    public BattleObjectFactory mObjectFactory = null;
-     public CardDeckManager mCardDeckManager = null;
-    public PinBallLauncher mPinBallLauncher = null;
+    protected BattleClock mClock = null;
+    protected BattleStage mStage = null;
+    protected BattleGameState mGameState = null;
+    protected BattleObjectManager mObjectManager = null;
+    protected BattleObjectFactory mObjectFactory = null;
+    protected BattleCampManager mCampManager = null;
+    protected CardDeckManager mCardDeckManager = null;
+    protected PinBallLauncher mPinBallLauncher = null;
+    
+    public BattleClock Clock => mClock;
+    public BattleStage Stage => mStage;
+    public BattleGameState GameState => mGameState;
+    public BattleObjectManager ObjectManager => mObjectManager;
+    public BattleObjectFactory ObjectFactory => mObjectFactory;
+    public BattleCampManager CampManager => mCampManager;
+    public CardDeckManager CardDeckManager => mCardDeckManager;
+    public PinBallLauncher PinBallLauncher => mPinBallLauncher;
     
     public float Now => mClock?.ElapsedSec ?? 0;
+
+    public bool IsFinished => mState == BattleState.End;
 
     public void Init()
     {
@@ -89,6 +96,9 @@ public class BattleBase : MonoBehaviour
         
         mObjectFactory = new BattleObjectFactory();
         RegisterModule(mObjectFactory);
+        
+        mCampManager = new BattleCampManager();
+        RegisterModule(mCampManager);
 
         mCardDeckManager = new CardDeckManager();
         RegisterModule(mCardDeckManager);
@@ -105,7 +115,6 @@ public class BattleBase : MonoBehaviour
 
     private void InitModules()
     {
-   
         foreach (var module in mModules)
         {
             module.Init();

@@ -1,6 +1,13 @@
 ﻿
 using System;
 
+public enum BattleState
+{
+    None = 0,
+    Inprogress,
+    End,
+}
+
 public enum DamageSource
 {
     None = 0,

@@ -7,18 +7,25 @@ public class ServantsAgent : UnitComponent
     public List<BattleUnit> Servants => mServants;
     public BattleUnit RegisterServants(int servantID)
     {
-        BattleUnit newServant = mOwner.Battle.mObjectFactory.CreateBattleUnit(servantID);
-
-        if (!IsVaildServants(newServant)) 
+        UnitInstance servantInstance = new UnitInstance()
+        {
+            mKind = servantID,
+            mCamp = mOwner.Camp
+        };
+        
+        BattleUnit newServant = mOwner.Battle.ObjectFactory.CreateBattleUnit(servantInstance);
+        if (newServant == null)
             return null;
 
-        if (newServant == null)
+        if (!IsVaildServants(newServant)) 
             return null;
         
         while (mServants.Count > 2)
         {
             RemoveServants();
         }
+        
+        newServant.ServantOwner = mOwner;
         
         Servants.Add(newServant);
         return newServant;
@@ -45,7 +52,7 @@ public class ServantsAgent : UnitComponent
 
     protected bool IsVaildServants(BattleUnit servant)
     {
-        if (servant.Daata.mInitType != BattleUnitType.Servant) 
+        if (servant.Data.mInitType != BattleUnitType.Servant) 
             return false;
         
         return true;
