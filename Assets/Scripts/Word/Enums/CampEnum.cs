@@ -5,7 +5,8 @@
 public enum CampEnum
 {
     /// <summary>ÖÐÁ¢</summary>
-    stranger,
+    None = -1,
+    stranger = 0,
     left,
     right,
 };

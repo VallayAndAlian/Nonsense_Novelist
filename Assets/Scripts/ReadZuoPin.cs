@@ -56,7 +56,7 @@ public class ReadZuoPin : MonoBehaviour
 
     #region button°ó¶¨
 
-    public void SetContent(Save _index)
+    public void SetContent(SaveArticle _index)
     {
         content = _index.content;
         bookName.text = _index.title;

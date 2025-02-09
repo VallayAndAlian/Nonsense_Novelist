@@ -1,54 +1,78 @@
-/// <summary>
-/// ĞÅ¼ş×÷Õß,¸ù¾İÆäÉ¸Ñ¡
-/// </summary>
-public enum E_MailAuther
-{
-    Auther1,
-    Auther2,
-    Auther3,
-    NULLAuther
-}
+ï»¿using System;
+using static MailTable;
+using UnityEngine;
 
 /// <summary>
-/// ĞÅ¼şĞÅÏ¢Àà
-/// ÅäÖÃ¸ñÊ½{ĞÅ¼şid,ĞÅ¼ş×÷Õß,ĞÅ¼ş³Æºô,ĞÅ¼şÄÚÈİ}
+/// ä¿¡ä»¶ä¿¡æ¯ç±»
+/// é…ç½®æ ¼å¼{ä¿¡ä»¶id,ä¿¡ä»¶ä½œè€…,ä¿¡ä»¶ç§°å‘¼,ä¿¡ä»¶å†…å®¹}
 /// </summary>
-public class MailInfo
+public class MailInfo 
 {
-    //ĞÅ¼şĞòºÅ
-    public int id;
-    //·¢¼şÈË
-    public E_MailAuther auther;
-    //³ÆºôÄÚÈİ:Ò²Ğí¿ÉÒÔ¸ù¾İ·¢¼şÈËÓÅ»¯
+    /* é™æ€æ•°æ® */
+    //ä¿¡ä»¶åç§°
+    public string mailName;
+    //å‘ä»¶äººç±»å‹:åŒºåˆ†å‘ä»¶äºº,åŒä¸€å‘ä»¶äººç±»å‹å¯èƒ½ä»¥ä¸åŒç§°å‘¼å‡ºç°
+    public E_MailAutherType autherType;
+    //å‘ä»¶äººå®é™…æ˜¾ç¤ºå§“å
+    public string autherName;
+    //ç§°å‘¼å†…å®¹:å‘ä»¶äººå¯¹æ”¶ä»¶äººçš„ç§°å‘¼
     public string dear;
-    //ĞÅ¼şÄÚÈİ
+    //ä¿¡ä»¶å†…å®¹
     public string mailBody;
-    //ĞÅ¼ş¶ÁÕßÆÀ·Ö
-    public int score;
-    //ÊÇ·ñÒÑ¶Á
-    public bool isRead;
-    //ÊÇ·ñÓ¦¸ÃÏÔÊ¾
-    public bool isDisPlay;
-    //¸½¼şÄÚÈİ:ÅäÖÃÎªidµÈ,¸ù¾İÆä¿ÉÒÔÔö¼ÓÓÎÏ·ÖĞµÄµÀ¾ß
-    public string attch;
-    //¸½¼şÊıÁ¿
-    public string attchNum;
-    //¸½¼şÊÇ·ñÒÑ¾­±»ÁìÈ¡(ÄÃ³ö)
-    public string attchIsOut;
+    //é™„ä»¶id
+    public int attachId;
+    //é™„ä»¶æ•°é‡
+    public int attachNum;
 
-    public MailInfo()
+    /* åŠ¨æ€æ•°æ® */
+    //åŠ¨æ€id:ç”¨äºåŠ¨æ€ä¿¡å°çš„
+    public int dId;
+    //ä¿¡ä»¶åºå·:æ­¤ä¿¡ä»¶å¯¹åº”çš„ä¿¡çš„id
+    public int id;
+    //æ˜¯å¦å·²è¯»
+    public bool isRead;
+    //æ˜¯å¦æ˜¾ç¤º:æ­¤æ—¶ä¿¡ä»¶æ˜¯å¦è½½å…¥ä¿¡ç®±
+    public bool isDisplay;
+    //ä¿¡ä»¶è¯»è€…è¯„åˆ†
+    public int score;
+    //é™„ä»¶æ˜¯å¦å·²ç»è¢«é¢†å–(æ‹¿å‡º)
+    public bool attachIsTake;
+
+    public MailInfo(MailTable.Data data)
     {
-        
+        this.id = data.id;
+        this.mailName = data.mailName;
+        this.autherType = data.autherType;
+        this.autherName = data.autherName;
+        this.dear = data.dear;
+        this.mailBody = data.mailBody;
+        this.attachId = data.attachId;
+        this.attachNum = data.attachNum;
+    }
+
+    public MailInfo(int id) 
+    {
+        this.id = id;
+        Data data = MailTable.Find(id);
+        if (data != null)
+        {
+           this.mailName = data.mailName;
+           this.autherType = data.autherType;
+           this.autherName = data.autherName;
+           this.dear = data.dear;
+           this.mailBody = data.mailBody;
+           this.attachId = data.attachId;
+           this.attachNum = data.attachNum;
+        }
     }
 
     /// <summary>
-    /// ½ö³õÊ¼»¯auther×Ö¶ÎµÄĞÅ¼ş
+    /// ä»…åˆå§‹åŒ–autherå­—æ®µçš„ä¿¡ä»¶[æµ‹è¯•é˜¶æ®µä½¿ç”¨]
     /// </summary>
     /// <param name="auther"></param>
-    public MailInfo(E_MailAuther auther)
+    [Obsolete("MailInfoä¸­ä»…åˆå§‹åŒ–ä¿¡ä»¶ç±»å‹çš„æ–¹æ³•,è¯¥æ–¹æ³•ä»…é™äºæµ‹è¯•ä½¿ç”¨")]
+    public MailInfo(E_MailAutherType auther)
     {
-        this.auther = auther;
+        this.autherType = auther;
     }
-
 }
-

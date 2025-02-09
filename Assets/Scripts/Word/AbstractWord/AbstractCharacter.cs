@@ -1,3 +1,4 @@
+using System;
 using AI;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,8 @@ using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
+
 public enum AttackType
 { 
     psy,//精神
@@ -84,7 +87,6 @@ abstract public class AbstractCharacter : AbstractWord0
 
     public bool isNaiMa = false;
 
-    
     #region 血量
 
     private Slider hpSlider;
@@ -130,7 +132,6 @@ abstract public class AbstractCharacter : AbstractWord0
             HPSetting();
         }
     }
-
 
     IEnumerator DelayAttack(float _delayTime, float _value, AttackType _at, bool _hasFloat, AbstractCharacter _whoDid)
     {
@@ -1217,7 +1218,6 @@ abstract public class AbstractCharacter : AbstractWord0
         if (data == null)
             return;
 
-
         //数值
         hp = maxHp = data.maxhp;
         atk = data.atk;
@@ -1240,6 +1240,11 @@ abstract public class AbstractCharacter : AbstractWord0
         attackAmount = 1;
         hasBetray = false;
     }
+    
+    public void Start()
+    {
+        
+    }
 
     private void OnEnable()
     {
@@ -1250,17 +1255,22 @@ abstract public class AbstractCharacter : AbstractWord0
   
     private void Update()
     {
+        if (CharacterManager.instance.pause) 
+            return;
+        
+        if(myState == null) 
+            return;
+        
+        if (myState.nowState == myState.allState.Find(p => p.id == AI.StateID.dead)) 
+            return;
 
-        if (CharacterManager.instance.pause) return;
-        if(myState == null) return;
-        if (myState.nowState == myState.allState.Find(p => p.id == AI.StateID.dead)) return;
-            //角色的能量条积攒
-            energy += Time.deltaTime;
-    
-
+        float deltaTime = Time.deltaTime;
+        
+        //角色的能量条积攒
+        energy += deltaTime;
+        
         if (energy > 5)//每5秒恢复一点能量
         {
-        
             energy = 0;
             _canUseSkills = 0;
             if (OnEnergyFull != null)
@@ -1284,13 +1294,12 @@ abstract public class AbstractCharacter : AbstractWord0
 
         //【恢复】计时
         if (cureOpen)
-            cureTime += Time.deltaTime;
+            cureTime += deltaTime;
         if (cureTime >= 10)
         {
             cureTime = 0;
             CureHp();
-        }
- 
+        } 
     }
 
 
