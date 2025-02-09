@@ -1,8 +1,10 @@
+using OfficeOpenXml.ConditionalFormatting.Contracts;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using static UnityEditor.Progress;
 
 public class MailDataManager : Save
 {
@@ -19,18 +21,6 @@ public class MailDataManager : Save
     //信件动态数据ID:初始id和当前计算到的最大id
     private int startDID = 1;
     public int currentDID = 0;
-
-    public override bool Read(BinaryFormatter binary, string path)
-    {
-
-        return false;
-    }
-
-    public override bool Write(BinaryFormatter binary, string path)
-    {
-
-        return false;
-    }
 
     /// <summary>
     /// 添加一个基于主id的信件对象
@@ -78,5 +68,50 @@ public class MailDataManager : Save
         if(dataList.ContainsKey(info.id))
             dataList[info.id]= info;
     }
-    
+
+    public override bool WriteA(SaveHandler writer)
+    {
+        //先写长度
+        writer.Write<int>(dataList.Count);
+        
+        //逐个序列化
+        foreach (var item in DataList.Values)
+        {
+            //key
+            writer.Write(item.dId);
+            //这个key对应的value
+            writer.Write(item.id);
+            writer.Write(item.isRead);
+            writer.Write(item.isDisplay);
+            writer.Write(item.score);
+            writer.Write(item.attachIsTake);
+        }
+
+        return true;
+    }
+
+    public override bool ReadA(SaveHandler reader)
+    {
+        //清空
+        dataList.Clear();
+
+        //先读长度
+        int length = reader.Read<int>();
+        int key = 0;
+        int id = 0;
+        MailInfo mailinfo;
+        for (int i = 0; i < length; i++)
+        {
+            key = reader.Read<int>();
+            id = reader.Read<int>();
+            mailinfo = new MailInfo(id);
+            mailinfo.dId = key;
+            mailinfo.isRead  = reader.Read<bool>();
+            mailinfo.isDisplay = reader.Read<bool>();
+            mailinfo.score = reader.Read<int>();
+            mailinfo.attachIsTake = reader.Read<bool>();
+            dataList.Add(key, mailinfo);
+        }
+        return true;
+    }
 }

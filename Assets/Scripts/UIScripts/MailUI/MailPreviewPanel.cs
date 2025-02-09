@@ -82,10 +82,12 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         MailDataManager.instance.CreateMail(100204);
         MailDataManager.instance.CreateMail(100203);
         MailDataManager.instance.CreateMail(100101);
-        
+        MailDataManager.Instance.SaveData();
+
         //从管理器获取数据
         Dictionary<int, MailInfo> dataList = MailDataManager.instance.DataList;
         mailDataList.AddRange(dataList.Values);
+        print(Application.persistentDataPath);
 
         //排序
         mailDataList.Sort((mail1,mail2) =>
