@@ -37,7 +37,8 @@ public abstract class PinBall : BattleObject
         public bool hasShoot=false;
         
     }
-    
+  
+
     public class PreLineInfo
     {
         public List<Vector3> colPos=new List<Vector3>();
@@ -46,7 +47,7 @@ public abstract class PinBall : BattleObject
 
     public Ball mBall;
     public PreLineInfo mPreInfo;
-    
+    private int preMoveTimes=30;
 
     public void ShootOut()
     {   SyncPreAndReal();
@@ -77,7 +78,7 @@ public abstract class PinBall : BattleObject
 
 
 
-    public override void LateUpdate(float deltaSec)
+    public override void LateFixedUpdate(float deltaSec)
     {
         if (!IsTickEnable) return;
 
@@ -89,7 +90,7 @@ public abstract class PinBall : BattleObject
         else
         {   
             mPreInfo.colPos.Clear();
-            for(int i=0;i<12;i++)
+            for(int i=0;i<preMoveTimes;i++)
             {
                 PreUpdate(deltaSec);
             }
@@ -111,7 +112,6 @@ public abstract class PinBall : BattleObject
     public  void PreUpdate(float deltaSec)
     {
         ApplyFriction(deltaSec);
-
         mBall.preTransform.position += (Vector3)mBall.preVelocity * deltaSec;
 
         RaycastHit2D hit = Physics2D.CircleCast(
@@ -136,20 +136,17 @@ public abstract class PinBall : BattleObject
 
     protected virtual void HandleCollision(RaycastHit2D hit)
     {
+        Debug.Log(hit.collider.gameObject.name);
 
-        Vector2 normal = hit.normal;
+        var wall=Battle.ObjectManager.Find<WallObject>(hit.collider);
+        if(wall==null)
+        {
+            return;
+        }
+        Debug.Log("HandleCollision");
+        mBall.preTransform.position = wall.ApplyBounceEffectToPos(mBall.radius,hit.point,(Vector2)mBall.preTransform.position);
+        mBall.preVelocity=wall.ApplyBounceEffectToVel(ref mBall.preVelocity, hit.normal);
 
-        Vector2 penetrationDepth = (hit.point - (Vector2)mBall.preTransform.position).normalized * mBall.radius;
-        mBall.preTransform.position = hit.point - penetrationDepth;
-
-        Vector2 normalVelocity = Vector2.Dot(mBall.preVelocity, normal) * normal;
-        Vector2 tangentVelocity = mBall.preVelocity - normalVelocity;
-
-        normalVelocity *= (1f - mBall.energyLoss); // 法线方向:动能损耗
-        tangentVelocity *= (1f - mBall.friction); // 切线方向:摩擦损耗
-        
-
-        mBall.preVelocity = -normalVelocity + tangentVelocity;
 
         if(mBall.hasShoot)  
         {

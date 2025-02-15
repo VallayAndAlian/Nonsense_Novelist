@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class TableManager
 {
@@ -21,6 +22,8 @@ public static class TableManager
         Add(new BattleConfig());
         Add(new WordTable());
         Add(new MailTable());
+        Add(new LevelTable());
+        Add(new PhaseTable());
     }
 
     public static void ReadTables()

@@ -7,7 +7,8 @@ public enum BattleObjectType
 {
     none=0,
     BattleUnit=1,
-    PinBall=2
+    PinBall=2,
+    Wall=3,
 
 }
 public enum BattleUnitType
@@ -15,6 +16,7 @@ public enum BattleUnitType
     Character = 0,  
     Servant = 1, 
     Monster = 2,
+    
 
 }
 
@@ -24,7 +26,8 @@ public class BattleObjectFactory : BattleModule
         new Dictionary<BattleObjectType, System.Type>()
         {
             { BattleObjectType.BattleUnit, typeof(BattleUnit) },
-            { BattleObjectType.PinBall, typeof(PinBall) }
+            { BattleObjectType.PinBall, typeof(PinBall) },
+            {BattleObjectType.Wall, typeof(WallObject) },
         };
 
     #region pinball
@@ -124,7 +127,21 @@ public class BattleObjectFactory : BattleModule
 
     }
 
+
     #endregion
+
+
+    #region Wall
+    public WallObject CreateWall<T>(Collider2D collider)where T:WallObject, new()
+    {
+        T wall=new T();
+        Battle.ObjectManager.RegisterWall<T>(wall,collider);
+        return wall;
+
+    }
+
+    #endregion
+
 
     public BattleUnit CreateBattleUnit(UnitInstance instance, UnitPlacement placement = null)
     {

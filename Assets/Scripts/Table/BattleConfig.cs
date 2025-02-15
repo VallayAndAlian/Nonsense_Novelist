@@ -12,7 +12,7 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
         public float wordBallFriction = 3;
         public float wordBallCollisionLoss = 3;
         public float wordBallChargingMaxTime=3;
-
+        public float maxAngle = 45f;
     }
     
     [System.Serializable]

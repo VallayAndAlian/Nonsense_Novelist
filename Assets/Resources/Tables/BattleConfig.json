@@ -8,7 +8,8 @@
         "wordBallMaxSpeed":4,
         "wordBallFriction":0.02,
         "wordBallCollisionLoss":0.5,
-        "wordBallChargingMaxTime":3
+        "wordBallChargingMaxTime":3,
+        "maxAngle":70
     }
 
 }

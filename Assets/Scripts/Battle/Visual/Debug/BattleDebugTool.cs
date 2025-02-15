@@ -48,6 +48,7 @@ public class BattleDebugTool : MonoBehaviour
         {
             if (GUILayout.Button("Start Battle"))
             {
+                mRunner = BattleRunner.Instance;
                 mRunner.StartBattle();
                 
                 mBattle = mRunner.Battle;

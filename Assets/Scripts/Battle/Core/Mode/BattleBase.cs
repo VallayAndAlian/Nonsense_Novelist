@@ -18,6 +18,8 @@ public class BattleBase : MonoBehaviour
     protected BattleCampManager mCampManager = null;
     protected CardDeckManager mCardDeckManager = null;
     protected PinBallLauncher mPinBallLauncher = null;
+    protected BattlePhase mBattlePhase=null;
+    protected BattleScene mBattleScene=null;
     
     public BattleClock Clock => mClock;
     public BattleStage Stage => mStage;
@@ -27,9 +29,13 @@ public class BattleBase : MonoBehaviour
     public BattleCampManager CampManager => mCampManager;
     public CardDeckManager CardDeckManager => mCardDeckManager;
     public PinBallLauncher PinBallLauncher => mPinBallLauncher;
+    public BattlePhase BattlePhase=> mBattlePhase;
+    public BattleScene BattleScene=> mBattleScene;
+
     
     public float Now => mClock?.ElapsedSec ?? 0;
-
+    private float fixedTimeAccumulated = 0f;
+    private const float FixedDeltaTime = 0.02f;  
     public bool IsFinished => mState == BattleState.End;
 
     public void Init()
@@ -68,6 +74,18 @@ public class BattleBase : MonoBehaviour
         {
             module.LateUpdate(deltaSec);
         }
+
+
+        fixedTimeAccumulated += deltaSec;
+        while (fixedTimeAccumulated >= FixedDeltaTime)
+        {
+            foreach (var module in mModules)
+            {
+                module.LateFixedUpdate(FixedDeltaTime);
+            }
+
+            fixedTimeAccumulated -= FixedDeltaTime;
+        }
     }
 
     public void Close()
@@ -103,8 +121,14 @@ public class BattleBase : MonoBehaviour
         mCardDeckManager = new CardDeckManager();
         RegisterModule(mCardDeckManager);
 
+        mBattleScene = new BattleScene();
+        RegisterModule(mBattleScene);
+
         mPinBallLauncher = new PinBallLauncher();
         RegisterModule(mPinBallLauncher);
+
+        mBattlePhase = new BattlePhase();
+        RegisterModule(mBattlePhase);
     }
 
     protected void RegisterModule(BattleModule module)

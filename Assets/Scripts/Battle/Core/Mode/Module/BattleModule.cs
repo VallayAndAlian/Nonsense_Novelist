@@ -17,6 +17,8 @@ public class BattleModule
     public virtual void Update(float deltaSec) {}
     
     public virtual void LateUpdate(float deltaSec) {}
+
+    public virtual void LateFixedUpdate(float deltaSec) {}
     
     public virtual void Dispose() {}
 }

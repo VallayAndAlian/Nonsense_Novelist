@@ -33,7 +33,10 @@ public class BattleCampManager : BattleModule
             list.Remove(unit);
         }
     }
-
+    public List<BattleUnit> GetCampMember(CampEnum camp)
+    {
+        return mCampUnit[camp];
+    }
     public List<BattleUnit> GetAllies(BattleUnit unit)
     {
         List<BattleUnit> allies = new List<BattleUnit>();
