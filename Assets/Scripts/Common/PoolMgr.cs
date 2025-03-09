@@ -37,13 +37,12 @@ public class PoolData
         GameObject obj = null;
         if (poolList.Count == 0) Debug.Log("poolList==null");
         if (poolList[0] == null) Debug.Log("poolList[0]==null");
-        //ȡ����һ��
+
         obj = poolList[0];
         poolList.RemoveAt(0);
-        //���� ������ʾ
         if (obj == null) Debug.Log("obj==null");
         obj.SetActive(true);
-        //�Ͽ��˸��ӹ�ϵ
+
         obj.transform.SetParent(null, false);
 
         return obj;
@@ -54,7 +53,6 @@ public class PoolData
 public class PoolMgr : BaseManager<PoolMgr>
 {       
     private PrefabSO prefabData;
-    //��������� ���¹�
     public Dictionary<string, PoolData> poolDic = new Dictionary<string, PoolData>();
 
     private GameObject poolObj;
@@ -63,7 +61,9 @@ public class PoolMgr : BaseManager<PoolMgr>
     public void GetSOObj(prefabSOType type,int id,UnityAction<GameObject> callBack)
     {
         if(prefabData==null)
+        {
             prefabData = Resources.Load<PrefabSO>("SO/PrefabSO");    
+        }
 
         GameObject obj=null;
         switch(type)
@@ -76,7 +76,7 @@ public class PoolMgr : BaseManager<PoolMgr>
             case prefabSOType.UI:
             {
                 obj=prefabData.UIPrefabs[id].mPrefab;
-                }
+            }
             break;
             case prefabSOType.BattleObj:
             {
@@ -92,21 +92,14 @@ public class PoolMgr : BaseManager<PoolMgr>
 
     }
     
-    /// <summary>
-    /// �����ö���
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
     public void GetObj(string name, UnityAction<GameObject> callBack)
     {
-        //�г��� ���ҳ������ж���
         if (poolDic.ContainsKey(name) && poolDic[name].poolList.Count > 0)
         {
             callBack(poolDic[name].GetObj());
         }
         else
         {
-            //ͨ���첽������Դ ����������ⲿ��
             GameObject o=ResMgr.GetInstance().Load<GameObject>(name);
                 o.name = name;
                 callBack(o);
@@ -115,14 +108,12 @@ public class PoolMgr : BaseManager<PoolMgr>
     }
      public GameObject GetObj(string name)
     {
-        //�г��� ���ҳ������ж���
         if (poolDic.ContainsKey(name) && poolDic[name].poolList.Count > 0)
         {
             return poolDic[name].GetObj();
         }
         else
         {
-            //ͨ���첽������Դ ����������ⲿ��
             GameObject o=ResMgr.GetInstance().Load<GameObject>(name);
                 o.name = name;
             return o;
@@ -131,34 +122,28 @@ public class PoolMgr : BaseManager<PoolMgr>
     }
     public void GetObj(GameObject obj, UnityAction<GameObject> callBack)
     {
-        //�г��� ���ҳ������ж���
         if ((poolDic.ContainsKey(obj.name) && poolDic[obj.name].poolList.Count > 0)&&(poolObj!=null))
         {
             callBack(poolDic[obj.name].GetObj());
         }
         else
         {
-            //ͨ���첽������Դ ����������ⲿ��
             GameObject o = GameObject.Instantiate(obj);
             callBack(o);
 
         }
     }
-    /// <summary>
-    /// ����ʱ���õĶ�������
-    /// </summary>
+
     public void PushObj(string name, GameObject obj)
     {
         if (obj == null) return;
         if (poolObj == null)
             poolObj = new GameObject("Pool");
 
-        //�����г���
         if (poolDic.ContainsKey(name))
         {
             poolDic[name].PushObj(obj);
         }
-        //����û�г���
         else
         {
             poolDic.Add(name, new PoolData(obj, poolObj));
@@ -166,10 +151,7 @@ public class PoolMgr : BaseManager<PoolMgr>
     }
 
 
-    /// <summary>
-    /// ��ջ���صķ��� 
-    /// ��Ҫ���� �����л�ʱ
-    /// </summary>
+
     public void Clear()
     {
         poolDic.Clear();
@@ -178,11 +160,9 @@ public class PoolMgr : BaseManager<PoolMgr>
 }
 public class ResMgr : BaseManager<ResMgr>
 {
-    //ͬ��������Դ
     public T Load<T>(string name) where T : Object
     {
         T res = Resources.Load<T>(name);
-        //���������һ��GameObject���͵� �Ұ���ʵ������ �ٷ��س�ȥ �ⲿ ֱ��ʹ�ü���
         if (res is GameObject)
             return GameObject.Instantiate(res);
         else//TextAsset AudioClip

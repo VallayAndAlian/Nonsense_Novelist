@@ -4,7 +4,10 @@ public class BattleUnitSelfUI : BattleUI
 {
     protected bool mEnabled = false;
     protected bool mRegistered = false;
+ public BattleUnitSelfUI(GameObject gameObject) : base(gameObject) 
+    { 
 
+    } 
     public class UIOwner
     {
         public BattleUnit mUnit = null;
@@ -73,7 +76,7 @@ public class BattleUnitSelfUI : BattleUI
 
     protected virtual void OnDisabled() { }
 
-    public override void Start() 
+    public override void Init() 
     {
         AddListenerToAttribute();
     }

@@ -29,7 +29,8 @@ public class GamePhase_Rest : GamePhase
         //掉血
 
         // 切换战斗UI
-        
+        Battle.PinBallLauncher.CanShootSwitch(false);
+        Battle.BattlePhase.ActivePhaseUI(BattlePhaseType.Rest);
 
     }
     public override void Update(float deltaTime)

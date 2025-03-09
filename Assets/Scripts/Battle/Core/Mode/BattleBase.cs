@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class BattleBase : MonoBehaviour
 {
@@ -20,7 +21,9 @@ public class BattleBase : MonoBehaviour
     protected PinBallLauncher mPinBallLauncher = null;
     protected BattlePhase mBattlePhase=null;
     protected BattleScene mBattleScene=null;
+    protected BattleUIManage mBattleUI=null;
     
+
     public BattleClock Clock => mClock;
     public BattleStage Stage => mStage;
     public BattleGameState GameState => mGameState;
@@ -31,6 +34,7 @@ public class BattleBase : MonoBehaviour
     public PinBallLauncher PinBallLauncher => mPinBallLauncher;
     public BattlePhase BattlePhase=> mBattlePhase;
     public BattleScene BattleScene=> mBattleScene;
+    public BattleUIManage BattleUI=>mBattleUI;
 
     
     public float Now => mClock?.ElapsedSec ?? 0;
@@ -99,7 +103,10 @@ public class BattleBase : MonoBehaviour
     }
     
     protected virtual void AddModules()
-    {
+    {        
+        mBattleUI = new BattleUIManage();
+        RegisterModule(mBattleUI);
+
         mClock = new BattleClock();
         RegisterModule(mClock);
         
@@ -128,7 +135,8 @@ public class BattleBase : MonoBehaviour
         RegisterModule(mPinBallLauncher);
 
         mBattlePhase = new BattlePhase();
-        RegisterModule(mBattlePhase);
+        RegisterModule(mBattlePhase); 
+
     }
 
     protected void RegisterModule(BattleModule module)

@@ -5,17 +5,17 @@ using UnityEngine.UI;
 namespace AI
 {
     /// <summary>
-    /// µ¹ÏÂ×´Ì¬£¨Ô­ËÀÍö×´Ì¬£©
+    /// ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½
     /// </summary>
     class DeadState :AbstractState
     {
-        private UIManager uIManager;
+        //private UIManager uIManager;
         private AudioPlay audioPlay;
         private void Start()
         {
             if (GameObject.Find("UIManager")!=null)
             {
-                uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+                //uIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
 
             }
             audioPlay = GameObject.Find("AudioSource").GetComponent<AudioPlay>();
@@ -52,7 +52,7 @@ namespace AI
             //  }
            
 
-            ////ÁÙÊ±µÄËÀÍöÐ§¹û
+            ////ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
             //SpriteRenderer sp;
             //if (this.TryGetComponent<SpriteRenderer>(out sp))
             //{
@@ -60,15 +60,15 @@ namespace AI
             //}
 
             var _sa = this.transform.parent.GetComponent<ServantAbstract>();
-            //Èç¹ûÊÇËæ´Ó£¬¶îÍâÊÖÐø
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (_sa != null)
             {
                 _sa.masterNow.DeleteServant(_sa.gameObject);
             }
-            //ÁÙÊ±È¥µôÁËÕâ¸öif
+            //ï¿½ï¿½Ê±È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½if
             //if (myState.character.charaAnim.IsEnd(AnimEnum.dead))
             //{ 
-            //²¥·ÅÍê¶¯»­ºóÏú»Ù
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ê¶¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             Destroy(this.transform.parent.gameObject);
             //}
         }
@@ -94,7 +94,7 @@ namespace AI
             {
                 myState.character.Camp = CampEnum.left;
                 CharacterManager.instance.RefreshStanger();
-                //ÅÐ¶Ï¹ÖÎïorBossËÀÍö
+                //ï¿½Ð¶Ï¹ï¿½ï¿½ï¿½orBossï¿½ï¿½ï¿½ï¿½
                 audioPlay.RandomPlay();
 
                 Destroy(myState.character.gameObject);
@@ -108,7 +108,7 @@ namespace AI
             AbstractBook.afterFightText += myState.character.DieText();
             
 
-            ////½áÊø
+            ////ï¿½ï¿½ï¿½ï¿½
             //if (GameObject.Find("LeftAll").GetComponentsInChildren<AbstractCharacter>().Length <= 1 || GameObject.Find("RightAll").GetComponentsInChildren<AbstractCharacter>().Length <= 1)
             //// if (myState.character.camp == CampEnum.friend)
             //{

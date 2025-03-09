@@ -1,15 +1,17 @@
 using UnityEngine;
-public class BattleShooterUI : BattleUI
-{ 
-    public BattleShooterUI(GameObject gameObject) : base(gameObject) 
+public class BattlePhaseUI_Battle : BattleUI
+{
+    public BattlePhaseUI_Battle(GameObject gameObject) : base(gameObject) 
     { 
 
     } 
     public override void Init() 
     {
-        
+        base.Init();
+       
     }
 
+    
     public override void Update(float deltaTime) 
     {
         

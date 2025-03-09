@@ -8,6 +8,8 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 
 public class PinBallLauncher : BattleModule
 {
+    public bool canShoot=>mCanShoot;
+    protected bool mCanShoot;
     public Vector3 launchPoint;
     private float currentChargeTime = 0f;
     private float chargeStartTime = 0f;
@@ -20,6 +22,11 @@ public class PinBallLauncher : BattleModule
     
     public LineRenderer trajectoryLine;
 
+
+    public void CanShootSwitch(bool _canShoot)
+    {
+        mCanShoot=_canShoot;
+    }
     /// <summary>
     /// 发射小球
     /// </summary>
@@ -77,13 +84,25 @@ public class PinBallLauncher : BattleModule
 
     private Vector2 CalculateLaunchVelocity()
     {
-        float speed = Mathf.Lerp
-        (BattleConfig.mData.word.wordBallMinSpeed, BattleConfig.mData.word.wordBallMaxSpeed, 
-        currentChargeTime / BattleConfig.mData.word.wordBallChargingMaxTime);
+       float speed = Mathf.Lerp(
+            BattleConfig.mData.word.wordBallMinSpeed,
+            BattleConfig.mData.word.wordBallMaxSpeed,
+            currentChargeTime / BattleConfig.mData.word.wordBallChargingMaxTime
+        );
 
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPosition.z = 0; 
         Vector2 direction = (mouseWorldPosition - launchPoint).normalized;
+
+        // 新增角度限制逻辑
+        float maxAngle = BattleConfig.mData.word.maxAngle;
+        float signedAngle = Vector2.SignedAngle(Vector2.up, direction);
+    
+        if (Mathf.Abs(signedAngle) > maxAngle)
+        {
+            float clampedAngle = Mathf.Clamp(signedAngle, -maxAngle, maxAngle);
+            direction = Quaternion.Euler(0, 0, clampedAngle) * Vector2.up;
+        }
 
         return direction * speed;
     }
@@ -94,7 +113,7 @@ public class PinBallLauncher : BattleModule
     bool isAngleValid=false;
     public override void Update(float deltaSec)
     { 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)&&mCanShoot)
         {
             if (!isCharging)
             {
@@ -135,7 +154,7 @@ public class PinBallLauncher : BattleModule
                 }
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0)&&mCanShoot)
         { 
             if (isCharging)
             {        

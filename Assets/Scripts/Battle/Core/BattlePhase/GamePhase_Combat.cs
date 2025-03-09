@@ -34,7 +34,8 @@ public class GamePhase_Combat : GamePhase
 
 
         // 切换战斗UI
-        
+         Battle.PinBallLauncher.CanShootSwitch(true);
+        Battle.BattlePhase.ActivePhaseUI(BattlePhaseType.Pve);
 
     }
     

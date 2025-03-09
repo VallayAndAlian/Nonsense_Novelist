@@ -19,6 +19,10 @@ public class BattlePhase : BattleModule
     protected int mStageIndex=-1;       //索引从负1开始，第一个回合也使用EnterNextStage
     protected GamePhase mCurrentPhase;
 
+    protected BattlePhaseUI_Rest restUI;
+    protected GameObject restUIObj;
+    protected BattlePhaseUI_Battle battleUI;
+    protected GameObject battleUIObj;
     public override void Init() 
     {
         //从表格中读取数据，存储在Mphase中
@@ -33,7 +37,52 @@ public class BattlePhase : BattleModule
         }
 
         //进入第一个回合
+          InitPhaseUI();
         EnterNextStage();
+    }
+ protected void InitPhaseUI()
+    { 
+        if(restUIObj==null)
+        {
+            restUIObj=ResMgr.GetInstance().Load<GameObject>("UI/Battle/phase_rest");
+        }
+        if(restUI==null)
+        {
+            restUI=new BattlePhaseUI_Rest(restUIObj);
+            restUI.Battle=Battle;
+        }
+        if(battleUIObj==null)
+        {
+            battleUIObj=ResMgr.GetInstance().Load<GameObject>("UI/Battle/phase_battle");
+        }
+        if(battleUI==null)
+        {
+            battleUI=new BattlePhaseUI_Battle(battleUIObj);
+        }
+
+
+        Battle.BattleUI.Hide(battleUI);
+        Battle.BattleUI.Hide(restUI);
+    }
+
+    public void ActivePhaseUI(BattlePhaseType type)
+    {
+        Battle.BattleUI.Hide(battleUI);
+        Battle.BattleUI.Hide(restUI);
+        switch(type)
+        {
+            case  BattlePhaseType.Rest:
+            {
+                Battle.BattleUI.ShowPanel(restUIObj,restUI);
+            }break;
+            case  BattlePhaseType.Pve:
+            case  BattlePhaseType.Pvp:
+            case  BattlePhaseType.Rve:
+            case  BattlePhaseType.Lve:
+            {
+                Battle.BattleUI.ShowPanel(battleUIObj,battleUI);
+            }break;
+        }
     }
 
     public GamePhase RegisterPhase(PhaseTable.Data data)
