@@ -23,7 +23,8 @@ public class BattleUnitSO : ScriptableObject
     [Tooltip("场景角色")]
     public Sprite sprite;
 
-
+    [Tooltip("角色子弹")]
+    public GameObject weaponProj;
 
     [Space(20)][Header("角色特性")][Space(5)]
 
@@ -32,7 +33,6 @@ public class BattleUnitSO : ScriptableObject
 
     [Tooltip("角色特性描述")][TextArea]
     public string roleInfo;
-
 
 
 }

@@ -13,6 +13,7 @@ public class BattleRunner : MonoBehaviour
 
     private void Start()
     {
+        UIStatics.ResetCanvas();
         RegisterSingleton();
     }
 

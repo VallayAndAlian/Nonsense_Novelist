@@ -143,13 +143,13 @@ public class BattleObjectFactory : BattleModule
     #endregion
 
 
-    public BattleUnit CreateBattleUnit(UnitInstance instance, UnitPlacement placement = null)
+    public BattleUnit CreateBattleUnit(UnitInstance instance, UnitPlacement placement = new UnitPlacement())
     {
         var unitData = BattleUnitTable.Find(instance.mKind);
         if (unitData == null)
             return null;
 
-        var asset = AssetManager.Load<BattleUnitSO>("Units", unitData.mAsset);
+        var asset = AssetManager.Load<BattleUnitSO>("SO/BattleUnit", unitData.mAsset);
         if (asset == null)
             return null;
         
@@ -162,13 +162,11 @@ public class BattleObjectFactory : BattleModule
             return null;
 
         var unit = new BattleUnit(unitData, instance);
-        if (placement != null)
+        
+        var slot = Battle.Stage.GetSlot(placement.mSlotIndex);
+        if (slot != null)
         {
-            var slot = Battle.Stage.GetSlot(placement.mSlotIndex);
-            if (slot != null)
-            {
-                slot.OccupiedBy(unit);
-            }
+            slot.OccupiedBy(unit);
         }
 
         Battle.ObjectManager.RegisterUnit(unit);

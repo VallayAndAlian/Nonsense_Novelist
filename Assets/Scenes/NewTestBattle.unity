@@ -5097,6 +5097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 4
+  mDefaultCamp: 128
 --- !u!1 &464921546
 GameObject:
   m_ObjectHideFlags: 0
@@ -5718,6 +5719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 2
+  mDefaultCamp: 6
 --- !u!1 &559135345
 GameObject:
   m_ObjectHideFlags: 0
@@ -6951,6 +6953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 1
+  mDefaultCamp: 2
 --- !u!1 &645772834
 GameObject:
   m_ObjectHideFlags: 0
@@ -8954,6 +8957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 2
+  mDefaultCamp: 2
 --- !u!1 &811888267
 GameObject:
   m_ObjectHideFlags: 0
@@ -9812,7 +9816,7 @@ GameObject:
   - component: {fileID: 874544094}
   m_Layer: 5
   m_Name: combatCanvas
-  m_TagString: Untagged
+  m_TagString: MainCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13661,6 +13665,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 2
+  mDefaultCamp: 6
 --- !u!1 &1305289855
 GameObject:
   m_ObjectHideFlags: 0
@@ -14362,6 +14367,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1434148872}
   - component: {fileID: 1434148873}
+  - component: {fileID: 1434148874}
+  - component: {fileID: 1434148875}
   m_Layer: 0
   m_Name: DebugTool
   m_TagString: Untagged
@@ -14393,7 +14400,75 @@ MonoBehaviour:
   m_GameObject: {fileID: 1434148871}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3823c58ff231244a92c4f9877f7911e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 1709106007}
+  _renderFeature: {fileID: 0}
+  _rendererType: 0
+  _platformType: 0
+  _iniSettings: {fileID: 0}
+  _initialConfiguration:
+    ImGuiConfig: 65
+    DoubleClickTime: 0.3
+    DoubleClickMaxDist: 6
+    DragThreshold: 6
+    KeyRepeatDelay: 0.25
+    KeyRepeatRate: 0.05
+    FontGlobalScale: 1
+    FontAllowUserScaling: 0
+    DisplayFramebufferScale: {x: 1, y: 1}
+    MouseDrawCursor: 0
+    TextCursorBlink: 0
+    ResizeFromEdges: 1
+    MoveFromTitleOnly: 1
+    ConfigMemoryCompactTimer: 1
+    ConfigDockingNoSplit: 0
+    ConfigDockingAlwaysTabBar: 0
+    ConfigDockingTransparentPayload: 0
+  _fontCustomInitializer:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1434148875}
+        m_TargetAssemblyTypeName: UImGui.UImGuiFont, UImGui
+        m_MethodName: AddChineseFont
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _fontAtlasConfiguration: {fileID: 0}
+  _shaders: {fileID: 11400000, guid: 68f2e550e81076948ba9757c73f74336, type: 2}
+  _style: {fileID: 11400000, guid: 90718c4e7d6fa04438adef1ad7a432cc, type: 2}
+  _cursorShapes: {fileID: 11400000, guid: 71deade41763c6e4eaeb5df973b321f1, type: 2}
+  _doGlobalEvents: 1
+--- !u!114 &1434148874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434148871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59db3b1391ef499a879de54f51b3bcce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uimGuiInstance: {fileID: 1434148873}
+--- !u!114 &1434148875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434148871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08739ef9492d41798a896e6413a8da8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1436025545
@@ -16491,6 +16566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 1
+  mDefaultCamp: 6
 --- !u!1 &1640358646
 GameObject:
   m_ObjectHideFlags: 0
@@ -17539,6 +17615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 1
+  mDefaultCamp: 2
 --- !u!1 &1740367419
 GameObject:
   m_ObjectHideFlags: 0
@@ -17995,6 +18072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 1
+  mDefaultCamp: 6
 --- !u!1 &1766191751
 GameObject:
   m_ObjectHideFlags: 0
@@ -21667,6 +21745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 2
+  mDefaultCamp: 2
 --- !u!1 &2083047480
 GameObject:
   m_ObjectHideFlags: 0

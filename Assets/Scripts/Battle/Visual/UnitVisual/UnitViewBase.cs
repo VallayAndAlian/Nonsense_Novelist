@@ -36,6 +36,11 @@ public class UnitViewBase : MonoBehaviour
         mModelLayout.Setup(this);
 
         mRoot = transform.parent;
+        if (mRole.Slot)
+        {
+            mRoot.parent = mRole.Slot.transform;
+            mRoot.localPosition = Vector3.zero;
+        }
 
         var slots = mRoot.GetComponentsInChildren<UnitSlot>();
         foreach (var slot in slots)
@@ -43,14 +48,10 @@ public class UnitViewBase : MonoBehaviour
             mRole.Battle.Stage.AddSlot(slot);
             mServantSlots.Add(slot);
         }
-
-        if (mRole.Slot)
+        
+        foreach (var servant in mRole.ServantsAgent.Servants)
         {
-            mRoot.parent = mRole.Slot.transform;
-        }
-        else if (mRole.ServantOwner != null)
-        {
-            mRole.ServantOwner.UnitView.AddServant(this);
+            AddServant(servant.UnitView);
         }
         
         GetComponent<SpriteRenderer>().sprite = mAsset.sprite;
@@ -58,6 +59,9 @@ public class UnitViewBase : MonoBehaviour
 
     public void AddServant(UnitViewBase unitView)
     {
+        if (mServantSlots.Count == 0)
+            return;
+        
         if (unitView != null && unitView.Role != null)
         {
             foreach (var slot in mServantSlots)
@@ -74,5 +78,9 @@ public class UnitViewBase : MonoBehaviour
     public void OnStartEmit(EmitMeta meta)
     {
         // create projectile
+        var projObj = Object.Instantiate(mAsset.weaponProj);
+        var proj = projObj.GetComponent<NnProjectile>();
+        
+        proj.Emit(this, meta);
     }
 }

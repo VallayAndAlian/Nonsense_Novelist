@@ -1,12 +1,33 @@
 ﻿
 
 using System.Collections.Generic;
+using UnityEngine;
+
 public class ServantsAgent : UnitComponent
 {
     protected List<BattleUnit> mServants = new List<BattleUnit>();
     public List<BattleUnit> Servants => mServants;
+
+    public override void Start()
+    {
+        foreach (var ser in mOwner.Data.mInitServants)
+        {
+            RegisterServants(ser);
+        }
+    }
+
     public BattleUnit RegisterServants(int servantID)
     {
+        var unitData = BattleUnitTable.Find(servantID);
+        if (unitData == null)
+            return null;
+
+        if (unitData.mInitType != BattleUnitType.Servant)
+        {
+            Debug.LogError($"单位[{mOwner.UnitInstance.mKind}]的随从单位[{servantID}]不是随从类型!");
+            return null;
+        }
+        
         UnitInstance servantInstance = new UnitInstance()
         {
             mKind = servantID,

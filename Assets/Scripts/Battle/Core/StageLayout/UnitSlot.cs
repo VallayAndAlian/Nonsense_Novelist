@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+[System.Flags]
 public enum UnitSlotType
 {
     None = 0,
-    FrontSeat,
-    BackSeat,
-    Servant,
-    Boss,
+    FrontSeat = 1 << 0,
+    BackSeat = 1 << 1,
+    Servant = 1 << 2,
+    Boss = 1 << 3,
 }
 
 public class UnitSlot : MonoBehaviour
@@ -14,6 +16,26 @@ public class UnitSlot : MonoBehaviour
     [SerializeField] 
     private UnitSlotType mSlotType = UnitSlotType.None;
     public UnitSlotType SlotType => mSlotType;
+    
+    [SerializeField] 
+    private BattleCamp mDefaultCamp = BattleCamp.None;
+    public BattleCamp SpawnCamp 
+    {
+        get
+        {
+            if (SlotType == UnitSlotType.BackSeat || SlotType == UnitSlotType.FrontSeat)
+            {
+                return mDefaultCamp;
+            }
+
+            if (SlotType == UnitSlotType.Boss)
+            {
+                return BattleCamp.Neutral;
+            }
+            
+            return BattleCamp.None;
+        }
+    }
 
     private BattleUnit mUnit = null;
     public BattleUnit Unit => mUnit;
@@ -37,8 +59,8 @@ public class UnitSlot : MonoBehaviour
             return;
         }
 
-        mUnit.Slot = this;
         mUnit = unit;
+        mUnit.Slot = this;
     }
 
     public void Remove()

@@ -1,90 +1,109 @@
 ﻿using System;
+using System.Collections.Generic;
+using ImGuiNET;
 using UnityEngine;
 
-public class BattleDebugTool : MonoBehaviour
+public class BattleDebugTool : ImGuiObjBase
 {
-    private bool isWindowOpen = false;
-    private Rect windowRect = new Rect (20, 20, 520, 650);
-    private Vector2 dragOffset;
-    
-    protected bool mStartBattle = false;
-    protected BattleBase mBattle = null;
-    protected BattleRunner mRunner = null;
+    private bool mStartBattle = false;
+    private BattleBase mBattle = null;
+    private BattleRunner mRunner = null;
 
-    private void Start()
+    private GameObject mModuleRoot = null;
+    private List<BattleDebugModule> mModules = new List<BattleDebugModule>();
+
+    protected override void Start()
     {
         mRunner = BattleRunner.Instance;
+
+        RegisterModules();
     }
 
-    void OnGUI()
+    private void RegisterModules()
     {
-        // 打开窗口的按钮
-        if (GUI.Button(new Rect(10, 10, 200, 20), "Open DebugTool"))
-        {
-            isWindowOpen = true;
-        }
- 
-        // 当窗口打开时显示窗口
-        if (isWindowOpen)
-        {
-            DrawWindow();
-        }
-    }
- 
-    void DrawWindow()
-    {
-        windowRect = GUILayout.Window(0, windowRect, OnWindowFunction, "DebugTool");
-    }
- 
-    void OnWindowFunction(int windowID)
-    {
-        // 关闭按钮
-        if (GUILayout.Button("Close"))
-        {
-            isWindowOpen = false;
-        }
+        mModuleRoot = new GameObject("Modules");
+        mModuleRoot.transform.parent = transform;
         
+        RegisterModule<DebugBattleInfo>();
+        RegisterModule<DebugSpawnUnit>();
+        RegisterModule<DebugUnitInspector>();
+    }
+    
+    private void RegisterModule<Ty>() where Ty : BattleDebugModule
+    {
+        Ty module = mModuleRoot.AddComponent<Ty>();
+        module.OnRegistered();
+        mModules.Add(module);
+    }
+
+    protected override void OnDrawImGui(UImGui.UImGui obj)
+    {
         if (!mStartBattle)
         {
-            if (GUILayout.Button("Start Battle"))
-            {
-                mRunner = BattleRunner.Instance;
-                mRunner.StartBattle();
-                
-                mBattle = mRunner.Battle;
-                mStartBattle = true;
-            }
+            DrawInitiator(obj);
         }
         else
         {
-            GUILayout.Label("Battle State {}", mBattle.State.ToString());
+            DrawDebugTool(obj);
         }
-        
-        DragWindow(windowID);
     }
 
-    void DragWindow(int windowID)
+    private void DrawInitiator(UImGui.UImGui obj)
     {
-        // 处理窗口拖动
-        GUI.DragWindow(new Rect(0, 0, 10000, 10000));
-        
-        // 处理窗口拖动事件
-        Event e = Event.current;
-        Vector2 mousePos = e.mousePosition;
+        if (!ImGui.Begin("战斗启动器", ImGuiWindowFlags.MenuBar))
+            return;
 
-        if (windowRect.Contains(mousePos))
+        if (ImGui.Button("Play"))
         {
-            switch (e.type)
-            {
-                case UnityEngine.EventType.MouseDown:
-                    dragOffset = windowRect.position - mousePos;
-                    e.Use();
-                    break;
-                case UnityEngine.EventType.MouseDrag:
-                    windowRect.position = mousePos + dragOffset;
-                    e.Use();
-                    break;
-            }
+            mStartBattle = true;
+            mBattle = mRunner.Battle;
+            mRunner.StartBattle();
         }
+        
+        ImGui.End();
+    }
+    
+    private void DrawDebugTool(UImGui.UImGui obj)
+    {
+        if (!ImGui.Begin("战斗调试器", ImGuiWindowFlags.MenuBar))
+            return;
+
+        BattleDebugContext context = new BattleDebugContext
+        {
+            mBattle = mBattle,
+            mImGuiObj = obj
+        };
+
+        int imguiID = 0;
+        
+        foreach (var module in mModules)
+        {
+            ImGui.PushID((++imguiID) * 10000);
+
+            bool bItemHovered = false;
+            
+            if (ImGui.CollapsingHeader(module.ModuleName))
+            {
+                bItemHovered = ImGui.IsItemHovered();
+                
+                module.OnDrawImGui(context);
+            }
+            else
+            {
+                bItemHovered = ImGui.IsItemHovered();
+            }
+
+            if (bItemHovered && !module.ToolTip.Equals(""))
+            {
+                ImGui.BeginTooltip();
+                ImGui.SetTooltip(module.ToolTip);
+                ImGui.EndTooltip();
+            }
+
+            ImGui.Spacing();
+            ImGui.PopID();
+        }
+        
+        ImGui.End();
     }
 }

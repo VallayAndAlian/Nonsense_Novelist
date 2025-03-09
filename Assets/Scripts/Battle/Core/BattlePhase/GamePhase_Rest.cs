@@ -54,18 +54,18 @@ public class GamePhase_Rest : GamePhase
     public override void Exit()
     {
         // 关闭角色战斗状态
-        foreach(var chara in Battle.CampManager.GetCampMember(CampEnum.left))
+        foreach(var chara in Battle.CampManager.GetCampMember(BattleCamp.Camp1))
         {
             
         }
-        foreach(var chara in Battle.CampManager.GetCampMember(CampEnum.right))
+        foreach(var chara in Battle.CampManager.GetCampMember(BattleCamp.Camp2))
         {
             
         }
         //清理场上的怪物
-        if(Battle.CampManager.GetCampMember(CampEnum.stranger).Count>0)
+        if(Battle.CampManager.GetCampMember(BattleCamp.Boss).Count>0)
         {
-            foreach(var chara in Battle.CampManager.GetCampMember(CampEnum.stranger))
+            foreach(var chara in Battle.CampManager.GetCampMember(BattleCamp.Boss))
             {
                 
             }

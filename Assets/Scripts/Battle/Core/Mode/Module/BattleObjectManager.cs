@@ -6,13 +6,16 @@ using UnityEngine;
 public class BattleObjectManager : BattleModule
 {
     protected int mGenID = 0;
+    protected bool mStarted = false;
+    protected List<int> mRemovedIDs = new List<int>();
+    
     protected Dictionary<int, BattleObject> mObjects = new Dictionary<int, BattleObject>();
     protected Dictionary<int, BattleUnit> mUnits = new Dictionary<int, BattleUnit>();
     protected Dictionary<Collider2D, WallObject> mWalls = new Dictionary<Collider2D, WallObject>();
 
-    protected List<int> mRemovedIDs = new List<int>();
-
-    protected bool mStarted = false;
+    public Dictionary<int, BattleObject> Objects => mObjects;
+    public Dictionary<int, BattleUnit> Units => mUnits;
+    public Dictionary<Collider2D, WallObject> Walls => mWalls;
 
     public T Find<T>(int id) where T : BattleObject
     {
@@ -64,9 +67,9 @@ public class BattleObjectManager : BattleModule
     
     public bool RegisterUnit(BattleUnit unit)
     {
-        if (!unit.IsRegistered)
+        if (unit.IsRegistered)
             return false;
-            
+        
         unit.Init();
         
         RegisterObject(unit);

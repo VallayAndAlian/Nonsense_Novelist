@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RasterizerFlags: 0
   Fonts:
-  - _fontAsset: {fileID: 102900000, guid: cad8c2f522427244f9639e653b5d36d4, type: 3}
-    Path: SanJiYuanJianJianTi-Cu-2.ttf
+  - _fontAsset: {fileID: 102900000, guid: 8a1da13827875d846ab6ac281d4042b8, type: 3}
+    Path: simkai.ttf
     Config:
       FontDataOwnedByAtlas: 1
       FontNo: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
       PixelSnapH: 0
       GlyphExtraSpacing: {x: 0, y: 0}
       GlyphOffset: {x: 0, y: 0}
-      GlyphRanges: 0
+      GlyphRanges: 64
       GlyphMinAdvanceX: 0
       GlyphMaxAdvanceX: 3.4028235e+38
       MergeMode: 0

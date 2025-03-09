@@ -7,6 +7,16 @@ public class AbilityAgent : UnitComponent
     protected List<AbilityBase> mAbilities = new List<AbilityBase>();
     public List<AbilityBase> Abilities => mAbilities;
 
+    public override void Start()
+    {
+        foreach (var abi in mOwner.Data.mTalents)
+        {
+            RegisterAbility(abi);
+        }
+        
+        RegisterAbility(mOwner.Data.mRoles);
+    }
+
     public AbilityBase RegisterAbility(int abiKind)
     {
         AbilityBase newAbi = AbilityFactory.CreateAbility(abiKind);

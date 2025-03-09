@@ -68,32 +68,32 @@ public class BattlePhase : BattleModule
 
     protected GamePhase_Combat NewBattlePhase(BattlePhaseType type)
     {
-        List<CampEnum> camps=new List<CampEnum>();
+        List<BattleCamp> camps=new List<BattleCamp>();
         switch(type)
         {
              case BattlePhaseType.Lve:
                 {
-                    camps.Add(CampEnum.left); 
-                    camps.Add(CampEnum.stranger);
+                    camps.Add(BattleCamp.Camp1); 
+                    camps.Add(BattleCamp.Boss);
                 }
             break;
             case BattlePhaseType.Pve:
                 {
-                    camps.Add(CampEnum.right); 
-                    camps.Add(CampEnum.left);
-                    camps.Add(CampEnum.stranger);
+                    camps.Add(BattleCamp.Camp1); 
+                    camps.Add(BattleCamp.Camp2);
+                    camps.Add(BattleCamp.Boss);
                 }
             break;
             case BattlePhaseType.Pvp:
                 {
-                    camps.Add(CampEnum.left); 
-                    camps.Add(CampEnum.right);
+                    camps.Add(BattleCamp.Camp1); 
+                    camps.Add(BattleCamp.Camp2);
                 }
             break;
             case BattlePhaseType.Rve:
                 {
-                    camps.Add(CampEnum.right);
-                    camps.Add(CampEnum.stranger);
+                    camps.Add(BattleCamp.Camp2);
+                    camps.Add(BattleCamp.Boss);
                 }
             break;
         }

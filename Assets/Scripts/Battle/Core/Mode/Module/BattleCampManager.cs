@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public class BattleCampManager : BattleModule
 {
-    protected Dictionary<CampEnum, List<BattleUnit>> mCampUnit = new Dictionary<CampEnum, List<BattleUnit>>();
+    protected Dictionary<BattleCamp, List<BattleUnit>> mCampUnit = new Dictionary<BattleCamp, List<BattleUnit>>();
 
     public override void Init()
     {
-        mCampUnit.Add(CampEnum.left, new List<BattleUnit>());
-        mCampUnit.Add(CampEnum.right, new List<BattleUnit>());
-        mCampUnit.Add(CampEnum.stranger, new List<BattleUnit>());
+        mCampUnit.Add(BattleCamp.Camp1, new List<BattleUnit>());
+        mCampUnit.Add(BattleCamp.Camp2, new List<BattleUnit>());
+        mCampUnit.Add(BattleCamp.Boss, new List<BattleUnit>());
     }
 
     public override void Begin()
@@ -33,7 +33,7 @@ public class BattleCampManager : BattleModule
             list.Remove(unit);
         }
     }
-    public List<BattleUnit> GetCampMember(CampEnum camp)
+    public List<BattleUnit> GetCampMember(BattleCamp camp)
     {
         return mCampUnit[camp];
     }

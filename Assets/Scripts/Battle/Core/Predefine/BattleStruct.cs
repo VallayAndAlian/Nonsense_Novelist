@@ -1,13 +1,13 @@
 ﻿
 using System;
 
-public class UnitInstance
+public struct UnitInstance
 {
     public int mKind;
-    public CampEnum mCamp;
+    public BattleCamp mCamp;
 }
 
-public class UnitPlacement
+public struct UnitPlacement
 {
     public int mSlotIndex;
 }

@@ -16,6 +16,7 @@ TagManager:
   - Slider
   - charaCard
   - wordInf
+  - MainCanvas
   layers:
   - Default
   - TransparentFX

@@ -56,7 +56,7 @@ public class BattleStage : BattleModule
         return null;
     }
 
-    public UnitSlot FindClosestSlot(UnitSlotType type, Vector2 pos, float range)
+    public UnitSlot FindClosestSlot(UnitSlotType typeFlags, Vector2 pos, float range)
     {
         float misDisSqr = float.MaxValue;
         UnitSlot closestSlot = null;
@@ -66,7 +66,7 @@ public class BattleStage : BattleModule
             if (!IsValidSlot(slot))
                 continue;
             
-            if (slot.SlotType != type || slot.IsOccupied)
+            if ((slot.SlotType & typeFlags) == 0 || slot.IsOccupied)
                 continue;
 
             float disSqr = (slot.Pos - pos).sqrMagnitude;

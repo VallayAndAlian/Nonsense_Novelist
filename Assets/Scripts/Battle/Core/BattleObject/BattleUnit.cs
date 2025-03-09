@@ -14,22 +14,23 @@ public class BattleUnit : BattleObject
 
     protected float mHp = 0;
     public float Hp => mHp;
+    public float MaxHp => GetAttributeValue(AttributeType.MaxHp);
 
     
     public float HpPercent
     {
         get
         {
-            var maxHp = GetAttributeValue(AttributeType.MaxHp);
+            var maxHp = MaxHp;
             return maxHp > 0 ? mHp / maxHp : 0;
         }
     }
 
     // camp would be enum
-    public CampEnum Camp
+    public BattleCamp Camp
     {
-        get => UnitInstance.mCamp;
-        set => UnitInstance.mCamp = value;
+        get => mUnitInstance.mCamp;
+        set => mUnitInstance.mCamp = value;
     }
 
     protected BattleUnitPos mPos = 0;
@@ -46,7 +47,7 @@ public class BattleUnit : BattleObject
         set => mSlot = value;
     }
 
-    protected UnitInstance mUnitInstance = null;
+    protected UnitInstance mUnitInstance;
     public UnitInstance UnitInstance => mUnitInstance;
 
     protected BattleUnitTable.Data mData = null;
@@ -99,8 +100,6 @@ public class BattleUnit : BattleObject
     {
         InitAttributes();
         AddComponents();
-        AddInitSkills();
-        AddInitServants();
     }
 
     protected void InitAttributes()
@@ -131,22 +130,6 @@ public class BattleUnit : BattleObject
             mServantsAgent = new ServantsAgent();
             RegisterComponent(mServantsAgent);
         }
-    }
-
-    protected void AddInitServants()
-    {
-        foreach (var ser in mData.mInitServants)
-        {
-            ServantsAgent.RegisterServants(ser);
-        }
-    }
-    protected void AddInitSkills()
-    {
-        foreach (var abi in mData.mTalents)
-        {
-            AbilityAgent.RegisterAbility(abi);
-        }
-        AbilityAgent.RegisterAbility(mData.mRoles);
     }
 
     protected void RegisterComponent(UnitComponent component)

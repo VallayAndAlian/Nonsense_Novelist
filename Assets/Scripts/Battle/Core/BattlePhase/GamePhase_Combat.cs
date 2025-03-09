@@ -3,10 +3,10 @@ using System.Collections.Generic;
 public class GamePhase_Combat : GamePhase
 {
     protected float mMonsterDelayTime=0;
-    protected List<CampEnum> mFightCamp=new List<CampEnum>();
+    protected List<BattleCamp> mFightCamp=new List<BattleCamp>();
     protected bool IsSomeCampDead => CheckCampDead();      // 是否有某个阵营全部死亡
    
-    public GamePhase_Combat(List<CampEnum> fightCamp,float monsterDelayTime)
+    public GamePhase_Combat(List<BattleCamp> fightCamp,float monsterDelayTime)
     {
         mFightCamp=fightCamp;
         mMonsterDelayTime=monsterDelayTime;

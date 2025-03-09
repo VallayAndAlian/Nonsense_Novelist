@@ -10,6 +10,10 @@ public class UnitModelLayout : MonoBehaviour
     public Animator Animator => mAnimator;
     public AnimEventReceiver AnimEvents => mAnimEvents;
     public AudioSource AudioSource => mAudioSource;
+
+    
+    protected Transform mWeaponPart;
+    public Transform WeaponPart => mWeaponPart;
     
     // 角色的各个骨骼的transform
     
@@ -21,6 +25,8 @@ public class UnitModelLayout : MonoBehaviour
 
         mAnimEvents = mAnimator.GetComponent<AnimEventReceiver>();
         mAudioSource = GetComponent<AudioSource>();
+
+        mWeaponPart = transform;
     }
 
     private void Update()

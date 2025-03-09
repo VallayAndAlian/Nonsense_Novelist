@@ -1,10 +1,10 @@
 
 /// <summary>
-/// 阵营
+/// ???
 /// </summary>
 public enum CampEnum
 {
-    /// <summary>中立</summary>
+    /// <summary>????</summary>
     None = -1,
     stranger = 0,
     left,
@@ -12,7 +12,7 @@ public enum CampEnum
 };
 
 /// <summary>
-/// 目标阵营
+/// ??????
 /// </summary>
 public enum NeedCampEnum
 {
