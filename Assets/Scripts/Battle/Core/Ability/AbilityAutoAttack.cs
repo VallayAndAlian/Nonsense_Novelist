@@ -82,6 +82,8 @@ public class AbilityAutoAttack : AbilityBase
         DamageSchedule schedule = new DamageSchedule();
         schedule.mTarget = mTarget;
         schedule.mApplySec = ElapsedSec + 1.0f;
+        
+        mSchedules.Add(schedule);
     }
     
     protected void OnActEnd()

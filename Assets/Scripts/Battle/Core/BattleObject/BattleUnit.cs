@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleUnit : BattleObject
 {
-    protected bool mAlive = false;
+    protected bool mAlive = true;
     public bool IsAlive => mAlive;
 
     protected bool mStart = false;
@@ -113,14 +113,15 @@ public class BattleUnit : BattleObject
 
     protected void AddComponents()
     {
-        mAIAgent = new AIController();
-        RegisterComponent(mAIAgent);
         
         mAbilityAgent = new AbilityAgent();
         RegisterComponent(mAbilityAgent);
 
         mEffectAgent = new EffectAgent();
         RegisterComponent(mEffectAgent);
+        
+        mAIAgent = new AIController();
+        RegisterComponent(mAIAgent);
 
         mWordComponent = new WordComponent();
         RegisterComponent(mWordComponent);
@@ -241,8 +242,8 @@ public class BattleUnit : BattleObject
         takeDamageCalc.mAbility = damageCalc.mAbility;
         takeDamageCalc.mFlag = damageCalc.mFlag;
         takeDamageCalc.mMagic = damageCalc.mMagic;
-        takeDamageCalc.mDefense = 0;
-        takeDamageCalc.mResistance = 0;
+        takeDamageCalc.mDefense = GetAttributeValue(AttributeType.Def);
+        takeDamageCalc.mResistance = GetAttributeValue(AttributeType.Def);
 
 
         foreach (var abi in AbilityAgent.Abilities)
@@ -351,7 +352,7 @@ public class BattleUnit : BattleObject
         {
             float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
             float max = cannotKill ? currentMaxHp - 1 : currentMaxHp;
-            number = Mathf.Max(damageValue, max);
+            number = Mathf.Min(damageValue, max);
 
             mHp -= number;
             if (mHp < 0.99f)

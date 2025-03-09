@@ -87,6 +87,6 @@ public class NnProjectile : MonoBehaviour
             return;
         
         mExpired = true;
-        Destroy(this);
+        Destroy(gameObject);
     }
 }

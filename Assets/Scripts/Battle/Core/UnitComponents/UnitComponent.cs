@@ -3,7 +3,7 @@
 public class UnitComponent
 {
     protected BattleUnit mOwner = null;
-    protected bool mEnabled = false;
+    protected bool mEnabled = true;
     protected bool mRegistered = false;
 
     public BattleUnit Owner

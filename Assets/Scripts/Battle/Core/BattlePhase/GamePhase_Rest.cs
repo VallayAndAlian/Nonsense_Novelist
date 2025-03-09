@@ -36,7 +36,7 @@ public class GamePhase_Rest : GamePhase
     public override void Update(float deltaTime)
     {
         base.Update(deltaTime);
-        UnityEngine.Debug.Log("休息回合update" );
+        // UnityEngine.Debug.Log("休息回合update" );
         if(DetectPhaseEnd())
         {
             

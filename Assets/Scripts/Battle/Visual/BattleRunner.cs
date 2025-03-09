@@ -11,10 +11,14 @@ public class BattleRunner : MonoBehaviour
 
     protected List<BattleVisualSystemBase> mSystems = new List<BattleVisualSystemBase>();
 
+    private void Awake()
+    {
+        RegisterSingleton();
+    }
+
     private void Start()
     {
         UIStatics.ResetCanvas();
-        RegisterSingleton();
     }
 
     private void OnDestroy()

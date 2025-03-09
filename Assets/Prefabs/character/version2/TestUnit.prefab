@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1425272243827366164}
   - component: {fileID: 2942606164471934740}
   - component: {fileID: 8797055807760165436}
-  - component: {fileID: 4404125053240082675}
   - component: {fileID: 5019573120601818525}
+  - component: {fileID: 6411735356419533406}
   m_Layer: 3
   m_Name: Pawn
   m_TagString: character
@@ -108,20 +108,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4404125053240082675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 723217449379156723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c6e908473309d24abf8212e935898f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 8797055807760165436}
-  currentAnim: 0
 --- !u!114 &5019573120601818525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +118,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9758a33e796145a8a82549f1b7c7bcd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6411735356419533406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723217449379156723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db76e975cb04000b0073d120f3da3d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2437689646154250782
@@ -232,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 3
+  mDefaultCamp: 0
 --- !u!1 &3837959891525375965
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,11 +325,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3837959891539934792}
   - component: {fileID: 897282651725383747}
-  - component: {fileID: 897282651725383749}
   - component: {fileID: 2320014479563054447}
   - component: {fileID: 3365705217194823574}
   - component: {fileID: 2168264803539121840}
-  - component: {fileID: 1887637913}
   - component: {fileID: 3579512521669017538}
   m_Layer: 3
   m_Name: TestUnit
@@ -386,56 +383,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3.155706, y: 3.3721147}
   m_EdgeRadius: 0
---- !u!114 &897282651725383749
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837959891539934793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d04b13235789104418cdcca033136510, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wordKind: 0
-  bookName: 0
-  wordName: 
-  brief: 
-  description: 
-  nickname: []
-  rarity: 0
-  wordCollisionShoots: []
-  myState: {fileID: 0}
-  characterID: 0
-  source: {fileID: 0}
-  aAttackAudio: {fileID: 8300000, guid: edc2a4efe8798ab4fa33fca1e1883da9, type: 3}
-  walkAudio: {fileID: 8300000, guid: 336cc2b14d4b27641a1c4408bd39c99d, type: 3}
-  teXiao: {fileID: 0}
-  bullet: {fileID: 7617887590883620401, guid: c53e15fe0150c9d428a6254f04e23faf, type: 3}
-  roleName: 
-  roleInfo: 
-  isNaiMa: 0
-  gender: 0
-  trait: {fileID: 0}
-  criticalChance: 0
-  multipleCriticalStrike: 0
-  dizzyTime: 0
-  skills: []
-  servants: []
-  maxSkillsCount: 3
-  hasBetray: 0
-  skillText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  attackInterval: 0
-  situation: {fileID: 0}
-  attackDistance: 0
-  charaAnim: {fileID: 0}
-  energy: 0
-  attackA: {fileID: 0}
-  AttackTimes: 1
 --- !u!114 &2320014479563054447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,20 +506,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1887637913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837959891539934793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c93954f1550e8745be3314a9e6fe6b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nowParentTF: {fileID: 0}
-  lastParentTF: {fileID: 0}
 --- !u!60 &3579512521669017538
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -703,6 +636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 3
+  mDefaultCamp: 0
 --- !u!1 &4886961545774673777
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mSlotType: 3
+  mDefaultCamp: 0
 --- !u!1 &6592295561007384171
 GameObject:
   m_ObjectHideFlags: 0

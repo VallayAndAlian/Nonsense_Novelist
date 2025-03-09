@@ -30,6 +30,11 @@ public class DebugUnitInspector : BattleDebugModule
         ImGui.SameLine();
         ImGui.Text($"{unit.Hp}/{unit.MaxHp}");
 
+        if (ImGui.Button("杀死单位"))
+        {
+            unit.Die(null);
+        }
+
         if (ImGui.BeginTabBar("单位信息"))
         {
             DrawAIInfo(unit);

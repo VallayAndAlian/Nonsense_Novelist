@@ -38,6 +38,8 @@ public class AIController : UnitComponent
     public override void Start()
     {
         mAbility = mOwner.AbilityAgent.GetAbilityByType(AbilityType.AutoAttack);
+
+        mState = EUnitState.Idle;
     }
 
     public override void Update(float deltaTime)
