@@ -80,6 +80,7 @@ public class AttributeSet
             attr.mMod = 0;
             attr.mPercentMod = 0;
         }
-        OnAttributeChanged.Invoke(this);
+        
+        // OnAttributeChanged.Invoke(this);
     }
 }

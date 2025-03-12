@@ -9,6 +9,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         public BattleUnitType mInitType;
         public string mAsset;
         public string mName;
+        public BookNameEnum mBook;
         public float mAttack;
         public float mMaxHp;
         public float mDefense;
@@ -29,6 +30,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mInitType = (BattleUnitType)reader.Read<int>();
         data.mAsset = reader.Read<string>();
         data.mName = reader.Read<string>();
+        data.mBook = (BookNameEnum)reader.Read<int>();
         data.mAttack = reader.Read<float>();
         data.mMaxHp = reader.Read<float>();
         data.mDefense = reader.Read<float>();
@@ -39,7 +41,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mInitServants.AddRange(reader.ReadVec<int>());
         for (int _temp = 0; _temp < 6; _temp++)
         {
-            data.mTrees.Add(reader.Read<int>(), reader.ReadVec<int>());
+            data.mTrees.TryAdd(reader.Read<int>(), reader.ReadVec<int>());
         }
 
 

@@ -42,7 +42,7 @@ public class RecordMgr : MonoSingleton<RecordMgr>
         //序列化过程（将Save对象转换为字节流） 
         //创建Save对象并保存当前游戏状态
       
-        Save save = new Save();
+        SaveArticle save = new SaveArticle();
         DirectoryInfo di = new DirectoryInfo(Application.dataPath + "/StreamingAssets");
         var _files = di.GetFiles("*");
         save.id = _files.Length ;
@@ -68,7 +68,7 @@ public class RecordMgr : MonoSingleton<RecordMgr>
         //序列化过程（将Save对象转换为字节流） 
         //创建Save对象并保存当前游戏状态
 
-        Save save = LoadByJson(path);
+        SaveArticle save = LoadByJson(path);
 
         save.hasRead = true;
         //定义字符串filePath保存文件路径信息（就是在Assets中创建的一个文件夹名称为StreamFile,然后系统会给我创建一个byJson.json用于保存游戏信息）
@@ -83,7 +83,7 @@ public class RecordMgr : MonoSingleton<RecordMgr>
         sw.Close();
     }
 
-    public Save LoadByJson(string filepath)
+    public SaveArticle LoadByJson(string filepath)
     {
         if (File.Exists(filepath))
         {
@@ -95,7 +95,7 @@ public class RecordMgr : MonoSingleton<RecordMgr>
             sr.Close();
 
             //将字符串jsonStr转换为Save对象
-            Save save = JsonMapper.ToObject<Save>(jsonStr);
+            SaveArticle save = JsonMapper.ToObject<SaveArticle>(jsonStr);
             return save;
         }
         return null;

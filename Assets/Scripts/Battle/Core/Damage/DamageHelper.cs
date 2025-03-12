@@ -85,27 +85,34 @@ public class DamageHelper
 
         if (instigator != null)
         {
-            foreach (var p in instigator.Allies)
+            var allies = instigator.Allies;
+            foreach (var p in allies)
             {
                 p.AllyDealDamage(report);
             }
                 
-            foreach (var p in instigator.Enemies)
+            var enemies = instigator.Enemies;
+            foreach (var p in enemies)
             {
                 p.EnemyDealDamage(report);
             }
         }
-            
-        foreach (var p in target.Allies)
+
         {
-            p.AllyTakeDamage(report);
+
+            var allies = target.Allies;
+            foreach (var p in allies)
+            {
+                p.AllyTakeDamage(report);
+            }
+
+            var enemies = target.Enemies;
+            foreach (var p in enemies)
+            {
+                p.EnemyTakeDamage(report);
+            }
         }
-                
-        foreach (var p in target.Enemies)
-        {
-            p.EnemyTakeDamage(report);
-        }
-        
+
         //todo: 伤害结算完成通知
     }
 

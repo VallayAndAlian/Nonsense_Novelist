@@ -16,6 +16,7 @@ TagManager:
   - Slider
   - charaCard
   - wordInf
+  - MainCanvas
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Servants
   - wall
   - Slider
-  - 
+  - Ball
   - 
   - 
   - 

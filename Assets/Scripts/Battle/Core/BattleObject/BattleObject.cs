@@ -37,4 +37,5 @@ public class BattleObject
     public virtual void Start() {}
     public virtual void Update(float deltaSec) {}
     public virtual void LateUpdate(float deltaSec) {}
+    public virtual void LateFixedUpdate(float deltaSec) {}
 }

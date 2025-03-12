@@ -5,6 +5,14 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
     public class WordConfig
     {
         public int maxVerbNum = 3;
+        public int maxPreColTimes = 3;
+        public float wordBallRadius = 3;
+        public float wordBallMinSpeed = 3;
+        public float wordBallMaxSpeed = 3;
+        public float wordBallFriction = 3;
+        public float wordBallCollisionLoss = 3;
+        public float wordBallChargingMaxTime=3;
+        public float maxAngle = 45f;
     }
     
     [System.Serializable]

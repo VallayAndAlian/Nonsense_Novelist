@@ -1,7 +1,6 @@
 ﻿
 
 using System.Collections.Generic;
-
 public enum WordType
 {
     Undefined = 0,
@@ -22,7 +21,10 @@ public class WordTable : MapTable<int, WordTable.Data>
     {
         public int mKind;
         public WordType mType;
-        public string mDesc;
+        public string mAssetName;
+        public string mName;
+        public BookNameEnum mBook;
+        public ShootType mShootType;
         public float mDuration;
         public List<int> mTags;
         public List<int> mAbilities;
@@ -35,8 +37,10 @@ public class WordTable : MapTable<int, WordTable.Data>
 
         data.mKind = reader.Read<int>();
         data.mType = (WordType)reader.Read<int>();
-        data.mDesc = reader.Read<string>();
-
+        data.mAssetName = reader.Read<string>();
+        data.mName = reader.Read<string>();
+        data.mBook = (BookNameEnum)reader.Read<int>();
+        data.mShootType = (ShootType)reader.Read<int>();
         data.mTags = reader.ReadVec<int>();
         data.mAbilities = reader.ReadVec<int>();
 

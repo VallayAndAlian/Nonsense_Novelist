@@ -1,17 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BattleRunner : MonoBehaviour
 {
+    public static BattleRunner Instance = null;
+    
     protected BattleBase mBattle = null;
+    public BattleBase Battle => mBattle;
+
+    protected List<BattleVisualSystemBase> mSystems = new List<BattleVisualSystemBase>();
+
+    private void Awake()
+    {
+        RegisterSingleton();
+    }
 
     private void Start()
     {
-        // test battle
-        CreateBattle();
-        StartBattle();
+        UIStatics.ResetCanvas();
     }
 
+    private void OnDestroy()
+    {
+        UnregisterSingleton();
+    }
+
+    public void RegisterSingleton()
+    {
+        Instance = this;
+        
+        CreateBattle();
+    }
+    
+    public void UnregisterSingleton()
+    {
+        Instance = null;
+
+        if (mBattle != null)
+        {
+            mBattle.Close();
+            mBattle = null;
+        }
+    }
 
     public void CreateBattle()
     {
@@ -25,12 +56,25 @@ public class BattleRunner : MonoBehaviour
 
     public void StartBattle()
     {
-        mBattle.Init();
-        mBattle.Begin();
+        if (mBattle.State == BattleState.None)
+        {
+            mBattle.Init();
+            mBattle.Begin();
+        }
     }
 
     public void Update()
     {
-        mBattle.Tick(Time.deltaTime);
+        float deltaSec = Time.deltaTime;
+
+        if (!mBattle.IsFinished)
+        {
+            mBattle.Tick(deltaSec);
+        }
+
+        foreach (var system in mSystems)
+        {
+            system.Tick(deltaSec);
+        }
     }
 }

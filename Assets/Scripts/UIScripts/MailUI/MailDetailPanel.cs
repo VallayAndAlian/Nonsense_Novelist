@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MailTable;
 
 public class MailDetailPanel : BasePanel<MailDetailPanel>
 {
@@ -8,8 +9,12 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
     public Button backBtn;
     //信件内容背景图片
     public Image contentImage;
-    //读者评分
+    //读者评分文字
     public TextMeshProUGUI scoreText;
+    //读者评分图片文字
+    public Image scoreTitleImg;
+    //读者评分底图
+    public Image scorebgImg;
     //收件人
     public TextMeshProUGUI dearText;
     //信件内容
@@ -27,16 +32,6 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
     //储存附件列表:从UpdateDetailInfo函数读入
     protected override void Init()
     {
-        //附件已经领取,则取消领取按钮,不能重复领取
-        if(mailInfo.attachIsTake)
-            attchBtn.gameObject.SetActive(false);
-
-        //只有报社编辑才有读者评分
-        if(mailInfo.autherType == E_MailAutherType.BaoShe)
-            scoreText.gameObject.SetActive(true);
-        else
-            scoreText.gameObject.SetActive(false);
-
         //返回按钮
         backBtn.onClick.AddListener(() => {
             //当前隐藏面板
@@ -73,6 +68,24 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
         contentText.text = mailInfo.mailBody;
         autherText.text = mailInfo.autherName;
         scoreText.text = mailInfo.score.ToString();
+        
+        //附件已经领取,则取消领取按钮,不能重复领取
+        if(mailInfo.attachIsTake)
+            attchBtn.gameObject.SetActive(false);
+
+        //只有报社编辑显示读者评分模块
+        if(mailInfo.autherType == E_MailAutherType.BaoShe)
+        {
+            scoreText.gameObject.SetActive(true);
+            scoreTitleImg.gameObject.SetActive(true);
+            scorebgImg.gameObject.SetActive(true);
+        }
+        else
+        {
+            scoreText.gameObject.SetActive(false);
+            scoreTitleImg.gameObject.SetActive(false);
+            scorebgImg.gameObject.SetActive(false);
+        }
         //根据信件类型显示背景图片
         switch (mailInfo.autherType)
         {
@@ -108,13 +121,11 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
         return sprite ?? contentImage.sprite;
     }
 
-
     public void tackAttach()
     {
-
-        //调用数据持久化方法存储已经领取的状态
-        
         //领取根据附件id领取信件的逻辑
-        this.mailInfo.attachIsTake = false;
+        this.mailInfo.attachIsTake = true;
+        //持久化存储已领取状态
+        MailDataManager.instance.Cover(mailInfo);
     }
 }

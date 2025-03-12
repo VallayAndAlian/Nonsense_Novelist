@@ -1,16 +1,21 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class BattleObjectManager : BattleModule
 {
     protected int mGenID = 0;
+    protected bool mStarted = false;
+    protected List<int> mRemovedIDs = new List<int>();
+    
     protected Dictionary<int, BattleObject> mObjects = new Dictionary<int, BattleObject>();
     protected Dictionary<int, BattleUnit> mUnits = new Dictionary<int, BattleUnit>();
+    protected Dictionary<Collider2D, WallObject> mWalls = new Dictionary<Collider2D, WallObject>();
 
-    protected List<int> mRemovedIDs = new List<int>();
-
-    protected bool mStarted = false;
+    public Dictionary<int, BattleObject> Objects => mObjects;
+    public Dictionary<int, BattleUnit> Units => mUnits;
+    public Dictionary<Collider2D, WallObject> Walls => mWalls;
 
     public T Find<T>(int id) where T : BattleObject
     {
@@ -21,7 +26,14 @@ public class BattleObjectManager : BattleModule
 
         return null;
     }
-
+    public T Find<T>(Collider2D col)where T:WallObject
+    {
+        if(mWalls.TryGetValue(col,out var obj))
+        {
+            return obj as T;
+        }
+        return null;
+    }
     public bool RegisterObject(BattleObject obj)
     {
         if (obj.IsRegistered)
@@ -38,12 +50,26 @@ public class BattleObjectManager : BattleModule
         return true;
     }
 
+    public bool RegisterWall<T>(T wall,Collider2D collider)where T:WallObject
+    {
+         Debug.Log("!!!CreateWallCreateWall");
+        if(wall.IsRegistered)
+            return false;
 
+        wall.IsRegistered = true;    
+        wall.mWall.collider=collider;
+
+        wall.Start();
+
+        mWalls.TryAdd(wall.mWall.collider,wall);
+        return true;
+    }
+    
     public bool RegisterUnit(BattleUnit unit)
     {
-        if (!unit.IsRegistered)
+        if (unit.IsRegistered)
             return false;
-            
+        
         unit.Init();
         
         RegisterObject(unit);
@@ -114,4 +140,13 @@ public class BattleObjectManager : BattleModule
             objIt.LateUpdate(deltaSec);
         }
     }
+
+    public override void LateFixedUpdate(float deltaSec)
+      {
+        foreach (var objIt in mObjects.Values.Where(objIt => objIt.IsTickEnable))
+        {
+            objIt.LateFixedUpdate(deltaSec);
+        }
+    }
+
 }

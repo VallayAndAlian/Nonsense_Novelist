@@ -1,2 +1,2 @@
-mKind,mType,mName,mDesc,LvlNumber,,,,,,,,
-1,2,永久属性测试,永久属性测试,3,attr_type,1,attr_percent,1,attr_value,0.1,,
+mKind,mType,mName,mDesc,LvlNumber,attr_type,attr_percent,attr_value
+2,10,自动攻击,自动攻击测试,0,0,0,0

@@ -1,34 +1,34 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// UIÃæ°å»ùÀà
-/// UIÃæ°å¼Ì³Ğ´ËÀà¼´¿É»ñÈ¡MonoµÄÖ§³ÖºÍ³£ÓÃ¸¸Àà¹¦ÄÜ
+/// UIé¢æ¿åŸºç±»
+/// UIé¢æ¿ç»§æ‰¿æ­¤ç±»å³å¯è·å–Monoçš„æ”¯æŒå’Œå¸¸ç”¨çˆ¶ç±»åŠŸèƒ½
 /// </summary>
-/// <typeparam name="T">×ÓÀàÃæ°å</typeparam>
+/// <typeparam name="T">å­ç±»é¢æ¿</typeparam>
 public abstract class BasePanel<T> : MonoBehaviour where T:class
 {
     /// <summary>
-    /// µ¥Àı¶ÔÏó,·½±ãÃæ°å¼äµÄµ÷ÓÃºÍĞÅÏ¢½»»»
+    /// å•ä¾‹å¯¹è±¡,æ–¹ä¾¿é¢æ¿é—´çš„è°ƒç”¨å’Œä¿¡æ¯äº¤æ¢
     /// </summary>
     public static T Instance;
 
-    //¹ÜÀíÃæ°åÍ¸Ã÷¶ÈµÄ×é¼ş
+    //ç®¡ç†é¢æ¿é€æ˜åº¦çš„ç»„ä»¶
     CanvasGroup canvasGroup;
-    //±íÊ¾Ãæ°åÊÇ·ñÒş²ØµÄ±êÊ¶
+    //è¡¨ç¤ºé¢æ¿æ˜¯å¦éšè—çš„æ ‡è¯†
     private bool isShow = true;
-    //UI½¥±äÏÔÊ¾/Òş²ØËÙ¶È
+    //UIæ¸å˜æ˜¾ç¤º/éšè—é€Ÿåº¦
     private float showSpeed = 5f;
-    //Òş²ØÃæ°åºóµÄ»Øµ÷
+    //éšè—é¢æ¿åçš„å›è°ƒ
     UnityAction hideCallback = null;
 
     private void Awake()
     {
         Instance = this as T;
-        //³õÊ¼»¯PanelµÄCanvasGroup×é¼ş
+        //åˆå§‹åŒ–Panelçš„CanvasGroupç»„ä»¶
         canvasGroup = this.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
@@ -42,41 +42,59 @@ public abstract class BasePanel<T> : MonoBehaviour where T:class
     }
 
     /// <summary>
-    /// ³õÊ¼»¯º¯Êı
-    /// ´úÌæ×ÓÀàStartÂß¼­,½¨ÒéÓÃÓÚ×Ö¶Î³õÊ¼»¯ºÍUIÊÂ¼ş°ó¶¨
+    /// åˆå§‹åŒ–å‡½æ•°
+    /// ä»£æ›¿å­ç±»Starté€»è¾‘,å»ºè®®ç”¨äºå­—æ®µåˆå§‹åŒ–å’ŒUIäº‹ä»¶ç»‘å®š
     /// </summary>
     protected abstract void Init();
 
     /// <summary>
-    /// ÏÔÊ¾Ãæ°å
-    /// ×ÓÀà¿ÉÖØĞ´,½¨Òé¿ÉÓÃÓÚ¸üĞÂ,Ã¿´ÎË¢ĞÂÒ³ÃæĞèÒª¸üĞÂµÄÊı¾İ
+    /// æ˜¾ç¤ºé¢æ¿
+    /// å­ç±»å¯é‡å†™,å»ºè®®å¯ç”¨äºæ›´æ–°,æ¯æ¬¡åˆ·æ–°é¡µé¢éœ€è¦æ›´æ–°çš„æ•°æ®
     /// </summary>
     public virtual void Show()
     {
         this.gameObject.SetActive(true);
         isShow = true;
-        //ÏÈÉèÖÃÃæ°åÍ¸Ã÷¶ÈÎª0,´ı½¥±äÎª1
+        //å…ˆè®¾ç½®é¢æ¿é€æ˜åº¦ä¸º0,å¾…æ¸å˜ä¸º1
         canvasGroup.alpha = 0;
     }
 
     /// <summary>
-    /// Òş²ØÃæ°å
-    /// ¿É´«ÈëÎŞ²ÎÎ¯ÍĞ,½¨Òé¿ÉÓÃÓÚÏú»ÙÃæ°åÔ¤ÖÆÌåµÈ
+    /// éšè—é¢æ¿
+    /// å¯ä¼ å…¥æ— å‚å§”æ‰˜,å»ºè®®å¯ç”¨äºé”€æ¯é¢æ¿é¢„åˆ¶ä½“ç­‰
     /// </summary>
-    /// <param name="callBack">Òş²ØÃæ°åºóµÄ»Øµ÷</param>
+    /// <param name="callBack">éšè—é¢æ¿åçš„å›è°ƒ</param>
     public virtual void Hide(UnityAction callBack = null)
     {
         isShow = false;
-        //ÏÈÉèÖÃÃæ°åÍ¸Ã÷¶ÈÎª1,´ı½¥±äÎª0
+        //å…ˆè®¾ç½®é¢æ¿é€æ˜åº¦ä¸º1,å¾…æ¸å˜ä¸º0
         canvasGroup.alpha = 1;
         hideCallback += callBack;
     }
     
     /// <summary>
-    /// updateÖ¡¸üĞÂ·½·¨:
-    /// ×ÓÀà¿ÉÖØĞ´ÔÚbase()Âß¼­ÉÏÌá¹©ĞÂ¹¦ÄÜ
+    /// UIé¡µé¢é€€åœºç‰¹æ•ˆ
     /// </summary>
-    protected virtual void Update()
+    public virtual void PlayFadeOut()
+    {
+        if (isShow == false && canvasGroup.alpha != 0)
+        {
+            canvasGroup.alpha -= showSpeed * Time.deltaTime;
+            if (canvasGroup.alpha <= 0)
+            {
+                canvasGroup.alpha = 0;
+                this.gameObject.SetActive(false);
+                //éšè—åè°ƒç”¨å§”æ‰˜ç§»é™¤é¢æ¿å¯¹è±¡
+                hideCallback?.Invoke();
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// UIé¡µé¢è¿›åœºç‰¹æ•ˆ
+    /// </summary>
+    public virtual void PlayFadeIn()
     {
         if (isShow == true && canvasGroup.alpha != 1)
         {
@@ -86,17 +104,16 @@ public abstract class BasePanel<T> : MonoBehaviour where T:class
                 canvasGroup.alpha = 1;
             }
         }
-        else if (isShow == false && canvasGroup.alpha != 0)
-        {
-            canvasGroup.alpha -= showSpeed * Time.deltaTime;
-            if (canvasGroup.alpha <= 0)
-            {
-                canvasGroup.alpha = 0;
-                this.gameObject.SetActive(false);   
-                //Òş²Øºóµ÷ÓÃÎ¯ÍĞÒÆ³ıÃæ°å¶ÔÏó
-                hideCallback?.Invoke();
-            }
-        }
+    }
+
+    /// <summary>
+    /// updateå¸§æ›´æ–°æ–¹æ³•:
+    /// å­ç±»å¯é‡å†™åœ¨base()é€»è¾‘ä¸Šæä¾›æ–°åŠŸèƒ½
+    /// </summary>
+    protected virtual void Update()
+    {
+        PlayFadeIn();
+        PlayFadeOut();
     }
     
 }

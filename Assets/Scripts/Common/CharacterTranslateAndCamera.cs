@@ -2,25 +2,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 ///<summary>
-///½ÇÉ«ÒÆ¶¯+ÉãÏñ»úÒÆ¶¯(¹ÒÉãÏñ»úÉÏ
+///ï¿½ï¿½É«ï¿½Æ¶ï¿½+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ///</summary>
 class CharacterTranslateAndCamera : MonoBehaviour
 {
-    /// <summary>µ±Ç°¹Ø¿¨ËùÓÐ½ÇÉ«</summary>
+    /// <summary>ï¿½ï¿½Ç°ï¿½Ø¿ï¿½ï¿½ï¿½ï¿½Ð½ï¿½É«</summary>
     private GameObject[] characters1;
-    /// <summary>ÒÆ¶¯µÄÉãÏñ»ú</summary>
+    /// <summary>ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</summary>
     private Camera camera_;
-    /// <summary>ÒÆ¶¯ËÙ¶È</summary>
+    /// <summary>ï¿½Æ¶ï¿½ï¿½Ù¶ï¿½</summary>
     public float moveSpeed = 0.1f;
-    /// <summary>ÔÝÍ£µÄµã</summary>
+    /// <summary>ï¿½ï¿½Í£ï¿½Äµï¿½</summary>
     private GameObject[] targets;
-    /// <summary>µ±Ç°¹Ø¿¨ÐòºÅ</summary>
+    /// <summary>ï¿½ï¿½Ç°ï¿½Ø¿ï¿½ï¿½ï¿½ï¿½</summary>
     public int guanQiaNum = 0;
-    /// <summary>µ±Ç°ÕÂ½ÚÐòºÅ</summary>ÐèÒªÔÚinspector½çÃæ¸ù¾Ýµ±Ç°ÕÂ½Ú¸³Öµ
+    /// <summary>ï¿½ï¿½Ç°ï¿½Â½ï¿½ï¿½ï¿½ï¿½</summary>ï¿½ï¿½Òªï¿½ï¿½inspectorï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½Ç°ï¿½Â½Ú¸ï¿½Öµ
     public int chapterNum = 2;
-    /// <summary>×°ÊÎÆ·</summary>
+    /// <summary>×°ï¿½ï¿½Æ·</summary>
     public GameObject[] zhuangShiPin;
-    /// <summary>¹Ø¿¨Í¼Æ¬</summary>
+    /// <summary>ï¿½Ø¿ï¿½Í¼Æ¬</summary>
     public GameObject[] chapterName;
     
 
@@ -34,16 +34,16 @@ class CharacterTranslateAndCamera : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (UIManager.nextQuanQia && characters1.Length != 0)
+        /*if (UIManager.nextQuanQia && characters1.Length != 0)
         {   
-            //ÉãÏñ»úÒÆ¶¯
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
             camera_.transform.Translate(Vector3.right*moveSpeed);
-            //Ê£Óà½ÇÉ«ÒÆ¶¯
+            //Ê£ï¿½ï¿½ï¿½É«ï¿½Æ¶ï¿½
             foreach(var item in characters1)
             {
                 item.transform.Translate(Vector3.right * moveSpeed);
             }
-        }
+        }*/
         EndMove();
     }
     public void BeginMove()
@@ -60,14 +60,14 @@ class CharacterTranslateAndCamera : MonoBehaviour
         if (guanQiaNum<=1&&Vector3.Distance(camera_.transform.position, targets[guanQiaNum+1].transform.position) <= 0.5f)
         {
             camera_.transform.position = targets[guanQiaNum+1].transform.position;
-            UIManager.nextQuanQia = false;
-            //×°ÊÎÆ·ºÍ¹Ø¿¨ÃûÍ¼Æ¬ÇÐ»»
+            //UIManager.nextQuanQia = false;
+            //×°ï¿½ï¿½Æ·ï¿½Í¹Ø¿ï¿½ï¿½ï¿½Í¼Æ¬ï¿½Ð»ï¿½
             zhuangShiPin[guanQiaNum + 1].SetActive(true);
             zhuangShiPin[guanQiaNum].SetActive(false);
             chapterName[guanQiaNum + 1].SetActive(true);
             chapterName[guanQiaNum].SetActive(false);
 
-            guanQiaNum++;//ÕâÒ»ÐÐÓÀÔ¶·ÅÔÚ×îºóÃæ
+            guanQiaNum++;//ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         }
     }
 }

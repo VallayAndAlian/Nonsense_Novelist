@@ -4,6 +4,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MailTable;
 
 public class MailPreviewPanel : BasePanel<MailPreviewPanel>
 {
@@ -47,7 +48,7 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         ReadMailsData();
         //待显示数据
         RefreshPrepMail();
-        //显示索引
+        //计算显示索引
         startIndex = 0;
         lastIndex = maxMailCount > prepMailData.Count ? prepMailData.Count - 1 : maxMailCount - 1;
         //显示信件
@@ -76,12 +77,21 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// </summary>
     private void ReadMailsData()
     {
-        //读取streamingAssets中的配置初始化信件列表
-        string path = Application.streamingAssetsPath + "/mailData.json";
-        string JsonStr = "";
-        if (File.Exists(path))
-            JsonStr = File.ReadAllText(path);
-        mailDataList = JsonMapper.ToObject<List<MailInfo>>(JsonStr);
+        //模拟数据
+        MailDataManager.instance.CreateMail(100102);
+        MailDataManager.instance.CreateMail(100204);
+        MailDataManager.instance.CreateMail(100203);
+        MailDataManager.instance.CreateMail(100101);
+        
+        //从管理器获取数据
+        Dictionary<int, MailInfo> dataList = MailDataManager.instance.DataList;
+        mailDataList.AddRange(dataList.Values);
+
+        //排序
+        mailDataList.Sort((mail1,mail2) =>
+        {
+            return mail1.id - mail2.id;
+        });
     }
 
     /// <summary>
@@ -260,19 +270,15 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     }
 
     /// <summary>
-    /// 
+    /// 根据ID设置读者评分
     /// </summary>
     /// <param name="id"></param>
-    /// <param name="attachId"></param>
-    /// <param name="attachNum"></param>
-    public void setScoreById(int id, int attachId, int attachNum)
+    /// <param name="score"></param>
+    public void setScoreById(int id, int score)
     {
         //只有报社编辑类型才有读者评分
     
     }
-
-
-    //持久化功能
 
 }
 

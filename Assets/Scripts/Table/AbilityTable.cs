@@ -30,15 +30,9 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         data.mName = reader.Read<string>();
         data.mDesc = reader.Read<string>();
         
-        data.mMaxStackCount = reader.Read<int>();
-
+        // data.mMaxStackCount = reader.Read<int>();
+        
         int paramNum = reader.Read<int>();
-        if (paramNum != 0)
-        {
-            reader.MarkReadInvalid();
-            return default;
-        }
-
         data.mCustomParams = new Dictionary<string, Data.CustomParam>();
         for (int i = 0; i < paramNum * 2; i += 2)
         {
@@ -61,4 +55,5 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
             
         return new KeyValuePair<int, Data>(data.mKind, data);
     }
+
 }

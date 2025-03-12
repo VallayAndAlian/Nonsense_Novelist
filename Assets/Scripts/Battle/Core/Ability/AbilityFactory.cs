@@ -10,6 +10,8 @@ public enum AbilityType
     PermanentAttribute,
     AttributeMod,
     AttributePercentMod,
+    
+    AutoAttack = 10,
 }
 
 public class AbilityFactory
@@ -18,6 +20,7 @@ public class AbilityFactory
     {
         { AbilityType.TemplateAbility, typeof(AbilityTemplate) },
         { AbilityType.PermanentAttribute, typeof(AbilityPermanentAttribute) },
+        { AbilityType.AutoAttack, typeof(AbilityAutoAttack) },
     };
 
     public static AbilityBase CreateAbility(int abiID)

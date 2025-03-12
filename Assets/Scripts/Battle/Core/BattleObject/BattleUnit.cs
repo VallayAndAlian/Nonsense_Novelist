@@ -4,31 +4,33 @@ using UnityEngine;
 
 public class BattleUnit : BattleObject
 {
-    protected bool mAlive = false;
+    protected bool mAlive = true;
     public bool IsAlive => mAlive;
 
     protected bool mStart = false;
     public bool IsStart => mStart;
+    
+    public BattleUnit ServantOwner { get; set; }
 
     protected float mHp = 0;
     public float Hp => mHp;
+    public float MaxHp => GetAttributeValue(AttributeType.MaxHp);
 
     
     public float HpPercent
     {
         get
         {
-            var maxHp = GetAttributeValue(AttributeType.MaxHp);
+            var maxHp = MaxHp;
             return maxHp > 0 ? mHp / maxHp : 0;
         }
     }
 
     // camp would be enum
-    protected CampEnum mCamp = 0;
-    public CampEnum Camp
+    public BattleCamp Camp
     {
-        get => mCamp;
-        set => mCamp = value;
+        get => mUnitInstance.mCamp;
+        set => mUnitInstance.mCamp = value;
     }
 
     protected BattleUnitPos mPos = 0;
@@ -38,12 +40,24 @@ public class BattleUnit : BattleObject
         set => mPos = value;
     }
 
+    protected UnitSlot mSlot = null;
+    public UnitSlot Slot
+    {
+        get => mSlot;
+        set => mSlot = value;
+    }
+
+    protected UnitInstance mUnitInstance;
+    public UnitInstance UnitInstance => mUnitInstance;
+
     protected BattleUnitTable.Data mData = null;
-    public BattleUnitTable.Data Daata => mData;
+    public BattleUnitTable.Data Data => mData;
 
     protected List<UnitComponent> mComponents = new List<UnitComponent>();
     public List<UnitComponent> Components => mComponents;
 
+    protected AIController mAIAgent = null;
+    public AIController AIAgent => mAIAgent;
 
     protected AbilityAgent mAbilityAgent = null;
     public AbilityAgent AbilityAgent => mAbilityAgent;
@@ -54,7 +68,6 @@ public class BattleUnit : BattleObject
     protected WordComponent mWordComponent = null;
     public WordComponent WordComponent => mWordComponent;
     
-
     protected ServantsAgent mServantsAgent = null;
     public ServantsAgent ServantsAgent => mServantsAgent;
 
@@ -63,13 +76,9 @@ public class BattleUnit : BattleObject
 
     protected AttributeSet mAttributeSet = new AttributeSet();
     public AttributeSet AttributeSet => mAttributeSet;
-
-
-    protected List<BattleUnit> mAllies = new List<BattleUnit>();
-    public List<BattleUnit> Allies => mAllies;
-
-    protected List<BattleUnit> mEnemies = new List<BattleUnit>();
-    public List<BattleUnit> Enemies => mEnemies;
+    
+    public List<BattleUnit> Allies => Battle.CampManager.GetAllies(this);
+    public List<BattleUnit> Enemies => Battle.CampManager.GetEnemies(this);
 
     protected UnitViewBase mView = null;
 
@@ -80,9 +89,10 @@ public class BattleUnit : BattleObject
     }
 
 
-    public BattleUnit(BattleUnitTable.Data data)
+    public BattleUnit(BattleUnitTable.Data data, UnitInstance unitInstance)
     {
         mData = data;
+        mUnitInstance = unitInstance;
     }
 
     // init with no battle
@@ -90,8 +100,6 @@ public class BattleUnit : BattleObject
     {
         InitAttributes();
         AddComponents();
-        AddInitSkills();
-        AddInitServants();
     }
 
     protected void InitAttributes()
@@ -105,36 +113,24 @@ public class BattleUnit : BattleObject
 
     protected void AddComponents()
     {
+        
         mAbilityAgent = new AbilityAgent();
         RegisterComponent(mAbilityAgent);
 
         mEffectAgent = new EffectAgent();
         RegisterComponent(mEffectAgent);
+        
+        mAIAgent = new AIController();
+        RegisterComponent(mAIAgent);
 
         mWordComponent = new WordComponent();
         RegisterComponent(mWordComponent);
 
-		if (Daata.mInitType != BattleUnitType.Servant)
+		if (Data.mInitType != BattleUnitType.Servant)
         {
             mServantsAgent = new ServantsAgent();
             RegisterComponent(mServantsAgent);
         }
-    }
-
-    protected void AddInitServants()
-    {
-        foreach (var ser in mData.mInitServants)
-        {
-            ServantsAgent.RegisterServants(ser);
-        }
-    }
-    protected void AddInitSkills()
-    {
-        foreach (var abi in mData.mTalents)
-        {
-            AbilityAgent.RegisterAbility(abi);
-        }
-        AbilityAgent.RegisterAbility(mData.mRoles);
     }
 
     protected void RegisterComponent(UnitComponent component)
@@ -246,8 +242,8 @@ public class BattleUnit : BattleObject
         takeDamageCalc.mAbility = damageCalc.mAbility;
         takeDamageCalc.mFlag = damageCalc.mFlag;
         takeDamageCalc.mMagic = damageCalc.mMagic;
-        takeDamageCalc.mDefense = 0;
-        takeDamageCalc.mResistance = 0;
+        takeDamageCalc.mDefense = GetAttributeValue(AttributeType.Def);
+        takeDamageCalc.mResistance = GetAttributeValue(AttributeType.Def);
 
 
         foreach (var abi in AbilityAgent.Abilities)
@@ -256,7 +252,8 @@ public class BattleUnit : BattleObject
         }
 
         // process ally
-        foreach (var p in Allies)
+        var allies = Allies;
+        foreach (var p in allies)
         {
             foreach (var abi in p.AbilityAgent.Abilities)
             {
@@ -355,7 +352,7 @@ public class BattleUnit : BattleObject
         {
             float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
             float max = cannotKill ? currentMaxHp - 1 : currentMaxHp;
-            number = Mathf.Max(damageValue, max);
+            number = Mathf.Min(damageValue, max);
 
             mHp -= number;
             if (mHp < 0.99f)

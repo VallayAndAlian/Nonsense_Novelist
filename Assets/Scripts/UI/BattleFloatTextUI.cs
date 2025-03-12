@@ -16,6 +16,10 @@ using System.Collections.Generic;
 
 public class BattleFloatTextUI : BattleUI
 {
+    public BattleFloatTextUI(GameObject gameObject) : base(gameObject) 
+    { 
+        mainCamera = Camera.main;
+    } 
     public class FloatTextInfo
     {
         public string text;
@@ -39,10 +43,7 @@ public class BattleFloatTextUI : BattleUI
     protected string PrefabPath = "";
     protected float displayDuration = 3.0f;
 
-    public BattleFloatTextUI()
-    {
-        mainCamera = Camera.main;
-    }
+  
 
    
     public void AddFloatText(string text, Vector3 worldPosition,FloatWordType type)
@@ -104,7 +105,7 @@ public class BattleFloatTextUI : BattleUI
 
     protected virtual void OnDisabled() { }
 
-    public override void Start()
+    public override void Init()
     {
         
     }
