@@ -36,7 +36,7 @@ public class AbilityAutoAttack : AbilityBase
         
         foreach (var schedule in mSchedules)
         {
-            if (schedule.mApplySec < ElapsedSec)
+            if (schedule.mApplySec > ElapsedSec)
                 continue;
 
             if (schedule.mTarget != null)
@@ -69,7 +69,8 @@ public class AbilityAutoAttack : AbilityBase
     
     protected void OnActTrigger()
     {
-        SetTarget(PickAutoAttackTarget());
+        if (mTarget == null)
+            return;
 
         // emit projectile
         EmitMeta meta = new EmitMeta();
@@ -91,7 +92,7 @@ public class AbilityAutoAttack : AbilityBase
         
     }
 
-    BattleUnit PickAutoAttackTarget()
+    public override BattleUnit PickTarget()
     {
         var enemies = Unit.Enemies;
         if (enemies.Count > 0)

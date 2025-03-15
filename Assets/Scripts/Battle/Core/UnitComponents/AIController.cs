@@ -16,6 +16,8 @@ public class AIController : UnitComponent
 
     protected AbilityBase mAbility = null; // 攻击技能
 
+    protected BattleUnit mTarget = null;
+
     public void EnterState(EUnitState state)
     {
         if (mState == state)
@@ -61,16 +63,31 @@ public class AIController : UnitComponent
 
     protected void TickIdle(float deltaTime)
     {
-        if (mAbility != null && mAbility.TryActivate())
+        if (mAbility != null)
         {
-            EnterState(EUnitState.Attack);
+            mTarget = mAbility.PickTarget();
+
+            if (mTarget != null)
+            {
+                mAbility.SetTarget(mTarget);
+                
+                if (mAbility.TryActivate())
+                {
+                    EnterState(EUnitState.Attack);
+                }
+            }
         }
     }
 
     protected void TickAttack(float deltaTime)
     {
-        if (mAbility == null || !mAbility.IsActivated)
+        if (mAbility == null || mTarget == null || !mAbility.IsActivated)
         {
+            if (mAbility != null)
+            {
+                mAbility.TryDeactivate();
+            }
+            
             EnterState(EUnitState.Idle);
         }
     }

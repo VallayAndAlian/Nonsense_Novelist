@@ -88,6 +88,11 @@ public class AbilityBase
         mTarget = target;
     }
 
+    public virtual BattleUnit PickTarget()
+    {
+        return null;
+    }
+
     #region DamageProcess
     
     public virtual void OnPreDealDamageCalc(DealDamageCalc dmgCalc) { }

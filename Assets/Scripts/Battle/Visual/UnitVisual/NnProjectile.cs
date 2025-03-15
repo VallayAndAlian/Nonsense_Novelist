@@ -31,7 +31,7 @@ public class NnProjectile : MonoBehaviour
         Vector3 offset = mTargetPos - mEmitPos;
         var transform1 = transform;
         transform1.position = mEmitPos;
-        transform1.forward = offset;
+        transform1.rotation = Quaternion.Euler(Mathf.Atan2(offset.y, offset.x), 0, 0);
         
         if (meta.mDelay <= 0)
             meta.mDelay = 1.0f;
@@ -48,7 +48,7 @@ public class NnProjectile : MonoBehaviour
         {
             case State.Route:
             {
-                float percent = (mMeta.mDelay - mTimer) / mMeta.mDelay;
+                float percent = mTimer / mMeta.mDelay;
                 transform.position = (1 - percent) * mEmitPos + percent * mTargetPos;
 
                 if (percent >= 1.0f)
