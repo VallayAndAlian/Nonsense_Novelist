@@ -62,7 +62,7 @@ public class UnitViewBase : MonoBehaviour
         if (mServantSlots.Count == 0)
             return;
         
-        if (unitView != null && unitView.Role != null)
+        if (unitView && unitView.Role != null)
         {
             foreach (var slot in mServantSlots)
             {
@@ -82,5 +82,10 @@ public class UnitViewBase : MonoBehaviour
         var proj = projObj.GetComponent<NnProjectile>();
         
         proj.Emit(this, meta);
+    }
+
+    public void OnUnitDie()
+    {
+        Destroy(mRoot.gameObject);
     }
 }

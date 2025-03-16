@@ -16,16 +16,22 @@ public class AbilityAutoAttack : AbilityBase
 
     protected override void OnActivate()
     {
-        UnitView.ModelLayout.AnimEvents.OnActBegin += OnActBegin;
-        UnitView.ModelLayout.AnimEvents.OnActTrigger += OnActTrigger;
-        UnitView.ModelLayout.AnimEvents.OnActEnd += OnActEnd;
+        if (UnitView)
+        {
+            UnitView.ModelLayout.AnimEvents.OnActBegin += OnActBegin;
+            UnitView.ModelLayout.AnimEvents.OnActTrigger += OnActTrigger;
+            UnitView.ModelLayout.AnimEvents.OnActEnd += OnActEnd;
+        }
     }
 
     protected override void OnDeactivate()
     {
-        UnitView.ModelLayout.AnimEvents.OnActBegin -= OnActBegin;
-        UnitView.ModelLayout.AnimEvents.OnActTrigger -= OnActTrigger;
-        UnitView.ModelLayout.AnimEvents.OnActEnd -= OnActEnd;
+        if (UnitView)
+        {
+            UnitView.ModelLayout.AnimEvents.OnActBegin -= OnActBegin;
+            UnitView.ModelLayout.AnimEvents.OnActTrigger -= OnActTrigger;
+            UnitView.ModelLayout.AnimEvents.OnActEnd -= OnActEnd;
+        }
 
         OnActEnd();
     }

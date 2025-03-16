@@ -381,7 +381,19 @@ public class BattleUnit : BattleObject
         {
             ser.Die(report);
         }
-        // todo: 死亡事件通知
+
+        if (mSlot)
+            mSlot.Remove();
+        
+        EventManager.Invoke(EventEnum.UnitDie, this);
+
+        if (UnitView)
+        {
+            UnitView.OnUnitDie();
+            UnitView = null;
+        }
+        
+        Battle.ObjectManager.RemoveObject(this);
     }
 
     #endregion

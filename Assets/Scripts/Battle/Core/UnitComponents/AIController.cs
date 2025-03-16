@@ -28,11 +28,13 @@ public class AIController : UnitComponent
         switch (mState)
         {
             case EUnitState.Idle:
-                mOwner.UnitView.ModelLayout.Animator.SetTrigger("idle");
+                if (mOwner.UnitView)
+                    mOwner.UnitView.ModelLayout.Animator.SetTrigger("idle1");
                 break;
             
             case EUnitState.Attack:
-                mOwner.UnitView.ModelLayout.Animator.SetTrigger("attack");
+                if (mOwner.UnitView)
+                    mOwner.UnitView.ModelLayout.Animator.SetTrigger("attack1");
                 break;
         }
     }
@@ -81,14 +83,28 @@ public class AIController : UnitComponent
 
     protected void TickAttack(float deltaTime)
     {
-        if (mAbility == null || mTarget == null || !mAbility.IsActivated)
+        if (!IsValidTarget(mTarget))
         {
             if (mAbility != null)
             {
+                mAbility.SetTarget(null);
                 mAbility.TryDeactivate();
             }
+
+            mTarget = null;
             
             EnterState(EUnitState.Idle);
         }
+    }
+
+    protected bool IsValidTarget(BattleUnit target)
+    {
+        if (mAbility is not { IsActivated: true })
+            return false;
+
+        if (mTarget is not { IsAlive: true })
+            return false;
+
+        return true;
     }
 }
