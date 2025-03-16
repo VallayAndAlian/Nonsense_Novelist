@@ -1,10 +1,16 @@
 using UnityEngine;
 public class BattlePhaseUI_Battle : BattleUI
 {
-    public BattlePhaseUI_Battle(GameObject gameObject) : base(gameObject) 
+    public BattlePhaseUI_Battle()
     { 
-
+  
     } 
+
+    protected override void CreateUIpanel()
+    {
+        mUIPanel=ResMgr.GetInstance().Load<GameObject>("UI/Battle/phase_battle");
+    }
+    
     public override void Init() 
     {
         base.Init();

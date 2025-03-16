@@ -4,10 +4,26 @@ public class BattleUnitSelfUI : BattleUI
 {
     protected bool mEnabled = false;
     protected bool mRegistered = false;
- public BattleUnitSelfUI(GameObject gameObject) : base(gameObject) 
+    public BattleUnitSelfUI(BattleUnit _role)
     { 
+        mOwner=new UIOwner();
+        mOwner.mUnit=_role;
+        mOwner.mUnit.infoUI=this;
+        mOwner.mUnitPos=mOwner.mUnit.UnitView.transform;
+        AddListenerToAttribute();
 
+        mUIContent=new UnitUIContent();
+       
     } 
+
+
+   protected override void CreateUIpanel()
+    {
+        mUIPanel=ResMgr.GetInstance().Load<GameObject>("UI/Battle/battleUnitSelfUI");
+        mUIContent.hpSlider=mUIPanel.transform.Find("HP").GetComponent<Slider>();
+    }
+
+
     public class UIOwner
     {
         public BattleUnit mUnit = null;
@@ -29,13 +45,11 @@ public class BattleUnitSelfUI : BattleUI
     }
 
 
-    protected Transform mObject;
-    public Transform Object => mObject;
+   
 
     public class UnitUIContent
     {
         public Slider hpSlider = null;
-        public Transform mUnitPos;
 
     }
 
@@ -44,7 +58,7 @@ public class BattleUnitSelfUI : BattleUI
 
 
 
-    public Vector3 offset = new Vector3(0, 2, 0);
+    public Vector3 offset = new Vector3(0, 1.2f, 0);
 
 
     public bool Enabled
@@ -74,11 +88,13 @@ public class BattleUnitSelfUI : BattleUI
 
     protected virtual void OnEnabled() { }
 
-    protected virtual void OnDisabled() { }
+    protected virtual void OnDisabled() {
+
+     }
 
     public override void Init() 
     {
-        AddListenerToAttribute();
+       
     }
 
     public override void Update(float deltaTime) 
@@ -93,17 +109,17 @@ public class BattleUnitSelfUI : BattleUI
     protected void FollowPlayerPos()
     {
         if (Owner == null) return;
-
         Vector3 worldPosition = Owner.mUnitPos.position + offset;
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            Object.parent as RectTransform,
+         RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            UIPanel.transform.parent as RectTransform,
             screenPosition,
-            Camera.main,
+            null,
             out Vector2 localPosition
         );
-
-        Object.localPosition = localPosition;
+        UIPanel.transform.localScale = Vector3.one*0.1f;
+         UIPanel.transform.localPosition = localPosition;
+         
     }
 
     public void AddListenerToAttribute()
@@ -117,8 +133,9 @@ public class BattleUnitSelfUI : BattleUI
     {
         if (Owner == null) return;
 
+        
         if (UIContent.hpSlider != null)
-            UIContent.hpSlider.value = atr.GetAttribute(AttributeType.MaxHp).mValue 
+            UIContent.hpSlider.value = Owner.mUnit.Hp 
                 / atr.GetAttribute(AttributeType.MaxHp).mValue;
     }
 }

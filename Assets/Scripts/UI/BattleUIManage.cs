@@ -4,39 +4,39 @@ using UnityEngine;
 
 public class BattleUIManage:UIManage
 {
-    public Dictionary<GameObject, BattleUI> BattleUiDic = new Dictionary<GameObject, BattleUI>();
+    public List<BattleUI> BattleUiDic = new List<BattleUI>();
     public BattleUIManage()
     {}
     protected Canvas mBattleCanvas;
     public Canvas BattleCanvas => mBattleCanvas;
     
-    public void ShowPanel(GameObject panel,BattleUI ui)
+    public void ShowPanel(BattleUI ui)
     {
-        if (!BattleUiDic.TryAdd(panel, ui))
+        if (BattleUiDic.Contains(ui))
         {
             ui.Init();
-            panel.SetActive(true);
+            ui.UIPanel.SetActive(true);
             return;
         }
 
-        if(panel==null)Debug.Log("panel==null");
         
         if(BattleCanvas==null)Debug.Log("BattleCanvas==null");
-        panel.transform.SetParent(BattleCanvas.transform);
-        panel.transform.localPosition = Vector3.zero;
-        panel.transform.localScale = Vector3.one;
-        (panel.transform as RectTransform).offsetMax = Vector2.zero;
-        (panel.transform as RectTransform).offsetMin = Vector2.zero;
+
+        BattleUiDic.Add(ui);
+        ui.UIPanel.transform.SetParent(BattleCanvas.transform);
+        ui.UIPanel.transform.localPosition = Vector3.zero;
+        ui.UIPanel.transform.localScale = Vector3.one;
+        (ui.UIPanel.transform as RectTransform).offsetMax = Vector2.zero;
+        (ui.UIPanel.transform as RectTransform).offsetMin = Vector2.zero;
     }
 
     public void Hide(BattleUI ui)
     {
-        if (!BattleUiDic.TryGetValue(ui.UIPanel,out var uI))
+        if (!BattleUiDic.Contains(ui))
         {
-            ui.UIPanel.SetActive(false);
             return;
         }
-          ui.UIPanel.SetActive(false);
+        ui.UIPanel.SetActive(false);
         return;
     }
 
@@ -48,6 +48,11 @@ public class BattleUIManage:UIManage
             GameObject uiCanvas = new GameObject("BattleUICanvas");
             mBattleCanvas= uiCanvas.AddComponent<Canvas>();
             mBattleCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            RectTransform canvasRect = uiCanvas.GetComponent<RectTransform>();
+            canvasRect.anchorMin = Vector2.zero;   // 锚点左下角
+            canvasRect.anchorMax = Vector2.one;    // 锚点右上角
+            canvasRect.offsetMin = Vector2.zero;   // 边距归零
+            canvasRect.offsetMax = Vector2.zero;   // 边距归零
         }
         
     }
@@ -56,7 +61,7 @@ public class BattleUIManage:UIManage
     {
         foreach (var ui in BattleUiDic)
         {
-            ui.Value.Update(deltaTime);
+            ui.Update(deltaTime);
         }
     }
 
@@ -64,7 +69,7 @@ public class BattleUIManage:UIManage
     {
         foreach (var ui in BattleUiDic)
         {
-            ui.Value.LateUpdate(deltaTime);
+            ui.LateUpdate(deltaTime);
         }
     }
 

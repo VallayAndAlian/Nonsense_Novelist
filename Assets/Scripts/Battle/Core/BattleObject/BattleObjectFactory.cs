@@ -175,6 +175,9 @@ public class BattleObjectFactory : BattleModule
             unitView = pawnTransform.gameObject.AddComponent<UnitViewBase>();
         
         unitView.Setup(unit, asset);
+
+         var infoUI=new BattleUnitSelfUI(unit);
+        Battle.BattleUI.ShowPanel(infoUI);
         
         EventManager.Invoke(EventEnum.UnitSpawn, unit);
         

@@ -1,19 +1,8 @@
-
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
-public enum BattlePhaseType
-{
-    Rest = 0,//休息回合
-    Lve=1,//左对抗怪物
-    Rve=2,//右对抗怪物
-    Pve=3,//左右一起对抗怪物
-    Pvp=4//左右互博
-}
-
-public class BattlePhase : BattleModule
+public class BattleFloatTextManager : BattleModule
 {
     protected Dictionary<int, PhaseTable.Data> mPhases = new Dictionary<int, PhaseTable.Data>();
     protected int mStageIndex=-1;       //索引从负1开始，第一个回合也使用EnterNextStage
@@ -167,9 +156,6 @@ public class BattlePhase : BattleModule
 
     public override void Update(float deltaSec)
     {
-       if(mCurrentPhase!=null)
-       {
-        mCurrentPhase.Update(deltaSec);
-       }
+       
     }
 }
