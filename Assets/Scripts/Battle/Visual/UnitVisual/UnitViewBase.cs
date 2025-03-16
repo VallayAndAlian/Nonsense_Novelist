@@ -48,12 +48,15 @@ public class UnitViewBase : MonoBehaviour
             mRole.Battle.Stage.AddSlot(slot);
             mServantSlots.Add(slot);
         }
-        
-        foreach (var servant in mRole.ServantsAgent.Servants)
+
+        if (mRole.ServantsAgent != null)
         {
-            AddServant(servant.UnitView);
+            foreach (var servant in mRole.ServantsAgent.Servants)
+            {
+                AddServant(servant.UnitView);
+            }
         }
-        
+
         GetComponent<SpriteRenderer>().sprite = mAsset.sprite;
     }
 
@@ -70,6 +73,7 @@ public class UnitViewBase : MonoBehaviour
                 {
                     slot.OccupiedBy(unitView.Role);
                     unitView.Root.parent = slot.transform;
+                    unitView.Root.localPosition = Vector3.zero;
                 }
             }
         }

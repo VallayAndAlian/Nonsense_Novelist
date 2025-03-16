@@ -377,9 +377,12 @@ public class BattleUnit : BattleObject
             abi.OnSelfDeath(report);
         }
 
-        foreach (var ser in ServantsAgent.Servants)
+        if (ServantsAgent != null)
         {
-            ser.Die(report);
+            foreach (var ser in ServantsAgent.Servants)
+            {
+                ser.Die(report);
+            }
         }
 
         if (mSlot)

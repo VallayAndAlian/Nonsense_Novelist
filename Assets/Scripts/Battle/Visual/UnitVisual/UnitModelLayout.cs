@@ -23,6 +23,8 @@ public class UnitModelLayout : MonoBehaviour
         if (mAnimator == null)
             mAnimator = transform.GetComponentInChildren<Animator>();
 
+        mAnimator.runtimeAnimatorController = unitObj.Asset.animatorController;
+
         mAnimEvents = mAnimator.GetComponent<AnimEventReceiver>();
         mAudioSource = GetComponent<AudioSource>();
 

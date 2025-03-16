@@ -16,8 +16,6 @@ public enum BattleUnitType
     Character = 0,  
     Servant = 1, 
     Monster = 2,
-    
-
 }
 
 public class BattleObjectFactory : BattleModule

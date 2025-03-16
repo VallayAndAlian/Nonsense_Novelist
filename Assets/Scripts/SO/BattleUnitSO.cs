@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Animations;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewBattleUnitSO", menuName = "BattleUnitData")]
 public class BattleUnitSO : ScriptableObject
@@ -25,6 +26,9 @@ public class BattleUnitSO : ScriptableObject
 
     [Tooltip("角色子弹")]
     public GameObject weaponProj;
+    
+    [Tooltip("角色动画")]
+    public AnimatorController animatorController;
 
     [Space(20)][Header("角色特性")][Space(5)]
 
