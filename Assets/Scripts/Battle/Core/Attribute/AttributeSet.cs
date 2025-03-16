@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Diagnostics;
 
 public class AttributeSet
 {
@@ -9,6 +10,7 @@ public class AttributeSet
 
     public void Define(AttributeType type, float initValue = 0)
     {
+        
         if (mAttributes.ContainsKey(type))
         {
             mAttributes[type].mBaseValue = initValue;
@@ -28,6 +30,7 @@ public class AttributeSet
 
             mAttributes.TryAdd(type, attr);
         }
+       OnAttributeChanged?.Invoke(this); 
     }
     
 
@@ -69,6 +72,7 @@ public class AttributeSet
             {
                 attr.mBaseValue += mod;
             }
+           OnAttributeChanged?.Invoke(this); 
         }
     }
 
@@ -80,7 +84,6 @@ public class AttributeSet
             attr.mMod = 0;
             attr.mPercentMod = 0;
         }
-        
-        // OnAttributeChanged.Invoke(this);
+        OnAttributeChanged?.Invoke(this); 
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 public class BattleShooterUI : BattleUI
 { 
-    public BattleShooterUI(GameObject gameObject) : base(gameObject) 
+    public BattleShooterUI()
     { 
 
     } 

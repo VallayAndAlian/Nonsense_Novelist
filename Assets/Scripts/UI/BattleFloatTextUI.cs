@@ -16,10 +16,16 @@ using System.Collections.Generic;
 
 public class BattleFloatTextUI : BattleUI
 {
-    public BattleFloatTextUI(GameObject gameObject) : base(gameObject) 
+    public BattleFloatTextUI(string context,Vector3 pos,float startTime, FloatWordType type,RectTransform uiText)
     { 
         mainCamera = Camera.main;
+        mFloatTexts=new FloatTextInfo(context,pos,startTime,type,uiText);
     } 
+    protected override void CreateUIpanel()
+    {
+        mUIPanel=ResMgr.GetInstance().Load<GameObject>("SecondStageLoad/floatWord");
+        
+    }
     public class FloatTextInfo
     {
         public string text;
@@ -38,12 +44,13 @@ public class BattleFloatTextUI : BattleUI
         }
     }
 
-    protected List<FloatTextInfo> floatTexts = new List<FloatTextInfo>();
+    protected FloatTextInfo mFloatTexts;
+    public FloatTextInfo floatTexts=>mFloatTexts;
     protected Camera mainCamera;
     protected string PrefabPath = "";
     protected float displayDuration = 3.0f;
 
-  
+  /*
 
    
     public void AddFloatText(string text, Vector3 worldPosition,FloatWordType type)
@@ -94,6 +101,12 @@ public class BattleFloatTextUI : BattleUI
         var obj=PoolMgr.GetInstance().GetObj(PrefabPath);
         TextMeshProUGUI tmp;
         if (!obj.TryGetComponent<TextMeshProUGUI>(out tmp)) return null;
+
+
+       
+
+
+
         return tmp;
     }
 
@@ -153,4 +166,5 @@ public class BattleFloatTextUI : BattleUI
         }
         return Color.white;
     }
+    */
 }

@@ -90,6 +90,7 @@ public class UnitViewBase : MonoBehaviour
 
     public void OnUnitDie()
     {
-        Destroy(mRoot.gameObject);
+        GetComponent<SpriteRenderer>().enabled=false;
+        //Destroy(mRoot.gameObject);
     }
 }

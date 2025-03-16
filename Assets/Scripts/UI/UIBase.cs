@@ -17,12 +17,24 @@ public class UIBase
     public UI_LAYER layer;
 
     protected GameObject mUIPanel;
-    public GameObject UIPanel=>mUIPanel;
-
-    public UIBase(GameObject gameObject)
+    public GameObject UIPanel
     {
-        mUIPanel=gameObject;
+        get
+        {
+            if(mUIPanel==null)
+            {
+                CreateUIpanel();
+            }
+            return mUIPanel;
+        }
     }
+
+    public UIBase()
+    {
+        
+    }
+
+    protected virtual void CreateUIpanel(){}
     public virtual void Init() { }
 
     public virtual void Update(float deltaTime) { }

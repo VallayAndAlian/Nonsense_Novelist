@@ -9,7 +9,7 @@ public class BattleUI : UIBase
         set => mBattle = value;
     }
     protected BattleBase mBattle;
-    public BattleUI(GameObject gameObject) : base(gameObject) 
+    public BattleUI()
     { 
 
     } 

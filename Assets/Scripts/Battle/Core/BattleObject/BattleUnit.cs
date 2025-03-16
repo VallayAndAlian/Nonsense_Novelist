@@ -87,6 +87,13 @@ public class BattleUnit : BattleObject
         set => mView = value;
         get => mView;
     }
+    protected BattleUnitSelfUI mInfoUI= null;
+
+    public BattleUnitSelfUI infoUI
+    {
+        set => mInfoUI = value;
+        get => mInfoUI;
+    }
 
 
     public BattleUnit(BattleUnitTable.Data data, UnitInstance unitInstance)
@@ -397,6 +404,9 @@ public class BattleUnit : BattleObject
         }
         
         Battle.ObjectManager.RemoveObject(this);
+
+        Battle.BattleUI.Hide(mInfoUI);
+        
     }
 
     #endregion
