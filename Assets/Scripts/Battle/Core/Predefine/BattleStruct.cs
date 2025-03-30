@@ -30,7 +30,7 @@ public class DealDamageCalc
     public float mDealDamageUp;
     public float mDealDamageDown;
 
-    void Reset()
+    public void Reset()
     {
         mDamageSource = DamageSource.None;
         mInstigator = null;

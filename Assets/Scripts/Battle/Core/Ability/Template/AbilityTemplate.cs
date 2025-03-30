@@ -26,16 +26,24 @@ public class AbilityTemplate : AbilityBase
         // mStackLimit = InitStackLimit(appliers);
     }
 
+    public override void AddParams()
+    {
+        base.AddParams();
+    }
+
     public void TriggeredBy(object triggerData)
     {
-        List<AbstractCharacter> targets = null;
+        List<BattleUnit> targets = null;
 
         if (mSelector != null)
             targets = mSelector.Pick(triggerData);
 
-        foreach (var applier in mAppliers)
+        if (targets is { Count: > 0 })
         {
-            applier.AddTask(targets, triggerData);
+            foreach (var applier in mAppliers)
+            {
+                applier.AddTask(targets, triggerData);
+            }
         }
     }
 
@@ -119,7 +127,7 @@ public class AbilityTemplate : AbilityBase
         mTrigger.OnAllyDealDamage(dmg);
     }
 
-    public override void OnPawnDeath(AbstractCharacter deceased, DamageReport dmg)
+    public override void OnPawnDeath(BattleUnit deceased, DamageReport dmg)
     {
         mTrigger.OnPawnDeath(deceased, dmg);
     }
@@ -136,41 +144,45 @@ public class AbilityModule
 {
     protected AbilityTemplate mOwner = null;
 
-    protected List<float> mArgs = new List<float>();
-    protected List<float> mInitArgs = new List<float>();
-
     protected int mParseIndex = 0;
-
-    protected virtual int CommonArgCount => 0;
+    
+    protected List<Formula> mParams = new List<Formula>();
+    protected Dictionary<string, CustomParam> mCustomParams = null;
 
     public void Bind(AbilityTemplate owner)
     {
         mOwner = owner;
     }
 
-    public bool Setup(List<float> args)
+    public virtual void AddParams() {}
+    
+    public bool ParseParams()
     {
-        if (args == null || args.Count < CommonArgCount)
-            return false;
+        AddParams();
         
-        mArgs.Clear();
-        mArgs.AddRange(args);
+        foreach (var param in mParams)
+        {
+            if (!ReadParam(param))
+            {
+                return false; 
+            }
+        }
         
-        mInitArgs.Clear();
-        mInitArgs.AddRange(args);
-        
-        return ParseParams();
+        return true; 
     }
     
-    public float GetArg(int index)
+    protected bool ReadParam(Formula param)
     {
-        if (index >= 0 && index < mArgs.Count)
-            return mArgs[index];
-        else
-            return 0;
+        if (mCustomParams.TryGetValue(param.mKey, out var data))
+        {
+            param.mValues = data.mValues;
+            return true;
+        }
+        
+        return false;
     }
-
-    protected virtual bool ParseParams() { return true; }
+    
+    public virtual void OnInit() {}
 
     public virtual void Update(float deltaTime)
     {

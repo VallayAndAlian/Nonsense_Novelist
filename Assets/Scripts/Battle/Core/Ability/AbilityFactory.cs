@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public enum AbilityType
 {
@@ -40,6 +41,9 @@ public class AbilityFactory
 
             AbilityBase ability = (AbilityBase)System.Activator.CreateInstance(type);
             ability.Data = data;
+
+            if (!ability.ParseParams())
+                return null;
             
             return ability;
         }
@@ -56,27 +60,32 @@ public class AbilityFactory
 
     public static AbilityTemplate CreateTemplateAbility(AbilityTable.Data data)
     {
-        var templateData = AbilityTemplateTable.Find(data.mKind);
-        if (templateData == null)
-            return null;
-
-        var triggerData = templateData.mTriggerData;
-        var trigger = AbilityTrigger.Create((AbilityTrigger.Type)triggerData.mType);
-        if (trigger == null || trigger.Setup(triggerData.mParams))
+        var triggerData = AbilityTriggerTable.Find(data.mTriggerKind);
+        if (triggerData == null)
             return null;
         
-        var selectorData = templateData.mSelectorData;
-        var selector = AbilityTargetSelector.Create((AbilityTargetSelector.Type)selectorData.mType);
-        if (selector == null || selector.Setup(selectorData.mParams))
+        var selectorData = AbilitySelectorTable.Find(data.mSelectorKind);
+        if (selectorData == null)
             return null;
 
-        var effectDataList = templateData.mEffectApplyDataList;
+        var effectDataList = data.mEffectApplierList.Select(AbilityEffectApplierTable.Find).Where(effectData => effectData != null).ToList();
+        if (effectDataList.Count == 0)
+            return null;
+
+        var trigger = AbilityTrigger.Create((AbilityTrigger.Type)triggerData.mType);
+        if (trigger == null || !trigger.Setup(triggerData))
+            return null;
+        
+        var selector = AbilityTargetSelector.Create((AbilityTargetSelector.Type)selectorData.mType);
+        if (selector == null || !selector.Setup(selectorData))
+            return null;
+
         var effectAppliers = new List<AbilityEffectApplier>();
         
         foreach (var effectData in effectDataList)
         {
             var effectApplier = AbilityEffectApplier.Create((AbilityEffectApplier.Type)effectData.mType);
-            if (effectApplier == null || effectApplier.Setup(effectData.mParams))
+            if (effectApplier == null || !effectApplier.Setup(effectData))
                 return null;
             
             effectAppliers.Add(effectApplier);

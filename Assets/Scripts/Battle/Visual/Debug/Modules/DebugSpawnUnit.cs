@@ -22,20 +22,7 @@ public class DebugSpawnUnit : BattleDebugModule
 
     public override void OnDrawImGui(BattleDebugContext context)
     {
-        mItems.TryGetValue(mPickIdx, out var comboPreviewValue);
-        if (ImGui.BeginCombo("UnitList", comboPreviewValue))
-        {
-            foreach (var it in mItems)
-            {
-                bool isSelected = (mPickIdx == it.Key);
-                if (ImGui.Selectable(it.Value, isSelected))
-                    mPickIdx = it.Key;
-                
-                if (isSelected)
-                    ImGui.SetItemDefaultFocus();
-            }
-            ImGui.EndCombo();
-        }
+        ImGuiFunc.Combo("UnitList", mItems, ref mPickIdx, (int key, string value) => value);
         
         if (mPickIdx > 0 && Input.GetKeyDown(KeyCode.C))
         {

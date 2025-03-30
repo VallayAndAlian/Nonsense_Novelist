@@ -17,6 +17,7 @@ public class AIController : UnitComponent
     protected AbilityBase mAbility = null; // 攻击技能
 
     protected BattleUnit mTarget = null;
+    public BattleUnit Target => mTarget;
 
     public void EnterState(EUnitState state)
     {

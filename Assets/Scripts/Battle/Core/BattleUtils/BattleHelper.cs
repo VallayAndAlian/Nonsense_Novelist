@@ -9,6 +9,8 @@ public class BattleHelper
     public static DealDamageCalc GetReusableDealDamageCalc(BattleUnit instigator)
     {
         //todo : fill calc info
+        mReusableDealDamageCalc.Reset();
+        
         mReusableDealDamageCalc.mInstigator = instigator;
         
         return mReusableDealDamageCalc;

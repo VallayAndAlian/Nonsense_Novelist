@@ -91,6 +91,7 @@ public class UnitViewBase : MonoBehaviour
     public void OnUnitDie()
     {
         GetComponent<SpriteRenderer>().enabled=false;
-        //Destroy(mRoot.gameObject);
+        mRoot.gameObject.SetActive(false);
+        // Destroy(mRoot.gameObject);
     }
 }

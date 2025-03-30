@@ -11,6 +11,9 @@ public class BattleDebugTool : ImGuiObjBase
 
     private GameObject mModuleRoot = null;
     private List<BattleDebugModule> mModules = new List<BattleDebugModule>();
+    
+    private BattleUnit mPickedUnit = null;
+    private int mMoudleID = 0;
 
     protected override void Start()
     {
@@ -27,11 +30,13 @@ public class BattleDebugTool : ImGuiObjBase
         RegisterModule<DebugBattleInfo>();
         RegisterModule<DebugSpawnUnit>();
         RegisterModule<DebugUnitInspector>();
+        RegisterModule<DebugAbility>();
     }
     
     private void RegisterModule<Ty>() where Ty : BattleDebugModule
     {
         Ty module = mModuleRoot.AddComponent<Ty>();
+        module.ModuleImGuiID = (++mMoudleID) * 10000;
         module.OnRegistered();
         mModules.Add(module);
     }
@@ -71,14 +76,15 @@ public class BattleDebugTool : ImGuiObjBase
         BattleDebugContext context = new BattleDebugContext
         {
             mBattle = mBattle,
-            mImGuiObj = obj
+            mImGuiObj = obj,
+            mPickedUnit = UpdatePickedUnit(),
         };
 
-        int imguiID = 0;
+        
         
         foreach (var module in mModules)
         {
-            ImGui.PushID((++imguiID) * 10000);
+            ImGui.PushID(module.ModuleImGuiID);
 
             bool bItemHovered = false;
             
@@ -105,5 +111,15 @@ public class BattleDebugTool : ImGuiObjBase
         }
         
         ImGui.End();
+    }
+
+    public BattleUnit UpdatePickedUnit()
+    {
+        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(1))
+        {
+            mPickedUnit = BVHelper.GetUnitAtPosition(ClientUtils.GetMouseWorldPosition());
+        }
+        
+        return mPickedUnit;
     }
 }

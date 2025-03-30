@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
+
 public class AbilityTable : MapTable<int, AbilityTable.Data>
 {
     public class Data
@@ -10,14 +11,12 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         public string mName;
         public string mDesc;
         public int mMaxStackCount;
+        
+        public int mTriggerKind;
+        public int mSelectorKind;
+        public List<int> mEffectApplierList;
 
-        public class CustomParam
-        {
-            public string mKey;
-            public List<float> mValues;
-        }
-
-        public Dictionary<string, CustomParam> mCustomParams;
+        public Dictionary<string, CustomParam> mCustomParams = new Dictionary<string, CustomParam>();
     }
 
     public override string AssetName => "AbilityData";
@@ -32,27 +31,14 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         
         // data.mMaxStackCount = reader.Read<int>();
         
-        int paramNum = reader.Read<int>();
-        data.mCustomParams = new Dictionary<string, Data.CustomParam>();
-        for (int i = 0; i < paramNum * 2; i += 2)
-        {
-            Data.CustomParam param = new Data.CustomParam
-            {
-                mKey = reader.Read<string>(),
-                mValues = reader.ReadVec<float>()
-            };
-
-            if (param.mValues is { Count: > 0 })
-            {
-                data.mCustomParams.Add(param.mKey, param);
-            }
-            else
-            {
-                reader.MarkReadInvalid();
-                return default;
-            }
-        }
-            
+        data.mTriggerKind = reader.Read<int>();
+        data.mSelectorKind = reader.Read<int>();
+        data.mEffectApplierList = reader.ReadVec<int>();
+        
+        if (!ReaderUtils.ParseCustomParams(reader, data.mCustomParams))
+            return default;
+        
+        
         return new KeyValuePair<int, Data>(data.mKind, data);
     }
 

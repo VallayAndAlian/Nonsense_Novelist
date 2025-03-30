@@ -3,6 +3,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Formula
+{
+    public string mKey;
+    public List<float> mValues;
+        
+    public Formula(string key)
+    {
+        mKey = key;
+    }
+
+    public float Evaluate(AbilityBase abi)
+    {
+        return mValues[0];
+    }
+        
+    public bool EvaluateBool(AbilityBase abi)
+    {
+        return mValues[0] > 0.5;
+    }
+        
+    public int EvaluateInt(AbilityBase abi)
+    {
+        return (int)mValues[0];
+    }
+}
+
 public class AbilityBase
 {
     protected bool mActivated = false;
@@ -16,7 +42,10 @@ public class AbilityBase
         get => mUnit;
     }
 
+    public BattleCamp Camp => Unit.Camp;
+
     public float ElapsedSec => Unit.Battle.Now;
+    public BattleBase Battle => Unit.Battle;
 
     public UnitViewBase UnitView => Unit?.UnitView;
 
@@ -127,7 +156,7 @@ public class AbilityBase
 
     public virtual void OnEnemyTakeDamage(DamageReport report) { }
     
-    public virtual void OnPawnDeath(AbstractCharacter deceased, DamageReport report) { }
+    public virtual void OnPawnDeath(BattleUnit deceased, DamageReport report) { }
     
     public virtual void OnSelfDeath(DamageReport report) { }
     
@@ -141,34 +170,8 @@ public class AbilityBase
     
     #region ParseCustomParams
 
-    public class Formula
-    {
-        public string mKey;
-        public List<float> mValues;
-        
-        public Formula(string key)
-        {
-            mKey = key;
-        }
-
-        public float Evaluate(AbilityBase abi)
-        {
-            return mValues[0];
-        }
-        
-        public bool EvaluateBool(AbilityBase abi)
-        {
-            return mValues[0] > 0.5;
-        }
-        
-        public int EvaluateInt(AbilityBase abi)
-        {
-            return (int)mValues[0];
-        }
-    }
-
-    protected List<Formula> mParams;
-
+    protected List<Formula> mParams = new List<Formula>();
+    
     public virtual void AddParams() {}
     
     public bool ParseParams()

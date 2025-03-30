@@ -17,7 +17,9 @@ public static class TableManager
     public static void AddTables()
     {
         Add(new AbilityTable());
-        Add(new AbilityTemplateTable());
+        Add(new AbilityTriggerTable());
+        Add(new AbilitySelectorTable());
+        Add(new AbilityEffectApplierTable());
         Add(new BattleUnitTable());
         Add(new BattleConfig());
         Add(new WordTable());

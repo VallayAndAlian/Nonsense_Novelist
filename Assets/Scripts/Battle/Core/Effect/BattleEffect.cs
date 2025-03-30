@@ -6,8 +6,8 @@ using UnityEngine;
 public enum EffectType
 {
     None = 0,
-    AttributeMod,
-    AttributePercentMod,
+    AttrMod,
+    AttrPercentMod,
 }
     
 public enum EffectDurationRule
