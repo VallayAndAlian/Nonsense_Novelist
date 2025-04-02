@@ -49,6 +49,7 @@ public class AbilityAutoAttack : AbilityBase
             {
                 // apply damage
                 DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(Unit);
+                dmg.mDamageSource = DamageSource.Ability;
                 dmg.mTarget = schedule.mTarget;
                 dmg.mAbility = this;
                 dmg.mMinAttack = Unit.GetAttributeValue(AttributeType.Attack);

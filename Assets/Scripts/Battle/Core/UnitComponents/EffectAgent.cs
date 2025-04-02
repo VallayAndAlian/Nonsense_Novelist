@@ -7,6 +7,11 @@ public class EffectAgent : UnitComponent
     protected List<BattleEffect> mEffects = new List<BattleEffect>();
     private List<BattleEffect> mRemovedEffect = new List<BattleEffect>();
 
+    public static BattleEffect ApplyEffectToTarget(BattleUnit target, BattleEffectSpec spec)
+    {
+        return target.EffectAgent?.ApplyEffect(spec);
+    }
+
     public BattleEffect ApplyEffect(BattleEffectSpec spec)
     {
         if (!CanApplyEffect(spec))
@@ -122,12 +127,12 @@ public class EffectAgent : UnitComponent
 
             switch (effect.mType)
             {
-                case EffectType.AttributeMod:
-                    Owner.AddMod((AttributeType)effect.mInputValue, effect.mInputValue);
+                case EffectType.AttrMod:
+                    Owner.AddMod((AttributeType)effect.mInputValueInt, effect.mInputValue);
                     break;
                 
-                case EffectType.AttributePercentMod:
-                    Owner.AddPercentMod((AttributeType)effect.mInputValue, effect.mInputValue);
+                case EffectType.AttrPercentMod:
+                    Owner.AddPercentMod((AttributeType)effect.mInputValueInt, effect.mInputValue);
                     break;
                 
                 default:

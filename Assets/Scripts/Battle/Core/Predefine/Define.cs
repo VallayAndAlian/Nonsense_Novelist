@@ -40,6 +40,14 @@ public enum DamageSource
     Ability,
 }
 
+public enum DamageType
+{
+    None = 0,
+    Fix,
+    Psy,
+    Magic,
+}
+
 [Flags]
 public enum DealDamageFlag
 {

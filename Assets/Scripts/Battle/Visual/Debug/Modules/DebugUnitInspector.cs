@@ -10,20 +10,45 @@ public class DebugUnitInspector : BattleDebugModule
     
     public override void OnDrawImGui(BattleDebugContext context)
     {
-        foreach (var unit in context.mBattle.ObjectManager.Units.Values)
+        int unitNum = 1;
+        
+        ImGui.PushID(ModuleImGuiID + unitNum * 10);
+        DrawUnit(context.mPickedUnit);
+        ImGui.PopID();
+
+        if (context.mPickedUnit is { ServantsAgent: { } })
         {
-            if (ImGui.TreeNode($"{unit.Data.mName}_{unit.ID}"))
+            var servants = context.mPickedUnit.ServantsAgent.Servants;
+            if (servants.Count > 0)
             {
-                DrawUnit(unit);
-                ImGui.TreePop();
+                if (ImGui.TreeNode("随从信息"))
+                {
+                    foreach (var servant in servants)
+                    {
+                        ImGui.PushID(ModuleImGuiID + (++unitNum) * 10);
+                        if (ImGui.TreeNode($"随从"))
+                        {
+                            DrawUnit(servant);
+                            ImGui.TreePop();
+                        }
+                        ImGui.PopID();
+                    }
+                    
+                    ImGui.TreePop();
+                }
             }
         }
     }
 
     public static void DrawUnit(BattleUnit unit)
     {
+        if (unit == null)
+            return;
+
         ImGui.Text($"单位Kind: {unit.UnitInstance.mKind}");
-        
+        ImGui.Text($"单位名称: {unit.Data.mName}");
+        ImGui.Text($"单位ID: {unit.ID}");
+
         ImGui.Text($"单位血量:");
         ImGui.SameLine();
         ImGui.ProgressBar(unit.HpPercent, new Vector2(150, 20));
@@ -39,9 +64,10 @@ public class DebugUnitInspector : BattleDebugModule
         {
             DrawAIInfo(unit);
             DrawUnitAttributes(unit);
-            
+
             ImGui.EndTabBar();
         }
+
         
     }
 
