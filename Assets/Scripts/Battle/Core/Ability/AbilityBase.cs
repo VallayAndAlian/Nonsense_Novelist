@@ -58,6 +58,10 @@ public class AbilityBase
         get => mData;
     }
     
+    public virtual bool IsUltra => false;
+    public virtual float CD => mData.mCoolDown;
+    
+    
     public void Init()
     {
         OnInit();
@@ -72,7 +76,9 @@ public class AbilityBase
     }
     
     protected virtual void OnRemoved() { }
-
+    
+    public virtual bool CanActivate() { return false; }
+    
     public bool TryActivate()
     {
         if (!mActivated)
@@ -121,6 +127,10 @@ public class AbilityBase
     {
         return null;
     }
+    
+    public virtual string AnimName => Data.mAnimName;
+
+    public virtual void OnAnimTrigger() { }
 
     #region DamageProcess
     

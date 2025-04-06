@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityAutoAttack : AbilityBase
+public class AbilityAutoAttack : AbilityActive
 {
     public class DamageSchedule
     {
@@ -16,24 +16,12 @@ public class AbilityAutoAttack : AbilityBase
 
     protected override void OnActivate()
     {
-        if (UnitView)
-        {
-            UnitView.ModelLayout.AnimEvents.OnActBegin += OnActBegin;
-            UnitView.ModelLayout.AnimEvents.OnActTrigger += OnActTrigger;
-            UnitView.ModelLayout.AnimEvents.OnActEnd += OnActEnd;
-        }
+        
     }
 
     protected override void OnDeactivate()
     {
-        if (UnitView)
-        {
-            UnitView.ModelLayout.AnimEvents.OnActBegin -= OnActBegin;
-            UnitView.ModelLayout.AnimEvents.OnActTrigger -= OnActTrigger;
-            UnitView.ModelLayout.AnimEvents.OnActEnd -= OnActEnd;
-        }
-
-        OnActEnd();
+        
     }
 
     protected override void Tick(float deltaTime)
@@ -68,13 +56,8 @@ public class AbilityAutoAttack : AbilityBase
         
         mRemovedSchedules.Clear();
     }
-
-    protected void OnActBegin()
-    {
-        
-    }
     
-    protected void OnActTrigger()
+    public override void OnAnimTrigger()
     {
         if (mTarget == null)
             return;
@@ -92,11 +75,6 @@ public class AbilityAutoAttack : AbilityBase
         schedule.mApplySec = ElapsedSec + 1.0f;
         
         mSchedules.Add(schedule);
-    }
-    
-    protected void OnActEnd()
-    {
-        
     }
 
     public override BattleUnit PickTarget()

@@ -79,8 +79,6 @@ public class BattleDebugTool : ImGuiObjBase
             mImGuiObj = obj,
             mPickedUnit = UpdatePickedUnit(),
         };
-
-        
         
         foreach (var module in mModules)
         {

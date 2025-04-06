@@ -1,5 +1,6 @@
-mKind,mType,mName,mDesc,TriggerKind,SelectorKind,EffectAppliers,ParamNumber,Params...
-2,10,自动攻击,自动攻击测试,0,0,0,0,
-3,1,测试模板技能1,测试模板技能1,1,1,1,0,
-4,1,测试模板技能2,测试模板技能2,2,1,1,0,
-5,1,测试模板技能3,测试模板技能3,3,1,1,0,
+mKind,mType,mName,mDesc,TriggerKind,SelectorKind,EffectAppliers,AnimName,CD,ParamNumber,Params...
+2,10,自动攻击,自动攻击测试,0,0,0,Attack,2.2,0,
+3,1,测试模板技能1,测试模板技能1,1,1,1,None,0,0,
+4,1,测试模板技能2,测试模板技能2,2,1,1,None,0,0,
+5,1,测试模板技能3,测试模板技能3,3,1,1,None,0,0,
+6,11,测试特殊技能,测试特殊技能,0,0,0,Ultra,10,0,

@@ -120,6 +120,8 @@ public class BattleUnit : BattleObject
 
     protected void AddComponents()
     {
+        mWordComponent = new WordComponent();
+        RegisterComponent(mWordComponent);
         
         mAbilityAgent = new AbilityAgent();
         RegisterComponent(mAbilityAgent);
@@ -129,9 +131,6 @@ public class BattleUnit : BattleObject
         
         mAIAgent = new AIController();
         RegisterComponent(mAIAgent);
-
-        mWordComponent = new WordComponent();
-        RegisterComponent(mWordComponent);
 
 		if (Data.mInitType != BattleUnitType.Servant)
         {

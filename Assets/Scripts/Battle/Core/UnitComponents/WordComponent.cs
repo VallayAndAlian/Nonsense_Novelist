@@ -22,7 +22,7 @@ public class WordComponent : UnitComponent
         return mWordEntries.TryGetValue(wt, out var words) ? words : null;
     }
 
-    public override void Start()
+    protected override void OnRegistered()
     {
         mWordEntries.Clear();
         foreach (WordType wt in Enum.GetValues(typeof(WordType)))
@@ -34,6 +34,16 @@ public class WordComponent : UnitComponent
         }
 
         mAdjectiveWords = GetWordsByType(WordType.Adjective);
+    }
+
+    public override void Start()
+    {
+        foreach (var abi in mOwner.Data.mTalents)
+        {
+            AddWord(abi);
+        }
+        
+        AddWord(mOwner.Data.mRoles);
     }
 
     public override void Update(float deltaTime)

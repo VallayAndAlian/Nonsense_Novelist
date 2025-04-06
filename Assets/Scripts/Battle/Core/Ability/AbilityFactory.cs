@@ -13,6 +13,7 @@ public enum AbilityType
     AttributePercentMod,
     
     AutoAttack = 10,
+    TestUltra = 11,
 }
 
 public class AbilityFactory
@@ -22,6 +23,7 @@ public class AbilityFactory
         { AbilityType.TemplateAbility, typeof(AbilityTemplate) },
         { AbilityType.PermanentAttribute, typeof(AbilityPermanentAttribute) },
         { AbilityType.AutoAttack, typeof(AbilityAutoAttack) },
+        { AbilityType.TestUltra, typeof(AbilityTestUltra) },
     };
 
     public static AbilityBase CreateAbility(int abiID)

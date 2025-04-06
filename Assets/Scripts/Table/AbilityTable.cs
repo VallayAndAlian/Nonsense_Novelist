@@ -10,11 +10,15 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         public AbilityType mType;
         public string mName;
         public string mDesc;
-        public int mMaxStackCount;
         
         public int mTriggerKind;
         public int mSelectorKind;
         public List<int> mEffectApplierList;
+        
+        public string mAnimName;
+
+        public float mCoolDown;
+        public int mMaxStackCount;
 
         public Dictionary<string, CustomParam> mCustomParams = new Dictionary<string, CustomParam>();
     }
@@ -34,6 +38,9 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         data.mTriggerKind = reader.Read<int>();
         data.mSelectorKind = reader.Read<int>();
         data.mEffectApplierList = reader.ReadVec<int>();
+        
+        data.mAnimName = reader.Read<string>();
+        data.mCoolDown = reader.Read<float>();
         
         if (!ReaderUtils.ParseCustomParams(reader, data.mCustomParams))
             return default;

@@ -1,2 +1,4 @@
-Kind,TriggerType,TriggerParasCount,TriggerParams,SelectorType,SelectorParasCount,SelectorParams,EffectNum,EffectType,EffectParasCount,EffectParams
-1,1,1,1|2|3,1,1,1|2|3,1,1,1,1|2|3
+Kind,TriggerType,TriggerParams,SelectorType,SelectorParams,EffectNum,EffectType,EffectParams
+3,1,1|1|0,1,0,1,1,1|2|3
+4,2,0|1|10,1,0,1,1,1|2|3
+5,3,1|1|0|5,1,0,1,1,1|2|3

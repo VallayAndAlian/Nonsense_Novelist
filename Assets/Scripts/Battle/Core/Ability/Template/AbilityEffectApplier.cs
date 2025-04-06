@@ -25,6 +25,22 @@ public class AbilityEffectApplier : AbilityModule
                 applier = new AMEATest();
                 break;
             
+            case Type.AttrMod:
+                applier = new AMEAAttrMod();
+                break;
+            
+            case Type.AttrPercentMod:
+                applier = new AMEAAttrPercentMod();
+                break;
+            
+            case Type.Damage:
+                applier = new AMEADamage();
+                break;
+            
+            case Type.AttrDamage:
+                applier = new AMEAAttrDamage();
+                break;
+            
             default:
                 break;
         }

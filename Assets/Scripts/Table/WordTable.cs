@@ -41,6 +41,7 @@ public class WordTable : MapTable<int, WordTable.Data>
         data.mName = reader.Read<string>();
         data.mBook = (BookNameEnum)reader.Read<int>();
         data.mShootType = (ShootType)reader.Read<int>();
+        data.mDuration = reader.Read<float>();
         data.mTags = reader.ReadVec<int>();
         data.mAbilities = reader.ReadVec<int>();
 
