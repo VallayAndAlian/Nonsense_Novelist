@@ -17,6 +17,9 @@ public class UnitViewBase : MonoBehaviour
 
     protected List<UnitSlot> mServantSlots = new List<UnitSlot>();
 
+    public Vector3 Pos => mRoot.transform.position;
+    public Vector3 CenterPos => Pos;//todo: replace it with a real center pos
+
     public bool IsCompatibleType(BattleUnit role)
     {
         return true;
@@ -77,15 +80,6 @@ public class UnitViewBase : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void OnStartEmit(EmitMeta meta)
-    {
-        // create projectile
-        var projObj = Object.Instantiate(mAsset.weaponProj);
-        var proj = projObj.GetComponent<NnProjectile>();
-        
-        proj.Emit(this, meta);
     }
 
     public void OnUnitDie()

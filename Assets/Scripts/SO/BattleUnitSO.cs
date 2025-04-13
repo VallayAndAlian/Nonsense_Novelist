@@ -1,7 +1,7 @@
 ﻿using UnityEditor.Animations;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewBattleUnitSO", menuName = "BattleUnitData")]
+[CreateAssetMenu(fileName = "NewBattleUnitSO", menuName = "BattleSO/BattleUnitData")]
 public class BattleUnitSO : ScriptableObject
 {
     [Header("基础信息信息")][Space(5)]

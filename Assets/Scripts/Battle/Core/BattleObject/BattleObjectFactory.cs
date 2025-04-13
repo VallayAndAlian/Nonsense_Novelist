@@ -183,4 +183,36 @@ public class BattleObjectFactory : BattleModule
         
         return unit;
     }
+    
+    
+    public static void StartEmit(EmitMeta meta)
+    {
+        // create projectile
+        var projData = EmitTable.Find(meta.mProjKind);
+        if (projData == null)
+        {
+            meta.OnHitTarget();
+            return;
+        }
+        
+        var projAsset = AssetManager.Load<EmitSO>("SO/Emit", projData.mAsset);
+        if (projAsset == null)
+        {
+            meta.OnHitTarget();
+            return;
+        }
+        
+        var projObj = Object.Instantiate(projAsset.projObject);
+        var proj = projObj != null ? projObj.GetComponent<NnProjectile>() : null;
+        if (proj == null)
+        {
+            meta.OnHitTarget();
+            return;
+        }
+        
+        meta.mData = projData;
+        proj.Setup(meta, projAsset);
+        
+        proj.Emit();
+    }
 }

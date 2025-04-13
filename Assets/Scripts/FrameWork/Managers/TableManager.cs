@@ -26,6 +26,7 @@ public static class TableManager
         Add(new MailTable());
         Add(new LevelTable());
         Add(new PhaseTable());
+        Add(new EmitTable());
     }
 
     public static void ReadTables()

@@ -8,7 +8,9 @@ public class AbilityTemplate : AbilityBase
     protected AbilityTrigger mTrigger = null;
     protected AbilityTargetSelector mSelector = null;
     protected List<AbilityEffectApplier> mAppliers = new List<AbilityEffectApplier>();
-    
+
+    public override bool IsUltra => mTrigger.CanTriggerByOther();
+
     public AbilityTemplate(AbilityTrigger trigger, AbilityTargetSelector selector, List<AbilityEffectApplier> appliers)
     {
         mTrigger = trigger;
@@ -45,6 +47,31 @@ public class AbilityTemplate : AbilityBase
                 applier.AddTask(targets, triggerData);
             }
         }
+    }
+
+    public override bool CanActivate()
+    {
+        if (!mTrigger.CanTriggerByOther())
+            return false;
+        
+        return mTrigger.ShouldTrigger();
+    }
+
+    public override BattleUnit PickTarget()
+    {
+        if (!mTrigger.CanTriggerByOther())
+            return null;
+        
+        var tgts = mSelector.Pick(null);
+        return tgts.Count > 0 ? tgts[0] : null;
+    }
+
+    public override void OnAnimTrigger()
+    {
+        if (!mTrigger.CanTriggerByOther())
+            return;
+        
+        mTrigger.TriggerDirect();
     }
 
     protected override void Tick(float deltaTime)

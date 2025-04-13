@@ -115,7 +115,32 @@ public class AbilityEffectApplier : AbilityModule
         }
     }
 
-    public virtual void Apply(List<BattleUnit> targets, object triggerData) { }
+    public virtual void Apply(List<BattleUnit> targets, object triggerData)
+    {
+        if (mOwner.Data.mProjKind > 0)
+        {
+            foreach (var tgt in targets)
+            {
+                EmitMeta meta = new EmitMeta();
+                meta.mProjKind = mOwner.Data.mProjKind;
+                meta.mInstigator = mOwner.Unit;
+                meta.mTarget = tgt;
+                meta.mAbility = mOwner;
+                meta.mHitCallBack = (tgt1) => Apply(tgt1, triggerData);
+
+                BattleObjectFactory.StartEmit(meta);
+            }
+        }
+        else
+        {
+            foreach (var tgt in targets)
+            {
+                Apply(tgt, triggerData);
+            }
+        }
+    }
+    
+    public virtual void Apply(BattleUnit target, object triggerData) { }
 
     public override void Update(float deltaTime)
     {
@@ -135,12 +160,9 @@ public class AbilityEffectApplier : AbilityModule
 
 public class AMEATest : AbilityEffectApplier
 {
-    public override void Apply(List<BattleUnit> targets, object triggerData)
+    public override void Apply(BattleUnit target, object triggerData)
     {
-        foreach (var tgt in targets)
-        {
-            Debug.Log($"Apply to target {tgt.Data.mName}");
-        }
+        Debug.Log($"Apply to target {target.Data.mName}");
     }
 }
 
@@ -148,26 +170,23 @@ public class AMEAAttrMod : AbilityEffectApplier
 {
     protected Formula mAttrType = new Formula("attr_type");
     protected Formula mValue = new Formula("value");
-    
-    public override void Apply(List<BattleUnit> targets, object triggerData)
-    {
-        foreach (var tgt in targets)
-        {
-            BattleEffectSpec spec = new BattleEffectSpec();
-            spec.mType = EffectType.AttrMod;
-            spec.mInstigator = mOwner.Unit;
-            spec.mTarget = tgt;
-            spec.mInputValueInt = mAttrType.EvaluateInt(mOwner);
-            spec.mInputValue = mValue.Evaluate(mOwner);
-            spec.mDuration = mDuration;
-            spec.mDurationRule = mHasDuration ? EffectDurationRule.HasDuration : EffectDurationRule.Script;
-            spec.mStackRule = EffectStackRule.Target;
-            spec.mStackDurationRule = EffectStackDurationRule.Refresh;
-            spec.mAbility = mOwner;
-            spec.mMaxStackCount = mStackLimit;
 
-            EffectAgent.ApplyEffectToTarget(tgt, spec);
-        }
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        BattleEffectSpec spec = new BattleEffectSpec();
+        spec.mType = EffectType.AttrMod;
+        spec.mInstigator = mOwner.Unit;
+        spec.mTarget = target;
+        spec.mInputValueInt = mAttrType.EvaluateInt(mOwner);
+        spec.mInputValue = mValue.Evaluate(mOwner);
+        spec.mDuration = mDuration;
+        spec.mDurationRule = mHasDuration ? EffectDurationRule.HasDuration : EffectDurationRule.Script;
+        spec.mStackRule = EffectStackRule.Target;
+        spec.mStackDurationRule = EffectStackDurationRule.Refresh;
+        spec.mAbility = mOwner;
+        spec.mMaxStackCount = mStackLimit;
+
+        EffectAgent.ApplyEffectToTarget(target, spec);
     }
 }
 
@@ -175,26 +194,23 @@ public class AMEAAttrPercentMod : AbilityEffectApplier
 {
     protected Formula mAttrType = new Formula("attr_type");
     protected Formula mValue = new Formula("value");
-    
-    public override void Apply(List<BattleUnit> targets, object triggerData)
-    {
-        foreach (var tgt in targets)
-        {
-            BattleEffectSpec spec = new BattleEffectSpec();
-            spec.mType = EffectType.AttrPercentMod;
-            spec.mInstigator = mOwner.Unit;
-            spec.mTarget = tgt;
-            spec.mInputValueInt = mAttrType.EvaluateInt(mOwner);
-            spec.mInputValue = mValue.Evaluate(mOwner);
-            spec.mDuration = mDuration;
-            spec.mDurationRule = mHasDuration ? EffectDurationRule.HasDuration : EffectDurationRule.Script;
-            spec.mStackRule = EffectStackRule.Target;
-            spec.mStackDurationRule = EffectStackDurationRule.Refresh;
-            spec.mAbility = mOwner;
-            spec.mMaxStackCount = mStackLimit;
 
-            EffectAgent.ApplyEffectToTarget(tgt, spec);
-        }
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        BattleEffectSpec spec = new BattleEffectSpec();
+        spec.mType = EffectType.AttrPercentMod;
+        spec.mInstigator = mOwner.Unit;
+        spec.mTarget = target;
+        spec.mInputValueInt = mAttrType.EvaluateInt(mOwner);
+        spec.mInputValue = mValue.Evaluate(mOwner);
+        spec.mDuration = mDuration;
+        spec.mDurationRule = mHasDuration ? EffectDurationRule.HasDuration : EffectDurationRule.Script;
+        spec.mStackRule = EffectStackRule.Target;
+        spec.mStackDurationRule = EffectStackDurationRule.Refresh;
+        spec.mAbility = mOwner;
+        spec.mMaxStackCount = mStackLimit;
+
+        EffectAgent.ApplyEffectToTarget(target, spec);
     }
 }
 
@@ -203,36 +219,33 @@ public class AMEADamage : AbilityEffectApplier
     protected Formula mDamageType = new Formula("damage_type");
     protected Formula mDamageTimes = new Formula("damage_times");
     protected Formula mDamageValue = new Formula("damage_value");
-    
-    public override void Apply(List<BattleUnit> targets, object triggerData)
+
+    public override void Apply(BattleUnit target, object triggerData)
     {
-        foreach (var tgt in targets)
+        DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(mOwner.Unit);
+        dmg.mTarget = target;
+        dmg.mAbility = mOwner;
+        dmg.mMinAttack = mDamageValue.Evaluate(mOwner);
+        dmg.mMaxAttack = dmg.mMinAttack;
+
+        switch ((DamageType)mDamageType.EvaluateInt(mOwner))
         {
-            DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(mOwner.Unit);
-            dmg.mTarget = tgt;
-            dmg.mAbility = mOwner;
-            dmg.mMinAttack = mDamageValue.Evaluate(mOwner);
-            dmg.mMaxAttack = dmg.mMinAttack;
+            case DamageType.Fix:
+                dmg.mFlag |= DealDamageFlag.Fixed;
+                break;
 
-            switch ((DamageType)mDamageType.EvaluateInt(mOwner))
-            {
-                case DamageType.Fix:
-                    dmg.mFlag |= DealDamageFlag.Fixed;
-                    break;
-                
-                case DamageType.Magic:
-                    dmg.mMagic = true;
-                    break;
-                
-                case DamageType.Psy:
-                    dmg.mMagic = false;
-                    break;
-            }
+            case DamageType.Magic:
+                dmg.mMagic = true;
+                break;
 
-            for (int i = 0; i < mDamageTimes.EvaluateInt(mOwner); i++)
-            {
-                DamageHelper.ProcessDamage(dmg);
-            }
+            case DamageType.Psy:
+                dmg.mMagic = false;
+                break;
+        }
+
+        for (int i = 0; i < mDamageTimes.EvaluateInt(mOwner); i++)
+        {
+            DamageHelper.ProcessDamage(dmg);
         }
     }
 }
@@ -243,37 +256,34 @@ public class AMEAAttrDamage : AbilityEffectApplier
     protected Formula mDamageTimes = new Formula("damage_times");
     protected Formula mDamageRatio = new Formula("damage_ratio");
     protected Formula mAttrType = new Formula("attr_type");
-    
-    public override void Apply(List<BattleUnit> targets, object triggerData)
+
+    public override void Apply(BattleUnit target, object triggerData)
     {
-        foreach (var tgt in targets)
+        DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(mOwner.Unit);
+        dmg.mDamageSource = DamageSource.Ability;
+        dmg.mTarget = target;
+        dmg.mAbility = mOwner;
+        dmg.mMinAttack = mOwner.Unit.GetAttributeValue((AttributeType)mAttrType.EvaluateInt(mOwner)) * mDamageRatio.Evaluate(mOwner);
+        dmg.mMaxAttack = dmg.mMinAttack;
+
+        switch ((DamageType)mDamageType.EvaluateInt(mOwner))
         {
-            DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(mOwner.Unit);
-            dmg.mDamageSource = DamageSource.Ability;
-            dmg.mTarget = tgt;
-            dmg.mAbility = mOwner;
-            dmg.mMinAttack = mOwner.Unit.GetAttributeValue((AttributeType)mAttrType.EvaluateInt(mOwner)) * mDamageRatio.Evaluate(mOwner);
-            dmg.mMaxAttack = dmg.mMinAttack;
+            case DamageType.Fix:
+                dmg.mFlag |= DealDamageFlag.Fixed;
+                break;
 
-            switch ((DamageType)mDamageType.EvaluateInt(mOwner))
-            {
-                case DamageType.Fix:
-                    dmg.mFlag |= DealDamageFlag.Fixed;
-                    break;
-                
-                case DamageType.Magic:
-                    dmg.mMagic = true;
-                    break;
-                
-                case DamageType.Psy:
-                    dmg.mMagic = false;
-                    break;
-            }
+            case DamageType.Magic:
+                dmg.mMagic = true;
+                break;
 
-            for (int i = 0; i < mDamageTimes.EvaluateInt(mOwner); i++)
-            {
-                DamageHelper.ProcessDamage(dmg);
-            }
+            case DamageType.Psy:
+                dmg.mMagic = false;
+                break;
+        }
+
+        for (int i = 0; i < mDamageTimes.EvaluateInt(mOwner); i++)
+        {
+            DamageHelper.ProcessDamage(dmg);
         }
     }
 }

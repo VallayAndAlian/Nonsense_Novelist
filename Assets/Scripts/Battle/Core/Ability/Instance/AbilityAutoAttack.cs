@@ -5,14 +5,11 @@ using UnityEngine;
 
 public class AbilityAutoAttack : AbilityActive
 {
-    public class DamageSchedule
+    protected override void OnInit()
     {
-        public BattleUnit mTarget = null;
-        public float mApplySec = 0;
+        base.OnInit();
+        Unit.AIAgent.RegisterAttackAbility(this);
     }
-
-    protected List<DamageSchedule> mSchedules = new List<DamageSchedule>();
-    protected List<DamageSchedule> mRemovedSchedules = new List<DamageSchedule>();
 
     protected override void OnActivate()
     {
@@ -23,39 +20,6 @@ public class AbilityAutoAttack : AbilityActive
     {
         
     }
-
-    protected override void Tick(float deltaTime)
-    {
-        base.Tick(deltaTime);
-        
-        foreach (var schedule in mSchedules)
-        {
-            if (schedule.mApplySec > ElapsedSec)
-                continue;
-
-            if (schedule.mTarget != null)
-            {
-                // apply damage
-                DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(Unit);
-                dmg.mDamageSource = DamageSource.Ability;
-                dmg.mTarget = schedule.mTarget;
-                dmg.mAbility = this;
-                dmg.mMinAttack = Unit.GetAttributeValue(AttributeType.Attack);
-                dmg.mMaxAttack = dmg.mMinAttack;
-
-                DamageHelper.ProcessDamage(dmg);
-            }
-
-            mRemovedSchedules.Add(schedule);
-        }
-
-        foreach (var schedule in mRemovedSchedules)
-        {
-            mSchedules.Remove(schedule);
-        }
-        
-        mRemovedSchedules.Clear();
-    }
     
     public override void OnAnimTrigger()
     {
@@ -64,17 +28,13 @@ public class AbilityAutoAttack : AbilityActive
 
         // emit projectile
         EmitMeta meta = new EmitMeta();
+        meta.mProjKind = mData.mProjKind;
+        meta.mInstigator = mUnit;
         meta.mTarget = mTarget;
         meta.mAbility = this;
-        meta.mDelay = 1.0f;
+        meta.mHitCallBack = OnHitTarget;
         
-        UnitView.OnStartEmit(meta);
-
-        DamageSchedule schedule = new DamageSchedule();
-        schedule.mTarget = mTarget;
-        schedule.mApplySec = ElapsedSec + 1.0f;
-        
-        mSchedules.Add(schedule);
+        BattleObjectFactory.StartEmit(meta);
     }
 
     public override BattleUnit PickTarget()
@@ -86,5 +46,21 @@ public class AbilityAutoAttack : AbilityActive
         }
         
         return null;
+    }
+
+    public void OnHitTarget(BattleUnit hitTarget)
+    {
+        if (hitTarget is not { IsAlive: true })
+            return;
+        
+        // apply damage
+        DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(Unit);
+        dmg.mDamageSource = DamageSource.Ability;
+        dmg.mTarget = hitTarget;
+        dmg.mAbility = this;
+        dmg.mMinAttack = Unit.GetAttributeValue(AttributeType.Attack);
+        dmg.mMaxAttack = dmg.mMinAttack;
+
+        DamageHelper.ProcessDamage(dmg);
     }
 }

@@ -111,7 +111,17 @@ public class DamageReport
 
 public class EmitMeta
 {
+    public delegate void HitTargetCallBack(BattleUnit target);
+
+    public int mProjKind;
+    public EmitTable.Data mData = null;
+    public BattleUnit mInstigator;
     public BattleUnit mTarget;
     public AbilityBase mAbility;
-    public float mDelay;
+    public HitTargetCallBack mHitCallBack;
+
+    public void OnHitTarget()
+    {
+        mHitCallBack?.Invoke(mTarget);
+    }
 }

@@ -93,7 +93,7 @@ public class AbilitySelectorTable : MapTable<int, AbilitySelectorTable.Data>
         public Dictionary<string, CustomParam> mCustomParams = new Dictionary<string, CustomParam>();
     }
     
-    public override string AssetName => "AbilityTriggerData";
+    public override string AssetName => "AbilitySelectorData";
     
     protected override KeyValuePair<int, Data> ParseMapEntry(TokenReader reader)
     {

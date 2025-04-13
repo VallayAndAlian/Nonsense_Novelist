@@ -1,4 +1,5 @@
 ﻿
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using UnityEngine;
 
 public class AbilityTrigger : AbilityModule
@@ -8,6 +9,7 @@ public class AbilityTrigger : AbilityModule
         Undefined = 0,
         Direct = 1,                                // 直接触发
         Tick = 2,                                  // 每隔多少秒
+        DirectCall = 3,                            // 外部驱动
         
         /* 伤害类 */
         AutoAttackTimes = 30,                       // 每隔几次自动攻击
@@ -34,6 +36,10 @@ public class AbilityTrigger : AbilityModule
             
             case Type.Tick:
                 trigger = new AMTTick();
+                break;
+            
+            case Type.DirectCall:
+                trigger = new AMTDirectCall();
                 break;
             
             case Type.AutoAttackTimes:
@@ -123,7 +129,7 @@ public class AbilityTrigger : AbilityModule
         return false;
     }
 
-    protected virtual bool ShouldTrigger()
+    public virtual bool ShouldTrigger()
     {
         if (!CoolDown)
             return false;
@@ -136,9 +142,11 @@ public class AbilityTrigger : AbilityModule
         
         return true;
     }
-    
-    public virtual void OnInit() {}
-    
+
+    public virtual bool CanTriggerByOther() { return false; }
+
+    public virtual void TriggerDirect() {}
+
     public virtual void OnPreDealDamageCalc(DealDamageCalc dmgCalc) { }
 
     public virtual void OnPreDealDamageCalcOtherAbility(DealDamageCalc dmgCalc) { }
@@ -193,12 +201,26 @@ public class AMTTick : AbilityTrigger
 }
 
 
+public class AMTDirectCall : AbilityTrigger
+{
+    public override bool CanTriggerByOther()
+    {
+        return true;
+    }
+
+    public override void TriggerDirect()
+    {
+        TryTrigger(null);
+    }
+}
+
+
 public class AMTAttackTimes : AbilityTrigger
 {
     protected Formula mAttackTimes = new Formula("attack_times");
     protected int mCurrentAttackTimes = 0;
     
-    protected virtual void AddParams()
+    public override void AddParams()
     {
         mParams.Add(mAttackTimes);
     }

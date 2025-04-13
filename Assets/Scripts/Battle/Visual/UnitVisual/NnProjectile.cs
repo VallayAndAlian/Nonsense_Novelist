@@ -15,29 +15,50 @@ public class NnProjectile : MonoBehaviour
     protected State mState = State.None;
     
     protected EmitMeta mMeta;
+    protected EmitSO mAsset;
+    
+    
     protected Vector3 mEmitPos;
     protected Vector3 mTargetPos;
     protected float mTimer = 0;
+    protected float mHitTime = 0;
     protected float mExpiredTime = 0;
     protected bool mExpired = false;
-    
-    public void Emit(UnitViewBase emitter, EmitMeta meta)
+
+    public void Setup(EmitMeta meta, EmitSO asset)
     {
         mMeta = meta;
-        
-        mEmitPos = emitter.ModelLayout.WeaponPart.position;
-        mTargetPos = meta.mTarget.UnitView.transform.position;
+        mAsset = asset;
+    }
+    
+    public void Emit()
+    {
+        if (mMeta.mData.mType == EmitType.EnemyToSelf)
+        {
+            mEmitPos = mMeta.mTarget.ViewPos;
+            mTargetPos = mMeta.mInstigator.UnitView.ModelLayout.WeaponPart.position;
+        }
+        else
+        {
+            mEmitPos = mMeta.mInstigator.UnitView.ModelLayout.WeaponPart.position;
+            mTargetPos = mMeta.mTarget.ViewPos;
+        }
         
         Vector3 offset = mTargetPos - mEmitPos;
         var transform1 = transform;
         transform1.position = mEmitPos;
         transform1.rotation = Quaternion.Euler(Mathf.Atan2(offset.y, offset.x), 0, 0);
+
+        mHitTime = offset.magnitude / mMeta.mData.mSpeed;
         
-        if (meta.mDelay <= 0)
-            meta.mDelay = 1.0f;
+        mExpiredTime = mHitTime + 1;
+        
+        if (mMeta.mData.mType == EmitType.EnemyToSelf)
+        {
+            mMeta.OnHitTarget();
+        }
         
         mState = State.Route;
-        mExpiredTime = meta.mDelay * 1.5f + 2;
     }
 
     private void Update()
@@ -48,7 +69,7 @@ public class NnProjectile : MonoBehaviour
         {
             case State.Route:
             {
-                float percent = mTimer / mMeta.mDelay;
+                float percent = mTimer / mHitTime;
                 transform.position = (1 - percent) * mEmitPos + percent * mTargetPos;
 
                 if (percent >= 1.0f)
@@ -75,6 +96,11 @@ public class NnProjectile : MonoBehaviour
     {
         if (mMeta.mTarget != null)
         {
+            if (mMeta.mData.mType == EmitType.SelfToEnemy)
+            {
+                mMeta.OnHitTarget();
+            }
+            
             // play hit effect
 
             Expired();

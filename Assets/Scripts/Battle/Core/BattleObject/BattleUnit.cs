@@ -40,6 +40,8 @@ public class BattleUnit : BattleObject
         set => mPos = value;
     }
 
+    public Vector3 ViewPos => UnitView != null ? UnitView.Pos : Vector3.zero;
+
     protected UnitSlot mSlot = null;
     public UnitSlot Slot
     {
@@ -53,6 +55,7 @@ public class BattleUnit : BattleObject
     protected BattleUnitTable.Data mData = null;
     public BattleUnitTable.Data Data => mData;
 
+    #region UnitComponent
     protected List<UnitComponent> mComponents = new List<UnitComponent>();
     public List<UnitComponent> Components => mComponents;
 
@@ -70,6 +73,7 @@ public class BattleUnit : BattleObject
     
     protected ServantsAgent mServantsAgent = null;
     public ServantsAgent ServantsAgent => mServantsAgent;
+    #endregion
 
     protected StatusManager mStatus = new StatusManager();
     public StatusManager Status => mStatus;

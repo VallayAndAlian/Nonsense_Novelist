@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "NewCardSO", menuName = "CardData")]
+[CreateAssetMenu(fileName = "NewCardSO", menuName = "BattleSO/CardData")]
     public class CardSO : ScriptableObject
     {
         [Header("基础信息信息")][Space(5)]

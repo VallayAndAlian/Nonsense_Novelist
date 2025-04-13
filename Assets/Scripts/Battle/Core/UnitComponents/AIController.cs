@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum EUnitState
 {
@@ -15,7 +16,7 @@ public class AIController : UnitComponent
     protected EUnitState mState = EUnitState.None;
     public EUnitState State => mState;
 
-    protected AbilityBase mAutoAttackAbility = null; // 攻击技能
+    protected AbilityBase mAttackAbility = null; // 攻击技能
     protected AbilityBase mUltraAbility = null; // 特殊技能
     
     protected BattleUnit mTarget = null;
@@ -23,81 +24,19 @@ public class AIController : UnitComponent
 
     protected bool hasBindAnimFunc = false;
 
-    public void EnterState(EUnitState state)
+    public void RegisterAttackAbility(AbilityBase abi)
     {
-        if (mState == state)
+        if (mAttackAbility != null)
+        {
+            Debug.LogError("repeat register attack ability");
             return;
-
-        switch (mState)
-        {
-            case EUnitState.Attack:
-            {
-                if (mAutoAttackAbility != null)
-                {
-                    mAutoAttackAbility.SetTarget(null);
-                    mAutoAttackAbility.TryDeactivate();
-                }
-                
-                mTarget = null;
-                
-                UnbindAnimFunc();
-                
-                break;
-            }
-
-            case EUnitState.Ultra:
-            {
-                if (mUltraAbility != null)
-                {
-                    mUltraAbility.SetTarget(null);
-                    mUltraAbility.TryDeactivate();
-                }
-                
-                mTarget = null;
-                
-                UnbindAnimFunc();
-                
-                break;
-            }
         }
-        
-        mState = state;
 
-        switch (mState)
-        {
-            case EUnitState.Idle:
-            {
-                if (mOwner.UnitView)
-                    mOwner.UnitView.ModelLayout.Animator.Play("idle", 0, 0);
-
-                break;
-            }
-
-            case EUnitState.Attack:
-            {
-                BindAnimFunc();
-                
-                if (mOwner.UnitView)
-                    mOwner.UnitView.ModelLayout.Animator.Play("attack", 0, 0);
-                
-                break;
-            }
-
-            case EUnitState.Ultra:
-            {
-                BindAnimFunc();
-                
-                if (mUltraAbility != null && mOwner.UnitView != null && !mUltraAbility.AnimName.Equals("None"))
-                    mOwner.UnitView.ModelLayout.Animator.Play(mUltraAbility.AnimName, 0, 0);
-                
-                break;
-            }
-        }
+        mAttackAbility = abi;
     }
 
     public override void Start()
     {
-        mAutoAttackAbility = mOwner.AbilityAgent.GetAbilityByType(AbilityType.AutoAttack);
         mState = EUnitState.Idle;
     }
 
@@ -132,27 +71,29 @@ public class AIController : UnitComponent
             if (!abi.CanActivate())
                 continue;
 
-            mTarget = abi.PickTarget();
-            if (mTarget == null)
+            var target = abi.PickTarget();
+            if (target == null)
                 continue;
 
-            abi.SetTarget(mTarget);
+            abi.SetTarget(target);
             if (abi.TryActivate())
             {
                 mUltraAbility = abi;
+                mTarget = target;
                 EnterState(EUnitState.Ultra);
                 return;
             }
         }
 
-        if (mAutoAttackAbility != null && mAutoAttackAbility.CanActivate())
+        if (mAttackAbility != null && mAttackAbility.CanActivate())
         {
-            mTarget = mAutoAttackAbility.PickTarget();
+            var target = mAttackAbility.PickTarget();
 
-            if (mTarget != null)
+            if (target != null)
             {
-                mAutoAttackAbility.SetTarget(mTarget);
-                if (mAutoAttackAbility.TryActivate())
+                mTarget = target;
+                mAttackAbility.SetTarget(mTarget);
+                if (mAttackAbility.TryActivate())
                 {
                     EnterState(EUnitState.Attack);
                 }
@@ -170,7 +111,7 @@ public class AIController : UnitComponent
             {
                 needStop = true;
             }
-            else if (mAutoAttackAbility is not { IsActivated: true })
+            else if (mAttackAbility is not { IsActivated: true })
             {
                 needStop = true;
             }
@@ -258,9 +199,9 @@ public class AIController : UnitComponent
         switch (State)
         {
             case EUnitState.Attack:
-                if (mAutoAttackAbility != null)
+                if (mAttackAbility != null)
                 {
-                    mAutoAttackAbility.OnAnimTrigger();
+                    mAttackAbility.OnAnimTrigger();
                 }
                 break;
 
@@ -276,5 +217,77 @@ public class AIController : UnitComponent
     protected void OnActEnd()
     {
         EnterState(EUnitState.Idle);
+    }
+    
+    public void EnterState(EUnitState state)
+    {
+        if (mState == state)
+            return;
+
+        switch (mState)
+        {
+            case EUnitState.Attack:
+            {
+                if (mAttackAbility != null)
+                {
+                    mAttackAbility.SetTarget(null);
+                    mAttackAbility.TryDeactivate();
+                }
+                
+                mTarget = null;
+                
+                UnbindAnimFunc();
+                
+                break;
+            }
+
+            case EUnitState.Ultra:
+            {
+                if (mUltraAbility != null)
+                {
+                    mUltraAbility.SetTarget(null);
+                    mUltraAbility.TryDeactivate();
+                }
+                
+                mTarget = null;
+                
+                UnbindAnimFunc();
+                
+                break;
+            }
+        }
+        
+        mState = state;
+
+        switch (mState)
+        {
+            case EUnitState.Idle:
+            {
+                if (mOwner.UnitView)
+                    mOwner.UnitView.ModelLayout.Animator.Play("idle", 0, 0);
+
+                break;
+            }
+
+            case EUnitState.Attack:
+            {
+                BindAnimFunc();
+                
+                if (mOwner.UnitView)
+                    mOwner.UnitView.ModelLayout.Animator.Play("attack", 0, 0);
+                
+                break;
+            }
+
+            case EUnitState.Ultra:
+            {
+                BindAnimFunc();
+                
+                if (mUltraAbility != null && !mUltraAbility.AnimName.Equals("None"))
+                    mOwner.UnitView.ModelLayout.Animator.Play(mUltraAbility.AnimName, 0, 0);
+                
+                break;
+            }
+        }
     }
 }

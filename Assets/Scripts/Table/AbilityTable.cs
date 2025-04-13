@@ -16,6 +16,7 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         public List<int> mEffectApplierList;
         
         public string mAnimName;
+        public int mProjKind;
 
         public float mCoolDown;
         public int mMaxStackCount;
@@ -40,6 +41,8 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         data.mEffectApplierList = reader.ReadVec<int>();
         
         data.mAnimName = reader.Read<string>();
+        data.mProjKind = reader.Read<int>();
+        
         data.mCoolDown = reader.Read<float>();
         
         if (!ReaderUtils.ParseCustomParams(reader, data.mCustomParams))
