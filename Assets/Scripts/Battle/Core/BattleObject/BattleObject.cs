@@ -1,5 +1,5 @@
 ﻿
-public class BattleObject
+public class BattleObject : CoreEntity
 {
     protected int mID = 0;
     public int ID

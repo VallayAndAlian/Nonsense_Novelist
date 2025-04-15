@@ -198,8 +198,4 @@ public class PinBallLauncher : BattleModule
         GameObject.Find("bulletroot").TryGetComponent<LineRenderer>(out trajectoryLine);
         launchPoint=GameObject.Find("bulletroot").transform.position;
     }
-    public override void Dispose()
-    {
-        base.Dispose();
-    }
 }

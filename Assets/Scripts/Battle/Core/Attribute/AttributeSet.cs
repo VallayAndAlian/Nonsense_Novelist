@@ -30,7 +30,8 @@ public class AttributeSet
 
             mAttributes.TryAdd(type, attr);
         }
-       OnAttributeChanged?.Invoke(this); 
+        
+        OnAttributeChanged?.Invoke(this); 
     }
     
 
@@ -71,8 +72,9 @@ public class AttributeSet
             else
             {
                 attr.mBaseValue += mod;
-            }
-           OnAttributeChanged?.Invoke(this); 
+            } 
+            
+            OnAttributeChanged?.Invoke(this); 
         }
     }
 
@@ -83,7 +85,8 @@ public class AttributeSet
             attr.mValue = attr.mBaseValue * (1 + attr.mPercentMod) + attr.mMod;
             attr.mMod = 0;
             attr.mPercentMod = 0;
-        }
+        } 
+        
         OnAttributeChanged?.Invoke(this); 
     }
 }

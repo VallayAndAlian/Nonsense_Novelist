@@ -1,6 +1,6 @@
 ﻿
 
-public class UnitComponent
+public class UnitComponent : CoreEntity
 {
     protected BattleUnit mOwner = null;
     protected bool mEnabled = true;

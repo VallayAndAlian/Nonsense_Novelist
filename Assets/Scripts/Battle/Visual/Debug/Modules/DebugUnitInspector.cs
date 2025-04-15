@@ -12,7 +12,7 @@ public class DebugUnitInspector : BattleDebugModule
     {
         int unitNum = 1;
         
-        ImGui.PushID(ModuleImGuiID + unitNum * 10);
+        ImGui.PushID(ModuleImGuiID + unitNum * 100);
         DrawUnit(context.mPickedUnit);
         ImGui.PopID();
 
@@ -25,7 +25,7 @@ public class DebugUnitInspector : BattleDebugModule
                 {
                     foreach (var servant in servants)
                     {
-                        ImGui.PushID(ModuleImGuiID + (++unitNum) * 10);
+                        ImGui.PushID(ModuleImGuiID + (++unitNum) * 100);
                         if (ImGui.TreeNode($"随从"))
                         {
                             DrawUnit(servant);
@@ -84,20 +84,33 @@ public class DebugUnitInspector : BattleDebugModule
     {
         if (ImGui.BeginTabItem("属性"))
         {
-            ImGui.Columns(2);
+            if (ImGui.Button("重置基础属性"))
+            {
+                unit.InitAttributes();
+            }
+            
+            ImGui.Columns(3);
             ImGui.Text("属性名");ImGui.NextColumn();
             ImGui.Text("属性值");ImGui.NextColumn();
+            ImGui.Text("修改值");ImGui.NextColumn();
 
             foreach (AttributeType attyType in Enum.GetValues(typeof(AttributeType)))
             {
+                ImGui.PushID(unit.ID * 100 + (int)attyType);
                 if (attyType == AttributeType.None)
                     continue;
 
                 ImGui.Text(attyType.ToString());
                 ImGui.NextColumn();
-                ImGui.Text($"{unit.GetAttributeValue(attyType)}");
+
+                var attr = unit.AttributeSet.GetAttribute(attyType);
+                ImGui.Text($"{attr.mValue}");
                 ImGui.NextColumn();
 
+                ImGui.InputFloat("", ref attr.mBaseValue);
+                ImGui.NextColumn();
+
+                ImGui.PopID();
             }
             
             ImGui.Columns();

@@ -164,9 +164,9 @@ public class CardDeckManager : BattleModule
     {
         base.Update(deltaSec);
     }
-    public override void Dispose()
+    protected override void OnDisposed()
     {
-        base.Dispose();
+        base.OnDisposed();
 
         currentCard = null;
         previewCards.Clear();

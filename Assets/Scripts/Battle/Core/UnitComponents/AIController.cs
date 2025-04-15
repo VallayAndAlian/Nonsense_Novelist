@@ -26,7 +26,7 @@ public class AIController : UnitComponent
 
     public void RegisterAttackAbility(AbilityBase abi)
     {
-        if (mAttackAbility != null)
+        if (mAttackAbility.IsValid())
         {
             Debug.LogError("repeat register attack ability");
             return;
@@ -85,7 +85,7 @@ public class AIController : UnitComponent
             }
         }
 
-        if (mAttackAbility != null && mAttackAbility.CanActivate())
+        if (mAttackAbility.IsValid() && mAttackAbility.CanActivate())
         {
             var target = mAttackAbility.PickTarget();
 
@@ -111,7 +111,7 @@ public class AIController : UnitComponent
             {
                 needStop = true;
             }
-            else if (mAttackAbility is not { IsActivated: true })
+            else if (!mAttackAbility.IsValid() || !mAttackAbility.IsActivated)
             {
                 needStop = true;
             }
@@ -133,7 +133,7 @@ public class AIController : UnitComponent
             {
                 needStop = true;
             }
-            else if (mUltraAbility is not { IsActivated: true })
+            else if (!mUltraAbility.IsValid() || !mUltraAbility.IsActivated)
             {
                 needStop = true;
             }
@@ -152,8 +152,7 @@ public class AIController : UnitComponent
 
     protected bool IsValidTarget(BattleUnit target)
     {
-
-        if (mTarget is not { IsAlive: true })
+        if (!mTarget.IsValid() || !mTarget.IsAlive)
             return false;
 
         return true;
@@ -199,14 +198,14 @@ public class AIController : UnitComponent
         switch (State)
         {
             case EUnitState.Attack:
-                if (mAttackAbility != null)
+                if (mAttackAbility.IsValid())
                 {
                     mAttackAbility.OnAnimTrigger();
                 }
                 break;
 
             case EUnitState.Ultra:
-                if (mUltraAbility != null)
+                if (mUltraAbility.IsValid())
                 {
                     mUltraAbility.OnAnimTrigger();
                 }
@@ -228,7 +227,7 @@ public class AIController : UnitComponent
         {
             case EUnitState.Attack:
             {
-                if (mAttackAbility != null)
+                if (mAttackAbility.IsValid())
                 {
                     mAttackAbility.SetTarget(null);
                     mAttackAbility.TryDeactivate();
@@ -243,7 +242,7 @@ public class AIController : UnitComponent
 
             case EUnitState.Ultra:
             {
-                if (mUltraAbility != null)
+                if (mUltraAbility.IsValid())
                 {
                     mUltraAbility.SetTarget(null);
                     mUltraAbility.TryDeactivate();

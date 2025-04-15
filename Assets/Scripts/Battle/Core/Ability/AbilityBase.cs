@@ -29,7 +29,7 @@ public class Formula
     }
 }
 
-public class AbilityBase
+public class AbilityBase : CoreEntity
 {
     protected bool mActivated = false;
     public bool IsActivated => mActivated;
@@ -69,7 +69,7 @@ public class AbilityBase
 
     protected virtual void OnInit() { }
 
-    public void Dispose()
+    protected override void OnDisposed()
     {
         TryDeactivate();
         OnRemoved();

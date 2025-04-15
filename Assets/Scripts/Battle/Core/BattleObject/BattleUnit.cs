@@ -113,7 +113,7 @@ public class BattleUnit : BattleObject
         AddComponents();
     }
 
-    protected void InitAttributes()
+    public void InitAttributes()
     {
         AttributeSet.Define(AttributeType.MaxHp, mData.mMaxHp);
         AttributeSet.Define(AttributeType.Attack, mData.mAttack);

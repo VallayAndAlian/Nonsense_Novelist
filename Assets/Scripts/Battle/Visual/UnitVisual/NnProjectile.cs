@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Object = System.Object;
 
 
 public class NnProjectile : MonoBehaviour
@@ -29,6 +30,14 @@ public class NnProjectile : MonoBehaviour
     {
         mMeta = meta;
         mAsset = asset;
+        
+        var projRoot = GameObject.Find("ProjectileRoot");
+        if (projRoot == null)
+        {
+            projRoot = new GameObject("ProjectileRoot");
+        }
+
+        transform.parent = projRoot.transform;
     }
     
     public void Emit()
@@ -48,6 +57,11 @@ public class NnProjectile : MonoBehaviour
         var transform1 = transform;
         transform1.position = mEmitPos;
         transform1.rotation = Quaternion.Euler(Mathf.Atan2(offset.y, offset.x), 0, 0);
+        
+        if (mAsset.emitterFx != null)
+        {
+            Instantiate(mAsset.emitterFx, transform1.position, transform1.rotation);
+        }
 
         mHitTime = offset.magnitude / mMeta.mData.mSpeed;
         
@@ -102,6 +116,10 @@ public class NnProjectile : MonoBehaviour
             }
             
             // play hit effect
+            if (mAsset.arriverFx != null)
+            {
+                Instantiate(mAsset.arriverFx, mTargetPos, Quaternion.Euler(0, 0, 0));
+            }
 
             Expired();
         }

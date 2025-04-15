@@ -1,5 +1,5 @@
 ﻿
-public class BattleModule
+public class BattleModule : CoreEntity
 {
     private BattleBase _mBattle;
     public BattleBase Battle
@@ -19,6 +19,4 @@ public class BattleModule
     public virtual void LateUpdate(float deltaSec) {}
 
     public virtual void LateFixedUpdate(float deltaSec) {}
-    
-    public virtual void Dispose() {}
 }

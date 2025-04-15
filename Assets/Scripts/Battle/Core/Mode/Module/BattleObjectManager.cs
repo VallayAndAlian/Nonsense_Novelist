@@ -94,6 +94,7 @@ public class BattleObjectManager : BattleModule
             {
                 if (objIt.IsPendingKill)
                 {
+                    objIt.Dispose();
                     mRemovedIDs.Add(objIt.ID);
                 }
             }
@@ -111,6 +112,7 @@ public class BattleObjectManager : BattleModule
             {
                 if (objIt.IsPendingKill)
                 {
+                    objIt.Dispose();
                     mRemovedIDs.Add(objIt.ID);
                 }
             }
