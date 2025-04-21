@@ -79,7 +79,10 @@ public class BattleDebugTool : ImGuiObjBase
             mImGuiObj = obj,
             mPickedUnit = UpdatePickedUnit(),
         };
-        
+        if(mPickedUnit != null)
+        {
+            DrawUtils.DrawRotatedSquare(mPickedUnit.ViewPos,2, Time.time * 45,Color.red);
+        }
         foreach (var module in mModules)
         {
             ImGui.PushID(module.ModuleImGuiID);

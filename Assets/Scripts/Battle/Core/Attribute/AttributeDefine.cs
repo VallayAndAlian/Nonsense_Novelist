@@ -10,6 +10,14 @@ public enum AttributeType
     Psy,
     San,
 }
+public enum ComparisonOperator
+{
+    LessThan,
+    LessOrEqual,
+    Equal,
+    GreaterOrEqual,
+    GreaterThan
+}
 
 public class Attribute
 {

@@ -4,3 +4,6 @@ mKind,mType,mName,mDesc,TriggerKind,SelectorKind,EffectAppliers,AnimName,ProjKin
 4,1,测试模板技能2,测试模板技能2,2,1,1,None,0,0,0,
 5,1,测试模板技能3,测试模板技能3,3,4,1,attack,1,6,0,
 6,11,测试特殊技能,测试特殊技能,0,0,0,Ultra,0,10,0,
+7,1,测试模板技能4,测试模板技能4,5,5,2,None,0,5,0,
+8,1,测试模板技能5,测试模板技能5,4,2,1,None,0,3,0,
+9,1,测试模板技能6,测试模板技能6,6,1,2,None,0,0,0,

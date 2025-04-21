@@ -1,6 +1,7 @@
 ﻿
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class AbilityTrigger : AbilityModule
 {
@@ -22,6 +23,9 @@ public class AbilityTrigger : AbilityModule
         AllyDeath = 102,                             // 友军死亡时
         EnemyDeath = 103,                            // 敌人死亡时
         ServantDeath = 104,                          // 随从死亡时
+
+        SelfAttributeThreshold=130,                  //自身属性达到多少
+        NounTreshold=131,                            //拥有多少名词时
     }
 
     public static AbilityTrigger Create(Type type)
@@ -65,7 +69,14 @@ public class AbilityTrigger : AbilityModule
             case Type.ServantDeath:
                 trigger = new AMTServantDeath();
                 break;
-            
+
+            case Type.SelfAttributeThreshold:
+                trigger = new AMTSelfAttributeThreshold();
+                break;
+            case Type.NounTreshold:
+                trigger = new NounTreshold();
+                break;
+
             default:
                 break;
         }
@@ -284,6 +295,68 @@ public class AMTServantDeath : AbilityTrigger
         if (deceased.ServantOwner == mOwner.Unit)
         {
             TryTrigger(report);
+        }
+    }
+}
+public class AMTSelfAttributeThreshold : AbilityTrigger
+{
+    protected Formula mTargetAttribute = new Formula("attribute_type");
+    protected Formula mComparisonOp = new Formula("comparison_op");
+    protected Formula mThreshold = new Formula("threshold");
+    public override void AddParams()
+    {
+       mParams.AddRange(new[] { mTargetAttribute, mComparisonOp, mThreshold });
+    }
+    public override void Update(float deltaTime)
+    {
+        if (CheckCondition())
+        {
+            TryTrigger(null);
+        }
+    }
+    private bool CheckCondition()
+    {
+        var attributeType = (AttributeType)mTargetAttribute.EvaluateInt(mOwner);
+        var currentValue = mOwner.Unit.GetAttributeValue(attributeType);
+        var threshold = mThreshold.Evaluate(mOwner)*mOwner.Unit.MaxHp;
+
+        return CompareValues(
+            currentValue,
+            threshold,
+            (ComparisonOperator)mComparisonOp.EvaluateInt(mOwner)
+        );
+    }
+    private bool CompareValues(float a, float b, ComparisonOperator op)
+    {
+        return op switch
+        {
+            ComparisonOperator.LessThan => a < b,
+            ComparisonOperator.LessOrEqual => a <= b,
+            ComparisonOperator.Equal => Mathf.Approximately(a, b),
+            ComparisonOperator.GreaterOrEqual => a >= b,
+            ComparisonOperator.GreaterThan => a > b,
+            _ => false
+        };
+    }
+}
+public class NounTreshold : AbilityTrigger
+{
+    protected Formula mNounTreshold = new Formula("noun_treshold");
+    protected int mCurrentNounNum;
+    public override void OnInit()
+    {
+        mCurrentNounNum=mOwner.Unit.WordComponent.GetWordsByType(WordType.Noun).Count;
+    }
+    public override void AddParams()
+    {
+        mParams.Add(mNounTreshold);
+    }
+    public override void Update(float deltaTime)
+    {
+        mCurrentNounNum = mOwner.Unit.WordComponent.GetWordsByType(WordType.Noun).Count;
+        if (mCurrentNounNum>=mNounTreshold.EvaluateInt(mOwner))
+        {
+            TryTrigger(null);
         }
     }
 }
