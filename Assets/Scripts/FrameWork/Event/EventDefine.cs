@@ -7,4 +7,7 @@ public enum EventEnum
 	
 	UnitSpawn,
 	UnitDie,
+	
+	ApplyEffect,
+	RemoveEffect,
 }

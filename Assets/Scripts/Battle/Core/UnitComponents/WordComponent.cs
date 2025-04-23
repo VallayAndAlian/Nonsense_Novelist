@@ -22,6 +22,12 @@ public class WordComponent : UnitComponent
         return mWordEntries.TryGetValue(wt, out var words) ? words : null;
     }
 
+    public string GetFirstPropertyName()
+    {
+        var list = GetWordsByType(WordType.Property);
+        return list is { Count: > 0 } ? list[0].mData.mName : "";
+    }
+
     protected override void OnRegistered()
     {
         mWordEntries.Clear();

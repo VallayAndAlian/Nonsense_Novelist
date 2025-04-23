@@ -21,10 +21,10 @@ class MouseDown : MonoBehaviour
     private Text[] texts=new Text[2];
     /// <summary>抽象角色</summary>
     [HideInInspector]
-    public AbstractCharacter abschara;
+    public UnitViewBase abschara;
     /// <summary>抽象角色身份</summary>
     [HideInInspector]
-    public AbstractRole absRole;
+    public BattleUnit absRole;
     /// <summary>抽象形容词</summary>
     [HideInInspector]
     public AbstractAdjectives absAdj;
@@ -75,7 +75,8 @@ class MouseDown : MonoBehaviour
                     isShow = true;
 
                     //获取点击角色的脚本信息
-                    abschara = hit.collider.GetComponent<AbstractCharacter>();
+                    abschara = hit.collider.GetComponentInChildren<UnitViewBase>();
+                    absRole = abschara.Role;
 
                     a.GetComponentInChildren<CharacterDetail_t>().SetCharacter(hit.collider.gameObject);
 

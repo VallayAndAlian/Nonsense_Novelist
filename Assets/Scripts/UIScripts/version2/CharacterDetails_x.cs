@@ -49,33 +49,33 @@ class CharacterDetails_x : MonoBehaviour
 
         ///0、首页信息
         //角色名和图片
-        charaName.sprite = Resources.Load<Sprite>("FirstStageLoad/" + "Character_" + mouseDown.abschara.wordName);
-        charaImage.sprite = Resources.Load<Sprite>("FirstStageLoad/" + mouseDown.abschara.wordName);
+        charaName.sprite = Resources.Load<Sprite>("FirstStageLoad/" + "Character_" + mouseDown.abschara.Asset.unitName);
+        charaImage.sprite = Resources.Load<Sprite>("FirstStageLoad/" + mouseDown.abschara.Asset.unitName);
 
         //书本图片
-        bookImage.sprite = Resources.Load<Sprite>("WordImage/Book/" + mouseDown.abschara.bookName.ToString());
+        bookImage.sprite = Resources.Load<Sprite>("WordImage/Book/" + mouseDown.abschara.Role.Data.mBook.ToString());
         //print(mouseDown.abschara.bookName.ToString());
 
         //角色身份（特性）左下角的短纸片
-        texts4[0].text = mouseDown.abschara.roleName;
+        texts4[0].text = mouseDown.abschara.Asset.roleName;
 
         //4、背景页信息面板
-        texts3[0].text = mouseDown.abschara.description;
+        texts3[0].text = mouseDown.abschara.Asset.roleInfo;
 
     }
     private void Update()
     {
         //1、状态页信息面板
         //HP
-        texts1[0].text = mouseDown.abschara.hp.ToString() + "/" + mouseDown.abschara.maxHp.ToString();
+        texts1[0].text = ((int)mouseDown.absRole.Hp).ToString() + "/" + ((int)mouseDown.absRole.MaxHp).ToString();
         //ATK
-        texts1[1].text = IntToString.SwitchATK(mouseDown.abschara.atk);
+        texts1[1].text = IntToString.SwitchATK(mouseDown.absRole.GetAttributeValue(AttributeType.Attack));
         //def
-        texts1[2].text = IntToString.SwitchATK(mouseDown.abschara.def);
+        texts1[2].text = IntToString.SwitchATK(mouseDown.absRole.GetAttributeValue(AttributeType.Def));
         //san
-        texts1[3].text = IntToString.SwitchATK(mouseDown.abschara.san);
+        texts1[3].text = IntToString.SwitchATK(mouseDown.absRole.GetAttributeValue(AttributeType.San));
         //psy
-        texts1[4].text = IntToString.SwitchATK(mouseDown.abschara.psy);
+        texts1[4].text = IntToString.SwitchATK(mouseDown.absRole.GetAttributeValue(AttributeType.Psy));
 
         AdjDetails();
 

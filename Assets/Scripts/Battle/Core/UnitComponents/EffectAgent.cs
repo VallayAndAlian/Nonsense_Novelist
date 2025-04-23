@@ -35,8 +35,12 @@ public class EffectAgent : UnitComponent
             {
                 newBe.mExpiredTime = Owner.Battle.Now + spec.mDuration;
             }
-
-            //todo: process effect apply event
+            
+            mEffects.Add(newBe);
+            
+            mOwner.UnitView.OnApplyEffect(newBe);
+            
+            EventManager.Invoke(EventEnum.ApplyEffect, newBe);
 
             return newBe;
         }
@@ -144,6 +148,10 @@ public class EffectAgent : UnitComponent
         {
             foreach (var effect in mRemovedEffect)
             {
+                mOwner.UnitView.OnApplyEffect(effect);
+                
+                EventManager.Invoke(EventEnum.RemoveEffect, effect);
+                
                 mEffects.Remove(effect);
             }
         

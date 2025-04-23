@@ -263,7 +263,7 @@ public class AIController : UnitComponent
             case EUnitState.Idle:
             {
                 if (mOwner.UnitView)
-                    mOwner.UnitView.ModelLayout.Animator.Play("idle", 0, 0);
+                    mOwner.UnitView.ModelLayout.PlayAnimation("idle", true);
 
                 break;
             }
@@ -273,7 +273,7 @@ public class AIController : UnitComponent
                 BindAnimFunc();
                 
                 if (mOwner.UnitView)
-                    mOwner.UnitView.ModelLayout.Animator.Play("attack", 0, 0);
+                    mOwner.UnitView.ModelLayout.PlayAnimation("attack");
                 
                 break;
             }
@@ -282,8 +282,8 @@ public class AIController : UnitComponent
             {
                 BindAnimFunc();
                 
-                if (mUltraAbility != null && !mUltraAbility.AnimName.Equals("None"))
-                    mOwner.UnitView.ModelLayout.Animator.Play(mUltraAbility.AnimName, 0, 0);
+                if (mUltraAbility.IsValid() && !mUltraAbility.AnimName.Equals("None"))
+                    mOwner.UnitView.ModelLayout.PlayAnimation(mUltraAbility.AnimName);
                 
                 break;
             }

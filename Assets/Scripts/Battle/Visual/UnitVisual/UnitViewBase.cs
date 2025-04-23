@@ -88,4 +88,14 @@ public class UnitViewBase : MonoBehaviour
         mRoot.gameObject.SetActive(false);
         // Destroy(mRoot.gameObject);
     }
+
+    public void OnApplyEffect(BattleEffect be)
+    {
+        
+    }
+    
+    public void OnRemoveEffect(BattleEffect be)
+    {
+        
+    }
 }

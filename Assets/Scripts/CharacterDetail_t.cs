@@ -8,7 +8,7 @@ using TMPro;
 public class CharacterDetail_t : MonoBehaviour
 {
     private GameObject nowObj;
-    private AbstractCharacter nowCharacter;
+    private UnitViewBase nowCharacter;
     [Header("手动设置4个面板")]
     public Transform panel_state;
     public Transform panel_item;
@@ -53,36 +53,38 @@ public class CharacterDetail_t : MonoBehaviour
 
         itemDic.Clear();
 
+        var role = nowCharacter.Role;
+        var asset = nowCharacter.Asset;
+
         //baseInfo
-        Sprite _s1 = Resources.Load<Sprite>(bookAdr + nowCharacter.bookName.ToString());
-        if (_s1 == null) _s1 = Resources.Load<Sprite>(bookAdr + "HongLouMeng");
+        Sprite _s1 = AssetManager.Load<Sprite>(bookAdr, role.Data.mBook.ToString());
+        if (_s1 == null) 
+            _s1 = AssetManager.Load<Sprite>(bookAdr, "HongLouMeng");
         bookIcon.sprite = _s1;
 
-        nameText.text = nowCharacter.wordName;
-        nameTrait.text = nowCharacter.roleName;
-
-        Sprite _s2 = Resources.Load<Sprite>(spriteAdr + nowCharacter.wordName.ToString());
-        if (_s2 == null) _s2 = Resources.Load<Sprite>(spriteAdr + "林黛玉");
-        sprite.sprite = _s2;
+        nameText.text = asset.unitName;
+        nameTrait.text = asset.roleName;
+        
+        sprite.sprite = asset.sprite;
 
         //panel1
-        panel_state.GetComponentInChildren<Slider>().value =nowCharacter.hp/nowCharacter.maxHp;
-        panel_state.GetComponentsInChildren<Text>()[0].text = ((int)nowCharacter.hp).ToString() + "/" + (nowCharacter.maxHp* nowCharacter.maxHpMul).ToString();
+        panel_state.GetComponentInChildren<Slider>().value = role.Hp / role.MaxHp;
+        panel_state.GetComponentsInChildren<Text>()[0].text = ((int)role.Hp).ToString() + "/" + ((int)role.MaxHp).ToString();
 
         //atk
-        panel_state.GetComponentsInChildren<Text>()[1].text = (nowCharacter.atk*nowCharacter.atkMul).ToString();
+        panel_state.GetComponentsInChildren<Text>()[1].text = ((int)role.GetAttributeValue(AttributeType.Attack)).ToString();
            // +" \n<color=#787878><size=25>( " + nowCharacter.atk.ToString() + " * "+(nowCharacter.atkMul*100).ToString()+ "% </size></color> )";
 
        //def
-        panel_state.GetComponentsInChildren<Text>()[3].text = (nowCharacter.def * nowCharacter.defMul).ToString(); 
+        panel_state.GetComponentsInChildren<Text>()[3].text = ((int)role.GetAttributeValue(AttributeType.Def)).ToString(); 
            // +" \n<color=#787878><size=25>( " + nowCharacter.def.ToString() + " * " + (nowCharacter.defMul * 100).ToString() + "%</size></color>  )";
 
         //san
-        panel_state.GetComponentsInChildren<Text>()[4].text = (nowCharacter.san * nowCharacter.sanMul).ToString();
+        panel_state.GetComponentsInChildren<Text>()[4].text = ((int)role.GetAttributeValue(AttributeType.San)).ToString();
           //+ " \n<color=#787878><size=25>( " + nowCharacter.san.ToString() + " * " + (nowCharacter.sanMul * 100).ToString() + "%</size></color> )";
 
         //psy
-        panel_state.GetComponentsInChildren<Text>()[2].text = (nowCharacter.psy * nowCharacter.psyMul).ToString();
+        panel_state.GetComponentsInChildren<Text>()[2].text = ((int)role.GetAttributeValue(AttributeType.Psy)).ToString();
       //+"\n<color=#787878><size=25> ( " + nowCharacter.psy.ToString() + " * " + (nowCharacter.psyMul * 100).ToString() + "%</size></color> )";
 
 
@@ -114,67 +116,73 @@ public class CharacterDetail_t : MonoBehaviour
 
 
         }
-
-
+        
+        
         //panel2
-
-        foreach (var item in nowCharacter.GetComponents<AbstractItems>())
+        //获取角色的名词列表
+        var NounList = role.WordComponent.GetWordsByType(WordType.Noun);
+        foreach (var item in NounList)
         {
-            if (itemDic.ContainsKey(item.wordName))
+            string wordName = item.mData.mName;
+            if (itemDic.ContainsKey(wordName))
             {
-                itemDic[item.wordName] += 1;
-                panel_item.transform.Find(item.wordName).GetComponentInChildren<TextMeshProUGUI>().text = item.wordName+"   x"+ itemDic[item.wordName];
+                itemDic[wordName] += 1;
+                panel_item.transform.Find(wordName).GetComponentInChildren<TextMeshProUGUI>().text = wordName +"   x"+ itemDic[wordName];
             }
             else
             {
-                itemDic.Add(item.wordName,1);
+                itemDic.Add(wordName, 1);
 
                 //生成对应的
                 PoolMgr.GetInstance().GetObj(itemPerfab, (obj) =>
                 {
                     obj.AddComponent(item.GetType());
-                    obj.name = item.wordName;
+                    obj.name = wordName;
                     obj.transform.parent = panel_item;
                     obj.transform.localScale = Vector3.one;
-                    obj.GetComponentInChildren<TextMeshProUGUI>().text = item.wordName;
+                    obj.GetComponentInChildren<TextMeshProUGUI>().text = wordName;
                 });
             }
            
         }
+        
+        
         //panel3
-        //获取角色的技能列表
+        //获取角色的动词列表
+        var verbList = role.WordComponent.GetWordsByType(WordType.Verb);
+        
+        if (verbList.Count > 3) 
+            print(role.Data.mName + "技能数超过3个");
 
-        if (nowCharacter.skills.Count > 3) print(nowCharacter.name + "技能数超过3个");
-        for (int x = 0; x < nowCharacter.skills.Count; x++)
+        for (int x = 0; x < verbList.Count; x++)
         {
-            // panel_skill.GetChild(x).GetComponent<Text>().text = abschara.skills[x].wordName;
+            string wordName = verbList[x].mData.mName;
+            
+            panel_skill.GetChild(x).GetComponent<Text>().text = wordName;
             PoolMgr.GetInstance().GetObj(skillPerfab, (obj) =>
             {
-                obj.transform.GetChild(0).gameObject.AddComponent(nowCharacter.skills[x].GetType());
+                // obj.transform.GetChild(0).gameObject.AddComponent(nowCharacter.skills[x].GetType());
                 obj.transform.parent = panel_skill;
-                 obj.transform.localScale = Vector3.one;
-                 obj.GetComponentInChildren<TextMeshProUGUI>().text = nowCharacter.skills[x].wordName;
+                obj.transform.localScale = Vector3.one;
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = wordName;
 
-                 for (int i = 0; i < nowCharacter.skills[x].needCD; i++)
-                 {
-                     PoolMgr.GetInstance().GetObj(energyPerfab, (o) =>
-                     {
-                         o.transform.parent = obj.transform.GetChild(1);
-                         o.transform.localScale = Vector3.one * 0.6f;
-                         o.transform.localPosition = new Vector3(i * energyOffset + energyOffsetWith, 0, 0);
-                         o.GetComponent<Image>().color = (i < nowCharacter.skills[x].CD) ? colorHasEnergy : colorNoEnergy;
-                         o.transform.GetChild(0).gameObject.SetActive((i < nowCharacter.skills[x].CD) ? true : false);
-                     });
-                 }
-             });
-
-           
+                // for (int i = 0; i < nowCharacter.skills[x].needCD; i++)
+                // {
+                //     PoolMgr.GetInstance().GetObj(energyPerfab, (o) =>
+                //     {
+                //         o.transform.parent = obj.transform.GetChild(1);
+                //         o.transform.localScale = Vector3.one * 0.6f;
+                //         o.transform.localPosition = new Vector3(i * energyOffset + energyOffsetWith, 0, 0);
+                //         o.GetComponent<Image>().color =
+                //             (i < nowCharacter.skills[x].CD) ? colorHasEnergy : colorNoEnergy;
+                //         o.transform.GetChild(0).gameObject.SetActive((i < nowCharacter.skills[x].CD) ? true : false);
+                //     });
+                // }
+            });
         }
-
         
-    
         //panel4
-        panel_bg.GetComponentInChildren<Text>().text = nowCharacter.description;
+        panel_bg.GetComponentInChildren<Text>().text = asset.infoDetail;
     }
 
     private void SetPanal(int i)
@@ -225,7 +233,7 @@ public class CharacterDetail_t : MonoBehaviour
     public void SetCharacter(GameObject _ac)
     {
         nowObj = _ac;
-        nowCharacter = _ac.GetComponent<AbstractCharacter>();
+        nowCharacter = _ac.GetComponentInChildren<UnitViewBase>();
         OpenInit();
 
     }
@@ -252,9 +260,8 @@ public class CharacterDetail_t : MonoBehaviour
     }
     public void ClickTrait()
     {
-       
         var a = Instantiate(infoPerfab, this.transform);
-        a.GetComponent<DetailInfo>().SetInfo(nowCharacter.roleName,nowCharacter.roleInfo);
+        // a.GetComponent<DetailInfo>().SetInfo(nowCharacter.roleName,nowCharacter.roleInfo);
     }
     #endregion
 }

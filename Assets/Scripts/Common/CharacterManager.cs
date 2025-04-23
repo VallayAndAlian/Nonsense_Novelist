@@ -98,8 +98,8 @@ public class CharacterManager : MonoSingleton<CharacterManager>
             if(shooter==null) shooter = GameObject.Find("shooter").transform;
             shooter.GetComponent<Shoot>().enabled = (!_b);
         } 
-        else shooter.GetComponent<TestShoot>().enabled = (!_b);
-        shooter.GetComponent<RollControler>().enabled = (!_b);
+        // else shooter.GetComponent<TestShoot>().enabled = (!_b);
+        // shooter.GetComponent<RollControler>().enabled = (!_b);
     }
 
     Vector2[] wordVtemp = new Vector2[100];
