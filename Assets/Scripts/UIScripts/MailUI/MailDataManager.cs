@@ -23,7 +23,7 @@ public class MailDataManager : Save
     public int currentDID = 0;
 
     /// <summary>
-    /// 添加一个基于主id的信件对象
+    /// 添加一个基于主id的信件对象,放入管理器
     /// </summary>
     /// <param name="id"></param>
     public void CreateMail(int id)

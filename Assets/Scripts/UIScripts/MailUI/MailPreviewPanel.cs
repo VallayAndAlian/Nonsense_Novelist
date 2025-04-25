@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static MailTable;
 
@@ -15,7 +16,7 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// 报社编辑 | 安德鲁医生 | 粉丝彼得 | 佐佐木编辑 
     /// </summary>
     public Toggle[] AuthorToggles;
-
+    public Button backBtn;
     //界面上的信件对象
     public PreMailObj[] mailObjs;
     //翻页按钮上一页下一页
@@ -63,12 +64,19 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
                 ShowMail();
             });
         }
+
         //上下翻页事件
         AddPageBtn.onClick.AddListener(() => {
             TurnPage(true);
         });
         SubPageBtn.onClick.AddListener(() => {
             TurnPage(false);
+        });
+
+        //返回按钮
+        backBtn.onClick.AddListener(() => {
+            PoolMgr.GetInstance().Clear();
+            SceneManager.LoadScene("Study");
         });
     }
 
@@ -78,16 +86,23 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     private void ReadMailsData()
     {
         //模拟数据
-        MailDataManager.instance.CreateMail(100102);
-        MailDataManager.instance.CreateMail(100204);
-        MailDataManager.instance.CreateMail(100203);
         MailDataManager.instance.CreateMail(100101);
+        MailDataManager.instance.CreateMail(100102);
+        MailDataManager.instance.CreateMail(100103);
+        MailDataManager.instance.CreateMail(100104);
+        MailDataManager.instance.CreateMail(100105);
+        MailDataManager.instance.CreateMail(100201);
+        MailDataManager.instance.CreateMail(100202);
+        MailDataManager.instance.CreateMail(100203);
+        MailDataManager.instance.CreateMail(100204);
+        MailDataManager.instance.CreateMail(100205);
+        MailDataManager.instance.CreateMail(100206);
+        MailDataManager.instance.CreateMail(100207);
         MailDataManager.Instance.SaveData();
 
         //从管理器获取数据
         Dictionary<int, MailInfo> dataList = MailDataManager.instance.DataList;
         mailDataList.AddRange(dataList.Values);
-        print(Application.persistentDataPath);
 
         //排序
         mailDataList.Sort((mail1,mail2) =>
@@ -139,15 +154,7 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// <param name="isAdd">页码是否增加,false表示页码后退</param>
     private void TurnPage(bool isAdd)
     {
-        /*
-         每页显示len个数据
-         页码p  显示范围
-         1      0 ~ 2
-         2      3 ~ 3 + (3-1) = 5 
-         3      6 ~ 8
-         第p页的数据个数为:len*(p-1) ~ 开始索引start + (len-1)
-        */
-        //判断翻页,更新页码
+        //判断翻页并翻页,更新页码
         if (CanTrunPage(isAdd))
         {
             //更新UI页码为 pageNum
@@ -172,10 +179,12 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
             AddPageBtn.gameObject.SetActive(false);
             //显示无信件按钮
             noneMailText.gameObject.SetActive(true);
+            noneMailText.gameObject.SetActive(true);
             return;
         }
 
         noneMailText.gameObject.SetActive(false);
+        /* 更新加减页码的按钮 */
         //左边按钮
         if (startIndex <= 1)
             SubPageBtn.gameObject.SetActive(false);
@@ -187,7 +196,6 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
             AddPageBtn.gameObject.SetActive(false);
         else
             AddPageBtn.gameObject.SetActive(true);
-
     }
 
     /// <summary>
