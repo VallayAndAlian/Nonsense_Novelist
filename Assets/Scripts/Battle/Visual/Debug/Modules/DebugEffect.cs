@@ -38,7 +38,7 @@ public class DebugEffect : BattleDebugModule
             ImGui.NextColumn();
             
             ImGui.Text($"{effect.mType.ToString()}");ImGui.NextColumn();
-            ImGui.Text($"{context.mBattle.Now - effect.mExpiredTime}");ImGui.NextColumn();
+            ImGui.Text((effect.mExpiredTime - context.mBattle.Now).ToString("F2"));ImGui.NextColumn();
             ImGui.Text($"{effect.mStackCount}");ImGui.NextColumn();
             
             ImGui.PopID();

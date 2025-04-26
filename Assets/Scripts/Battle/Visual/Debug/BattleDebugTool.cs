@@ -31,6 +31,7 @@ public class BattleDebugTool : ImGuiObjBase
         RegisterModule<DebugSpawnUnit>();
         RegisterModule<DebugUnitInspector>();
         RegisterModule<DebugAbility>();
+        RegisterModule<DebugEffect>();
     }
     
     private void RegisterModule<Ty>() where Ty : BattleDebugModule
