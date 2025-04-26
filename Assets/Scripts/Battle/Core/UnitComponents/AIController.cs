@@ -147,7 +147,7 @@ public class AIController : UnitComponent
 
     protected bool CanKeepAttack()
     {
-        return true;
+        return !mOwner.Status.InStatus(Status.Stun);
     }
 
     protected bool IsValidTarget(BattleUnit target)

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AbilityAutoAttack : AbilityActive
 {
+    public override float CD => mData.mCoolDown * Unit.GetAttributeValue(AttributeType.Attack);
+
     protected override void OnInit()
     {
         base.OnInit();

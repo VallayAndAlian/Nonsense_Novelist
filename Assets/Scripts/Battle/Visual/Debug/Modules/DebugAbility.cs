@@ -12,8 +12,6 @@ public class DebugAbility : BattleDebugModule
 
     protected Dictionary<int, string> mItems = new Dictionary<int, string>();
 
-    protected BattleUnit mPickUnit = null;
-
     List<AbilityBase> mRemoveAbilities = new List<AbilityBase>();
 
     public override void OnRegistered()

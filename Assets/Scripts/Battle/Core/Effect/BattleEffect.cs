@@ -6,8 +6,19 @@ using UnityEngine;
 public enum EffectType
 {
     None = 0,
-    AttrMod,
-    AttrPercentMod,
+    Stun,
+    Damage,
+    
+    AttackUp,
+    AttackDown,
+    DefUp,
+    DefDown,
+    SanUp,
+    SanDown,
+    PsyUp,
+    PsyDown,
+    MaxHpUp,
+    MaxHpDown,
 }
     
 public enum EffectDurationRule
@@ -40,7 +51,8 @@ public class BattleEffectSpec
     public EffectDurationRule mDurationRule;
     public EffectStackRule mStackRule;
     public EffectStackDurationRule mStackDurationRule;
-    
+
+    public bool mInputValueBool;
     public float mInputValue;
     public int mInputValueInt;
     
@@ -63,6 +75,7 @@ public class BattleEffect
     public EffectStackRule mStackRule;
     public EffectStackDurationRule mStackDurationRule;
     
+    public bool mInputValueBool;
     public float mInputValue;
     public int mInputValueInt;
     
@@ -88,6 +101,7 @@ public class BattleEffect
         mDuration = spec.mDuration;
         mInputValue = spec.mInputValue;
         mInputValueInt = spec.mInputValueInt;
+        mInputValueBool = spec.mInputValueBool;
         mCanBePurged = spec.mCanBePurged;
         
         mMaxStackCount = spec.mMaxStackCount;

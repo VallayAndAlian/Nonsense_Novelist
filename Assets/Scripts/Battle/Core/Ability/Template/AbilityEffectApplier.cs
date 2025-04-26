@@ -10,9 +10,8 @@ public class AbilityEffectApplier : AbilityModule
         None = 0,
         Test = 1,
         AttrMod = 2,
-        AttrPercentMod = 3,
-        Damage = 4,
-        AttrDamage = 5,
+        Damage = 3,
+        AttrDamage = 4,
     }
 
     public static AbilityEffectApplier Create(Type type)
@@ -27,10 +26,6 @@ public class AbilityEffectApplier : AbilityModule
             
             case Type.AttrMod:
                 applier = new AMEAAttrMod();
-                break;
-            
-            case Type.AttrPercentMod:
-                applier = new AMEAAttrPercentMod();
                 break;
             
             case Type.Damage:
@@ -170,38 +165,22 @@ public class AMEAAttrMod : AbilityEffectApplier
 {
     protected Formula mAttrType = new Formula("attr_type");
     protected Formula mValue = new Formula("value");
+    protected Formula mModifyPercent = new Formula("is_percent");
 
-    public override void Apply(BattleUnit target, object triggerData)
+    public override void AddParams()
     {
-        BattleEffectSpec spec = new BattleEffectSpec();
-        spec.mType = EffectType.AttrMod;
-        spec.mInstigator = mOwner.Unit;
-        spec.mTarget = target;
-        spec.mInputValueInt = mAttrType.EvaluateInt(mOwner);
-        spec.mInputValue = mValue.Evaluate(mOwner);
-        spec.mDuration = mDuration;
-        spec.mDurationRule = mHasDuration ? EffectDurationRule.HasDuration : EffectDurationRule.Script;
-        spec.mStackRule = EffectStackRule.Target;
-        spec.mStackDurationRule = EffectStackDurationRule.Refresh;
-        spec.mAbility = mOwner;
-        spec.mMaxStackCount = mStackLimit;
-
-        EffectAgent.ApplyEffectToTarget(target, spec);
+        mParams.Add(mAttrType);
+        mParams.Add(mValue);
+        mParams.Add(mModifyPercent);
     }
-}
-
-public class AMEAAttrPercentMod : AbilityEffectApplier
-{
-    protected Formula mAttrType = new Formula("attr_type");
-    protected Formula mValue = new Formula("value");
 
     public override void Apply(BattleUnit target, object triggerData)
     {
         BattleEffectSpec spec = new BattleEffectSpec();
-        spec.mType = EffectType.AttrPercentMod;
+        spec.mType = BattleHelper.ToEffectType((AttributeType)mAttrType.EvaluateInt(mOwner), mValue.Evaluate(mOwner) > 0);
         spec.mInstigator = mOwner.Unit;
         spec.mTarget = target;
-        spec.mInputValueInt = mAttrType.EvaluateInt(mOwner);
+        spec.mInputValueBool = mModifyPercent.EvaluateBool(mOwner);
         spec.mInputValue = mValue.Evaluate(mOwner);
         spec.mDuration = mDuration;
         spec.mDurationRule = mHasDuration ? EffectDurationRule.HasDuration : EffectDurationRule.Script;
@@ -219,6 +198,13 @@ public class AMEADamage : AbilityEffectApplier
     protected Formula mDamageType = new Formula("damage_type");
     protected Formula mDamageTimes = new Formula("damage_times");
     protected Formula mDamageValue = new Formula("damage_value");
+    
+    public override void AddParams()
+    {
+        mParams.Add(mDamageType);
+        mParams.Add(mDamageTimes);
+        mParams.Add(mDamageValue);
+    }
 
     public override void Apply(BattleUnit target, object triggerData)
     {
@@ -256,6 +242,14 @@ public class AMEAAttrDamage : AbilityEffectApplier
     protected Formula mDamageTimes = new Formula("damage_times");
     protected Formula mDamageRatio = new Formula("damage_ratio");
     protected Formula mAttrType = new Formula("attr_type");
+    
+    public override void AddParams()
+    {
+        mParams.Add(mDamageType);
+        mParams.Add(mDamageTimes);
+        mParams.Add(mDamageRatio);
+        mParams.Add(mAttrType);
+    }
 
     public override void Apply(BattleUnit target, object triggerData)
     {

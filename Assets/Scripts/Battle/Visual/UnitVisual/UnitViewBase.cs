@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitViewBase : MonoBehaviour
@@ -19,6 +20,15 @@ public class UnitViewBase : MonoBehaviour
 
     public Vector3 Pos => mRoot.transform.position;
     public Vector3 CenterPos => Pos;//todo: replace it with a real center pos
+
+    public class EffectFxCache
+    {
+        public EffectType mType;
+        public int mCount;
+        public List<GameObject> mPlayedFx = new List<GameObject>();
+    }
+
+    protected List<EffectFxCache> mEffectFxCache = new List<EffectFxCache>();
 
     public bool IsCompatibleType(BattleUnit role)
     {
@@ -91,11 +101,76 @@ public class UnitViewBase : MonoBehaviour
 
     public void OnApplyEffect(BattleEffect be)
     {
+        var effectAsset = AssetManager.GetEffectAsset();
+        if (effectAsset == null || !effectAsset.mFxConfigs.ContainsKey(be.mType))
+            return;
+
+        bool bHasScriptFx = false;
+        var fxConfigs = effectAsset.mFxConfigs[be.mType];
+
+        var getSocket = new Func<string, Transform>((string name) =>
+        {
+            var soc = mRoot.Find(name);
+            return soc == null ? mRoot : soc;
+        });
+
+        foreach (var it in fxConfigs)
+        {
+            if (it.mPlayType == EffectFxPlayType.Instant)
+            {
+                GameObject.Instantiate(it.mFxObj, getSocket(it.mSocketName));
+            }
+            else if (it.mPlayType == EffectFxPlayType.Script)
+            {
+                bHasScriptFx = true;
+            }
+        }
+
+        if (!bHasScriptFx)
+            return;
+
+        foreach (var it in mEffectFxCache)
+        {
+            if (be.mType == it.mType)
+            {
+                ++it.mCount;
+                return;
+            }
+        }
+
+        EffectFxCache cache = new EffectFxCache();
+        cache.mType = be.mType;
+        cache.mCount = 1;
         
+        foreach (var it in fxConfigs)
+        {
+            if (it.mPlayType == EffectFxPlayType.Script)
+            {
+                cache.mPlayedFx.Add(GameObject.Instantiate(it.mFxObj, getSocket(it.mSocketName)));
+            }
+        }
+        
+        mEffectFxCache.Add(cache);
     }
     
     public void OnRemoveEffect(BattleEffect be)
     {
-        
+        foreach (var it in mEffectFxCache)
+        {
+            if (be.mType == it.mType)
+            {
+                --it.mCount;
+                if (it.mCount <= 0)
+                {
+                    foreach (var fx in it.mPlayedFx)
+                    {
+                        Destroy(fx);
+                    }
+                    
+                    mEffectFxCache.Remove(it);
+                }
+                break;
+            }
+        }
     }
 }

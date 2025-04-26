@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class EffectAgent : UnitComponent
 {
     protected List<BattleEffect> mEffects = new List<BattleEffect>();
+    public List<BattleEffect> Effects => mEffects;
+        
     private List<BattleEffect> mRemovedEffect = new List<BattleEffect>();
 
     public static BattleEffect ApplyEffectToTarget(BattleUnit target, BattleEffectSpec spec)
@@ -84,7 +86,10 @@ public class EffectAgent : UnitComponent
             if (effect.mExpired)
                 continue;
 
-            if (spec.mStackRule != effect.mStackRule || effect.mType != spec.mType)
+            if (effect.mType != spec.mType || effect.mAbility != spec.mAbility)
+                continue;
+
+            if (spec.mStackRule != effect.mStackRule || effect.mStackDurationRule != spec.mStackDurationRule)
                 continue;
 
             if (spec.mStackRule == EffectStackRule.Source && spec.mInstigator != effect.mInstigator)
@@ -129,18 +134,44 @@ public class EffectAgent : UnitComponent
                 continue;
             }
 
-            switch (effect.mType)
+            var attrType = BattleHelper.ToAttrType(effect.mType);
+            if (attrType != AttributeType.None)
             {
-                case EffectType.AttrMod:
-                    Owner.AddMod((AttributeType)effect.mInputValueInt, effect.mInputValue);
-                    break;
-                
-                case EffectType.AttrPercentMod:
-                    Owner.AddPercentMod((AttributeType)effect.mInputValueInt, effect.mInputValue);
-                    break;
-                
-                default:
-                    break;
+                if (effect.mInputValueBool)
+                {
+                    Owner.AddPercentMod(attrType, effect.mInputValue);
+                }
+                else
+                {
+                    Owner.AddMod(attrType, effect.mInputValue);
+                }
+            }
+            else
+            {
+
+                switch (effect.mType)
+                {
+                    case EffectType.Stun:
+                        Owner.Status.AddStatus(Status.Stun);
+                        break;
+
+                    case EffectType.Damage:
+                    {
+                        DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(effect.mInstigator);
+                        dmg.mTarget = mOwner;
+                        dmg.mAbility = effect.mAbility;
+                        dmg.mMinAttack = effect.mInputValue;
+                        dmg.mMaxAttack = dmg.mMinAttack;
+                        dmg.mMagic = true;
+                        dmg.mFlag |= DealDamageFlag.Fixed;
+
+                        DamageHelper.ProcessDamage(dmg);
+                    }
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
 

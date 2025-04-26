@@ -1,3 +1,4 @@
-Kind,Type,可以被清除,最大堆叠数,持续时间,ParamsNum
-1,1,1,1,0,0
-2,3,1,1,15,0
+Kind,Type,可以被清除,最大堆叠数,持续时间,ParamsNum,,,,,,
+1,1,1,1,0,0,,,,,,
+3,2,1,1,10,3,attr_type,1,value,10,is_percent,0
+4,2,1,1,10,3,attr_type,1,value,100,is_percent,1

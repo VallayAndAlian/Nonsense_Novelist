@@ -120,6 +120,7 @@ public class BattleUnit : BattleObject
         AttributeSet.Define(AttributeType.Def, mData.mDefense);
         AttributeSet.Define(AttributeType.Psy, mData.mPsy);
         AttributeSet.Define(AttributeType.San, mData.mSan);
+        AttributeSet.Define(AttributeType.AttackSpeed, 1.0f);
     }
 
     protected void AddComponents()

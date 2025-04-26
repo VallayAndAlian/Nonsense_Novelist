@@ -34,4 +34,58 @@ public class BattleHelper
         //todo: expand merge function
         return a + b;
     }
+
+    public static EffectType ToEffectType(AttributeType type, bool bPositive)
+    {
+        switch (type)
+        {
+            case AttributeType.Attack:
+                return bPositive ? EffectType.AttackUp : EffectType.AttackDown;
+            
+            case AttributeType.Def:
+                return bPositive ? EffectType.DefUp : EffectType.DefDown;
+            
+            case AttributeType.Psy:
+                return bPositive ? EffectType.PsyUp : EffectType.PsyDown;
+            
+            case AttributeType.San:
+                return bPositive ? EffectType.SanUp : EffectType.SanDown;
+            
+            case AttributeType.MaxHp:
+                return bPositive ? EffectType.MaxHpUp : EffectType.MaxHpDown;
+            
+            default:
+                break;
+        }
+
+        return EffectType.None;
+    }
+    
+    public static AttributeType ToAttrType(EffectType type)
+    {
+        switch (type)
+        {
+            case EffectType.AttackUp:
+            case EffectType.AttackDown:
+                return AttributeType.Attack;
+            
+            case EffectType.DefUp:
+            case EffectType.DefDown:
+                return AttributeType.Def;
+            
+            case EffectType.PsyUp:
+            case EffectType.PsyDown:
+                return AttributeType.Psy;
+            
+            case EffectType.SanUp:
+            case EffectType.SanDown:
+                return AttributeType.San;
+            
+            case EffectType.MaxHpUp:
+            case EffectType.MaxHpDown:
+                return AttributeType.MaxHp;
+        }
+
+        return AttributeType.None;
+    }
 }

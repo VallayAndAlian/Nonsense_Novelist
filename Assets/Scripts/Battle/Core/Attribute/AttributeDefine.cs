@@ -6,6 +6,7 @@ public enum AttributeType
     None = 0,
     MaxHp,
     Attack,
+    AttackSpeed,
     Def,
     Psy,
     San,

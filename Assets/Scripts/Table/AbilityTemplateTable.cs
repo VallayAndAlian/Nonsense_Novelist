@@ -121,7 +121,7 @@ public class AbilityEffectApplierTable : MapTable<int, AbilityEffectApplierTable
         public Dictionary<string, CustomParam> mCustomParams = new Dictionary<string, CustomParam>();
     }
     
-    public override string AssetName => "AbilityTriggerData";
+    public override string AssetName => "AbilityEffectApplierData";
     
     protected override KeyValuePair<int, Data> ParseMapEntry(TokenReader reader)
     {
