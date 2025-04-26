@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EffectAgent : UnitComponent
 {
@@ -104,10 +105,22 @@ public class EffectAgent : UnitComponent
             {
                 mergedBe.mExpiredTime = Owner.Battle.Now + spec.mDuration;
             }
-
-            if (spec.mMergeInputValue)
+            
+            if (mergedBe.mMaxStackCount == 0 || mergedBe.mStackCount < mergedBe.mMaxStackCount)
             {
-                mergedBe.mInputValue = BattleHelper.MergerEffectValue(spec.mType, spec.mInputValue, effect.mInputValue);
+                if (spec.mMergeInputValue)
+                {
+                    mergedBe.mInputValue = BattleHelper.MergerEffectValue(spec.mType, spec.mInputValue, effect.mInputValue);
+                }
+
+                if (mergedBe.mMaxStackCount > 0)
+                {
+                    mergedBe.mStackCount = Mathf.Clamp(mergedBe.mStackCount + spec.mStackCount, 0, mergedBe.mMaxStackCount);
+                }
+                else
+                {
+                    ++mergedBe.mStackCount;
+                }
             }
             
             break;

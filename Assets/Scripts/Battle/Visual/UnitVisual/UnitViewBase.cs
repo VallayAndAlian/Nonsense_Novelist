@@ -12,6 +12,9 @@ public class UnitViewBase : MonoBehaviour
     
     protected Transform mRoot = null;
     public Transform Root => mRoot;
+    
+    [Header("动画类型")] 
+    public UnitAnimType mAnimType = UnitAnimType.Anim;
 
     protected UnitModelLayout mModelLayout = null;
     public UnitModelLayout ModelLayout => mModelLayout;
@@ -112,9 +115,9 @@ public class UnitViewBase : MonoBehaviour
         bool bHasScriptFx = false;
         var fxList = fxData.mFxList;
         
-        var getSocket = new Func<string, Transform>((string name) =>
+        var getSocket = new Func<string, Transform>((string socketName) =>
         {
-            var soc = mRoot.Find(name);
+            var soc = mRoot.Find(socketName);
             return soc == null ? mRoot : soc;
         });
         

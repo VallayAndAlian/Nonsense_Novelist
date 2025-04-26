@@ -17,7 +17,7 @@ public class CardDeckManager : BattleModule
     {
         base.Init();
 
-       AddInitCardDeck();
+        AddInitCardDeck();
         ShuffleDeck();
         DrawCurrentAndPreviewCards();
     }
@@ -27,8 +27,10 @@ public class CardDeckManager : BattleModule
     /// </summary>
     private void AddInitCardDeck()
     {
-        AddCardToDeck(WordTable.Find(1));AddCardToDeck(WordTable.Find(1));
-        AddCardToDeck(WordTable.Find(1));AddCardToDeck(WordTable.Find(1));
+        AddCardToDeck(WordTable.Find(1));
+        AddCardToDeck(WordTable.Find(1));
+        AddCardToDeck(WordTable.Find(1));
+        AddCardToDeck(WordTable.Find(1));
     }
 
     /// <summary>
@@ -39,9 +41,7 @@ public class CardDeckManager : BattleModule
         for (int i = 0; i < deck.Count; i++)
         {
             int randomIndex = Random.Range(0, deck.Count);
-            WordTable.Data temp = deck[i];
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
+            (deck[i], deck[randomIndex]) = (deck[randomIndex], deck[i]);
         }
     }
 
@@ -100,7 +100,7 @@ public class CardDeckManager : BattleModule
         }
 
         discardPile.Add(currentCard);
-        currentCard=null;
+        currentCard = null;
         DrawCurrentCard();
         DrawCurrentAndPreviewCards();
     }
@@ -127,7 +127,7 @@ public class CardDeckManager : BattleModule
     public void AddCardToDeck(WordTable.Data cardData)
     {
         deck.Add(cardData);
- 
+
     }
 
     /// <summary>
@@ -151,6 +151,7 @@ public class CardDeckManager : BattleModule
         {
             Debug.Log("currentCard == null");
         }
+
         return currentCard;
     }
 
@@ -164,6 +165,7 @@ public class CardDeckManager : BattleModule
     {
         base.Update(deltaSec);
     }
+
     protected override void OnDisposed()
     {
         base.OnDisposed();

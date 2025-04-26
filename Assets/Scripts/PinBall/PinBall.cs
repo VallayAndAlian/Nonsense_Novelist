@@ -25,55 +25,57 @@ public abstract class PinBall : BattleObject
 {
     public class Ball
     {
-        public Transform transform;//小球本体
-        public Transform preTransform;//预测小球位置
-        public Vector2 velocity;//小球实际速度
-        public Vector2 preVelocity;//预测小球速度
+        public Transform transform; //小球本体
+        public Transform preTransform; //预测小球位置
+        public Vector2 velocity; //小球实际速度
+        public Vector2 preVelocity; //预测小球速度
         public LayerMask collisionLayer = LayerMask.GetMask("wall", "WordCollision");
         public WordTable.Data wordData;
         public float radius = 0.5f;
         public float friction = 0.1f;
         public float energyLoss = 0.2f;
-        public bool hasShoot=false;
-        
+        public bool hasShoot = false;
+
     }
-  
+
 
     public class PreLineInfo
     {
-        public List<Vector3> colPos=new List<Vector3>();
-        
+        public List<Vector3> colPos = new List<Vector3>();
+
     }
 
     public Ball mBall;
     public PreLineInfo mPreInfo;
-    private int preMoveTimes=30;
+    private int preMoveTimes = 30;
 
     public void ShootOut()
-    {   SyncPreAndReal();
-        mBall.hasShoot=true;
+    {
+        SyncPreAndReal();
+        mBall.hasShoot = true;
         SetSizeToRadius();
     }
 
     public void SyncPreAndReal()
     {
-        if(mBall.hasShoot)
+        if (mBall.hasShoot)
         {
-            mBall.transform.position=mBall.preTransform.position;
-            mBall.transform.rotation= mBall.preTransform.rotation; 
-            mBall.velocity=mBall.preVelocity;
+            mBall.transform.position = mBall.preTransform.position;
+            mBall.transform.rotation = mBall.preTransform.rotation;
+            mBall.velocity = mBall.preVelocity;
         }
         else
         {
-            if(mBall.preTransform==null)
+            if (mBall.preTransform == null)
             {
-                var obk=new GameObject();
-                mBall.preTransform=obk.transform;
+                var obk = new GameObject();
+                mBall.preTransform = obk.transform;
             }
-            mBall.preTransform.position=mBall.transform.position;    
-            mBall.preTransform.rotation= mBall.transform.rotation; 
-            mBall.preVelocity=mBall.velocity;   
-        }      
+
+            mBall.preTransform.position = mBall.transform.position;
+            mBall.preTransform.rotation = mBall.transform.rotation;
+            mBall.preVelocity = mBall.velocity;
+        }
     }
 
 
@@ -82,34 +84,35 @@ public abstract class PinBall : BattleObject
     {
         if (!IsTickEnable) return;
 
-       SyncPreAndReal(); 
-        if(mBall.hasShoot)
+        SyncPreAndReal();
+        if (mBall.hasShoot)
         {
-            PreUpdate(deltaSec);  
+            PreUpdate(deltaSec);
         }
         else
-        {   
+        {
             mPreInfo.colPos.Clear();
-            for(int i=0;i<preMoveTimes;i++)
+            for (int i = 0; i < preMoveTimes; i++)
             {
                 PreUpdate(deltaSec);
             }
-               
+
         }
 
     }
+
     public void SetSizeToRadius()
     {
-        if(mBall.transform==null)return;
+        if (mBall.transform == null) return;
         SpriteRenderer ballSprite;
         mBall.transform.TryGetComponent<SpriteRenderer>(out ballSprite);
-        if(ballSprite==null)return;
+        if (ballSprite == null) return;
         Vector2 spriteSize = ballSprite.sprite.bounds.size;
         float scale = (mBall.radius * 2) / Mathf.Max(spriteSize.x, spriteSize.y);
-        mBall.transform.localScale = new Vector3(scale, scale, 1f);       
+        mBall.transform.localScale = new Vector3(scale, scale, 1f);
     }
 
-    public  void PreUpdate(float deltaSec)
+    public void PreUpdate(float deltaSec)
     {
         ApplyFriction(deltaSec);
         mBall.preTransform.position += (Vector3)mBall.preVelocity * deltaSec;
@@ -121,10 +124,10 @@ public abstract class PinBall : BattleObject
             mBall.preVelocity.magnitude * deltaSec,
             mBall.collisionLayer
         );
-       
+
         if (hit.collider != null)
         {
-            HandleCollision(hit);       
+            HandleCollision(hit);
         }
     }
 
@@ -138,17 +141,19 @@ public abstract class PinBall : BattleObject
     {
         Debug.Log(hit.collider.gameObject.name);
 
-        var wall=Battle.ObjectManager.Find<WallObject>(hit.collider);
-        if(wall==null)
+        var wall = Battle.ObjectManager.Find<WallObject>(hit.collider);
+        if (wall == null)
         {
             return;
         }
+
         Debug.Log("HandleCollision");
-        mBall.preTransform.position = wall.ApplyBounceEffectToPos(mBall.radius,hit.point,(Vector2)mBall.preTransform.position);
-        mBall.preVelocity=wall.ApplyBounceEffectToVel(ref mBall.preVelocity, hit.normal);
+        mBall.preTransform.position =
+            wall.ApplyBounceEffectToPos(mBall.radius, hit.point, (Vector2)mBall.preTransform.position);
+        mBall.preVelocity = wall.ApplyBounceEffectToVel(ref mBall.preVelocity, hit.normal);
 
 
-        if(mBall.hasShoot)  
+        if (mBall.hasShoot)
         {
             OnCollision();
         }
@@ -157,16 +162,16 @@ public abstract class PinBall : BattleObject
             mPreInfo.colPos.Add(hit.point);
             OnPreCollision();
         }
-            
+
     }
 
-    protected virtual void OnPreCollision() 
+    protected virtual void OnPreCollision()
     {
-        
+
     }
 
 
-    protected virtual void OnCollision() 
+    protected virtual void OnCollision()
     {
         PlayEffect(mBall.transform.position);
     }

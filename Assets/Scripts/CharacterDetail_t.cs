@@ -113,8 +113,6 @@ public class CharacterDetail_t : MonoBehaviour
              
             }
             buffP.Find(buff.buffName).GetComponentInChildren<TextMeshProUGUI>().text = buffDic[buff.buffName].ToString();
-
-
         }
         
         
@@ -136,7 +134,7 @@ public class CharacterDetail_t : MonoBehaviour
                 //生成对应的
                 PoolMgr.GetInstance().GetObj(itemPerfab, (obj) =>
                 {
-                    obj.AddComponent(item.GetType());
+                    // obj.AddComponent(item.GetType());
                     obj.name = wordName;
                     obj.transform.parent = panel_item;
                     obj.transform.localScale = Vector3.one;

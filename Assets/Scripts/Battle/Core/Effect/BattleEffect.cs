@@ -56,12 +56,12 @@ public class BattleEffectSpec
     public float mInputValue;
     public int mInputValueInt;
     
-    public int mStackCount;
+    public int mStackCount = 1;
     public int mMaxStackCount;
     public float mDuration;
     
-    public bool mCanBePurged;
-    public bool mMergeInputValue;
+    public bool mCanBePurged = true;
+    public bool mMergeInputValue = false;
 }
 
 public class BattleEffect
