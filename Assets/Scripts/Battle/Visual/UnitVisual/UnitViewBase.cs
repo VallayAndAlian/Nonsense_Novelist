@@ -73,7 +73,11 @@ public class UnitViewBase : MonoBehaviour
             }
         }
 
-        GetComponent<SpriteRenderer>().sprite = mAsset.sprite;
+        var spriteComp = GetComponent<SpriteRenderer>();
+        if (spriteComp != null)
+        {
+            spriteComp.sprite = mAsset.sprite;
+        }
     }
 
     public void AddServant(UnitViewBase unitView)

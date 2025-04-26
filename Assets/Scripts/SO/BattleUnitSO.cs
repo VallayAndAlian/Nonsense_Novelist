@@ -24,9 +24,6 @@ public class BattleUnitSO : ScriptableObject
     [Tooltip("场景角色")]
     public Sprite sprite;
 
-    [Tooltip("角色子弹")]
-    public GameObject weaponProj;
-    
     [Tooltip("角色动画")]
     public AnimatorController animatorController;
 
