@@ -102,19 +102,23 @@ public class UnitViewBase : MonoBehaviour
     public void OnApplyEffect(BattleEffect be)
     {
         var effectAsset = AssetManager.GetEffectAsset();
-        if (effectAsset == null || !effectAsset.mFxConfigs.ContainsKey(be.mType))
+        if (effectAsset == null)
             return;
 
+        var fxData = effectAsset.GetFxList(be.mType);
+        if (fxData == null || fxData.mFxList.Count > 0)
+            return;
+        
         bool bHasScriptFx = false;
-        var fxConfigs = effectAsset.mFxConfigs[be.mType];
-
+        var fxList = fxData.mFxList;
+        
         var getSocket = new Func<string, Transform>((string name) =>
         {
             var soc = mRoot.Find(name);
             return soc == null ? mRoot : soc;
         });
-
-        foreach (var it in fxConfigs)
+        
+        foreach (var it in fxList)
         {
             if (it.mPlayType == EffectFxPlayType.Instant)
             {
@@ -125,10 +129,10 @@ public class UnitViewBase : MonoBehaviour
                 bHasScriptFx = true;
             }
         }
-
+        
         if (!bHasScriptFx)
             return;
-
+        
         foreach (var it in mEffectFxCache)
         {
             if (be.mType == it.mType)
@@ -137,12 +141,12 @@ public class UnitViewBase : MonoBehaviour
                 return;
             }
         }
-
+        
         EffectFxCache cache = new EffectFxCache();
         cache.mType = be.mType;
         cache.mCount = 1;
         
-        foreach (var it in fxConfigs)
+        foreach (var it in fxList)
         {
             if (it.mPlayType == EffectFxPlayType.Script)
             {

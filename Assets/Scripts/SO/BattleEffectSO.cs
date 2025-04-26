@@ -8,22 +8,45 @@ public enum EffectFxPlayType
     Script,
 }
 
-public class EffectFxConfig
+[System.Serializable]
+public class EffectFxData
 {
-    [Header("播放类型")]
+    [Tooltip("播放类型")]
     public EffectFxPlayType mPlayType = EffectFxPlayType.None;
     
-    [Header("插槽")]
+    [Tooltip("插槽")]
     public string mSocketName;
 
-    [Header("特效")]
+    [Tooltip("特效")]
     public GameObject mFxObj;
+}
+
+[System.Serializable]
+public class EffectFxList
+{
+    [Tooltip("Buff类型")]
+    public EffectType mType = EffectType.None;
+    
+    [Tooltip("特效列表")]
+    public List<EffectFxData> mFxList;
 }
 
 
 [CreateAssetMenu(fileName = "NewBattleEffectSO", menuName = "BattleSO/BattleEffectSO")]
 public class BattleEffectSO : ScriptableObject
 {
-    [Tooltip("特效配置")]
-    public Dictionary<EffectType, List<EffectFxConfig>> mFxConfigs;
+    public List<EffectFxList> mConfigs;
+    
+    public EffectFxList GetFxList(EffectType type)
+    {
+        foreach (var it in mConfigs)
+        {
+            if (it.mType == type)
+            {
+                return it;
+            }
+        }
+
+        return null;
+    }
 }
