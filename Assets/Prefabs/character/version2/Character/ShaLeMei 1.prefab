@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261524052246935467}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.05, y: 2.9399998, z: 0}
+  m_LocalPosition: {x: 3.7, y: 1.38, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,8 +59,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3837959891525375965}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: -4.43, z: 0}
-  m_LocalScale: {x: 3.1499999, y: 3.5, z: 3.5}
+  m_LocalPosition: {x: -0.14, y: -2.88, z: 0}
+  m_LocalScale: {x: 4.063678, y: 4.063678, z: 4.063678}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3837959891539934792}
@@ -132,10 +132,10 @@ GameObject:
   - component: {fileID: 3365705217194823574}
   - component: {fileID: 2168264803539121840}
   - component: {fileID: 1887637913}
-  - component: {fileID: -5807438003841155818}
   - component: {fileID: 8818918942053195216}
+  - component: {fileID: 4208935380331129851}
   m_Layer: 3
-  m_Name: Anubis
+  m_Name: ShaLeMei 1
   m_TagString: character
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.12061405, y: -2.457694}
+  m_Offset: {x: -0.53633237, y: -3.3966615}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -186,7 +186,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.557476, y: 4.622734}
+  m_Size: {x: 5.786182, y: 3.8448195}
   m_EdgeRadius: 0
 --- !u!114 &2320014479563054447
 MonoBehaviour:
@@ -325,56 +325,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nowParentTF: {fileID: 0}
   lastParentTF: {fileID: 0}
---- !u!114 &-5807438003841155818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3837959891539934793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 324181645b01f45428554d07136f59d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wordKind: 0
-  bookName: 0
-  wordName: 
-  brief: 
-  description: 
-  nickname: []
-  rarity: 0
-  wordCollisionShoots: []
-  myState: {fileID: 0}
-  characterID: 0
-  source: {fileID: 0}
-  aAttackAudio: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
-  walkAudio: {fileID: 0}
-  teXiao: {fileID: 0}
-  bullet: {fileID: 5396089893936509290, guid: 767f667755cd0c247aa64b5b5d83c016, type: 3}
-  roleName: 
-  roleInfo: 
-  isNaiMa: 0
-  gender: 0
-  trait: {fileID: 0}
-  criticalChance: 0
-  multipleCriticalStrike: 2
-  dizzyTime: 0
-  skills: []
-  servants: []
-  maxSkillsCount: 3
-  hasBetray: 0
-  skillText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  attackInterval: 2.2
-  situation: {fileID: 0}
-  attackDistance: 0
-  charaAnim: {fileID: 0}
-  energy: 0
-  attackA: {fileID: 0}
-  AttackTimes: 1
 --- !u!60 &8818918942053195216
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -400,14 +350,65 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 3.67531, y: -3.5934494}
-      - {x: 4.4131675, y: 6.465538}
-      - {x: 0.8986343, y: 7.1081367}
-      - {x: -2.6005292, y: 2.7539802}
-      - {x: -3.0860822, y: -0.51652634}
-      - {x: -0.075379014, y: -4.39586}
-      - {x: 1.1023133, y: -4.1212916}
-      - {x: 1.7085848, y: -3.033989}
+    - - {x: 6.29866, y: 3.7271101}
+      - {x: 2.2378285, y: 6.650674}
+      - {x: -2.017835, y: 6.3823357}
+      - {x: -6.835707, y: 1.9271472}
+      - {x: -4.7536955, y: -1.2046341}
+      - {x: -4.849157, y: -2.5186849}
+      - {x: -2.1402311, y: -5.446739}
+      - {x: 2.291925, y: -5.410035}
+      - {x: 3.1207988, y: -3.4338543}
+--- !u!114 &4208935380331129851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3837959891539934793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edaf6883883ae32488315eb01830def1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wordKind: 0
+  bookName: 0
+  wordName: 
+  brief: 
+  description: 
+  nickname: []
+  rarity: 0
+  wordCollisionShoots: []
+  myState: {fileID: 0}
+  characterID: 0
+  source: {fileID: 0}
+  aAttackAudio: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
+  walkAudio: {fileID: 0}
+  teXiao: {fileID: 0}
+  bullet: {fileID: 7617887590883620401, guid: 78a625ad23a1cc342bb5aba92387dad9, type: 3}
+  roleName: 
+  roleInfo: 
+  isNaiMa: 0
+  gender: 0
+  trait: {fileID: 0}
+  criticalChance: 0
+  multipleCriticalStrike: 2
+  dizzyTime: 0
+  skills: []
+  servants: []
+  maxSkillsCount: 3
+  hasBetray: 0
+  skillText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  attackInterval: 2.2
+  situation: {fileID: 0}
+  attackDistance: 99
+  charaAnim: {fileID: 0}
+  energy: 0
+  attackA: {fileID: 0}
+  AttackTimes: 1
 --- !u!1 &5796725402490811840
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7266290056929868227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 4.8919992, z: 0}
+  m_LocalPosition: {x: 5.1499996, y: 4.0019994, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -537,7 +538,7 @@ GameObject:
   - component: {fileID: 2494579536742588335}
   - component: {fileID: 5402677229484741157}
   m_Layer: 3
-  m_Name: Anubis
+  m_Name: ShaLeMei
   m_TagString: character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -551,8 +552,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8395572501098447643}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.05, y: 2.19, z: 0}
-  m_LocalScale: {x: 1.313, y: 1.249, z: 1}
+  m_LocalPosition: {x: 1.12, y: 1.6299999, z: 0}
+  m_LocalScale: {x: 0.4912007, y: 0.46725783, z: 0.37410557}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3837959891539934792}
@@ -599,12 +600,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: db47590b262ab1843b2f885b4fad5bfd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 50a1861f1d0acee48812e22fe98a6e25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 23, y: 23.192516}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -620,7 +621,7 @@ Animator:
   m_GameObject: {fileID: 8395572501098447643}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b6b11bc1eb2843c47bb2307f4badc4a4, type: 2}
+  m_Controller: {fileID: 9100000, guid: e8edfabc7cca11848a75e9b19f88fcf4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -846,6 +847,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 8818280296233398531, guid: 86fc7b269e745eb42a9d31714cb7a868, type: 3}
+    - target: {fileID: 1306441908484667631, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306441908484667631, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1306441908484667631, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2117688827076469648, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -928,11 +941,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.56300026
+      value: 0.213
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 8.68
+      value: 8.98
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1010,11 +1023,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_Size.x
-      value: 5.76
+      value: 8.43
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_Size.y
-      value: 6.72
+      value: 8.93
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_WasSpriteAssigned
@@ -1034,11 +1047,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.4
+      value: -0.11
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.79
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.z

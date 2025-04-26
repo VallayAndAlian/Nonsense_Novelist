@@ -570,7 +570,7 @@ GameObject:
   - component: {fileID: -3105405567596336704}
   - component: {fileID: 2631833717394192740}
   m_Layer: 3
-  m_Name: Rat
+  m_Name: LaoShu
   m_TagString: character
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

@@ -14106,7 +14106,6 @@ MonoBehaviour:
   characterDetailPrefab: {fileID: 8455573955455536434, guid: 48dc8dc6e3fd05943b6d165b193a8751, type: 3}
   otherCanvas: {fileID: 226819304}
   abschara: {fileID: 0}
-  absRole: {fileID: 0}
   absAdj: {fileID: 0}
   absVerbs: {fileID: 0}
   absTrait: {fileID: 0}

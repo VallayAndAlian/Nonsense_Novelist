@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261524052246935467}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.7, y: 1.38, z: 0}
+  m_LocalPosition: {x: 2.81, y: 2.75, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -59,8 +59,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3837959891525375965}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14, y: -2.88, z: 0}
-  m_LocalScale: {x: 4.063678, y: 4.063678, z: 4.063678}
+  m_LocalPosition: {x: -0.76000047, y: -4.19, z: 0}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3837959891539934792}
@@ -133,9 +133,9 @@ GameObject:
   - component: {fileID: 2168264803539121840}
   - component: {fileID: 1887637913}
   - component: {fileID: 8818918942053195216}
-  - component: {fileID: 4208935380331129851}
+  - component: {fileID: 3923152546429214895}
   m_Layer: 3
-  m_Name: ShaLeMei
+  m_Name: AliTa
   m_TagString: character
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.53633237, y: -3.3966615}
+  m_Offset: {x: 0.45500898, y: -2.1079178}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -186,7 +186,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.786182, y: 3.8448195}
+  m_Size: {x: 6.182723, y: 3.7456846}
   m_EdgeRadius: 0
 --- !u!114 &2320014479563054447
 MonoBehaviour:
@@ -225,7 +225,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8b5639a6809bb624e8b17876819c694e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -350,16 +350,16 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 6.29866, y: 3.7271101}
-      - {x: 2.2378285, y: 6.650674}
-      - {x: -2.017835, y: 6.3823357}
-      - {x: -6.835707, y: 1.9271472}
-      - {x: -4.7536955, y: -1.2046341}
-      - {x: -4.849157, y: -2.5186849}
-      - {x: -2.1402311, y: -5.446739}
-      - {x: 2.291925, y: -5.410035}
-      - {x: 3.1207988, y: -3.4338543}
---- !u!114 &4208935380331129851
+    - - {x: 6.1304717, y: 1.505287}
+      - {x: 3.1267333, y: 5.1206293}
+      - {x: -2.6465836, y: 5.5077}
+      - {x: -5.714133, y: 2.8732831}
+      - {x: -4.0342817, y: -0.68622136}
+      - {x: -2.6177282, y: -0.83312887}
+      - {x: -4.229057, y: -3.680138}
+      - {x: 0.80994195, y: -4.7645106}
+      - {x: 4.816552, y: -3.901649}
+--- !u!114 &3923152546429214895
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3837959891539934793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edaf6883883ae32488315eb01830def1, type: 3}
+  m_Script: {fileID: 11500000, guid: bf7b5854515fdbe45ad5072e17fee1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   wordKind: 0
@@ -382,10 +382,10 @@ MonoBehaviour:
   myState: {fileID: 0}
   characterID: 0
   source: {fileID: 0}
-  aAttackAudio: {fileID: 8300000, guid: 647edd8e503142c4f9d04cf77ad97bd1, type: 3}
+  aAttackAudio: {fileID: 8300000, guid: 8b5639a6809bb624e8b17876819c694e, type: 3}
   walkAudio: {fileID: 0}
   teXiao: {fileID: 0}
-  bullet: {fileID: 7617887590883620401, guid: 78a625ad23a1cc342bb5aba92387dad9, type: 3}
+  bullet: {fileID: 5396089893936509290, guid: 767f667755cd0c247aa64b5b5d83c016, type: 3}
   roleName: 
   roleInfo: 
   isNaiMa: 0
@@ -517,7 +517,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7266290056929868227}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1499996, y: 4.0019994, z: 0}
+  m_LocalPosition: {x: 4.2599993, y: 4.701999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 2494579536742588335}
   - component: {fileID: 5402677229484741157}
   m_Layer: 3
-  m_Name: ShaLeMei
+  m_Name: ShiLian
   m_TagString: character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,8 +552,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8395572501098447643}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.12, y: 1.6299999, z: 0}
-  m_LocalScale: {x: 0.4912007, y: 0.46725783, z: 0.37410557}
+  m_LocalPosition: {x: -0.54, y: 2.691, z: 0}
+  m_LocalScale: {x: 3.193754, y: 3.0940707, z: 0.63389045}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3837959891539934792}
@@ -600,12 +600,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 21300000, guid: 50a1861f1d0acee48812e22fe98a6e25, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 992b31e78c2e61d4bb2bddc04ed77325, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 23, y: 23.192516}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -621,10 +621,10 @@ Animator:
   m_GameObject: {fileID: 8395572501098447643}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e8edfabc7cca11848a75e9b19f88fcf4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 057af2442bd21514eb547d0a70e1f47e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -941,11 +941,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.213
+      value: -0.6770002
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 8.98
+      value: 8.058001
       objectReference: {fileID: 0}
     - target: {fileID: 2981727307482942888, guid: efee30f1ca7c4b2438e7b262e95efa2e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1023,11 +1023,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_Size.x
-      value: 8.43
+      value: 5.4105077
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_Size.y
-      value: 8.93
+      value: 6.5799994
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_WasSpriteAssigned
@@ -1047,11 +1047,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.11
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalPosition.z
