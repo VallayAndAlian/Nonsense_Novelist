@@ -16,7 +16,6 @@ public class CharacterDetail : MonoBehaviour
     public TextMeshProUGUI psy;
     public TextMeshProUGUI san;
 
-
     private AbstractCharacter nowCharacter;
     private string spriteAdr = "WordImage/Character/";
 
@@ -26,29 +25,11 @@ public class CharacterDetail : MonoBehaviour
         InitDetail();
     }
 
-
-    //public void Open(string _ac)
-    //{
-    //    AbstractCharacter _tempac=new AbstractCharacter();
-    //    switch (_ac)
-    //    {
-    //        case "LinDaiYu":
-    //        {
-    //            _tempac.wordName = "林黛玉";
-    //            _tempac.roleName = "^";
-    //            //……设置一系列参数
-    //        }break;
-    //    }
-        
-    //    nowCharacter = _tempac;
-    //    InitDetail();
-    //}
-
-
     void InitDetail()
     {
         Sprite _s2 = Resources.Load<Sprite>(spriteAdr + nowCharacter.wordName.ToString());
-        if (_s2 == null) _s2 = Resources.Load<Sprite>(spriteAdr + "林黛玉");
+        if (_s2 == null) 
+            _s2 = Resources.Load<Sprite>(spriteAdr + "林黛玉");
         sprite.sprite = _s2;
 
         nameText.text = nowCharacter.wordName.ToString();

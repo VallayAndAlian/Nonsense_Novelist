@@ -31,8 +31,6 @@ public class CharacterMouseDrag : MonoBehaviour
     private SpriteRenderer sr;
     private AudioYinXiao yinXiao;
 
-
-
     private string characterDetailPrefab = "UI/CharacterDetail";
 
     private Transform oriParent;
@@ -50,12 +48,14 @@ public class CharacterMouseDrag : MonoBehaviour
         oriParent = GameObject.Find("UICanvas").transform.Find("Panel").Find("charaPos");
         transform.localScale = Vector3.one * GameMgr.instance.beforeScale;
         yinXiao = GameObject.Find("yinxiaoSource").GetComponent<AudioYinXiao>();
+        Debug.Log("右键单击卡片");
     }
 
     private void OnMouseEnter()
     {
 
     }
+
     #region OnMouseDrag()随鼠标移动(废弃)
 
     /* private void OnMouseDrag()
@@ -88,8 +88,6 @@ public class CharacterMouseDrag : MonoBehaviour
                 //获取点击角色的脚本信息
                 a.GetComponentInChildren<CharacterDetail>().Open(this.GetComponent<AbstractCharacter>());
             }
-
-
         }
     }
     private void OnMouseExit()
@@ -99,8 +97,6 @@ public class CharacterMouseDrag : MonoBehaviour
         sr.color = colorOnMouseExit;
 
     }
-
-
 
     //被移动物体需要添加collider组件，以响应OnMouseDown()函数
     //基本思路。当鼠标点击物体时（OnMouseDown（），函数体里面代码只执行一次），

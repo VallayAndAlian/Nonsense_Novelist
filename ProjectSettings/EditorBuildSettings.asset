@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Letters.unity
     guid: 8ace63efce93cbb47a4d0bb6a33bb870
+  - enabled: 1
+    path: Assets/Scenes/Mail.unity
+    guid: eb2f207981f315945bf2b1db851fa112
   m_configObjects: {}

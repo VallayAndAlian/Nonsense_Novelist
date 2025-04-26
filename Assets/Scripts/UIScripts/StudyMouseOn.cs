@@ -102,11 +102,15 @@ public class StudyMouseOn : MonoBehaviour
                 break;
             case StudyUIType.zuopin:
                 {
+                    PoolMgr.GetInstance().Clear();
+                    SceneManager.LoadScene("Mail");
+                    /*
                     audioSource.Play();
                     if (zuopinUI == null)
                         return;
                     hasOpenUI = true;
                     zuopinUI.SetActive(true);
+                    */
                 }
                 break;
             case StudyUIType.tuichu:

@@ -51,7 +51,6 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     private bool isCombatScene = false;
     private AbstractWord0 abs;
 
-
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "ShootCombat")
@@ -190,14 +189,11 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
     {
         if (!isCombatScene) return;
 
-
         if (CharacterManager.instance.pause)
         {
            // if(this.transform.parent.parent.gameObject.name != "CardGroup")
                  return;
         }
-           
-        
 
         isDetail = true;
         ChangeDetailInfo();
@@ -266,6 +262,7 @@ public class WordInformation : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
             PoolMgr.GetInstance().PushObj(detailInfoPrefab.name, s.gameObject);
         }
     }
+
     public void ClickClose()
     {
         Destroy(this.gameObject);
