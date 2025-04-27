@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   events:
-  - spineEvent: attack
+  - spineEvent: ActTrigger
     unityHandler:
       m_PersistentCalls:
         m_Calls:

@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0f3383ebeadbbd442853727201cac811, type: 2}
+  - {fileID: 2100000, guid: 274bd5c290195014daa7739d388365ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   events:
-  - spineEvent: attack
+  - spineEvent: ActTrigger
     unityHandler:
       m_PersistentCalls:
         m_Calls:
