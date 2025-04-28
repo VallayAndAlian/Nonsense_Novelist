@@ -12,16 +12,6 @@ public class AbilityAutoAttack : AbilityActive
         base.OnInit();
         Unit.AIAgent.RegisterAttackAbility(this);
     }
-
-    protected override void OnActivate()
-    {
-        
-    }
-
-    protected override void OnDeactivate()
-    {
-        
-    }
     
     public override void OnAnimTrigger()
     {

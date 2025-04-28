@@ -6,6 +6,7 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
     {
         public int maxVerbNum = 3;
         public int maxPreColTimes = 3;
+        public float verbPowerInterval = 5;
         public float wordBallRadius = 3;
         public float wordBallMinSpeed = 3;
         public float wordBallMaxSpeed = 3;

@@ -76,7 +76,7 @@ public class AIController : UnitComponent
                 continue;
 
             abi.SetTarget(target);
-            if (abi.TryActivate())
+            if (abi.TryActivate(true))
             {
                 mUltraAbility = abi;
                 mTarget = target;
@@ -93,7 +93,7 @@ public class AIController : UnitComponent
             {
                 mTarget = target;
                 mAttackAbility.SetTarget(mTarget);
-                if (mAttackAbility.TryActivate())
+                if (mAttackAbility.TryActivate(true))
                 {
                     EnterState(EUnitState.Attack);
                 }

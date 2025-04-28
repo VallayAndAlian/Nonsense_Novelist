@@ -7,6 +7,9 @@ public class WordEntry
     public WordType mType;
     public float mApplyTime = 0;
     public float mEndTime = 0;
+
+    public float mUpdateTimer = 0;
+    public int mPower = 0;
     
     public WordTable.Data mData = null;
     public List<AbilityBase> mAbilities = null;
@@ -16,6 +19,7 @@ public class WordComponent : UnitComponent
 {
     protected Dictionary<WordType, List<WordEntry>> mWordEntries = new Dictionary<WordType, List<WordEntry>>();
     protected List<WordEntry> mAdjectiveWords = null;
+    protected List<WordEntry> mVerbWords = null;
 
     public List<WordEntry> GetWordsByType(WordType wt)
     {
@@ -40,6 +44,7 @@ public class WordComponent : UnitComponent
         }
 
         mAdjectiveWords = GetWordsByType(WordType.Adjective);
+        mVerbWords = GetWordsByType(WordType.Verb);
     }
 
     public override void Start()
@@ -54,20 +59,8 @@ public class WordComponent : UnitComponent
 
     public override void Update(float deltaTime)
     {
-        List<WordEntry> Removed = new List<WordEntry>();
-        foreach (var w in mAdjectiveWords)
-        {
-            if (w.mEndTime > Owner.Battle.Now)
-            {
-                Removed.Add(w);
-            }
-        }
-
-        foreach (var w in Removed)
-        {
-            ClearAbilities(w);
-            mAdjectiveWords.Remove(w);
-        }
+        TickAdjWords(deltaTime);
+        TickVerbWords(deltaTime);
     }
 
     public WordEntry AddWord(int wordKind)
@@ -93,12 +86,15 @@ public class WordComponent : UnitComponent
                 break;
             
             case WordType.Verb:
-                if (words.Count > 0 && mWordEntries.Count >= BattleConfig.mData.word.maxVerbNum)
+                if (words.Count > 0 && words.Count >= BattleConfig.mData.word.maxVerbNum)
                 {
                     ClearAbilities(words[0]);
                     
                     words.RemoveAt(0);
                 }
+
+                entry.mUpdateTimer = BattleConfig.mData.word.verbPowerInterval;
+                entry.mPower = wordData.mInitPower;
                 
                 break;
             
@@ -148,6 +144,48 @@ public class WordComponent : UnitComponent
         foreach (var abi in we.mAbilities)
         {
             Owner.AbilityAgent.RemoveAbility(abi);
+        }
+    }
+
+    protected void TickAdjWords(float deltaTime)
+    {
+        List<WordEntry> Removed = new List<WordEntry>();
+        foreach (var w in mAdjectiveWords)
+        {
+            if (w.mEndTime > Owner.Battle.Now)
+            {
+                Removed.Add(w);
+            }
+        }
+
+        foreach (var w in Removed)
+        {
+            ClearAbilities(w);
+            mAdjectiveWords.Remove(w);
+        }
+    }
+
+    protected void TickVerbWords(float deltaTime)
+    {
+        foreach (var w in mVerbWords)
+        {
+            if (w.mPower >= w.mData.mTriggerPower)
+            {
+                foreach (var abi in w.mAbilities)
+                {
+                    abi.TryActivate();
+                }
+                
+                w.mPower = 0;
+            }
+            
+            w.mUpdateTimer -= deltaTime;
+            if (w.mUpdateTimer <= 0)
+            {
+                w.mUpdateTimer += BattleConfig.mData.word.verbPowerInterval;
+                
+                ++w.mPower;
+            }
         }
     }
 }

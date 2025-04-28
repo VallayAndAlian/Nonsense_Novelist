@@ -1,4 +1,4 @@
-mkind,Type,AssetName,Name,Book,ShootType,Duration,Tags,Abilities
-1,1,SO/Card/TestCardSO2.asset,测试形容词,0,0,1,1,1|2|3|4
-10001,3,,茶杯,1,0,4,1,100011
-10003,3,,通灵宝玉,1,0,1,1,100031
+mkind,Type,AssetName,Name,Book,ShootType,Duration,InitPower,TriggerPower,Tags,Abilities
+1,1,SO/Card/TestCardSO2.asset,测试形容词,0,0,1,0,5,1,1|2|3|4
+10001,3,None,茶杯,1,0,4,0,5,1,100011
+10003,3,None,通灵宝玉,1,0,1,0,5,1,100031

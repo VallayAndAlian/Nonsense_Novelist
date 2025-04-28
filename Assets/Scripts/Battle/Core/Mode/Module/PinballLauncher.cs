@@ -8,96 +8,97 @@ using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 
 public class PinBallLauncher : BattleModule
 {
-    public bool canShoot=>mCanShoot;
+    public bool canShoot => mCanShoot;
     protected bool mCanShoot;
     public Vector3 launchPoint;
     private float currentChargeTime = 0f;
     private float chargeStartTime = 0f;
     private bool isCharging = false;
     List<Vector3> pathPoints = new List<Vector3>();
-    private float trajectoryUpdateTime = 0.05f;  // 设置轨迹更新的时间间隔
+    private float trajectoryUpdateTime = 0.05f; // 设置轨迹更新的时间间隔
     private float lastTrajectoryUpdateTime = 0f;
 
     public PinBall nowBall;
-    
+
     public LineRenderer trajectoryLine;
 
 
     public void CanShootSwitch(bool _canShoot)
     {
-        mCanShoot=_canShoot;
+        mCanShoot = _canShoot;
     }
+
     /// <summary>
     /// 发射小球
     /// </summary>
     public void LaunchPinBall()
     {
         CreateNewBallObj();
-   
+
     }
 
 
     void CreateNewBallObj()
-    {           
+    {
 
-        PoolMgr.GetInstance().GetSOObj(prefabSOType.BattleObj,0,(obj)=>
+        PoolMgr.GetInstance().GetSOObj(prefabSOType.BattleObj, 0, (obj) =>
         {
-            obj.transform.position=launchPoint;
-            obj.transform.rotation=Quaternion.identity;
-        
-            nowBall.mBall.transform=obj.transform;
+            obj.transform.position = launchPoint;
+            obj.transform.rotation = Quaternion.identity;
+
+            nowBall.mBall.transform = obj.transform;
             SetNowBallVel();
-            nowBall.ShootOut(); 
-            nowBall=null;
-            
+            nowBall.ShootOut();
+            nowBall = null;
+
             Battle.CardDeckManager.UseCurrentCard();
-        CreateNewBall();
+            CreateNewBall();
         });
-        
+
     }
 
     void CreateNewBall()
     {
-        WordTable.Data data=Battle.CardDeckManager.GetCurrentCard();
-        PinBall pinball=Battle.ObjectFactory.CreatePinBall(data);
-        GameObject temp=new GameObject();
-        temp.transform.position=launchPoint;
+        WordTable.Data data = Battle.CardDeckManager.GetCurrentCard();
+        PinBall pinball = Battle.ObjectFactory.CreatePinBall(data);
+        GameObject temp = new GameObject();
+        temp.transform.position = launchPoint;
         pinball.mBall = new PinBall.Ball
         {
             transform = temp.transform,
-            
+
             velocity = Vector3.zero,
             radius = BattleConfig.mData.word.wordBallRadius,
             friction = BattleConfig.mData.word.wordBallFriction,
             energyLoss = BattleConfig.mData.word.wordBallCollisionLoss,
-            hasShoot=false
+            hasShoot = false
         };
-        nowBall=pinball;
+        nowBall = pinball;
     }
 
     void SetNowBallVel()
     {
-        if(nowBall==null)
-            return; 
-        nowBall.mBall.velocity=nowBall.mBall.preVelocity=CalculateLaunchVelocity();
+        if (nowBall == null)
+            return;
+        nowBall.mBall.velocity = nowBall.mBall.preVelocity = CalculateLaunchVelocity();
     }
 
     private Vector2 CalculateLaunchVelocity()
     {
-       float speed = Mathf.Lerp(
+        float speed = Mathf.Lerp(
             BattleConfig.mData.word.wordBallMinSpeed,
             BattleConfig.mData.word.wordBallMaxSpeed,
             currentChargeTime / BattleConfig.mData.word.wordBallChargingMaxTime
         );
 
         Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseWorldPosition.z = 0; 
+        mouseWorldPosition.z = 0;
         Vector2 direction = (mouseWorldPosition - launchPoint).normalized;
 
         // 新增角度限制逻辑
         float maxAngle = BattleConfig.mData.word.maxAngle;
         float signedAngle = Vector2.SignedAngle(Vector2.up, direction);
-    
+
         if (Mathf.Abs(signedAngle) > maxAngle)
         {
             float clampedAngle = Mathf.Clamp(signedAngle, -maxAngle, maxAngle);
@@ -106,14 +107,17 @@ public class PinBallLauncher : BattleModule
 
         return direction * speed;
     }
+
     public override void LateUpdate(float deltaSec)
-    { 
+    {
 
     }
-    bool isAngleValid=false;
+
+    bool isAngleValid = false;
+
     public override void Update(float deltaSec)
-    { 
-        if (Input.GetMouseButton(0)&&mCanShoot)
+    {
+        if (Input.GetMouseButton(0) && mCanShoot)
         {
             if (!isCharging)
             {
@@ -121,7 +125,8 @@ public class PinBallLauncher : BattleModule
                 isCharging = true;
                 chargeStartTime = 0;
             }
-            chargeStartTime+=deltaSec;
+
+            chargeStartTime += deltaSec;
             currentChargeTime = Mathf.Min(chargeStartTime, BattleConfig.mData.word.wordBallChargingMaxTime);
 
             lastTrajectoryUpdateTime += deltaSec;
@@ -132,11 +137,11 @@ public class PinBallLauncher : BattleModule
                 Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 mouseWorldPosition.z = 0;
                 Vector2 direction = (mouseWorldPosition - launchPoint).normalized;
-                float angle = Mathf.Abs(Vector2.Angle(direction, Vector2.up));  // 计算鼠标方向与Vector2.up的夹角
-             
+                float angle = Mathf.Abs(Vector2.Angle(direction, Vector2.up)); // 计算鼠标方向与Vector2.up的夹角
+
                 if (angle > BattleConfig.mData.word.maxAngle)
                 {
-                    if (isAngleValid)  // 如果之前的角度有效，保留当前的轨迹
+                    if (isAngleValid) // 如果之前的角度有效，保留当前的轨迹
                     {
                         isAngleValid = false;
                         // 保持轨迹不更新，保持之前的位置和轨迹
@@ -147,48 +152,49 @@ public class PinBallLauncher : BattleModule
                 {
                     // 如果夹角在限制范围内，更新轨迹
                     isAngleValid = true;
-                
-                        lastTrajectoryUpdateTime = 0f;
-                        ShowTrajectory();  // 定期更新轨迹
-                    
+
+                    lastTrajectoryUpdateTime = 0f;
+                    ShowTrajectory(); // 定期更新轨迹
+
                 }
             }
         }
-        else if (Input.GetMouseButtonUp(0)&&mCanShoot)
-        { 
+        else if (Input.GetMouseButtonUp(0) && mCanShoot)
+        {
             if (isCharging)
-            {        
+            {
                 LaunchPinBall();
                 currentChargeTime = 0f;
                 isCharging = false;
-             
+
             }
         }
     }
 
     public void ShowTrajectory()
     {
-       var preInfo=nowBall.mPreInfo;
+        var preInfo = nowBall.mPreInfo;
 
         pathPoints.Clear();
         pathPoints.Add(launchPoint); // 起点
-        for(int i=0;i<preInfo.colPos.Count;i++)
+        for (int i = 0; i < preInfo.colPos.Count; i++)
         {
-            pathPoints.Add(preInfo.colPos[i]); 
+            pathPoints.Add(preInfo.colPos[i]);
         }
-        if(nowBall.mBall.preTransform!=null)
-            pathPoints.Add(nowBall.mBall.preTransform.position);   // 射线的延伸终点
 
-   
-        trajectoryLine.startWidth=BattleConfig.mData.word.wordBallRadius;
-        trajectoryLine.endWidth=BattleConfig.mData.word.wordBallRadius;
-        trajectoryLine.positionCount = Mathf.Min(pathPoints.Count,BattleConfig.mData.word.maxPreColTimes);
-        
-        for (int i = 0; i < Mathf.Min(pathPoints.Count,BattleConfig.mData.word.maxPreColTimes); i++)
+        if (nowBall.mBall.preTransform != null)
+            pathPoints.Add(nowBall.mBall.preTransform.position); // 射线的延伸终点
+
+
+        trajectoryLine.startWidth = BattleConfig.mData.word.wordBallRadius;
+        trajectoryLine.endWidth = BattleConfig.mData.word.wordBallRadius;
+        trajectoryLine.positionCount = Mathf.Min(pathPoints.Count, BattleConfig.mData.word.maxPreColTimes);
+
+        for (int i = 0; i < Mathf.Min(pathPoints.Count, BattleConfig.mData.word.maxPreColTimes); i++)
         {
             trajectoryLine.SetPosition(i, pathPoints[i]);
         }
-        
+
     }
 
     public override void Init()
@@ -196,6 +202,6 @@ public class PinBallLauncher : BattleModule
         base.Init();
 
         GameObject.Find("bulletroot").TryGetComponent<LineRenderer>(out trajectoryLine);
-        launchPoint=GameObject.Find("bulletroot").transform.position;
+        launchPoint = GameObject.Find("bulletroot").transform.position;
     }
 }

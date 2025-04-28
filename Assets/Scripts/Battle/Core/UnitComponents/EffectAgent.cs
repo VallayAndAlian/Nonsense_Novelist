@@ -15,7 +15,7 @@ public class EffectAgent : UnitComponent
         return target.EffectAgent?.ApplyEffect(spec);
     }
 
-    public BattleEffect ApplyEffect(BattleEffectSpec spec)
+    protected BattleEffect ApplyEffect(BattleEffectSpec spec)
     {
         if (!CanApplyEffect(spec))
             return null;

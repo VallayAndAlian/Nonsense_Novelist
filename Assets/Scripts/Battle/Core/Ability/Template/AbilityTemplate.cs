@@ -57,6 +57,16 @@ public class AbilityTemplate : AbilityBase
         return mTrigger.ShouldTrigger();
     }
 
+    protected override void OnActivate()
+    {
+        if (!IsUltra)
+        {
+            mTrigger.TriggerDirect();
+            
+            TryDeactivate();
+        }
+    }
+
     public override BattleUnit PickTarget()
     {
         if (!mTrigger.CanTriggerByOther())

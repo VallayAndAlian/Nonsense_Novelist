@@ -79,8 +79,11 @@ public class AbilityBase : CoreEntity
     
     public virtual bool CanActivate() { return false; }
     
-    public bool TryActivate()
+    public bool TryActivate(bool bIgnoreCheck = false)
     {
+        if (!bIgnoreCheck && !CanActivate())
+            return false;
+        
         if (!mActivated)
         {
             mActivated = true;
