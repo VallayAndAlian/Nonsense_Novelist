@@ -1,5 +1,9 @@
 ﻿
+using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEngine.UI.CanvasScaler;
 
@@ -24,8 +28,16 @@ public class AbilityTrigger : AbilityModule
         EnemyDeath = 103,                            // 敌人死亡时
         ServantDeath = 104,                          // 随从死亡时
 
-        SelfAttributeThreshold=130,                  //自身属性达到多少
-        NounTreshold=131,                            //拥有多少名词时
+        OursideBuffTypeThreshold=128,                //己方每拥有多少某buff
+        OursideServantThreshold=129,                 //己方每拥有多少随从
+        SelfAttributeThreshold =130,                 //自身属性达到多少
+        SelfNounTreshold=131,                        //自身拥有多少名词时
+        SelfHealTreshold=132,                        //自身治疗累计多少时
+        SelfServantTreshold = 133,                   //自身随从达到多少时
+        SelfReincarnationTreshold=134,               //自身轮回多少次时
+        SelfDebuffThreshold=135,                     //施加多少次负面状态后
+        AccDamageThreshold= 136,                     //累计造成多少伤害
+        AccStealNounTreshold=137,                    //累计偷取名词（老鼠）
     }
 
     public static AbilityTrigger Create(Type type)
@@ -70,13 +82,35 @@ public class AbilityTrigger : AbilityModule
                 trigger = new AMTServantDeath();
                 break;
 
+            case Type.OursideBuffTypeThreshold:
+                trigger = new AMTOursideBuffTypeThreshold();
+                break;
+
+            case Type.OursideServantThreshold:
+                trigger = new AMTOursideServantThreshold();
+                break;
+
             case Type.SelfAttributeThreshold:
                 trigger = new AMTSelfAttributeThreshold();
                 break;
-            case Type.NounTreshold:
-                trigger = new NounTreshold();
+            case Type.SelfNounTreshold:
+                trigger = new AMTSelfNounTreshold();
                 break;
-
+            case Type.SelfHealTreshold:
+                trigger = new AMTSelfHealTreshold();
+                break;
+            case Type.SelfServantTreshold:
+                trigger = new AMTSelfServantTreshold();
+                break;
+            case Type.SelfReincarnationTreshold:
+                trigger = new AMTSelfReincarnationTreshold();
+                break;
+            case Type.SelfDebuffThreshold:
+                trigger = new AMTSelfDebuffThreshold();
+                break;
+            case Type.AccDamageThreshold:
+                trigger = new AMTAccDamageThreshold();
+                break;
             default:
                 break;
         }
@@ -148,7 +182,7 @@ public class AbilityTrigger : AbilityModule
         if (TriggerTimesReachLimit)
             return false;
         
-        if (mPossibility < 1 && Random.Range(0f, 1.0f) >= mPossibility)
+        if (mPossibility < 1 && UnityEngine.Random.Range(0f, 1.0f) >= mPossibility)
             return false;
         
         return true;
@@ -298,11 +332,85 @@ public class AMTServantDeath : AbilityTrigger
         }
     }
 }
+public class AMTOursideBuffTypeThreshold : AbilityTrigger
+{
+    protected Formula mBuffType = new Formula("buff_type");
+    protected Formula mBuffThreshold = new Formula("buff_threshold");
+    protected int mBuffNum = 0;
+    public override void AddParams()
+    {
+        mParams.AddRange(new[] { mBuffType, mBuffThreshold });
+    }
+    public override void Update(float deltaTime)
+    {
+        if (GetBuffNum(mBuffNum) >= mBuffThreshold.EvaluateInt(mOwner))
+        {
+            TryTrigger(null);
+        }
+    }
+    public int GetBuffNum(int num)
+    {
+        var mSelfCurrentBuffNum = 0;
+        var mAlliesCurrentBuffNum = 0;
+        if (mOwner.Unit.EffectAgent.Effects != null)
+        {
+            foreach (var effect in mOwner.Unit.EffectAgent.Effects)
+            {
+                if (effect.mType == (EffectType)mBuffType.EvaluateInt(mOwner))
+                {
+                    mSelfCurrentBuffNum++;
+                }
+            }
+        }
+        if (mOwner.Unit.Allies != null)
+        {
+            foreach (var unit in mOwner.Unit.Allies)
+            {
+                if (unit.EffectAgent.Effects != null)
+                {
+                    foreach (var effect in unit.EffectAgent.Effects)
+                    {
+                        if (effect.mType == (EffectType)mBuffType.EvaluateInt(mOwner))
+                        {
+                            mAlliesCurrentBuffNum++;
+                        }
+                    }
+                }
+            }
+        }
+        return num=mSelfCurrentBuffNum + mAlliesCurrentBuffNum; 
+    }
+}
+
+public class AMTOursideServantThreshold : AbilityTrigger
+{
+    protected Formula mServantThreshold = new Formula("servant_threshold");
+    protected int mCurrentServant;
+    public override void AddParams()
+    {
+        mParams.Add(mServantThreshold);
+    }
+    public override void Update(float deltaTime)
+    {
+        mCurrentServant=mOwner.Unit.ServantsAgent.Servants.Count;
+        if (mOwner.Unit.Allies != null)
+        {
+            foreach (var unit in mOwner.Unit.Allies)
+            {
+                mCurrentServant += unit.ServantsAgent.Servants.Count;
+            }
+        }
+        if (mCurrentServant >= mServantThreshold.EvaluateInt(mOwner))
+        {
+            TryTrigger(null);
+        }
+    }
+}
 public class AMTSelfAttributeThreshold : AbilityTrigger
 {
     protected Formula mTargetAttribute = new Formula("attribute_type");
     protected Formula mComparisonOp = new Formula("comparison_op");
-    protected Formula mThreshold = new Formula("threshold");
+    protected Formula mThreshold = new Formula("attr_threshold");
     public override void AddParams()
     {
        mParams.AddRange(new[] { mTargetAttribute, mComparisonOp, mThreshold });
@@ -317,7 +425,7 @@ public class AMTSelfAttributeThreshold : AbilityTrigger
     private bool CheckCondition()
     {
         var attributeType = (AttributeType)mTargetAttribute.EvaluateInt(mOwner);
-        var currentValue = mOwner.Unit.GetAttributeValue(attributeType);
+        var currentValue = mOwner.Unit.Hp;
         var threshold = mThreshold.Evaluate(mOwner)*mOwner.Unit.MaxHp;
 
         return CompareValues(
@@ -339,7 +447,7 @@ public class AMTSelfAttributeThreshold : AbilityTrigger
         };
     }
 }
-public class NounTreshold : AbilityTrigger
+public class AMTSelfNounTreshold : AbilityTrigger
 {
     protected Formula mNounTreshold = new Formula("noun_treshold");
     protected int mCurrentNounNum;
@@ -359,4 +467,149 @@ public class NounTreshold : AbilityTrigger
             TryTrigger(null);
         }
     }
+}
+public class AMTSelfHealTreshold : AbilityTrigger
+{
+    protected Formula mHealTreshold = new Formula("heal_treshold");
+    protected int mCurrentHealing = 0;
+    public override void AddParams()
+    {
+        mParams.Add(mHealTreshold);
+    }
+    public override void Update(float deltaTime)
+    {
+        if (mCurrentHealing >= mHealTreshold.EvaluateInt(mOwner))
+        {
+            mCurrentHealing -= mHealTreshold.EvaluateInt(mOwner);
+            TryTrigger(null);
+        }
+    }
+    
+}
+public class AMTSelfServantTreshold : AbilityTrigger
+{
+    protected Formula mServantTreshold = new Formula("servant_treshold");
+    protected int mCurrentServantNum ;
+    public override void AddParams()
+    {
+        mParams.Add(mServantTreshold);
+    }
+    public override void Update(float deltaTime)
+    {
+        mCurrentServantNum=mOwner.Unit.ServantsAgent.Servants.Count;
+        if (mCurrentServantNum >= mServantTreshold.EvaluateInt(mOwner))
+        {
+            TryTrigger(null);
+        }
+    }
+}
+public class AMTSelfReincarnationTreshold : AbilityTrigger
+{
+    protected Formula mSelfReincarnationTreshold = new Formula("reincarnation_treshold");
+    protected int mCurrentReincarnationNum=0;
+    public override void AddParams()
+    {
+        mParams.Add(mSelfReincarnationTreshold);
+    }
+    public override void Update(float deltaTime)
+    {
+        if (mCurrentReincarnationNum >= mSelfReincarnationTreshold.EvaluateInt(mOwner))
+        {
+            TryTrigger(null);
+            mCurrentReincarnationNum = 0;
+        }
+    }
+    public override void OnPawnDeath(BattleUnit deceased, DamageReport report)
+    {
+        if (deceased.ServantOwner == mOwner.Unit)
+        {
+            if (deceased.Hp == deceased.MaxHp * 0.3)
+            {
+                mCurrentReincarnationNum++;
+            }
+        }
+    }
+}
+public class AMTSelfDebuffThreshold : AbilityTrigger
+{
+    protected Formula mSelfDebuffThreshold = new Formula("debuff_treshold");
+    protected int mCurrentDebuffNum=0;
+    public override void AddParams()
+    {
+        mParams.Add(mSelfDebuffThreshold);
+    }
+    public override void Update(float deltaTime)
+    {
+        if (mOwner.Unit.EffectAgent.Effects != null) 
+        {
+            foreach (var effect in mOwner.Unit.EffectAgent.Effects)
+            {
+                if (effect.mType.ToString().Substring(effect.mType.ToString().Length-4)== "Down")
+                {
+                    mCurrentDebuffNum++;
+                }
+            }
+        }
+        if (mCurrentDebuffNum >= mSelfDebuffThreshold.EvaluateInt(mOwner))
+        {
+            TryTrigger(null);
+            mCurrentDebuffNum = 0;
+        }
+        else
+        {
+            mCurrentDebuffNum = 0;
+        }
+    }
+}
+public class AMTAccDamageThreshold : AbilityTrigger
+{
+    protected Formula mAccDamageThreshold = new Formula("damage_treshold");
+    protected Formula mFixDamage = new Formula("fix_damage");
+    protected Formula mPsyDamage = new Formula("psy_damage");
+    protected Formula mMagicDamage = new Formula("magic_damage");
+    protected List<DamageType> mDamageData = new List<DamageType>();
+    protected float mCurrentAccDamage=0f;
+    public override void AddParams()
+    {
+        mParams.AddRange(new[] { mAccDamageThreshold,mFixDamage,mPsyDamage,mMagicDamage });
+    }
+    public override void OnInit()
+    {
+        List<Formula> formulas = new List<Formula>() { mFixDamage,mPsyDamage,mMagicDamage};
+        foreach (var item in formulas)
+        {
+            if (item.EvaluateInt(mOwner) != 0)
+            {
+                if(item.mKey.ToString() == "fix_damage")
+                {
+                    mDamageData.Add(DamageType.Fix);
+                }else if(item.mKey.ToString() == "psy_damage")
+                {
+                    mDamageData.Add(DamageType.Psy);
+                }
+                else
+                {
+                    mDamageData.Add(DamageType.Magic);
+                }
+            }
+        }
+    }
+    public override void Update(float deltaTime)
+    {
+        if (mCurrentAccDamage >= mAccDamageThreshold.Evaluate(mOwner))
+        {
+            TryTrigger(null);
+            mCurrentAccDamage = 0;
+        }
+    }
+    public override void OnPostDealDamage(DamageReport report)
+    {
+        foreach (var type in mDamageData)
+        {
+            if (report.mMeta.mDamageType==type)
+            {
+                mCurrentAccDamage += report.mResult.mDamage;
+            }
+        }
+    } 
 }

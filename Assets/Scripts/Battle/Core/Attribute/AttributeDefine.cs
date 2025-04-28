@@ -14,10 +14,10 @@ public enum AttributeType
 public enum ComparisonOperator
 {
     LessThan,
+    GreaterThan,
     LessOrEqual,
     Equal,
     GreaterOrEqual,
-    GreaterThan
 }
 
 public class Attribute

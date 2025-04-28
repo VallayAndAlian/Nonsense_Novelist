@@ -12,6 +12,7 @@ public class AbilityEffectApplier : AbilityModule
         AttrMod = 2,
         Damage = 3,
         AttrDamage = 4,
+        Reincarnation=5,
     }
 
     public static AbilityEffectApplier Create(Type type)
@@ -35,7 +36,11 @@ public class AbilityEffectApplier : AbilityModule
             case Type.AttrDamage:
                 applier = new AMEAAttrDamage();
                 break;
-            
+
+            case Type.Reincarnation:
+                applier = new AMEAReincarnation();
+                break;
+
             default:
                 break;
         }
@@ -151,6 +156,7 @@ public class AbilityEffectApplier : AbilityModule
         
         Tick(deltaTime);
     }
+    public virtual void OnPawnDeath(BattleUnit deceased, DamageReport report) { }
 }
 
 public class AMEATest : AbilityEffectApplier
@@ -279,5 +285,20 @@ public class AMEAAttrDamage : AbilityEffectApplier
         {
             DamageHelper.ProcessDamage(dmg);
         }
+    }
+}
+public class AMEAReincarnation : AbilityEffectApplier
+{
+    public override void OnPawnDeath(BattleUnit deceased, DamageReport report)
+    {
+        if (deceased.ServantOwner == mOwner.Unit)
+        {
+            Apply(deceased, null);
+        }
+    }
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        target.ServantOwner.ServantsAgent.RegisterServants(target.ID);
+        target.ModifyBase(AttributeType.MaxHp, -0.7f, true);
     }
 }

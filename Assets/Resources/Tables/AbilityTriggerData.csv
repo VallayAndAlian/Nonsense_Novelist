@@ -1,7 +1,8 @@
-Kind,Type,最大触发次数,触发概率,冷却时间,ParamsNum,,,,,,
-1,1,1,1,0,0,,,,,,
-2,2,0,1,10,0,,,,,,
-3,3,0,1,10,0,,,,,,
-4,30,0,1,0,1,attack_times,10,,,,
-5,1,1,1,0,0,,,,,,
-6,130,1,1,0,3,attribute_type,4,comparison_op,0,threshold,30
+Kind,Type,最大触发次数,触发概率,冷却时间,ParamsNum,,,,,,,,
+1,1,1,1,0,0,,,,,,,,
+2,2,0,1,10,0,,,,,,,,
+3,3,0,1,10,0,,,,,,,,
+4,30,0,1,0,1,attack_times,10,,,,,,
+5,1,1,1,0,0,,,,,,,,
+6,130,1,1,0,3,attribute_type,4,comparison_op,0,attr_threshold,30,,
+7,136,1,1,0,4,damage_treshold,30000,fix_damage,0,psy_damage,1,magic_damage,1

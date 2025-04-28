@@ -92,6 +92,7 @@ public class DamageMeta
     public BattleUnit mTarget;
     public AbilityBase mAbility;
     public DealDamageFlag mFlag;
+    public DamageType mDamageType;
 
     public float mAttack;
     public float mDefense;
