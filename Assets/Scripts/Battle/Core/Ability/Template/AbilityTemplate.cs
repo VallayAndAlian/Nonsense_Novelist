@@ -9,7 +9,7 @@ public class AbilityTemplate : AbilityBase
     protected AbilityTargetSelector mSelector = null;
     protected List<AbilityEffectApplier> mAppliers = new List<AbilityEffectApplier>();
 
-    public override bool IsUltra => mTrigger.CanTriggerByOther();
+    public override bool IsUltra => mTrigger.CanTriggerByOther() && !AnimName.Equals("None");
 
     public AbilityTemplate(AbilityTrigger trigger, AbilityTargetSelector selector, List<AbilityEffectApplier> appliers)
     {
@@ -162,6 +162,15 @@ public class AbilityTemplate : AbilityBase
     public override void OnSelfDeath(DamageReport dmg)
     {
         mTrigger.OnSelfDeath(dmg);
+    }
+
+    #endregion
+
+    #region EffectProcess
+    
+    public override void OnSelfApplyEffect(BattleEffect be)
+    {
+        mTrigger.OnSelfApplyEffect(be);
     }
 
     #endregion

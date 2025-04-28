@@ -64,7 +64,7 @@ public class BattleEffectSpec
     public bool mMergeInputValue = false;
 }
 
-public class BattleEffect
+public class BattleEffect : CoreEntity
 {
     public BattleUnit mInstigator;
     public BattleUnit mTarget;
@@ -98,6 +98,7 @@ public class BattleEffect
         mAbility = spec.mAbility;
         mType = spec.mType;
         mDurationRule = spec.mDurationRule;
+        mStackDurationRule = spec.mStackDurationRule;
         mDuration = spec.mDuration;
         mInputValue = spec.mInputValue;
         mInputValueInt = spec.mInputValueInt;

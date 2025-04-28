@@ -415,6 +415,16 @@ public class BattleUnit : BattleObject
 
     #endregion
 
+    #region EffectProcess
 
+    public void OnSelfApplyEffect(BattleEffect be)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnSelfApplyEffect(be);
+        }
+    }
+
+    #endregion
 
 }

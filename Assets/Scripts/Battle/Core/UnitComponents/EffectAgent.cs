@@ -40,6 +40,8 @@ public class EffectAgent : UnitComponent
             }
             
             mEffects.Add(newBe);
+
+            mOwner.OnSelfApplyEffect(newBe);
             
             mOwner.UnitView.OnApplyEffect(newBe);
             
@@ -147,6 +149,12 @@ public class EffectAgent : UnitComponent
                 continue;
             }
 
+            if (effect.mDurationRule == EffectDurationRule.Script && !effect.mAbility.IsValid())
+            {
+                mRemovedEffect.Add(effect);
+                continue;
+            }
+
             var attrType = BattleHelper.ToAttrType(effect.mType);
             if (attrType != AttributeType.None)
             {
@@ -197,6 +205,8 @@ public class EffectAgent : UnitComponent
                 EventManager.Invoke(EventEnum.RemoveEffect, effect);
                 
                 mEffects.Remove(effect);
+                
+                effect.Dispose();
             }
         
             mRemovedEffect.Clear();

@@ -173,9 +173,9 @@ public class AbilityBase : CoreEntity
     #endregion
 
     #region EffectProcess
-
     
-
+    public virtual void OnSelfApplyEffect(BattleEffect be) { }
+    
     #endregion
     
     #region ParseCustomParams

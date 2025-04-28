@@ -227,6 +227,8 @@ public class AbilityTrigger : AbilityModule
     public virtual void OnPawnDeath(BattleUnit deceased, DamageReport report) { }
     
     public virtual void OnSelfDeath(DamageReport report) { }
+    
+    public virtual void OnSelfApplyEffect(BattleEffect be) { }
 }
 
 public class AMTDirect : AbilityTrigger
