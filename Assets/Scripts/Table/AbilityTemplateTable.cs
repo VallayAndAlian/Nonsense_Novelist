@@ -59,6 +59,7 @@ public class AbilityTriggerTable : MapTable<int, AbilityTriggerTable.Data>
     {
         public int mKind;
         public int mType;
+        public string mDesc;
         public int mMaxTriggerTimes;
         public float mPossibility;
         public float mCoolDownDuration;
@@ -72,6 +73,7 @@ public class AbilityTriggerTable : MapTable<int, AbilityTriggerTable.Data>
         Data data = new Data();
         data.mKind = reader.Read<int>();
         data.mType = reader.Read<int>();
+        data.mDesc = reader.Read<string>();
         data.mMaxTriggerTimes = reader.Read<int>();
         data.mPossibility = reader.Read<float>();
         data.mCoolDownDuration = reader.Read<float>();
@@ -89,6 +91,7 @@ public class AbilitySelectorTable : MapTable<int, AbilitySelectorTable.Data>
     {
         public int mKind;
         public int mType;
+        public string mDesc;
         public int mTargetCount;
         public Dictionary<string, CustomParam> mCustomParams = new Dictionary<string, CustomParam>();
     }
@@ -100,6 +103,7 @@ public class AbilitySelectorTable : MapTable<int, AbilitySelectorTable.Data>
         Data data = new Data();
         data.mKind = reader.Read<int>();
         data.mType = reader.Read<int>();
+        data.mDesc = reader.Read<string>();
         data.mTargetCount = reader.Read<int>();
         
         if (!ReaderUtils.ParseCustomParams(reader, data.mCustomParams))
@@ -115,6 +119,7 @@ public class AbilityEffectApplierTable : MapTable<int, AbilityEffectApplierTable
     {
         public int mKind;
         public int mType;
+        public string mDesc;
         public bool mCanBePurgedOrExpelled;
         public int mStackLimit;
         public float mDuration;
@@ -128,6 +133,7 @@ public class AbilityEffectApplierTable : MapTable<int, AbilityEffectApplierTable
         Data data = new Data();
         data.mKind = reader.Read<int>();
         data.mType = reader.Read<int>();
+        data.mDesc = reader.Read<string>();
         data.mCanBePurgedOrExpelled = reader.Read<bool>();
         data.mStackLimit = reader.Read<int>();
         data.mDuration = reader.Read<float>();
