@@ -8,3 +8,4 @@ Kind,Type,Desc,TargetCount,ParamsNum
 7,7,优先最近敌人,1,0
 8,7,所有敌人,4,0
 9,3,所有队友,4,0
+10,3,优先2个残血队友,2,0

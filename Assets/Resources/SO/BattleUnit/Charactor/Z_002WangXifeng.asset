@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cf2a644c5d71af4e8adae713d4a149c, type: 3}
-  m_Name: Z_WangXifeng
+  m_Name: Z_002WangXifeng
   m_EditorClassIdentifier: 
   unitName: "\u738B\u7199\u51E4"
   prefab: {fileID: 2923459406948245553, guid: 41fa4755dae4fc1478c606d816b532f8, type: 3}
@@ -18,7 +18,6 @@ MonoBehaviour:
   infoDetail: "\u8FD9\u662F\u4E00\u4E2A\u6D4B\u8BD5\u89D2\u8272\uFF0C\u6B64\u5904\u8BB0\u5F55\u5176\u8BE6\u7EC6\u63CF\u8FF0\u3002\u6D4B\u8BD5\u89D2\u8272\u51FA\u8EAB\u4E00\u4E2A\u53EF\u601C\u7684\u591C\u665A\uFF0C\u5979\u7684\u4F5C\u8005\u6B63\u5750\u5728\u7535\u8111\u524D\u82E6\u601D\u51A5\u60F3\u2026\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u3002"
   pic: {fileID: 2800000, guid: 23f33fdb901ac6b48a06e7d59cf83a77, type: 3}
   sprite: {fileID: 21300000, guid: 23f33fdb901ac6b48a06e7d59cf83a77, type: 3}
-  weaponProj: {fileID: 7617887590883620401, guid: bdf137f0210d54642a7472faab397ea9, type: 3}
   animatorController: {fileID: 9100000, guid: 45946341818a8804594654b961c17f4a, type: 2}
-  roleName: "\u6D4B\u8BD5"
+  roleName: "\u5927\u5BB6\u957F"
   roleInfo: "\u3010\u6D4B\u8BD5\u3011\u7CBE\u795E+15%"

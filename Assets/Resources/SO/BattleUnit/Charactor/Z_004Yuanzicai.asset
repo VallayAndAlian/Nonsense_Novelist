@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6cf2a644c5d71af4e8adae713d4a149c, type: 3}
-  m_Name: Z_LongDuangongsi
+  m_Name: Z_004Yuanzicai
   m_EditorClassIdentifier: 
-  unitName: "\u5784\u65AD\u516C\u53F8"
-  prefab: {fileID: 3837959891539934793, guid: d83fcd52ac5e01f4f8fe59d05902a0de, type: 3}
+  unitName: "\u56ED\u5B50\u83DC"
+  prefab: {fileID: 3837959891539934793, guid: a3b7ea579aa180f40839d807138ce191, type: 3}
   infoShort: "\u8FD9\u662F\u4E00\u4E2A\u6D4B\u8BD5\u89D2\u8272\uFF0C\u6B64\u5904\u8BB0\u5F55\u5176\u7B80\u8981\u63CF\u8FF0\u3002"
   infoDetail: "\u8FD9\u662F\u4E00\u4E2A\u6D4B\u8BD5\u89D2\u8272\uFF0C\u6B64\u5904\u8BB0\u5F55\u5176\u8BE6\u7EC6\u63CF\u8FF0\u3002\u6D4B\u8BD5\u89D2\u8272\u51FA\u8EAB\u4E00\u4E2A\u53EF\u601C\u7684\u591C\u665A\uFF0C\u5979\u7684\u4F5C\u8005\u6B63\u5750\u5728\u7535\u8111\u524D\u82E6\u601D\u51A5\u60F3\u2026\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u63CF\u8FF0\u3002"
-  pic: {fileID: 2800000, guid: a59a7004e76a7214fa440b87b6af4027, type: 3}
-  sprite: {fileID: 21300000, guid: a59a7004e76a7214fa440b87b6af4027, type: 3}
-  weaponProj: {fileID: 5396089893936509290, guid: 767f667755cd0c247aa64b5b5d83c016, type: 3}
-  animatorController: {fileID: 9100000, guid: deb9026bfcc36644391939cf5b08192b, type: 2}
-  roleName: "\u6D4B\u8BD5"
+  pic: {fileID: 2800000, guid: 8d11f78d6a527a743b333580e3f9ea4b, type: 3}
+  sprite: {fileID: 21300000, guid: 96b66feb908b7be469bab0743829169a, type: 3}
+  animatorController: {fileID: 9100000, guid: 8607cd5107c4df2478c560336310d6bf, type: 2}
+  roleName: "\u9690\u8005"
   roleInfo: "\u3010\u6D4B\u8BD5\u3011\u7CBE\u795E+15%"
