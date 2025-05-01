@@ -178,9 +178,11 @@ public class AbilityBase : CoreEntity
     #region EffectProcess
     
     public virtual void OnSelfApplyEffect(BattleEffect be) { }
-    
+    public virtual void OnPawnApplyEffect(BattleEffect be) { }
+    public virtual void OnSelfApplyHealEffect(BattleEffect be) { }
+
     #endregion
-    
+
     #region ParseCustomParams
 
     protected List<Formula> mParams = new List<Formula>();

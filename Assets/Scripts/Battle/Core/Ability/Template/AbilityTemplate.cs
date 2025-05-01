@@ -182,7 +182,10 @@ public class AbilityTemplate : AbilityBase
     {
         mTrigger.OnSelfApplyEffect(be);
     }
-
+    public override void OnSelfApplyHealEffect(BattleEffect be)
+    {
+        mTrigger.OnSelfApplyHealEffect(be);
+    }
     #endregion
 }
 

@@ -15,12 +15,12 @@ public class AbilityTrigger : AbilityModule
         Direct = 1,                                // 直接触发
         Tick = 2,                                  // 每隔多少秒
         DirectCall = 3,                            // 外部驱动
-        
+
         /* 伤害类 */
         AutoAttackTimes = 30,                       // 每隔几次自动攻击
         BeAutoAttackTimes = 31,                     // 每受到几次自动攻击
         TakeDamageByValue = 32,                     // 每受到几点伤害
-        
+
         /* 死亡类 */
         AnyDeath = 100,                              // 任意单位死亡时
         SelfDeath = 101,                             // 自己死亡时
@@ -28,16 +28,17 @@ public class AbilityTrigger : AbilityModule
         EnemyDeath = 103,                            // 敌人死亡时
         ServantDeath = 104,                          // 随从死亡时
 
-        OursideBuffTypeThreshold=128,                //己方每拥有多少某buff
-        OursideServantThreshold=129,                 //己方每拥有多少随从
-        SelfAttributeThreshold =130,                 //自身属性达到多少
-        SelfNounTreshold=131,                        //自身拥有多少名词时
-        SelfHealTreshold=132,                        //自身治疗累计多少时
-        SelfServantTreshold = 133,                   //自身随从达到多少时
-        SelfReincarnationTreshold=134,               //自身轮回多少次时
-        SelfDebuffThreshold=135,                     //施加多少次负面状态后
-        AccDamageThreshold= 136,                     //累计造成多少伤害
-        AccStealNounTreshold=137,                    //累计偷取名词（老鼠）
+        AccOursideBuffTypeThreshold=127,              //己方到当前累计每拥有多少某buff
+        NowOursideBuffTypeThreshold = 128,            //己方当前时刻每拥有多少某buff
+        OursideServantThreshold = 129,                //己方每拥有多少随从
+        SelfAttributeThreshold = 130,                 //自身属性达到多少
+        SelfNounTreshold = 131,                       //自身拥有多少名词时
+        SelfHealTreshold = 132,                       //自身治疗累计多少时
+        SelfServantTreshold = 133,                    //自身随从达到多少时
+        SelfReincarnationTreshold = 134,              //自身轮回多少次时
+        SelfDebuffThreshold = 135,                    //施加多少次负面状态后
+        AccDamageThreshold = 136,                     //累计造成多少伤害
+        AccStealNounTreshold = 137,                   //累计偷取名词（老鼠）
     }
 
     public static AbilityTrigger Create(Type type)
@@ -49,41 +50,49 @@ public class AbilityTrigger : AbilityModule
             case Type.Direct:
                 trigger = new AMTDirect();
                 break;
-            
+
             case Type.Tick:
                 trigger = new AMTTick();
                 break;
-            
+
             case Type.DirectCall:
                 trigger = new AMTDirectCall();
                 break;
-            
+
             case Type.AutoAttackTimes:
                 trigger = new AMTAttackTimes();
                 break;
-            
+
+            case Type.BeAutoAttackTimes:
+                trigger = new AMTBeAutoAttackTimes();
+                break;
+
+            case Type.TakeDamageByValue:
+                trigger = new AMTTakeDamageByValue();
+                break;
+
             case Type.AnyDeath:
                 trigger = new AMTAnyDeath();
                 break;
-            
+
             case Type.SelfDeath:
                 trigger = new AMTSelfDeath();
                 break;
-            
+
             case Type.AllyDeath:
                 trigger = new AMTAllyDeath();
                 break;
-            
+
             case Type.EnemyDeath:
                 trigger = new AMTEnemyDeath();
                 break;
-            
+
             case Type.ServantDeath:
                 trigger = new AMTServantDeath();
                 break;
 
-            case Type.OursideBuffTypeThreshold:
-                trigger = new AMTOursideBuffTypeThreshold();
+            case Type.NowOursideBuffTypeThreshold:
+                trigger = new AMTNowOursideBuffTypeThreshold();
                 break;
 
             case Type.OursideServantThreshold:
@@ -117,20 +126,20 @@ public class AbilityTrigger : AbilityModule
 
         if (trigger != null)
             trigger.mType = type;
-        
+
         return trigger;
     }
-    
-    
+
+
     public Type mType = Type.Undefined;
 
     public AbilityTriggerTable.Data mData = null;
-    
+
     protected int mMaxTriggerTimes = int.MaxValue;
     protected float mPossibility = 1.0f;
     protected float mCoolDownDuration = 0f;
-    
-    
+
+
     protected int mTriggerTimes = 0;
     protected float mLastTriggerTime = 0f;
 
@@ -144,19 +153,19 @@ public class AbilityTrigger : AbilityModule
                 return mOwner.ElapsedSec - mLastTriggerTime >= mCoolDownDuration;
         }
     }
-    
+
     public bool TriggerTimesReachLimit => mMaxTriggerTimes > 0 && mTriggerTimes >= mMaxTriggerTimes;
 
     public virtual bool Setup(AbilityTriggerTable.Data data)
     {
         mData = data;
-        
+
         mMaxTriggerTimes = mData.mMaxTriggerTimes;
         mPossibility = mData.mPossibility;
         mCoolDownDuration = mData.mCoolDownDuration;
-        
+
         mCustomParams = data.mCustomParams;
-        
+
         return ParseParams();
     }
 
@@ -166,7 +175,7 @@ public class AbilityTrigger : AbilityModule
         {
             mTriggerTimes++;
             mLastTriggerTime = mOwner.ElapsedSec;
-            
+
             mOwner.TriggeredBy(triggerData);
             return true;
         }
@@ -181,16 +190,16 @@ public class AbilityTrigger : AbilityModule
 
         if (TriggerTimesReachLimit)
             return false;
-        
+
         if (mPossibility < 1 && UnityEngine.Random.Range(0f, 1.0f) >= mPossibility)
             return false;
-        
+
         return true;
     }
 
     public virtual bool CanTriggerByOther() { return false; }
 
-    public virtual void TriggerDirect() {}
+    public virtual void TriggerDirect() { }
 
     public virtual void OnPreDealDamageCalc(DealDamageCalc dmgCalc) { }
 
@@ -199,36 +208,38 @@ public class AbilityTrigger : AbilityModule
     public virtual void OnPreTakeDamageCalc(TakeDamageCalc dmgCalc) { }
 
     public virtual void OnAllyPreTakeDamageCalc(TakeDamageCalc dmgCalc) { }
-    
+
 
     public virtual void OnPreDealDamage(DamageReport report) { }
-    
+
     public virtual void OnPreDealDamageOtherAbility(DamageReport report) { }
 
     public virtual void OnPostDealDamage(DamageReport report) { }
 
     public virtual void OnPostDealDamageOtherAbility(DamageReport report) { }
-    
+
     public virtual void OnAllyDealDamage(DamageReport report) { }
 
     public virtual void OnEnemyDealDamage(DamageReport report) { }
-    
+
 
     public virtual void OnPreTakeDamage(DamageReport report) { }
 
     public virtual void OnAllyPreTakeDamage(DamageReport report) { }
 
     public virtual void OnPostTakeDamage(DamageReport report) { }
-    
+
     public virtual void OnAllyTakeDamage(DamageReport report) { }
 
     public virtual void OnEnemyTakeDamage(DamageReport report) { }
-    
+
     public virtual void OnPawnDeath(BattleUnit deceased, DamageReport report) { }
-    
+
     public virtual void OnSelfDeath(DamageReport report) { }
-    
+
     public virtual void OnSelfApplyEffect(BattleEffect be) { }
+
+    public virtual void OnSelfApplyHealEffect(BattleEffect be) { }
 }
 
 public class AMTDirect : AbilityTrigger
@@ -285,6 +296,45 @@ public class AMTAttackTimes : AbilityTrigger
         }
     }
 }
+public class AMTBeAutoAttackTimes : AbilityTrigger
+{
+    protected Formula mBeAttackTimes = new Formula("attack_times");
+    protected int mCurrentBeAttackTimes = 0;
+
+    public override void AddParams()
+    {
+        mParams.Add(mBeAttackTimes);
+    }
+
+    public override void OnPostTakeDamage(DamageReport report)
+    {
+        if (report.mMeta.mAbility != null && report.mMeta.mAbility.Data.mType == AbilityType.AutoAttack)
+        {
+            ++mCurrentBeAttackTimes;
+            if (mCurrentBeAttackTimes >= mBeAttackTimes.EvaluateInt(mOwner))
+            {
+                mCurrentBeAttackTimes = 0;
+                TryTrigger(report);
+            }
+        }
+    }
+}
+public class AMTTakeDamageByValue : AbilityTrigger
+{
+    protected Formula mDamageValue = new Formula("damage_value");
+
+    public override void AddParams()
+    {
+        mParams.Add(mDamageValue);
+    }
+    public override void OnPostTakeDamage(DamageReport report)
+    {
+        if (report.mMeta.mAbility != null && report.mResult.mDamage>=mDamageValue.Evaluate(mOwner))
+        {
+           TryTrigger(report);
+        }
+    }
+}
 
 public class AMTAnyDeath : AbilityTrigger
 {
@@ -334,7 +384,7 @@ public class AMTServantDeath : AbilityTrigger
         }
     }
 }
-public class AMTOursideBuffTypeThreshold : AbilityTrigger
+public class AMTNowOursideBuffTypeThreshold : AbilityTrigger
 {
     protected Formula mBuffType = new Formula("buff_type");
     protected Formula mBuffThreshold = new Formula("buff_threshold");
@@ -360,7 +410,7 @@ public class AMTOursideBuffTypeThreshold : AbilityTrigger
             {
                 if (effect.mType == (EffectType)mBuffType.EvaluateInt(mOwner))
                 {
-                    mSelfCurrentBuffNum++;
+                    ++mSelfCurrentBuffNum;
                 }
             }
         }
@@ -374,13 +424,20 @@ public class AMTOursideBuffTypeThreshold : AbilityTrigger
                     {
                         if (effect.mType == (EffectType)mBuffType.EvaluateInt(mOwner))
                         {
-                            mAlliesCurrentBuffNum++;
+                            ++mAlliesCurrentBuffNum;
                         }
                     }
                 }
             }
         }
         return num=mSelfCurrentBuffNum + mAlliesCurrentBuffNum; 
+    }
+    public override void OnSelfApplyEffect(BattleEffect be)
+    {
+        if(be.mType== (EffectType)mBuffType.EvaluateInt(mOwner))
+        {
+            
+        }
     }
 }
 
@@ -486,7 +543,13 @@ public class AMTSelfHealTreshold : AbilityTrigger
             TryTrigger(null);
         }
     }
-    
+    public override void OnSelfApplyHealEffect(BattleEffect be)
+    {
+        if (be.mType == EffectType.MaxHpUp&&mOwner.Unit.Hp<mOwner.Unit.MaxHp)
+        {
+            mCurrentHealing += be.mInputValueInt;
+        }
+    }
 }
 public class AMTSelfServantTreshold : AbilityTrigger
 {
@@ -513,21 +576,18 @@ public class AMTSelfReincarnationTreshold : AbilityTrigger
     {
         mParams.Add(mSelfReincarnationTreshold);
     }
-    public override void Update(float deltaTime)
-    {
-        if (mCurrentReincarnationNum >= mSelfReincarnationTreshold.EvaluateInt(mOwner))
-        {
-            TryTrigger(null);
-            mCurrentReincarnationNum = 0;
-        }
-    }
     public override void OnPawnDeath(BattleUnit deceased, DamageReport report)
     {
         if (deceased.ServantOwner == mOwner.Unit)
         {
             if (deceased.Hp == deceased.MaxHp * 0.3)
             {
-                mCurrentReincarnationNum++;
+                ++mCurrentReincarnationNum;
+                if (mCurrentReincarnationNum >= mSelfReincarnationTreshold.EvaluateInt(mOwner))
+                {
+                    TryTrigger(null);
+                    mCurrentReincarnationNum = 0;
+                }
             }
         }
     }
@@ -548,7 +608,7 @@ public class AMTSelfDebuffThreshold : AbilityTrigger
             {
                 if (effect.mType.ToString().Substring(effect.mType.ToString().Length-4)== "Down")
                 {
-                    mCurrentDebuffNum++;
+                    ++mCurrentDebuffNum;
                 }
             }
         }
@@ -596,14 +656,6 @@ public class AMTAccDamageThreshold : AbilityTrigger
             }
         }
     }
-    public override void Update(float deltaTime)
-    {
-        if (mCurrentAccDamage >= mAccDamageThreshold.Evaluate(mOwner))
-        {
-            TryTrigger(null);
-            mCurrentAccDamage = 0;
-        }
-    }
     public override void OnPostDealDamage(DamageReport report)
     {
         foreach (var type in mDamageData)
@@ -611,6 +663,11 @@ public class AMTAccDamageThreshold : AbilityTrigger
             if (report.mMeta.mDamageType==type)
             {
                 mCurrentAccDamage += report.mResult.mDamage;
+                if (mCurrentAccDamage >= mAccDamageThreshold.Evaluate(mOwner))
+                {
+                    TryTrigger(null);
+                    mCurrentAccDamage = 0;
+                }
             }
         }
     } 

@@ -19,6 +19,7 @@ public enum EffectType
     PsyDown,
     MaxHpUp,
     MaxHpDown,
+    Heal,
 }
     
 public enum EffectDurationRule

@@ -13,6 +13,7 @@ public class AbilityEffectApplier : AbilityModule
         Damage = 3,
         AttrDamage = 4,
         Reincarnation=5,
+        AttrHeal=6,
     }
 
     public static AbilityEffectApplier Create(Type type)
@@ -39,6 +40,10 @@ public class AbilityEffectApplier : AbilityModule
 
             case Type.Reincarnation:
                 applier = new AMEAReincarnation();
+                break;
+
+            case Type.AttrHeal:
+                applier = new AMEAAttrHeal();
                 break;
 
             default:
@@ -156,7 +161,6 @@ public class AbilityEffectApplier : AbilityModule
         
         Tick(deltaTime);
     }
-    public virtual void OnPawnDeath(BattleUnit deceased, DamageReport report) { }
 }
 
 public class AMEATest : AbilityEffectApplier
@@ -289,16 +293,36 @@ public class AMEAAttrDamage : AbilityEffectApplier
 }
 public class AMEAReincarnation : AbilityEffectApplier
 {
-    public override void OnPawnDeath(BattleUnit deceased, DamageReport report)
-    {
-        if (deceased.ServantOwner == mOwner.Unit)
-        {
-            Apply(deceased, null);
-        }
-    }
     public override void Apply(BattleUnit target, object triggerData)
     {
         target.ServantOwner.ServantsAgent.RegisterServants(target.ID);
         target.ModifyBase(AttributeType.MaxHp, -0.7f, true);
+    }
+}
+public class AMEAAttrHeal : AbilityEffectApplier
+{
+    protected Formula mAttrType = new Formula("attr_type");
+    protected Formula mValue = new Formula("value");
+    protected Formula mModifyPercent = new Formula("is_percent");
+    protected float mCurrentHeal=0;
+
+    public override void AddParams()
+    {
+        mParams.Add(mAttrType);
+        mParams.Add(mValue);
+        mParams.Add(mModifyPercent);
+    }
+
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        if(mModifyPercent.EvaluateBool(mOwner))
+        {
+            mCurrentHeal=mOwner.Unit.GetAttributeValue((AttributeType)mAttrType.EvaluateInt(mOwner))*mValue.Evaluate(mOwner);
+        }
+        else
+        {
+            mCurrentHeal=mValue.Evaluate(mOwner);
+        }
+        target.ApplyHeal(mCurrentHeal);
     }
 }

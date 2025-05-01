@@ -11,7 +11,9 @@ public enum AbilityType
     PermanentAttribute,
     AttributeMod,
     AttributePercentMod,
-    
+    AutoHeal,
+
+
     AutoAttack = 10,
     TestUltra = 11,
 }
@@ -23,6 +25,7 @@ public class AbilityFactory
         { AbilityType.TemplateAbility, typeof(AbilityTemplate) },
         { AbilityType.PermanentAttribute, typeof(AbilityPermanentAttribute) },
         { AbilityType.AutoAttack, typeof(AbilityAutoAttack) },
+        { AbilityType.AutoAttack, typeof(AbilityAutoHeal) },
         { AbilityType.TestUltra, typeof(AbilityTestUltra) },
     };
 

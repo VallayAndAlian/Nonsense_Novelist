@@ -42,6 +42,10 @@ public class EffectAgent : UnitComponent
             mEffects.Add(newBe);
 
             mOwner.OnSelfApplyEffect(newBe);
+            if (newBe.mType == EffectType.Heal)
+            {
+                mOwner.OnSelfApplyHealEffect(newBe);
+            }
             
             mOwner.UnitView.OnApplyEffect(newBe);
             

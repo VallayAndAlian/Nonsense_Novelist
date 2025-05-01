@@ -425,6 +425,28 @@ public class BattleUnit : BattleObject
         }
     }
 
+    public void OnSelfApplyHealEffect(BattleEffect be)
+    {
+        foreach (var abi in AbilityAgent.Abilities)
+        {
+            abi.OnSelfApplyHealEffect(be);
+        }
+    }
+    public float ApplyHeal(float healValue)
+    {
+        float number = 0;
+
+        if (healValue > 0)
+        {
+            float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
+            number = Mathf.Min(healValue, currentMaxHp - mHp);
+
+            mHp += number;
+        }
+
+        return number;
+    }
+
     #endregion
 
 }
