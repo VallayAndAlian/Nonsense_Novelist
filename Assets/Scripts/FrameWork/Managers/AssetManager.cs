@@ -10,6 +10,7 @@ using Object = UnityEngine.Object;
 public class AssetManager
 {
     protected static BattleEffectSO mEffectSO = null;
+    protected static CommonSO mCommonSO = null;
     
     public static T Load<T>(string path, string assetName) where T : Object
     {
@@ -29,5 +30,15 @@ public class AssetManager
         }
             
         return mEffectSO;
+    }
+    
+    public static CommonSO GetCommonAsset()
+    {
+        if (mCommonSO == null)
+        {
+            mCommonSO = Load<CommonSO>("SO", "CommonSO");
+        }
+            
+        return mCommonSO;
     }
 }

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: A_018QingXiDe
   m_EditorClassIdentifier: 
   unitName: "\u6E05\u6670\u7684"
+  wordName: "\u6E05\u6670\u7684"
   prefab: "\u83B7\u5F97\u5171\u632F"
+  desc: "\u83B7\u5F97\u5171\u632F"
   infoShort: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
+  sprite: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

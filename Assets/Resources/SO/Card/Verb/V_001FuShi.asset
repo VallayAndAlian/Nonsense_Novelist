@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: V_001FuShi
   m_EditorClassIdentifier: 
   unitName: "\u8D4B\u8BD7"
+  wordName: "\u8D4B\u8BD7"
   prefab: "\u4F7F\u81EA\u8EAB\u83B7\u5F97\u8BD7\u7BC7"
+  desc: "\u4F7F\u81EA\u8EAB\u83B7\u5F97\u8BD7\u7BC7"
   infoShort: {fileID: 2800000, guid: 6e4f104fb4390ec4ab35629c92116af5, type: 3}
+  sprite: {fileID: 2800000, guid: 6e4f104fb4390ec4ab35629c92116af5, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

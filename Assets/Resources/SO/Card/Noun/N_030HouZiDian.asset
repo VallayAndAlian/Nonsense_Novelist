@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: N_030HouZiDian
   m_EditorClassIdentifier: 
   unitName: "\u539A\u5B57\u5178"
+  wordName: "\u539A\u5B57\u5178"
   prefab: "\u9632\u5FA1+1"
+  desc: "\u9632\u5FA1+1"
   infoShort: {fileID: 2800000, guid: 3111c4a59bd270342a4e37d8e0f99393, type: 3}
+  sprite: {fileID: 2800000, guid: 3111c4a59bd270342a4e37d8e0f99393, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

@@ -4,21 +4,21 @@ using UnityEngine;
 public enum ShootType
 {
     None = 0,
-    Split = 1,    // 分裂
-    Activate = 2, // 激活
-    spread = 3,   // 传播
-    Alpha = 4,     // 穿透
-    Start=5,     // 起兴
-    Servants=6,     // 连及
-    Dead=7,     // 歇后
-    Add=8,     // 递进
-    Small=9,     // 委婉
-    Big=10,     // 直白
-    Mirror=11,     // 对仗
-    Expect=12,     // 衬托
-    Copy=13,     // 比喻
-    SameChara=14,     // 顶针
-    ReTrigger=15,     // 回环
+    Split = 1,            // 分裂
+    Activate = 2,         // 激活
+    spread = 3,           // 传播
+    Alpha = 4,            // 穿透
+    Start = 5,            // 起兴
+    Servants = 6,         // 连及
+    Dead = 7,             // 歇后
+    Add = 8,              // 递进
+    Small = 9,            // 委婉
+    Big = 10,             // 直白
+    Mirror = 11,          // 对仗
+    Expect = 12,          // 衬托
+    Copy = 13,            // 比喻
+    SameChara = 14,       // 顶针
+    ReTrigger = 15,       // 回环
 }
 
 public abstract class PinBall : BattleObject

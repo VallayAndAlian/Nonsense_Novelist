@@ -29,7 +29,7 @@ public class AbilityFactory
     public static AbilityBase CreateAbility(int abiID)
     {
         var data = AbilityTable.Find(abiID);
-        if (data == null)
+        if (data == null || data.mForbidden)
             return null;
         
         if (data.mType == AbilityType.TemplateAbility)

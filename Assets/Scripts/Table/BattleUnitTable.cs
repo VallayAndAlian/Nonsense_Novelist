@@ -9,6 +9,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         public BattleUnitType mInitType;
         public string mAsset;
         public string mName;
+        public bool mForbidden;
         public BookNameEnum mBook;
         public float mAttack;
         public float mMaxHp;
@@ -30,6 +31,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mInitType = (BattleUnitType)reader.Read<int>();
         data.mAsset = reader.Read<string>();
         data.mName = reader.Read<string>();
+        data.mForbidden = reader.Read<bool>();
         data.mBook = (BookNameEnum)reader.Read<int>();
         data.mAttack = reader.Read<float>();
         data.mMaxHp = reader.Read<float>();

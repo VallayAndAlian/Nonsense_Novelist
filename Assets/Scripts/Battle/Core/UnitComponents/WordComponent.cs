@@ -66,7 +66,7 @@ public class WordComponent : UnitComponent
     public WordEntry AddWord(int wordKind)
     {
         var wordData = WordTable.Find(wordKind);
-        if (wordData == null)
+        if (wordData == null || wordData.mForbidden)
             return null;
 
         var words = GetWordsByType(wordData.mType);

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: A_030YingDe
   m_EditorClassIdentifier: 
   unitName: "\u786C\u7684"
+  wordName: "\u786C\u7684"
   prefab: "\u9632\u5FA1+3\uFF0C\u6218\u6597\u7ED3\u675F\u540E\u79FB\u9664"
+  desc: "\u9632\u5FA1+3\uFF0C\u6218\u6597\u7ED3\u675F\u540E\u79FB\u9664"
   infoShort: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
+  sprite: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

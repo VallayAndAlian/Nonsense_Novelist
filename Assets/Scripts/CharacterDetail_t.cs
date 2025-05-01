@@ -125,16 +125,18 @@ public class CharacterDetail_t : MonoBehaviour
             if (itemDic.ContainsKey(wordName))
             {
                 itemDic[wordName] += 1;
-                panel_item.transform.Find(wordName).GetComponentInChildren<TextMeshProUGUI>().text = wordName +"   x"+ itemDic[wordName];
+                panel_item.transform.Find(wordName).GetComponentInChildren<TextMeshProUGUI>().text = $"{wordName}    x{itemDic[wordName]}";
             }
             else
             {
                 itemDic.Add(wordName, 1);
-
+                
                 //生成对应的
                 PoolMgr.GetInstance().GetObj(itemPerfab, (obj) =>
                 {
-                    // obj.AddComponent(item.GetType());
+                    var wordDetail = obj.GetComponent<SeeWordDetail>();
+                    wordDetail.Setup(item.mData);
+                    
                     obj.name = wordName;
                     obj.transform.parent = panel_item;
                     obj.transform.localScale = Vector3.one;
@@ -154,28 +156,29 @@ public class CharacterDetail_t : MonoBehaviour
 
         for (int x = 0; x < verbList.Count; x++)
         {
-            string wordName = verbList[x].mData.mName;
+            var word = verbList[x];
+            string wordName = word.mData.mName;
             
-            panel_skill.GetChild(x).GetComponent<Text>().text = wordName;
             PoolMgr.GetInstance().GetObj(skillPerfab, (obj) =>
             {
-                // obj.transform.GetChild(0).gameObject.AddComponent(nowCharacter.skills[x].GetType());
+                var wordDetail = obj.GetComponentInChildren<SeeWordDetail>();
+                wordDetail.Setup(word.mData);
+                
                 obj.transform.parent = panel_skill;
                 obj.transform.localScale = Vector3.one;
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = wordName;
 
-                // for (int i = 0; i < nowCharacter.skills[x].needCD; i++)
-                // {
-                //     PoolMgr.GetInstance().GetObj(energyPerfab, (o) =>
-                //     {
-                //         o.transform.parent = obj.transform.GetChild(1);
-                //         o.transform.localScale = Vector3.one * 0.6f;
-                //         o.transform.localPosition = new Vector3(i * energyOffset + energyOffsetWith, 0, 0);
-                //         o.GetComponent<Image>().color =
-                //             (i < nowCharacter.skills[x].CD) ? colorHasEnergy : colorNoEnergy;
-                //         o.transform.GetChild(0).gameObject.SetActive((i < nowCharacter.skills[x].CD) ? true : false);
-                //     });
-                // }
+                for (int i = 0; i < word.mData.mTriggerPower; i++)
+                {
+                    PoolMgr.GetInstance().GetObj(energyPerfab, (o) =>
+                    {
+                        o.transform.parent = obj.transform.GetChild(1);
+                        o.transform.localScale = Vector3.one * 0.6f;
+                        o.transform.localPosition = new Vector3(i * energyOffset + energyOffsetWith, 0, 0);
+                        o.GetComponent<Image>().color = (i < word.mPower) ? colorHasEnergy : colorNoEnergy;
+                        o.transform.GetChild(0).gameObject.SetActive((i < word.mPower) ? true : false);
+                    });
+                }
             });
         }
         

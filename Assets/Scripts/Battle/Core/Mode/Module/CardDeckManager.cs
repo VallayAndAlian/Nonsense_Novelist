@@ -126,8 +126,10 @@ public class CardDeckManager : BattleModule
     /// </summary>
     public void AddCardToDeck(WordTable.Data cardData)
     {
-        deck.Add(cardData);
-
+        if (cardData is { mForbidden: false })
+        {
+            deck.Add(cardData);
+        }
     }
 
     /// <summary>

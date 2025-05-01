@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: A_033ShouShangDe
   m_EditorClassIdentifier: 
   unitName: "\u53D7\u4F24\u7684"
+  wordName: "\u53D7\u4F24\u7684"
   prefab: "\u53D7\u523020\u70B9\u7269\u7406\u4F24\u5BB3"
+  desc: "\u53D7\u523020\u70B9\u7269\u7406\u4F24\u5BB3"
   infoShort: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
+  sprite: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

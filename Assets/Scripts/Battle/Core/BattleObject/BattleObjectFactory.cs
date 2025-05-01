@@ -1,6 +1,5 @@
 
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public enum BattleObjectType
@@ -145,19 +144,37 @@ public class BattleObjectFactory : BattleModule
     {
         var unitData = BattleUnitTable.Find(instance.mKind);
         if (unitData == null)
+        {
+            Debug.LogError($"unit_{instance.mKind} not found data");
             return null;
+        }
+        
+        if (unitData.mForbidden)
+        {
+            Debug.LogError($"unit_{instance.mKind} is forbidden");
+            return null;
+        }
 
         var asset = AssetManager.Load<BattleUnitSO>("SO/BattleUnit", unitData.mAsset);
         if (asset == null)
+        {
+            Debug.LogError("unit_{instance.mKind} not found asset");
             return null;
+        }
         
         var obj = Object.Instantiate(asset.prefab);
         if (obj == null)
+        {
+            Debug.LogError("unit_{instance.mKind} no prefab");
             return null;
+        }
         
         var pawnTransform = obj.transform.Find("Pawn");
         if (pawnTransform == null)
+        {
+            Debug.LogError("unit_{instance.mKind} no pawn component");
             return null;
+        }
 
         var unit = new BattleUnit(unitData, instance);
         

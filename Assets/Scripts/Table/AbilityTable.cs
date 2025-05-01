@@ -10,6 +10,8 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         public AbilityType mType;
         public string mName;
         public string mDesc;
+
+        public bool mForbidden;
         
         public int mTriggerKind;
         public int mSelectorKind;
@@ -33,6 +35,8 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         data.mType = (AbilityType)reader.Read<int>();
         data.mName = reader.Read<string>();
         data.mDesc = reader.Read<string>();
+        
+        data.mForbidden = reader.Read<bool>();
         
         // data.mMaxStackCount = reader.Read<int>();
         

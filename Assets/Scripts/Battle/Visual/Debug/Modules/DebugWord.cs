@@ -19,7 +19,7 @@ public class DebugWord : BattleDebugModule
     {
         foreach (var it in WordTable.DataList)
         {
-            mItems.Add(it.Key, $"{it.Key}_{it.Value.mName}");
+            mItems.Add(it.Key, $"{it.Key}_{it.Value.mType.ToString()}_{it.Value.mName}");
         }
     }
 
@@ -197,7 +197,14 @@ public class DebugWord : BattleDebugModule
 
             foreach (var w in words)
             {
-                counter.TryAdd(w.mData, 1);
+                if (counter.ContainsKey(w.mData))
+                {
+                    ++counter[w.mData];
+                }
+                else
+                {
+                    counter.Add(w.mData, 1);
+                }
             }
 
             ImGui.Columns(4);
@@ -213,8 +220,6 @@ public class DebugWord : BattleDebugModule
             foreach (var w in counter)
             {
                 ImGui.PushID(ModuleImGuiID + (count++) * 4000);
-
-                ImGui.NextColumn();
 
                 ImGui.Text($"{w.Key.mKind}"); ImGui.NextColumn();
                 ImGui.Text($"{w.Key.mName}"); ImGui.NextColumn();

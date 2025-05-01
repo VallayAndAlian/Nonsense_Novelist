@@ -1,5 +1,6 @@
 ﻿
 
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -87,5 +88,35 @@ public class BattleHelper
         }
 
         return AttributeType.None;
+    }
+
+    
+    private static Dictionary<ShootType, string> shootStrMap = new Dictionary<ShootType, string>()
+    {
+
+        { ShootType.Split, "分裂" },
+        { ShootType.Activate, "激活" },
+        { ShootType.spread, "传播" },
+        { ShootType.Alpha, "穿透" },
+        { ShootType.Start, "起兴" },
+        { ShootType.Servants, "连及" },
+        { ShootType.Dead, "歇后" },
+        { ShootType.Add, "递进" },
+        { ShootType.Small, "委婉" },
+        { ShootType.Big, "直白" },
+        { ShootType.Mirror, "对仗" },
+        { ShootType.Expect, "衬托" },
+        { ShootType.Copy, "比喻" },
+        { ShootType.SameChara, "顶针" },
+        { ShootType.ReTrigger, "回环" }
+    };
+
+    public static string GetShootTypeString(ShootType type)
+    {
+        if (shootStrMap.TryGetValue(type, out var rst))
+        {
+            return rst;
+        }
+        return "";
     }
 }

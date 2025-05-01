@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: V_024BaoZa
   m_EditorClassIdentifier: 
   unitName: "\u5305\u624E"
+  wordName: "\u5305\u624E"
   prefab: "\u6CBB\u7597100%\u7CBE\u795E"
+  desc: "\u6CBB\u7597100%\u7CBE\u795E"
   infoShort: {fileID: 2800000, guid: 9e4ba1ee919e5fc4cb814670d8c3281f, type: 3}
+  sprite: {fileID: 2800000, guid: 9e4ba1ee919e5fc4cb814670d8c3281f, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

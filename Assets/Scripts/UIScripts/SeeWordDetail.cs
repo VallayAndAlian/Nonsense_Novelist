@@ -11,6 +11,7 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private GameObject go;
     private Vector3 detailPos = Vector3.zero;
     private Vector3 detailScale = Vector3.one;
+    private WordTable.Data mCardData = null;
 
     [HideInInspector] public string resTitleBg = "WordImage/wordTitle/";
 
@@ -32,10 +33,11 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             detailPos = Vector3.zero;
             detailScale = Vector3.one * 0.7f;
         }
+    }
 
-
-
-       
+    public void Setup(WordTable.Data data)
+    {
+        mCardData = data;
     }
 
     /// <summary>
@@ -96,19 +98,19 @@ public class SeeWordDetail : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         isOpen = true;
         PoolMgr.GetInstance().GetObj(adr_detail, (obj) =>
-         {
-             go = obj;
-       
-            obj.GetComponentInChildren<WordInformation>().SetIsDetail(false);
-             if (this.gameObject.GetComponent<AbstractWord0>() == null) print("this.gameObject.GetComponent<AbstractWord0>()");
-             else
-                obj.GetComponentInChildren<WordInformation>().ChangeInformation(this.gameObject.GetComponent<AbstractWord0>());
-             obj.transform.parent = this.transform;
-             obj.transform.localPosition = new Vector3(0,0,3);
-             obj.transform.localScale = detailScale;
-             obj.transform.GetChild(0).localPosition = detailPos;
-             obj.GetComponent<Canvas>().overrideSorting = true;
-         });
+        {
+            go = obj;
+
+            var worInfoComp = obj.GetComponentInChildren<WordInformation>();
+            worInfoComp.SetIsDetail(false);
+            worInfoComp.ChangeInformation(mCardData);
+
+            obj.transform.parent = this.transform;
+            obj.transform.localPosition = new Vector3(0, 0, 3);
+            obj.transform.localScale = detailScale;
+            obj.transform.GetChild(0).localPosition = detailPos;
+            obj.GetComponent<Canvas>().overrideSorting = true;
+        });
 
     }
 

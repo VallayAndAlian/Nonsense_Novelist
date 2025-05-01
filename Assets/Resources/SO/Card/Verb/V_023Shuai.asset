@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: V_023Shuai
   m_EditorClassIdentifier: 
   unitName: "\u6454"
+  wordName: "\u6454"
   prefab: "\u9020\u6210\u4E09\u6B2170%\u653B\u51FB\u7684\u7269\u7406\u4F24\u5BB3"
+  desc: "\u9020\u6210\u4E09\u6B2170%\u653B\u51FB\u7684\u7269\u7406\u4F24\u5BB3"
   infoShort: {fileID: 2800000, guid: 0154ea517fd54414baea77fec056dc3b, type: 3}
+  sprite: {fileID: 2800000, guid: 0154ea517fd54414baea77fec056dc3b, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

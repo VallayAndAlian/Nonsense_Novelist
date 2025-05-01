@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: N_029DunFuTou
   m_EditorClassIdentifier: 
   unitName: "\u949D\u65A7\u5934"
+  wordName: "\u949D\u65A7\u5934"
   prefab: "\u653B\u51FB+1"
+  desc: "\u653B\u51FB+1"
   infoShort: {fileID: 2800000, guid: e2c0b217383377840bdf502d7970999d, type: 3}
+  sprite: {fileID: 2800000, guid: e2c0b217383377840bdf502d7970999d, type: 3}
   relativeCard: 6e000000
   relativeSkills: []
