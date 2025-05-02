@@ -175,6 +175,9 @@ public class BattleUnit : BattleObject
 
     public override void Update(float deltaSec)
     {
+        if (!Battle.BattlePhase.FightCamp.Contains(Camp))
+            return;
+        
         foreach (var comp in Components.Where(comp => comp.Enabled))
         {
             comp.Update(deltaSec);
@@ -183,6 +186,9 @@ public class BattleUnit : BattleObject
 
     public override void LateUpdate(float deltaSec)
     {
+        if (!Battle.BattlePhase.FightCamp.Contains(Camp))
+            return;
+        
         foreach (var comp in Components.Where(comp => comp.Enabled))
         {
             comp.LateUpdate(deltaSec);
@@ -194,6 +200,40 @@ public class BattleUnit : BattleObject
         mStatus.ApplyMod();
 
         mHp = GetAttributeValue(AttributeType.MaxHp) * oldHpPercent;
+    }
+    
+    public override void OnEnterCombatPhase()
+    {
+        foreach (var comp in Components)
+        {
+            comp.OnEnterCombatPhase();
+        }
+    }
+    
+    public override void OnExitCombatPhase()
+    {
+        mHp = MaxHp;
+        
+        foreach (var comp in Components)
+        {
+            comp.OnExitCombatPhase();
+        }
+    }
+
+    public override void OnEnterResetPhase()
+    {
+        foreach (var comp in Components)
+        {
+            comp.OnEnterResetPhase();
+        }
+    }
+    
+    public override void OnExitResetPhase()
+    {
+        foreach (var comp in Components)
+        {
+            comp.OnExitResetPhase();
+        }
     }
 
     public void AddMod(AttributeType type, float mod)

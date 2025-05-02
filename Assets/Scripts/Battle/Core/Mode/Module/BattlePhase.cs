@@ -16,42 +16,58 @@ public enum BattlePhaseType
 public class BattlePhase : BattleModule
 {
     protected Dictionary<int, PhaseTable.Data> mPhases = new Dictionary<int, PhaseTable.Data>();
-    protected int mStageIndex=-1;       //索引从负1开始，第一个回合也使用EnterNextStage
+    protected int mStageIndex = -1; //索引从负1开始，第一个回合也使用EnterNextStage
     protected GamePhase mCurrentPhase;
 
     protected BattlePhaseUI_Rest restUI;
     protected GameObject restUIObj;
     protected BattlePhaseUI_Battle battleUI;
     protected GameObject battleUIObj;
-    public override void Init() 
+    
+    public bool IsCombat => mPhases[mStageIndex].mType != BattlePhaseType.Rest;
+    public BattlePhaseType PhaseType => mPhases[mStageIndex].mType;
+    
+    protected List<BattleCamp> mFightCamp = new List<BattleCamp>();
+    public List<BattleCamp> FightCamp => mFightCamp;
+
+    public override void Init()
     {
         //从表格中读取数据，存储在Mphase中
-        int temp=0;
-        foreach(var data in PhaseTable.DataList)
+        int temp = 0;
+        foreach (var data in PhaseTable.DataList)
         {
-            if(data.Value.mChapter==1)//读取和当前章节一致的回合。还没写章节相关的东西，这里默认1
+            if (data.Value.mChapter == 1) //读取和当前章节一致的回合。还没写章节相关的东西，这里默认1
             {
-                mPhases.Add(temp,data.Value);
+                mPhases.Add(temp, data.Value);
                 temp++;
             }
         }
+        
+    }
 
+    public override void Begin()
+    {
+        InitPhaseUI();
+    }
+
+    public override void PostBegin()
+    {
         //进入第一个回合
-          InitPhaseUI();
         EnterNextStage();
     }
- protected void InitPhaseUI()
-    { 
-        if(restUI==null)
+
+    protected void InitPhaseUI()
+    {
+        if (restUI == null)
         {
-            restUI=new BattlePhaseUI_Rest();
-            restUI.Battle=Battle;
-        }
-        if(battleUI==null)
-        {
-            battleUI=new BattlePhaseUI_Battle();
+            restUI = Battle.BattleUI.Add(new BattlePhaseUI_Rest());
+            restUI.Battle = Battle;
         }
 
+        if (battleUI == null)
+        {
+            battleUI = Battle.BattleUI.Add(new BattlePhaseUI_Battle());
+        }
 
         Battle.BattleUI.Hide(battleUI);
         Battle.BattleUI.Hide(restUI);
@@ -61,92 +77,95 @@ public class BattlePhase : BattleModule
     {
         Battle.BattleUI.Hide(battleUI);
         Battle.BattleUI.Hide(restUI);
-        switch(type)
+        switch (type)
         {
-            case  BattlePhaseType.Rest:
+            case BattlePhaseType.Rest:
             {
                 Battle.BattleUI.ShowPanel(restUI);
-            }break;
-            case  BattlePhaseType.Pve:
-            case  BattlePhaseType.Pvp:
-            case  BattlePhaseType.Rve:
-            case  BattlePhaseType.Lve:
+            }
+                break;
+            case BattlePhaseType.Pve:
+            case BattlePhaseType.Pvp:
+            case BattlePhaseType.Rve:
+            case BattlePhaseType.Lve:
             {
                 Battle.BattleUI.ShowPanel(battleUI);
-            }break;
+            }
+                break;
         }
     }
 
     public GamePhase RegisterPhase(PhaseTable.Data data)
     {
         GamePhase newPhase;
-        switch(data.mType)
+        switch (data.mType)
         {
-            case (int)BattlePhaseType.Lve:
-            case (int)BattlePhaseType.Pve:
-            case (int)BattlePhaseType.Pvp:
-            case (int)BattlePhaseType.Rve:
-                {
-                   newPhase=NewBattlePhase((BattlePhaseType)data.mType);
-                }
+            case BattlePhaseType.Lve:
+            case BattlePhaseType.Pve:
+            case BattlePhaseType.Pvp:
+            case BattlePhaseType.Rve:
+            {
+                newPhase = NewBattlePhase(data.mType);
+            }
                 break;
-            case (int)BattlePhaseType.Rest:
+            case BattlePhaseType.Rest:
             default:
-                {
-                    var restData=new GamePhase_Rest.RestData();
-                    restData.mEventCount=3;
-                    restData.mEventShowTime=3;
-                    newPhase=new GamePhase_Rest(restData);
-                }
+            {
+                var restData = new GamePhase_Rest.RestData();
+                restData.mEventCount = 3;
+                restData.mEventShowTime = 3;
+                newPhase = new GamePhase_Rest(restData);
+            }
                 break;
-        };
+        }
+        
         newPhase.Battle = Battle;
         newPhase.IsRegistered = true;
-        newPhase.Start();
-        
+
         return newPhase;
     }
 
     protected GamePhase_Combat NewBattlePhase(BattlePhaseType type)
     {
-        List<BattleCamp> camps=new List<BattleCamp>();
-        switch(type)
+        mFightCamp.Clear();
+        switch (type)
         {
-             case BattlePhaseType.Lve:
-                {
-                    camps.Add(BattleCamp.Camp1); 
-                    camps.Add(BattleCamp.Boss);
-                }
-            break;
+            case BattlePhaseType.Lve:
+            {
+                mFightCamp.Add(BattleCamp.Camp1);
+                mFightCamp.Add(BattleCamp.Boss);
+                break;
+            }
             case BattlePhaseType.Pve:
-                {
-                    camps.Add(BattleCamp.Camp1); 
-                    camps.Add(BattleCamp.Camp2);
-                    camps.Add(BattleCamp.Boss);
-                }
-            break;
+            {
+                mFightCamp.Add(BattleCamp.Camp1);
+                mFightCamp.Add(BattleCamp.Camp2);
+                mFightCamp.Add(BattleCamp.Boss);
+                break;
+            }
             case BattlePhaseType.Pvp:
-                {
-                    camps.Add(BattleCamp.Camp1); 
-                    camps.Add(BattleCamp.Camp2);
-                }
-            break;
+            {
+                mFightCamp.Add(BattleCamp.Camp1);
+                mFightCamp.Add(BattleCamp.Camp2);
+                break;
+            }
             case BattlePhaseType.Rve:
-                {
-                    camps.Add(BattleCamp.Camp2);
-                    camps.Add(BattleCamp.Boss);
-                }
-            break;
+            {
+                mFightCamp.Add(BattleCamp.Camp2);
+                mFightCamp.Add(BattleCamp.Boss);
+                break;
+            }
         }
-        return new GamePhase_Combat(camps,0);
+
+        return new GamePhase_Combat(mFightCamp, 0);
     }
 
     public void EnterNextStage()
     {
-         if (mCurrentPhase != null)
+        if (mCurrentPhase != null)
         {
             mCurrentPhase.Exit();
-            mCurrentPhase=null;
+            mCurrentPhase = null;
         }
 
         // 进入下一阶段
@@ -161,15 +180,29 @@ public class BattlePhase : BattleModule
         var nextData = mPhases[mStageIndex];
         mCurrentPhase = RegisterPhase(nextData);
         mCurrentPhase.Start();
-
+        
         // 存档
     }
 
     public override void Update(float deltaSec)
     {
-       if(mCurrentPhase!=null)
-       {
-        mCurrentPhase.Update(deltaSec);
-       }
+        if (mCurrentPhase != null)
+        {
+            if (!mCurrentPhase.DetectPhaseEnd())
+            {
+                mCurrentPhase.Update(deltaSec);
+            }
+            else
+            {
+                mCurrentPhase.Exit();
+                mCurrentPhase = null;
+                mFightCamp.Clear();
+            }
+        }
+
+        if (mCurrentPhase == null)
+        {
+            EnterNextStage();
+        }
     }
 }

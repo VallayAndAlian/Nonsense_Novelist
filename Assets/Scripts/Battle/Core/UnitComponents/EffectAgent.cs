@@ -135,6 +135,21 @@ public class EffectAgent : UnitComponent
         return mergedBe;
     }
 
+    public override void OnExitCombatPhase()
+    {
+        // 清除buff
+        foreach (var effect in mEffects)
+        {
+            mOwner.UnitView.OnRemoveEffect(effect);
+                
+            EventManager.Invoke(EventEnum.RemoveEffect, effect);
+                
+            effect.Dispose();
+        }
+        
+        mEffects.Clear();
+    }
+
     public override void LateUpdate(float deltaTime)
     {
         mRemovedEffect.Clear();
@@ -204,7 +219,7 @@ public class EffectAgent : UnitComponent
         {
             foreach (var effect in mRemovedEffect)
             {
-                mOwner.UnitView.OnApplyEffect(effect);
+                mOwner.UnitView.OnRemoveEffect(effect);
                 
                 EventManager.Invoke(EventEnum.RemoveEffect, effect);
                 

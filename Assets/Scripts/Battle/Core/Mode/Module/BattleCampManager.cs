@@ -54,7 +54,7 @@ public class BattleCampManager : BattleModule
         List<BattleUnit> enemies = new List<BattleUnit>();
         foreach (var iter in mCampUnit)
         {
-            if (iter.Key != unit.Camp)
+            if (iter.Key != unit.Camp && Battle.BattlePhase.FightCamp.Contains(iter.Key))
             {
                 enemies.AddRange(iter.Value);
             }

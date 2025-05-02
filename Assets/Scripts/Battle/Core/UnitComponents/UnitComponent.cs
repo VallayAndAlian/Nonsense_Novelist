@@ -54,4 +54,9 @@ public class UnitComponent : CoreEntity
     
     public virtual void LateUpdate(float deltaTime) { }
     
+    public virtual void OnEnterCombatPhase() { }
+    public virtual void OnExitCombatPhase() { }
+    public virtual void OnEnterResetPhase() { }
+    public virtual void OnExitResetPhase() { }
+
 }

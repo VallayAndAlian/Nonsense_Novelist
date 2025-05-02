@@ -148,7 +148,7 @@ public class BattleObjectFactory : BattleModule
             Debug.LogError($"unit_{instance.mKind} not found data");
             return null;
         }
-        
+
         if (unitData.mForbidden)
         {
             Debug.LogError($"unit_{instance.mKind} is forbidden");
@@ -161,14 +161,14 @@ public class BattleObjectFactory : BattleModule
             Debug.LogError("unit_{instance.mKind} not found asset");
             return null;
         }
-        
+
         var obj = Object.Instantiate(asset.prefab);
         if (obj == null)
         {
             Debug.LogError("unit_{instance.mKind} no prefab");
             return null;
         }
-        
+
         var pawnTransform = obj.transform.Find("Pawn");
         if (pawnTransform == null)
         {
@@ -177,7 +177,7 @@ public class BattleObjectFactory : BattleModule
         }
 
         var unit = new BattleUnit(unitData, instance);
-        
+
         var slot = Battle.Stage.GetSlot(placement.mSlotIndex);
         if (slot != null)
         {
@@ -190,18 +190,18 @@ public class BattleObjectFactory : BattleModule
         var unitView = pawnTransform.GetComponent<UnitViewBase>();
         if (unitView == null)
             unitView = pawnTransform.gameObject.AddComponent<UnitViewBase>();
-        
+
         unitView.Setup(unit, asset);
 
-         var infoUI=new BattleUnitSelfUI(unit);
+        var infoUI = Battle.BattleUI.Add(new BattleUnitSelfUI(unit));
         Battle.BattleUI.ShowPanel(infoUI);
-        
+
         EventManager.Invoke(EventEnum.UnitSpawn, unit);
-        
+
         return unit;
     }
-    
-    
+
+
     public static void StartEmit(EmitMeta meta)
     {
         // create projectile

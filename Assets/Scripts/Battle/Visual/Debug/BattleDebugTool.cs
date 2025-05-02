@@ -63,7 +63,7 @@ public class BattleDebugTool : ImGuiObjBase
         if (ImGui.Button("Play"))
         {
             mStartBattle = true;
-            mBattle = mRunner.Battle;
+            mBattle = BattleRunner.Battle;
             mRunner.StartBattle();
         }
         
@@ -121,6 +121,11 @@ public class BattleDebugTool : ImGuiObjBase
         if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(1))
         {
             mPickedUnit = BVHelper.GetUnitAtPosition(ClientUtils.GetMouseWorldPosition());
+        }
+
+        if (!mPickedUnit.IsValid())
+        {
+            mPickedUnit = null;
         }
         
         return mPickedUnit;

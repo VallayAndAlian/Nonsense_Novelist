@@ -45,7 +45,7 @@ public class NnProjectile : MonoBehaviour
         if (mMeta.mData.mType == EmitType.EnemyToSelf)
         {
             mEmitPos = mMeta.mTarget.ViewPos;
-            mTargetPos = mMeta.mInstigator.UnitView.ModelLayout.WeaponPart.position;
+            mTargetPos = mMeta.mInstigator.ViewPos;
         }
         else
         {

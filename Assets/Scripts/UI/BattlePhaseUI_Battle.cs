@@ -6,7 +6,7 @@ public class BattlePhaseUI_Battle : BattleUI
   
     } 
 
-    protected override void CreateUIpanel()
+    protected override void CreateUIPanel()
     {
         mUIPanel=ResMgr.GetInstance().Load<GameObject>("UI/Battle/phase_battle");
     }

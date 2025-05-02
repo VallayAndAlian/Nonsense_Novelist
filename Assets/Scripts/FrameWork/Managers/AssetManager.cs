@@ -16,6 +16,16 @@ public class AssetManager
     {
         return Resources.Load(Path.Combine(path, assetName)) as T;
     }
+    
+    public static T Load<T>(string assetPath) where T : Object
+    {
+        return Resources.Load(assetPath) as T;
+    }
+    
+    public static T Create<T>(string assetPath) where T : Object
+    {
+        return Object.Instantiate(Load<T>(assetPath));
+    }
 
     public static void UnLoad(Object asset)
     {

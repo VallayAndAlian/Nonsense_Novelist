@@ -5,14 +5,9 @@ using UnityEngine;
 
 public static class BVHelper
 {
-    public static BattleBase GetBattle()
-    {
-        return BattleRunner.Instance != null ? BattleRunner.Instance.Battle : null;
-    }
-
     public static BattleUnit GetUnitAtPosition(Vector3 pos)
     {
-        var battle = GetBattle();
+        var battle = BattleRunner.Battle;
         if (battle == null)
             return null;
         

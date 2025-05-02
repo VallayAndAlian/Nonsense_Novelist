@@ -55,12 +55,13 @@ public class UnitViewBase : MonoBehaviour
         if (mRole.Slot)
         {
             mRoot.parent = mRole.Slot.transform;
-            mRoot.localPosition = Vector3.zero;
+            mRoot.localPosition = Vector3.Scale(-mRoot.Find("seat").localPosition, mRoot.localScale);
         }
 
         var slots = mRoot.GetComponentsInChildren<UnitSlot>();
         foreach (var slot in slots)
         {
+            slot.ServantOwner = mRole;
             mRole.Battle.Stage.AddSlot(slot);
             mServantSlots.Add(slot);
         }
@@ -103,7 +104,7 @@ public class UnitViewBase : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().enabled=false;
         mRoot.gameObject.SetActive(false);
-        // Destroy(mRoot.gameObject);
+        Destroy(mRoot.gameObject, 1.0f);
     }
 
     public void OnApplyEffect(BattleEffect be)

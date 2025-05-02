@@ -22,7 +22,10 @@ public class BattleStage : BattleModule
         var slots = GameObject.FindObjectsByType<UnitSlot>(FindObjectsSortMode.InstanceID);
         foreach (var slot in slots)
         {
-            AddSlot(slot);
+            if (slot.gameObject.activeSelf)
+            {
+                AddSlot(slot);
+            }
         }
     }
 
@@ -40,23 +43,26 @@ public class BattleStage : BattleModule
         mUnitSlots.Remove(slot);
     }
 
-    public UnitSlot FindSlot(UnitSlotType type)
+    public UnitSlot FindSlot(UnitSlotType typeFlags)
     {
         foreach (var slot in mUnitSlots)
         {
             if (!IsValidSlot(slot))
                 continue;
             
-            if (!slot.IsOccupied && slot.SlotType == type)
-            {
-                return slot;
-            }
+            if (slot.IsOccupied)
+                continue;
+            
+            if ((slot.SlotType & typeFlags) == 0)
+                continue;
+            
+            return slot;
         }
 
         return null;
     }
 
-    public UnitSlot FindClosestSlot(UnitSlotType typeFlags, Vector2 pos, float range)
+    public UnitSlot FindClosestSlot(UnitSlotType typeFlags, Vector2 pos, float range, bool ignoreOccupied = false)
     {
         float misDisSqr = float.MaxValue;
         UnitSlot closestSlot = null;
@@ -65,8 +71,11 @@ public class BattleStage : BattleModule
         {
             if (!IsValidSlot(slot))
                 continue;
+
+            if (!ignoreOccupied && slot.IsOccupied)
+                continue;
             
-            if ((slot.SlotType & typeFlags) == 0 || slot.IsOccupied)
+            if ((slot.SlotType & typeFlags) == 0)
                 continue;
 
             float disSqr = (slot.Pos - pos).sqrMagnitude;
@@ -96,4 +105,49 @@ public class BattleStage : BattleModule
         return null;
     }
     #endregion
+
+    public BattleUnit SpawnUnit(int kind, UnitSlotType typeFlags, Vector2 pos, float range = 1.0f)
+    {
+        var slot = FindClosestSlot(typeFlags, pos, range);
+        if (slot != null)
+        {
+            UnitInstance instance = new UnitInstance()
+            {
+                mKind = kind,
+                mCamp = slot.SpawnCamp,
+            };
+
+            UnitPlacement placement = new UnitPlacement()
+            {
+                mSlotIndex = slot.ID,
+            };
+            
+            return Battle.ObjectFactory.CreateBattleUnit(instance, placement);
+        }
+
+        return null;
+    }
+
+
+    public BattleUnit SpawnUnit(int kind, UnitSlotType typeFlags)
+    {
+        var slot = FindSlot(typeFlags);
+        if (slot != null)
+        {
+            UnitInstance instance = new UnitInstance()
+            {
+                mKind = kind,
+                mCamp = slot.SpawnCamp,
+            };
+
+            UnitPlacement placement = new UnitPlacement()
+            {
+                mSlotIndex = slot.ID,
+            };
+            
+            return Battle.ObjectFactory.CreateBattleUnit(instance, placement);
+        }
+
+        return null;
+    }
 }

@@ -1,5 +1,5 @@
 mkind,Type,AssetName,Name,Forbidden,Book,ShootType,Duration,InitPower,TriggerPower,Tags,Abilities
-1,1,TestCardSO2.asset,测试形容词,0,0,0,1,0,5,0,1|2|3|4
+1,4,TestCardSO2.asset,测试形容词,0,0,0,1,0,5,0,1|2|3|4
 10001,3,Noun/N_001ChaBei,茶杯,0,1,0,4,0,0,0,100011
 10003,3,Noun/N_003TongLingBaoYu,通灵宝玉,0,1,0,1,0,0,0,100031
 10017,3,Noun/N_017SiLiao,饲料,0,1,0,0,0,0,0,100171

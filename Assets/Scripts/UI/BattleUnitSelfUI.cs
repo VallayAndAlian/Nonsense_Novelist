@@ -17,7 +17,7 @@ public class BattleUnitSelfUI : BattleUI
     } 
 
 
-   protected override void CreateUIpanel()
+   protected override void CreateUIPanel()
     {
         mUIPanel=ResMgr.GetInstance().Load<GameObject>("UI/Battle/battleUnitSelfUI");
         mUIContent.hpSlider=mUIPanel.transform.Find("HP").GetComponent<Slider>();
@@ -108,7 +108,9 @@ public class BattleUnitSelfUI : BattleUI
 
     protected void FollowPlayerPos()
     {
-        if (Owner == null) return;
+        if (Owner == null || !Owner.mUnit.IsValid()) 
+            return;
+        
         Vector3 worldPosition = Owner.mUnitPos.position + offset;
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(worldPosition);
          RectTransformUtility.ScreenPointToLocalPointInRectangle(

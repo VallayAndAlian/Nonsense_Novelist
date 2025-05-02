@@ -63,6 +63,9 @@ public class AIController : UnitComponent
 
     protected void TickIdle(float deltaTime)
     {
+        if (!mOwner.Battle.BattlePhase.IsCombat)
+            return;
+        
         foreach (var abi in mOwner.AbilityAgent.Abilities)
         {
             if (!abi.IsUltra)
@@ -288,5 +291,10 @@ public class AIController : UnitComponent
                 break;
             }
         }
+    }
+
+    public override void OnEnterResetPhase()
+    {
+        EnterState(EUnitState.Idle);
     }
 }

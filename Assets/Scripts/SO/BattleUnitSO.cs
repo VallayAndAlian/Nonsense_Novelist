@@ -11,6 +11,9 @@ public class BattleUnitSO : ScriptableObject
 
     [Tooltip("角色预制体")]
     public GameObject prefab;
+    
+    [Tooltip("UI展示预制体")]
+    public GameObject uiPrefab;
 
     [Tooltip("角色缩略描述")][TextArea]
     public string infoShort;

@@ -30,7 +30,15 @@ public class UnitSlot : MonoBehaviour
 
             if (SlotType == UnitSlotType.Boss)
             {
-                return BattleCamp.Neutral;
+                return BattleCamp.Boss;
+            }
+            
+            if (SlotType == UnitSlotType.Servant)
+            {
+                if (ServantOwner.IsValid())
+                {
+                    return ServantOwner.Camp;
+                }
             }
             
             return BattleCamp.None;
@@ -39,6 +47,8 @@ public class UnitSlot : MonoBehaviour
 
     private BattleUnit mUnit = null;
     public BattleUnit Unit => mUnit;
+    
+    public BattleUnit ServantOwner { set; get; }
 
     public Vector2 Pos => transform.position;
 

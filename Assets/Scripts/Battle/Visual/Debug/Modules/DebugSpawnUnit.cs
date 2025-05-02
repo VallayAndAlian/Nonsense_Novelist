@@ -16,34 +16,43 @@ public class DebugSpawnUnit : BattleDebugModule
     {
         foreach (var it in BattleUnitTable.DataList)
         {
-            mItems.Add(it.Key, $"{it.Key}_{it.Value.mName}");
+            if (!it.Value.mForbidden)
+            {
+                mItems.Add(it.Key, $"{it.Key}_{it.Value.mName}");
+            }
         }
     }
 
     public override void OnDrawImGui(BattleDebugContext context)
     {
         ImGuiFunc.Combo("UnitList", mItems, ref mPickIdx, (int key, string value) => value);
-        
+
         if (mPickIdx > 0 && Input.GetKeyDown(KeyCode.C))
         {
-            var foundSlot = context.mBattle.Stage.FindClosestSlot(UnitSlotType.BackSeat | UnitSlotType.FrontSeat,
-                ClientUtils.GetMouseWorldPosition(), 5.0f);
-
-            if (foundSlot != null)
+            var data = BattleUnitTable.Find(mPickIdx);
+            if (data != null)
             {
-                UnitInstance instance = new UnitInstance()
-                {
-                    mKind = mPickIdx,
-                    mCamp = foundSlot.SpawnCamp,
-                };
+                UnitSlotType typeFlags = UnitSlotType.None;
 
-                UnitPlacement placement = new UnitPlacement()
+                switch (data.mInitType)
                 {
-                    mSlotIndex = foundSlot.ID,
-                };
+                    case BattleUnitType.Character:
+                        typeFlags = UnitSlotType.BackSeat | UnitSlotType.FrontSeat;
+                        break;
+                    
+                    case BattleUnitType.Servant:
+                        typeFlags = UnitSlotType.Servant;
+                        break;
+                    
+                    case BattleUnitType.Monster:
+                        typeFlags = UnitSlotType.Boss;
+                        break;
+                }
                 
-                context.mBattle.ObjectFactory.CreateBattleUnit(instance, placement);
+                
+                context.mBattle.Stage.SpawnUnit(mPickIdx, typeFlags, ClientUtils.GetMouseWorldPosition());
             }
+            
         }
     }
 }

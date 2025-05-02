@@ -7,7 +7,7 @@ public class BattleRunner : MonoBehaviour
     public static BattleRunner Instance = null;
     
     protected BattleBase mBattle = null;
-    public BattleBase Battle => mBattle;
+    public static BattleBase Battle => Instance.mBattle;
 
     protected List<BattleVisualSystemBase> mSystems = new List<BattleVisualSystemBase>();
 

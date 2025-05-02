@@ -7,7 +7,7 @@ public class PhaseTable : MapTable<int, PhaseTable.Data>
     {
         public int mKind;
         public int mChapter;
-        public int mType;
+        public BattlePhaseType mType;
         public int mLevel;
     }
 
@@ -18,7 +18,7 @@ public class PhaseTable : MapTable<int, PhaseTable.Data>
 
         data.mKind = reader.Read<int>();
         data.mChapter = reader.Read<int>();
-        data.mType = reader.Read<int>();
+        data.mType = (BattlePhaseType)reader.Read<int>();
         data.mLevel = reader.Read<int>();
 
         return new KeyValuePair<int, Data>(data.mKind, data);

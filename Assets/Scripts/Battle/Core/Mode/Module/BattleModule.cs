@@ -19,4 +19,10 @@ public class BattleModule : CoreEntity
     public virtual void LateUpdate(float deltaSec) {}
 
     public virtual void LateFixedUpdate(float deltaSec) {}
+    
+    public virtual void OnEnterCombatPhase() {}
+    public virtual void OnExitCombatPhase() {}
+    
+    public virtual void OnEnterResetPhase() {}
+    public virtual void OnExitResetPhase() {}
 }
