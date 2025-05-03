@@ -14,17 +14,27 @@ public class AssetManager
     
     public static T Load<T>(string path, string assetName) where T : Object
     {
-        return Resources.Load(Path.Combine(path, assetName)) as T;
+        return Load<T>(Path.Combine(path, assetName));
     }
     
     public static T Load<T>(string assetPath) where T : Object
     {
-        return Resources.Load(assetPath) as T;
-    }
-    
-    public static T Create<T>(string assetPath) where T : Object
-    {
-        return Object.Instantiate(Load<T>(assetPath));
+        T asset = Resources.Load<T>(assetPath);
+
+        if (asset == null)
+        {
+            Debug.LogError($"failed to load {typeof(T).ToString()} asset : {assetPath}");
+            return null;
+        }
+        else
+        {
+            if (asset is GameObject)
+            {
+                return Object.Instantiate(asset);
+            }
+
+            return asset;
+        }
     }
 
     public static void UnLoad(Object asset)

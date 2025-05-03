@@ -18,7 +18,7 @@ public class BattleUnitSelfUI : BattleUI
 
     protected override void CreateUIPanel()
     {
-        mUIPanel = AssetManager.Create<GameObject>("UI/Battle/battleUnitSelfUI");
+        mUIPanel = AssetManager.Load<GameObject>("UI/Battle/battleUnitSelfUI");
         mUIContent.hpSlider = mUIPanel.transform.Find("HP").GetComponent<Slider>();
     }
     

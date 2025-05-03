@@ -14,7 +14,7 @@ public class BattlePhaseUI_Rest : BattleUI
 
     protected override void CreateUIPanel()
     {
-        mUIPanel = AssetManager.Create<GameObject>("UI/Battle/phase_rest");
+        mUIPanel = AssetManager.Load<GameObject>("UI/Battle/phase_rest");
         mUnitCandiTemp = AssetManager.Load<GameObject>("UI/Battle/UnitCandidate");
     }
 

@@ -6,6 +6,8 @@ public class CardDeckManager : BattleModule
     private WordTable.Data currentCard;
     private Queue<WordTable.Data> previewCards = new Queue<WordTable.Data>();
 
+    protected bool mHasShuffleDeck = false;
+
     // 未抽取的牌库
     private List<WordTable.Data> deck = new List<WordTable.Data>();
 
@@ -18,9 +20,34 @@ public class CardDeckManager : BattleModule
         base.Init();
 
         AddInitCardDeck();
-        ShuffleDeck();
-        DrawCurrentAndPreviewCards();
     }
+
+    public override void Update(float deltaSec)
+    {
+        base.Update(deltaSec);
+    }
+
+    public override void OnEnterCombatPhase()
+    {
+        if (!mHasShuffleDeck)
+        {
+            mHasShuffleDeck = true;
+            
+            ShuffleDeck();
+            DrawCurrentAndPreviewCards();
+        }
+    }
+
+    protected override void OnDisposed()
+    {
+        base.OnDisposed();
+
+        currentCard = null;
+        previewCards.Clear();
+        deck.Clear();
+        discardPile.Clear();
+    }
+    
 
     /// <summary>
     ///初始卡牌
@@ -89,6 +116,12 @@ public class CardDeckManager : BattleModule
                 deck.RemoveAt(0);
             }
         }
+        
+        var infoCard = GameObject.Find("WordInformation");
+        if (infoCard != null)
+        {
+            infoCard.GetComponent<WordInformation>().ChangeInformation(currentCard);
+        }
     }
 
     /// <summary>
@@ -104,7 +137,6 @@ public class CardDeckManager : BattleModule
 
         discardPile.Add(currentCard);
         currentCard = null;
-        DrawCurrentCard();
         DrawCurrentAndPreviewCards();
     }
 
@@ -163,21 +195,5 @@ public class CardDeckManager : BattleModule
     public Queue<WordTable.Data> GetPreviewCards()
     {
         return new Queue<WordTable.Data>(previewCards);
-    }
-
-
-    public override void Update(float deltaSec)
-    {
-        base.Update(deltaSec);
-    }
-
-    protected override void OnDisposed()
-    {
-        base.OnDisposed();
-
-        currentCard = null;
-        previewCards.Clear();
-        deck.Clear();
-        discardPile.Clear();
     }
 }

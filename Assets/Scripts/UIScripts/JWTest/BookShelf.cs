@@ -75,7 +75,7 @@ public class BookShelf : MonoBehaviour
     void RefreshTag()
     {
         DeleteWords();
-        CreateWordFromTag();
+        OpenBookByTag();
     }
 
     public void ClickToggle(GameObject _name)
@@ -319,6 +319,29 @@ public class BookShelf : MonoBehaviour
             
     }
     }
+
+    void OpenBookByTag()
+    {
+        BookNameEnum boonEnum = BookNameEnum.allBooks;
+        if (!Enum.TryParse(buttonSelf.name, out boonEnum))
+            return;
+
+        sp_bottom.sprite = AssetManager.Load<Sprite>(sp_resName + boonEnum.ToString()+"_B");
+        sp_top.sprite = AssetManager.Load<Sprite>(sp_resName + boonEnum.ToString() + "_T");
+        panels[0].gameObject.SetActive(true);
+
+        //角色
+        if(b_chara)
+            CharaShowNew(boonEnum);
+        //名+动+形
+        if (b_noun)
+            InsWordsNew(WordType.Noun, boonEnum);//231
+        if (b_verb)
+            InsWordsNew(WordType.Verb, boonEnum);
+        if (b_adj)
+            InsWordsNew(WordType.Adjective, boonEnum);
+    }
+    
     /// <summary>
     /// 翻页
     /// </summary>
@@ -758,6 +781,73 @@ public class BookShelf : MonoBehaviour
                 }
                 obj.transform.localScale = Vector3.one * 0.5f;
             });
+        }
+    }
+
+
+    void InsWordsNew(WordType wordType, BookNameEnum book)
+    {
+        foreach (var word in WordTable.DataList.Values)
+        {
+            if (word.mForbidden || word.mType != wordType || (book != BookNameEnum.allBooks && word.mBook != book))
+                continue;
+            
+            PoolMgr.GetInstance().GetObj(prefab_wordinf, (obj) =>
+            {
+                obj.GetComponentInChildren<WordInformation>().ChangeInformation(word);
+                ReshapeBookItem(obj);
+                obj.transform.localScale = Vector3.one * 0.15f;
+            });
+        }
+    }
+
+    void CharaShowNew(BookNameEnum book)
+    {
+        foreach (var unit in BattleUnitTable.DataList.Values)
+        {
+            if (unit.mForbidden || (book != BookNameEnum.allBooks && unit.mBook != book))
+                continue;
+            
+            PoolMgr.GetInstance().GetObj(prefab_chara, (obj) =>
+            {
+                //卡牌信息
+                obj.GetComponent<CharacterDetail>().Open(unit.mKind);
+                ReshapeBookItem(obj);
+                obj.transform.localScale = Vector3.one * 0.5f;
+            });
+        }
+    }
+
+    void ReshapeBookItem(GameObject obj)
+    {
+        var wordPL = panels[0].gameObject.transform.Find("wordPL");
+        var wordPR = panels[0].gameObject.transform.Find("wordPR");
+        
+        if (wordPL.childCount < cardCount)
+        {
+            //这将保留局部方向和缩放，而不是世界方向和缩放，这可以防止常见的 UI 缩放问题,以下修改相同
+            obj.transform.SetParent(wordPL, false);
+        }
+        else
+        {
+            obj.transform.SetParent(wordPR, false);
+            //隐藏后面页面的卡牌
+            if (wordPR.childCount > cardCount)
+            {
+                for (int i = cardCount; i < wordPR.childCount; i++)
+                {
+                    wordPR.GetChild(i).gameObject.SetActive(false);
+                }
+            }
+
+            //右侧比左侧panel子物体数量多
+            if (wordPR.childCount >= wordPL.childCount && wordPR.childCount % cardCount != 0)
+            {
+                for (int i = wordPL.childCount - 1; i < wordPL.childCount + 3; i++) //隐藏
+                {
+                    obj.transform.SetParent(wordPL, false);
+                }
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ public class UnitCandidateOperator : MonoBehaviour, IPointerDownHandler, IPointe
         {
             if (GameObject.Find("BattleUICanvas/CharacterDetail(Clone)") == null)
             {
-                var a = AssetManager.Create<GameObject>("UI/CharacterDetail");
+                var a = AssetManager.Load<GameObject>("UI/CharacterDetail");
                 a.transform.SetParent(GameObject.Find("BattleUICanvas").transform);
                 a.transform.localPosition = Vector3.zero;
                 a.transform.localScale = Vector3.one;
