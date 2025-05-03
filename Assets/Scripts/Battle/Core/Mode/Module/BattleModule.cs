@@ -24,5 +24,5 @@ public class BattleModule : CoreEntity
     public virtual void OnExitCombatPhase() {}
     
     public virtual void OnEnterResetPhase() {}
-    public virtual void OnExitResetPhase() {}
+    public virtual void OnExitRestPhase() {}
 }

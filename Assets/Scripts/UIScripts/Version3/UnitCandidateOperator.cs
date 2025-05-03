@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class UnitCandidateOperator : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IBeginDragHandler,
     IDragHandler, IEndDragHandler
 {
-    [Header("控制物体")] 
+    [Header("控制物体")] [SerializeField]
     public GameObject mTarget;
 
     protected RectTransform mRectTransform;
@@ -15,6 +15,8 @@ public class UnitCandidateOperator : MonoBehaviour, IPointerDownHandler, IPointe
 
     protected int mSpawnKind = 0;
     protected BattleBase mBattle = null;
+
+    protected bool mDragging = false;
 
     public void Setup(int unitKind)
     {
@@ -37,6 +39,18 @@ public class UnitCandidateOperator : MonoBehaviour, IPointerDownHandler, IPointe
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!mDragging && eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (GameObject.Find("BattleUICanvas/CharacterDetail(Clone)") == null)
+            {
+                var a = AssetManager.Create<GameObject>("UI/CharacterDetail");
+                a.transform.SetParent(GameObject.Find("BattleUICanvas").transform);
+                a.transform.localPosition = Vector3.zero;
+                a.transform.localScale = Vector3.one;
+                //获取点击角色的脚本信息
+                a.GetComponentInChildren<CharacterDetail>().Open(mSpawnKind);
+            }
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -45,13 +59,28 @@ public class UnitCandidateOperator : MonoBehaviour, IPointerDownHandler, IPointe
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
+        mDragging = true;
+        
         mOriginalPanelPosition = mRectTransform.anchoredPosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(mCanvas.transform as RectTransform, eventData.position,
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(mCanvas.transform as RectTransform,
+            eventData.position,
             eventData.pressEventCamera, out mOriginalLocalPointerPosition);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!mDragging)
+            return;
+        
+        if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            OnEndDrag(eventData);
+            return;
+        }
+        
         if (mCanvas == null)
             return;
 
@@ -66,12 +95,16 @@ public class UnitCandidateOperator : MonoBehaviour, IPointerDownHandler, IPointe
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!mDragging)
+            return;
+
+        mDragging = false;
         mRectTransform.anchoredPosition = mOriginalPanelPosition;
 
         var unit = mBattle.Stage.SpawnUnit(mSpawnKind, UnitSlotType.BackSeat | UnitSlotType.FrontSeat, ClientUtils.GetMouseWorldPosition());
         if (unit != null)
         {
-            gameObject.SetActive(false);
+            enabled = false;
             mTarget.SetActive(false);
         }
     }

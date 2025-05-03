@@ -25,7 +25,7 @@ public class BattleDebugTool : ImGuiObjBase
     private void RegisterModules()
     {
         mModuleRoot = new GameObject("Modules");
-        mModuleRoot.transform.parent = transform;
+        mModuleRoot.transform.SetParent(transform);
         
         RegisterModule<DebugBattleInfo>();
         RegisterModule<DebugSpawnUnit>();

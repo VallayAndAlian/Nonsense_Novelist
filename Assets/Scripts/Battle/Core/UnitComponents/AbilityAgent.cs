@@ -9,7 +9,10 @@ public class AbilityAgent : UnitComponent
 
     public override void Start()
     {
-        
+        foreach (var abi in mOwner.Data.mTalents)
+        {
+            RegisterAbility(abi);
+        }
     }
 
     public AbilityBase RegisterAbility(int abiKind)

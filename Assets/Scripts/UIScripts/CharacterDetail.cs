@@ -42,6 +42,30 @@ public class CharacterDetail : MonoBehaviour
         san.text = nowCharacter.san.ToString();
 
     }
+
+    public void Open(int kind)
+    {
+        var unitData = BattleUnitTable.Find(kind);
+        if (unitData == null)
+            return;
+
+        var asset = AssetManager.Load<BattleUnitSO>("SO/BattleUnit", unitData.mAsset);
+        if (asset == null)
+            return;
+        
+        sprite.sprite = asset.sprite;
+
+        nameText.text = asset.unitName;
+        roleName.text = asset.roleName;
+        roleInfo.text = asset.roleInfo;
+
+        atk.text = ((int)unitData.mAttack).ToString();
+        def.text = ((int)unitData.mDefense).ToString();
+        psy.text = ((int)unitData.mPsy).ToString();
+        san.text = ((int)unitData.mSan).ToString();
+        
+    }
+    
     public void OpenName(string ac)
     {
         CharaInfoExcelItem data = null;

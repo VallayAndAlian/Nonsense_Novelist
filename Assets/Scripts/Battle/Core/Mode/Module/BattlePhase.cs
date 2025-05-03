@@ -6,16 +6,16 @@ using UnityEngine;
 
 public enum BattlePhaseType
 {
-    Rest = 0,//休息回合
-    Lve=1,//左对抗怪物
-    Rve=2,//右对抗怪物
-    Pve=3,//左右一起对抗怪物
-    Pvp=4//左右互博
+    Rest = 0, //休息回合
+    Lve = 1, //左对抗怪物
+    Rve = 2, //右对抗怪物
+    Pve = 3, //左右一起对抗怪物
+    Pvp = 4 //左右互博
 }
 
 public class BattlePhase : BattleModule
 {
-    protected Dictionary<int, PhaseTable.Data> mPhases = new Dictionary<int, PhaseTable.Data>();
+    protected List<PhaseTable.Data> mPhases = new List<PhaseTable.Data>();
     protected int mStageIndex = -1; //索引从负1开始，第一个回合也使用EnterNextStage
     protected GamePhase mCurrentPhase;
 
@@ -24,9 +24,34 @@ public class BattlePhase : BattleModule
     protected BattlePhaseUI_Battle battleUI;
     protected GameObject battleUIObj;
     
-    public bool IsCombat => mPhases[mStageIndex].mType != BattlePhaseType.Rest;
-    public BattlePhaseType PhaseType => mPhases[mStageIndex].mType;
+
+    public int StageIndex => mStageIndex;
     
+    public bool IsCombat
+    {
+        get
+        {
+            if (mStageIndex >= 0 && mStageIndex < mPhases.Count)
+            {
+                return mPhases[mStageIndex].mType != BattlePhaseType.Rest;
+            }
+
+            return false;
+        }
+    }
+    public BattlePhaseType PhaseType
+    {
+        get
+        {
+            if (mStageIndex >= 0 && mStageIndex < mPhases.Count)
+            {
+                return mPhases[mStageIndex].mType;
+            }
+
+            return BattlePhaseType.Rest;
+        }
+    }
+
     protected List<BattleCamp> mFightCamp = new List<BattleCamp>();
     public List<BattleCamp> FightCamp => mFightCamp;
 
@@ -38,7 +63,7 @@ public class BattlePhase : BattleModule
         {
             if (data.Value.mChapter == 1) //读取和当前章节一致的回合。还没写章节相关的东西，这里默认1
             {
-                mPhases.Add(temp, data.Value);
+                mPhases.Add(data.Value);
                 temp++;
             }
         }
@@ -173,6 +198,7 @@ public class BattlePhase : BattleModule
         if (mStageIndex >= mPhases.Count)
         {
             Debug.Log("所有阶段已完成！");
+            Battle.EndBattle(BattleCamp.None);
             return;
         }
 

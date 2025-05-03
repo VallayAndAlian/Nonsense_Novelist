@@ -27,10 +27,13 @@ public class CardDeckManager : BattleModule
     /// </summary>
     private void AddInitCardDeck()
     {
-        AddCardToDeck(WordTable.Find(1));
-        AddCardToDeck(WordTable.Find(1));
-        AddCardToDeck(WordTable.Find(1));
-        AddCardToDeck(WordTable.Find(1));
+        foreach (var word in WordTable.DataList.Values)
+        {
+            if (!word.mForbidden)
+            {
+                AddCardToDeck(word);
+            }
+        }
     }
 
     /// <summary>

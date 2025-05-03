@@ -106,7 +106,7 @@ public class BattleStage : BattleModule
     }
     #endregion
 
-    public BattleUnit SpawnUnit(int kind, UnitSlotType typeFlags, Vector2 pos, float range = 1.0f)
+    public BattleUnit SpawnUnit(int kind, UnitSlotType typeFlags, Vector2 pos, float range = 0.5f)
     {
         var slot = FindClosestSlot(typeFlags, pos, range);
         if (slot != null)

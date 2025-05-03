@@ -293,7 +293,7 @@ public class AIController : UnitComponent
         }
     }
 
-    public override void OnEnterResetPhase()
+    public override void OnEnterRestPhase()
     {
         EnterState(EUnitState.Idle);
     }

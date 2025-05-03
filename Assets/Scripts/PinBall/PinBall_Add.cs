@@ -7,15 +7,11 @@ public class PinBall_Add : PinBall
     {
         mBall.wordData=data;
     }
-    protected override void HandleCollision(RaycastHit2D hit)
+    protected override void OnHitWall(RaycastHit2D hit)
     {
-        if (hit.collider.CompareTag("Wall"))
-        {
-            // 递进效果：每次碰撞增强一次。
-            effectLevel++;
-       
-        }
+        // 递进效果：每次碰撞增强一次。
+        effectLevel++;
 
-        base.HandleCollision(hit);
+        base.OnHitWall(hit);
     }
 }

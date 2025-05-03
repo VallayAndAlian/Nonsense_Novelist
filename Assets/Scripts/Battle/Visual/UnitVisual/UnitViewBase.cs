@@ -44,17 +44,16 @@ public class UnitViewBase : MonoBehaviour
         mAsset = asset;
         
         mRole.UnitView = this;
+        mRoot = transform.parent;
         
         mModelLayout = GetComponent<UnitModelLayout>();
         if (mModelLayout == null)
             mModelLayout = gameObject.AddComponent<UnitModelLayout>();
         
         mModelLayout.Setup(this);
-
-        mRoot = transform.parent;
         if (mRole.Slot)
         {
-            mRoot.parent = mRole.Slot.transform;
+            mRoot.SetParent(mRole.Slot.transform);
             mRoot.localPosition = Vector3.Scale(-mRoot.Find("seat").localPosition, mRoot.localScale);
         }
 
@@ -93,7 +92,7 @@ public class UnitViewBase : MonoBehaviour
                 if (!slot.IsOccupied)
                 {
                     slot.OccupiedBy(unitView.Role);
-                    unitView.Root.parent = slot.transform;
+                    unitView.Root.parent.SetParent(slot.transform);
                     unitView.Root.localPosition = Vector3.zero;
                 }
             }

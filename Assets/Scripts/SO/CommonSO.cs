@@ -16,7 +16,7 @@ public class CardTagDetail
 }
 
 [CreateAssetMenu(fileName = "NewCommonSO", menuName = "BattleSO")]
-public class CommonSO : MonoBehaviour
+public class CommonSO : ScriptableObject
 {
     [Header("卡牌标签配置")][Space(5)]
     public List<CardTagDetail> tagDetails;

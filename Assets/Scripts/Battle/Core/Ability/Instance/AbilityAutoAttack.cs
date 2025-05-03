@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AbilityAutoAttack : AbilityActive
 {
-    public override float CD => mData.mCoolDown * Unit.GetAttributeValue(AttributeType.Attack);
+    public override float CD => mData.mCoolDown / Mathf.Max(Unit.GetAttributeValue(AttributeType.AttackSpeed), 0.1f);
 
     protected override void OnInit()
     {

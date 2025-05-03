@@ -182,11 +182,18 @@ public class BattleBase : MonoBehaviour
         }
     }
 
-    public void OnExitResetPhase()
+    public void OnExitRestPhase()
     {
         foreach (var module in mModules)
         {
-            module.OnExitResetPhase();
+            module.OnExitRestPhase();
         }
+    }
+
+    public void EndBattle(BattleCamp winner)
+    {
+        mState = BattleState.End;
+        
+        EventManager.Invoke(EventEnum.BattleEnd, winner);
     }
 }

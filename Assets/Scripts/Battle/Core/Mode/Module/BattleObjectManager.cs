@@ -158,7 +158,10 @@ public class BattleObjectManager : BattleModule
     {
         foreach (var objIt in mObjects.Values)
         {
-            objIt.OnEnterCombatPhase();
+            if (!objIt.IsPendingKill)
+            {
+                objIt.OnEnterCombatPhase();
+            }
         }
     }
     
@@ -166,7 +169,10 @@ public class BattleObjectManager : BattleModule
     {
         foreach (var objIt in mObjects.Values)
         {
-            objIt.OnExitCombatPhase();
+            if (!objIt.IsPendingKill)
+            {
+                objIt.OnExitCombatPhase();
+            }
         }
     }
 
@@ -174,15 +180,21 @@ public class BattleObjectManager : BattleModule
     {
         foreach (var objIt in mObjects.Values)
         {
-            objIt.OnEnterResetPhase();
+            if (!objIt.IsPendingKill)
+            {
+                objIt.OnEnterRestPhase();
+            }
         }
     }
 
-    public override void OnExitResetPhase()
+    public override void OnExitRestPhase()
     {
         foreach (var objIt in mObjects.Values)
         {
-            objIt.OnExitResetPhase();
+            if (!objIt.IsPendingKill)
+            {
+                objIt.OnExitRestPhase();
+            }
         }
     }
 }

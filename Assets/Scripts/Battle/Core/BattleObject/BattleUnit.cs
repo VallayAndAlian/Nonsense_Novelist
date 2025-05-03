@@ -220,19 +220,19 @@ public class BattleUnit : BattleObject
         }
     }
 
-    public override void OnEnterResetPhase()
+    public override void OnEnterRestPhase()
     {
         foreach (var comp in Components)
         {
-            comp.OnEnterResetPhase();
+            comp.OnEnterRestPhase();
         }
     }
     
-    public override void OnExitResetPhase()
+    public override void OnExitRestPhase()
     {
         foreach (var comp in Components)
         {
-            comp.OnExitResetPhase();
+            comp.OnExitRestPhase();
         }
     }
 

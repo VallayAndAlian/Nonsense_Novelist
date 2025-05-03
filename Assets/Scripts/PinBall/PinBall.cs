@@ -21,6 +21,12 @@ public enum ShootType
     ReTrigger = 15,       // 回环
 }
 
+public enum HitTargetType
+{
+    None = 0,
+    
+}
+
 public abstract class PinBall : BattleObject
 {
     public class Ball
@@ -29,7 +35,7 @@ public abstract class PinBall : BattleObject
         public Transform preTransform; //预测小球位置
         public Vector2 velocity; //小球实际速度
         public Vector2 preVelocity; //预测小球速度
-        public LayerMask collisionLayer = LayerMask.GetMask("wall", "WordCollision");
+        public LayerMask collisionLayer = LayerMask.GetMask("wall", "WordCollision", "Character");
         public WordTable.Data wordData;
         public float radius = 0.5f;
         public float friction = 0.1f;
@@ -37,6 +43,10 @@ public abstract class PinBall : BattleObject
         public bool hasShoot = false;
 
     }
+
+    public static int mWallLayer = LayerMask.NameToLayer("wall");
+    public static int mWordLayer = LayerMask.NameToLayer("WordCollision");
+    public static int mCharacterLayer = LayerMask.NameToLayer("Character");
 
 
     public class PreLineInfo
@@ -103,7 +113,9 @@ public abstract class PinBall : BattleObject
 
     public void SetSizeToRadius()
     {
-        if (mBall.transform == null) return;
+        if (mBall.transform == null) 
+            return;
+        
         SpriteRenderer ballSprite;
         mBall.transform.TryGetComponent<SpriteRenderer>(out ballSprite);
         if (ballSprite == null) return;
@@ -141,28 +153,72 @@ public abstract class PinBall : BattleObject
     {
         Debug.Log(hit.collider.gameObject.name);
 
-        var wall = Battle.ObjectManager.Find<WallObject>(hit.collider);
-        if (wall == null)
-        {
-            return;
-        }
-
-        Debug.Log("HandleCollision");
-        mBall.preTransform.position =
-            wall.ApplyBounceEffectToPos(mBall.radius, hit.point, (Vector2)mBall.preTransform.position);
-        mBall.preVelocity = wall.ApplyBounceEffectToVel(ref mBall.preVelocity, hit.normal);
-
+        int layer = hit.collider.gameObject.layer;
 
         if (mBall.hasShoot)
         {
-            OnCollision();
+            if (layer == mWordLayer)
+            {
+                OnHitWord(hit);
+            }
+            else if (layer == mCharacterLayer)
+            {
+                OnHitUnit(hit);
+            }
+            else if (layer == mWallLayer)
+            {
+                OnHitWall(hit);
+            }
         }
         else
         {
-            mPreInfo.colPos.Add(hit.point);
-            OnPreCollision();
+            if (layer == mWallLayer)
+            {
+                OnPreHitWall(hit);
+            }
         }
+    }
 
+    protected virtual void OnPreHitWall(RaycastHit2D hit)
+    {
+        var wall = Battle.ObjectManager.Find<WallObject>(hit.collider);
+        if (wall == null)
+            return;
+        
+        mBall.preTransform.position =
+            wall.ApplyBounceEffectToPos(mBall.radius, hit.point, (Vector2)mBall.preTransform.position);
+        mBall.preVelocity = wall.ApplyBounceEffectToVel(ref mBall.preVelocity, hit.normal);
+        
+        mPreInfo.colPos.Add(hit.point);
+        OnPreCollision();
+    }
+
+    protected virtual void OnHitWall(RaycastHit2D hit)
+    {
+        var wall = Battle.ObjectManager.Find<WallObject>(hit.collider);
+        if (wall == null)
+            return;
+
+        mBall.preTransform.position =
+            wall.ApplyBounceEffectToPos(mBall.radius, hit.point, (Vector2)mBall.preTransform.position);
+        mBall.preVelocity = wall.ApplyBounceEffectToVel(ref mBall.preVelocity, hit.normal);
+        
+        OnCollision();
+    }
+
+    protected virtual void OnHitWord(RaycastHit2D hit)
+    {
+        
+    }
+    
+    protected virtual void OnHitUnit(RaycastHit2D hit)
+    {
+        var role = hit.collider.GetComponentInChildren<UnitViewBase>().Role;
+        if (!role.IsValid())
+            return;
+
+        role.WordComponent.AddWord(mBall.wordData.mKind);
+        Expired();
     }
 
     protected virtual void OnPreCollision()
@@ -178,5 +234,19 @@ public abstract class PinBall : BattleObject
 
     private void PlayEffect(Vector2 position)
     {
+    }
+
+    protected virtual void Expired()
+    {
+        if (mBall == null)
+            return;
+        
+        MarkPendingKill();
+
+        if (mBall.transform != null)
+        {
+            Object.Destroy(mBall.transform.gameObject);
+        }
+        mBall.transform = null;
     }
 }

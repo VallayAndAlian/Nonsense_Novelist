@@ -40,6 +40,6 @@ public class BattleObject : CoreEntity
     public virtual void LateFixedUpdate(float deltaSec) {}
     public virtual void OnEnterCombatPhase() {}
     public virtual void OnExitCombatPhase() {}
-    public virtual void OnEnterResetPhase() {}
-    public virtual void OnExitResetPhase() {}
+    public virtual void OnEnterRestPhase() {}
+    public virtual void OnExitRestPhase() {}
 }

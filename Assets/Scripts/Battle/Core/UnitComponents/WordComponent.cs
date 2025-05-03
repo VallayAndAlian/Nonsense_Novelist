@@ -49,11 +49,6 @@ public class WordComponent : UnitComponent
 
     public override void Start()
     {
-        foreach (var abi in mOwner.Data.mTalents)
-        {
-            AddWord(abi);
-        }
-        
         AddWord(mOwner.Data.mRoles);
     }
 

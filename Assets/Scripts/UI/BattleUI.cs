@@ -27,7 +27,7 @@ public class BattleUI : UIBase
         
         transform.SetParent(uiManager.BattleCanvas.transform);
         transform.localPosition = Vector3.zero;
-        // transform.localScale = Vector3.one;
+        transform.localScale = Vector3.one;
 
         var rect = transform as RectTransform;
         if (rect != null)

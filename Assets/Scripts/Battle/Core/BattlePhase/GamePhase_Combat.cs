@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public class GamePhase_Combat : GamePhase
 {
@@ -53,7 +54,8 @@ public class GamePhase_Combat : GamePhase
 
         //清理场上的怪物
         {
-            List<BattleUnit> monsters = Battle.CampManager.GetCampMember(BattleCamp.Boss);
+            List<BattleUnit> monsters = new List<BattleUnit>();
+            monsters.AddRange(Battle.CampManager.GetCampMember(BattleCamp.Boss));
             foreach (var unit in monsters)
             {
                 unit.Die(null);

@@ -53,7 +53,7 @@ public class GamePhase_Rest : GamePhase
 
     public override void Exit()
     {
-        Battle.OnExitResetPhase();
+        Battle.OnExitRestPhase();
 
         // 关闭角色战斗状态
         foreach (var chara in Battle.CampManager.GetCampMember(BattleCamp.Camp1))

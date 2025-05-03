@@ -63,23 +63,21 @@ public class PinBallLauncher : BattleModule
         PinBall pinball = Battle.ObjectFactory.CreatePinBall(data);
         GameObject temp = new GameObject();
         temp.transform.position = launchPoint;
-        pinball.mBall = new PinBall.Ball
-        {
-            transform = temp.transform,
-
-            velocity = Vector3.zero,
-            radius = BattleConfig.mData.word.wordBallRadius,
-            friction = BattleConfig.mData.word.wordBallFriction,
-            energyLoss = BattleConfig.mData.word.wordBallCollisionLoss,
-            hasShoot = false
-        };
+        pinball.mBall.transform = temp.transform;
+        pinball.mBall.wordData = data;
+        pinball.mBall.velocity = Vector3.zero;
+        pinball.mBall.radius = BattleConfig.mData.word.wordBallRadius;
+        pinball.mBall.friction = BattleConfig.mData.word.wordBallFriction;
+        pinball.mBall.energyLoss = BattleConfig.mData.word.wordBallCollisionLoss;
+        pinball.mBall.hasShoot = false;
         nowBall = pinball;
     }
 
     void SetNowBallVel()
     {
-        if (nowBall == null)
+        if (!nowBall.IsValid())
             return;
+        
         nowBall.mBall.velocity = nowBall.mBall.preVelocity = CalculateLaunchVelocity();
     }
 

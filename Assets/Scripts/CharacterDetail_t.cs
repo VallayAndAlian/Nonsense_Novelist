@@ -262,7 +262,7 @@ public class CharacterDetail_t : MonoBehaviour
     public void ClickTrait()
     {
         var a = Instantiate(infoPerfab, this.transform);
-        // a.GetComponent<DetailInfo>().SetInfo(nowCharacter.roleName,nowCharacter.roleInfo);
+        a.GetComponent<DetailInfo>().SetInfo(nowCharacter.Asset.roleName,nowCharacter.Asset.roleInfo);
     }
     #endregion
 }

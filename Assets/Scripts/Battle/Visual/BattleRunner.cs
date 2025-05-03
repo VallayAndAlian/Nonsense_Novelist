@@ -19,6 +19,8 @@ public class BattleRunner : MonoBehaviour
     private void Start()
     {
         UIStatics.ResetCanvas();
+        
+        EventManager.Subscribe<BattleCamp>(EventEnum.BattleEnd, OnBattleEnd);
     }
 
     private void OnDestroy()
@@ -76,5 +78,10 @@ public class BattleRunner : MonoBehaviour
         {
             system.Tick(deltaSec);
         }
+    }
+
+    public void OnBattleEnd(BattleCamp winner)
+    {
+        
     }
 }

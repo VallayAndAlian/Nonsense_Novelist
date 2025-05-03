@@ -44,10 +44,13 @@ public class UnitModelLayout : MonoBehaviour
         
         
         mAnimEvents = GetComponent<AnimEventReceiver>();
-        
         mAudioSource = GetComponent<AudioSource>();
 
-        mWeaponPart = transform;
+        mWeaponPart = unitObj.transform.Find("WeaponMuzzle");
+        if (mWeaponPart == null)
+        {
+            mWeaponPart = unitObj.Root;
+        }
     }
 
     public void PlayAnimation(string animName, bool isLoop = false)

@@ -32,8 +32,6 @@ public class BattlePhaseUI_Rest : BattleUI
         {
             mCharaPos = GameObject.Find("Panel/charaPos").transform;
         }
-
-        ShuffleCharacter(4);
     }
 
     public void OnClickStartButton()
@@ -48,6 +46,18 @@ public class BattlePhaseUI_Rest : BattleUI
 
     public void RefreshSlider(float amount)
     {
+    }
+
+    protected override void OnEnabled()
+    {
+        if (Battle.BattlePhase.StageIndex > 0)
+        {
+            ShuffleCharacter(1);
+        }
+        else
+        {
+            ShuffleCharacter(4);
+        }
     }
 
     public void ShuffleCharacter(int count)

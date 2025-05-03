@@ -141,12 +141,12 @@ public class EffectAgent : UnitComponent
         foreach (var effect in mEffects)
         {
             mOwner.UnitView.OnRemoveEffect(effect);
-                
+
             EventManager.Invoke(EventEnum.RemoveEffect, effect);
-                
+
             effect.Dispose();
         }
-        
+
         mEffects.Clear();
     }
 
