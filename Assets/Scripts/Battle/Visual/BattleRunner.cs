@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class BattleRunner : MonoBehaviour
 {
@@ -82,6 +83,7 @@ public class BattleRunner : MonoBehaviour
 
     public void OnBattleEnd(BattleCamp winner)
     {
-        
+        var infoUI = Battle.BattleUI.Add(new BattlePhaseUI_End());
+        Battle.BattleUI.ShowPanel(infoUI);
     }
 }
