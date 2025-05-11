@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221f047a4d846b24fbde340c22d8b8d7, type: 3}
   m_Name: N_029DunFuTou
   m_EditorClassIdentifier: 
-  unitName: "\u949D\u65A7\u5934"
   wordName: "\u949D\u65A7\u5934"
-  prefab: "\u653B\u51FB+1"
   desc: "\u653B\u51FB+1"
-  infoShort: {fileID: 2800000, guid: e2c0b217383377840bdf502d7970999d, type: 3}
-  sprite: {fileID: 2800000, guid: e2c0b217383377840bdf502d7970999d, type: 3}
+  mainIcon: {fileID: 2800000, guid: e2c0b217383377840bdf502d7970999d, type: 3}
+  titleIcon: {fileID: 2800000, guid: de4feb616d82cb645aa6c49da64d286e, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

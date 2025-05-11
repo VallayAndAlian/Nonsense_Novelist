@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221f047a4d846b24fbde340c22d8b8d7, type: 3}
   m_Name: N_004KaoRou
   m_EditorClassIdentifier: 
-  unitName: "\u70E4\u8089"
-  prefab: "\u5F00\u5E55\uFF0C\u83B7\u5F97\u706B\u70ED"
-  infoShort: {fileID: 2800000, guid: 4081cce386550c749a602fb3e9031cc0, type: 3}
+  wordName: 
+  desc: 
+  mainIcon: {fileID: 0}
+  titleIcon: {fileID: 2800000, guid: 54c0e58d20347c841a4d6767292926be, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

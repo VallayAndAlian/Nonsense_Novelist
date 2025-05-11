@@ -180,7 +180,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 7593424996706969840}
           m_TargetAssemblyTypeName: AnimEventReceiver, Assembly-CSharp
-          m_MethodName: ActTrigger
+          m_MethodName: ActBegin
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -196,7 +196,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 7593424996706969840}
           m_TargetAssemblyTypeName: AnimEventReceiver, Assembly-CSharp
-          m_MethodName: ActTrigger
+          m_MethodName: ActEnd
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

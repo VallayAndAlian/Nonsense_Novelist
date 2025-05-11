@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221f047a4d846b24fbde340c22d8b8d7, type: 3}
   m_Name: V_016TongPingGongZheng
   m_EditorClassIdentifier: 
-  unitName: "\u540C\u9891\u5171\u632F"
   wordName: "\u540C\u9891\u5171\u632F"
-  prefab: "\u4F7F\u6240\u6709\u961F\u53CB\u83B7\u5F97\u5171\u632F"
   desc: "\u4F7F\u6240\u6709\u961F\u53CB\u83B7\u5F97\u5171\u632F"
-  infoShort: {fileID: 2800000, guid: 38a3f03902e59754bb3f738e5fe6b51e, type: 3}
-  sprite: {fileID: 2800000, guid: 38a3f03902e59754bb3f738e5fe6b51e, type: 3}
+  mainIcon: {fileID: 2800000, guid: 38a3f03902e59754bb3f738e5fe6b51e, type: 3}
+  titleIcon: {fileID: 2800000, guid: 08c4838984e879240bb6a312d2c6e6c3, type: 3}
   relativeCard: 6e000000
   relativeSkills: []

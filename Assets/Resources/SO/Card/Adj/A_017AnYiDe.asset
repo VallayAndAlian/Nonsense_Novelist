@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221f047a4d846b24fbde340c22d8b8d7, type: 3}
   m_Name: A_017AnYiDe
   m_EditorClassIdentifier: 
-  unitName: "\u5B89\u9038\u7684"
   wordName: "\u5B89\u9038\u7684"
-  prefab: "\u9632\u5FA1+5\uFF0C\u6218\u6597\u7ED3\u675F\u540E\u79FB\u9664"
   desc: "\u9632\u5FA1+5\uFF0C\u6218\u6597\u7ED3\u675F\u540E\u79FB\u9664"
-  infoShort: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
-  sprite: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
+  mainIcon: {fileID: 2800000, guid: 7c757ed815c141a4a9d305e9b29e0a80, type: 3}
+  titleIcon: {fileID: 2800000, guid: de4feb616d82cb645aa6c49da64d286e, type: 3}
   relativeCard: 6e000000
   relativeSkills: []
