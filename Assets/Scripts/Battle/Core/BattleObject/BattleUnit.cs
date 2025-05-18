@@ -30,7 +30,16 @@ public class BattleUnit : BattleObject
     public BattleCamp Camp
     {
         get => mUnitInstance.mCamp;
-        set => mUnitInstance.mCamp = value;
+        set
+        {
+            var oldCamp = mUnitInstance.mCamp;
+            mUnitInstance.mCamp = value;
+            
+            if (oldCamp != mUnitInstance.mCamp)
+            {
+                EventManager.Invoke(EventEnum.UnitChangeCamp, this, oldCamp);
+            }
+        }
     }
 
     protected BattleUnitPos mPos = 0;
@@ -46,7 +55,42 @@ public class BattleUnit : BattleObject
     public UnitSlot Slot
     {
         get => mSlot;
-        set => mSlot = value;
+        set
+        {
+            var oldSlot = mSlot;
+
+            if (value != null && oldSlot != null && oldSlot != value)
+            {
+                oldSlot.Remove();
+            }
+
+            mSlot = value;
+
+            if (mSlot != null)
+            {
+                if (Data.mInitType == BattleUnitType.Character)
+                {
+                    BattleCamp oldCamp = Camp;
+                    BattleCamp newCamp = mSlot.SpawnCamp;
+                    if (oldCamp != newCamp)
+                    {
+                        Camp = newCamp;
+                        if (ServantsAgent.IsValid())
+                        {
+                            foreach (var it in ServantsAgent.Servants)
+                            {
+                                it.Camp = newCamp;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (UnitView != null)
+            {
+                UnitView.UpdateSlot();
+            }
+        }
     }
 
     protected UnitInstance mUnitInstance;

@@ -16,13 +16,17 @@ public class BattleCampManager : BattleModule
     {
         EventManager.Subscribe<BattleUnit>(EventEnum.UnitSpawn, OnUnitSpawn);
         EventManager.Subscribe<BattleUnit>(EventEnum.UnitDie, OnUnitDie);
+        EventManager.Subscribe<BattleUnit, BattleCamp>(EventEnum.UnitChangeCamp, OnUnitChangeCamp);
     }
 
     public void OnUnitSpawn(BattleUnit unit)
     {
         if (mCampUnit.TryGetValue(unit.Camp, out var list))
         {
-            list.Add(unit);
+            if (!list.Contains(unit))
+            {
+                list.Add(unit);
+            }
         }
     }
     
@@ -33,10 +37,32 @@ public class BattleCampManager : BattleModule
             list.Remove(unit);
         }
     }
+    
+    public void OnUnitChangeCamp(BattleUnit unit, BattleCamp oldCamp)
+    {
+        {
+            if (mCampUnit.TryGetValue(oldCamp, out var list))
+            {
+                list.Remove(unit);
+            }
+        }
+        
+        {
+            if (mCampUnit.TryGetValue(unit.Camp, out var list))
+            {
+                if (!list.Contains(unit))
+                {
+                    list.Add(unit);
+                }
+            }
+        }
+    }
+    
     public List<BattleUnit> GetCampMember(BattleCamp camp)
     {
         return mCampUnit[camp];
     }
+    
     public List<BattleUnit> GetAllies(BattleUnit unit)
     {
         List<BattleUnit> allies = new List<BattleUnit>();

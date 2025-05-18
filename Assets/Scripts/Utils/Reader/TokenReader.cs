@@ -129,12 +129,12 @@ public class TokenReader
     public List<T> ReadVec<T>()
     {
         if (!IsReadValid())
-            return default;
+            return new List<T>();
 
         if (_mTokens.Length <= _mPos)
         {
             MarkReadInvalid();
-            return default;
+            return new List<T>();
         }
 
         var reader = new TokenReader(_mTokens[_mPos++], new []{'|'});

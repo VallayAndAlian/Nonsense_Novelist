@@ -30,4 +30,9 @@ public static class NnMathUtils
         
         return rst;
     }
+
+    public static float GetSign(float x)
+    {
+        return x >= 0 ? 1 : -1;
+    }
 }

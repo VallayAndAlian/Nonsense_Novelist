@@ -68,7 +68,7 @@ public class UnitSlot : MonoBehaviour
             Debug.LogError("this slot has Occupied already");
             return;
         }
-
+        
         mUnit = unit;
         mUnit.Slot = this;
     }

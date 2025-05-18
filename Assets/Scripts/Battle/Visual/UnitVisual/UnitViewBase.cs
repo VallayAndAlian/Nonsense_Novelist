@@ -51,11 +51,7 @@ public class UnitViewBase : MonoBehaviour
             mModelLayout = gameObject.AddComponent<UnitModelLayout>();
         
         mModelLayout.Setup(this);
-        if (mRole.Slot)
-        {
-            mRoot.SetParent(mRole.Slot.transform);
-            mRoot.localPosition = Vector3.Scale(-mRoot.Find("seat").localPosition, mRoot.localScale);
-        }
+        UpdateSlot();
 
         var slots = mRoot.GetComponentsInChildren<UnitSlot>();
         foreach (var slot in slots)
@@ -78,6 +74,12 @@ public class UnitViewBase : MonoBehaviour
         {
             spriteComp.sprite = mAsset.sprite;
         }
+
+        var dragComp = mRoot.GetComponent<UnitOperator>();
+        if (dragComp != null)
+        {
+            dragComp.Setup(this);
+        }
     }
 
     public void AddServant(UnitViewBase unitView)
@@ -92,11 +94,23 @@ public class UnitViewBase : MonoBehaviour
                 if (!slot.IsOccupied)
                 {
                     slot.OccupiedBy(unitView.Role);
-                    unitView.Root.parent.SetParent(slot.transform);
-                    unitView.Root.localPosition = Vector3.zero;
                 }
             }
         }
+    }
+
+    public void UpdateSlot()
+    {
+        if (mRole.Slot == null)
+        {
+            mRoot.SetParent(null);
+            return;
+        }
+
+        mRoot.SetParent(mRole.Slot.transform);
+        mRoot.localScale = CalcLocalScale();
+        mRoot.localPosition = CalcLocalPosition();
+
     }
 
     public void OnUnitDie()
@@ -183,5 +197,45 @@ public class UnitViewBase : MonoBehaviour
                 break;
             }
         }
+    }
+
+
+    public Vector3 CalcLocalPosition()
+    {
+        switch (mRole.Data.mInitType)
+        {
+            case BattleUnitType.Character:
+            case BattleUnitType.Monster:
+                return Vector3.Scale(-mRoot.Find("seat").localPosition, mRoot.localScale);
+            
+            case BattleUnitType.Servant:
+                return Vector3.zero;
+        }
+
+        return Vector3.zero;
+    }
+
+    public Vector3 CalcLocalScale()
+    {
+        var tempScale = mRoot.localScale;
+        switch (mRole.Data.mInitType)
+        {
+            case BattleUnitType.Character:
+            {
+                return new Vector3(Mathf.Abs(tempScale.x), tempScale.y, tempScale.z);
+            }
+
+            case BattleUnitType.Servant:
+            {
+                return new Vector3(Mathf.Abs(tempScale.x), tempScale.y, tempScale.z);
+            }
+
+            case BattleUnitType.Monster:
+            {
+                return tempScale;
+            }
+        }
+
+        return tempScale;
     }
 }
