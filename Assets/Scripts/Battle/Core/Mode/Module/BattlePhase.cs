@@ -52,8 +52,8 @@ public class BattlePhase : BattleModule
         }
     }
 
-    protected List<BattleCamp> mFightCamp = new List<BattleCamp>();
-    public List<BattleCamp> FightCamp => mFightCamp;
+    protected Dictionary<BattleCamp, List<BattleCamp>> mCampEnemies = new Dictionary<BattleCamp, List<BattleCamp>>();
+    public Dictionary<BattleCamp, List<BattleCamp>> CampEnemies => mCampEnemies;
 
     public override void Init()
     {
@@ -68,6 +68,9 @@ public class BattlePhase : BattleModule
             }
         }
         
+        mCampEnemies.Add(BattleCamp.Camp1, new List<BattleCamp>());
+        mCampEnemies.Add(BattleCamp.Camp2, new List<BattleCamp>());
+        mCampEnemies.Add(BattleCamp.Boss, new List<BattleCamp>());
     }
 
     public override void Begin()
@@ -152,37 +155,59 @@ public class BattlePhase : BattleModule
 
     protected GamePhase_Combat NewBattlePhase(BattlePhaseType type)
     {
-        mFightCamp.Clear();
+        var fightCamp = new List<List<BattleCamp>>();
+        
+        var camp1List = mCampEnemies[BattleCamp.Camp1];
+        var camp2List = mCampEnemies[BattleCamp.Camp2];
+        var bossList = mCampEnemies[BattleCamp.Boss];
+        
+        camp1List.Clear();
+        camp2List.Clear();
+        bossList.Clear();
+        
         switch (type)
         {
             case BattlePhaseType.Lve:
             {
-                mFightCamp.Add(BattleCamp.Camp1);
-                mFightCamp.Add(BattleCamp.Boss);
+                camp1List.Add(BattleCamp.Boss);
+                bossList.Add(BattleCamp.Camp1);
+                
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Camp1 });
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Boss });
                 break;
             }
             case BattlePhaseType.Pve:
             {
-                mFightCamp.Add(BattleCamp.Camp1);
-                mFightCamp.Add(BattleCamp.Camp2);
-                mFightCamp.Add(BattleCamp.Boss);
+                bossList.Add(BattleCamp.Camp1);
+                bossList.Add(BattleCamp.Camp2);
+                camp1List.Add(BattleCamp.Boss);
+                camp2List.Add(BattleCamp.Boss);
+                
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Camp1, BattleCamp.Camp2 });
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Boss });
                 break;
             }
             case BattlePhaseType.Pvp:
             {
-                mFightCamp.Add(BattleCamp.Camp1);
-                mFightCamp.Add(BattleCamp.Camp2);
+                camp2List.Add(BattleCamp.Camp1);
+                camp1List.Add(BattleCamp.Camp2);
+                
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Camp1 });
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Camp2 });
                 break;
             }
             case BattlePhaseType.Rve:
             {
-                mFightCamp.Add(BattleCamp.Camp2);
-                mFightCamp.Add(BattleCamp.Boss);
+                camp2List.Add(BattleCamp.Boss);
+                bossList.Add(BattleCamp.Camp2);
+                
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Camp2 });
+                fightCamp.Add(new List<BattleCamp>() { BattleCamp.Boss });
                 break;
             }
         }
 
-        return new GamePhase_Combat(mFightCamp, 0);
+        return new GamePhase_Combat(fightCamp, 0);
     }
 
     public void EnterNextStage()
@@ -222,7 +247,7 @@ public class BattlePhase : BattleModule
             {
                 mCurrentPhase.Exit();
                 mCurrentPhase = null;
-                mFightCamp.Clear();
+                mCampEnemies.Clear();
             }
         }
 

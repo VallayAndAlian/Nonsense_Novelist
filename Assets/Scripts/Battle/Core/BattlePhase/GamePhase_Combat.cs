@@ -4,9 +4,9 @@ using System.Linq;
 public class GamePhase_Combat : GamePhase
 {
     protected float mMonsterDelayTime = 0;
-    protected List<BattleCamp> mFightCamp = new List<BattleCamp>();
+    protected List<List<BattleCamp>> mFightCamp;
 
-    public GamePhase_Combat(List<BattleCamp> fightCamp, float monsterDelayTime)
+    public GamePhase_Combat(List<List<BattleCamp>> fightCamp, float monsterDelayTime)
     {
         mFightCamp = fightCamp;
         mMonsterDelayTime = monsterDelayTime;
@@ -74,19 +74,21 @@ public class GamePhase_Combat : GamePhase
 
     private bool CheckCampDead()
     {
-        foreach (var camp in mFightCamp)
+        foreach (var camps in mFightCamp)
         {
             bool bHasAlive = false;
-            List<BattleUnit> unitList = Battle.CampManager.GetCampMember(camp);
-            foreach (var unit in unitList)
+            foreach (var unitList in camps.Select(camp => Battle.CampManager.GetCampMember(camp)))
             {
-                if (unit.IsAlive)
+                foreach (var unit in unitList)
                 {
-                    bHasAlive = true;
-                    break;
+                    if (unit.IsAlive)
+                    {
+                        bHasAlive = true;
+                        break;
+                    }
                 }
             }
-            
+
             if (!bHasAlive)
                 return true;
         }

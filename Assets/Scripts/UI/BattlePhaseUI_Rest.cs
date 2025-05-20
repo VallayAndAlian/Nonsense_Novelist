@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,9 @@ public class BattlePhaseUI_Rest : BattleUI
     protected Button startButton;
     public Transform mCharaPos = null;
     public GameObject mUnitCandiTemp = null;
+    protected Text mText = null;
+
+    protected List<UnitCandidateOperator> mCandidates = new List<UnitCandidateOperator>();
 
     public BattlePhaseUI_Rest()
     {
@@ -32,16 +36,42 @@ public class BattlePhaseUI_Rest : BattleUI
         {
             mCharaPos = GameObject.Find("Panel/charaPos").transform;
         }
+
+        if (mText == null)
+        {
+            mText = GameObject.Find("Panel/Text").GetComponent<Text>();
+        }
     }
 
     public void OnClickStartButton()
     {
+        foreach (var candi in mCandidates)
+        {
+            if (candi.enabled)
+            {
+                mText.color = Color.red;
+                mText.text = "仍有角色未就位";
+                return;
+            }
+        }
+
+        {
+            var camp1 = Battle.CampManager.GetCampMember(BattleCamp.Camp1);
+            var camp2 = Battle.CampManager.GetCampMember(BattleCamp.Camp2);
+            if (camp1 == null || camp2 == null || camp1.Count == 0 || camp2.Count == 0)
+            {
+                mText.color = Color.red;
+                mText.text = "两方至少要有一名角色";
+                return;
+            }
+        }
+        
         Battle.BattlePhase.EnterNextStage();
     }
 
     public override void Update(float deltaTime)
     {
-
+        
     }
 
     public void RefreshSlider(float amount)
@@ -64,7 +94,7 @@ public class BattlePhaseUI_Rest : BattleUI
     {
         ClearCandidates();
         
-        var unitList =  Battle.UnitDeck.ShuffleUnit(count);
+        var unitList = Battle.UnitDeck.ShuffleUnit(count);
 
         for (int i = 0; i < unitList.Count; i++)
         {
@@ -100,19 +130,18 @@ public class BattlePhaseUI_Rest : BattleUI
             candiObj.transform.Find("Icon").GetComponent<Image>().sprite = asset.sprite;
         }
         
-        candiObj.GetComponent<UnitCandidateOperator>().Setup(kind);
+        var candi = candiObj.GetComponent<UnitCandidateOperator>();
+        candi.Setup(kind);
+        mCandidates.Add(candi);
     }
 
     public void ClearCandidates()
     {
-        for (int i = 0; i < mCharaPos.childCount; i++)
+        foreach (var candi in mCandidates)
         {
-            var slot = mCharaPos.GetChild(i);
-            for (int j = slot.childCount - 1; j >= 0; j--)
-            {
-                Object.Destroy(slot.GetChild(j).gameObject);
-            }
+            Object.Destroy(candi.gameObject);
         }
 
+        mCandidates.Clear();
     }
 }
