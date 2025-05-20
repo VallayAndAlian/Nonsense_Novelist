@@ -57,13 +57,9 @@ public class BattleUnit : BattleObject
         get => mSlot;
         set
         {
-            var oldSlot = mSlot;
-
-            if (value != null && oldSlot != null && oldSlot != value)
-            {
-                oldSlot.Remove();
-            }
-
+            if (mSlot != null)
+                return;
+            
             mSlot = value;
 
             if (mSlot != null)

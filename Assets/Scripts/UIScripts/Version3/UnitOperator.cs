@@ -52,16 +52,30 @@ public class UnitOperator : MonoBehaviour
     private void OnMouseUp()
     {
         var slot = mView.Role.Battle.Stage.FindClosestSlot(UnitSlotType.BackSeat | UnitSlotType.FrontSeat, GetMouseWorldPos(),
-            1.0f, false);
-
-        if (slot == null)
+            1.0f, true);
+        
+        if (slot == null || slot.Unit == mView.Role)
         {
             mTarget.position = mOriginPos;
             mTarget.localScale = mOriginScale;
         }
         else
         {
-            slot.OccupiedBy(mView.Role);
+            var oriSlot = mView.Role.Slot;
+            var changedUnit = slot.Unit;
+            
+            if (changedUnit == null)
+            {
+                oriSlot.Remove();
+                slot.OccupiedBy(mView.Role);
+            }
+            else
+            {
+                oriSlot.Remove();
+                slot.Remove();
+                oriSlot.OccupiedBy(changedUnit);
+                slot.OccupiedBy(mView.Role);
+            }
         }
     }
     
