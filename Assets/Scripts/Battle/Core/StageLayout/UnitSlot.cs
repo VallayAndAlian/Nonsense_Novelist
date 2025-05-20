@@ -71,15 +71,22 @@ public class UnitSlot : MonoBehaviour
 
         if (unit.Slot != null)
         {
-            unit.Slot.Remove();
+            Debug.LogError("unit has slot already");
+            return;
         }
         
-        mUnit = unit;
-        mUnit.Slot = this;
+        unit.Slot = this;
+        if (unit.Slot == this)
+        {
+            mUnit = unit;
+        }
     }
 
     public void Remove()
     {
+        if (mUnit == null)
+            return;
+        
         mUnit.Slot = null;
         mUnit = null;
     }

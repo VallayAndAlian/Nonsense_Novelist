@@ -57,7 +57,7 @@ public class BattleUnit : BattleObject
         get => mSlot;
         set
         {
-            if (mSlot != null)
+            if (mSlot != null && value != null)
                 return;
             
             mSlot = value;
