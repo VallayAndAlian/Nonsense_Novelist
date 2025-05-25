@@ -16,18 +16,36 @@ MonoBehaviour:
   - mType: 13
     mFxList:
     - mPlayType: 1
-      mDesc: 
-      mSocketName: 
+      mDesc: 2
+      mSocketName: Socket1
       mFxObj: {fileID: 7426835889143023896, guid: 0a14aff07f6d6094a8aeca95522d3841, type: 3}
   - mType: 11
     mFxList:
     - mPlayType: 1
-      mDesc: 
-      mSocketName: 
+      mDesc: 2
+      mSocketName: Socket1
       mFxObj: {fileID: 5993121859969497792, guid: 5e4c84915e4ac0f44aaf9a682af79237, type: 3}
   - mType: 2
     mFxList:
     - mPlayType: 1
-      mDesc: 
-      mSocketName: 
+      mDesc: 2
+      mSocketName: Socket1
       mFxObj: {fileID: 3828618311402108717, guid: 2ee4499f36b4ba648b91f950098e333a, type: 3}
+  - mType: 5
+    mFxList:
+    - mPlayType: 1
+      mDesc: 2
+      mSocketName: Socket1
+      mFxObj: {fileID: 5993121859969497792, guid: 6506ea96b5e81754d80f8a2c5d833503, type: 3}
+  - mType: 3
+    mFxList:
+    - mPlayType: 1
+      mDesc: 2
+      mSocketName: Socket1
+      mFxObj: {fileID: 5993121859969497792, guid: 64cfa14cad5a16c458a3496f4ddf7733, type: 3}
+  - mType: 7
+    mFxList:
+    - mPlayType: 1
+      mDesc: 2
+      mSocketName: Socket1
+      mFxObj: {fileID: 5993121859969497792, guid: af9e813112fad3b41a9ece256e514e9c, type: 3}
