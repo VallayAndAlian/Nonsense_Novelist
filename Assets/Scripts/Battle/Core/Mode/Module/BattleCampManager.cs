@@ -77,8 +77,7 @@ public class BattleCampManager : BattleModule
     
     public List<BattleUnit> GetEnemies(BattleUnit unit)
     {
-        var enemyCamp = Battle.BattlePhase.CampEnemies[unit.Camp];
-        if (enemyCamp == null) 
+        if (!Battle.BattlePhase.CampEnemies.TryGetValue(unit.Camp, out var enemyCamp))
             return new List<BattleUnit>();
         
         List<BattleUnit> enemies = new List<BattleUnit>();

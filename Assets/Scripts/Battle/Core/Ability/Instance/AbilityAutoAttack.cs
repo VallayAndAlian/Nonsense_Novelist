@@ -42,7 +42,7 @@ public class AbilityAutoAttack : AbilityActive
 
     public void OnHitTarget(BattleUnit hitTarget)
     {
-        if (hitTarget is not { IsAlive: true })
+        if (!hitTarget.IsValid() || !hitTarget.IsAlive)
             return;
         
         // apply damage

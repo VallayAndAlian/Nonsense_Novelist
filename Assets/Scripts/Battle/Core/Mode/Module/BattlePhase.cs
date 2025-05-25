@@ -257,7 +257,6 @@ public class BattlePhase : BattleModule
             {
                 mCurrentPhase.Exit();
                 mCurrentPhase = null;
-                mCampEnemies.Clear();
             }
         }
 

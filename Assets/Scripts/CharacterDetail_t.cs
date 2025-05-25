@@ -163,10 +163,13 @@ public class CharacterDetail_t : MonoBehaviour
             {
                 var wordDetail = obj.GetComponentInChildren<SeeWordDetail>();
                 wordDetail.Setup(word.mData);
+
+                var cardAsset = AssetManager.Load<CardSO>("SO/Card", word.mData.mAssetName);
                 
                 obj.transform.parent = panel_skill;
                 obj.transform.localScale = Vector3.one;
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = wordName;
+                obj.transform.Find("word_verb").GetComponent<Image>().sprite = AssetUtils.ToSprite(cardAsset.titleIcon);
 
                 for (int i = 0; i < word.mData.mTriggerPower; i++)
                 {

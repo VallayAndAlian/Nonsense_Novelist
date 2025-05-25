@@ -115,9 +115,15 @@ public class UnitViewBase : MonoBehaviour
 
     public void OnUnitDie()
     {
-        GetComponent<SpriteRenderer>().enabled=false;
-        mRoot.gameObject.SetActive(false);
-        Destroy(mRoot.gameObject, 1.0f);
+        var spriteComp = GetComponent<SpriteRenderer>();
+        if (spriteComp != null)
+        {
+            spriteComp.enabled = false;
+        }
+
+        GameObject o;
+        (o = mRoot.gameObject).SetActive(false);
+        Destroy(o, 1.0f);
     }
 
     public void OnApplyEffect(BattleEffect be)

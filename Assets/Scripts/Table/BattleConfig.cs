@@ -14,6 +14,9 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
         public float wordBallCollisionLoss = 3;
         public float wordBallChargingMaxTime=3;
         public float maxAngle = 45f;
+        public int initLoadCount = 3;
+        public int maxLoadCount = 5;
+        public float loadSec = 1.0f;
     }
     
     [System.Serializable]

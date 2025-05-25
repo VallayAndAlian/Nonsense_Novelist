@@ -208,6 +208,7 @@ public class BattleObjectFactory : BattleModule
         var projData = EmitTable.Find(meta.mProjKind);
         if (projData == null)
         {
+            Debug.LogError($"can not find proj obj data, kind {meta.mProjKind}!");
             meta.OnHitTarget();
             return;
         }
@@ -215,16 +216,23 @@ public class BattleObjectFactory : BattleModule
         var projAsset = AssetManager.Load<EmitSO>("SO/Emit", projData.mAsset);
         if (projAsset == null)
         {
+            Debug.LogError($"can not load proj asset, kind {meta.mProjKind}!");
             meta.OnHitTarget();
             return;
         }
         
         var projObj = Object.Instantiate(projAsset.projObject);
-        var proj = projObj != null ? projObj.GetComponent<NnProjectile>() : null;
-        if (proj == null)
+        if (projObj == null)
         {
+            Debug.LogError($"can not create proj obj, kind {meta.mProjKind}!");
             meta.OnHitTarget();
             return;
+        }
+        
+        var proj = projObj.GetComponent<NnProjectile>();
+        if (proj == null)
+        {
+            proj = projObj.AddComponent<NnProjectile>();
         }
         
         meta.mData = projData;
