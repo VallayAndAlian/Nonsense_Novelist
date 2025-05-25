@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: "\u6728\u4E43\u4F0A"
   prefab: {fileID: 3837959891539934793, guid: f75d27366220d554897fa9c643398771, type: 3}
+  uiPrefab: {fileID: 0}
   infoShort: "\u6B7B\u4EA1\u65F6\uFF0C\u8BA9\u6240\u6709\u654C\u4EBA\u964D\u4F4E10\u9632\u5FA1"
   infoDetail: "\u6B7B\u4EA1\u65F6\uFF0C\u8BA9\u6240\u6709\u654C\u4EBA\u964D\u4F4E10\u9632\u5FA1"
-  pic: {fileID: 2800000, guid: 7b279691fb999a748950349eecdcca7a, type: 3}
-  sprite: {fileID: 21300000, guid: 7b279691fb999a748950349eecdcca7a, type: 3}
+  pic: {fileID: 2800000, guid: 6d4eaa45fa8c2574fb7393e2a89f2c8e, type: 3}
+  sprite: {fileID: 2800000, guid: 6d4eaa45fa8c2574fb7393e2a89f2c8e, type: 3}
   animatorController: {fileID: 9100000, guid: 2644ab7566fc7b34e870236d63241958, type: 2}
   roleName: "\u6B7B\u7075"
   roleInfo: "\u6B7B\u4EA1\u65F6\uFF0C\u8BA9\u6240\u6709\u654C\u4EBA\u964D\u4F4E10\u9632\u5FA1"

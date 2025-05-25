@@ -17,8 +17,8 @@ MonoBehaviour:
   uiPrefab: {fileID: 0}
   infoShort: "\u6BCF\u83B7\u5F97\u4E09\u4E2A\u540D\u8BCD\uFF0C\u63D0\u53471\u7CBE\u795E"
   infoDetail: "\u6BCF\u83B7\u5F97\u4E09\u4E2A\u540D\u8BCD\uFF0C\u63D0\u53471\u7CBE\u795E"
-  pic: {fileID: 2800000, guid: 8d11f78d6a527a743b333580e3f9ea4b, type: 3}
-  sprite: {fileID: 21300000, guid: 96b66feb908b7be469bab0743829169a, type: 3}
+  pic: {fileID: 2800000, guid: 65c15d3367963f941a131c8cf72ddf89, type: 3}
+  sprite: {fileID: 2800000, guid: 65c15d3367963f941a131c8cf72ddf89, type: 3}
   animatorController: {fileID: 9100000, guid: 2d577c2d6b54d094faad103479543560, type: 2}
   roleName: "\u8BD7\u4EBA"
   roleInfo: "\u6BCF\u83B7\u5F97\u4E09\u4E2A\u540D\u8BCD\uFF0C\u63D0\u53471\u7CBE\u795E"

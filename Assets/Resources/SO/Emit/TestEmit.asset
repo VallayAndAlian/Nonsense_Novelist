@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestEmit
   m_EditorClassIdentifier: 
   projName: "\u6D4B\u8BD5\u5B50\u5F39"
-  projObject: {fileID: 7617887590883620401, guid: bdf137f0210d54642a7472faab397ea9, type: 3}
+  projObject: {fileID: 1826051641626314554, guid: 5419c27e6add9524983302334031804d, type: 3}
   emitterFx: {fileID: 0}
   arriverFx: {fileID: 0}
