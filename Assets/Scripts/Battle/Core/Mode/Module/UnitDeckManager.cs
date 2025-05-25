@@ -7,6 +7,7 @@ public class UnitDeckManager : BattleModule
     public class UnitPoolItem
     {
         public int mKind = 0;
+        public int mLevel = 0;
         public int mUsed = 0;
     }
     
@@ -40,7 +41,8 @@ public class UnitDeckManager : BattleModule
             {
                 mMonsterPools.Add(data.mKind, new UnitPoolItem()
                 {
-                    mKind = data.mKind
+                    mKind = data.mKind,
+                    mLevel = data.mLevel,
                 });
             }
         }
@@ -93,7 +95,7 @@ public class UnitDeckManager : BattleModule
         }
     }
 
-    public List<int> ShuffleUnit(int count, BattleUnitType type = BattleUnitType.Character)
+    public List<int> ShuffleUnit(int count, BattleUnitType type = BattleUnitType.Character, int level = -1)
     {
         List<int> result = new List<int>();
 
@@ -117,7 +119,10 @@ public class UnitDeckManager : BattleModule
             {
                 foreach (var it in mMonsterPools.Values)
                 {
-                    result.Add(it.mKind);
+                    if (level == -1 || level == it.mLevel)
+                    {
+                        result.Add(it.mKind);
+                    }
                 }
 
                 break;
@@ -127,9 +132,9 @@ public class UnitDeckManager : BattleModule
         return NnMathUtils.Shuffle(result, count);
     }
 
-    public int RandomUnit(BattleUnitType type = BattleUnitType.Character)
+    public int RandomUnit(BattleUnitType type = BattleUnitType.Character, int level = -1)
     {
-        var rst = ShuffleUnit(1, type);
+        var rst = ShuffleUnit(1, type, level);
 
         return rst.Count > 0 ? rst[0] : -1;
     }
