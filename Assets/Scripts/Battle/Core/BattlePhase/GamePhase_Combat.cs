@@ -21,9 +21,9 @@ public class GamePhase_Combat : GamePhase
     {
         //生成危机
         
-        if (Battle.BattlePhase.PhaseType != BattlePhaseType.Pvp)
+        if (Battle.BattlePhase.CurrentPhaseType != BattlePhaseType.Pvp)
         {
-            Battle.Stage.SpawnUnit(Battle.UnitDeck.RandomUnit(BattleUnitType.Monster), UnitSlotType.Boss);
+            Battle.Stage.SpawnUnit(Battle.UnitDeck.RandomUnit(BattleUnitType.Monster, Battle.BattlePhase.CurrentPhase.mLevel), UnitSlotType.Boss);
         }
 
         // 切换战斗UI

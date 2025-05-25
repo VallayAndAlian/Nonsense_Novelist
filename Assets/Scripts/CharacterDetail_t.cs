@@ -65,7 +65,7 @@ public class CharacterDetail_t : MonoBehaviour
         nameText.text = asset.unitName;
         nameTrait.text = asset.roleName;
         
-        sprite.sprite = asset.sprite;
+        sprite.sprite = AssetUtils.ToSprite(asset.sprite);
 
         //panel1
         panel_state.GetComponentInChildren<Slider>().value = role.Hp / role.MaxHp;

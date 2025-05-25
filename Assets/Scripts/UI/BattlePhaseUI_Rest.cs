@@ -126,8 +126,8 @@ public class BattlePhaseUI_Rest : BattleUI
         else
         {
             candiObj = Object.Instantiate(mUnitCandiTemp, mCharaPos.GetChild(i), false);
-            candiObj.transform.Find("Mask").GetComponent<Image>().sprite = asset.sprite;
-            candiObj.transform.Find("Icon").GetComponent<Image>().sprite = asset.sprite;
+            candiObj.transform.Find("Mask").GetComponent<Image>().sprite = AssetUtils.ToSprite(asset.sprite);
+            candiObj.transform.Find("Icon").GetComponent<Image>().sprite = AssetUtils.ToSprite(asset.sprite);
         }
         
         var candi = candiObj.GetComponent<UnitCandidateOperator>();

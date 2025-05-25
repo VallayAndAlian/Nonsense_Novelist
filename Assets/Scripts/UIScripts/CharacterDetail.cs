@@ -53,7 +53,7 @@ public class CharacterDetail : MonoBehaviour
         if (asset == null)
             return;
         
-        sprite.sprite = asset.sprite;
+        sprite.sprite = AssetUtils.ToSprite(asset.pic);
 
         nameText.text = asset.unitName;
         roleName.text = asset.roleName;

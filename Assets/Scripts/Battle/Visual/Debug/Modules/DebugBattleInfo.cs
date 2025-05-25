@@ -16,7 +16,7 @@ public class DebugBattleInfo : BattleDebugModule
     {
         ImGui.BulletText($"Battle State: {context.mBattle.State.ToString()}");
         
-        ImGui.BulletText($"Battle Phase: {context.mBattle.BattlePhase.PhaseType.ToString()}");
+        ImGui.BulletText($"Battle Phase: {context.mBattle.BattlePhase.CurrentPhaseType.ToString()}");
 
         Vector3 position = Input.mousePosition;
         

@@ -25,7 +25,7 @@ public class BattleUnitSO : ScriptableObject
     public Texture2D pic;
     
     [Tooltip("场景角色")]
-    public Sprite sprite;
+    public Texture2D sprite;
 
     [Tooltip("角色动画")]
     public AnimatorController animatorController;

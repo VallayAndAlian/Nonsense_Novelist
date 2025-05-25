@@ -11,6 +11,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         public string mName;
         public bool mForbidden;
         public BookNameEnum mBook;
+        public int mLevel;
         public float mAttack;
         public float mMaxHp;
         public float mDefense;
@@ -33,6 +34,7 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mName = reader.Read<string>();
         data.mForbidden = reader.Read<bool>();
         data.mBook = (BookNameEnum)reader.Read<int>();
+        data.mLevel = reader.Read<int>();
         data.mAttack = reader.Read<float>();
         data.mMaxHp = reader.Read<float>();
         data.mDefense = reader.Read<float>();

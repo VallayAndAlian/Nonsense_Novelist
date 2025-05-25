@@ -72,7 +72,7 @@ public class UnitViewBase : MonoBehaviour
         var spriteComp = GetComponent<SpriteRenderer>();
         if (spriteComp != null)
         {
-            spriteComp.sprite = mAsset.sprite;
+            spriteComp.sprite = AssetUtils.ToSprite(mAsset.sprite);
         }
 
         var dragComp = mRoot.GetComponent<UnitOperator>();

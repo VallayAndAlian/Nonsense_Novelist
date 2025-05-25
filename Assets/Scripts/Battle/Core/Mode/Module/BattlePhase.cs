@@ -27,19 +27,20 @@ public class BattlePhase : BattleModule
 
     public int StageIndex => mStageIndex;
     
-    public bool IsCombat
+    public PhaseTable.Data CurrentPhase
     {
         get
         {
             if (mStageIndex >= 0 && mStageIndex < mPhases.Count)
             {
-                return mPhases[mStageIndex].mType != BattlePhaseType.Rest;
+                return mPhases[mStageIndex];
             }
 
-            return false;
+            return null;
         }
     }
-    public BattlePhaseType PhaseType
+    
+    public BattlePhaseType CurrentPhaseType
     {
         get
         {
@@ -47,10 +48,19 @@ public class BattlePhase : BattleModule
             {
                 return mPhases[mStageIndex].mType;
             }
-
+            
+            var phase = CurrentPhase;
+            if (phase != null)
+            {
+                return phase.mType;
+            }
+            
             return BattlePhaseType.Rest;
+            
         }
     }
+    
+    public bool IsCombat => CurrentPhaseType != BattlePhaseType.Rest;
 
     protected Dictionary<BattleCamp, List<BattleCamp>> mCampEnemies = new Dictionary<BattleCamp, List<BattleCamp>>();
     public Dictionary<BattleCamp, List<BattleCamp>> CampEnemies => mCampEnemies;
