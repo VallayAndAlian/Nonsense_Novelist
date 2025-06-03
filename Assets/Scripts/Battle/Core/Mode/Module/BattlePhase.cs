@@ -265,4 +265,14 @@ public class BattlePhase : BattleModule
             EnterNextStage();
         }
     }
+
+    public bool IsCampFight(BattleCamp camp)
+    {
+        if (CampEnemies.TryGetValue(camp, out var list))
+        {
+            return list.Contains(camp);
+        }
+
+        return false;
+    }
 }

@@ -228,7 +228,7 @@ public class BattleUnit : BattleObject
 
     public override void LateUpdate(float deltaSec)
     {
-        if (!Battle.BattlePhase.CampEnemies.ContainsKey(Camp))
+        if (!Battle.BattlePhase.IsCampFight(Camp))
             return;
         
         foreach (var comp in Components.Where(comp => comp.Enabled))

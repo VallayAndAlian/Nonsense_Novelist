@@ -276,7 +276,7 @@ public class AIController : UnitComponent
                 BindAnimFunc();
                 
                 if (mOwner.UnitView)
-                    mOwner.UnitView.ModelLayout.PlayAnimation("attack");
+                    mOwner.UnitView.ModelLayout.PlayAnimation(mAttackAbility.AnimName);
                 
                 break;
             }
