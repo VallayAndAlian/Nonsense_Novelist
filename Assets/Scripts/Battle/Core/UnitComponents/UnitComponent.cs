@@ -53,6 +53,10 @@ public class UnitComponent : CoreEntity
     public virtual void Update(float deltaTime) { }
     
     public virtual void LateUpdate(float deltaTime) { }
+
+    public virtual void OnSelfDeath(DamageReport report) { }
+    
+    public virtual void OnSelfRevive() { }
     
     public virtual void OnEnterCombatPhase() { }
     public virtual void OnExitCombatPhase() { }

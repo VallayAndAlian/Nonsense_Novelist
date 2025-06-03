@@ -8,6 +8,7 @@ public enum EventEnum
 	
 	UnitSpawn,
 	UnitDie,
+	UnitRemove,
 	UnitChangeCamp,
 	
 	ApplyEffect,

@@ -31,6 +31,9 @@ public class UnitOperator : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (!enabled)
+            return;
+        
         mOriginPos = mTarget.position;
         mOriginScale = mTarget.localScale;
         
@@ -45,12 +48,18 @@ public class UnitOperator : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (!enabled)
+            return;
+        
         Vector3 newPosition = GetMouseWorldPos() + mOffset;
         transform.position = newPosition;
     }
 
     private void OnMouseUp()
     {
+        if (!enabled)
+            return;
+        
         var targetSlot = mView.Role.Battle.Stage.FindClosestSlot(UnitSlotType.BackSeat | UnitSlotType.FrontSeat, GetMouseWorldPos(),
             1.0f, true);
         

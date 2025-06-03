@@ -16,6 +16,14 @@ public class ServantsAgent : UnitComponent
         }
     }
 
+    public override void OnSelfDeath(DamageReport report)
+    {
+        foreach (var ser in Servants)
+        {
+            ser.Die(report);
+        }
+    }
+
     public BattleUnit RegisterServants(int servantID)
     {
         var unitData = BattleUnitTable.Find(servantID);

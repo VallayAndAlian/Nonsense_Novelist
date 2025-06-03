@@ -20,9 +20,16 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
     }
     
     [System.Serializable]
+    public class UnitConfig
+    {
+        public float scale = 0.8f;
+    }
+    
+    [System.Serializable]
     public class Data
     {
         public WordConfig word;
+        public UnitConfig unit;
     }
 
     public override string AssetName => "BattleConfig";

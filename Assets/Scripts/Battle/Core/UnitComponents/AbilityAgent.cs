@@ -59,4 +59,12 @@ public class AbilityAgent : UnitComponent
             abi.Update(deltaTime);
         }
     }
+
+    public override void OnSelfDeath(DamageReport report)
+    {
+        foreach (var abi in Abilities)
+        {
+            abi.OnSelfDeath(report);
+        }
+    }
 }

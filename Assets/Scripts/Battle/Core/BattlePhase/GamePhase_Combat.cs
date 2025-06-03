@@ -59,6 +59,7 @@ public class GamePhase_Combat : GamePhase
             foreach (var unit in monsters)
             {
                 unit.Die(null);
+                unit.Remove();
             }
         }
 

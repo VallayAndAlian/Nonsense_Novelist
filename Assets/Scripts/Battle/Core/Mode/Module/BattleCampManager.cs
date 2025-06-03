@@ -16,6 +16,7 @@ public class BattleCampManager : BattleModule
     {
         EventManager.Subscribe<BattleUnit>(EventEnum.UnitSpawn, OnUnitSpawn);
         EventManager.Subscribe<BattleUnit>(EventEnum.UnitDie, OnUnitDie);
+        EventManager.Subscribe<BattleUnit>(EventEnum.UnitRemove, OnUnitRemove);
         EventManager.Subscribe<BattleUnit, BattleCamp>(EventEnum.UnitChangeCamp, OnUnitChangeCamp);
     }
 
@@ -31,6 +32,14 @@ public class BattleCampManager : BattleModule
     }
     
     public void OnUnitDie(BattleUnit unit)
+    {
+        // if (mCampUnit.TryGetValue(unit.Camp, out var list))
+        // {
+        //     list.Remove(unit);
+        // }
+    }
+    
+    public void OnUnitRemove(BattleUnit unit)
     {
         if (mCampUnit.TryGetValue(unit.Camp, out var list))
         {

@@ -9,7 +9,14 @@
         "wordBallFriction":0.02,
         "wordBallCollisionLoss":0.5,
         "wordBallChargingMaxTime":3,
-        "maxAngle":70
+        "maxAngle":70,
+        "initLoadCount":3,                      //初始加载词条数
+        "maxLoadCount":5,                       //最大加载词条数
+        "loadSec":1                             //词条加载时长
+    },
+    
+    "unit": 
+    {
+        "scale" : 0.6
     }
-
 }

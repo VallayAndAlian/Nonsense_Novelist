@@ -24,6 +24,9 @@ public class UnitViewBase : MonoBehaviour
     public Vector3 Pos => mRoot.transform.position;
     public Vector3 CenterPos => Pos;//todo: replace it with a real center pos
 
+    protected bool mFirstInitScale = true;
+    protected Vector3 mOriLocalScale;
+
     public class EffectFxCache
     {
         public EffectType mType;
@@ -36,6 +39,10 @@ public class UnitViewBase : MonoBehaviour
     public bool IsCompatibleType(BattleUnit role)
     {
         return true;
+    }
+
+    public void Start()
+    {
     }
 
     public void Setup(BattleUnit role, BattleUnitSO asset)
@@ -108,6 +115,13 @@ public class UnitViewBase : MonoBehaviour
         }
 
         mRoot.SetParent(mRole.Slot.transform);
+
+        if (mFirstInitScale)
+        {
+            mOriLocalScale = mRoot.localScale;
+            mFirstInitScale = false;
+        }
+        
         mRoot.localScale = CalcLocalScale();
         mRoot.localPosition = CalcLocalPosition();
 
@@ -120,10 +134,24 @@ public class UnitViewBase : MonoBehaviour
         {
             spriteComp.enabled = false;
         }
-
-        GameObject o;
-        (o = mRoot.gameObject).SetActive(false);
-        Destroy(o, 1.0f);
+        
+        mRoot.gameObject.SetActive(false);
+    }
+    
+    public void OnUnitRevive()
+    {
+        var spriteComp = GetComponent<SpriteRenderer>();
+        if (spriteComp != null)
+        {
+            spriteComp.enabled = true;
+        }
+        
+        mRoot.gameObject.SetActive(true);
+    }
+    
+    public void OnUnitRemove()
+    {
+        Destroy(mRoot.gameObject, 0.1f);
     }
 
     public void OnApplyEffect(BattleEffect be)
@@ -205,6 +233,23 @@ public class UnitViewBase : MonoBehaviour
         }
     }
 
+    public void OnEnterCombatPhase()
+    {
+        var dragComp = mRoot.GetComponent<UnitOperator>();
+        if (dragComp != null)
+        {
+            dragComp.enabled = false;
+        }
+    }
+    
+    public void OnExitCombatPhase()
+    {
+        var dragComp = mRoot.GetComponent<UnitOperator>();
+        if (dragComp != null)
+        {
+            dragComp.enabled = true;
+        }
+    }
 
     public Vector3 CalcLocalPosition()
     {
@@ -223,7 +268,7 @@ public class UnitViewBase : MonoBehaviour
 
     public Vector3 CalcLocalScale()
     {
-        var tempScale = mRoot.localScale;
+        var tempScale = mOriLocalScale * BattleConfig.mData.unit.scale;
         switch (mRole.Data.mInitType)
         {
             case BattleUnitType.Character:

@@ -135,9 +135,8 @@ public class EffectAgent : UnitComponent
         return mergedBe;
     }
 
-    public override void OnExitCombatPhase()
+    public void ClearEffects()
     {
-        // 清除buff
         foreach (var effect in mEffects)
         {
             mOwner.UnitView.OnRemoveEffect(effect);
@@ -230,5 +229,16 @@ public class EffectAgent : UnitComponent
         
             mRemovedEffect.Clear();
         }
+    }
+    
+    public override void OnSelfDeath(DamageReport report)
+    {
+        ClearEffects();
+    }
+
+    public override void OnExitCombatPhase()
+    {
+        // 清除buff
+        ClearEffects();
     }
 }

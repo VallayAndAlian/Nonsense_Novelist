@@ -10,6 +10,8 @@ public class BattleUnit : BattleObject
     protected bool mStart = false;
     public bool IsStart => mStart;
     
+    protected bool mRemoved = false;
+    
     public BattleUnit ServantOwner { get; set; }
 
     protected float mHp = 0;
@@ -248,16 +250,29 @@ public class BattleUnit : BattleObject
         {
             comp.OnEnterCombatPhase();
         }
+
+        if (UnitView)
+            UnitView.OnEnterCombatPhase();
     }
     
     public override void OnExitCombatPhase()
     {
-        mHp = MaxHp;
+        if (IsAlive)
+        {
+            mHp = MaxHp;
+        }
+        else
+        {
+            Revive();
+        }
         
         foreach (var comp in Components)
         {
             comp.OnExitCombatPhase();
         }
+        
+        if (UnitView)
+            UnitView.OnExitCombatPhase();
     }
 
     public override void OnEnterRestPhase()
@@ -462,35 +477,68 @@ public class BattleUnit : BattleObject
 
         mHp = 0f;
         mAlive = false;
-
-        foreach (var abi in AbilityAgent.Abilities)
+        
+        foreach (var comp in Components)
         {
-            abi.OnSelfDeath(report);
+            comp.OnSelfDeath(report);
         }
-
-        if (ServantsAgent != null)
-        {
-            foreach (var ser in ServantsAgent.Servants)
-            {
-                ser.Die(report);
-            }
-        }
-
-        if (mSlot)
-            mSlot.Remove();
         
         EventManager.Invoke(EventEnum.UnitDie, this);
 
         if (UnitView)
         {
             UnitView.OnUnitDie();
+        }
+        
+        Battle.BattleUI.Hide(mInfoUI);
+
+        if (Data.mInitType != BattleUnitType.Character)
+        {
+            Remove();
+        }
+    }
+
+    public void Revive()
+    {
+        if (mAlive)
+            return;
+        
+        mAlive = true;
+
+        mHp = MaxHp;
+
+        foreach (var comp in Components)
+        {
+            comp.OnSelfRevive();
+        }
+        
+        if (UnitView)
+        {
+            UnitView.OnUnitRevive();
+        }
+        
+        Battle.BattleUI.ShowPanel(mInfoUI);
+    }
+
+    public void Remove()
+    {
+        if (mRemoved)
+            return;
+
+        mRemoved = true;
+        
+        if (mSlot)
+            mSlot.Remove();
+        
+        EventManager.Invoke(EventEnum.UnitRemove, this);
+        
+        if (UnitView)
+        {
+            UnitView.OnUnitRemove();
             UnitView = null;
         }
         
         Battle.ObjectManager.RemoveObject(this);
-
-        Battle.BattleUI.Hide(mInfoUI);
-        
     }
 
     #endregion
