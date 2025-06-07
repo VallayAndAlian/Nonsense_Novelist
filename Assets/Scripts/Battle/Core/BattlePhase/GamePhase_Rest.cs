@@ -50,7 +50,10 @@ public class GamePhase_Rest : GamePhase
         return false;
 
     }
-
+    public override bool DetectPvbIsEnd()
+    {
+        return false;
+    }
     public override void Exit()
     {
         Battle.OnExitRestPhase();

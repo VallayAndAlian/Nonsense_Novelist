@@ -18,18 +18,25 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
         public int maxLoadCount = 5;
         public float loadSec = 1.0f;
     }
-    
+
     [System.Serializable]
     public class UnitConfig
     {
         public float scale = 0.8f;
     }
-    
+
+    [System.Serializable]
+    public class CampConfig
+    {
+        public float initCampHp = 100;
+    }
+
     [System.Serializable]
     public class Data
     {
         public WordConfig word;
         public UnitConfig unit;
+        public CampConfig camp;
     }
 
     public override string AssetName => "BattleConfig";

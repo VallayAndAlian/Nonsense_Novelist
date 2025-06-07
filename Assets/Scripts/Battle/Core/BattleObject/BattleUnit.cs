@@ -414,6 +414,8 @@ public class BattleUnit : BattleObject
         {
             abi.OnPostTakeDamage(report);
         }
+        
+        EventManager.Invoke(EventEnum.UnitTakeDamage, this);
     }
 
     public void AllyDealDamage(DamageReport report)
@@ -539,6 +541,13 @@ public class BattleUnit : BattleObject
         }
         
         Battle.ObjectManager.RemoveObject(this);
+    }
+    public void LossHp(DamageReport report)
+    {
+        if(!mAlive) return;
+
+        EventManager.Invoke(EventEnum.UnitTakeDamage, this);
+        
     }
 
     #endregion

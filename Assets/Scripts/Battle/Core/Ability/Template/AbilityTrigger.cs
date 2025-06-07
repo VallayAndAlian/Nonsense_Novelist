@@ -120,6 +120,9 @@ public class AbilityTrigger : AbilityModule
             case Type.AccDamageThreshold:
                 trigger = new AMTAccDamageThreshold();
                 break;
+            case Type.AccStealNounTreshold:
+                trigger = new AMTAAccStealNounTreshold();
+                break;
             default:
                 break;
         }
@@ -671,4 +674,22 @@ public class AMTAccDamageThreshold : AbilityTrigger
             }
         }
     } 
+}
+public class AMTAAccStealNounTreshold : AbilityTrigger
+{
+    protected Formula mAccNounThreshold = new Formula("noun_treshold");
+    protected int mCurrentAccNoun = 0;
+    protected int mInitNoun = 0;
+    public override void AddParams()
+    {
+        mParams.Add(mAccNounThreshold);
+    }
+    public override void OnInit()
+    {
+        mInitNoun = mOwner.Unit.WordComponent.GetWordsByType(WordType.Noun).Count;
+    }
+    public override void Update(float deltaTime)
+    {
+       
+    }
 }

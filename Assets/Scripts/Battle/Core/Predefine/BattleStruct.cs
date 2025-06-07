@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 public struct UnitInstance
 {
@@ -125,4 +126,13 @@ public class EmitMeta
     {
         mHitCallBack?.Invoke(mTarget);
     }
+}
+
+public class CombatReport
+{
+    public BattlePhaseType mPhaseType;
+    public int mChapter;//关卡
+    public bool mIsHasWinner;
+    public List<BattleCamp> mWinCamp;
+    public int mActiveNum;
 }

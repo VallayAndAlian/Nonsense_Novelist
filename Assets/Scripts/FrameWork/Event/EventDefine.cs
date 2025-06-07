@@ -10,7 +10,8 @@ public enum EventEnum
 	UnitDie,
 	UnitRemove,
 	UnitChangeCamp,
-	
+	UnitTakeDamage,
+	ChangeCampHp,
 	ApplyEffect,
 	RemoveEffect,
 }
