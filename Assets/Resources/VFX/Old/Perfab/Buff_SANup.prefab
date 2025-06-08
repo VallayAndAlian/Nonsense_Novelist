@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5993121859640904478}
   - component: {fileID: 5993121859640904472}
   - component: {fileID: 5993121859640904473}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4899,7 +4899,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5993121859969497795}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Buff_SANup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4933,7 +4933,7 @@ GameObject:
   - component: {fileID: 5993121861347269922}
   - component: {fileID: 5993121861347269932}
   - component: {fileID: 5993121861347269933}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: dot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9821,7 +9821,7 @@ GameObject:
   - component: {fileID: 3638121472075776571}
   - component: {fileID: 5903101381598326925}
   - component: {fileID: 8310941639242851756}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

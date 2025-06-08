@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 464840}
   - component: {fileID: 19844120}
   - component: {fileID: 19944218}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SmokeExplosionDark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4756,7 +4756,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4798,7 +4798,7 @@ GameObject:
   - component: {fileID: 460152}
   - component: {fileID: 19820734}
   - component: {fileID: 19915054}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Droplets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9605,7 +9605,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0

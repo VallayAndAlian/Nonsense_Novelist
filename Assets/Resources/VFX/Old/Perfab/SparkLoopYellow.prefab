@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 452338}
   - component: {fileID: 19862984}
   - component: {fileID: 19989360}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SparkImpactGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4809,7 +4809,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4851,7 +4851,7 @@ GameObject:
   - component: {fileID: 444998}
   - component: {fileID: 19804860}
   - component: {fileID: 19912830}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SparkGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9649,7 +9649,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -9691,7 +9691,7 @@ GameObject:
   - component: {fileID: 476132}
   - component: {fileID: 19852676}
   - component: {fileID: 19901100}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SparkLoopYellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14445,7 +14445,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -14487,7 +14487,7 @@ GameObject:
   - component: {fileID: 441506}
   - component: {fileID: 19897956}
   - component: {fileID: 19953042}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: StartGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14759,7 +14759,7 @@ ParticleSystem:
         m_RotationOrder: 0
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -14812,7 +14812,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -14865,7 +14865,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -14918,7 +14918,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -19191,7 +19191,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -19233,7 +19233,7 @@ GameObject:
   - component: {fileID: 414332}
   - component: {fileID: 19818996}
   - component: {fileID: 19907570}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SubSpark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24031,7 +24031,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
