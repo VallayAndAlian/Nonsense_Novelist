@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7557573753778312428}
   - component: {fileID: 6097025354251027460}
   - component: {fileID: 7593424996706969840}
+  - component: {fileID: 3705718813959203752}
   m_Layer: 3
   m_Name: Pawn
   m_TagString: character
@@ -216,6 +217,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db76e975cb04000b0073d120f3da3d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3705718813959203752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723217449379156723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21f6b27563942164a8277042d5c6857d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashDuration: 0.2
+  flashColor: {r: 0.81886786, g: 0.17767876, b: 0.17767876, a: 1}
 --- !u!1 &2437689646154250782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,6 +1020,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HumanTeXIao
       objectReference: {fileID: 0}
+    - target: {fileID: 6051212354406734210, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1048,6 +1067,10 @@ PrefabInstance:
     - target: {fileID: 6051212354406734211, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6051212354406734237, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 512bfb6a1cadbdb4891a2704d6878f23, type: 3}

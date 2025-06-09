@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 442120}
   - component: {fileID: 19852656}
   - component: {fileID: 19965760}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LightningOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 137932}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 470246}
   - {fileID: 482028}
@@ -4753,7 +4753,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4795,7 +4795,7 @@ GameObject:
   - component: {fileID: 470246}
   - component: {fileID: 19895658}
   - component: {fileID: 19966662}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: LongLightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9535,7 +9535,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -9577,7 +9577,7 @@ GameObject:
   - component: {fileID: 482028}
   - component: {fileID: 19885332}
   - component: {fileID: 19948006}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14335,7 +14335,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

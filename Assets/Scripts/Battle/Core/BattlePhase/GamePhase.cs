@@ -37,5 +37,6 @@ public abstract class GamePhase
 
     // 检测阶段是否结束
     public abstract bool DetectPhaseEnd();
+    public abstract bool DetectPvbIsEnd();
 
 }

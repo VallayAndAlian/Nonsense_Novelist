@@ -10,7 +10,8 @@ public enum BattlePhaseType
     Lve = 1, //左对抗怪物
     Rve = 2, //右对抗怪物
     Pve = 3, //左右一起对抗怪物
-    Pvp = 4 //左右互博
+    Pvp = 4, //左右互博
+    Pvb = 5  //左右一起打最终Boss
 }
 
 public class BattlePhase : BattleModule
@@ -23,7 +24,8 @@ public class BattlePhase : BattleModule
     protected GameObject restUIObj;
     protected BattlePhaseUI_Battle battleUI;
     protected GameObject battleUIObj;
-    
+    protected BattleCampUI_Left CampLeftHpUI;
+    protected BattleCampUI_Right CampRightHpUI;
 
     public int StageIndex => mStageIndex;
     
@@ -86,6 +88,7 @@ public class BattlePhase : BattleModule
     public override void Begin()
     {
         InitPhaseUI();
+        InitCampHpUI();
     }
 
     public override void PostBegin()
@@ -111,6 +114,21 @@ public class BattlePhase : BattleModule
         Battle.BattleUI.Hide(restUI);
     }
 
+    protected void InitCampHpUI()
+    {
+        if (CampLeftHpUI == null)
+        {
+            CampLeftHpUI = Battle.BattleUI.Add(new BattleCampUI_Left());
+            CampLeftHpUI.Battle = Battle;
+            Battle.BattleUI.ShowPanel(CampLeftHpUI);
+        }
+        if (CampRightHpUI == null)
+        {
+            CampRightHpUI = Battle.BattleUI.Add(new BattleCampUI_Right());
+            CampRightHpUI.Battle = Battle;
+            Battle.BattleUI.ShowPanel(CampRightHpUI);
+        }
+    }
     public void ActivePhaseUI(BattlePhaseType type)
     {
         Battle.BattleUI.Hide(battleUI);
@@ -252,6 +270,18 @@ public class BattlePhase : BattleModule
             if (!mCurrentPhase.DetectPhaseEnd())
             {
                 mCurrentPhase.Update(deltaSec);
+            }
+            else if (CurrentPhaseType == BattlePhaseType.Pvb)
+            {
+                if (mCurrentPhase.DetectPvbIsEnd())
+                {
+                    Battle.EndBattle(BattleCamp.None);
+                    return;
+                }
+                else
+                {
+                    mCurrentPhase.Update(deltaSec);
+                }
             }
             else
             {

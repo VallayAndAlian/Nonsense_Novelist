@@ -18,10 +18,10 @@ public class BattlePhaseUI_End : BattleUI
     {
         base.Init();
         okBtn = UIPanel.transform.Find("Panel/Okbutton").GetComponent<Button>();
-        okBtn.onClick.AddListener(OnClickStartButton);
+        okBtn.onClick.AddListener(OnClickOkButton);
     }
 
-    public void OnClickStartButton()
+    public void OnClickOkButton()
     {
         okBtn.transform.parent.parent.gameObject.SetActive(false);
     }

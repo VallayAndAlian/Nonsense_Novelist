@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 402228}
   - component: {fileID: 19839762}
   - component: {fileID: 19978276}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Tinysparkles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4796,7 +4796,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -4838,7 +4838,7 @@ GameObject:
   - component: {fileID: 482002}
   - component: {fileID: 19836462}
   - component: {fileID: 19985258}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Buff_KongLing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9588,7 +9588,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0

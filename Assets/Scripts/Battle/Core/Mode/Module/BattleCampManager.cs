@@ -1,15 +1,19 @@
 ﻿
 using System.Collections.Generic;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class BattleCampManager : BattleModule
 {
     protected Dictionary<BattleCamp, List<BattleUnit>> mCampUnit = new Dictionary<BattleCamp, List<BattleUnit>>();
-
+    protected Dictionary<BattleCamp ,float > mCampHp= new Dictionary<BattleCamp ,float >();
+    protected float mInitCampHp=>BattleConfig.mData.camp.initCampHp;
     public override void Init()
     {
         mCampUnit.Add(BattleCamp.Camp1, new List<BattleUnit>());
         mCampUnit.Add(BattleCamp.Camp2, new List<BattleUnit>());
         mCampUnit.Add(BattleCamp.Boss, new List<BattleUnit>());
+        mCampHp.Add(BattleCamp.Camp1, mInitCampHp);
+        mCampHp.Add(BattleCamp.Camp2, mInitCampHp);
     }
 
     public override void Begin()
@@ -99,5 +103,18 @@ public class BattleCampManager : BattleModule
         }
 
         return enemies;
+    }
+
+    public void UpdateCampHp(BattleCamp camp, float hp)
+    {
+        mCampHp[camp] -= hp;
+        if (mCampHp[camp] > 0)
+        {
+            EventManager.Invoke(EventEnum.ChangeCampHp, camp, mCampHp[camp] / mInitCampHp);
+        }
+        else
+        {
+            EventManager.Invoke(EventEnum.BattleEnd, camp);//失败阵营
+        }
     }
 }
