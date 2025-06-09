@@ -484,8 +484,8 @@ public class BattleUnit : BattleObject
         {
             comp.OnSelfDeath(report);
         }
-        
         EventManager.Invoke(EventEnum.UnitDie, this);
+        EventManager.Invoke(EventEnum.UnitDie, this,report);
 
         if (UnitView)
         {

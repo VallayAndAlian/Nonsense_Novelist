@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UnitViewBase : MonoBehaviour
 {
@@ -161,7 +162,8 @@ public class UnitViewBase : MonoBehaviour
             return;
 
         var fxData = effectAsset.GetFxList(be.mType);
-        if (fxData == null || fxData.mFxList.Count > 0)
+        //if (fxData == null || fxData.mFxList.Count > 0)
+        if (fxData == null || fxData.mFxList.Count ==0)
             return;
         
         bool bHasScriptFx = false;

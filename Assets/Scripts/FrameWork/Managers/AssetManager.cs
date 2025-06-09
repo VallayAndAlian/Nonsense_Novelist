@@ -46,9 +46,9 @@ public class AssetManager
     {
         if (mEffectSO == null)
         {
-            mEffectSO = Load<BattleEffectSO>("SO/Effect", "EffectSO");
+            mEffectSO = Load<BattleEffectSO>("SO/EffectFxSO");
         }
-            
+
         return mEffectSO;
     }
     

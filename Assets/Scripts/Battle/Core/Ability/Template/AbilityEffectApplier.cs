@@ -173,6 +173,7 @@ public class AMEATest : AbilityEffectApplier
 
 public class AMEAAttrMod : AbilityEffectApplier
 {
+    protected override bool DelayApply => false;
     protected Formula mAttrType = new Formula("attr_type");
     protected Formula mValue = new Formula("value");
     protected Formula mModifyPercent = new Formula("is_percent");

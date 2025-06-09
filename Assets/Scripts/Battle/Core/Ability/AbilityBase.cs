@@ -65,6 +65,7 @@ public class AbilityBase : CoreEntity
     public void Init()
     {
         OnInit();
+        EventManager.Subscribe<BattleUnit, DamageReport>(EventEnum.UnitDie, OnPawnDeath);
     }
 
     protected virtual void OnInit() { }
