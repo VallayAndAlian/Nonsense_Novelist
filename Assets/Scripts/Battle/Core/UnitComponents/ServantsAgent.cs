@@ -24,21 +24,21 @@ public class ServantsAgent : UnitComponent
         }
     }
 
-    public BattleUnit RegisterServants(int servantID)
+    public BattleUnit RegisterServants(int servantKind)
     {
-        var unitData = BattleUnitTable.Find(servantID);
+        var unitData = BattleUnitTable.Find(servantKind);
         if (unitData == null)
             return null;
 
         if (unitData.mInitType != BattleUnitType.Servant)
         {
-            Debug.LogError($"单位[{mOwner.UnitInstance.mKind}]的随从单位[{servantID}]不是随从类型!");
+            Debug.LogError($"单位[{mOwner.UnitInstance.mKind}]的随从单位[{servantKind}]不是随从类型!");
             return null;
         }
         
         UnitInstance servantInstance = new UnitInstance()
         {
-            mKind = servantID,
+            mKind = servantKind,
             mCamp = mOwner.Camp
         };
         

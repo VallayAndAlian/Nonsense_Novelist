@@ -293,9 +293,11 @@ public class AMEAAttrDamage : AbilityEffectApplier
 }
 public class AMEAReincarnation : AbilityEffectApplier
 {
+    protected override bool DelayApply => false;
+
     public override void Apply(BattleUnit target, object triggerData)
     {
-        target.ServantOwner.ServantsAgent.RegisterServants(target.ID);
+        target.ServantOwner.ServantsAgent.RegisterServants(target.Data.mKind);
         target.ModifyBase(AttributeType.MaxHp, -0.7f, true);
     }
 }
