@@ -37,7 +37,7 @@ public class NnProjectile : MonoBehaviour
             projRoot = new GameObject("ProjectileRoot");
         }
 
-        transform.parent = projRoot.transform;
+        transform.SetParent(projRoot.transform);
     }
     
     public void Emit()
