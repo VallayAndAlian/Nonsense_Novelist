@@ -3,38 +3,93 @@ using UnityEngine;
 
 public class CardDeckManager : BattleModule
 {
-    private WordTable.Data currentCard;
-    private Queue<WordTable.Data> previewCards = new Queue<WordTable.Data>();
+    
+    
+    protected WordTable.Data mCurrentCard = null;
+    protected Queue<WordTable.Data> mPreviewCards = new Queue<WordTable.Data>();
 
     protected bool mHasShuffleDeck = false;
+    
+    public class LoadSlot
+    {
+        public int mIndex = 0;
+        public float mLoadTimer = 0; 
+        public WordTable.Data mWord = null;
+    }
+
+    protected List<LoadSlot> mLoadSlots = new List<LoadSlot>();
+    public List<LoadSlot> LoadSlots => mLoadSlots;
 
     // 未抽取的牌库
-    private List<WordTable.Data> deck = new List<WordTable.Data>();
+    protected List<WordTable.Data> mDeck = new List<WordTable.Data>();
 
     // 弃牌堆
-    private List<WordTable.Data> discardPile = new List<WordTable.Data>();
-    public int maxPreviewCount = 2;
+    protected List<WordTable.Data> mDiscardPile = new List<WordTable.Data>();
+
+    protected int mNextSlot = 0;
+    
+    protected int mMaxPreviewCount = 0;
+
+    public int MaxPreviewCount
+    {
+        get => mMaxPreviewCount;
+
+        set
+        {
+            mMaxPreviewCount = value;
+            if (mMaxPreviewCount >= mLoadSlots.Count)
+            {
+                for (int i = mLoadSlots.Count; i < mMaxPreviewCount; ++i)
+                {
+                    mLoadSlots.Add(new LoadSlot()
+                    {
+                        mLoadTimer = BattleConfig.mData.word.loadSec,
+                        mWord = !mHasShuffleDeck ? LoadWord() : null,
+                    });
+                }
+            }
+            else
+            {
+                for (int i = mLoadSlots.Count - 1; i >= mMaxPreviewCount; --i)
+                {
+                    mLoadSlots.RemoveAt(i);
+                }
+            }
+        }
+    }
 
     public override void Init()
     {
-        base.Init();
-
         AddInitCardDeck();
     }
 
     public override void Update(float deltaSec)
     {
-        base.Update(deltaSec);
+        if (!Battle.BattlePhase.IsCombat)
+            return;
+        
+        foreach (var slot in mLoadSlots)
+        {
+            if (slot.mWord != null)
+                continue;
+
+            slot.mLoadTimer -= deltaSec;
+            if (slot.mLoadTimer <= 0)
+            {
+                slot.mLoadTimer = BattleConfig.mData.word.loadSec;
+                slot.mWord = LoadWord();
+            }
+        }
     }
 
     public override void OnEnterCombatPhase()
     {
         if (!mHasShuffleDeck)
         {
-            mHasShuffleDeck = true;
-            
             ShuffleDeck();
-            DrawCurrentAndPreviewCards();
+
+            MaxPreviewCount = 2;
+            mHasShuffleDeck = true;
         }
     }
 
@@ -42,10 +97,10 @@ public class CardDeckManager : BattleModule
     {
         base.OnDisposed();
 
-        currentCard = null;
-        previewCards.Clear();
-        deck.Clear();
-        discardPile.Clear();
+        mCurrentCard = null;
+        mPreviewCards.Clear();
+        mDeck.Clear();
+        mDiscardPile.Clear();
     }
     
 
@@ -68,59 +123,72 @@ public class CardDeckManager : BattleModule
     /// </summary>
     private void ShuffleDeck()
     {
-        for (int i = 0; i < deck.Count; i++)
+        for (int i = 0; i < mDeck.Count; i++)
         {
-            int randomIndex = Random.Range(0, deck.Count);
-            (deck[i], deck[randomIndex]) = (deck[randomIndex], deck[i]);
+            int randomIndex = Random.Range(0, mDeck.Count);
+            (mDeck[i], mDeck[randomIndex]) = (mDeck[randomIndex], mDeck[i]);
         }
+    }
+
+    private WordTable.Data LoadWord()
+    {
+        if (mDeck.Count == 0)
+        {
+            RefillDeckFromDiscardPile();
+        }
+
+        var word = mDeck[^1];
+        mDeck.RemoveAt(mDeck.Count - 1);
+        
+        return word;
     }
 
     private void DrawCurrentAndPreviewCards()
     {
-        if (currentCard == null)
+        if (mCurrentCard == null)
         {
             DrawCurrentCard();
         }
 
-        while (previewCards.Count < maxPreviewCount)
+        while (mPreviewCards.Count < mMaxPreviewCount)
         {
-            if (deck.Count == 0)
+            if (mDeck.Count == 0)
             {
                 RefillDeckFromDiscardPile();
             }
 
-            previewCards.Enqueue(deck[0]);
-            deck.RemoveAt(0);
+            mPreviewCards.Enqueue(mDeck[0]);
+            mDeck.RemoveAt(0);
         }
     }
 
     /// <summary>
     /// 抽取当前卡牌
     /// </summary>
-    private void DrawCurrentCard()
+    protected void DrawCurrentCard()
     {
-        if (previewCards.Count > 0)
+        if (mPreviewCards.Count > 0)
         {
-            currentCard = previewCards.Dequeue();
+            mCurrentCard = mPreviewCards.Dequeue();
         }
         else
         {
-            if (deck.Count == 0)
+            if (mDeck.Count == 0)
             {
                 RefillDeckFromDiscardPile();
             }
 
-            if (deck.Count > 0)
+            if (mDeck.Count > 0)
             {
-                currentCard = deck[0];
-                deck.RemoveAt(0);
+                mCurrentCard = mDeck[0];
+                mDeck.RemoveAt(0);
             }
         }
         
         var infoCard = GameObject.Find("WordInformation");
         if (infoCard != null)
         {
-            infoCard.GetComponent<WordInformation>().ChangeInformation(currentCard);
+            infoCard.GetComponent<WordInformation>().ChangeInformation(mCurrentCard);
         }
     }
 
@@ -129,14 +197,14 @@ public class CardDeckManager : BattleModule
     /// </summary>
     public void UseCurrentCard()
     {
-        if (currentCard == null)
+        if (mCurrentCard == null)
         {
             Debug.Log("currentCard == null");
             return;
         }
 
-        discardPile.Add(currentCard);
-        currentCard = null;
+        mDiscardPile.Add(mCurrentCard);
+        mCurrentCard = null;
         DrawCurrentAndPreviewCards();
     }
 
@@ -145,14 +213,14 @@ public class CardDeckManager : BattleModule
     /// </summary>
     private void RefillDeckFromDiscardPile()
     {
-        if (discardPile.Count == 0)
+        if (mDiscardPile.Count == 0)
         {
-            Debug.Log("discardPile.Count == 0");
+            Debug.LogError("discardPile.Count == 0");
             return;
         }
 
-        deck.AddRange(discardPile);
-        discardPile.Clear();
+        mDeck.AddRange(mDiscardPile);
+        mDiscardPile.Clear();
         ShuffleDeck();
     }
 
@@ -163,7 +231,7 @@ public class CardDeckManager : BattleModule
     {
         if (cardData is { mForbidden: false })
         {
-            deck.Add(cardData);
+            mDeck.Add(cardData);
         }
     }
 
@@ -172,11 +240,11 @@ public class CardDeckManager : BattleModule
     /// </summary>
     public void RemoveCardFromGame(WordTable.Data cardData)
     {
-        deck.Remove(cardData);
-        discardPile.Remove(cardData);
+        mDeck.Remove(cardData);
+        mDiscardPile.Remove(cardData);
 
         // 如果当前卡牌被移除，立即更新当前卡牌
-        if (currentCard == cardData)
+        if (mCurrentCard == cardData)
         {
             UseCurrentCard();
         }
@@ -184,16 +252,16 @@ public class CardDeckManager : BattleModule
 
     public WordTable.Data GetCurrentCard()
     {
-        if (currentCard == null)
+        if (mCurrentCard == null)
         {
             Debug.Log("currentCard == null");
         }
 
-        return currentCard;
+        return mCurrentCard;
     }
 
     public Queue<WordTable.Data> GetPreviewCards()
     {
-        return new Queue<WordTable.Data>(previewCards);
+        return new Queue<WordTable.Data>(mPreviewCards);
     }
 }

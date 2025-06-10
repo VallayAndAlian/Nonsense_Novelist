@@ -300,7 +300,7 @@ public class BattlePhase : BattleModule
     {
         if (CampEnemies.TryGetValue(camp, out var list))
         {
-            return list.Contains(camp);
+            return list.Count > 0;
         }
 
         return false;

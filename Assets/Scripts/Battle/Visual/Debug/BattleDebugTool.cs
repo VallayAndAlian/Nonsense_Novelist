@@ -81,10 +81,12 @@ public class BattleDebugTool : ImGuiObjBase
             mImGuiObj = obj,
             mPickedUnit = UpdatePickedUnit(),
         };
+        
         if(mPickedUnit != null)
         {
             DrawUtils.DrawRotatedSquare(mPickedUnit.ViewPos,2, Time.time * 45,Color.red);
         }
+        
         foreach (var module in mModules)
         {
             ImGui.PushID(module.ModuleImGuiID);
@@ -118,7 +120,9 @@ public class BattleDebugTool : ImGuiObjBase
 
     public BattleUnit UpdatePickedUnit()
     {
-        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(1))
+        ImGui.Text("Alt + 鼠标4号键挑选单位");
+        
+        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(5))
         {
             mPickedUnit = BVHelper.GetUnitAtPosition(ClientUtils.GetMouseWorldPosition());
         }
