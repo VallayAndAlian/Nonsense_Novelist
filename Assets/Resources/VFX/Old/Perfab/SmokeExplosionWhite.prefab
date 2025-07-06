@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 443696}
   - component: {fileID: 19855650}
   - component: {fileID: 19948540}
-  - component: {fileID: 5764973063092342984}
   m_Layer: 4
   m_Name: SmokeExplosionWhite
   m_TagString: Untagged
@@ -4788,19 +4787,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5764973063092342984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 153256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85a12d5dd2cc86f4a9a5c554a5da322a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delay: 2
 --- !u!1 &160968
 GameObject:
   m_ObjectHideFlags: 0
