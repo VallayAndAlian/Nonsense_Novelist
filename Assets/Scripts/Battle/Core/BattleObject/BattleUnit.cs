@@ -463,7 +463,7 @@ public class BattleUnit : BattleObject
             number = Mathf.Min(damageValue, max);
 
             mHp -= number;
-            if (mHp < 0.99f)
+            if (mHp < 0.99f && Battle.Mode != BattleMode.TestShoot)
             {
                 kill = true;
             }

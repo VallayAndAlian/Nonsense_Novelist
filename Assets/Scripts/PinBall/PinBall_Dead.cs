@@ -1,9 +1,5 @@
 public class PinBall_Dead : PinBall
 {
-    public PinBall_Dead(WordTable.Data data)
-    {
-        mBall.wordData=data;
-    }
     public override void Update(float deltaSec)
     {
         base.Update(deltaSec);
@@ -16,8 +12,6 @@ public class PinBall_Dead : PinBall
 
     private void TriggerDeadEffect()
     {
-        
-      
     }
 
     private bool IsDead()

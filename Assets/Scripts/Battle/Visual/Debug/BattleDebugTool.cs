@@ -28,6 +28,7 @@ public class BattleDebugTool : ImGuiObjBase
         mModuleRoot.transform.SetParent(transform);
         
         RegisterModule<DebugBattleInfo>();
+        RegisterModule<DebugPinball>();
         RegisterModule<DebugSpawnUnit>();
         RegisterModule<DebugUnitInspector>();
         RegisterModule<DebugAbility>();
@@ -64,6 +65,15 @@ public class BattleDebugTool : ImGuiObjBase
         {
             mStartBattle = true;
             mBattle = BattleRunner.Battle;
+            mBattle.Mode = BattleMode.Normal;
+            mRunner.StartBattle();
+        }
+        
+        if (ImGui.Button("TestShoot"))
+        {
+            mStartBattle = true;
+            mBattle = BattleRunner.Battle;
+            mBattle.Mode = BattleMode.TestShoot;
             mRunner.StartBattle();
         }
         

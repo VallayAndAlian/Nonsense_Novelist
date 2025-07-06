@@ -1,12 +1,10 @@
 using UnityEngine;
+
 public class PinBall_ReTrigger : PinBall
 {
     private float retriggerDuration = 5f;
     private float retriggerEndTime;
-    public PinBall_ReTrigger(WordTable.Data data)
-    {
-        mBall.wordData=data;
-    }
+
     protected override void OnCollision()
     {
         retriggerEndTime = Time.time + retriggerDuration;

@@ -4,10 +4,7 @@ public class PinBall_Split : PinBall
 {
     public static int SplitCount = 3;
     public static float SplitAngleOffset = 15f;
-   public PinBall_Split(WordTable.Data data)
-    {
-        mBall.wordData=data;
-    }
+    
     protected override void OnCollision()
     {
         SplitBall();
@@ -18,7 +15,7 @@ public class PinBall_Split : PinBall
         if (SplitCount < 2) return;
 
         float totalOffset = 0;
-        float baseAngle = Mathf.Atan2(mBall.velocity.y, mBall.velocity.x) * Mathf.Rad2Deg;
+        float baseAngle = Mathf.Atan2(mBall.mVelocity.y, mBall.mVelocity.x) * Mathf.Rad2Deg;
 
         for (int i = 0; i < SplitCount; i++)
         {

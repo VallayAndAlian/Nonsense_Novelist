@@ -1,19 +1,18 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 
 public enum BattleObjectType
 {
-    none=0,
-    BattleUnit=1,
-    PinBall=2,
-    Wall=3,
-
+    none = 0,
+    BattleUnit = 1,
+    PinBall = 2,
+    Wall = 3,
 }
+
 public enum BattleUnitType
 {
-    Character = 0,  
-    Servant = 1, 
+    Character = 0,
+    Servant = 1,
     Monster = 2,
 }
 
@@ -24,117 +23,98 @@ public class BattleObjectFactory : BattleModule
         {
             { BattleObjectType.BattleUnit, typeof(BattleUnit) },
             { BattleObjectType.PinBall, typeof(PinBall) },
-            {BattleObjectType.Wall, typeof(WallObject) },
+            { BattleObjectType.Wall, typeof(WallObject) },
         };
 
     #region pinball
 
     public PinBall CreatePinBall(WordTable.Data data)
     {
+        if (data == null)
+            return null;
+        
         PinBall ball = null;
         switch (data.mShootType)
         {
             case ShootType.None:
-            {
-                ball = new PinBall_none(data);
-            }
+                ball = new PinBall_none();
                 break;
             case ShootType.Split:
-            {
-                ball = new PinBall_Split(data);
-            }
+                ball = new PinBall_Split();
                 break;
             case ShootType.Alpha:
-            {
-                ball = new PinBall_Alpha(data);
-            }
+                ball = new PinBall_Alpha();
                 break;
             case ShootType.spread:
-            {
-                ball = new PinBall_Spread(data);
-            }
+                ball = new PinBall_Spread();
                 break;
             case ShootType.Activate:
-            {
-                ball = new PinBall_Activate(data);
-            }
+                ball = new PinBall_Activate();
                 break;
             case ShootType.Small:
-            {
-                ball = new PinBall_Small(data);
-            }
+                ball = new PinBall_Small();
                 break;
             case ShootType.Big:
-            {
-                ball = new PinBall_Big(data);
-            }
+                ball = new PinBall_Big();
                 break;
             case ShootType.Add:
-            {
-                ball = new PinBall_Add(data);
-            }
+                ball = new PinBall_Add();
                 break;
             case ShootType.Mirror:
-            {
-                ball = new PinBall_Mirror(data);
-            }
+                ball = new PinBall_Mirror();
                 break;
             case ShootType.Copy:
-            {
-                ball = new PinBall_Copy(data);
-            }
+                ball = new PinBall_Copy();
                 break;
             case ShootType.Dead:
-            {
-                ball = new PinBall_Dead(data);
-            }
+                ball = new PinBall_Dead();
                 break;
             case ShootType.Expect:
-            {
-                ball = new PinBall_Expect(data);
-            }
+                ball = new PinBall_Expect();
                 break;
             case ShootType.ReTrigger:
-            {
-                ball = new PinBall_ReTrigger(data);
-            }
+                ball = new PinBall_ReTrigger();
                 break;
             case ShootType.SameChara:
-            {
-                ball = new PinBall_SameChara(data);
-            }
+                ball = new PinBall_SameChara();
                 break;
             case ShootType.Servants:
-            {
-                ball = new PinBall_Servants(data);
-            }
+                ball = new PinBall_Servants();
                 break;
             case ShootType.Start:
-            {
-                ball = new PinBall_Start(data);
-            }
+                ball = new PinBall_Start();
+                break;
+            
+            default:
                 break;
         }
-
+        
         if (ball == null)
             return null;
-
+        
+        ball.mBall = new PinBall.Ball
+        {
+            mWordData = data,
+            mVelocity = Vector3.zero,
+            mRadius = BattleConfig.mData.word.wordBallRadius,
+            mFriction = BattleConfig.mData.word.wordBallFriction,
+            mEnergyLoss = BattleConfig.mData.word.wordBallCollisionLoss
+        };
+        
         Battle.ObjectManager.RegisterObject(ball);
         return ball;
-
     }
-
-
+    
     #endregion
 
 
     #region Wall
-    public WallObject CreateWall<T>(Collider2D collider)where T:WallObject, new()
-    {
-        T wall=new T();
-        Battle.ObjectManager.RegisterWall<T>(wall,collider);
-        return wall;
 
+    public WallObject CreateWall<T>(Collider2D collider) where T : WallObject, new()
+    {
+        T wall = new T();
+        Battle.ObjectManager.RegisterWall<T>(wall, collider);
+        return wall;
     }
 
     #endregion
@@ -193,8 +173,11 @@ public class BattleObjectFactory : BattleModule
 
         unitView.Setup(unit, asset);
 
-        var infoUI = Battle.BattleUI.Add(new BattleUnitSelfUI(unit));
-        Battle.BattleUI.ShowPanel(infoUI);
+        if (unitData.mInitType != BattleUnitType.Servant)
+        {
+            var infoUI = Battle.BattleUI.Add(new BattleUnitSelfUI(unit));
+            Battle.BattleUI.ShowPanel(infoUI);
+        }
 
         EventManager.Invoke(EventEnum.UnitSpawn, unit);
 
@@ -212,7 +195,7 @@ public class BattleObjectFactory : BattleModule
             meta.OnHitTarget();
             return;
         }
-        
+
         var projAsset = AssetManager.Load<EmitSO>("SO/Emit", projData.mAsset);
         if (projAsset == null)
         {
@@ -220,7 +203,7 @@ public class BattleObjectFactory : BattleModule
             meta.OnHitTarget();
             return;
         }
-        
+
         var projObj = Object.Instantiate(projAsset.projObject);
         if (projObj == null)
         {
@@ -228,16 +211,16 @@ public class BattleObjectFactory : BattleModule
             meta.OnHitTarget();
             return;
         }
-        
+
         var proj = projObj.GetComponent<NnProjectile>();
         if (proj == null)
         {
             proj = projObj.AddComponent<NnProjectile>();
         }
-        
+
         meta.mData = projData;
         proj.Setup(meta, projAsset);
-        
+
         proj.Emit();
     }
 }

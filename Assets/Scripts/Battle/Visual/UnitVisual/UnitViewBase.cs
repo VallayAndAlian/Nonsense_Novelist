@@ -152,7 +152,7 @@ public class UnitViewBase : MonoBehaviour
     
     public void OnUnitRemove()
     {
-        Destroy(mRoot.gameObject, 0.1f);
+        Destroy(mRoot.gameObject, 1.0f);
     }
 
     public void OnApplyEffect(BattleEffect be)

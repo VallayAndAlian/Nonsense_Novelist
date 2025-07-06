@@ -8,11 +8,12 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
         public int maxPreColTimes = 3;
         public float verbPowerInterval = 5;
         public float wordBallRadius = 3;
-        public float wordBallMinSpeed = 3;
+        public float wordBallMinSpeed = 0.1f;
         public float wordBallMaxSpeed = 3;
         public float wordBallFriction = 3;
         public float wordBallCollisionLoss = 3;
-        public float wordBallChargingMaxTime=3;
+        public float wordBallChargingMinTime = 0.5f;
+        public float wordBallChargingMaxTime = 3;
         public float maxAngle = 45f;
         public int initLoadCount = 3;
         public int maxLoadCount = 5;

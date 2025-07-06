@@ -55,7 +55,6 @@ public class BattleObjectManager : BattleModule
 
     public bool RegisterWall<T>(T wall, Collider2D collider) where T : WallObject
     {
-        Debug.Log("!!!CreateWallCreateWall");
         if (wall.IsRegistered)
             return false;
 

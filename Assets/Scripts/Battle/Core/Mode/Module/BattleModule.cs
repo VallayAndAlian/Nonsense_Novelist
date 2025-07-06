@@ -8,6 +8,8 @@ public class BattleModule : CoreEntity
         set => _mBattle = value;
     }
 
+    public virtual bool IsSupportUpdateInRest => false;
+
     public virtual void Init() {}
     
     public virtual void Begin() {}
@@ -19,7 +21,7 @@ public class BattleModule : CoreEntity
     public virtual void LateUpdate(float deltaSec) {}
 
     public virtual void LateFixedUpdate(float deltaSec) {}
-    
+
     public virtual void OnEnterCombatPhase() {}
     public virtual void OnExitCombatPhase() {}
     

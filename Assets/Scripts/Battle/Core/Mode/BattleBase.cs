@@ -5,9 +5,10 @@ using UnityEngine.Assertions.Must;
 
 public class BattleBase : MonoBehaviour
 {
-
     protected BattleState mState = BattleState.None;
     public BattleState State => mState;
+    
+    public BattleMode Mode { get; set; }
 
     protected List<BattleModule> mModules = new List<BattleModule>();
 
@@ -40,8 +41,9 @@ public class BattleBase : MonoBehaviour
 
 
     public float Now => mClock?.ElapsedSec ?? 0;
-    private float fixedTimeAccumulated = 0f;
-    private const float FixedDeltaTime = 0.02f;
+    protected float mFixedTimeAccumulated = 0f;
+    private const float FixedDeltaTime = 1.0f / 60;
+    
     public bool IsFinished => mState == BattleState.End;
 
     public void Init()
@@ -73,24 +75,30 @@ public class BattleBase : MonoBehaviour
 
         foreach (var module in mModules)
         {
-            module.Update(deltaSec);
+            if (module.IsSupportUpdateInRest || BattlePhase.IsCombat)
+            {
+                module.Update(deltaSec);
+            }
         }
 
         foreach (var module in mModules)
         {
-            module.LateUpdate(deltaSec);
+            if (module.IsSupportUpdateInRest || BattlePhase.IsCombat)
+            {
+                module.LateUpdate(deltaSec);
+            }
         }
 
 
-        fixedTimeAccumulated += deltaSec;
-        while (fixedTimeAccumulated >= FixedDeltaTime)
+        mFixedTimeAccumulated += deltaSec;
+        while (mFixedTimeAccumulated >= FixedDeltaTime)
         {
             foreach (var module in mModules)
             {
                 module.LateFixedUpdate(FixedDeltaTime);
             }
 
-            fixedTimeAccumulated -= FixedDeltaTime;
+            mFixedTimeAccumulated -= FixedDeltaTime;
         }
     }
 

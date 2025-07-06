@@ -26,6 +26,8 @@ public class BattlePhase : BattleModule
     protected GameObject battleUIObj;
     protected BattleCampUI_Left CampLeftHpUI;
     protected BattleCampUI_Right CampRightHpUI;
+    
+    public override bool IsSupportUpdateInRest => true;
 
     public int StageIndex => mStageIndex;
     
@@ -63,6 +65,7 @@ public class BattlePhase : BattleModule
     }
     
     public bool IsCombat => CurrentPhaseType != BattlePhaseType.Rest;
+    public bool IsRest => CurrentPhaseType == BattlePhaseType.Rest;
 
     protected Dictionary<BattleCamp, List<BattleCamp>> mCampEnemies = new Dictionary<BattleCamp, List<BattleCamp>>();
     public Dictionary<BattleCamp, List<BattleCamp>> CampEnemies => mCampEnemies;
@@ -189,10 +192,6 @@ public class BattlePhase : BattleModule
         var camp2List = mCampEnemies[BattleCamp.Camp2];
         var bossList = mCampEnemies[BattleCamp.Boss];
         
-        camp1List.Clear();
-        camp2List.Clear();
-        bossList.Clear();
-        
         switch (type)
         {
             case BattlePhaseType.Lve:
@@ -240,6 +239,10 @@ public class BattlePhase : BattleModule
 
     public void EnterNextStage()
     {
+        mCampEnemies[BattleCamp.Camp1].Clear();
+        mCampEnemies[BattleCamp.Camp2].Clear();
+        mCampEnemies[BattleCamp.Boss].Clear();
+        
         if (mCurrentPhase != null)
         {
             mCurrentPhase.Exit();

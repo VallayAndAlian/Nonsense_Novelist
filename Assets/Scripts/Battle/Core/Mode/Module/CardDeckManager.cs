@@ -3,64 +3,58 @@ using UnityEngine;
 
 public class CardDeckManager : BattleModule
 {
-    
-    
     protected WordTable.Data mCurrentCard = null;
     protected Queue<WordTable.Data> mPreviewCards = new Queue<WordTable.Data>();
 
     protected bool mHasShuffleDeck = false;
     
+    public enum EState
+    {
+        None = 0,
+        Lock,
+        Loading,
+        Ready,
+    }
+    
     public class LoadSlot
     {
-        public int mIndex = 0;
-        public float mLoadTimer = 0; 
+        public EState mState = EState.None;
+        public int mNext = 0;
+        public float mLoadTimer = 0;
         public WordTable.Data mWord = null;
     }
+    
+    protected int mLockedHead = 0;
+    protected int mUnlockedHead = 0;
+    protected int mUnlockedTail = 0;
 
     protected List<LoadSlot> mLoadSlots = new List<LoadSlot>();
     public List<LoadSlot> LoadSlots => mLoadSlots;
 
     // 未抽取的牌库
     protected List<WordTable.Data> mDeck = new List<WordTable.Data>();
-
     // 弃牌堆
     protected List<WordTable.Data> mDiscardPile = new List<WordTable.Data>();
-
-    protected int mNextSlot = 0;
-    
-    protected int mMaxPreviewCount = 0;
-
-    public int MaxPreviewCount
-    {
-        get => mMaxPreviewCount;
-
-        set
-        {
-            mMaxPreviewCount = value;
-            if (mMaxPreviewCount >= mLoadSlots.Count)
-            {
-                for (int i = mLoadSlots.Count; i < mMaxPreviewCount; ++i)
-                {
-                    mLoadSlots.Add(new LoadSlot()
-                    {
-                        mLoadTimer = BattleConfig.mData.word.loadSec,
-                        mWord = !mHasShuffleDeck ? LoadWord() : null,
-                    });
-                }
-            }
-            else
-            {
-                for (int i = mLoadSlots.Count - 1; i >= mMaxPreviewCount; --i)
-                {
-                    mLoadSlots.RemoveAt(i);
-                }
-            }
-        }
-    }
 
     public override void Init()
     {
         AddInitCardDeck();
+        
+        for (int i = 0; i < BattleConfig.mData.word.maxLoadCount; ++i)
+        {
+            mLoadSlots.Add(new LoadSlot()
+            {
+                mState = EState.Lock,
+                mNext = i + 1,
+                mLoadTimer = BattleConfig.mData.word.loadSec,
+                mWord = null,
+            });
+        }
+
+        mUnlockedHead = -1;
+        mUnlockedTail = -1;
+        mLockedHead = 0;
+        mLoadSlots[^1].mNext = -1;
     }
 
     public override void Update(float deltaSec)
@@ -70,7 +64,7 @@ public class CardDeckManager : BattleModule
         
         foreach (var slot in mLoadSlots)
         {
-            if (slot.mWord != null)
+            if (slot.mState != EState.Loading)
                 continue;
 
             slot.mLoadTimer -= deltaSec;
@@ -78,6 +72,7 @@ public class CardDeckManager : BattleModule
             {
                 slot.mLoadTimer = BattleConfig.mData.word.loadSec;
                 slot.mWord = LoadWord();
+                slot.mState = EState.Ready;
             }
         }
     }
@@ -87,8 +82,9 @@ public class CardDeckManager : BattleModule
         if (!mHasShuffleDeck)
         {
             ShuffleDeck();
-
-            MaxPreviewCount = 2;
+            
+            UnlockLoadSlot(BattleConfig.mData.word.initLoadCount);
+            
             mHasShuffleDeck = true;
         }
     }
@@ -129,7 +125,40 @@ public class CardDeckManager : BattleModule
             (mDeck[i], mDeck[randomIndex]) = (mDeck[randomIndex], mDeck[i]);
         }
     }
+    
+    /// <summary>
+    /// 解锁槽位
+    /// </summary>
+    private void UnlockLoadSlot(int num)
+    {
+        for (int i = 0; i < num; i++)
+        {
+            var slot = GetLoadSlot(mLockedHead);
+            if (slot == null)
+                break;
+            
+            slot.mWord = LoadWord();
+            slot.mState = EState.Ready;
 
+            if (mUnlockedHead == -1)
+            {
+                mUnlockedHead = mLockedHead;
+                mUnlockedTail = mLockedHead;
+            }
+            else
+            {
+                mLoadSlots[mUnlockedTail].mNext = mLockedHead;
+                mUnlockedTail = mLockedHead;
+            }
+            
+            mLockedHead = slot.mNext;
+            slot.mNext = mUnlockedHead;
+        }
+    }
+
+    /// <summary>
+    /// 填充卡槽
+    /// </summary>
     private WordTable.Data LoadWord()
     {
         if (mDeck.Count == 0)
@@ -142,54 +171,39 @@ public class CardDeckManager : BattleModule
         
         return word;
     }
-
-    private void DrawCurrentAndPreviewCards()
-    {
-        if (mCurrentCard == null)
-        {
-            DrawCurrentCard();
-        }
-
-        while (mPreviewCards.Count < mMaxPreviewCount)
-        {
-            if (mDeck.Count == 0)
-            {
-                RefillDeckFromDiscardPile();
-            }
-
-            mPreviewCards.Enqueue(mDeck[0]);
-            mDeck.RemoveAt(0);
-        }
-    }
-
+    
+    
     /// <summary>
-    /// 抽取当前卡牌
+    /// 获取卡槽
     /// </summary>
-    protected void DrawCurrentCard()
+    public LoadSlot GetLoadSlot(int index)
     {
-        if (mPreviewCards.Count > 0)
-        {
-            mCurrentCard = mPreviewCards.Dequeue();
-        }
-        else
-        {
-            if (mDeck.Count == 0)
-            {
-                RefillDeckFromDiscardPile();
-            }
-
-            if (mDeck.Count > 0)
-            {
-                mCurrentCard = mDeck[0];
-                mDeck.RemoveAt(0);
-            }
-        }
+        if (index < 0 || index >= mLoadSlots.Count)
+            return null;
         
-        var infoCard = GameObject.Find("WordInformation");
-        if (infoCard != null)
+        return mLoadSlots[index];
+    }
+    
+    /// <summary>
+    /// 获取当前卡牌
+    /// </summary>
+    public WordTable.Data GetCurrentCard()
+    {
+        var slot = GetLoadSlot(mUnlockedHead);
+        if (slot != null)
         {
-            infoCard.GetComponent<WordInformation>().ChangeInformation(mCurrentCard);
+            return slot.mWord;
         }
+
+        return null;
+    }
+    
+    /// <summary>
+    /// 是否有已经加载好的卡牌
+    /// </summary>
+    public bool HasLoadCard()
+    {
+        return GetCurrentCard() != null;
     }
 
     /// <summary>
@@ -197,15 +211,16 @@ public class CardDeckManager : BattleModule
     /// </summary>
     public void UseCurrentCard()
     {
-        if (mCurrentCard == null)
+        var slot = GetLoadSlot(mUnlockedHead);
+        if (slot is { mState: EState.Ready })
         {
-            Debug.Log("currentCard == null");
-            return;
-        }
+            slot.mWord = null;
+            slot.mLoadTimer = BattleConfig.mData.word.loadSec;
+            slot.mState = EState.Loading;
 
-        mDiscardPile.Add(mCurrentCard);
-        mCurrentCard = null;
-        DrawCurrentAndPreviewCards();
+            mUnlockedTail = mUnlockedHead;
+            mUnlockedHead = slot.mNext;
+        }
     }
 
     /// <summary>
@@ -248,16 +263,6 @@ public class CardDeckManager : BattleModule
         {
             UseCurrentCard();
         }
-    }
-
-    public WordTable.Data GetCurrentCard()
-    {
-        if (mCurrentCard == null)
-        {
-            Debug.Log("currentCard == null");
-        }
-
-        return mCurrentCard;
     }
 
     public Queue<WordTable.Data> GetPreviewCards()
