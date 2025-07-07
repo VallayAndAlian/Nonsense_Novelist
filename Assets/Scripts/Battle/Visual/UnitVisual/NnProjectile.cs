@@ -56,7 +56,7 @@ public class NnProjectile : MonoBehaviour
         Vector3 offset = mTargetPos - mEmitPos;
         var transform1 = transform;
         transform1.position = mEmitPos;
-        transform1.rotation = Quaternion.Euler(Mathf.Atan2(offset.y, offset.x), 0, 0);
+        transform1.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(offset.y, offset.x));
         
         if (mAsset.emitterFx != null)
         {
