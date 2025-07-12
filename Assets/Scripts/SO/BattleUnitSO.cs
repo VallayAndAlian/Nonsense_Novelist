@@ -30,6 +30,9 @@ public class BattleUnitSO : ScriptableObject
     [Tooltip("角色动画")]
     public AnimatorController animatorController;
 
+    [Tooltip("武器插槽名")] 
+    public string weaponSocket = "weaponMuzzle";
+
     [Space(20)][Header("角色特性")][Space(5)]
 
     [Tooltip("角色特性名称")]

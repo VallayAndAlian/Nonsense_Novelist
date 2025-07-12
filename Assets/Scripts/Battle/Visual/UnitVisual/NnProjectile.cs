@@ -49,7 +49,7 @@ public class NnProjectile : MonoBehaviour
         }
         else
         {
-            mEmitPos = mMeta.mInstigator.UnitView.ModelLayout.WeaponPart.position;
+            mEmitPos = mMeta.mInstigator.UnitView.ModelLayout.GetWeaponPos();
             mTargetPos = mMeta.mTarget.ViewPos;
         }
         

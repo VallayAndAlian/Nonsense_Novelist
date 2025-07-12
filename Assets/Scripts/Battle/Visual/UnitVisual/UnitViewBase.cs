@@ -115,8 +115,7 @@ public class UnitViewBase : MonoBehaviour
             return;
         }
 
-        mRoot.SetParent(mRole.Slot.transform);
-
+        mRoot.SetParent(mRole.Slot.transform.Find("Seat"));
         if (mFirstInitScale)
         {
             mOriLocalScale = mRoot.localScale;
@@ -125,7 +124,6 @@ public class UnitViewBase : MonoBehaviour
         
         mRoot.localScale = CalcLocalScale();
         mRoot.localPosition = CalcLocalPosition();
-
     }
 
     public void OnUnitDie()
@@ -163,7 +161,7 @@ public class UnitViewBase : MonoBehaviour
 
         var fxData = effectAsset.GetFxList(be.mType);
         //if (fxData == null || fxData.mFxList.Count > 0)
-        if (fxData == null || fxData.mFxList.Count ==0)
+        if (fxData == null || fxData.mFxList.Count == 0)
             return;
         
         bool bHasScriptFx = false;
@@ -255,16 +253,6 @@ public class UnitViewBase : MonoBehaviour
 
     public Vector3 CalcLocalPosition()
     {
-        switch (mRole.Data.mInitType)
-        {
-            case BattleUnitType.Character:
-            case BattleUnitType.Monster:
-                return Vector3.Scale(-mRoot.Find("seat").localPosition, mRoot.localScale);
-            
-            case BattleUnitType.Servant:
-                return Vector3.zero;
-        }
-
         return Vector3.zero;
     }
 
