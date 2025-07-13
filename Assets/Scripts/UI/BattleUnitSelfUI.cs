@@ -11,7 +11,11 @@ public class BattleUnitSelfUI : BattleUI
         mOwner = new UIOwner();
         mOwner.mUnit = _role;
         mOwner.mUnit.infoUI = this;
-        mOwner.mUnitPos = mOwner.mUnit.UnitView.Root;
+        mOwner.mUnitPos = mOwner.mUnit.UnitView.Root.Find("UIHPSocket");
+        if (mOwner.mUnitPos == null)
+        {
+            mOwner.mUnitPos = mOwner.mUnit.UnitView.Root;
+        }
 
         mUIContent = new UnitUIContent();
     }
@@ -51,8 +55,6 @@ public class BattleUnitSelfUI : BattleUI
     
     protected UnitUIContent mUIContent;
     public UnitUIContent UIContent => mUIContent;
-    
-    public Vector3 offset = new Vector3(-0.3f, 1.0f, 0);
 
     public bool IsRegistered => mRegistered;
 
@@ -81,7 +83,7 @@ public class BattleUnitSelfUI : BattleUI
         if (Owner == null || !Owner.mUnit.IsValid())
             return;
         
-        Vector3 worldPosition = Owner.mUnitPos.position + offset;
+        Vector3 worldPosition = Owner.mUnitPos.position;
         Vector3 screenPosition = UIStatics.WorldToUIPosition(worldPosition);
         
         UIPanel.transform.localPosition = screenPosition;

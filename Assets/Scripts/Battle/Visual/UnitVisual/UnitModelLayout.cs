@@ -35,14 +35,13 @@ public class UnitModelLayout : MonoBehaviour
         {
             mAnimator = GetComponent<Animator>();
             mAnimator.runtimeAnimatorController = unitObj.Asset.animatorController;
-            
-            mWeaponPart = unitObj.transform.Find("WeaponMuzzle");
         }
         else
         {
             mSpineAnimator = GetComponent<SkeletonAnimation>();
         }
         
+        mWeaponPart = unitObj.transform.Find("WeaponMuzzle");
         if (mWeaponPart == null)
         {
             mWeaponPart = unitObj.Root;
@@ -66,15 +65,15 @@ public class UnitModelLayout : MonoBehaviour
 
     public Vector3 GetWeaponPos()
     {
-        if (mOwner.mAnimType == UnitAnimType.Anim)
-        {
-            Spine.Bone bone = mSpineAnimator.Skeleton.FindBone(mOwner.Asset.weaponSocket);
-
-            if (bone == null)
-            {
-                return mSpineAnimator.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0));
-            }
-        }
+        // if (mOwner.mAnimType == UnitAnimType.Anim)
+        // {
+        //     Spine.Bone bone = mSpineAnimator.Skeleton.FindBone(mOwner.Asset.weaponSocket);
+        //
+        //     if (bone == null)
+        //     {
+        //         return mSpineAnimator.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0));
+        //     }
+        // }
         
         return mWeaponPart.position;
     }
