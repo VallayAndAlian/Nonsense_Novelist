@@ -27,6 +27,16 @@ public class Formula
     {
         return (int)mValues[0];
     }
+
+    public int EvaluateInt()
+    {
+        return (int)mValues[0];
+    }
+
+    public List<float> EvaluateList(AbilityBase abi)
+    {
+        return mValues;
+    }
 }
 
 public class AbilityBase : CoreEntity

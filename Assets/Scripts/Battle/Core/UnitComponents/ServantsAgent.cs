@@ -86,5 +86,35 @@ public class ServantsAgent : UnitComponent
         
         return true;
     }
-
+    public List<BattleUnit> GetEnemiesServantList(BattleUnit unit)
+    {
+        var enemies = unit.Battle.CampManager.GetEnemies(unit);
+        var list = new List<BattleUnit>();
+        foreach (var enemy in enemies)
+        {
+            foreach (var servant in enemy.ServantsAgent.Servants)
+            {
+                list.Add(servant);
+            }
+        }
+        return list;
+    }
+    public BattleUnit GetEnemyMaxServantUnit(BattleUnit unit)
+    {
+        var enenemies = unit.Battle.CampManager.GetEnemies(unit);
+        BattleUnit MaxServantunit = null;
+        var maxcount = 0;
+        foreach (var enemy in enenemies)
+        {
+            if (enemy.IsAlive && enemy.ServantsAgent.Servants.Count > 0)
+            {
+                if (enemy.ServantsAgent.Servants.Count > maxcount)
+                {
+                    maxcount = enemy.ServantsAgent.Servants.Count;
+                    MaxServantunit = enemy;
+                }
+            }
+        }
+        return MaxServantunit;
+    }
 }

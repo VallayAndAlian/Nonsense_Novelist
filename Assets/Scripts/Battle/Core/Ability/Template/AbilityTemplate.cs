@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 
 
 
@@ -208,16 +209,16 @@ public class AbilityModule
     public bool ParseParams()
     {
         AddParams();
-        
+
         foreach (var param in mParams)
         {
             if (!ReadParam(param))
             {
-                return false; 
+                return false;
             }
         }
-        
-        return true; 
+
+        return true;
     }
     
     protected bool ReadParam(Formula param)

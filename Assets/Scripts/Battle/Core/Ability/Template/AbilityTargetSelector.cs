@@ -14,6 +14,7 @@ public class AbilityTargetSelector : AbilityModule
         HighestSan = 5,
         HighestDef = 6,
         Nearest = 7,
+        ServantOwner= 8,
     }
 
     public static AbilityTargetSelector Create(Type type)
@@ -48,6 +49,10 @@ public class AbilityTargetSelector : AbilityModule
             
             case Type.Nearest:
                 selector = new AMTSNearest();
+                break;
+
+            case Type.ServantOwner:
+                selector = new AMTSServantOwner();
                 break;
         }
 
@@ -161,5 +166,13 @@ public class AMTSNearest : AbilityTargetSelector
         enemies.Sort((a,b) => (a.UnitView.transform.position - ori).sqrMagnitude.CompareTo((b.UnitView.transform.position - ori).sqrMagnitude));
         
         return Trim(enemies);
+    }
+}
+
+public class AMTSServantOwner : AbilityTargetSelector
+{
+    public override List<BattleUnit> Pick(object triggerData)
+    {
+        return mOwner.Unit.ServantOwner != null ? new List<BattleUnit> { mOwner.Unit.ServantOwner } : null;
     }
 }
