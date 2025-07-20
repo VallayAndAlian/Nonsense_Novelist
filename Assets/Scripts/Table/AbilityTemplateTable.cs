@@ -123,6 +123,7 @@ public class AbilityEffectApplierTable : MapTable<int, AbilityEffectApplierTable
         public bool mCanBePurgedOrExpelled;
         public int mStackLimit;
         public float mDuration;
+        public bool mIsRemoveOnCombatEnd;
         public Dictionary<string, CustomParam> mCustomParams = new Dictionary<string, CustomParam>();
     }
     
@@ -137,6 +138,7 @@ public class AbilityEffectApplierTable : MapTable<int, AbilityEffectApplierTable
         data.mCanBePurgedOrExpelled = reader.Read<bool>();
         data.mStackLimit = reader.Read<int>();
         data.mDuration = reader.Read<float>();
+        data.mIsRemoveOnCombatEnd = reader.Read<bool>();
         
         if (!ReaderUtils.ParseCustomParams(reader, data.mCustomParams))
             return default;

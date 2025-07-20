@@ -180,7 +180,14 @@ public class UnitViewBase : MonoBehaviour
 
             if (it.mPlayType == EffectFxPlayType.Instant)
             {
-                GameObject.Instantiate(it.mFxObj, getSocket(it.mSocketName));
+                if (it.mFxObj != null)
+                {
+                    GameObject.Instantiate(it.mFxObj, getSocket(it.mSocketName));
+                }
+                else
+                {
+                    Debug.LogError($"{be.mType}的预制体为空");
+                }
             }
             else if (it.mPlayType == EffectFxPlayType.Script)
             {

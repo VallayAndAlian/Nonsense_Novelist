@@ -173,6 +173,12 @@ public class EffectAgent : UnitComponent
                 continue;
             }
 
+            if (effect.mIsRemoveOnCombatEnd && Owner.Battle.BattlePhase.IsCombat == false)
+            {
+                mRemovedEffect.Add(effect);
+                continue;
+            }
+
             var attrType = BattleHelper.ToAttrType(effect.mType);
             if (attrType != AttributeType.None)
             {

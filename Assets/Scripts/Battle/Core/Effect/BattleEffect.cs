@@ -63,6 +63,7 @@ public class BattleEffectSpec
     
     public bool mCanBePurged = true;
     public bool mMergeInputValue = false;
+    public bool mIsRemoveOnCombatEnd = true;
 }
 
 public class BattleEffect : CoreEntity
@@ -89,7 +90,8 @@ public class BattleEffect : CoreEntity
     public bool mCanBePurged;
     public bool mIgnored;
     public bool mExpired;
-    
+    public bool mIsRemoveOnCombatEnd;
+
     public BattleEffect() {}
     
     public BattleEffect(BattleEffectSpec spec)
@@ -105,6 +107,7 @@ public class BattleEffect : CoreEntity
         mInputValueInt = spec.mInputValueInt;
         mInputValueBool = spec.mInputValueBool;
         mCanBePurged = spec.mCanBePurged;
+        mIsRemoveOnCombatEnd = spec.mIsRemoveOnCombatEnd;
         
         mMaxStackCount = spec.mMaxStackCount;
         mStackCount = 1;
