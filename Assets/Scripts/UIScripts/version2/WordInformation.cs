@@ -213,6 +213,14 @@ public class WordInformation : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void ChangeInformation(WordTable.Data data)
     {
+        if (data == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        
+        gameObject.SetActive(true);
+        
         if (titleBg == null)
             titleBg = title.transform.parent.GetComponent<Image>();
 

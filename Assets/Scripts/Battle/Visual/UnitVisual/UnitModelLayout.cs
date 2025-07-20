@@ -69,7 +69,7 @@ public class UnitModelLayout : MonoBehaviour
         // {
         //     Spine.Bone bone = mSpineAnimator.Skeleton.FindBone(mOwner.Asset.weaponSocket);
         //
-        //     if (bone == null)
+        //     if (bone != null)
         //     {
         //         return mSpineAnimator.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0));
         //     }

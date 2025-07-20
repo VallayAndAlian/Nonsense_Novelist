@@ -175,6 +175,9 @@ public class UnitViewBase : MonoBehaviour
         
         foreach (var it in fxList)
         {
+            if (it.mFxObj == null)
+                continue;
+
             if (it.mPlayType == EffectFxPlayType.Instant)
             {
                 GameObject.Instantiate(it.mFxObj, getSocket(it.mSocketName));

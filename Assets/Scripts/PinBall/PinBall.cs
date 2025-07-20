@@ -191,7 +191,7 @@ public abstract class PinBall : BattleObject
     
     protected virtual void OnHitUnit(RaycastHit2D hit)
     {
-        var role = hit.collider.GetComponentInChildren<UnitViewBase>().Role;
+        var role = hit.collider.transform.parent.GetComponentInChildren<UnitViewBase>().Role;
         if (!role.IsValid())
             return;
 

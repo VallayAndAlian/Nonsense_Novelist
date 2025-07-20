@@ -25,8 +25,13 @@ public class CardDeckManager : BattleModule
     }
     
     protected int mLockedHead = 0;
+    public int LockedHead => mLockedHead;
+    
     protected int mUnlockedHead = 0;
+    public int UnlockedHead => mUnlockedHead;
+    
     protected int mUnlockedTail = 0;
+    public int UnlockedTail => mUnlockedTail;
 
     protected List<LoadSlot> mLoadSlots = new List<LoadSlot>();
     public List<LoadSlot> LoadSlots => mLoadSlots;
@@ -55,6 +60,8 @@ public class CardDeckManager : BattleModule
         mUnlockedTail = -1;
         mLockedHead = 0;
         mLoadSlots[^1].mNext = -1;
+        
+        EventManager.Invoke(EventEnum.DeckUpdate, mUnlockedHead, mLockedHead);
     }
 
     public override void Update(float deltaSec)
@@ -73,6 +80,11 @@ public class CardDeckManager : BattleModule
                 slot.mLoadTimer = BattleConfig.mData.word.loadSec;
                 slot.mWord = LoadWord();
                 slot.mState = EState.Ready;
+
+                if (mLoadSlots.IndexOf(slot) == UnlockedHead)
+                {
+                    EventManager.Invoke(EventEnum.ShootCardUpdate, mUnlockedHead, mLockedHead);
+                }
             }
         }
     }
@@ -144,6 +156,8 @@ public class CardDeckManager : BattleModule
             {
                 mUnlockedHead = mLockedHead;
                 mUnlockedTail = mLockedHead;
+                
+                EventManager.Invoke(EventEnum.ShootCardUpdate, mUnlockedHead, mLockedHead);
             }
             else
             {
@@ -154,6 +168,8 @@ public class CardDeckManager : BattleModule
             mLockedHead = slot.mNext;
             slot.mNext = mUnlockedHead;
         }
+        
+        EventManager.Invoke(EventEnum.DeckUpdate, mUnlockedHead, mLockedHead);
     }
 
     /// <summary>
@@ -221,6 +237,9 @@ public class CardDeckManager : BattleModule
             mUnlockedTail = mUnlockedHead;
             mUnlockedHead = slot.mNext;
         }
+        
+        EventManager.Invoke(EventEnum.DeckUpdate, mUnlockedHead, mLockedHead);
+        EventManager.Invoke(EventEnum.ShootCardUpdate, mUnlockedHead, mLockedHead);
     }
 
     /// <summary>
