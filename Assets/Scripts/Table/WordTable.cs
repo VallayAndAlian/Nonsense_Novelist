@@ -9,7 +9,12 @@ public enum WordType
     Noun,                  //名词
     Property,              //特性
 }
-
+public enum WordSource
+{
+    Undefined = 0,
+    Emitter,
+    Other,
+}
 public enum WordTag
 {
     Undefined = 0,

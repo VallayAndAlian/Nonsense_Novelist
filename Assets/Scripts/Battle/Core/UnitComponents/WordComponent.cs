@@ -1,10 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class WordEntry
 {
     public WordType mType;
+    public WordSource mSource;
+    public bool mIsCopy;
     public float mApplyTime = 0;
     public float mEndTime = 0;
 
@@ -110,13 +113,74 @@ public class WordComponent : UnitComponent
             var abi = Owner.AbilityAgent.RegisterAbility(kind);
             if (abi != null)
             {
+                abi.WordType = entry.mType;
                 entry.mAbilities.Add(abi);
             }
         }
-
+        EventManager.Invoke(EventEnum.AddWord,entry);
         return entry;
     }
+    public WordEntry AddWord(int wordKind,WordSource source,bool isCopy=false)
+    {
+        var wordData = WordTable.Find(wordKind);
+        if (wordData == null || wordData.mForbidden)
+            return null;
 
+        var words = GetWordsByType(wordData.mType);
+        if (words == null)
+            return null;
+
+        WordEntry entry = new WordEntry();
+
+        entry.mType = wordData.mType;
+        entry.mApplyTime = Owner.Battle.Now;
+        entry.mData = wordData;
+        entry.mSource = source;
+        entry.mIsCopy = isCopy;
+
+        switch (wordData.mType)
+        {
+            case WordType.Property:
+            case WordType.Noun:
+                break;
+
+            case WordType.Verb:
+                if (words.Count > 0 && words.Count >= BattleConfig.mData.word.maxVerbNum)
+                {
+                    ClearAbilities(words[0]);
+
+                    words.RemoveAt(0);
+                }
+
+                entry.mUpdateTimer = BattleConfig.mData.word.verbPowerInterval;
+                entry.mPower = wordData.mInitPower;
+
+                break;
+
+            case WordType.Adjective:
+                entry.mEndTime = entry.mApplyTime + wordData.mDuration;
+                break;
+
+            default:
+                break;
+        }
+
+        words.Add(entry);
+
+        entry.mAbilities = new List<AbilityBase>();
+
+        foreach (var kind in wordData.mAbilities)
+        {
+            var abi = Owner.AbilityAgent.RegisterAbility(kind);
+            if (abi != null)
+            {
+                abi.WordType = entry.mType;
+                entry.mAbilities.Add(abi);
+            }
+        }
+        EventManager.Invoke(EventEnum.AddWord, entry);
+        return entry;
+    }
     public void RemoveWord(WordEntry we)
     {
         if (we?.mData == null)
@@ -181,6 +245,27 @@ public class WordComponent : UnitComponent
                 
                 ++w.mPower;
             }
+        }
+    }
+    public void ReduceSingleVerbPower(int reduceValue)
+    {
+        var maxPower = 0;
+        WordEntry wordVerb = null;
+        foreach (var w in mVerbWords)
+        {
+            if(w.mPower > maxPower)
+            {
+                maxPower = w.mPower;
+                wordVerb = w;
+            }
+        }
+        wordVerb.mData.mTriggerPower = Mathf.Max(wordVerb.mData.mTriggerPower - reduceValue, 2);
+    }
+    public void ReduceAllVerbPower(int reduceValue)
+    {
+        foreach (var w in mVerbWords)
+        {
+            w.mData.mTriggerPower = Mathf.Max(w.mData.mTriggerPower - reduceValue, 2);
         }
     }
 }

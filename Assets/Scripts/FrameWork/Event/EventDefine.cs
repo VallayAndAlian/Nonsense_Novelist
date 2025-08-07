@@ -14,6 +14,7 @@ public enum EventEnum
 	ChangeCampHp,
 	ApplyEffect,
 	RemoveEffect,
+	AddWord,
 	
 	DeckUpdate,
 	ShootCardUpdate,

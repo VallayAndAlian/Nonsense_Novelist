@@ -10,6 +10,7 @@ using System.Linq;
 using System.Xml.Schema;
 using UnityEngine;
 using UnityEngine.Analytics;
+using static OfficeOpenXml.ExcelErrorValue;
 using static UnityEditor.Progress;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.CanvasScaler;
@@ -28,7 +29,11 @@ public class AbilityEffectApplier : AbilityModule
         KillServant=7,
         SeizeServant=8,
         DrawCertainEffect=9,
-        TestSeizeServant=10,
+        StrengthenRegularAttack=10,
+        DoubleObtainNoun=11,
+        GainRepeatBuff=12,
+        GiveSbObject=13,
+        TestSeizeServant =100,
     }
 
     public static AbilityEffectApplier Create(Type type)
@@ -73,9 +78,26 @@ public class AbilityEffectApplier : AbilityModule
                 applier = new AMEADrawCertainEffect();
                 break;
 
+            case Type.StrengthenRegularAttack:
+                applier = new AMEAStrengthenRegularAttack();
+                break;
+
+            case Type.DoubleObtainNoun:
+                applier = new AMEADoubleObtainNoun();
+                break;
+
+            case Type.GainRepeatBuff:
+                applier = new AMEAGainRepeatBuff();
+                break;
+
+            case Type.GiveSbObject:
+                applier = new AMEAGiveSbObject();
+                break;
+
             case Type.TestSeizeServant:
                 applier= new AMEATestSeizeServant();
                 break;
+
             default:
                 break;
         }
@@ -386,7 +408,7 @@ public class AMEAAttrHeal : AbilityEffectApplier
         {
             mCurrentHeal=mValue.Evaluate(mOwner);
         }
-        target.ApplyHeal(mCurrentHeal);
+        target.ApplyHeal((AttributeType)mAttrType.EvaluateInt(mOwner), mCurrentHeal);
     }
 }
 public class AMEAKillServant : AbilityEffectApplier
@@ -511,11 +533,15 @@ public class AMEASeizeServant : AbilityEffectApplier
         {
             servant.ServantOwner.ServantsAgent.RemoveServants(servant);
             var newservant = target.ServantsAgent.RegisterServants(servant.ID);
-            newservant.ModifyBase(AttributeType.MaxHp,mAttrAdjValue.Evaluate(mOwner),true);
+            newservant.ModifyBase(AttributeType.Def,mAttrAdjValue.Evaluate(mOwner),true);
+            newservant.ModifyBase(AttributeType.Attack, mAttrAdjValue.Evaluate(mOwner), true);
+            newservant.ModifyBase(AttributeType.San, mAttrAdjValue.Evaluate(mOwner), true);
         }
         else
         {
-            servant.ModifyBase(AttributeType.MaxHp, mAttrAdjValue.Evaluate(mOwner), true);
+            servant.ModifyBase(AttributeType.Def, mAttrAdjValue.Evaluate(mOwner), true);
+            servant.ModifyBase(AttributeType.Attack, mAttrAdjValue.Evaluate(mOwner), true);
+            servant.ModifyBase(AttributeType.San, mAttrAdjValue.Evaluate(mOwner), true);
             servant.ServantOwner.ServantsAgent.RemoveServants(servant);
             target.ServantsAgent.Servants.Add(servant);
             SwapSlot(target);
@@ -659,5 +685,251 @@ public class AMEADrawCertainEffect : AbilityEffectApplier
                 break;
         }
     }
+}
+
+public class AMEAStrengthenRegularAttack : AbilityEffectApplier
+{
+    protected Formula mAttackNum = new Formula("attack_num");
+    protected Formula mDemageAdjValue = new Formula("demage_adjust");
+    protected Formula mAttackSpeed = new Formula("attack_speed");
+    protected int mCurrentAttackNum = 0;
+    protected float mOriginSpeed = 0;
+    public override void AddParams()
+    {
+        mParams.Add(mAttackNum);
+        mParams.Add(mDemageAdjValue);
+        mParams.Add(mAttackSpeed);
+    }
+    public override void OnInit()
+    {
+        mOriginSpeed = mOwner.Unit.GetAttributeValue(AttributeType.AttackSpeed);
+    }
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        if (mCurrentAttackNum <= mAttackNum.EvaluateInt(mOwner))
+        {
+            DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(mOwner.Unit);
+            dmg.mDamageSource = DamageSource.AutoAttack;
+            dmg.mTarget = target;
+            dmg.mAbility=null;
+            dmg.mMinAttack =mOwner.Unit.GetAttributeValue(AttributeType.Attack)*(1+mDemageAdjValue.Evaluate(mOwner));
+            dmg.mMaxAttack = dmg.mMinAttack;
+
+            mOwner.Unit.AttributeSet.GetAttribute(AttributeType.AttackSpeed).mValue=mAttackSpeed.Evaluate(mOwner);
+
+            DamageHelper.ProcessDamage(dmg);
+
+        }
+        else
+        {
+            mOwner.Unit.AttributeSet.GetAttribute(AttributeType.AttackSpeed).mValue = mOriginSpeed;
+        }
+    }
+}
+public class AMEADoubleObtainNoun : AbilityEffectApplier
+{
+    protected Formula mDoubleGroupNum = new Formula("doubleGroup_num");
+    protected Formula mWordType = new Formula("word_type");
+    protected Formula mWordId = new Formula("word_id");
+    protected Formula mIsContain = new Formula("is_contain");
+    protected Dictionary<int,float> mWeightCounts = new Dictionary<int,float>();
+    protected WordEntry mCurrentWord=null;
+    public override void AddParams()
+    {
+        mParams.Add(mWordType);
+        mParams.Add(mWordId);
+        mParams.Add(mIsContain);
+        mParams.Add(mDoubleGroupNum);
+        for (int i = 0; i < mParams.Count; i++)
+        {
+            Formula param = mParams[i];
+            if (!ReadParam(param))
+            {
+                return;
+            }
+            if (param.mKey == "doubleGroup_num" && param.EvaluateInt() > 0)
+            {
+                for (int j = 1; j <= param.EvaluateInt(); j++)
+                {
+                    string s = string.Format("item_{0}_weight", j);
+                    string t = string.Format("item_{0}", j);
+                    mParams.Add(new Formula(s));
+                    mParams.Add(new Formula(t));
+                }
+            }
+        }
+    }
+    public override void OnInit()
+    {
+        EventManager.Subscribe<WordEntry>(EventEnum.AddWord, OnGainWord);
+        float otherProbabilitiesSum = 0f;
+        for (int i = 4; i < mParams.Count; i += 2)
+        {
+            Formula param = mParams[i];
+            mWeightCounts.Add((int)mParams[i+1].mValues[0], (float)param.mValues[0]);
+            otherProbabilitiesSum += (float)param.mValues[0];
+        }
+        mWeightCounts.Add(1,1-otherProbabilitiesSum);
+    }
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        if (mCurrentWord.mIsCopy) return;
+        var douWeight = Draw();
+        if(mCurrentWord != null&&mCurrentWord.mType==(WordType) mWordType.EvaluateInt(mOwner))
+        {
+            if (mIsContain.EvaluateBool(mOwner))
+            {
+                //mOwner.Unit.WordComponent.AddWord(mWordId.EvaluateInt(mOwner), WordSource.Other, false);
+                for (int i = 0; i < douWeight - 1; i++)
+                {
+                    mOwner.Unit.WordComponent.AddWord(mWordId.EvaluateInt(mOwner), WordSource.Other, true);
+                }
+            }
+            else
+            {
+                //mOwner.Unit.WordComponent.AddWord(mWordId.EvaluateInt(mOwner), WordSource.Emitter, false);
+                for (int i = 0; i < douWeight - 1; i++)
+                {
+                    mOwner.Unit.WordComponent.AddWord(mWordId.EvaluateInt(mOwner), WordSource.Emitter, true);
+                }
+            }
+        }
+    }
+    public void OnGainWord(WordEntry entry)
+    {
+        mCurrentWord = entry;
+    }
+    public int Draw()
+    {
+        float randomPoint =UnityEngine.Random.value;
+        float cumulative = 0f;
+
+        foreach (var dounum in mWeightCounts)
+        {
+            cumulative += dounum.Value;
+            if (randomPoint <= cumulative)
+            {
+                return dounum.Key;
+            }
+        }
+
+        return 1; 
+    }
+}
+public class AMEAGainRepeatBuff : AbilityEffectApplier
+{
+    //protected Formula mOldBuffId = new Formula("oldbuff_id");
+    //protected Formula mMinBuff = new Formula("min_buff");
+    //protected Formula mMaxBuff = new Formula("max_buff");
+    protected Formula mIsRemoveOld = new Formula("isRemove_oldBuff");
+    protected Formula mNewBuffId = new Formula("newbuff_id");
+    protected Formula mInheritRatio = new Formula("inherit_ratio");
+    protected Formula mNewBuffDuration = new Formula("newbuff_duration");
+    protected int mCurrentAccBuff = 0;
+    public override void AddParams()
+    {
+        mParams.Add(mIsRemoveOld);
+        mParams.Add(mNewBuffId);
+        mParams.Add(mInheritRatio);
+        mParams.Add(mNewBuffDuration);
+    }
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        if (mIsRemoveOld.EvaluateBool(mOwner))
+        {
+            foreach (var effect in mOwner.Unit.EffectAgent.Effects)
+            {
+                if ((int)effect.mType == (int)triggerData)
+                {
+                    effect.mExpired = true;
+                }
+            }
+        }
+        if(mNewBuffId.EvaluateInt(mOwner)!=0&& mInheritRatio.Evaluate(mOwner) != 0 &&mNewBuffDuration.Evaluate(mOwner) != 0)
+        {
+            for (int i = 0;i<(int)mCurrentAccBuff* mInheritRatio.Evaluate(mOwner); i++)
+            {
+                BattleEffectSpec spec = new BattleEffectSpec();
+                spec.mType = (EffectType)mNewBuffId.EvaluateInt(mOwner);
+                spec.mInstigator = mOwner.Unit;
+                spec.mTarget = target;
+                //spec.mInputValueBool = false;
+                //spec.mInputValue = mInputValue;
+                //spec.mInputValueBool = mModifyPercent.EvaluateBool(mOwner);
+                //spec.mInputValue = mValue.Evaluate(mOwner);
+                spec.mDuration = mNewBuffDuration.Evaluate(mOwner);
+                spec.mDurationRule = EffectDurationRule.HasDuration ;
+                spec.mStackRule = EffectStackRule.Target;
+                spec.mStackDurationRule = EffectStackDurationRule.Refresh;
+                spec.mAbility = mOwner;
+                spec.mMaxStackCount = mStackLimit;
+                spec.mIsRemoveOnCombatEnd = mIsRemoveOnCombatEnd;
+                EffectAgent.ApplyEffectToTarget(target, spec);
+            }
+        }
+    }
+}
+public class AMEAGiveSbObject : AbilityEffectApplier
+{
+    public enum DrawType
+    {
+        None = 0,
+        Word = 1,
+        Servant = 2,
+        Buff = 3,
+    }
+    protected Formula mObjectType = new Formula("object_type");
+    protected Formula mObjectId = new Formula("object_id");
+    protected Formula mObjectNum = new Formula("object_num");
+    public override void AddParams()
+    {
+        mParams.Add(mObjectType);
+        mParams.Add(mObjectId);
+        mParams.Add(mObjectNum);
+    }
+    public override void Apply(BattleUnit target, object triggerData)
+    {
+        mOwner.Battle.Clock.TimerManager.AddTimer<BattleUnit>(OnTrigger, target, 1, 0, 1);
+    }
+    public void OnTrigger(BattleUnit unit)
+    {
+        var type = (DrawType)mObjectType.EvaluateInt(mOwner);
+        switch (type)
+        {
+            case DrawType.Word:
+                if (mObjectNum.EvaluateInt(mOwner)!=0)
+                {
+                    for (int i = 0; i < mObjectNum.EvaluateInt(mOwner);i++)
+                    {
+                        unit.WordComponent.AddWord(mObjectId.EvaluateInt(mOwner));
+                    }
+                }
+                break;
+
+            case DrawType.Servant:
+                if (mObjectNum.EvaluateInt(mOwner) != 0)
+                {
+                    for (int i = 0; i < mObjectNum.EvaluateInt(mOwner); i++)
+                    {
+                       unit.ServantsAgent.RegisterServants(mObjectId.EvaluateInt(mOwner));
+                    }
+                }
+                break;
+
+            case DrawType.Buff:
+                if (mObjectNum.EvaluateInt(mOwner) != 0)
+                {
+                    for (int i = 0; i < mObjectNum.EvaluateInt(mOwner); i++)
+                    {
+                        unit.AbilityAgent.RegisterAbility(mObjectId.EvaluateInt(mOwner));
+                    }
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
 }
 public class AMEATestSeizeServant : AbilityEffectApplier { }

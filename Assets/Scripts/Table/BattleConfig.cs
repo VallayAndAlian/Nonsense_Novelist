@@ -24,6 +24,12 @@ public class BattleConfig : JsonTable<BattleConfig.Data>
     public class UnitConfig
     {
         public float scale = 0.8f;
+        public int nounInitSlotNum = 7;
+        public int nounMaxSlotNum = 10;
+        public int verbDefaultSlotNum = 3;
+        public int verbMaxSlotNum = 5;
+        public int servantDefaultSlotNum = 3;
+        public int servantMaxSlotNum = 4;
     }
 
     [System.Serializable]

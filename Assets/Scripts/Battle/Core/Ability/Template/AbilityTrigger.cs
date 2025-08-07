@@ -39,6 +39,8 @@ public class AbilityTrigger : AbilityModule
         SelfDebuffThreshold = 135,                    //施加多少次负面状态后
         AccDamageThreshold = 136,                     //累计造成多少伤害
         AccStealNounTreshold = 137,                   //累计偷取名词（老鼠）
+
+        DetectSelfBuffNum=150,                        //检测自身的buff数量
     }
 
     public static AbilityTrigger Create(Type type)
@@ -122,6 +124,9 @@ public class AbilityTrigger : AbilityModule
                 break;
             case Type.AccStealNounTreshold:
                 trigger = new AMTAAccStealNounTreshold();
+                break;
+            case Type.DetectSelfBuffNum:
+                trigger = new AMTADetectSelfBuffNum();
                 break;
             default:
                 break;
@@ -691,5 +696,37 @@ public class AMTAAccStealNounTreshold : AbilityTrigger
     public override void Update(float deltaTime)
     {
        
+    }
+}
+public class AMTADetectSelfBuffNum : AbilityTrigger
+{
+    protected Formula mBuffId = new Formula("buff_id");
+    protected Formula mMinBuff = new Formula("min_buff");
+    protected Formula mMaxBuff = new Formula("max_buff");
+    protected int mCurrentAccBuff = 0;
+    public override void AddParams()
+    {
+        mParams.Add(mBuffId);
+        mParams.Add(mMinBuff);
+        mParams.Add(mMaxBuff);
+    }
+    public override void Update(float deltaTime)
+    {
+        foreach (var effect in mOwner.Unit.EffectAgent.Effects)
+        {
+            if ((int)effect.mType == mBuffId.EvaluateInt(mOwner))
+            {
+                mCurrentAccBuff++;
+            }
+        }
+        if(mCurrentAccBuff>=mMinBuff.EvaluateInt(mOwner)&& mCurrentAccBuff <= mMaxBuff.EvaluateInt(mOwner))
+        {
+            TryTrigger(mBuffId.EvaluateInt(mOwner));
+            mCurrentAccBuff = 0;
+        }
+        else
+        {
+            mCurrentAccBuff = 0;
+        }
     }
 }

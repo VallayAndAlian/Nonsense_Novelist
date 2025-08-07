@@ -94,6 +94,8 @@ public class DamageMeta
     public AbilityBase mAbility;
     public DealDamageFlag mFlag;
     public DamageType mDamageType;
+    public WordType mWordType;
+    public EffectType mEffectType;
 
     public float mAttack;
     public float mDefense;

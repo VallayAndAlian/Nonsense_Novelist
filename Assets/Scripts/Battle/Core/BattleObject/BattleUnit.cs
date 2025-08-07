@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.UI.CanvasScaler;
 
 public class BattleUnit : BattleObject
 {
@@ -11,7 +15,7 @@ public class BattleUnit : BattleObject
     public bool IsStart => mStart;
     
     protected bool mRemoved = false;
-    
+    private float mTime = 0;
     public BattleUnit ServantOwner { get; set; }
 
     protected float mHp = 0;
@@ -162,7 +166,33 @@ public class BattleUnit : BattleObject
         AttributeSet.Define(AttributeType.Def, mData.mDefense);
         AttributeSet.Define(AttributeType.Psy, mData.mPsy);
         AttributeSet.Define(AttributeType.San, mData.mSan);
+        AttributeSet.Define(AttributeType.Mag, mData.mMag);
         AttributeSet.Define(AttributeType.AttackSpeed, 1.0f);
+        AttributeSet.Define(AttributeType.RecoverHp, mData.mRecoverHp);
+        AttributeSet.Define(AttributeType.VerbDamageCoefficient, mData.mVerbDamageCoefficient);
+        AttributeSet.Define(AttributeType.VerbDamageMod, mData.mVerbDamageMod);
+        AttributeSet.Define(AttributeType.EffectDamageCoefficient,mData.mEffectDamageCoefficient);
+        AttributeSet.Define(AttributeType.NormalAttackDamage,mData.mNormalAttackDamageCoefficient);
+        AttributeSet.Define(AttributeType.DebuffUp, mData.mDebuffDurationUp);
+        AttributeSet.Define(AttributeType.HealUp, mData.mHealUp);
+        AttributeSet.Define(AttributeType.TakeHealUp, mData.mTakeHealUp);
+        AttributeSet.Define(AttributeType.SuckBlood, mData.mSuckBloodCoefficient);
+        AttributeSet.Define(AttributeType.Sdu, mData.mSdu);
+        AttributeSet.Define(AttributeType.Luc, mData.mLuc);
+        AttributeSet.Define(AttributeType.TauntLevel, mData.mTauntLevel);
+        AttributeSet.Define(AttributeType.NounSlotNum,BattleConfig.mData.unit.nounInitSlotNum);
+        AttributeSet.Define(AttributeType.VerbSlotNum, BattleConfig.mData.unit.verbDefaultSlotNum);
+        AttributeSet.Define(AttributeType.ServantSlotNum, BattleConfig.mData.unit.servantDefaultSlotNum);
+        AttributeSet.Define(AttributeType.ServantAttrBouns, mData.mServantAttrBouns);
+        AttributeSet.Define(AttributeType.ServantAttackSpeed, mData.mServantAttackSpeed);
+        AttributeSet.Define(AttributeType.PowerRecoverSpeed, mData.mPowerRecoverSpeed);
+        AttributeSet.Define(AttributeType.SingleMaxPowerDown, mData.mSingleMaxPowerDown);
+        AttributeSet.Define(AttributeType.AllMaxPowerDown, mData.mAllMaxPowerDown);
+        if (Data.mInitType != BattleUnitType.Servant)
+        {
+            AttributeSet.Define(AttributeType.Soc, mData.mSoc);
+            AttributeSet.Define(AttributeType.Pet, mData.mPet);
+        }
     }
 
     protected void AddComponents()
@@ -202,7 +232,6 @@ public class BattleUnit : BattleObject
     {
         return AttributeSet.Get(type);
     }
-
     public override void Start()
     {
         mHp = GetAttributeValue(AttributeType.MaxHp);
@@ -211,7 +240,6 @@ public class BattleUnit : BattleObject
         {
             comp.Start();
         }
-
         mStart = true;
     }
 
@@ -223,6 +251,15 @@ public class BattleUnit : BattleObject
         foreach (var comp in Components.Where(comp => comp.Enabled))
         {
             comp.Update(deltaSec);
+        }
+        if (IsAlive)
+        {
+            mTime += deltaSec;
+            if(mTime >= 2f)
+            {
+                RecoverHp();
+                mTime = 0;
+            }
         }
     }
 
@@ -312,7 +349,23 @@ public class BattleUnit : BattleObject
             AttributeSet.ModifyBase(type, mod, isPercent);
         }
     }
-    
+   public void RecoverHp()
+    {
+        if (mData.mRecoverHp == 0)
+            return;
+        mHp += mData.mRecoverHp;
+        mHp = Mathf.Min(mHp, MaxHp);
+    }
+    public float GetAttackedProbability()
+    {
+        var sum = 0;
+        foreach (var unit in Battle.CampManager.GetCampMember(this.Camp))
+        {
+            sum += (int)Math.Pow( 3 + unit.GetAttributeValue(AttributeType.TauntLevel),2);
+        }
+        return  (int)Math.Pow(3 + GetAttributeValue(AttributeType.TauntLevel), 2)/sum;
+    }
+
     #region DamageProcess
 
     /// <summary>
@@ -583,7 +636,26 @@ public class BattleUnit : BattleObject
 
         return number;
     }
+    public float ApplyHeal(AttributeType attributeType, float healValue)
+    {
+        float number = 0;
+        var attr=AttributeSet.GetAttribute(attributeType);
+        if (healValue > 0)
+        {
+            float currentvalue = GetAttributeValue(attributeType);
+            if (mData.mTakeHealUp != 0)
+            {
+                number = Mathf.Min(healValue*(1+mData.mTakeHealUp), attr.mBaseValue - currentvalue);
+            }
+            else
+            {
+                number = Mathf.Min(healValue, attr.mBaseValue - currentvalue);
+            }
+            attr.mValue += number;
+        }
 
+        return number;
+    }
     #endregion
 
 }

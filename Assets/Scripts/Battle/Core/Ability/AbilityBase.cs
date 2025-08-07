@@ -70,6 +70,8 @@ public class AbilityBase : CoreEntity
     
     public virtual bool IsUltra => false;
     public virtual float CD => mData.mCoolDown;
+    public WordType WordType=WordType.Undefined;
+    public EffectType EffectType=EffectType.None;
     
     
     public void Init()

@@ -37,6 +37,10 @@ public class EffectAgent : UnitComponent
             if (newBe.mDurationRule == EffectDurationRule.HasDuration)
             {
                 newBe.mExpiredTime = Owner.Battle.Now + spec.mDuration;
+                if (BattleHelper.IsNegativeEffect(spec))
+                {
+                    newBe.mExpiredTime = Owner.Battle.Now + spec.mDuration*(1+ spec.mInstigator.GetAttributeValue(AttributeType.DebuffUp));
+                }
             }
             
             mEffects.Add(newBe);
@@ -205,6 +209,7 @@ public class EffectAgent : UnitComponent
                         DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(effect.mInstigator);
                         dmg.mTarget = mOwner;
                         dmg.mAbility = effect.mAbility;
+                        dmg.mAbility.EffectType=effect.mType;//
                         dmg.mMinAttack = effect.mInputValue;
                         dmg.mMaxAttack = dmg.mMinAttack;
                         dmg.mMagic = true;
