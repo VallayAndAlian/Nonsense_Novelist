@@ -21,7 +21,7 @@ public class BattleFloatTextUI : BattleUI
         mainCamera = Camera.main;
         mFloatTexts=new FloatTextInfo(context,pos,startTime,type,uiText);
     } 
-    protected override void CreateUIpanel()
+    protected override void CreateUIPanel()
     {
         mUIPanel=ResMgr.GetInstance().Load<GameObject>("SecondStageLoad/floatWord");
         

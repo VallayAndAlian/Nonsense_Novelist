@@ -31,13 +31,12 @@ public abstract class GamePhase
     public abstract void Enter();
 
     // 每帧更新
-    public virtual void Update(float deltaTime)
-    {
-
-    }
+    public virtual void Update(float deltaTime) { }
+    
     public abstract void Exit();
 
     // 检测阶段是否结束
     public abstract bool DetectPhaseEnd();
+    public abstract bool DetectPvbIsEnd();
 
 }

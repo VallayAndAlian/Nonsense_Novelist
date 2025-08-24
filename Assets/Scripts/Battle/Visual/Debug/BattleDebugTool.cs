@@ -25,13 +25,15 @@ public class BattleDebugTool : ImGuiObjBase
     private void RegisterModules()
     {
         mModuleRoot = new GameObject("Modules");
-        mModuleRoot.transform.parent = transform;
+        mModuleRoot.transform.SetParent(transform);
         
         RegisterModule<DebugBattleInfo>();
+        RegisterModule<DebugPinball>();
         RegisterModule<DebugSpawnUnit>();
         RegisterModule<DebugUnitInspector>();
         RegisterModule<DebugAbility>();
         RegisterModule<DebugEffect>();
+        RegisterModule<DebugWord>();
     }
     
     private void RegisterModule<Ty>() where Ty : BattleDebugModule
@@ -62,7 +64,16 @@ public class BattleDebugTool : ImGuiObjBase
         if (ImGui.Button("Play"))
         {
             mStartBattle = true;
-            mBattle = mRunner.Battle;
+            mBattle = BattleRunner.Battle;
+            mBattle.Mode = BattleMode.Normal;
+            mRunner.StartBattle();
+        }
+        
+        if (ImGui.Button("TestShoot"))
+        {
+            mStartBattle = true;
+            mBattle = BattleRunner.Battle;
+            mBattle.Mode = BattleMode.TestShoot;
             mRunner.StartBattle();
         }
         
@@ -80,10 +91,12 @@ public class BattleDebugTool : ImGuiObjBase
             mImGuiObj = obj,
             mPickedUnit = UpdatePickedUnit(),
         };
+        
         if(mPickedUnit != null)
         {
             DrawUtils.DrawRotatedSquare(mPickedUnit.ViewPos,2, Time.time * 45,Color.red);
         }
+        
         foreach (var module in mModules)
         {
             ImGui.PushID(module.ModuleImGuiID);
@@ -117,9 +130,16 @@ public class BattleDebugTool : ImGuiObjBase
 
     public BattleUnit UpdatePickedUnit()
     {
-        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(1))
+        ImGui.Text("Alt + 鼠标4号键挑选单位");
+        
+        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(5))
         {
             mPickedUnit = BVHelper.GetUnitAtPosition(ClientUtils.GetMouseWorldPosition());
+        }
+
+        if (!mPickedUnit.IsValid())
+        {
+            mPickedUnit = null;
         }
         
         return mPickedUnit;

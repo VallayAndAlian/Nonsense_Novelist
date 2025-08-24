@@ -4,174 +4,228 @@ using UnityEngine;
 public enum ShootType
 {
     None = 0,
-    Split = 1,    // 分裂
-    Activate = 2, // 激活
-    spread = 3,   // 传播
-    Alpha = 4,     // 穿透
-    Start=5,     // 起兴
-    Servants=6,     // 连及
-    Dead=7,     // 歇后
-    Add=8,     // 递进
-    Small=9,     // 委婉
-    Big=10,     // 直白
-    Mirror=11,     // 对仗
-    Expect=12,     // 衬托
-    Copy=13,     // 比喻
-    SameChara=14,     // 顶针
-    ReTrigger=15,     // 回环
+    Split = 1,            // 分裂
+    Activate = 2,         // 激活
+    spread = 3,           // 传播
+    Alpha = 4,            // 穿透
+    Start = 5,            // 起兴
+    Servants = 6,         // 连及
+    Dead = 7,             // 歇后
+    Add = 8,              // 递进
+    Small = 9,            // 委婉
+    Big = 10,             // 直白
+    Mirror = 11,          // 对仗
+    Expect = 12,          // 衬托
+    Copy = 13,            // 比喻
+    SameChara = 14,       // 顶针
+    ReTrigger = 15,       // 回环
+}
+
+public enum HitTargetType
+{
+    None = 0,
+    
+}
+
+public class PreLineInfo
+{
+    public List<Vector3> colPos = new List<Vector3>();
+
 }
 
 public abstract class PinBall : BattleObject
 {
     public class Ball
     {
-        public Transform transform;//小球本体
-        public Transform preTransform;//预测小球位置
-        public Vector2 velocity;//小球实际速度
-        public Vector2 preVelocity;//预测小球速度
-        public LayerMask collisionLayer = LayerMask.GetMask("wall", "WordCollision");
-        public WordTable.Data wordData;
-        public float radius = 0.5f;
-        public float friction = 0.1f;
-        public float energyLoss = 0.2f;
-        public bool hasShoot=false;
+        public WordTable.Data mWordData = null;
+        public Transform mTransform = null; //小球本体
+        public float mShootAngle = 0; //小球发射角度
+        public Vector2 mVelocity = Vector2.zero; //小球实际速度
         
+        public LayerMask mCollisionLayer = LayerMask.GetMask("wall", "WordCollision", "Character");
+        public float mRadius = 0.5f;
+        public float mFriction = 0.1f;
+        public float mEnergyLoss = 0.2f;
     }
-  
 
-    public class PreLineInfo
-    {
-        public List<Vector3> colPos=new List<Vector3>();
-        
-    }
+    public static int mWallLayer = LayerMask.NameToLayer("wall");
+    public static int mWordLayer = LayerMask.NameToLayer("WordCollision");
+    public static int mCharacterLayer = LayerMask.NameToLayer("Character");
 
     public Ball mBall;
-    public PreLineInfo mPreInfo;
-    private int preMoveTimes=30;
+    public PreLineInfo mSimulateInfo = new PreLineInfo();
+
+    protected bool mSimulate = false;
 
     public void ShootOut()
-    {   SyncPreAndReal();
-        mBall.hasShoot=true;
+    {
+        mSimulate = false;
+        IsTickEnable = true;
         SetSizeToRadius();
     }
-
-    public void SyncPreAndReal()
-    {
-        if(mBall.hasShoot)
-        {
-            mBall.transform.position=mBall.preTransform.position;
-            mBall.transform.rotation= mBall.preTransform.rotation; 
-            mBall.velocity=mBall.preVelocity;
-        }
-        else
-        {
-            if(mBall.preTransform==null)
-            {
-                var obk=new GameObject();
-                mBall.preTransform=obk.transform;
-            }
-            mBall.preTransform.position=mBall.transform.position;    
-            mBall.preTransform.rotation= mBall.transform.rotation; 
-            mBall.preVelocity=mBall.velocity;   
-        }      
-    }
-
-
-
+    
     public override void LateFixedUpdate(float deltaSec)
     {
-        if (!IsTickEnable) return;
-
-       SyncPreAndReal(); 
-        if(mBall.hasShoot)
-        {
-            PreUpdate(deltaSec);  
-        }
-        else
-        {   
-            mPreInfo.colPos.Clear();
-            for(int i=0;i<preMoveTimes;i++)
-            {
-                PreUpdate(deltaSec);
-            }
-               
-        }
-
+        TickMovement(deltaSec);
     }
+    
+    public virtual void TickSimulation(int times, float deltaSec)
+    {
+        mSimulate = true;
+        
+        var cachePos = mBall.mTransform.position;
+        var cacheRotation = mBall.mTransform.rotation;
+        var cacheVelocity = mBall.mVelocity;
+        
+        mSimulateInfo.colPos.Clear();
+        for (int i = 0; i < times; i++)
+        {
+            TickMovement(deltaSec);
+        }
+        
+        mSimulateInfo.colPos.Add(mBall.mTransform.position);
+        
+        mBall.mTransform.position = cachePos;
+        mBall.mTransform.rotation = cacheRotation;
+        mBall.mVelocity = cacheVelocity;
+    }
+
     public void SetSizeToRadius()
     {
-        if(mBall.transform==null)return;
+        if (mBall.mTransform == null) 
+            return;
+        
         SpriteRenderer ballSprite;
-        mBall.transform.TryGetComponent<SpriteRenderer>(out ballSprite);
-        if(ballSprite==null)return;
+        mBall.mTransform.TryGetComponent<SpriteRenderer>(out ballSprite);
+        if (ballSprite == null) 
+            return;
+        
         Vector2 spriteSize = ballSprite.sprite.bounds.size;
-        float scale = (mBall.radius * 2) / Mathf.Max(spriteSize.x, spriteSize.y);
-        mBall.transform.localScale = new Vector3(scale, scale, 1f);       
+        float scale = (mBall.mRadius * 2) / Mathf.Max(spriteSize.x, spriteSize.y);
+        mBall.mTransform.localScale = new Vector3(scale, scale, 1f);
     }
 
-    public  void PreUpdate(float deltaSec)
+    public void TickMovement(float deltaSec)
     {
         ApplyFriction(deltaSec);
-        mBall.preTransform.position += (Vector3)mBall.preVelocity * deltaSec;
+        mBall.mTransform.position += (Vector3)mBall.mVelocity * deltaSec;
 
         RaycastHit2D hit = Physics2D.CircleCast(
-            mBall.preTransform.position,
-            mBall.radius,
-            mBall.preVelocity.normalized,
-            mBall.preVelocity.magnitude * deltaSec,
-            mBall.collisionLayer
+            mBall.mTransform.position,
+            mBall.mRadius,
+            mBall.mVelocity.normalized,
+            mBall.mVelocity.magnitude * deltaSec,
+            mBall.mCollisionLayer
         );
-       
+
         if (hit.collider != null)
         {
-            HandleCollision(hit);       
+            HandleCollision(hit);
         }
     }
 
     private void ApplyFriction(float deltaSec)
     {
-        float frictionLoss = mBall.friction * mBall.preVelocity.magnitude * deltaSec;
-        mBall.preVelocity *= Mathf.Max(1f - frictionLoss / mBall.preVelocity.magnitude, 0f);
+        float frictionLoss = mBall.mFriction * mBall.mVelocity.magnitude * deltaSec;
+        mBall.mVelocity *= Mathf.Max(1f - frictionLoss / mBall.mVelocity.magnitude, 0f);
     }
 
     protected virtual void HandleCollision(RaycastHit2D hit)
     {
-        Debug.Log(hit.collider.gameObject.name);
-
-        var wall=Battle.ObjectManager.Find<WallObject>(hit.collider);
-        if(wall==null)
+        int layer = hit.collider.gameObject.layer;
+        if (mSimulate)
         {
-            return;
-        }
-        Debug.Log("HandleCollision");
-        mBall.preTransform.position = wall.ApplyBounceEffectToPos(mBall.radius,hit.point,(Vector2)mBall.preTransform.position);
-        mBall.preVelocity=wall.ApplyBounceEffectToVel(ref mBall.preVelocity, hit.normal);
-
-
-        if(mBall.hasShoot)  
-        {
-            OnCollision();
+            if (layer == mWallLayer)
+            {
+                OnPreHitWall(hit);
+            }
         }
         else
         {
-            mPreInfo.colPos.Add(hit.point);
-            OnPreCollision();
+            if (layer == mWordLayer)
+            {
+                OnHitWord(hit);
+            }
+            else if (layer == mCharacterLayer)
+            {
+                OnHitUnit(hit);
+            }
+            else if (layer == mWallLayer)
+            {
+                OnHitWall(hit);
+            }
         }
-            
     }
 
-    protected virtual void OnPreCollision() 
+    protected virtual void OnPreHitWall(RaycastHit2D hit)
+    {
+        var wall = Battle.ObjectManager.Find<WallObject>(hit.collider);
+        if (wall == null)
+            return;
+        
+        mBall.mTransform.position =
+            wall.ApplyBounceEffectToPos(mBall.mRadius, hit.point, (Vector2)mBall.mTransform.position);
+        mBall.mVelocity = wall.ApplyBounceEffectToVel(ref mBall.mVelocity, hit.normal);
+        
+        mSimulateInfo.colPos.Add(hit.point);
+        OnPreCollision();
+    }
+
+    protected virtual void OnHitWall(RaycastHit2D hit)
+    {
+        var wall = Battle.ObjectManager.Find<WallObject>(hit.collider);
+        if (wall == null)
+            return;
+
+        mBall.mTransform.position =
+            wall.ApplyBounceEffectToPos(mBall.mRadius, hit.point, (Vector2)mBall.mTransform.position);
+        mBall.mVelocity = wall.ApplyBounceEffectToVel(ref mBall.mVelocity, hit.normal);
+        
+        OnCollision();
+    }
+
+    protected virtual void OnHitWord(RaycastHit2D hit)
     {
         
     }
-
-
-    protected virtual void OnCollision() 
+    
+    protected virtual void OnHitUnit(RaycastHit2D hit)
     {
-        PlayEffect(mBall.transform.position);
+        var role = hit.collider.transform.parent.GetComponentInChildren<UnitViewBase>().Role;
+        if (!role.IsValid())
+            return;
+
+        role.WordComponent.AddWord(mBall.mWordData.mKind);
+        Expired();
+    }
+
+    protected virtual void OnPreCollision()
+    {
+
+    }
+
+
+    protected virtual void OnCollision()
+    {
+        PlayEffect(mBall.mTransform.position);
     }
 
     private void PlayEffect(Vector2 position)
     {
+    }
+
+    protected virtual void Expired()
+    {
+        if (mBall == null)
+            return;
+        
+        MarkPendingKill();
+
+        if (mBall.mTransform != null)
+        {
+            Object.Destroy(mBall.mTransform.gameObject);
+        }
+        
+        mBall.mTransform = null;
     }
 }

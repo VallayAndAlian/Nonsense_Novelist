@@ -27,6 +27,16 @@ public class Formula
     {
         return (int)mValues[0];
     }
+
+    public int EvaluateInt()
+    {
+        return (int)mValues[0];
+    }
+
+    public List<float> EvaluateList(AbilityBase abi)
+    {
+        return mValues;
+    }
 }
 
 public class AbilityBase : CoreEntity
@@ -60,11 +70,14 @@ public class AbilityBase : CoreEntity
     
     public virtual bool IsUltra => false;
     public virtual float CD => mData.mCoolDown;
+    public WordType WordType=WordType.Undefined;
+    public EffectType EffectType=EffectType.None;
     
     
     public void Init()
     {
         OnInit();
+        EventManager.Subscribe<BattleUnit, DamageReport>(EventEnum.UnitDie, OnPawnDeath);
     }
 
     protected virtual void OnInit() { }
@@ -79,8 +92,11 @@ public class AbilityBase : CoreEntity
     
     public virtual bool CanActivate() { return false; }
     
-    public bool TryActivate()
+    public bool TryActivate(bool bIgnoreCheck = false)
     {
+        if (!bIgnoreCheck && !CanActivate())
+            return false;
+        
         if (!mActivated)
         {
             mActivated = true;
@@ -173,11 +189,13 @@ public class AbilityBase : CoreEntity
     #endregion
 
     #region EffectProcess
-
     
+    public virtual void OnSelfApplyEffect(BattleEffect be) { }
+    public virtual void OnPawnApplyEffect(BattleEffect be) { }
+    public virtual void OnSelfApplyHealEffect(BattleEffect be) { }
 
     #endregion
-    
+
     #region ParseCustomParams
 
     protected List<Formula> mParams = new List<Formula>();

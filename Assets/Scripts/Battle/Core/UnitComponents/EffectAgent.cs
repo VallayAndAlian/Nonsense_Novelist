@@ -1,6 +1,7 @@
 ﻿
 
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EffectAgent : UnitComponent
 {
@@ -14,7 +15,7 @@ public class EffectAgent : UnitComponent
         return target.EffectAgent?.ApplyEffect(spec);
     }
 
-    public BattleEffect ApplyEffect(BattleEffectSpec spec)
+    protected BattleEffect ApplyEffect(BattleEffectSpec spec)
     {
         if (!CanApplyEffect(spec))
             return null;
@@ -36,9 +37,19 @@ public class EffectAgent : UnitComponent
             if (newBe.mDurationRule == EffectDurationRule.HasDuration)
             {
                 newBe.mExpiredTime = Owner.Battle.Now + spec.mDuration;
+                if (BattleHelper.IsNegativeEffect(spec))
+                {
+                    newBe.mExpiredTime = Owner.Battle.Now + spec.mDuration*(1+ spec.mInstigator.GetAttributeValue(AttributeType.DebuffUp));
+                }
             }
             
             mEffects.Add(newBe);
+
+            mOwner.OnSelfApplyEffect(newBe);
+            if (newBe.mType == EffectType.Heal)
+            {
+                mOwner.OnSelfApplyHealEffect(newBe);
+            }
             
             mOwner.UnitView.OnApplyEffect(newBe);
             
@@ -104,16 +115,42 @@ public class EffectAgent : UnitComponent
             {
                 mergedBe.mExpiredTime = Owner.Battle.Now + spec.mDuration;
             }
-
-            if (spec.mMergeInputValue)
+            
+            if (mergedBe.mMaxStackCount == 0 || mergedBe.mStackCount < mergedBe.mMaxStackCount)
             {
-                mergedBe.mInputValue = BattleHelper.MergerEffectValue(spec.mType, spec.mInputValue, effect.mInputValue);
+                if (spec.mMergeInputValue)
+                {
+                    mergedBe.mInputValue = BattleHelper.MergerEffectValue(spec.mType, spec.mInputValue, effect.mInputValue);
+                }
+
+                if (mergedBe.mMaxStackCount > 0)
+                {
+                    mergedBe.mStackCount = Mathf.Clamp(mergedBe.mStackCount + spec.mStackCount, 0, mergedBe.mMaxStackCount);
+                }
+                else
+                {
+                    ++mergedBe.mStackCount;
+                }
             }
             
             break;
         }
         
         return mergedBe;
+    }
+
+    public void ClearEffects()
+    {
+        foreach (var effect in mEffects)
+        {
+            mOwner.UnitView.OnRemoveEffect(effect);
+
+            EventManager.Invoke(EventEnum.RemoveEffect, effect);
+
+            effect.Dispose();
+        }
+
+        mEffects.Clear();
     }
 
     public override void LateUpdate(float deltaTime)
@@ -129,6 +166,18 @@ public class EffectAgent : UnitComponent
             }
 
             if (effect.mDurationRule == EffectDurationRule.HasDuration && Owner.Battle.Now > effect.mExpiredTime)
+            {
+                mRemovedEffect.Add(effect);
+                continue;
+            }
+
+            if (effect.mDurationRule == EffectDurationRule.Script && !effect.mAbility.IsValid())
+            {
+                mRemovedEffect.Add(effect);
+                continue;
+            }
+
+            if (effect.mIsRemoveOnCombatEnd && Owner.Battle.BattlePhase.IsCombat == false)
             {
                 mRemovedEffect.Add(effect);
                 continue;
@@ -160,6 +209,7 @@ public class EffectAgent : UnitComponent
                         DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(effect.mInstigator);
                         dmg.mTarget = mOwner;
                         dmg.mAbility = effect.mAbility;
+                        dmg.mAbility.EffectType=effect.mType;//
                         dmg.mMinAttack = effect.mInputValue;
                         dmg.mMaxAttack = dmg.mMinAttack;
                         dmg.mMagic = true;
@@ -179,14 +229,27 @@ public class EffectAgent : UnitComponent
         {
             foreach (var effect in mRemovedEffect)
             {
-                mOwner.UnitView.OnApplyEffect(effect);
+                mOwner.UnitView.OnRemoveEffect(effect);
                 
                 EventManager.Invoke(EventEnum.RemoveEffect, effect);
                 
                 mEffects.Remove(effect);
+                
+                effect.Dispose();
             }
         
             mRemovedEffect.Clear();
         }
+    }
+    
+    public override void OnSelfDeath(DamageReport report)
+    {
+        ClearEffects();
+    }
+
+    public override void OnExitCombatPhase()
+    {
+        // 清除buff
+        ClearEffects();
     }
 }

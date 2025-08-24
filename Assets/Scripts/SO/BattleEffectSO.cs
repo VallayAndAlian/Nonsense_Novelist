@@ -14,6 +14,9 @@ public class EffectFxData
     [Tooltip("播放类型")]
     public EffectFxPlayType mPlayType = EffectFxPlayType.None;
     
+    [Tooltip("描述")]
+    public string mDesc;
+    
     [Tooltip("插槽")]
     public string mSocketName;
 

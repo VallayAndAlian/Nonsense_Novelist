@@ -9,6 +9,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
+/[Uu]ser[Ss]ettings/
 /.idea/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
@@ -61,13 +62,5 @@ crashlytics-build.properties
 UserSettings/EditorUserSettings.asset
 UserSettings/Layouts/CurrentMaximizeLayout.dwlt
 UserSettings/Layouts/default-2021.dwlt
-UserSettings/Layouts/default-2021.dwlt
-UserSettings/EditorUserSettings.asset
-UserSettings/EditorUserSettings.asset
-UserSettings/Layouts/default-2021.dwlt
 imgui.ini
-UserSettings/EditorUserSettings.asset
-UserSettings/Layouts/default-2021.dwlt
-UserSettings/Layouts/default-2021.dwlt
-UserSettings/Layouts/default-2021.dwlt
-UserSettings/Layouts/default-2021.dwlt
+UserSettings

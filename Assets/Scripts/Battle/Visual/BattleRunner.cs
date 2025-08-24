@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.CanvasScaler;
 
 public class BattleRunner : MonoBehaviour
 {
     public static BattleRunner Instance = null;
     
     protected BattleBase mBattle = null;
-    public BattleBase Battle => mBattle;
+    public static BattleBase Battle => Instance.mBattle;
 
     protected List<BattleVisualSystemBase> mSystems = new List<BattleVisualSystemBase>();
 
@@ -19,6 +20,8 @@ public class BattleRunner : MonoBehaviour
     private void Start()
     {
         UIStatics.ResetCanvas();
+        
+        EventManager.Subscribe<BattleCamp>(EventEnum.BattleEnd, OnBattleEnd);
     }
 
     private void OnDestroy()
@@ -76,5 +79,11 @@ public class BattleRunner : MonoBehaviour
         {
             system.Tick(deltaSec);
         }
+    }
+
+    public void OnBattleEnd(BattleCamp winner)
+    {
+        var infoUI = Battle.BattleUI.Add(new BattlePhaseUI_End());
+        Battle.BattleUI.ShowPanel(infoUI);
     }
 }

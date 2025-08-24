@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
   m_Name: shalemei_SkeletonData
   m_EditorClassIdentifier: 
-  atlasAssets: []
+  atlasAssets:
+  - {fileID: 11400000, guid: 662b53424b592ff4d9aa71a048273e9c, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: 8323090d8d90cce48bc176282cf1aa50, type: 3}
   isUpgradingBlendModeMaterials: 0

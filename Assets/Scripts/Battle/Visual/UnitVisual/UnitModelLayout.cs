@@ -2,12 +2,19 @@
 using Spine.Unity;
 using UnityEngine;
 
+public enum UnitAnimType
+{
+    None = 0,
+    Anim,
+    Spine,
+}
+
 public class UnitModelLayout : MonoBehaviour
 {
     protected Animator mAnimator = null;
     protected AnimEventReceiver mAnimEvents = null;
-    protected AudioSource mAudioSource = null;
     protected SkeletonAnimation mSpineAnimator = null;
+    protected AudioSource mAudioSource = null;
     
     public Animator Animator => mAnimator;
     public AnimEventReceiver AnimEvents => mAnimEvents;
@@ -15,27 +22,33 @@ public class UnitModelLayout : MonoBehaviour
 
     
     protected Transform mWeaponPart;
-    public Transform WeaponPart => mWeaponPart;
+
+    protected UnitViewBase mOwner = null;
     
     // 角色的各个骨骼的transform
     
     public void Setup(UnitViewBase unitObj)
     {
-        mAnimator = GetComponent<Animator>();
-        if (mAnimator != null)
+        mOwner = unitObj;
+        
+        if (unitObj.mAnimType == UnitAnimType.Anim)
         {
+            mAnimator = GetComponent<Animator>();
             mAnimator.runtimeAnimatorController = unitObj.Asset.animatorController;
         }
         else
         {
             mSpineAnimator = GetComponent<SkeletonAnimation>();
         }
-
-
-        mAnimEvents = mAnimator.GetComponent<AnimEventReceiver>();
+        
+        mWeaponPart = unitObj.transform.Find("WeaponMuzzle");
+        if (mWeaponPart == null)
+        {
+            mWeaponPart = unitObj.Root;
+        }
+        
+        mAnimEvents = GetComponent<AnimEventReceiver>();
         mAudioSource = GetComponent<AudioSource>();
-
-        mWeaponPart = transform;
     }
 
     public void PlayAnimation(string animName, bool isLoop = false)
@@ -48,6 +61,21 @@ public class UnitModelLayout : MonoBehaviour
         {
             mSpineAnimator.state.SetAnimation(0, animName, isLoop);
         }
+    }
+
+    public Vector3 GetWeaponPos()
+    {
+        // if (mOwner.mAnimType == UnitAnimType.Anim)
+        // {
+        //     Spine.Bone bone = mSpineAnimator.Skeleton.FindBone(mOwner.Asset.weaponSocket);
+        //
+        //     if (bone != null)
+        //     {
+        //         return mSpineAnimator.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0));
+        //     }
+        // }
+        
+        return mWeaponPart.position;
     }
 
     private void Update()

@@ -5,7 +5,7 @@
 /// </summary>
 public enum BookNameEnum
 {
-    /// <summary>全书籍/字典 </summary>
+    /// <summary>全书籍</summary>
     allBooks = 0,
   
     /// <summary>女巫学徒 </summary>
@@ -26,5 +26,6 @@ public enum BookNameEnum
     FluStudy = 8,
     /// <summary>蚂蚁帝国 </summary>
     PHXTwist = 9,
-   
+    /// <summary>字典  </summary>
+    Dictionary = 10,
 };

@@ -11,6 +11,9 @@ public class BattleUnitSO : ScriptableObject
 
     [Tooltip("角色预制体")]
     public GameObject prefab;
+    
+    [Tooltip("UI展示预制体")]
+    public GameObject uiPrefab;
 
     [Tooltip("角色缩略描述")][TextArea]
     public string infoShort;
@@ -22,13 +25,13 @@ public class BattleUnitSO : ScriptableObject
     public Texture2D pic;
     
     [Tooltip("场景角色")]
-    public Sprite sprite;
+    public Texture2D sprite;
 
-    [Tooltip("角色子弹")]
-    public GameObject weaponProj;
-    
     [Tooltip("角色动画")]
     public AnimatorController animatorController;
+
+    [Tooltip("武器插槽名")] 
+    public string weaponSocket = "weaponMuzzle";
 
     [Space(20)][Header("角色特性")][Space(5)]
 

@@ -1,22 +1,24 @@
+using System.Collections.Generic;
 using UnityEngine;
 public class BattlePhaseUI_Battle : BattleUI
 {
+    protected DeckView mDeckView = null;
+    
     public BattlePhaseUI_Battle()
     { 
   
-    } 
+    }
 
-    protected override void CreateUIpanel()
+    protected override void CreateUIPanel()
     {
-        mUIPanel=ResMgr.GetInstance().Load<GameObject>("UI/Battle/phase_battle");
+        mUIPanel = ResMgr.GetInstance().Load<GameObject>("UI/Battle/phase_battle");
     }
     
     public override void Init() 
     {
-        base.Init();
-       
+        mDeckView = mUIPanel.transform.Find("Panel/ShootTime_New").GetComponent<DeckView>();
+        mDeckView.Setup(Battle.CardDeckManager);
     }
-
     
     public override void Update(float deltaTime) 
     {

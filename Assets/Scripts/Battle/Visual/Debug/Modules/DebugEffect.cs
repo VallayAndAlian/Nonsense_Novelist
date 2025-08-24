@@ -38,7 +38,17 @@ public class DebugEffect : BattleDebugModule
             ImGui.NextColumn();
             
             ImGui.Text($"{effect.mType.ToString()}");ImGui.NextColumn();
-            ImGui.Text((effect.mExpiredTime - context.mBattle.Now).ToString("F2"));ImGui.NextColumn();
+
+            if (effect.mDurationRule == EffectDurationRule.HasDuration)
+            {
+                ImGui.Text((effect.mExpiredTime - context.mBattle.Now).ToString("F2"));
+            }
+            else
+            {
+                ImGui.Text("Script");
+            }
+            
+            ImGui.NextColumn();
             ImGui.Text($"{effect.mStackCount}");ImGui.NextColumn();
             
             ImGui.PopID();

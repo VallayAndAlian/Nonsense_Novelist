@@ -5,10 +5,11 @@ using UnityEngine.Assertions.Must;
 
 public class BattleBase : MonoBehaviour
 {
-
     protected BattleState mState = BattleState.None;
     public BattleState State => mState;
     
+    public BattleMode Mode { get; set; }
+
     protected List<BattleModule> mModules = new List<BattleModule>();
 
     protected BattleClock mClock = null;
@@ -19,10 +20,11 @@ public class BattleBase : MonoBehaviour
     protected BattleCampManager mCampManager = null;
     protected CardDeckManager mCardDeckManager = null;
     protected PinBallLauncher mPinBallLauncher = null;
-    protected BattlePhase mBattlePhase=null;
-    protected BattleScene mBattleScene=null;
-    protected BattleUIManage mBattleUI=null;
-    
+    protected BattlePhase mBattlePhase = null;
+    protected BattleScene mBattleScene = null;
+    protected BattleUIManager mBattleUI = null;
+    protected UnitDeckManager mUnitDeck = null;
+
 
     public BattleClock Clock => mClock;
     public BattleStage Stage => mStage;
@@ -32,14 +34,16 @@ public class BattleBase : MonoBehaviour
     public BattleCampManager CampManager => mCampManager;
     public CardDeckManager CardDeckManager => mCardDeckManager;
     public PinBallLauncher PinBallLauncher => mPinBallLauncher;
-    public BattlePhase BattlePhase=> mBattlePhase;
-    public BattleScene BattleScene=> mBattleScene;
-    public BattleUIManage BattleUI=>mBattleUI;
+    public BattlePhase BattlePhase => mBattlePhase;
+    public BattleScene BattleScene => mBattleScene;
+    public BattleUIManager BattleUI => mBattleUI;
+    public UnitDeckManager UnitDeck => mUnitDeck;
 
-    
+
     public float Now => mClock?.ElapsedSec ?? 0;
-    private float fixedTimeAccumulated = 0f;
-    private const float FixedDeltaTime = 0.02f;  
+    protected float mFixedTimeAccumulated = 0f;
+    private const float FixedDeltaTime = 1.0f / 60;
+    
     public bool IsFinished => mState == BattleState.End;
 
     public void Init()
@@ -52,12 +56,12 @@ public class BattleBase : MonoBehaviour
     public void Begin()
     {
         mState = BattleState.Inprogress;
-        
+
         foreach (var module in mModules)
         {
             module.Begin();
         }
-        
+
         foreach (var module in mModules)
         {
             module.PostBegin();
@@ -68,27 +72,33 @@ public class BattleBase : MonoBehaviour
     {
         if (mState != BattleState.Inprogress)
             return;
-        
+
         foreach (var module in mModules)
         {
-            module.Update(deltaSec);
+            if (module.IsSupportUpdateInRest || BattlePhase.IsCombat)
+            {
+                module.Update(deltaSec);
+            }
         }
-        
+
         foreach (var module in mModules)
         {
-            module.LateUpdate(deltaSec);
+            if (module.IsSupportUpdateInRest || BattlePhase.IsCombat)
+            {
+                module.LateUpdate(deltaSec);
+            }
         }
 
 
-        fixedTimeAccumulated += deltaSec;
-        while (fixedTimeAccumulated >= FixedDeltaTime)
+        mFixedTimeAccumulated += deltaSec;
+        while (mFixedTimeAccumulated >= FixedDeltaTime)
         {
             foreach (var module in mModules)
             {
                 module.LateFixedUpdate(FixedDeltaTime);
             }
 
-            fixedTimeAccumulated -= FixedDeltaTime;
+            mFixedTimeAccumulated -= FixedDeltaTime;
         }
     }
 
@@ -98,30 +108,30 @@ public class BattleBase : MonoBehaviour
         {
             module.Dispose();
         }
-        
+
         mModules.Clear();
     }
-    
+
     protected virtual void AddModules()
-    {        
-        mBattleUI = new BattleUIManage();
+    {
+        mBattleUI = new BattleUIManager();
         RegisterModule(mBattleUI);
 
         mClock = new BattleClock();
         RegisterModule(mClock);
-        
+
         mStage = new BattleStage();
         RegisterModule(mStage);
-        
+
         mGameState = new BattleGameState();
         RegisterModule(mGameState);
-        
+
         mObjectManager = new BattleObjectManager();
         RegisterModule(mObjectManager);
-        
+
         mObjectFactory = new BattleObjectFactory();
         RegisterModule(mObjectFactory);
-        
+
         mCampManager = new BattleCampManager();
         RegisterModule(mCampManager);
 
@@ -135,7 +145,10 @@ public class BattleBase : MonoBehaviour
         RegisterModule(mPinBallLauncher);
 
         mBattlePhase = new BattlePhase();
-        RegisterModule(mBattlePhase); 
+        RegisterModule(mBattlePhase);
+
+        mUnitDeck = new UnitDeckManager();
+        RegisterModule(mUnitDeck);
 
     }
 
@@ -151,5 +164,44 @@ public class BattleBase : MonoBehaviour
         {
             module.Init();
         }
+    }
+
+    public void OnEnterCombatPhase()
+    {
+        foreach (var module in mModules)
+        {
+            module.OnEnterCombatPhase();
+        }
+    }
+
+    public void OnExitCombatPhase()
+    {
+        foreach (var module in mModules)
+        {
+            module.OnExitCombatPhase();
+        }
+    }
+
+    public void OnEnterResetPhase()
+    {
+        foreach (var module in mModules)
+        {
+            module.OnEnterResetPhase();
+        }
+    }
+
+    public void OnExitRestPhase()
+    {
+        foreach (var module in mModules)
+        {
+            module.OnExitRestPhase();
+        }
+    }
+
+    public void EndBattle(BattleCamp winner)
+    {
+        mState = BattleState.End;
+        
+        EventManager.Invoke(EventEnum.BattleEnd, winner);
     }
 }

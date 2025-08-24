@@ -7,13 +7,15 @@ using System.Linq;
 public enum AbilityType
 {
     None = 0,
-    TemplateAbility,                            // 模板类技能
-    PermanentAttribute,
-    AttributeMod,
-    AttributePercentMod,
-    
+    TemplateAbility = 1,                            // 模板类技能
+    PermanentAttribute = 2,
+    AttributeMod = 3,
+    AttributePercentMod = 4,
+
+
     AutoAttack = 10,
     TestUltra = 11,
+    AutoHeal = 12,
 }
 
 public class AbilityFactory
@@ -23,13 +25,14 @@ public class AbilityFactory
         { AbilityType.TemplateAbility, typeof(AbilityTemplate) },
         { AbilityType.PermanentAttribute, typeof(AbilityPermanentAttribute) },
         { AbilityType.AutoAttack, typeof(AbilityAutoAttack) },
+        { AbilityType.AutoHeal, typeof(AbilityAutoHeal) },
         { AbilityType.TestUltra, typeof(AbilityTestUltra) },
     };
 
     public static AbilityBase CreateAbility(int abiID)
     {
         var data = AbilityTable.Find(abiID);
-        if (data == null)
+        if (data == null || data.mForbidden)
             return null;
         
         if (data.mType == AbilityType.TemplateAbility)

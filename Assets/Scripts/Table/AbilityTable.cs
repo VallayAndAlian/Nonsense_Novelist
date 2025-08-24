@@ -10,7 +10,12 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         public AbilityType mType;
         public string mName;
         public string mDesc;
-        
+
+        public bool mForbidden;
+        public bool mVerbDamageCoefficient;
+        public bool mEffectDamageCoefficient;
+        public bool mNormalAttackDamageCoefficient;
+        public bool mSuckBloodCoefficient;
         public int mTriggerKind;
         public int mSelectorKind;
         public List<int> mEffectApplierList;
@@ -34,8 +39,13 @@ public class AbilityTable : MapTable<int, AbilityTable.Data>
         data.mName = reader.Read<string>();
         data.mDesc = reader.Read<string>();
         
+        data.mForbidden = reader.Read<bool>();
+        data.mVerbDamageCoefficient = reader.Read<bool>();
+        data.mEffectDamageCoefficient = reader.Read<bool>();
+        data.mNormalAttackDamageCoefficient = reader.Read<bool>();
+        data.mSuckBloodCoefficient = reader.Read<bool>();
         // data.mMaxStackCount = reader.Read<int>();
-        
+
         data.mTriggerKind = reader.Read<int>();
         data.mSelectorKind = reader.Read<int>();
         data.mEffectApplierList = reader.ReadVec<int>();

@@ -62,7 +62,7 @@ public class PoolMgr : BaseManager<PoolMgr>
     {
         if(prefabData==null)
         {
-            prefabData = Resources.Load<PrefabSO>("SO/PrefabSO");    
+            prefabData = AssetManager.Load<PrefabSO>("SO/PrefabSO");
         }
 
         GameObject obj=null;

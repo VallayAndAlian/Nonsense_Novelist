@@ -37,7 +37,7 @@ public class NnProjectile : MonoBehaviour
             projRoot = new GameObject("ProjectileRoot");
         }
 
-        transform.parent = projRoot.transform;
+        transform.SetParent(projRoot.transform);
     }
     
     public void Emit()
@@ -45,18 +45,18 @@ public class NnProjectile : MonoBehaviour
         if (mMeta.mData.mType == EmitType.EnemyToSelf)
         {
             mEmitPos = mMeta.mTarget.ViewPos;
-            mTargetPos = mMeta.mInstigator.UnitView.ModelLayout.WeaponPart.position;
+            mTargetPos = mMeta.mInstigator.ViewPos;
         }
         else
         {
-            mEmitPos = mMeta.mInstigator.UnitView.ModelLayout.WeaponPart.position;
+            mEmitPos = mMeta.mInstigator.UnitView.ModelLayout.GetWeaponPos();
             mTargetPos = mMeta.mTarget.ViewPos;
         }
         
         Vector3 offset = mTargetPos - mEmitPos;
         var transform1 = transform;
         transform1.position = mEmitPos;
-        transform1.rotation = Quaternion.Euler(Mathf.Atan2(offset.y, offset.x), 0, 0);
+        transform1.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(offset.y, offset.x));
         
         if (mAsset.emitterFx != null)
         {

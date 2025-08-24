@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 public struct UnitInstance
 {
@@ -92,6 +93,9 @@ public class DamageMeta
     public BattleUnit mTarget;
     public AbilityBase mAbility;
     public DealDamageFlag mFlag;
+    public DamageType mDamageType;
+    public WordType mWordType;
+    public EffectType mEffectType;
 
     public float mAttack;
     public float mDefense;
@@ -124,4 +128,13 @@ public class EmitMeta
     {
         mHitCallBack?.Invoke(mTarget);
     }
+}
+
+public class CombatReport
+{
+    public BattlePhaseType mPhaseType;
+    public int mChapter;//关卡
+    public bool mIsHasWinner;
+    public List<BattleCamp> mWinCamp;
+    public int mActiveNum;
 }

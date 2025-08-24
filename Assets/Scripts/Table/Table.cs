@@ -203,8 +203,8 @@ public abstract class JsonTable<TV> : TableBase
     public override TableErrorMeta Parse(string text)
     {
         TableErrorMeta errorMeta = new TableErrorMeta();
-        
-        mData = JsonUtility.FromJson<TV>(text);
+
+        mData = JsonUtility.FromJson<TV>(RemoveJsonComments(text));
         if (mData == null)
         {
             errorMeta.mErrorType = TableErrorType.ParseLine;
@@ -212,4 +212,13 @@ public abstract class JsonTable<TV> : TableBase
         
         return errorMeta;
     }
+    
+    public string RemoveJsonComments(string json)
+    {
+        // ÒÆ³ýµ¥ÐÐ×¢ÊÍ
+        json = System.Text.RegularExpressions.Regex.Replace(json, @"//.*", "");
+        // ÒÆ³ý¶àÐÐ×¢ÊÍ
+        json = System.Text.RegularExpressions.Regex.Replace(json, @"/\*.*?\*/", "", System.Text.RegularExpressions.RegexOptions.Singleline);
+        return json;
+    }    
 }

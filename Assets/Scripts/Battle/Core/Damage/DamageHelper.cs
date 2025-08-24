@@ -24,7 +24,8 @@ public class DamageHelper
         meta.mInstigator = instigator;
         meta.mTarget = target;
         meta.mAbility = damageCalc.mAbility;
-
+        meta.mWordType = meta.mAbility.WordType;//
+        meta.mEffectType = meta.mAbility.EffectType;
         // 计算伤害数值
         if ((damageCalc.mFlag & DealDamageFlag.Fixed) > 0)
         {
@@ -112,7 +113,27 @@ public class DamageHelper
                 p.EnemyTakeDamage(report);
             }
         }
-
+        if (report.mMeta.mWordType == WordType.Verb&& report.mMeta.mAbility.Data.mVerbDamageCoefficient)
+        {
+            var Coefficient = instigator.GetAttributeValue(AttributeType.VerbDamageCoefficient);
+            var Mod = instigator.GetAttributeValue(AttributeType.VerbDamageMod);
+            report.mResult.mDamage = report.mResult.mDamage * (1 + Coefficient) + Mod;  
+        }
+        if (report.mMeta.mEffectType==EffectType.Damage&& report.mMeta.mAbility.Data.mEffectDamageCoefficient)
+        {
+            var Coefficient = instigator.GetAttributeValue(AttributeType.EffectDamageCoefficient);
+            report.mResult.mDamage = report.mResult.mDamage * (1 +Coefficient);
+        }
+        if (report.mMeta.mDamageSource==DamageSource.AutoAttack && report.mMeta.mAbility.Data.mNormalAttackDamageCoefficient)
+        {
+            var Coefficient = instigator.GetAttributeValue(AttributeType.NormalAttackDamage);
+            report.mResult.mDamage = report.mResult.mDamage * (1 + Coefficient);
+        }
+        if (report.mMeta.mDamageSource == DamageSource.AutoAttack && report.mMeta.mAbility.Data.mSuckBloodCoefficient)
+        {
+            var suckBlood=report.mResult.mDamage * instigator.GetAttributeValue(AttributeType.SuckBlood);
+            instigator.ApplyHeal(suckBlood);
+        }
         //todo: 伤害结算完成通知
     }
 

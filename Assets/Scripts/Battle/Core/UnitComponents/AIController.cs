@@ -63,6 +63,9 @@ public class AIController : UnitComponent
 
     protected void TickIdle(float deltaTime)
     {
+        if (!mOwner.Battle.BattlePhase.IsCombat)
+            return;
+        
         foreach (var abi in mOwner.AbilityAgent.Abilities)
         {
             if (!abi.IsUltra)
@@ -76,7 +79,7 @@ public class AIController : UnitComponent
                 continue;
 
             abi.SetTarget(target);
-            if (abi.TryActivate())
+            if (abi.TryActivate(true))
             {
                 mUltraAbility = abi;
                 mTarget = target;
@@ -93,7 +96,7 @@ public class AIController : UnitComponent
             {
                 mTarget = target;
                 mAttackAbility.SetTarget(mTarget);
-                if (mAttackAbility.TryActivate())
+                if (mAttackAbility.TryActivate(true))
                 {
                     EnterState(EUnitState.Attack);
                 }
@@ -273,7 +276,7 @@ public class AIController : UnitComponent
                 BindAnimFunc();
                 
                 if (mOwner.UnitView)
-                    mOwner.UnitView.ModelLayout.PlayAnimation("attack");
+                    mOwner.UnitView.ModelLayout.PlayAnimation(mAttackAbility.AnimName);
                 
                 break;
             }
@@ -288,5 +291,10 @@ public class AIController : UnitComponent
                 break;
             }
         }
+    }
+
+    public override void OnEnterRestPhase()
+    {
+        EnterState(EUnitState.Idle);
     }
 }

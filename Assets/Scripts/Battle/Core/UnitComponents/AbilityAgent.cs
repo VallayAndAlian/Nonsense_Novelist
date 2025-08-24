@@ -9,7 +9,10 @@ public class AbilityAgent : UnitComponent
 
     public override void Start()
     {
-        
+        foreach (var abi in mOwner.Data.mTalents)
+        {
+            RegisterAbility(abi);
+        }
     }
 
     public AbilityBase RegisterAbility(int abiKind)
@@ -54,6 +57,14 @@ public class AbilityAgent : UnitComponent
         foreach (var abi in mAbilities)
         {
             abi.Update(deltaTime);
+        }
+    }
+
+    public override void OnSelfDeath(DamageReport report)
+    {
+        foreach (var abi in Abilities)
+        {
+            abi.OnSelfDeath(report);
         }
     }
 }

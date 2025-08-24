@@ -8,6 +8,13 @@ public enum BattleState
     End,
 }
 
+public enum BattleMode
+{
+    None = 0,
+    Normal,
+    TestShoot,
+}
+
 [Flags]
 public enum BattleCamp : int
 {

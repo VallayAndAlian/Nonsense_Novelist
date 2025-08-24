@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-[System.Flags]
 public enum UnitSlotType
 {
     None = 0,
@@ -30,7 +29,15 @@ public class UnitSlot : MonoBehaviour
 
             if (SlotType == UnitSlotType.Boss)
             {
-                return BattleCamp.Neutral;
+                return BattleCamp.Boss;
+            }
+            
+            if (SlotType == UnitSlotType.Servant)
+            {
+                if (ServantOwner.IsValid())
+                {
+                    return ServantOwner.Camp;
+                }
             }
             
             return BattleCamp.None;
@@ -39,6 +46,8 @@ public class UnitSlot : MonoBehaviour
 
     private BattleUnit mUnit = null;
     public BattleUnit Unit => mUnit;
+    
+    public BattleUnit ServantOwner { set; get; }
 
     public Vector2 Pos => transform.position;
 
@@ -59,12 +68,24 @@ public class UnitSlot : MonoBehaviour
             return;
         }
 
-        mUnit = unit;
-        mUnit.Slot = this;
+        if (unit.Slot != null)
+        {
+            Debug.LogError("unit has slot already");
+            return;
+        }
+        
+        unit.Slot = this;
+        if (unit.Slot == this)
+        {
+            mUnit = unit;
+        }
     }
 
     public void Remove()
     {
+        if (mUnit == null)
+            return;
+        
         mUnit.Slot = null;
         mUnit = null;
     }

@@ -19,6 +19,7 @@ public enum EffectType
     PsyDown,
     MaxHpUp,
     MaxHpDown,
+    Heal,
 }
     
 public enum EffectDurationRule
@@ -56,15 +57,16 @@ public class BattleEffectSpec
     public float mInputValue;
     public int mInputValueInt;
     
-    public int mStackCount;
+    public int mStackCount = 1;
     public int mMaxStackCount;
     public float mDuration;
     
-    public bool mCanBePurged;
-    public bool mMergeInputValue;
+    public bool mCanBePurged = true;
+    public bool mMergeInputValue = false;
+    public bool mIsRemoveOnCombatEnd = true;
 }
 
-public class BattleEffect
+public class BattleEffect : CoreEntity
 {
     public BattleUnit mInstigator;
     public BattleUnit mTarget;
@@ -88,7 +90,8 @@ public class BattleEffect
     public bool mCanBePurged;
     public bool mIgnored;
     public bool mExpired;
-    
+    public bool mIsRemoveOnCombatEnd;
+
     public BattleEffect() {}
     
     public BattleEffect(BattleEffectSpec spec)
@@ -98,11 +101,13 @@ public class BattleEffect
         mAbility = spec.mAbility;
         mType = spec.mType;
         mDurationRule = spec.mDurationRule;
+        mStackDurationRule = spec.mStackDurationRule;
         mDuration = spec.mDuration;
         mInputValue = spec.mInputValue;
         mInputValueInt = spec.mInputValueInt;
         mInputValueBool = spec.mInputValueBool;
         mCanBePurged = spec.mCanBePurged;
+        mIsRemoveOnCombatEnd = spec.mIsRemoveOnCombatEnd;
         
         mMaxStackCount = spec.mMaxStackCount;
         mStackCount = 1;

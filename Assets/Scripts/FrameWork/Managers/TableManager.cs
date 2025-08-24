@@ -64,11 +64,11 @@ public static class TableManager
                     break;
                 
                 case TableErrorType.ParseLine:
-                    Debug.Log($"Failed to parse table {table.AssetName} in line {meta.row} col {meta.col}!");
+                    Debug.LogError($"Failed to parse table {table.AssetName} in line {meta.row} col {meta.col}!");
                     break;
                 
                 case TableErrorType.Duplicate:
-                    Debug.Log($"table {table.AssetName} has duplicate key in line {meta.row}!");
+                    Debug.LogError($"table {table.AssetName} has duplicate key in line {meta.row}!");
                     break;
             }
         }

@@ -4,12 +4,17 @@ using System.Collections.Generic;
 public enum WordType
 {
     Undefined = 0,
-    Property,              //特性
-    Noun,                  //名词
     Verb,                  //动词
     Adjective,             //形容词
+    Noun,                  //名词
+    Property,              //特性
 }
-
+public enum WordSource
+{
+    Undefined = 0,
+    Emitter,
+    Other,
+}
 public enum WordTag
 {
     Undefined = 0,
@@ -23,9 +28,12 @@ public class WordTable : MapTable<int, WordTable.Data>
         public WordType mType;
         public string mAssetName;
         public string mName;
+        public bool mForbidden;
         public BookNameEnum mBook;
         public ShootType mShootType;
         public float mDuration;
+        public int mInitPower;
+        public int mTriggerPower;
         public List<int> mTags;
         public List<int> mAbilities;
     }
@@ -39,9 +47,12 @@ public class WordTable : MapTable<int, WordTable.Data>
         data.mType = (WordType)reader.Read<int>();
         data.mAssetName = reader.Read<string>();
         data.mName = reader.Read<string>();
+        data.mForbidden = reader.Read<bool>();
         data.mBook = (BookNameEnum)reader.Read<int>();
         data.mShootType = (ShootType)reader.Read<int>();
         data.mDuration = reader.Read<float>();
+        data.mInitPower = reader.Read<int>();
+        data.mTriggerPower = reader.Read<int>();
         data.mTags = reader.ReadVec<int>();
         data.mAbilities = reader.ReadVec<int>();
 

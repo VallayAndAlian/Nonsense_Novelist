@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 
 
 
@@ -9,7 +10,7 @@ public class AbilityTemplate : AbilityBase
     protected AbilityTargetSelector mSelector = null;
     protected List<AbilityEffectApplier> mAppliers = new List<AbilityEffectApplier>();
 
-    public override bool IsUltra => mTrigger.CanTriggerByOther();
+    public override bool IsUltra => mTrigger.CanTriggerByOther() && !AnimName.Equals("None");
 
     public AbilityTemplate(AbilityTrigger trigger, AbilityTargetSelector selector, List<AbilityEffectApplier> appliers)
     {
@@ -55,6 +56,16 @@ public class AbilityTemplate : AbilityBase
             return false;
         
         return mTrigger.ShouldTrigger();
+    }
+
+    protected override void OnActivate()
+    {
+        if (!IsUltra)
+        {
+            mTrigger.TriggerDirect();
+            
+            TryDeactivate();
+        }
     }
 
     public override BattleUnit PickTarget()
@@ -165,6 +176,18 @@ public class AbilityTemplate : AbilityBase
     }
 
     #endregion
+
+    #region EffectProcess
+    
+    public override void OnSelfApplyEffect(BattleEffect be)
+    {
+        mTrigger.OnSelfApplyEffect(be);
+    }
+    public override void OnSelfApplyHealEffect(BattleEffect be)
+    {
+        mTrigger.OnSelfApplyHealEffect(be);
+    }
+    #endregion
 }
 
 public class AbilityModule
@@ -186,16 +209,16 @@ public class AbilityModule
     public bool ParseParams()
     {
         AddParams();
-        
+
         foreach (var param in mParams)
         {
             if (!ReadParam(param))
             {
-                return false; 
+                return false;
             }
         }
-        
-        return true; 
+
+        return true;
     }
     
     protected bool ReadParam(Formula param)

@@ -5,22 +5,12 @@ using UnityEngine;
 
 public class AbilityAutoAttack : AbilityActive
 {
-    public override float CD => mData.mCoolDown * Unit.GetAttributeValue(AttributeType.Attack);
+    public override float CD => mData.mCoolDown / Mathf.Max(Unit.GetAttributeValue(AttributeType.AttackSpeed), 0.1f);
 
     protected override void OnInit()
     {
         base.OnInit();
         Unit.AIAgent.RegisterAttackAbility(this);
-    }
-
-    protected override void OnActivate()
-    {
-        
-    }
-
-    protected override void OnDeactivate()
-    {
-        
     }
     
     public override void OnAnimTrigger()
@@ -52,7 +42,7 @@ public class AbilityAutoAttack : AbilityActive
 
     public void OnHitTarget(BattleUnit hitTarget)
     {
-        if (hitTarget is not { IsAlive: true })
+        if (!hitTarget.IsValid() || !hitTarget.IsAlive)
             return;
         
         // apply damage
