@@ -1,6 +1,4 @@
-using LitJson;
 using System.Collections.Generic;
-using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,10 +14,11 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// 报社编辑 | 安德鲁医生 | 粉丝彼得 | 佐佐木编辑 
     /// </summary>
     public Toggle[] AuthorToggles;
+    //返回按钮
     public Button backBtn;
     //界面上的信件对象
     public PreMailObj[] mailObjs;
-    //翻页按钮上一页下一页
+    //翻页按钮和文字显示
     public TextMeshProUGUI pageNumText;
     public Button AddPageBtn;
     public Button SubPageBtn;
@@ -85,7 +84,8 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// </summary>
     private void ReadMailsData()
     {
-        //模拟数据
+        //测试数据
+        /*
         MailDataManager.instance.CreateMail(100101);
         MailDataManager.instance.CreateMail(100102);
         MailDataManager.instance.CreateMail(100103);
@@ -98,14 +98,13 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         MailDataManager.instance.CreateMail(100205);
         MailDataManager.instance.CreateMail(100206);
         MailDataManager.instance.CreateMail(100207);
-        MailDataManager.Instance.SaveData();
+        */
 
-        //从管理器获取数据
-        Dictionary<int, MailInfo> dataList = MailDataManager.instance.DataList;
-        mailDataList.AddRange(dataList.Values);
+        //将信件管理器中的同步数据同步到此面板
+        mailDataList.AddRange(MailDataManager.Instance.DataList.Values);
 
         //排序
-        mailDataList.Sort((mail1,mail2) =>
+        mailDataList.Sort((mail1, mail2) =>
         {
             return mail1.id - mail2.id;
         });
@@ -247,7 +246,7 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
     /// <summary>
     /// 根据显示索引范围显示预览信件
     /// </summary>
-    public void ShowMail()
+    private void ShowMail()
     {
         //根据数据激活对应信件
         //更新页码先隐藏之前数据
@@ -258,37 +257,5 @@ public class MailPreviewPanel : BasePanel<MailPreviewPanel>
         for (int i = startIndex, j = 0; i <= lastIndex; i++, j++)  
             mailObjs[j].Show(prepMailData[i]);
     }
-
-    /// <summary>
-    /// 根据id在信箱显示信件
-    /// </summary>
-    /// <param name="id">信件的id</param>
-    public void displayMailById(int id)
-    {
-
-    }
-
-    /// <summary>
-    /// 设置信件的附件内容[暂未实现,功能API形式]
-    /// </summary>
-    /// <param name="id">信件的id</param>
-    /// <param name="attachId">附件的道具id</param>
-    /// <param name="attachNum">附件的数量</param>
-    public void setAttachById(int id,int attachId,int attachNum)
-    {
-        
-    }
-
-    /// <summary>
-    /// 根据ID设置读者评分
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="score"></param>
-    public void setScoreById(int id, int score)
-    {
-        //只有报社编辑类型才有读者评分
-    
-    }
-
 }
 

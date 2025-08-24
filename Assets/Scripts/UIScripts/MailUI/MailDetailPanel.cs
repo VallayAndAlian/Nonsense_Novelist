@@ -127,5 +127,6 @@ public class MailDetailPanel : BasePanel<MailDetailPanel>
         this.mailInfo.attachIsTake = true;
         //持久化存储已领取状态
         MailDataManager.instance.Cover(mailInfo);
+        //领取道具
     }
 }

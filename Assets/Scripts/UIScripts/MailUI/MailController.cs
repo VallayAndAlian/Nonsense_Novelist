@@ -41,7 +41,8 @@ public class MailController : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         //鼠标点击
         clickAction += () =>
         {
-            /* 打开信件详情:传入MailInfo,显示信件详情,取消未读的发光显示等
+            /* 
+             打开信件详情:传入MailInfo,显示信件详情,取消未读的发光显示等
             */
             mailObj.ClickAction();
         };

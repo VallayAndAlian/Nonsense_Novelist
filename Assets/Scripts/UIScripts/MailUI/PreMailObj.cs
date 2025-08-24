@@ -45,7 +45,7 @@ public class PreMailObj : MonoBehaviour
 
         //初始化信件信息为NULL
         if (mailInfo == null)
-            Show(new MailInfo(E_MailAutherType.Default));
+            Debug.Log("于PreMailObj：添加了一个空的 MainInfo 信息");
     }
 
     /// <summary>
@@ -93,7 +93,7 @@ public class PreMailObj : MonoBehaviour
         //根据信件类型显示背景图片
         switch (mailInfo.autherType)
         {
-            //报社
+                //报社
             case E_MailAutherType.BaoShe:
                 bgImg.sprite = LoadImg(imgPath + "officepaper");
                 break;

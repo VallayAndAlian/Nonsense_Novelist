@@ -9,7 +9,6 @@ using UnityEngine;
  * 场景中多个对象都挂在此脚本,其中的this只会指向最后挂载的那个,造成浪费
  */
 
-
 /// <summary>
 /// 继承MonoBehaviour的单例基类
 /// 继承了此类后子类会变为继承了MonoBehaviour的类,且具有单例特征
@@ -25,7 +24,7 @@ public class SingletonMonoBase<T> : MonoBehaviour where T: MonoBehaviour
         instance = this as T;
     }
 
-    private T GetInstance()
+    public T GetInstance()
     {
         return instance;
     }

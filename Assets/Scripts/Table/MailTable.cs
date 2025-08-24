@@ -1,10 +1,4 @@
-﻿using Spine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using UnityEngine.Scripting;
+﻿using System.Collections.Generic;
 
 public class MailTable : MapTable<int, MailTable.Data>
 {
@@ -75,6 +69,4 @@ public class MailTable : MapTable<int, MailTable.Data>
         //送回数据
         return new KeyValuePair<int, Data>(data.id, data);
     }
-
-
 }

@@ -1,26 +1,28 @@
-using OfficeOpenXml.ConditionalFormatting.Contracts;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using static UnityEditor.Progress;
 
 public class MailDataManager : Save
 {
     //单例对象
-    public static MailDataManager instance = new MailDataManager();
-    public static MailDataManager Instance => instance;
+    private static MailDataManager instance;
+    public static MailDataManager Instance 
+    { 
+        get{ 
+            if (instance == null) 
+                instance = new MailDataManager(); 
+            return instance; 
+        }
+    }
     private MailDataManager() { }
 
     //信件数据<动态id,信件数据>
     private Dictionary<int, MailInfo> dataList = new Dictionary<int, MailInfo>();
     public Dictionary<int,MailInfo> DataList => dataList;
+    //持久化文件名称
     public override string mFileName => "mail";
     
     //信件动态数据ID:初始id和当前计算到的最大id
     private int startDID = 1;
-    public int currentDID = 0;
+    private int currentDID = 0;
 
     /// <summary>
     /// 添加一个基于主id的信件对象,放入管理器
@@ -46,6 +48,68 @@ public class MailDataManager : Save
             tempId = currentDID;
         }
         dataList.Add(tempId,new MailInfo(id));
+        //每当数据有变化便更新持久化存储
+        SaveData();
+    }
+
+    /// <summary>
+    /// 添加一个基于主id的信件对象,放入管理器,并设置信件的附件内容
+    /// </summary>
+    /// <param name="id">信件的id</param>
+    /// <param name="attachId">附件的道具id</param>
+    /// <param name="attachNum">附件的数量</param>
+    public void CreateMail(int id, int attachId, int attachNum)
+    {
+        //标记是否可以复用此前id
+        bool flag = false;
+        int tempId = startDID;
+        for (int i = startDID; i < currentDID; i++)
+        {
+            if (!dataList.ContainsKey(i))
+            {
+                flag = true;
+                tempId = i;
+                break;
+            }
+        }
+        if (!flag)
+        {
+            currentDID++;
+            tempId = currentDID;
+        }
+        dataList.Add(tempId, new MailInfo(id, attachId, attachNum));
+        //每当数据有变化便更新持久化存储
+        SaveData();
+    }
+
+    /// <summary>
+    /// 加入信件并根据ID设置读者评分
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="score"></param>
+    public void CreateMail(int id, int score)
+    {
+        //只有报社编辑类型才有读者评分
+        //标记是否可以复用此前id
+        bool flag = false;
+        int tempId = startDID;
+        for (int i = startDID; i < currentDID; i++)
+        {
+            if (!dataList.ContainsKey(i))
+            {
+                flag = true;
+                tempId = i;
+                break;
+            }
+        }
+        if (!flag)
+        {
+            currentDID++;
+            tempId = currentDID;
+        }
+        dataList.Add(tempId, new MailInfo(id,score));
+        //每当数据有变化便更新持久化存储
+        SaveData();
     }
 
     /// <summary>
@@ -69,6 +133,11 @@ public class MailDataManager : Save
             dataList[info.id]= info;
     }
 
+    /// <summary>
+    /// serialize
+    /// </summary>
+    /// <param name="writer"></param>
+    /// <returns></returns>
     public override bool WriteA(SaveHandler writer)
     {
         //先写长度
@@ -90,6 +159,11 @@ public class MailDataManager : Save
         return true;
     }
 
+    /// <summary>
+    /// deserialize
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <returns></returns>
     public override bool ReadA(SaveHandler reader)
     {
         //清空

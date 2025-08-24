@@ -66,13 +66,37 @@ public class MailInfo
         }
     }
 
-    /// <summary>
-    /// 仅初始化auther字段的信件[测试阶段使用]
-    /// </summary>
-    /// <param name="auther"></param>
-    [Obsolete("MailInfo中仅初始化信件类型的方法,该方法仅限于测试使用")]
-    public MailInfo(E_MailAutherType auther)
+    public MailInfo(int id, int attachId, int attachNum)
     {
-        this.autherType = auther;
+        this.id = id;
+        Data data = MailTable.Find(id);
+        if (data != null)
+        {
+            this.mailName = data.mailName;
+            this.autherType = data.autherType;
+            this.autherName = data.autherName;
+            this.dear = data.dear;
+            this.mailBody = data.mailBody;
+            this.attachId = attachId;
+            this.attachNum = attachNum;
+        }
     }
+
+    public MailInfo(int id, int score)
+    {
+        this.id = id;
+        Data data = MailTable.Find(id);
+        if (data != null)
+        {
+            this.mailName = data.mailName;
+            this.autherType = data.autherType;
+            this.autherName = data.autherName;
+            this.dear = data.dear;
+            this.mailBody = data.mailBody;
+            this.attachId = data.attachId;
+            this.attachNum = data.attachNum;
+            this.score = score;
+        }
+    }
+
 }
