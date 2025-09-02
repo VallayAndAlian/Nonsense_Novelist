@@ -7,7 +7,7 @@ public class CoreEntity : IDisposable
     private bool mDisposed = false;
     public bool IsDisposed => mDisposed;
 
-    public CoreEntity()
+    protected CoreEntity()
     {
         
     }
@@ -15,30 +15,35 @@ public class CoreEntity : IDisposable
     ~CoreEntity()
     {
         Dispose(false);
-    }   
+    }
 
     public void Dispose()
     {
+        if (mDisposed)
+            return;
+
         Dispose(true);
         GC.SuppressFinalize(this);
     }
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!mDisposed)
+        if (mDisposed)
+            return;
+
+        mDisposed = true;
+
+        if (disposing)
         {
-            mDisposed = true;
-            
-            if (disposing)
-            {
-                // 释放托管资源
-                OnDisposing();
-            }
-            // 释放非托管资源
-            OnDisposed();
+            // 释放托管资源
+            OnDisposing();
         }
+
+        // 释放非托管资源
+        OnDisposed();
+
     }
-    
+
     protected virtual void OnDisposing() {}
     
     protected virtual void OnDisposed() {}

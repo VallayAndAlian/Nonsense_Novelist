@@ -373,20 +373,8 @@ public class BattleUnit : BattleObject
     /// </summary>
     public void PreDealDamageCalc(DealDamageCalc damageCalc)
     {
-        if ((damageCalc.mFlag & DealDamageFlag.Fixed) == 0)
-        {
-            foreach (var abi in AbilityAgent.Abilities)
-            {
-                if (abi == damageCalc.mAbility)
-                {
-                    abi.OnPreDealDamageCalc(damageCalc);
-                }
-                else
-                {
-                    abi.OnPreDealDamageCalcOtherAbility(damageCalc);
-                }
-            }
-        }
+        AbilityAgent.PreDealDamageCalc(damageCalc);
+        EffectAgent.PreDealDamageCalc(damageCalc);
     }
 
     /// <summary>
@@ -403,21 +391,16 @@ public class BattleUnit : BattleObject
         takeDamageCalc.mMagic = damageCalc.mMagic;
         takeDamageCalc.mDefense = GetAttributeValue(AttributeType.Def);
         takeDamageCalc.mResistance = GetAttributeValue(AttributeType.Def);
-
-
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            abi.OnPreTakeDamageCalc(takeDamageCalc);
-        }
+        
+        AbilityAgent.OnPreTakeDamageCalc(takeDamageCalc);
+        EffectAgent.OnPreTakeDamageCalc(takeDamageCalc);
 
         // process ally
         var allies = Allies;
         foreach (var p in allies)
         {
-            foreach (var abi in p.AbilityAgent.Abilities)
-            {
-                abi.OnAllyPreTakeDamageCalc(takeDamageCalc);
-            }
+            p.AbilityAgent.OnAllyPreTakeDamageCalc(takeDamageCalc);
+            p.EffectAgent.OnAllyPreTakeDamageCalc(takeDamageCalc);
         }
 
         return takeDamageCalc;
@@ -425,82 +408,52 @@ public class BattleUnit : BattleObject
 
     public void PreDealDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            if (report.mMeta.mAbility == abi)
-            {
-                abi.OnPreDealDamage(report);
-            }
-            else
-            {
-                abi.OnPreDealDamageOtherAbility(report);
-            }
-        }
+        AbilityAgent.PreDealDamage(report);
+        EffectAgent.PreDealDamage(report);
     }
 
     public void PreTakeDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            abi.OnPreTakeDamage(report);
-        }
+        AbilityAgent.PreTakeDamage(report);
+        EffectAgent.PreTakeDamage(report);
     }
 
     public void PostDealDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            if (abi == report.mMeta.mAbility)
-            {
-                abi.OnPostDealDamage(report);
-            }
-            else
-            {
-                abi.OnPostDealDamageOtherAbility(report);
-            }
-        }
+        AbilityAgent.PostDealDamage(report);
+        EffectAgent.PostDealDamage(report);
     }
 
     public void PostTakeDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            abi.OnPostTakeDamage(report);
-        }
+        AbilityAgent.PostTakeDamage(report);
+        EffectAgent.PostTakeDamage(report);
         
         EventManager.Invoke(EventEnum.UnitTakeDamage, this);
     }
 
     public void AllyDealDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            abi.OnAllyDealDamage(report);
-        }
+        AbilityAgent.AllyDealDamage(report);
+        EffectAgent.AllyDealDamage(report);
     }
 
     public void AllyTakeDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            abi.OnAllyTakeDamage(report);
-        }
+        AbilityAgent.AllyTakeDamage(report);
+        EffectAgent.AllyTakeDamage(report);
     }
 
     public void EnemyDealDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            abi.OnEnemyDealDamage(report);
-        }
+        AbilityAgent.EnemyDealDamage(report);
+        EffectAgent.EnemyDealDamage(report);
     }
 
     public void EnemyTakeDamage(DamageReport report)
     {
-        foreach (var abi in AbilityAgent.Abilities)
-        {
-            abi.OnEnemyTakeDamage(report);
-        }
+        AbilityAgent.EnemyTakeDamage(report);
+        EffectAgent.EnemyTakeDamage(report);
     }
 
     public float ApplyDamage(float damageValue, bool cannotKill, out bool kill)
@@ -524,6 +477,24 @@ public class BattleUnit : BattleObject
 
         return number;
     }
+    
+    
+
+    public void ApplyHeal(float healValue)
+    {
+        if (healValue > 0)
+        {
+            float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
+
+            mHp += healValue;
+            if (mHp > currentMaxHp)
+            {
+                mHp = currentMaxHp;
+            }
+        }
+    }
+
+    #endregion
 
     public void Die(DamageReport report)
     {
@@ -603,8 +574,6 @@ public class BattleUnit : BattleObject
         
     }
 
-    #endregion
-
     #region EffectProcess
 
     public void OnSelfApplyEffect(BattleEffect be)
@@ -622,20 +591,7 @@ public class BattleUnit : BattleObject
             abi.OnSelfApplyHealEffect(be);
         }
     }
-    public float ApplyHeal(float healValue)
-    {
-        float number = 0;
-
-        if (healValue > 0)
-        {
-            float currentMaxHp = GetAttributeValue(AttributeType.MaxHp);
-            number = Mathf.Min(healValue, currentMaxHp - mHp);
-
-            mHp += number;
-        }
-
-        return number;
-    }
+    
     public float ApplyHeal(AttributeType attributeType, float healValue)
     {
         float number = 0;

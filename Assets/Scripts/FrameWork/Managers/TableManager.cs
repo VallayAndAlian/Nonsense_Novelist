@@ -20,6 +20,7 @@ public static class TableManager
         Add(new AbilityTriggerTable());
         Add(new AbilitySelectorTable());
         Add(new AbilityEffectApplierTable());
+        Add(new BattleEffectTable());
         Add(new BattleUnitTable());
         Add(new BattleConfig());
         Add(new WordTable());

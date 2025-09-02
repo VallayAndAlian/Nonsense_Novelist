@@ -10,42 +10,48 @@ public class EffectAgent : UnitComponent
         
     private List<BattleEffect> mRemovedEffect = new List<BattleEffect>();
 
-    public static BattleEffect ApplyEffectToTarget(BattleUnit target, BattleEffectSpec spec)
+    public static BattleEffect ApplyEffectToTarget(BattleUnit target, BattleEffectApplier applier)
     {
-        return target.EffectAgent?.ApplyEffect(spec);
+        if (!target.IsValid())
+            return null;
+        
+        applier.mTarget = target;
+        return target.EffectAgent?.ApplyEffect(applier);
     }
 
-    protected BattleEffect ApplyEffect(BattleEffectSpec spec)
+    protected BattleEffect ApplyEffect(BattleEffectApplier applier)
     {
-        if (!CanApplyEffect(spec))
+        if (!CanApplyEffect(applier))
             return null;
 
-        BattleEffect mergedBe = TryMergeEffect(spec);
+        BattleEffect mergedBe = TryMergeEffect(applier);
         if (mergedBe != null)
             return mergedBe;
-
-        if (spec.mDurationRule == EffectDurationRule.Instant)
+        
+        BattleEffect newBe = EffectFactory.CreateEffect(applier);
+        if (applier.mDefine.mDurationRule == EffectDurationRule.Instant)
         {
-            
+            newBe.Execute();
+            newBe.Dispose();
+            return null;
         }
         else
         {
-            BattleEffect newBe = new BattleEffect(spec);
-
             newBe.mApplyTime = Owner.Battle.Now;
             
-            if (newBe.mDurationRule == EffectDurationRule.HasDuration)
+            if (newBe.mDefine.mDurationRule == EffectDurationRule.HasDuration)
             {
-                newBe.mExpiredTime = Owner.Battle.Now + spec.mDuration;
-                if (BattleHelper.IsNegativeEffect(spec))
+                newBe.mExpiredTime = Owner.Battle.Now + applier.mDuration;
+                
+                if (applier.mInstigator.IsValid() && BattleHelper.IsNegativeEffect(applier))
                 {
-                    newBe.mExpiredTime = Owner.Battle.Now + spec.mDuration*(1+ spec.mInstigator.GetAttributeValue(AttributeType.DebuffUp));
+                    newBe.mExpiredTime = Owner.Battle.Now + applier.mDuration * (1 + applier.mInstigator.GetAttributeValue(AttributeType.DebuffUp));
                 }
             }
             
             mEffects.Add(newBe);
-
             mOwner.OnSelfApplyEffect(newBe);
+            
             if (newBe.mType == EffectType.Heal)
             {
                 mOwner.OnSelfApplyHealEffect(newBe);
@@ -61,11 +67,14 @@ public class EffectAgent : UnitComponent
         return null;
     }
 
-    public bool CanApplyEffect(BattleEffectSpec spec)
+    public bool CanApplyEffect(BattleEffectApplier applier)
     {
-        if (spec.mCanBePurged)
+        if (applier.mDefine == null)
+            return false;
+        
+        if (applier.mDefine.mCanBePurged)
         {
-            if (BattleHelper.IsPositiveEffect(spec))
+            if (BattleHelper.IsPositiveEffect(applier))
             {
                 if (Owner.Status.InStatus(Status.BlockPositive))
                 {
@@ -86,9 +95,9 @@ public class EffectAgent : UnitComponent
         return true;
     }
 
-    public BattleEffect TryMergeEffect(BattleEffectSpec spec)
+    public BattleEffect TryMergeEffect(BattleEffectApplier applier)
     {
-        if (spec.mStackRule == EffectStackRule.None)
+        if (applier.mDefine.mStackRule == EffectStackRule.None)
             return null;
 
         BattleEffect mergedBe = null;
@@ -97,35 +106,30 @@ public class EffectAgent : UnitComponent
             if (effect.mExpired)
                 continue;
 
-            if (effect.mType != spec.mType || effect.mAbility != spec.mAbility)
+            if (effect.mType != applier.mDefine.mType || effect.mAbility != applier.mAbility)
                 continue;
 
-            if (spec.mStackRule != effect.mStackRule || effect.mStackDurationRule != spec.mStackDurationRule)
+            if (applier.mDefine.mStackRule != effect.mDefine.mStackRule || effect.mDefine.mStackDurationRule != applier.mDefine.mStackDurationRule)
                 continue;
 
-            if (spec.mStackRule == EffectStackRule.Source && spec.mInstigator != effect.mInstigator)
+            if (applier.mDefine.mStackRule == EffectStackRule.Source && applier.mInstigator != effect.mInstigator)
                 continue;
             
-            if (spec.mStackRule == EffectStackRule.Target && spec.mTarget != effect.mTarget)
+            if (applier.mDefine.mStackRule == EffectStackRule.Target && applier.mTarget != effect.mTarget)
                 continue;
 
             mergedBe = effect;
             
-            if (spec.mStackDurationRule == EffectStackDurationRule.Refresh)
+            if (applier.mDefine.mStackDurationRule == EffectStackDurationRule.Refresh)
             {
-                mergedBe.mExpiredTime = Owner.Battle.Now + spec.mDuration;
+                mergedBe.mExpiredTime = Owner.Battle.Now + applier.mDefine.mDuration;
             }
             
             if (mergedBe.mMaxStackCount == 0 || mergedBe.mStackCount < mergedBe.mMaxStackCount)
             {
-                if (spec.mMergeInputValue)
-                {
-                    mergedBe.mInputValue = BattleHelper.MergerEffectValue(spec.mType, spec.mInputValue, effect.mInputValue);
-                }
-
                 if (mergedBe.mMaxStackCount > 0)
                 {
-                    mergedBe.mStackCount = Mathf.Clamp(mergedBe.mStackCount + spec.mStackCount, 0, mergedBe.mMaxStackCount);
+                    mergedBe.mStackCount = Mathf.Clamp(mergedBe.mStackCount + applier.mStackCount, 0, mergedBe.mMaxStackCount);
                 }
                 else
                 {
@@ -156,7 +160,7 @@ public class EffectAgent : UnitComponent
     public override void LateUpdate(float deltaTime)
     {
         mRemovedEffect.Clear();
-        
+
         foreach (var effect in mEffects)
         {
             if (effect.mExpired)
@@ -165,62 +169,46 @@ public class EffectAgent : UnitComponent
                 continue;
             }
 
-            if (effect.mDurationRule == EffectDurationRule.HasDuration && Owner.Battle.Now > effect.mExpiredTime)
+            if (effect.mDefine.mDurationRule == EffectDurationRule.HasDuration &&
+                Owner.Battle.Now > effect.mExpiredTime)
             {
                 mRemovedEffect.Add(effect);
                 continue;
             }
 
-            if (effect.mDurationRule == EffectDurationRule.Script && !effect.mAbility.IsValid())
+            if (effect.mDefine.mDurationRule == EffectDurationRule.Script && !effect.mAbility.IsValid())
             {
                 mRemovedEffect.Add(effect);
                 continue;
             }
 
-            if (effect.mIsRemoveOnCombatEnd && Owner.Battle.BattlePhase.IsCombat == false)
+            if (effect.IsRemoveOnCombatEnd && Owner.Battle.BattlePhase.IsCombat == false)
             {
                 mRemovedEffect.Add(effect);
                 continue;
             }
 
-            var attrType = BattleHelper.ToAttrType(effect.mType);
-            if (attrType != AttributeType.None)
+            foreach (var modifier in effect.mModifiers)
             {
-                if (effect.mInputValueBool)
+                if (modifier.mPercent)
                 {
-                    Owner.AddPercentMod(attrType, effect.mInputValue);
+                    Owner.AddPercentMod(modifier.mType, modifier.mValue);
                 }
                 else
                 {
-                    Owner.AddMod(attrType, effect.mInputValue);
+                    Owner.AddMod(modifier.mType, modifier.mValue);
                 }
             }
-            else
+            
+            Owner.Status.AddStatus(effect.mApplyStatus);
+
+            if (effect.mDefine.mTickInterval >= 0)
             {
-
-                switch (effect.mType)
+                effect.mTimer -= deltaTime;
+                if (effect.mTimer <= effect.mDefine.mTickInterval)
                 {
-                    case EffectType.Stun:
-                        Owner.Status.AddStatus(Status.Stun);
-                        break;
-
-                    case EffectType.Damage:
-                    {
-                        DealDamageCalc dmg = BattleHelper.GetReusableDealDamageCalc(effect.mInstigator);
-                        dmg.mTarget = mOwner;
-                        dmg.mAbility = effect.mAbility;
-                        dmg.mAbility.EffectType=effect.mType;//
-                        dmg.mMinAttack = effect.mInputValue;
-                        dmg.mMaxAttack = dmg.mMinAttack;
-                        dmg.mMagic = true;
-                        dmg.mFlag |= DealDamageFlag.Fixed;
-
-                        DamageHelper.ProcessDamage(dmg);
-                    }
-                        break;
-
-                    default:
-                        break;
+                    effect.mTimer = effect.mDefine.mTickInterval;
+                    effect.Execute();
                 }
             }
         }
@@ -230,22 +218,146 @@ public class EffectAgent : UnitComponent
             foreach (var effect in mRemovedEffect)
             {
                 mOwner.UnitView.OnRemoveEffect(effect);
-                
+
                 EventManager.Invoke(EventEnum.RemoveEffect, effect);
-                
+
                 mEffects.Remove(effect);
-                
+
                 effect.Dispose();
             }
-        
+
             mRemovedEffect.Clear();
         }
     }
-    
+
     public override void OnSelfDeath(DamageReport report)
     {
+        foreach (var abi in Effects)
+        {
+            abi.OnSelfDeath(report);
+        }
+        
         ClearEffects();
     }
+    
+    #region DamageProcess
+
+    /// <summary>
+    /// 造成伤害计算预处理
+    /// </summary>
+    public void PreDealDamageCalc(DealDamageCalc damageCalc)
+    {
+        if ((damageCalc.mFlag & DealDamageFlag.Fixed) == 0)
+        {
+            foreach (var effect in Effects)
+            {
+                if (effect.mAbility == damageCalc.mAbility)
+                {
+                    effect.OnPreDealDamageCalc(damageCalc);
+                }
+                else
+                {
+                    effect.OnPreDealDamageCalcOtherAbility(damageCalc);
+                }
+            }
+        }
+    }
+
+    public void OnPreTakeDamageCalc(TakeDamageCalc dmgCalc)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnPreTakeDamageCalc(dmgCalc);
+        }
+    }
+
+    public void OnAllyPreTakeDamageCalc(TakeDamageCalc dmgCalc)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnAllyPreTakeDamageCalc(dmgCalc);
+        }
+    }
+
+    public void PreDealDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            if (report.mMeta.mAbility == effect.mAbility)
+            {
+                effect.OnPreDealDamage(report);
+            }
+            else
+            {
+                effect.OnPreDealDamageOtherAbility(report);
+            }
+        }
+    }
+
+    public void PreTakeDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnPreTakeDamage(report);
+        }
+    }
+
+    public void PostDealDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            if (effect.mAbility == report.mMeta.mAbility)
+            {
+                effect.OnPostDealDamage(report);
+            }
+            else
+            {
+                effect.OnPostDealDamageOtherAbility(report);
+            }
+        }
+    }
+
+    public void PostTakeDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnPostTakeDamage(report);
+        }
+    }
+
+    public void AllyDealDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnAllyDealDamage(report);
+        }
+    }
+
+    public void AllyTakeDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnAllyTakeDamage(report);
+        }
+    }
+
+    public void EnemyDealDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnEnemyDealDamage(report);
+        }
+    }
+
+    public void EnemyTakeDamage(DamageReport report)
+    {
+        foreach (var effect in Effects)
+        {
+            effect.OnEnemyTakeDamage(report);
+        }
+    }
+
+    #endregion
 
     public override void OnExitCombatPhase()
     {

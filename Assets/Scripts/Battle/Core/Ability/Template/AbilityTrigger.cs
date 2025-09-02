@@ -553,9 +553,10 @@ public class AMTSelfHealTreshold : AbilityTrigger
     }
     public override void OnSelfApplyHealEffect(BattleEffect be)
     {
+        //todo optimize: 当buff是持续生效的时候该怎么处理, 并且为什么是MaxHpUp?
         if (be.mType == EffectType.MaxHpUp&&mOwner.Unit.Hp<mOwner.Unit.MaxHp)
         {
-            mCurrentHealing += be.mInputValueInt;
+            // mCurrentHealing += be.mInputValueInt;
         }
     }
 }

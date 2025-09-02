@@ -53,3 +53,10 @@ public class Attribute
     public float mMod;
     public float mPercentMod;
 }
+
+public class AttributeModifier
+{
+    public AttributeType mType;
+    public bool mPercent;
+    public float mValue;
+}

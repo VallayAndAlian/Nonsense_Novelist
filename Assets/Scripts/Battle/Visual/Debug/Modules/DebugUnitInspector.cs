@@ -45,10 +45,6 @@ public class DebugUnitInspector : BattleDebugModule
         if (unit == null)
             return;
 
-        ImGui.Text($"单位Kind: {unit.UnitInstance.mKind}");
-        ImGui.Text($"单位名称: {unit.Data.mName}");
-        ImGui.Text($"单位ID: {unit.ID}");
-
         ImGui.Text($"单位血量:");
         ImGui.SameLine();
         ImGui.ProgressBar(unit.HpPercent, new Vector2(150, 20));
@@ -104,10 +100,18 @@ public class DebugUnitInspector : BattleDebugModule
                 ImGui.NextColumn();
 
                 var attr = unit.AttributeSet.GetAttribute(attyType);
-                ImGui.Text($"{attr.mValue}");
-                ImGui.NextColumn();
-
-                ImGui.InputFloat("", ref attr.mBaseValue);
+                if (attr != null)
+                {
+                    ImGui.Text($"{attr.mValue}");
+                    ImGui.NextColumn();
+                    ImGui.InputFloat("", ref attr.mBaseValue);
+                }
+                else
+                {
+                    ImGui.Text($"NaN");
+                    ImGui.NextColumn();
+                    ImGui.Text($"NaN");
+                }
                 ImGui.NextColumn();
 
                 ImGui.PopID();

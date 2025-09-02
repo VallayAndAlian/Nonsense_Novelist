@@ -20,14 +20,14 @@ public class BattleHelper
     protected static TakeDamageCalc mReusableTakeDamageCalc = new TakeDamageCalc();
     public static TakeDamageCalc ReusableTakeDamageCalc => mReusableTakeDamageCalc;
 
-    public static bool IsPositiveEffect(BattleEffectSpec spec)
+    public static bool IsPositiveEffect(BattleEffectApplier applier)
     {
-        return false;
+        return applier.mDefine.mPositive;
     }
     
-    public static bool IsNegativeEffect(BattleEffectSpec spec)
+    public static bool IsNegativeEffect(BattleEffectApplier applier)
     {
-        return !IsPositiveEffect(spec);
+        return !IsPositiveEffect(applier);
     }
 
     public static float MergerEffectValue(EffectType type, float a, float b)

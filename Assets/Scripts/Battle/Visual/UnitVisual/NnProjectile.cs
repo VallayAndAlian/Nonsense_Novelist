@@ -44,13 +44,13 @@ public class NnProjectile : MonoBehaviour
     {
         if (mMeta.mData.mType == EmitType.EnemyToSelf)
         {
-            mEmitPos = mMeta.mTarget.ViewPos;
-            mTargetPos = mMeta.mInstigator.ViewPos;
+            mEmitPos = mMeta.mTarget.UnitView.ModelLayout.GetWeaponPos();
+            mTargetPos = mMeta.mInstigator.UnitView.ModelLayout.GetWeaponHitPos();
         }
         else
         {
             mEmitPos = mMeta.mInstigator.UnitView.ModelLayout.GetWeaponPos();
-            mTargetPos = mMeta.mTarget.ViewPos;
+            mTargetPos = mMeta.mTarget.UnitView.ModelLayout.GetWeaponHitPos();
         }
         
         Vector3 offset = mTargetPos - mEmitPos;

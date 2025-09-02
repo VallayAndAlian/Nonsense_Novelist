@@ -7,7 +7,7 @@ public class AbilityPermanentAttribute : AbilityBase
     private Formula mPercent = new Formula("attr_percent");
     private Formula mValue = new Formula("attr_value");
 
-    public override void AddParams()
+    protected override void AddParams()
     {
         mParams.Add(mAttributeType);
         mParams.Add(mPercent);

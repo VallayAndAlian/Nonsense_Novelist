@@ -126,6 +126,15 @@ public class TokenReader
         return (T)result;
     }
     
+    public T ReadEnum<T>() where T : struct
+    {
+        string enumStr = Read<string>();
+        if (string.IsNullOrEmpty(enumStr))
+            return default;
+
+        return Enum.TryParse(enumStr, true, out T result) ? result : default;
+    }
+    
     public List<T> ReadVec<T>()
     {
         if (!IsReadValid())

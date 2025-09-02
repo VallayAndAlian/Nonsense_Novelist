@@ -7,7 +7,36 @@ public class DebugEffect : BattleDebugModule
     public override string ModuleName => "Buff查看器";
     public override string ToolTip => "";
 
+    protected int mPickIdx = 0;
+    
+    protected Dictionary<int, string> mItems = new Dictionary<int, string>();
+
+    public override void OnRegistered()
+    {
+        foreach (var it in BattleEffectTable.DataList)
+        {
+            mItems.Add(it.Key, $"{it.Key}_{it.Value.mName}");
+        }
+    }
+
     public override void OnDrawImGui(BattleDebugContext context)
+    {
+        ImGuiFunc.Combo("Effect列表", mItems, ref mPickIdx, (int key, string value) => value);
+        ImGui.Spacing();
+        
+        var unit = context.mPickedUnit;
+        if (unit.IsValid())
+        {
+            if (mPickIdx > 0 && ImGui.Button("添加Effect"))
+            {
+                EffectAgent.ApplyEffectToTarget(unit, new BattleEffectApplier(mPickIdx, null));
+            }
+        }
+        
+        DrawUnitEffect(context);
+    }
+
+    protected void DrawUnitEffect(BattleDebugContext context)
     {
         if (context.mPickedUnit == null)
             return;
@@ -39,7 +68,7 @@ public class DebugEffect : BattleDebugModule
             
             ImGui.Text($"{effect.mType.ToString()}");ImGui.NextColumn();
 
-            if (effect.mDurationRule == EffectDurationRule.HasDuration)
+            if (effect.mDefine.mDurationRule == EffectDurationRule.HasDuration)
             {
                 ImGui.Text((effect.mExpiredTime - context.mBattle.Now).ToString("F2"));
             }
@@ -56,5 +85,5 @@ public class DebugEffect : BattleDebugModule
         
         ImGui.Separator();
         ImGui.Columns();
-    }  
+    }
 }

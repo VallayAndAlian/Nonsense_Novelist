@@ -282,7 +282,7 @@ public class AMEAAttrMod : AbilityEffectApplier
         spec.mAbility = mOwner;
         spec.mMaxStackCount = mStackLimit;
         spec.mIsRemoveOnCombatEnd = mIsRemoveOnCombatEnd;
-        EffectAgent.ApplyEffectToTarget(target, spec);
+        // EffectAgent.ApplyEffectToTarget(target, spec);
     }
 }
 
@@ -864,7 +864,7 @@ public class AMEAGainRepeatBuff : AbilityEffectApplier
                 spec.mAbility = mOwner;
                 spec.mMaxStackCount = mStackLimit;
                 spec.mIsRemoveOnCombatEnd = mIsRemoveOnCombatEnd;
-                EffectAgent.ApplyEffectToTarget(target, spec);
+                // EffectAgent.ApplyEffectToTarget(target, spec);
             }
         }
     }

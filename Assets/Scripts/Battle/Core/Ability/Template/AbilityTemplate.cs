@@ -29,7 +29,7 @@ public class AbilityTemplate : AbilityBase
         // mStackLimit = InitStackLimit(appliers);
     }
 
-    public override void AddParams()
+    protected override void AddParams()
     {
         base.AddParams();
     }

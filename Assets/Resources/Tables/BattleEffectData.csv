@@ -1,0 +1,2 @@
+Kind,Type,Name,Desc,TickInterval,DurationRule,Duration,StackRule,StackDurationRule,MaxStackCount,RemoveOnCombatEnd,CanBePurged,Positive,ApplyStatus,AttrModNum,Type...,Percent...,Value...,ParamNum,Params...,,
+1,1,Test,Test,0,1,10,2,1,2,1,1,1,0,2,MaxHp,1,1,Def,0,5,0

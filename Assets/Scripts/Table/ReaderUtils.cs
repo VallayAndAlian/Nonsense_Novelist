@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 
 public class CustomParam
@@ -28,6 +29,32 @@ public static class ReaderUtils
             else
             {
                 reader.MarkReadInvalid();
+                return false;
+            }
+        }
+
+        return true;
+    }
+    
+    public static bool ParseParams(TokenReader reader, List<AttributeModifier> paramList)
+    {
+        int paramNum = reader.Read<int>();
+        
+        for (int i = 0; i < paramNum * 3; i += 3)
+        {
+            AttributeModifier param = new AttributeModifier
+            {
+                mType = reader.ReadEnum<AttributeType>(),
+                mPercent = reader.Read<bool>(),
+                mValue = reader.Read<float>()
+            };
+
+            if (reader.IsReadValid())
+            {
+                paramList.Add(param);
+            }
+            else
+            {
                 return false;
             }
         }

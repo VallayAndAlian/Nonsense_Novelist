@@ -22,6 +22,7 @@ public class UnitModelLayout : MonoBehaviour
 
     
     protected Transform mWeaponPart;
+    protected Transform mHitPart;
 
     protected UnitViewBase mOwner = null;
     
@@ -45,6 +46,12 @@ public class UnitModelLayout : MonoBehaviour
         if (mWeaponPart == null)
         {
             mWeaponPart = unitObj.Root;
+        }
+        
+        mHitPart = unitObj.transform.Find("HitMuzzle");
+        if (mHitPart == null)
+        {
+            mHitPart = unitObj.Root;
         }
         
         mAnimEvents = GetComponent<AnimEventReceiver>();
@@ -76,6 +83,21 @@ public class UnitModelLayout : MonoBehaviour
         // }
         
         return mWeaponPart.position;
+    }
+    
+    public Vector3 GetWeaponHitPos()
+    {
+        // if (mOwner.mAnimType == UnitAnimType.Anim)
+        // {
+        //     Spine.Bone bone = mSpineAnimator.Skeleton.FindBone(mOwner.Asset.weaponSocket);
+        //
+        //     if (bone != null)
+        //     {
+        //         return mSpineAnimator.transform.TransformPoint(new Vector3(bone.WorldX, bone.WorldY, 0));
+        //     }
+        // }
+        
+        return mHitPart.position;
     }
 
     private void Update()

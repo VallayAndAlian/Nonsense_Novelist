@@ -30,10 +30,6 @@ public class DebugWord : BattleDebugModule
 
         var unit = context.mPickedUnit;
         mNow = context.mBattle.Now;
-        
-        ImGui.Text($"单位Kind: {unit.UnitInstance.mKind}");
-        ImGui.Text($"单位名称: {unit.Data.mName}");
-        ImGui.Text($"单位ID: {unit.ID}");
 
         ImGuiFunc.Combo("技能列表", mItems, ref mPickIdx, (int key, string value) => value);
         ImGui.Spacing();

@@ -71,6 +71,7 @@ public class AbilityBase : CoreEntity
     public virtual bool IsUltra => false;
     public virtual float CD => mData.mCoolDown;
     public WordType WordType=WordType.Undefined;
+    //todo optimize: 这个是做什么的？
     public EffectType EffectType=EffectType.None;
     
     
@@ -200,7 +201,7 @@ public class AbilityBase : CoreEntity
 
     protected List<Formula> mParams = new List<Formula>();
     
-    public virtual void AddParams() {}
+    protected virtual void AddParams() {}
     
     public bool ParseParams()
     {

@@ -61,6 +61,18 @@ public class AttributeSet
         }
     }
 
+    public void AddModifier(AttributeModifier modifier)
+    {
+        if (modifier.mPercent)
+        {
+            AddPercentMod(modifier.mType, modifier.mValue);
+        }
+        else
+        {
+            AddMod(modifier.mType, modifier.mValue);
+        } 
+    }
+
     public void ModifyBase(AttributeType type, float mod, bool isPercent = false)
     {
         if (mAttributes.TryGetValue(type, out var attr))

@@ -132,7 +132,7 @@ public class BattleDebugTool : ImGuiObjBase
     {
         ImGui.Text("Alt + 鼠标4号键挑选单位");
         
-        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(5))
+        if ((Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) && Input.GetMouseButtonDown(4))
         {
             mPickedUnit = BVHelper.GetUnitAtPosition(ClientUtils.GetMouseWorldPosition());
         }
@@ -140,6 +140,12 @@ public class BattleDebugTool : ImGuiObjBase
         if (!mPickedUnit.IsValid())
         {
             mPickedUnit = null;
+        }
+        else
+        {
+            ImGui.Text($"单位Kind: {mPickedUnit.UnitInstance.mKind}");
+            ImGui.Text($"单位名称: {mPickedUnit.Data.mName}");
+            ImGui.Text($"单位ID: {mPickedUnit.ID}");
         }
         
         return mPickedUnit;
