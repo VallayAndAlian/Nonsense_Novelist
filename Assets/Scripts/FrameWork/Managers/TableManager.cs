@@ -28,6 +28,7 @@ public static class TableManager
         Add(new LevelTable());
         Add(new PhaseTable());
         Add(new EmitTable());
+        Add(new UnitLevelUpTable());
     }
 
     public static void ReadTables()

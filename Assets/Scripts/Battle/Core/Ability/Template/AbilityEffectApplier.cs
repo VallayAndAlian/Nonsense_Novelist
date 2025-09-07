@@ -408,7 +408,8 @@ public class AMEAAttrHeal : AbilityEffectApplier
         {
             mCurrentHeal=mValue.Evaluate(mOwner);
         }
-        target.ApplyHeal((AttributeType)mAttrType.EvaluateInt(mOwner), mCurrentHeal);
+        HealMeta meta = new HealMeta(mOwner.Unit, target, mOwner, mCurrentHeal);
+        target.ApplyHeal(meta);
     }
 }
 public class AMEAKillServant : AbilityEffectApplier

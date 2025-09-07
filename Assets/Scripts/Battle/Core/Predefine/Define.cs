@@ -15,6 +15,27 @@ public enum BattleMode
     TestShoot,
 }
 
+public enum BattleUnitCareerAnchor
+{
+    None= 0,
+    Soldier,//战士
+    Monk,//法师
+    Tank,//坦克
+    Shooter,//射手
+    Summon//召唤
+}
+public enum BattleUnitCareerType
+{
+    None = 0,
+    InitCareer,
+    Swordsman,//剑客
+    Wizard,//巫师
+    Jester,//弄臣
+    Boxer,//拳击手
+    Gunner,//炮手
+    Follower,//信徒
+}
+
 [Flags]
 public enum BattleCamp : int
 {

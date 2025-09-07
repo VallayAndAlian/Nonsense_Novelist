@@ -81,4 +81,70 @@ public class WeightedLottery<T>
         if (_pools.Sum(p => p.Probability) <= 0)
             throw new InvalidOperationException("总概率必须大于0");
     }
+    public static List<S> WeightedRandomSelect<S>(Dictionary<S, float> weights, int count)
+    {
+        if (weights == null || weights.Count == 0 || count <= 0)
+            return new List<S>();
+
+        var results = new List<S>();
+        var random = new Random();
+        float totalWeight = weights.Values.Sum();
+        var tempWeights = new Dictionary<S, float>(weights);
+
+        for (int i = 0; i < count && tempWeights.Count > 0; i++)
+        {
+            float randomValue = random.Next(0, (int)totalWeight);
+            float cumulativeWeight = 0;
+
+            foreach (var pair in tempWeights)
+            {
+                cumulativeWeight += pair.Value;
+                if (randomValue < cumulativeWeight)
+                {
+                    results.Add(pair.Key);
+                    totalWeight -= pair.Value;
+                    tempWeights.Remove(pair.Key);
+                    break;
+                }
+            }
+        }
+
+        return results;
+    }
+    public static List<BattleUnitCareerType> SelectWeightedRandom(List<UnitLevelUpTable.Data.CareerData> items, int count)
+    {
+        if (items == null || items.Count == 0 || count <= 0)
+            return new List<BattleUnitCareerType>();
+
+        var results = new List<BattleUnitCareerType>();
+        var random = new Random();
+
+        // 计算总权重
+        int totalWeight = items.Sum(item => (int)item.mWeight);
+
+        // 创建临时列表，避免修改原始数据
+        var tempItems = new List<UnitLevelUpTable.Data.CareerData>(items);
+
+        for (int i = 0; i < count && tempItems.Count > 0; i++)
+        {
+            // 生成一个随机数
+            int randomValue = random.Next(0, totalWeight);
+            float cumulativeWeight = 0;
+
+            // 遍历所有项，找到随机数对应的项
+            foreach (var item in tempItems)
+            {
+                cumulativeWeight += item.mWeight;
+                if (randomValue < cumulativeWeight)
+                {
+                    results.Add(item.mType);
+                    totalWeight -= (int)item.mWeight;
+                    tempItems.Remove(item);
+                    break;
+                }
+            }
+        }
+
+        return results;
+    }
 }

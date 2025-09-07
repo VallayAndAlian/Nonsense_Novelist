@@ -12,6 +12,11 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         public bool mForbidden;
         public BookNameEnum mBook;
         public int mLevel;
+        public BattleUnitCareerAnchor mCareerAnchor;
+        public BattleUnitCareerType mInitCareer;
+        public int mInitCareerLevel;
+        public int mNewCareerLevel;
+        public float mDeathProvideExp;
         public float mAttack;
         public float mMaxHp;
         public float mDefense;
@@ -55,6 +60,11 @@ public class BattleUnitTable : MapTable<int, BattleUnitTable.Data>
         data.mForbidden = reader.Read<bool>();
         data.mBook = (BookNameEnum)reader.Read<int>();
         data.mLevel = reader.Read<int>();
+        data.mCareerAnchor=(BattleUnitCareerAnchor)reader.Read<int>();
+        data.mInitCareer=(BattleUnitCareerType)reader.Read<int>();
+        data.mInitCareerLevel=reader.Read<int>();
+        data.mNewCareerLevel = reader.Read<int>();
+        data.mDeathProvideExp=reader.Read<float>();
         data.mAttack = reader.Read<float>();
         data.mMaxHp = reader.Read<float>();
         data.mDefense = reader.Read<float>();

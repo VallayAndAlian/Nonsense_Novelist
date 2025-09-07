@@ -119,6 +119,9 @@ public class BattleUnit : BattleObject
     
     protected ServantsAgent mServantsAgent = null;
     public ServantsAgent ServantsAgent => mServantsAgent;
+
+    protected ExperienceSystem mExperienceSystem = null;
+    public ExperienceSystem ExperienceSystem => mExperienceSystem;
     #endregion
 
     protected StatusManager mStatus = new StatusManager();
@@ -213,6 +216,9 @@ public class BattleUnit : BattleObject
         {
             mServantsAgent = new ServantsAgent();
             RegisterComponent(mServantsAgent);
+
+            mExperienceSystem= new ExperienceSystem();
+            RegisterComponent(mExperienceSystem);
         }
     }
 
@@ -584,33 +590,25 @@ public class BattleUnit : BattleObject
         }
     }
 
-    public void OnSelfApplyHealEffect(BattleEffect be)
+    public void OnSelfApplyHealEffect(HealReport report)
     {
         foreach (var abi in AbilityAgent.Abilities)
         {
-            abi.OnSelfApplyHealEffect(be);
+            abi.OnSelfApplyHealEffect(report);
         }
     }
     
-    public float ApplyHeal(AttributeType attributeType, float healValue)
+    public void ApplyHeal(HealMeta meta)
     {
-        float number = 0;
-        var attr=AttributeSet.GetAttribute(attributeType);
-        if (healValue > 0)
-        {
-            float currentvalue = GetAttributeValue(attributeType);
-            if (mData.mTakeHealUp != 0)
-            {
-                number = Mathf.Min(healValue*(1+mData.mTakeHealUp), attr.mBaseValue - currentvalue);
-            }
-            else
-            {
-                number = Mathf.Min(healValue, attr.mBaseValue - currentvalue);
-            }
-            attr.mValue += number;
-        }
-
-        return number;
+        HealReport report = new HealReport();
+        report.mMeta=new HealMeta(meta);
+        report.mResult = new HealResult();
+        float mOldHp=mHp;
+        mHp += meta.mValue * (1 + GetAttributeValue(AttributeType.TakeHealUp));
+        if (mHp>MaxHp)
+            mHp = MaxHp;
+        report.mResult.mValue = mHp-mOldHp;
+        OnSelfApplyHealEffect(report);
     }
     #endregion
 

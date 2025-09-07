@@ -19,6 +19,8 @@ public class DealDamageCalc
     public BattleUnit mInstigator;
     public BattleUnit mTarget;
     public AbilityBase mAbility;
+    public WordType mWordType;
+    public EffectType mEffectType;
 
     public bool mMagic;
     
@@ -37,6 +39,8 @@ public class DealDamageCalc
         mInstigator = null;
         mTarget = null;
         mAbility = null;
+        mWordType=WordType.Undefined;
+        mEffectType=EffectType.None;
 
         mMagic = false;
         
@@ -137,4 +141,35 @@ public class CombatReport
     public bool mIsHasWinner;
     public List<BattleCamp> mWinCamp;
     public int mActiveNum;
+}
+
+public class HealMeta
+{
+    public BattleUnit mInstigator;
+    public BattleUnit mTarget;
+    public AbilityBase mAbility;
+    public float mValue;
+    public HealMeta(BattleUnit instigator, BattleUnit target, AbilityBase ability, float value)
+    {
+        mInstigator = instigator;
+        mTarget = target;
+        mAbility = ability;
+        mValue = value;
+    }
+    public HealMeta(HealMeta other)
+    {
+        mInstigator = other.mInstigator;
+        mTarget = other.mTarget;
+        mAbility = other.mAbility;
+        mValue = other.mValue;
+    }
+}
+public class HealResult
+{
+    public float mValue;
+}
+public class HealReport
+{
+    public HealMeta mMeta;
+    public HealResult mResult;
 }

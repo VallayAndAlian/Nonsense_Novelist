@@ -113,7 +113,7 @@ public class WordComponent : UnitComponent
             var abi = Owner.AbilityAgent.RegisterAbility(kind);
             if (abi != null)
             {
-                abi.WordType = entry.mType;
+                //abi.WordType = entry.mType;
                 entry.mAbilities.Add(abi);
             }
         }
@@ -174,7 +174,6 @@ public class WordComponent : UnitComponent
             var abi = Owner.AbilityAgent.RegisterAbility(kind);
             if (abi != null)
             {
-                abi.WordType = entry.mType;
                 entry.mAbilities.Add(abi);
             }
         }

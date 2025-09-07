@@ -24,8 +24,8 @@ public class DamageHelper
         meta.mInstigator = instigator;
         meta.mTarget = target;
         meta.mAbility = damageCalc.mAbility;
-        meta.mWordType = meta.mAbility.WordType;//
-        meta.mEffectType = meta.mAbility.EffectType;
+        meta.mWordType = damageCalc.mWordType;
+        meta.mEffectType = damageCalc.mEffectType;
         // 计算伤害数值
         if ((damageCalc.mFlag & DealDamageFlag.Fixed) > 0)
         {
@@ -74,6 +74,10 @@ public class DamageHelper
         if (killed)
         {
             target.Die(report);
+            if (instigator != null)
+            {
+                EventManager.Invoke(EventEnum.UnitKilled, report);
+            }
         }
         
         // 应用伤害后的相关处理

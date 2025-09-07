@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using static Unity.Burst.Intrinsics.X86.Avx;
+using static UnityEditor.Progress;
 
 public class BattleCampManager : BattleModule
 {
@@ -87,7 +88,51 @@ public class BattleCampManager : BattleModule
 
         return allies;
     }
-    
+    public List<BattleUnit> GetAlliesExceptServant(BattleUnit unit)
+    {
+        List<BattleUnit> allies = new List<BattleUnit>();
+        if (mCampUnit.TryGetValue(unit.Camp, out var list))
+        {
+            foreach (var item in list)
+            {
+                if (item.Data.mInitType == BattleUnitType.Character)
+                {
+                    allies.Add(item);
+                }
+            }
+            allies.Remove(unit);
+        }
+
+        return allies;
+    }
+    public List<BattleUnit> GetEnemiesExceptServant(BattleUnit unit)
+    {
+        if (!Battle.BattlePhase.CampEnemies.TryGetValue(unit.Camp, out var enemyCamp))
+            return new List<BattleUnit>();
+
+        List<BattleUnit> enemies = new List<BattleUnit>();
+        foreach (var iter in mCampUnit)
+        {
+            if (iter.Key != unit.Camp && enemyCamp.Contains(iter.Key))
+            {
+                var members = GetCampMember(iter.Key);
+                foreach(var member in members)
+                {
+                    if(member.Data.mInitType == BattleUnitType.Character)
+                    {
+                        enemies.AddRange(iter.Value);
+                        break;
+                    }
+                    else
+                    {
+                        return new List<BattleUnit>();
+                    }
+                }
+            }
+        }
+
+        return enemies;
+    }
     public List<BattleUnit> GetEnemies(BattleUnit unit)
     {
         if (!Battle.BattlePhase.CampEnemies.TryGetValue(unit.Camp, out var enemyCamp))

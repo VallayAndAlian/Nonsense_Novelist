@@ -1,0 +1,6 @@
+Kind,Anchor,AttrNums,AttrType,AttrAddValue,CareerNums,Career1,Career1Weight,Career2,Career2Weight,Career3,Career3Weight,Career4,Career4Weight,Career5,Career5Weight,Career6,Career6Weight
+1,1,1,1,100,6,1,50,2,20,3,5,4,10,5,20,6,15
+2,2,1,1,100,6,1,50,2,5,3,20,4,5,5,10,6,20
+3,3,1,1,100,6,1,50,2,10,3,5,4,20,5,20,6,10
+4,4,1,1,100,6,1,50,2,20,3,5,4,5,5,15,6,15
+5,5,1,1,100,6,1,50,2,10,3,10,4,10,5,10,6,10

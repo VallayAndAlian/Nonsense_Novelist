@@ -52,11 +52,6 @@ public class EffectAgent : UnitComponent
             mEffects.Add(newBe);
             mOwner.OnSelfApplyEffect(newBe);
             
-            if (newBe.mType == EffectType.Heal)
-            {
-                mOwner.OnSelfApplyHealEffect(newBe);
-            }
-            
             mOwner.UnitView.OnApplyEffect(newBe);
             
             EventManager.Invoke(EventEnum.ApplyEffect, newBe);
@@ -64,7 +59,7 @@ public class EffectAgent : UnitComponent
             return newBe;
         }
         
-        return null;
+        //return null;
     }
 
     public bool CanApplyEffect(BattleEffectApplier applier)

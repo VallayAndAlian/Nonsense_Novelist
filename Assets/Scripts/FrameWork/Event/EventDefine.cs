@@ -15,7 +15,11 @@ public enum EventEnum
 	ApplyEffect,
 	RemoveEffect,
 	AddWord,
-	
-	DeckUpdate,
+    UnitKilled,
+    PendingLevelUps,
+	TakeHeal,
+
+
+    DeckUpdate,
 	ShootCardUpdate,
 }

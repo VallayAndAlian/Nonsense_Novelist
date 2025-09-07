@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using JetBrains.Annotations;
 
@@ -34,8 +35,13 @@ public class GamePhase_Rest : GamePhase
         // 切换战斗UI
         Battle.PinBallLauncher.CanShootSwitch(false);
         Battle.BattlePhase.ActivePhaseUI(BattlePhaseType.Rest);
-
         Battle.OnEnterResetPhase();
+        if (Battle.UnitManager.GetUnitReadyToLevelUp().Count > 0)
+        {
+            var infoUI = Battle.BattleUI.Add(new BattleUnitLevelUpUI());
+            //Battle.BattleUI.ShowPanel(infoUI);
+            EventManager.Invoke(EventEnum.PendingLevelUps, Battle.UnitManager.GetUnitReadyToLevelUp());
+        }
     }
 
     public override void Update(float deltaTime)

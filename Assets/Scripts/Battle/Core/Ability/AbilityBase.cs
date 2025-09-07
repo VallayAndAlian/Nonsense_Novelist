@@ -70,9 +70,9 @@ public class AbilityBase : CoreEntity
     
     public virtual bool IsUltra => false;
     public virtual float CD => mData.mCoolDown;
-    public WordType WordType=WordType.Undefined;
+    //public WordType WordType=WordType.Undefined;
     //todo optimize: 这个是做什么的？
-    public EffectType EffectType=EffectType.None;
+    //public EffectType EffectType=EffectType.None;
     
     
     public void Init()
@@ -193,7 +193,7 @@ public class AbilityBase : CoreEntity
     
     public virtual void OnSelfApplyEffect(BattleEffect be) { }
     public virtual void OnPawnApplyEffect(BattleEffect be) { }
-    public virtual void OnSelfApplyHealEffect(BattleEffect be) { }
+    public virtual void OnSelfApplyHealEffect(HealReport report) { }
 
     #endregion
 

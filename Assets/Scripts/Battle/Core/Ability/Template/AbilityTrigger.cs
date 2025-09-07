@@ -247,7 +247,8 @@ public class AbilityTrigger : AbilityModule
 
     public virtual void OnSelfApplyEffect(BattleEffect be) { }
 
-    public virtual void OnSelfApplyHealEffect(BattleEffect be) { }
+    //public virtual void OnSelfApplyHealEffect(BattleEffect be) { }
+    public virtual void OnSelfApplyHealEffect(HealReport report) { }
 }
 
 public class AMTDirect : AbilityTrigger
@@ -538,25 +539,21 @@ public class AMTSelfNounTreshold : AbilityTrigger
 public class AMTSelfHealTreshold : AbilityTrigger
 {
     protected Formula mHealTreshold = new Formula("heal_treshold");
-    protected int mCurrentHealing = 0;
+    protected float mCurrentHealing = 0;
     public override void AddParams()
     {
         mParams.Add(mHealTreshold);
     }
-    public override void Update(float deltaTime)
+    public override void OnSelfApplyHealEffect(HealReport report)
     {
-        if (mCurrentHealing >= mHealTreshold.EvaluateInt(mOwner))
+        if (report.mMeta.mTarget == mOwner.Unit)
         {
-            mCurrentHealing -= mHealTreshold.EvaluateInt(mOwner);
-            TryTrigger(null);
-        }
-    }
-    public override void OnSelfApplyHealEffect(BattleEffect be)
-    {
-        //todo optimize: 当buff是持续生效的时候该怎么处理, 并且为什么是MaxHpUp?
-        if (be.mType == EffectType.MaxHpUp&&mOwner.Unit.Hp<mOwner.Unit.MaxHp)
-        {
-            // mCurrentHealing += be.mInputValueInt;
+            mCurrentHealing += report.mResult.mValue;
+            if (mCurrentHealing >= mHealTreshold.EvaluateInt(mOwner))
+            {
+                mCurrentHealing -= mHealTreshold.EvaluateInt(mOwner);
+                TryTrigger(null);
+            }
         }
     }
 }

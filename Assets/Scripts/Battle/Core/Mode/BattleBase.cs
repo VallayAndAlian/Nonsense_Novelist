@@ -24,6 +24,7 @@ public class BattleBase : MonoBehaviour
     protected BattleScene mBattleScene = null;
     protected BattleUIManager mBattleUI = null;
     protected UnitDeckManager mUnitDeck = null;
+    protected BattleUnitManager mUnitManager = null;//
 
 
     public BattleClock Clock => mClock;
@@ -38,6 +39,7 @@ public class BattleBase : MonoBehaviour
     public BattleScene BattleScene => mBattleScene;
     public BattleUIManager BattleUI => mBattleUI;
     public UnitDeckManager UnitDeck => mUnitDeck;
+    public BattleUnitManager UnitManager => mUnitManager;
 
 
     public float Now => mClock?.ElapsedSec ?? 0;
@@ -149,6 +151,9 @@ public class BattleBase : MonoBehaviour
 
         mUnitDeck = new UnitDeckManager();
         RegisterModule(mUnitDeck);
+
+        mUnitManager=new BattleUnitManager();
+        RegisterModule(mUnitManager);
 
     }
 
